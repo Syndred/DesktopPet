@@ -1,0 +1,78 @@
+{
+  "at": "2026-10-26T20:11:25.288Z",
+  "stage": "network-cleanup-and-restoration-complete",
+  "caseUpdates": [
+    {
+      "id": "S03",
+      "status": "passed",
+      "severity": "TBD",
+      "executionState": "executed",
+      "actual": "限定原A子进程到既有Supabase的Node HTTPS：DENY下仅一次正常pet974/carrot1，原e3e48e4c-47ab-4d1a-aa79-394be57ee185持久pending；正常退出并在DENY下同profile重启，原input/wire/immutable字节hash不变，公开session null如实保留；恢复后普通登录原账号，原请求一次重试。PG原operation和common receipt各1、39→40/garden13→14、carrot5→4、仅目标pet4→5变化，独立A2同结果。网络实例正常退出、helperSTOP seq3且PID/port消失，原A无测试代理正常重开后没有再次结算，完整原23设置全文正常UI恢复为25。未声称中断Chromium或所有传输。",
+      "evidence": [
+        "network-pending-restart-v1/root-pending-restart-recovery-independent-seal.json",
+        "network-pending-restart-v1/native-original-pending-feed-before-restart.json",
+        "network-pending-restart-v1/native-pending-integrity-ordinal2-restarted-denied.json",
+        "network-pending-restart-v1/native-recovered-feed-across-clients-seal.json",
+        "network-pending-restart-v1/native-network-cleanup-fully-stopped.json",
+        "native-network-closeout-and-full-settings-restoration-seal.json",
+        "native-A-original-request-confirmed-after-restart.png",
+        "native-A2-independent-inventory-after-recovery.png",
+        "native-A-full-original-settings-restored-after-network.png"
+      ],
+      "hardTechnicalBlock": false,
+      "blockerGroup": null,
+      "blockerKind": null
+    },
+    {
+      "id": "I04",
+      "status": "passed",
+      "severity": "TBD",
+      "executionState": "executed",
+      "actual": "本轮实际原喂养在正常断网重启恢复后唯一结算；A2独立原profile自然读到相同4宠整行/所有库存、head40/garden14，originating请求0。PG原操作/回执各1；网络清理后A再次正常无测试代理启动，库存carrot4、目标petrev5及原request committed保持，关键经济/战报/个人表digest与提交后相同，没有再次扣减或结算。",
+      "evidence": [
+        "network-pending-restart-v1/native-recovered-feed-across-clients-seal.json",
+        "network-pending-restart-v1/root-pending-restart-recovery-independent-seal.json",
+        "native-network-closeout-and-full-settings-restoration-seal.json",
+        "cloudA-post-network-full-original-settings-restored.json",
+        "native-A2-independent-inventory-after-recovery.png"
+      ],
+      "hardTechnicalBlock": false,
+      "blockerGroup": null,
+      "blockerKind": null
+    },
+    {
+      "id": "I03",
+      "status": "running",
+      "executionState": "partial",
+      "actual": "本轮S03中原pet974/carrot1已实际唯一结算，只有目标成长与库存变化，其他3宠/其他库存原文保持；原请求跨重启同ID一次重试不重复扣减。尚未执行本候选另一个正常快速连点新喂养子项，不能据旧轮结果或本次单点击冒充完整覆盖。",
+      "evidence": [
+        "network-pending-restart-v1/native-recovered-feed-across-clients-seal.json",
+        "network-pending-restart-v1/root-pending-restart-recovery-independent-seal.json"
+      ],
+      "hardTechnicalBlock": false,
+      "blockerGroup": null,
+      "blockerKind": null
+    },
+    {
+      "id": "S06",
+      "status": "failed",
+      "severity": "P2",
+      "executionState": "executed_failed",
+      "actual": "限定已登录原A的Node HTTPS DENY观测与原请求跨重启恢复完整执行：无旧高频连接风暴，忙碌结束、原请求回执唯一，正常退出/STOP/原设置恢复已完成。仍因4E6-002公开总及garden pending漏计、旧metadata错误遮住当前network错误使总状态partial而失败，保留统一修复。",
+      "evidence": [
+        "network-pending-restart-v1/native-logged-in-deny-observation-seal.json",
+        "network-pending-restart-v1/root-pending-restart-recovery-independent-seal.json",
+        "root-unified-repair-observations.json",
+        "native-network-closeout-and-full-settings-restoration-seal.json"
+      ],
+      "findingRefs": [
+        "4E6-002"
+      ],
+      "hardTechnicalBlock": false,
+      "blockerGroup": null,
+      "blockerKind": null
+    }
+  ],
+  "newIssues": [],
+  "issueUpdates": []
+}

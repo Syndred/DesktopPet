@@ -1,0 +1,148 @@
+{
+  "at": "2026-10-25T20:04:46.443Z",
+  "source": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+  "settings": {
+    "ok": true,
+    "data": {
+      "document": {
+        "desktop": {
+          "alwaysOnTop": true,
+          "clickThrough": true,
+          "launchAtLogin": false,
+          "closeToTray": true,
+          "companionLimit": 3,
+          "interactionSounds": true,
+          "volume": 70,
+          "hideInFullscreen": true,
+          "animationsEnabled": true
+        },
+        "notifications": {
+          "enabled": true,
+          "companions": true,
+          "battles": true,
+          "garden": true,
+          "quietEnabled": true,
+          "quietStart": "22:00",
+          "quietEnd": "08:00"
+        },
+        "privacy": {
+          "locationAllowed": false,
+          "locationOnlyWhileExploring": true,
+          "emotionStatistics": false
+        },
+        "sync": {
+          "enabled": true
+        }
+      },
+      "revision": 10,
+      "updatedAt": "2026-10-25T19:55:38.592Z",
+      "host": {
+        "startup": false,
+        "fullscreenMonitor": true,
+        "fullscreenMonitorReady": true,
+        "foregroundFullscreen": false,
+        "fullscreenSource": null,
+        "companionWindows": 1,
+        "clickThroughWindows": [
+          3
+        ],
+        "windows": [
+          {
+            "id": 3,
+            "alwaysOnTop": true,
+            "visible": true
+          }
+        ],
+        "locationAllowed": false,
+        "emotionStatistics": false,
+        "closeToTrayConnected": true,
+        "companionLimitConnected": true
+      }
+    }
+  },
+  "dom": {
+    "headings": [
+      "留一点安静，给自己。",
+      "通知与安静时段",
+      "位置与隐私"
+    ],
+    "switches": [
+      {
+        "label": "桌面通知",
+        "checked": "true"
+      },
+      {
+        "label": "伙伴互动提醒",
+        "checked": "true"
+      },
+      {
+        "label": "对战邀请提醒",
+        "checked": "true"
+      },
+      {
+        "label": "菜园成熟提醒",
+        "checked": "true"
+      },
+      {
+        "label": "启用安静时段",
+        "checked": "true"
+      },
+      {
+        "label": "允许附近探索使用位置",
+        "checked": "false"
+      },
+      {
+        "label": "位置仅在探索时更新",
+        "checked": "true"
+      },
+      {
+        "label": "情绪统计",
+        "checked": "false"
+      },
+      {
+        "label": "界面动效",
+        "checked": "true"
+      }
+    ],
+    "times": [
+      "22:00",
+      "08:00"
+    ],
+    "notices": [
+      "当前未发送通知：正处于安静时段。"
+    ]
+  },
+  "originalDocument": {
+    "desktop": {
+      "alwaysOnTop": true,
+      "clickThrough": true,
+      "launchAtLogin": false,
+      "closeToTray": true,
+      "companionLimit": 3,
+      "interactionSounds": true,
+      "volume": 70,
+      "hideInFullscreen": true,
+      "animationsEnabled": true
+    },
+    "notifications": {
+      "enabled": true,
+      "companions": true,
+      "battles": true,
+      "garden": true,
+      "quietEnabled": true,
+      "quietStart": "22:00",
+      "quietEnd": "08:00"
+    },
+    "privacy": {
+      "locationAllowed": false,
+      "locationOnlyWhileExploring": true,
+      "emotionStatistics": false
+    },
+    "sync": {
+      "enabled": true
+    }
+  },
+  "osStartupOrPrivacyNotModified": true,
+  "settingsDocumentExact": true
+}

@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-26T23:40:49.632Z",
+  "classification": "engineering-only startup profile propagation observation; not actual Windows registration or native issue",
+  "readOnly": true,
+  "productSourceChanged": false,
+  "osStartupWritten": false,
+  "source": [
+    "apps/pc-app/runtime/main/index.ts:14",
+    "apps/pc-app/runtime/core/profile-path.cjs:6",
+    "apps/pc-app/runtime/features/accounts/startup.cjs:28"
+  ],
+  "actualProfile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native",
+  "portableExe": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-4e6c3de4\\Lingjing-0.1.8-portable-x64.exe",
+  "actualPureTarget": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-4e6c3de4\\Lingjing-0.1.8-portable-x64.exe",
+    "args": []
+  },
+  "confirmed": "Current startup target identifies the stable outer EXE but carries no custom profile argument. Main currently derives non-default profile only from transient PET_USER_DATA_DIR.",
+  "limit": "No actual OS startup registration has been performed. Native P09 must verify expected profile semantics and real entry; this source finding is not a native pass or assigned issue.",
+  "authorizationAudit": "Current original P09 explicitly requires real registration without reboot/logoff. Current plan/freeze have no found user prohibition; awaiting Native09 source confirmation of the earlier self-imposed no-OS-write boundary."
+}

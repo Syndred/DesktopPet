@@ -1,0 +1,50 @@
+{
+  "at": "2026-10-26T23:20:50.520Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "readOnly": true,
+  "queryOnly": true,
+  "credentialValuesRead": false,
+  "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native",
+  "owner": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "sessionId": "battle-4b454308-b59f-4d52-9e98-96abdf075fae",
+  "playerPetId": "pet-96de9234-462d-413b-ac72-81cfc1add244",
+  "sameOriginalFourRoundPrefix": true,
+  "currentRoundCount": 4,
+  "currentStatus": "active",
+  "currentSnapshot": {
+    "enemy": {
+      "hp": 82,
+      "id": "enemy",
+      "anger": 3,
+      "maxHp": 120,
+      "element": "earth",
+      "statuses": [],
+      "freeDodgeUsed": true
+    },
+    "round": 4,
+    "player": {
+      "hp": 100,
+      "id": "player",
+      "anger": 53,
+      "maxHp": 120,
+      "element": "wood",
+      "statuses": [],
+      "freeDodgeUsed": true
+    }
+  },
+  "newSessionIds": [
+    "battle-4b454308-b59f-4d52-9e98-96abdf075fae"
+  ],
+  "settings": {
+    "originalRevision": 13,
+    "currentRevision": 15,
+    "wholeDocumentEqual": true,
+    "currentCloseToTray": true
+  },
+  "credentials": 0,
+  "chatMessageIdentityUnchanged": true,
+  "chatMessageCount": 4,
+  "actualCandidateBinding": "root-B04-new-Main-and-candidate-binding-independent.json",
+  "nativeNormalExit": "native-B04-old-runtime-normal-exit-readback.json",
+  "qualification": "Four original rounds survived real native normal exit/restart/login. Later natural rounds are allowed; no new Start or replacement session is inferred from the increasing local row revision."
+}

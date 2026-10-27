@@ -1,0 +1,149 @@
+{
+  "at": "2026-10-26T11:09:34.618Z",
+  "status": "resource_convergence_observed_pet_attribution_pending_not_final_pass",
+  "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+  "approvalRef": "root-c7ad-b2-temp-volume-sync-first-pull-1056",
+  "profile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-b-second-device-native",
+  "deviceId": "351797b0-cad7-4b8f-9f93-8d0e806c49c3",
+  "ordinaryLiveCloud": true,
+  "uiOnlyBusinessMutations": true,
+  "qaScenario": null,
+  "preloginPetChanges": [
+    {
+      "petId": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+      "before": {
+        "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "petId": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+        "templateId": "animal-white-fox",
+        "name": "小狐",
+        "serial": "2EC1523D",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 5,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 800,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "revision": 2,
+        "createdAt": "2026-10-25T21:01:31.876Z",
+        "updatedAt": "2026-10-25T21:49:00.381Z"
+      },
+      "afterLogin": {
+        "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "petId": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+        "templateId": "animal-white-fox",
+        "name": "小狐",
+        "serial": "2EC1523D",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 25,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 1,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 800,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "revision": 3,
+        "createdAt": "2026-10-25T21:01:31.876Z",
+        "updatedAt": "2026-10-26T00:33:32.702Z"
+      },
+      "attribution": "Pending Root independent original cloud training/reward receipt; no reset or rollback"
+    }
+  ],
+  "preloginAccountMetadataChanges": [
+    {
+      "before": {
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "revision": 13,
+        "selections_json": "{\"chatPetId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"battlePetId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"guardPetId\":null}",
+        "legacy_imported_at": "2026-10-25T12:07:23.190Z"
+      },
+      "afterLogin": {
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "revision": 15,
+        "selections_json": "{\"chatPetId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"battlePetId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"guardPetId\":null}",
+        "legacy_imported_at": "2026-10-25T12:07:23.190Z"
+      },
+      "attribution": "Login hydration revision change; original selections exact; Root independent attribution pending"
+    }
+  ],
+  "actualPath": "Ordinary original-account login; no auto resource pull under original syncfalse. Native volume71 save then native sync false→true once; normal resource pump including >=30s timer.",
+  "oldConflict": {
+    "actionId": "ad163d25-f061-4546-863b-057c680516a7",
+    "oldStatus": "conflict",
+    "newStatus": "superseded",
+    "allOtherFieldsRawExact": true,
+    "verifiedAt": null,
+    "attempts": 1,
+    "baseRevision": 0,
+    "lastError": "RESOURCE_PREFERENCE_CONFLICT",
+    "createdAt": "2026-10-26T00:09:32.568Z"
+  },
+  "preservation": {
+    "original4PetsRawExactAcrossLogin": false,
+    "all4PetsAndCompanionAccountRawExactFromAfterLoginThroughSync": true,
+    "originalSelectionFieldsExactAcrossLogin": true,
+    "preloginCompanionRevisionChange": [
+      13,
+      15
+    ],
+    "localPreferenceRowsRawExact": true,
+    "preferenceStateAllExceptVerifiedAtExact": true,
+    "accountHead": 8,
+    "accountOutboxCount": 0,
+    "accountSourcesCount": 0,
+    "checkpointCount": 1,
+    "settingsRevision": 5,
+    "temporaryVolume": 71,
+    "temporarySync": true,
+    "onlyTwoIntendedSettingsFieldsDiffer": true
+  },
+  "filenameCaveat": "first-resource-page-pull records entry attempt only: syncfalse prevented a pull. temporary-volume71-before-save actually shows68, keyboard corrected to71 before the sole volume save; original frame retained.",
+  "pending": "Root froze the next preference-save scope for pet-cache attribution; no more UI. Hold71/true as previously authorized. No manual sync/retry/restore/merge/new preference save executed. No verified issue/case ledger written."
+}

@@ -1,0 +1,923 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-26T19:08:42.132Z",
+  "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+  "roundId": "candidate-4e6c3de4-1b1afdd1",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "asarSha256": "3be5ce049efb9ad93a83f6090994a6f8ae26cf0f319b614c1d8e5ae6e8ab0568",
+  "allFourOriginalSettingsRestoredAndReadBack": true,
+  "productUiOperatedBy": "native09",
+  "networkHelpersStarted": false,
+  "entries": [
+    {
+      "alias": "cloudA",
+      "windowId": 2558374,
+      "mainPid": 18256,
+      "wrapperPid": 22232,
+      "extractedExe": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsg35D9.tmp\\app\\Lingjing.exe",
+      "asarSha256": "3be5ce049efb9ad93a83f6090994a6f8ae26cf0f319b614c1d8e5ae6e8ab0568",
+      "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a",
+      "cdp": 57234,
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "session": {
+        "dataMode": "live",
+        "persistence": "secure",
+        "user": {
+          "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "provider": "runtime",
+          "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe"
+        }
+      },
+      "scenario": null,
+      "settingsRevision": 23,
+      "originalSettingsDocumentMatched": true,
+      "settingsDocument": {
+        "desktop": {
+          "alwaysOnTop": true,
+          "clickThrough": true,
+          "launchAtLogin": false,
+          "closeToTray": true,
+          "companionLimit": 3,
+          "interactionSounds": true,
+          "volume": 70,
+          "hideInFullscreen": true,
+          "animationsEnabled": true
+        },
+        "notifications": {
+          "enabled": true,
+          "companions": true,
+          "battles": true,
+          "garden": true,
+          "quietEnabled": true,
+          "quietStart": "22:00",
+          "quietEnd": "08:00"
+        },
+        "privacy": {
+          "locationAllowed": false,
+          "locationOnlyWhileExploring": true,
+          "emotionStatistics": false
+        },
+        "sync": {
+          "enabled": true
+        }
+      },
+      "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+      "cloudStatus": {
+        "ok": true,
+        "mode": "cloud-authority",
+        "configured": true,
+        "cloudRevision": 36,
+        "pending": 0,
+        "conflicts": 0,
+        "running": false,
+        "localChanged": false,
+        "remoteChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "lastVerifiedAt": "2026-10-26T19:01:35.946Z",
+        "lastCloudCheckedAt": "2026-10-26T19:01:35.946Z",
+        "lastError": "GLOBAL_SERIAL_SCOPE_REVOKED",
+        "preservedLocalRecords": 0,
+        "domains": [
+          {
+            "domain": "companions",
+            "revision": 36,
+            "verifiedAt": "2026-10-26T19:01:35.946Z"
+          },
+          {
+            "domain": "garden",
+            "revision": 36,
+            "verifiedAt": "2026-10-26T19:01:35.946Z"
+          }
+        ]
+      },
+      "readOnlyEvidence": "cloudA-restored-settings-receipt-check.json",
+      "backupEvidence": "cloudABackup-preserved-before-upgrade.json",
+      "tableDiffs": [
+        {
+          "table": "account_actions",
+          "before": {
+            "count": 31,
+            "sha256": "e717476fa02e7f18b1a0236a1efe9ff2c63642d8c66bd6702e56f185139896e4"
+          },
+          "after": {
+            "count": 32,
+            "sha256": "ed6aa4219e2e4d08ecf4d371978bb12524500a9ffbb2abe11ef38c596ba03423"
+          },
+          "missingRowHashes": 2,
+          "newRowHashes": 3
+        },
+        {
+          "table": "account_cloud_links",
+          "before": {
+            "count": 2,
+            "sha256": "8b9bb0ef32b8c2bb4ae384d153cb10c26aff451b1d576fe2fa1678a93a90138e"
+          },
+          "after": {
+            "count": 2,
+            "sha256": "eba4a7744f8d2c6c24b14cf1337467e3f973f953186c11690ea3ba80dbf8d6e0"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 1
+        },
+        {
+          "table": "account_cloud_readbacks",
+          "before": {
+            "count": 2,
+            "sha256": "f892c1961cc0d3d06cb69a996510f6ccc4bbce6694146cadc3f2485fdf610c57"
+          },
+          "after": {
+            "count": 2,
+            "sha256": "5b7fa078ef06229246a8880699b92e70304d783017d481d8a3845abbf097a055"
+          },
+          "missingRowHashes": 2,
+          "newRowHashes": 2
+        },
+        {
+          "table": "account_identities",
+          "before": {
+            "count": 2,
+            "sha256": "5835051285abae135adf8b549526f0441d33d4e95763f5d3b907866a3f00afb0"
+          },
+          "after": {
+            "count": 2,
+            "sha256": "faa9d505fb41a66f284f71de8fe35aa2befbb9ee23ed311fde7316e2cd6a6721"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 1
+        },
+        {
+          "table": "account_settings",
+          "before": {
+            "count": 2,
+            "sha256": "e6368b1e0473ade6ebd67d40a06579eb73401d0b8173f846dd689a893ed6f332"
+          },
+          "after": {
+            "count": 2,
+            "sha256": "50fdc4bf072dfdb1ee2076f60e9cc6d40227e50a8407cebab0b06963f666155e"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 1
+        },
+        {
+          "table": "companion_device_actions",
+          "before": {
+            "count": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          "after": {
+            "count": 1,
+            "sha256": "c68a5dada5bf81990fe42c85f2696afa216ae9741c2ed920051216def902c44f"
+          },
+          "missingRowHashes": 0,
+          "newRowHashes": 1
+        },
+        {
+          "table": "companion_device_desktop",
+          "before": {
+            "count": 4,
+            "sha256": "1ad7d441d3916050e1db0a4db735e58e01983bdcc59018c092bbd5503fdea3fa"
+          },
+          "after": {
+            "count": 4,
+            "sha256": "6445742b87bda76eb6d499ee6cca42a58bb9d29492571a4529832f74455e896f"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 1
+        },
+        {
+          "table": "conversation_cloud_archives",
+          "before": {
+            "count": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          "after": {
+            "count": 1,
+            "sha256": "2ba57109311259dce126580e2c030089daabfc9f8d90bc2cc2723ebd2dc1d7fe"
+          },
+          "missingRowHashes": 0,
+          "newRowHashes": 1
+        },
+        {
+          "table": "conversation_cloud_state",
+          "before": {
+            "count": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          "after": {
+            "count": 1,
+            "sha256": "9e8ae9ac0b176afb490bd539a83976ee98e0acd2b3f5a8a52e9fadb31367313c"
+          },
+          "missingRowHashes": 0,
+          "newRowHashes": 1
+        },
+        {
+          "table": "garden_cloud_state",
+          "before": {
+            "count": 1,
+            "sha256": "1e4549e3efd91cb5508afe772165f57fb42f51db12d506a3e44a6d92528fc245"
+          },
+          "after": {
+            "count": 1,
+            "sha256": "45dc21b4278d30803a22ea7a08c540fbe7a06e1d4797602039db9aed368c0cf3"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 1
+        },
+        {
+          "table": "lingjing_meta",
+          "before": {
+            "count": 2,
+            "sha256": "2449abdd2d3ebc033ece071de5cb4f93e075a84b81b350772a9893b208f3e2f5"
+          },
+          "after": {
+            "count": 2,
+            "sha256": "abf22fd363e6bcc37d983996f561db64ecd491e72e98d6ef3d1cdab2835146d0"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 1
+        },
+        {
+          "table": "lingjing_resource_files",
+          "before": {
+            "count": 18,
+            "sha256": "6a07e24514fce615b4f676e45df1db478b316e1ebf34eb46623bbad4914c343b"
+          },
+          "after": {
+            "count": 18,
+            "sha256": "8047a1413b9227b9d922179df0ba8aea3bedbda5c0d605591bf37c582bf5aed4"
+          },
+          "missingRowHashes": 18,
+          "newRowHashes": 18
+        }
+      ]
+    },
+    {
+      "alias": "cloudASecond",
+      "windowId": 25953932,
+      "mainPid": 5400,
+      "wrapperPid": 2756,
+      "extractedExe": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nslBA76.tmp\\app\\Lingjing.exe",
+      "asarSha256": "3be5ce049efb9ad93a83f6090994a6f8ae26cf0f319b614c1d8e5ae6e8ab0568",
+      "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-bc6598d3-1b1afdd1\\profiles\\cloud-a-second-device",
+      "cdp": 57237,
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "session": {
+        "dataMode": "live",
+        "persistence": "memory",
+        "user": {
+          "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "provider": "runtime",
+          "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe"
+        }
+      },
+      "scenario": null,
+      "settingsRevision": 2,
+      "originalSettingsDocumentMatched": true,
+      "settingsDocument": {
+        "desktop": {
+          "alwaysOnTop": true,
+          "clickThrough": true,
+          "launchAtLogin": false,
+          "closeToTray": true,
+          "companionLimit": 3,
+          "interactionSounds": true,
+          "volume": 70,
+          "hideInFullscreen": true,
+          "animationsEnabled": true
+        },
+        "notifications": {
+          "enabled": true,
+          "companions": true,
+          "battles": true,
+          "garden": true,
+          "quietEnabled": true,
+          "quietStart": "22:00",
+          "quietEnd": "08:00"
+        },
+        "privacy": {
+          "locationAllowed": false,
+          "locationOnlyWhileExploring": true,
+          "emotionStatistics": false
+        },
+        "sync": {
+          "enabled": false
+        }
+      },
+      "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+      "cloudStatus": {
+        "ok": true,
+        "mode": "cloud-authority",
+        "configured": true,
+        "cloudRevision": 36,
+        "pending": 0,
+        "conflicts": 0,
+        "running": false,
+        "localChanged": false,
+        "remoteChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "lastVerifiedAt": "2026-10-26T19:04:00.782Z",
+        "lastCloudCheckedAt": "2026-10-26T19:04:00.782Z",
+        "lastError": "GLOBAL_SERIAL_SCOPE_REVOKED",
+        "preservedLocalRecords": 0,
+        "domains": [
+          {
+            "domain": "companions",
+            "revision": 36,
+            "verifiedAt": "2026-10-26T19:04:00.782Z"
+          },
+          {
+            "domain": "garden",
+            "revision": 36,
+            "verifiedAt": "2026-10-26T19:04:00.782Z"
+          }
+        ]
+      },
+      "readOnlyEvidence": "cloudASecond-restored-settings-first-readback.json",
+      "backupEvidence": "cloudASecondBackup-preserved-before-upgrade.json",
+      "tableDiffs": [
+        {
+          "table": "account_actions",
+          "before": {
+            "count": 1,
+            "sha256": "7cc306cea2e8b592f3df5f8a42f0ca2a0518bcb30ba025b72916d7d8f34ccb20"
+          },
+          "after": {
+            "count": 3,
+            "sha256": "7f8120259786a1ec5c48b5954f4e147e34cab01226bf36ee7db99b747337af4b"
+          },
+          "missingRowHashes": 0,
+          "newRowHashes": 2
+        },
+        {
+          "table": "account_cloud_links",
+          "before": {
+            "count": 1,
+            "sha256": "65a26b2fa99cdc456fc4481b29d076bad94bc2170a9a9450f1aa17e1c59c58ac"
+          },
+          "after": {
+            "count": 1,
+            "sha256": "f3262032b1f2884125776c7e0746afe23bf93029010df89e7f87ee7186c1ec54"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 1
+        },
+        {
+          "table": "account_cloud_readbacks",
+          "before": {
+            "count": 2,
+            "sha256": "4c3ef22b35a90116550588042ddded23cffc5b360faecbf37bceaaf05c048a3f"
+          },
+          "after": {
+            "count": 2,
+            "sha256": "66719c823f84692ba2ea39e5850be6cf6bf3b17eefe7ab99cd268772a652e099"
+          },
+          "missingRowHashes": 2,
+          "newRowHashes": 2
+        },
+        {
+          "table": "account_identities",
+          "before": {
+            "count": 1,
+            "sha256": "cc6f76eabeda1f4e44d775ff1814a8b71d743f642687a9cb0da4d1f236c8e3fd"
+          },
+          "after": {
+            "count": 1,
+            "sha256": "0035a78eaa770f3cc5bbe71f0f47579c919953bbc0574c4c765d3043cdd8b5cb"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 1
+        },
+        {
+          "table": "account_settings",
+          "before": {
+            "count": 1,
+            "sha256": "ee1ab083dc5dc89de785522e3c2007e193d57aa3505cbd7219c6c5b97ad030c9"
+          },
+          "after": {
+            "count": 1,
+            "sha256": "103d1b8199862b4841baa93722794ad9f482df8dd42f874475191a9477ed94a3"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 1
+        },
+        {
+          "table": "conversation_cloud_archives",
+          "before": {
+            "count": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          "after": {
+            "count": 1,
+            "sha256": "2fa2982c143e0c077d50a3c60700009f79a195c481221c27653d364e99f929c2"
+          },
+          "missingRowHashes": 0,
+          "newRowHashes": 1
+        },
+        {
+          "table": "conversation_cloud_state",
+          "before": {
+            "count": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          "after": {
+            "count": 1,
+            "sha256": "9e8ae9ac0b176afb490bd539a83976ee98e0acd2b3f5a8a52e9fadb31367313c"
+          },
+          "missingRowHashes": 0,
+          "newRowHashes": 1
+        },
+        {
+          "table": "garden_cloud_state",
+          "before": {
+            "count": 1,
+            "sha256": "3c0f1e6a4691dff7519b4843ef85aa052ffcd584dc7450577698de384c66774d"
+          },
+          "after": {
+            "count": 1,
+            "sha256": "50e6d56726ef8b3231ba7701a2b5bd9a3dd18f780eeb888887d02edabe91457a"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 1
+        },
+        {
+          "table": "lingjing_meta",
+          "before": {
+            "count": 2,
+            "sha256": "c4d6b6d1015b4690dbfad1b0fca10a9b063a261eb9ce4ddc95d2f74b11e9ebc9"
+          },
+          "after": {
+            "count": 2,
+            "sha256": "3c9f34388668fe2274bba517fc0653b97f7d99aa36cc50ca81f66c22a59a657e"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 1
+        },
+        {
+          "table": "lingjing_resource_files",
+          "before": {
+            "count": 18,
+            "sha256": "38643d3f77d3cc098662bc47b34331ac03e11008c6a0b78026e5e9a7e7501f7a"
+          },
+          "after": {
+            "count": 18,
+            "sha256": "0097e16a27b38d5e23e8bb65b915af8773f4419dc62d2a36cf0c827c27eff6cd"
+          },
+          "missingRowHashes": 18,
+          "newRowHashes": 18
+        }
+      ]
+    },
+    {
+      "alias": "cloudB2",
+      "windowId": 723278,
+      "mainPid": 21384,
+      "wrapperPid": 9532,
+      "extractedExe": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsa811D.tmp\\app\\Lingjing.exe",
+      "asarSha256": "3be5ce049efb9ad93a83f6090994a6f8ae26cf0f319b614c1d8e5ae6e8ab0568",
+      "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native",
+      "cdp": 57240,
+      "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "session": {
+        "dataMode": "live",
+        "persistence": "memory",
+        "user": {
+          "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+          "provider": "runtime",
+          "authUserId": "2028f0af-f501-47f5-9abb-de59487dad46"
+        }
+      },
+      "scenario": null,
+      "settingsRevision": 11,
+      "originalSettingsDocumentMatched": true,
+      "settingsDocument": {
+        "desktop": {
+          "alwaysOnTop": true,
+          "clickThrough": true,
+          "launchAtLogin": false,
+          "closeToTray": true,
+          "companionLimit": 3,
+          "interactionSounds": true,
+          "volume": 70,
+          "hideInFullscreen": true,
+          "animationsEnabled": true
+        },
+        "notifications": {
+          "enabled": true,
+          "companions": true,
+          "battles": true,
+          "garden": true,
+          "quietEnabled": true,
+          "quietStart": "22:00",
+          "quietEnd": "08:00"
+        },
+        "privacy": {
+          "locationAllowed": false,
+          "locationOnlyWhileExploring": true,
+          "emotionStatistics": false
+        },
+        "sync": {
+          "enabled": false
+        }
+      },
+      "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+      "cloudStatus": {
+        "ok": true,
+        "mode": "cloud-authority",
+        "configured": true,
+        "cloudRevision": 28,
+        "pending": 0,
+        "conflicts": 0,
+        "running": false,
+        "localChanged": false,
+        "remoteChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "lastVerifiedAt": "2026-10-26T19:06:58.080Z",
+        "lastCloudCheckedAt": "2026-10-26T19:06:58.081Z",
+        "lastError": "GLOBAL_SERIAL_SCOPE_REVOKED",
+        "preservedLocalRecords": 2,
+        "domains": [
+          {
+            "domain": "companions",
+            "revision": 28,
+            "verifiedAt": "2026-10-26T19:06:58.080Z"
+          },
+          {
+            "domain": "garden",
+            "revision": 28,
+            "verifiedAt": "2026-10-26T19:06:58.080Z"
+          }
+        ]
+      },
+      "readOnlyEvidence": "cloudB2-restored-settings-first-readback.json",
+      "backupEvidence": "cloudB2Backup-preserved-before-upgrade.json",
+      "tableDiffs": [
+        {
+          "table": "account_actions",
+          "before": {
+            "count": 16,
+            "sha256": "578424551c85aef73da6c30f1fbe92be01649518ee4700188f4d61bdfb50faea"
+          },
+          "after": {
+            "count": 17,
+            "sha256": "ce3e322f5916fbc02c16268e2af907f7fc500eba099cbe3f63f4fc20f5682f7d"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 2
+        },
+        {
+          "table": "account_cloud_links",
+          "before": {
+            "count": 1,
+            "sha256": "8cfb534e64ace5fbaa19807d5677175f6916c32e0d28f3a0d4a52da8ebbe075a"
+          },
+          "after": {
+            "count": 1,
+            "sha256": "68e456825663f910e7215ab7552fa67753a2a6f6c34615f68c7c294c32b892a4"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 1
+        },
+        {
+          "table": "account_cloud_readbacks",
+          "before": {
+            "count": 2,
+            "sha256": "b93467b077a268b2788ff26227a61c8504471a2f601c8c4bb7f2f50c8d8eed44"
+          },
+          "after": {
+            "count": 2,
+            "sha256": "b1739fc866a6939282f32e791fdc0abd4d2a93bd1b3715fe435463a304cd00da"
+          },
+          "missingRowHashes": 2,
+          "newRowHashes": 2
+        },
+        {
+          "table": "account_identities",
+          "before": {
+            "count": 1,
+            "sha256": "837a6254a05fd62f0d594b8fa65be1902ef3cae98605aabb01cffff15c4de9d4"
+          },
+          "after": {
+            "count": 1,
+            "sha256": "553cfcec5534741784f1e147bd13d8f32324e27fd7c81f199c0fd5ee791f68e0"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 1
+        },
+        {
+          "table": "account_settings",
+          "before": {
+            "count": 1,
+            "sha256": "51d3a12672eedba48afc21bbbbc832463a97cdce6d144cee859148e8b55ae7dc"
+          },
+          "after": {
+            "count": 1,
+            "sha256": "9ded9848aa627795dc9ab0b733049a3918dec68ea6965ab813c505351fd05670"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 1
+        },
+        {
+          "table": "conversation_cloud_archives",
+          "before": {
+            "count": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          "after": {
+            "count": 1,
+            "sha256": "83ca7e8f723b88e9c63835841755a7db99fa2fc0266491b4fa210db9ac57b426"
+          },
+          "missingRowHashes": 0,
+          "newRowHashes": 1
+        },
+        {
+          "table": "conversation_cloud_conflicts",
+          "before": {
+            "count": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          "after": {
+            "count": 2,
+            "sha256": "e570cb97a135b44cc068fe2064078e7c33eed6f1dc52ce9e90481193997bf36b"
+          },
+          "missingRowHashes": 0,
+          "newRowHashes": 2
+        },
+        {
+          "table": "conversation_cloud_records",
+          "before": {
+            "count": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          "after": {
+            "count": 4,
+            "sha256": "83e2d55c6a5206199abcb0d7e1f13ed2931b8535230988c428304d0ff91aafb5"
+          },
+          "missingRowHashes": 0,
+          "newRowHashes": 4
+        },
+        {
+          "table": "conversation_cloud_state",
+          "before": {
+            "count": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          "after": {
+            "count": 1,
+            "sha256": "62765d99c8579e3482b7004c5281649d715468b163183637dc67b5d37bdcd003"
+          },
+          "missingRowHashes": 0,
+          "newRowHashes": 1
+        },
+        {
+          "table": "conversation_preferences",
+          "before": {
+            "count": 1,
+            "sha256": "c71afc5ddc96f934a019fedb48a7dafcf84ff122a04d5abe604cc2d646cc9587"
+          },
+          "after": {
+            "count": 1,
+            "sha256": "11918c986c0da06f53fb22d5518fb9b1433d5769f8786a8499256c68c67aa29d"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 1
+        },
+        {
+          "table": "conversation_profiles",
+          "before": {
+            "count": 1,
+            "sha256": "4e558890c2313f53633b5689e2f0d6013058a2c8711ea7b0c423b995d2654e01"
+          },
+          "after": {
+            "count": 1,
+            "sha256": "4a05d92e17d6063f1f8800aeb89593a5461a03d4d9cce9278ca09f3d694b5d44"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 1
+        },
+        {
+          "table": "garden_cloud_state",
+          "before": {
+            "count": 1,
+            "sha256": "0f65b3afba96100c4b3b861e68bb4fdeed0b8cbfa0b01677f864e099e7391250"
+          },
+          "after": {
+            "count": 1,
+            "sha256": "3081e4c4f2a34eadbe6611502b143fd4e4a90ecdeb52a314b780eb3d6a1be326"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 1
+        },
+        {
+          "table": "lingjing_meta",
+          "before": {
+            "count": 2,
+            "sha256": "1210e54182fe8ce8c13c65862d77783cd3d4438bee606eee0701dcbed6904fbe"
+          },
+          "after": {
+            "count": 2,
+            "sha256": "1a517db934ff3e950da94856d2fa99744ff9820bbe6fd9c978bbaa6f243536b6"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 1
+        },
+        {
+          "table": "lingjing_resource_cloud_downloads",
+          "before": {
+            "count": 2,
+            "sha256": "316a693e7f1f564d45e0a25ab89948939b83b131b0408d329d1efed9d7ce58ca"
+          },
+          "after": {
+            "count": 2,
+            "sha256": "7b910f8b61ed93ac8d2962ff971b1e57f3bc6857e0905f0598d4fdb6e613c2c2"
+          },
+          "missingRowHashes": 2,
+          "newRowHashes": 2
+        },
+        {
+          "table": "lingjing_resource_cloud_receipts",
+          "before": {
+            "count": 3,
+            "sha256": "22194ce2bb0eb2ded761a3b48d07a04944eed2d560d00dcb97de9a17739d612d"
+          },
+          "after": {
+            "count": 3,
+            "sha256": "88a7b63dabc005c6bc1aef2b1efe53a227ba568f27bc4f28d594995bfb821cd0"
+          },
+          "missingRowHashes": 2,
+          "newRowHashes": 2
+        },
+        {
+          "table": "lingjing_resource_files",
+          "before": {
+            "count": 22,
+            "sha256": "e52c6c2ccd33831a2d238a8f65e4230619c87ca4db8c4b2f345f2f6a803b6416"
+          },
+          "after": {
+            "count": 22,
+            "sha256": "1881e4fb571e6fe73399541f482c80b5a49dcb7ac0c358ae33a7a291f0175a86"
+          },
+          "missingRowHashes": 18,
+          "newRowHashes": 18
+        },
+        {
+          "table": "lingjing_resource_preference_state",
+          "before": {
+            "count": 2,
+            "sha256": "512f075bca27ad83ffbfedf841fe1b8af3615d25bdc7fa9b97c0fe7357133a12"
+          },
+          "after": {
+            "count": 2,
+            "sha256": "7fc39bc8dfdcda7860c41413246712b9c1c5f141865b1cab056887ed60973a99"
+          },
+          "missingRowHashes": 2,
+          "newRowHashes": 2
+        }
+      ]
+    },
+    {
+      "alias": "localA",
+      "windowId": 21629138,
+      "mainPid": 11908,
+      "wrapperPid": 22928,
+      "extractedExe": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nspD582.tmp\\app\\Lingjing.exe",
+      "asarSha256": "3be5ce049efb9ad93a83f6090994a6f8ae26cf0f319b614c1d8e5ae6e8ab0568",
+      "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\6ff8e38f-9f2b-4872-8747-1fb00bd81655\\local-a",
+      "cdp": 57231,
+      "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+      "session": {
+        "dataMode": "simulated",
+        "persistence": "memory",
+        "user": {
+          "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "provider": "local"
+        }
+      },
+      "scenario": {
+        "id": "unified-battle",
+        "runId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+        "provenance": "simulated",
+        "isolated": true
+      },
+      "settingsRevision": 33,
+      "originalSettingsDocumentMatched": true,
+      "settingsDocument": {
+        "desktop": {
+          "alwaysOnTop": true,
+          "clickThrough": true,
+          "launchAtLogin": false,
+          "closeToTray": true,
+          "companionLimit": 3,
+          "interactionSounds": true,
+          "volume": 70,
+          "hideInFullscreen": true,
+          "animationsEnabled": true
+        },
+        "notifications": {
+          "enabled": true,
+          "companions": true,
+          "battles": true,
+          "garden": true,
+          "quietEnabled": true,
+          "quietStart": "22:00",
+          "quietEnd": "08:00"
+        },
+        "privacy": {
+          "locationAllowed": false,
+          "locationOnlyWhileExploring": true,
+          "emotionStatistics": false
+        },
+        "sync": {
+          "enabled": false
+        }
+      },
+      "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+      "cloudStatus": {
+        "ok": true,
+        "configured": false,
+        "cloudRevision": 0,
+        "pending": 0,
+        "conflicts": 0,
+        "running": false,
+        "localChanged": true,
+        "remoteChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "lastVerifiedAt": null,
+        "lastCloudCheckedAt": null,
+        "lastError": null
+      },
+      "readOnlyEvidence": "localA-restored-settings-first-readback.json",
+      "backupEvidence": "localABackup-preserved-before-upgrade.json",
+      "tableDiffs": [
+        {
+          "table": "account_actions",
+          "before": {
+            "count": 32,
+            "sha256": "5b996054ae235904180d8a877f8f5ad9c5d119425762d1cf26d5e766ee56028a"
+          },
+          "after": {
+            "count": 33,
+            "sha256": "1e5c0638d57d588edc506c63d1517736156f9bdccfb14eeee6d2c5b481fce498"
+          },
+          "missingRowHashes": 0,
+          "newRowHashes": 1
+        },
+        {
+          "table": "account_login_sessions",
+          "before": {
+            "count": 12,
+            "method": "sensitive-count-only"
+          },
+          "after": {
+            "count": 13,
+            "method": "sensitive-count-only"
+          },
+          "missingRowHashes": 0,
+          "newRowHashes": 0
+        },
+        {
+          "table": "account_settings",
+          "before": {
+            "count": 1,
+            "sha256": "da95321cd0d87d939490b81272391738986111d017e77f1d5c8f9372a770278a"
+          },
+          "after": {
+            "count": 1,
+            "sha256": "10766de686641e890a8d9dede4ee669a02acf2769e7af3fa7a3d10d3e84c127f"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 1
+        },
+        {
+          "table": "lingjing_meta",
+          "before": {
+            "count": 2,
+            "sha256": "b1c3547bd48c3d4f6a309903bfa707375e2a822ec13ca8131cf859e2c2cbf876"
+          },
+          "after": {
+            "count": 2,
+            "sha256": "2fba1033927e1ac28d8b4e45ae025e06fd45b54526f9b243c84921c72c912ea8"
+          },
+          "missingRowHashes": 1,
+          "newRowHashes": 1
+        },
+        {
+          "table": "lingjing_resource_files",
+          "before": {
+            "count": 18,
+            "sha256": "56822d6f50970980db15485e0d164b26912c2814c81ddafdc6764aea81a3e8f5"
+          },
+          "after": {
+            "count": 18,
+            "sha256": "c67f50e7dd440a62157a2d35a27d29a662cc12e13cb609ae474fa97fb36b5fd0"
+          },
+          "missingRowHashes": 18,
+          "newRowHashes": 18
+        }
+      ]
+    }
+  ]
+}

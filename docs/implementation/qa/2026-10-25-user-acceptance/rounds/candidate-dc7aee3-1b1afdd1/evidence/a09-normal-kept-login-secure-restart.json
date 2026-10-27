@@ -1,0 +1,329 @@
+{
+  "at": "2026-10-25T20:09:10.928Z",
+  "source": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "normalNativeLoginSelection": "S03 original-A normal login selected remember account and keep login; current secure session independently read below",
+  "currentSession": {
+    "ok": true,
+    "data": {
+      "currentUser": {
+        "id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "subjectId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "provider": "runtime",
+        "account": "uat_1025_a_9e486a",
+        "username": "云端验收甲",
+        "revision": 0,
+        "createdAt": "2026-10-25T10:05:01.804833+00:00",
+        "updatedAt": "2026-10-25T19:54:10.092Z",
+        "dataMode": "live",
+        "authKind": "supabase",
+        "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe"
+      },
+      "defaultProvider": "runtime",
+      "dataMode": "live",
+      "scenario": null,
+      "secureStorageAvailable": true,
+      "persistence": "secure",
+      "migration": {
+        "status": "absent",
+        "imported": 0,
+        "unresolved": []
+      },
+      "startupIssue": null
+    }
+  },
+  "normalExit": {
+    "at": "2026-10-25T19:53:47.8776940Z",
+    "method": "native-close-after-closeToTray-false",
+    "recordedPids": [
+      23112,
+      13892,
+      16188,
+      28160,
+      19464,
+      21300,
+      26744
+    ],
+    "stillRunning": [],
+    "debugPortListening": false,
+    "normalUiExitConfirmed": true
+  },
+  "restartedPayload": {
+    "at": "2026-10-25T19:54:53.9657798Z",
+    "mainPid": 12112,
+    "wrapperPid": 15848,
+    "mainWindowId": 10097098,
+    "root": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nss5693.tmp\\app",
+    "files": [
+      {
+        "relative": "Lingjing.exe",
+        "bytes": 246846464,
+        "sha256": "466204ae9c78143ad665b494cf6c104cd24ec7b08425bb6bb7544f2559d035e9",
+        "expected": "466204ae9c78143ad665b494cf6c104cd24ec7b08425bb6bb7544f2559d035e9",
+        "matches": true
+      },
+      {
+        "relative": "resources\\app.asar",
+        "bytes": 267512721,
+        "sha256": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba",
+        "expected": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba",
+        "matches": true
+      },
+      {
+        "relative": "resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node",
+        "bytes": 1989632,
+        "sha256": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a",
+        "expected": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a",
+        "matches": true
+      },
+      {
+        "relative": "resources\\lingjing-cloud-public.json",
+        "bytes": 194,
+        "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+        "expected": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+        "matches": true
+      }
+    ],
+    "actualChildUserData": [
+      "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a"
+    ],
+    "allFilesMatch": true,
+    "processReportedMainWindowId": 19989276,
+    "windowProcessReadback": [
+      {
+        "windowId": 10097098,
+        "processId": 12112
+      },
+      {
+        "windowId": 19989276,
+        "processId": 12112
+      }
+    ]
+  },
+  "afterRestartAppInfo": {
+    "ok": true,
+    "data": {
+      "version": "0.1.8",
+      "platform": "win32",
+      "build": {
+        "schemaVersion": 2,
+        "builtAt": "2026-10-25T15:25:16.006Z",
+        "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+        "sourceTree": "1b6b47b23a93bf505c92bb1ff9af5dead75d6273",
+        "sourceDirtyFiles": [],
+        "codeFingerprint": "8d9ba43d4b0da45fd810cb9fd95dd3186948fcdbc925ee002b77b265d616c2f0",
+        "canonicalSourceFingerprint": "6c54036d2e725e972370e90f6f59156836364fc4a9e4b69bfc164bee9b36f174",
+        "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+        "compiledFingerprint": "680068ce6f201848b7d443b230debd650a2cdb66c8c6432ee3c772999c8a4b5c",
+        "codeFiles": 317,
+        "compiledFiles": 89,
+        "toolchain": {
+          "node": "24.21.0",
+          "electron": "44.9.3",
+          "sqlite": "13.0.3",
+          "vite": "7.3.7",
+          "typescript": "5.9.3",
+          "platform": "win32",
+          "arch": "x64"
+        },
+        "entrypoints": {
+          "main": "main/index.cjs",
+          "app": "ui/index.html",
+          "desktop": "ui/desktop.html",
+          "preload": "preload/index.cjs"
+        },
+        "publicCloud": {
+          "projectRef": "jbvrdmrkwpznbrvteive",
+          "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+          "resourcePath": "lingjing-cloud-public.json"
+        },
+        "packageName": "lingjing-desktop",
+        "runtimeClosure": {
+          "manifest": "runtime-closure.json",
+          "files": 118,
+          "edges": 203,
+          "sha256": "4f04d46f3443f8d45b6b1dfeffdeb5d6e46569546cdae4c5b33e43d04e5b0b6f"
+        }
+      },
+      "runtime": {
+        "electron": "44.9.3",
+        "node": "24.22.0",
+        "modules": "149",
+        "napi": "10",
+        "arch": "x64",
+        "tray": {
+          "active": true,
+          "bounds": {
+            "x": 1751,
+            "y": 1104,
+            "width": 33,
+            "height": 48
+          }
+        }
+      },
+      "features": [
+        {
+          "id": "accounts",
+          "commands": [
+            "session",
+            "login",
+            "register",
+            "logout",
+            "profileSave",
+            "passwordChange",
+            "settingsGet",
+            "settingsDefaults",
+            "settingsSave",
+            "backupList",
+            "backupExport",
+            "backupPreview",
+            "backupRestore",
+            "syncStatus",
+            "syncNow",
+            "syncRetry",
+            "cloudPreview",
+            "testNotification",
+            "pointer"
+          ]
+        },
+        {
+          "id": "resources",
+          "commands": [
+            "list",
+            "history",
+            "cloudStatus",
+            "cloudSync",
+            "cloudPull",
+            "resolve",
+            "save",
+            "import"
+          ]
+        },
+        {
+          "id": "companions",
+          "commands": [
+            "list",
+            "get",
+            "combatProfile",
+            "identity",
+            "desktopInput",
+            "adopt",
+            "rename",
+            "desktop",
+            "select",
+            "interact",
+            "perform",
+            "appearance"
+          ]
+        },
+        {
+          "id": "battle",
+          "commands": [
+            "overview",
+            "rules",
+            "context",
+            "settleContext",
+            "selectPet",
+            "startTraining",
+            "snapshot",
+            "act",
+            "retryAction",
+            "search",
+            "invitations",
+            "invite",
+            "respondInvite",
+            "cancelInvite",
+            "createRoom",
+            "joinRoom",
+            "sync",
+            "leave",
+            "listReports",
+            "getReport",
+            "retrySettlement"
+          ]
+        },
+        {
+          "id": "garden",
+          "commands": [
+            "plant",
+            "harvest",
+            "craft",
+            "feed",
+            "garrison",
+            "snapshot",
+            "territoryLocate",
+            "territoryChallenge",
+            "territorySettle"
+          ]
+        },
+        {
+          "id": "discovery",
+          "commands": [
+            "snapshot",
+            "setExploring",
+            "locate",
+            "watch",
+            "stopWatch",
+            "setDemo",
+            "setProvider",
+            "tile",
+            "observe",
+            "begin",
+            "act",
+            "cancel",
+            "confirm",
+            "pokedex",
+            "memories"
+          ]
+        },
+        {
+          "id": "conversations",
+          "commands": [
+            "snapshot",
+            "select",
+            "history",
+            "profile.save",
+            "connection.save",
+            "connection.test",
+            "connection.cancel",
+            "memory.save",
+            "memory.delete",
+            "send",
+            "retry",
+            "cancel",
+            "history.clear",
+            "legacy.preview",
+            "legacy.import"
+          ]
+        }
+      ],
+      "user": {
+        "id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "subjectId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "provider": "runtime",
+        "account": "uat_1025_a_9e486a",
+        "username": "云端验收甲",
+        "revision": 0,
+        "createdAt": "2026-10-25T10:05:01.804833+00:00",
+        "updatedAt": "2026-10-25T19:54:10.092Z",
+        "dataMode": "live",
+        "authKind": "supabase",
+        "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe"
+      }
+    }
+  },
+  "currentDeviceNativeScreenshot": "a09-reopened-current-device-secure-login-native.jpg",
+  "currentDeviceDom": "设置 / 账号与同步\n\n把每一段陪伴，好好保存。\n桌面与行为\n通知与隐私\nAI 对话\n角色资源\n账号与同步\n账号资料\n云端验收甲\n\n@uat_1025_a_9e486a · 云端账号\n\n用户名\n保存资料\n修改密码\n当前密码\n新密码\n确认新密码\n保存密码\n伙伴与记录\n已同步\n开启存档同步\n立即同步\n导出本地备份\n恢复本地备份\n预览云端存档\n当前设备\nWindows PC\n\n已保持登录\n\n退出登录",
+  "checks": {
+    "currentPersistenceSecure": true,
+    "secureStorageAvailable": true,
+    "ordinaryLive": true,
+    "ownerExact": true,
+    "nativeDeviceShowsKeptLogin": true,
+    "normalExitAndSameProfileReopen": true,
+    "actualPayloadVerified": true
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+  "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+  "roundId": "candidate-312e5fe-524fd56d",
+  "runId": "6ff8e38f-9f2b-4872-8747-1fb00bd81655",
+  "provenance": "actual native keyboard, simulated isolated local identity; no live-cloud claim",
+  "observedAt": "2026-10-25T11:09:27.055Z",
+  "edited": {
+    "ok": true,
+    "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+    "profile": {
+      "persona": "候选第二只小狐：喜欢春雨，只使用自己的独立记忆。",
+      "replyStyle": "natural",
+      "memoryEnabled": true,
+      "pauseWhileChatting": true,
+      "useOverride": false,
+      "revision": 1
+    },
+    "memories": [
+      {
+        "id": "12d3b792-ad2d-4648-8f52-28f98d4c6e6a",
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "content": "第二只小狐记忆：2026年10月25日，新会话接手后修改；只属于第二只，喜欢春雨。",
+        "revision": 2,
+        "createdAt": 1792925542630,
+        "updatedAt": 1792926485579
+      }
+    ],
+    "dialogOpen": false
+  },
+  "sqlite": {
+    "queryOnly": {
+      "query_only": 1
+    },
+    "profiles": [
+      {
+        "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "persona": "候选第二只小狐：喜欢春雨，只使用自己的独立记忆。",
+        "reply_style": "natural",
+        "memory_enabled": 1,
+        "pause_while_chatting": 1,
+        "use_override": 0,
+        "revision": 1,
+        "updated_at": 1792925308447
+      }
+    ],
+    "memories": [
+      {
+        "id": "12d3b792-ad2d-4648-8f52-28f98d4c6e6a",
+        "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "content": "第二只小狐记忆：2026年10月25日，新会话接手后修改；只属于第二只，喜欢春雨。",
+        "revision": 2,
+        "created_at": 1792925542630,
+        "updated_at": 1792926485579
+      }
+    ]
+  },
+  "firstPetAfterSwitch": {
+    "ok": true,
+    "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+    "profile": {
+      "persona": "",
+      "replyStyle": "natural",
+      "memoryEnabled": true,
+      "pauseWhileChatting": true,
+      "useOverride": false,
+      "revision": 0
+    },
+    "memories": [],
+    "messages": []
+  }
+}

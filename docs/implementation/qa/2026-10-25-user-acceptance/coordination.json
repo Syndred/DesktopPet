@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T16:55:20.962Z",
+  "updatedAt": "2026-10-26T13:31:29.738Z",
   "status": "in-progress",
-  "qaThreadId": "01a172b4-d7f0-7213-9a40-092418ee776b",
-  "soleNativeInputOwner": "01a172b4-d7f0-7213-9a40-092418ee776b",
+  "qaThreadId": "01a1759f-4253-7ef0-bf83-44a87c0a16e8",
+  "soleNativeInputOwner": "01a1759f-4253-7ef0-bf83-44a87c0a16e8",
   "ordinaryUserProfileProtected": true,
   "tsMigrationPaused": true,
   "legacyServerExcluded": true,
@@ -241,7 +241,7 @@
     }
   },
   "nextCandidate": {
-    "status": "dc7 delivered to09; collect complete real defect list before any additional build",
+    "status": "frozen c7ad portable built and audited; old fixed DC7 gap sweep closed; original-profile native regressions active",
     "requiredContract": "docs/implementation/companions-global-serial-contract.json",
     "sourceFixes": {
       "QA008": "02ea2dac317b3aaaee12cf9517b456450391cf9c",
@@ -280,7 +280,18 @@
     },
     "previousSourceFreeze": "066f61df2d9b6ef8977756c8b0700c1ba5b01681",
     "sourceGateEvidence": "docs/implementation/qa/2026-10-25-user-acceptance/integration-gates-1bf17ef.json",
-    "cloudDeployment": "docs/implementation/evidence/cloud/2026-10-25/global-serial-deployment.json",
+    "cloudDeployment": {
+      "project": "jbvrdmrkwpznbrvteive",
+      "migrationVersion": "20261026080525",
+      "migrationFilename": "20261026080525_lingjing_battle_invite_expiry.sql",
+      "actualMigrationCount": 26,
+      "battleFunctionVersion": 4,
+      "independentMigrationAudit": "artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/invite-expiry-migration-independent-after.json",
+      "edgeReadback": "artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/battle-edge-after-invite-expiry.json",
+      "old12InvitationFieldsAndRoomsActionsCommandsExact": true,
+      "threeFunctionSourcesExact": true,
+      "serviceOnlyInvokers": true
+    },
     "liveConcurrency": "docs/implementation/evidence/cloud/2026-10-25/global-serial-live-concurrency.json",
     "packaging": {
       "firstAttempt": "rejected",
@@ -317,10 +328,13 @@
     "liveCapture": "docs/implementation/evidence/cloud/2026-10-25/global-serial-live-capture.json",
     "temporaryQaGrantRenewal": {
       "namespaceUnchanged": true,
-      "expiresAt": "2026-10-25T17:00:00Z",
+      "renewalNumber": 7,
+      "expiresAt": "2026-10-26T11:00:00Z",
       "restoreManifest": "artifacts/qa/user-acceptance/global-serial/grants-renewal-active.json",
       "restoreAfterAcceptance": true,
-      "currentRestoreScript": "artifacts/qa/user-acceptance/global-serial/restore-original-qa-grant-expiries-from-1700.sql"
+      "currentRestoreScript": "artifacts/qa/user-acceptance/global-serial/restore-original-qa-grant-expiries-from-1100.sql",
+      "additionalB2Cleanup": "artifacts/qa/user-acceptance/global-serial/remove-added-b2-qa-grant-from-1100.sql",
+      "permanentScopesRetained": true
     },
     "testedCodeSource": "1bf17ef1be03373b849bbcb992ef199bb3eba792",
     "qa014Deployment": "docs/implementation/evidence/cloud/2026-10-25/qa014-readonly-deployment.json",
@@ -330,19 +344,367 @@
       "sameOwner": "B",
       "normalUiLoginPending": true,
       "temporaryGrantCleanup": "artifacts/qa/user-acceptance/global-serial/remove-added-b2-qa-grant-after-acceptance.sql"
+    },
+    "preparedOrderedCommits": [
+      "b808a1406d2ed194377ee2861dfe0b28dcf1e997",
+      "d5609423e51c2473f2bb79be1c4ca42bc0fffd32",
+      "dfd3c493c95e1d77f686bda3e5be2429cfebfaa6",
+      "35702d3b70aac1c7f6961b6195166c94b6847917",
+      "d545f53101c15ab2ecd693979861c3169df73c63",
+      "7554e04a0dd6e7fe07df00754b1c11d0ddf2fbb4",
+      "cda80ddd16dec60254b94921badb89cb91bbe48c",
+      "bca4df4024f9b8a59a47b6a3567f04d6a14cf541",
+      "28ad68f24715c16095ec79f99608e4fb57ad27ad",
+      "9ec5ca2b1246fc9e6a79372c2abb518cd7bb39d1",
+      "16b8a3e829906f6d0a46ca5881ab899716be7e6a",
+      "17cacf1e743225d930d092715bd621b44380a02c"
+    ],
+    "virtualPreparedTree": "75245e3d825807589addd6a8fb556b014b3892ff",
+    "additionalFixesAlreadyCommitted": [
+      "9a17abda3b718c6277a2dc83fe08b9549317a348",
+      "a9191d8cd080e881b83b5cbf5a2894fa72a08ff7"
+    ],
+    "sourceIntegrated": true,
+    "cloudApplied": true,
+    "packageBuilt": true,
+    "freeze": {
+      "file": "releases/user-acceptance-c7ad6837/candidate-freeze.json",
+      "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+      "sourceTree": "e021c60cf8bfe120ca5054986f09a0ab521037b3",
+      "exe": {
+        "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-c7ad6837\\Lingjing-0.1.8-portable-x64.exe",
+        "bytes": 169227844,
+        "sha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d"
+      },
+      "asar": {
+        "path": "C:\\Users\\Administrator\\.codex\\worktrees\\acceptance-final\\DesktopPet\\artifacts\\pc-cloud-upgrade\\win-unpacked\\resources\\app.asar",
+        "sha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355"
+      },
+      "publicConfigSha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "runtimeClosureSha256": "c0cd8b3278c7ac175ee113d6a8ffbac7f557d9a2c7552f32beeb33831930ea10",
+      "nativeVerified": false
+    },
+    "sourceVerification": {
+      "fullFile": "C:/Users/Administrator/.codex/worktrees/acceptance-final/DesktopPet/artifacts/qa/final-source-gates/17da615f-fce1-4d48-b45d-e252aa7e8e1d/verification.json",
+      "fullSourceCommit": "be2d7b5b2bbf0ce1ab9376f4ba451fdb08b213aa",
+      "unit": 49,
+      "nativeRuntimeFixtures": 426,
+      "sqlFixtures": 121,
+      "denoFixtures": 15,
+      "totalFullFixtures": 611,
+      "metadataOnlyCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+      "ledgerRelatedFile": "C:/Users/Administrator/.codex/worktrees/acceptance-final/DesktopPet/artifacts/qa/final-ledger-gate-c7ad6837-20261026/verification.json",
+      "ledgerRelatedTests": 9,
+      "packagedCodeUnchangedAfterFullGate": true,
+      "liveNativeAcceptance": false
+    },
+    "currentRuntime": {
+      "observedAt": "2026-10-26T08:35:24.0441856Z",
+      "profile": "original 6ff8e38f local-a",
+      "mainPid": 20152,
+      "wrapperPid": 17212,
+      "cdp": 57215,
+      "sfx": "nshFF7A.tmp/app",
+      "binaryAudit": "artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/c7ad-localA-first-runtime-binary-audit.json",
+      "appInfo": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-c7ad6837-1b1afdd1/evidence/app-info-localA-c7ad-runtime-20261026.json",
+      "preservationAudit": "artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/c7ad-localA-cutover-preservation-independent.json",
+      "originalOwnerAndMarkerVerified": true,
+      "selected27DomainDigestsExact": true,
+      "settingsDocumentExact": true,
+      "normalSettingSaves": "22 to 24 with closeToTray restored true",
+      "behaviorAcceptanceStillRunning": true
+    },
+    "connectPreparations": [
+      {
+        "kind": "B10",
+        "directory": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\08\\artifacts\\accounts\\c7ad6837-b10-friends-connect-20261026-v1",
+        "fixtureId": "09af2527-b9af-4033-895a-0decae9695ea",
+        "freezeSha256": "41c0053d997817dd6cd0d830c5de72b8155bc94d4deb484dea4b61c801a7444d",
+        "files": 15,
+        "currentReferences": 134,
+        "historicalReferences": 49,
+        "allHashesExact": true,
+        "oldFreezeUnchanged": true,
+        "proxyControlLauncherBoundaryBytesExact": true,
+        "contractOnlyReviewedCandidatePinsChanged": true,
+        "inheritedFullSourceReviewReusedWithByteComparison": true,
+        "ownedRunAbsent": true,
+        "approvalClosed": true,
+        "preparationAccepted": true,
+        "executionApproved": false,
+        "liveStageConditions": [
+          "Root fresh actual time, Auth session/device/actor, process/start/path, helper/listener/port, phase sequence/ack and single UI action",
+          "Readiness requires real target UI server-read encrypted byte increments; child config is not full Main environment readback",
+          "S04 requires real shared confirmed base and zero existing pending; retained QA021/QA024 cannot be deleted or represented as zero",
+          "SQLite exact original bytes and PG JSONB-derived hashes remain separate; HTTP wire stays not captured",
+          "Normal UI exit and a new Root stop approval with fresh acknowledgement and listener disappearance required"
+        ]
+      },
+      {
+        "kind": "S04",
+        "directory": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\08\\artifacts\\accounts\\c7ad6837-s04-cloudb1-connect-20261026-v1",
+        "fixtureId": "9c33cd75-6392-45e4-b3d3-baec1c32c316",
+        "freezeSha256": "5b6fdc5dfe98b70fb3ed554d31204f6656334096b9ba7a91f18b5a520cdc8eb9",
+        "files": 15,
+        "currentReferences": 134,
+        "historicalReferences": 49,
+        "allHashesExact": true,
+        "oldFreezeUnchanged": true,
+        "proxyControlLauncherBoundaryBytesExact": true,
+        "contractOnlyReviewedCandidatePinsChanged": true,
+        "inheritedFullSourceReviewReusedWithByteComparison": true,
+        "ownedRunAbsent": true,
+        "approvalClosed": true,
+        "preparationAccepted": true,
+        "executionApproved": false,
+        "liveStageConditions": [
+          "Root fresh actual time, Auth session/device/actor, process/start/path, helper/listener/port, phase sequence/ack and single UI action",
+          "Readiness requires real target UI server-read encrypted byte increments; child config is not full Main environment readback",
+          "S04 requires real shared confirmed base and zero existing pending; retained QA021/QA024 cannot be deleted or represented as zero",
+          "SQLite exact original bytes and PG JSONB-derived hashes remain separate; HTTP wire stays not captured",
+          "Normal UI exit and a new Root stop approval with fresh acknowledgement and listener disappearance required"
+        ]
+      }
+    ],
+    "verifiedNativeIssueIds": [
+      "QA-015",
+      "QA-016",
+      "QA-017",
+      "QA-018",
+      "QA-019",
+      "QA-020",
+      "QA-022",
+      "QA-023",
+      "QA-024",
+      "QA-025",
+      "QA-026"
+    ],
+    "qa026Independent": "artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/c7ad-qa026-natural-loss-independent.json",
+    "territoryPositivePending": {
+      "caseIds": [
+        "G02",
+        "G03",
+        "C08 garrison subcase"
+      ],
+      "reason": "Natural 17-round loss; original account daily 2 attempts exhausted without reset",
+      "nextNaturalDay": "2026-10-27 Asia/Shanghai",
+      "reminderOrAutomationCreated": false
+    },
+    "qa017Preparation": {
+      "directory": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/c7ad-qa017-provider-prepared-v1",
+      "freezeSha256": "9024654eda40f67cbedba97b51cb69a2f8329dcd4d42dce4f6a31a5e130e49ae",
+      "binding": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/conversations/c7ad-qa017-simulated-provider/binding-fish-v1.json",
+      "bindingSha256": "8004e47945a22731bed599ae059e887114a18da65f95fa30331a1e12a7401a0c",
+      "targetPet": "pet-f31270e4-7ea3-42f1-a093-ac035d846de2",
+      "scope": "Only new empty pet connection; original global and retired fire slot untouched",
+      "pureInMemoryTests": 8,
+      "listenerStarted": false,
+      "startApproved": false,
+      "requiresFreshRuntimeAndSlotReviewBeforeStart": true
+    },
+    "cloudPendingBaseline": "artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/cloud-pending-before-normal-cutover.json",
+    "cloudResourceAndSaveBaseline": "artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/c7ad-resource-and-save-before-native-cloud.json",
+    "cloudNumberingBaseline": "artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/c7ad-cloud-numbering-baseline.json",
+    "qa025Independent": "artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/c7ad-qa025-capture-independent.json",
+    "qa015GeometryReview": "artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/c7ad-qa015-evidence-independent-review.json",
+    "qa017Execution": {
+      "observedAt": "2026-10-26T12:57:55.875Z",
+      "stage": "closed",
+      "stateObservationOnly": true,
+      "runId": "9b0d1667-db6f-4ccc-b0dc-3d369a68d327",
+      "recordedStatus": "stopped",
+      "pid": 19332,
+      "port": 49905,
+      "startedAt": "2026-10-26T10:11:02.125Z",
+      "stoppedAt": "2026-10-26T10:31:18.675Z",
+      "runDirectory": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/conversations/c7ad-qa017-simulated-provider/run-9b0d1667-db6f-4ccc-b0dc-3d369a68d327",
+      "startApproval": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/qa017-start-approval.json",
+      "uiApproval": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/qa017-ui-approval.json",
+      "retryApproval": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/qa017-same-action-retry-approval.json",
+      "rootFirstListenerAudit": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/qa017-first-helper-listener-independent.json",
+      "rootFinalStopAudit": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/qa017-final-helper-stop-independent.json",
+      "cleanupAudit": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/qa017-cleanup-preservation-independent.json",
+      "originalAction": "bd8ed802-4b20-49e8-bc51-478992af96f8",
+      "originalUser": "cfbf9d63-d083-4be2-9fed-589a853d2657",
+      "originalAssistant": "503fd6c5-cbff-4b33-a52e-1dbc55d5dfc8",
+      "failedAttempt": {
+        "attempt": 1,
+        "status": "failed",
+        "code": "INVALID_RESPONSE",
+        "chars": 14
+      },
+      "externalModelSuccess": false,
+      "originalKeysRead": false
+    },
+    "grantCleanup": {
+      "namespaceUnchanged": true,
+      "renewalNumber": 9,
+      "expiresAt": "2026-10-26T15:00:00Z",
+      "restoreManifest": "artifacts/qa/user-acceptance/global-serial/grants-renewal-active.json",
+      "restoreAfterAcceptance": true,
+      "currentRestoreScript": "artifacts/qa/user-acceptance/global-serial/restore-original-qa-grant-expiries-from-1500.sql",
+      "additionalB2Cleanup": "artifacts/qa/user-acceptance/global-serial/remove-added-b2-qa-grant-from-1500.sql",
+      "permanentScopesRetained": true,
+      "independentReadback": "artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/grants-renewal9-independent-readback.json"
+    },
+    "cloudB2": {
+      "rootObservedAt": "2026-10-26T10:46:20.9114638Z",
+      "mainPid": 17232,
+      "wrapperPid": 10512,
+      "cdp": 57221,
+      "actualAsarPath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsm65E5.tmp\\app\\resources\\app.asar",
+      "actualAsarSha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355",
+      "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+      "scenario": null,
+      "profile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-b-second-device-native",
+      "actualActor": {
+        "at": "2026-10-26T10:56:32.535923+00:00",
+        "sid": "1bf8499f-47fe-4ba7-9f67-abfc0f974328",
+        "uid": "2028f0af-f501-47f5-9abb-de59487dad46",
+        "owner": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "device": "351797b0-cad7-4b8f-9f93-8d0e806c49c3",
+        "notAfter": null,
+        "corePresent": true,
+        "accountStatus": "active",
+        "revokedLedger": false,
+        "coreUidMatches": true,
+        "deviceRevokedAt": null
+      },
+      "binaryProof": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/c7ad-b2-first-runtime-binary-independent.json",
+      "normalLoginAppInfo": "C:/Users/Administrator/Desktop/project/DesktopPet/docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudB2-app-info-first-normal-login-auto-pull-20261026.json",
+      "originalPendingBaseline": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/cloud-pending-b2-prelaunch-1035.json",
+      "originalSettingsBaseline": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/b2-sync-enable-precondition-readonly.json",
+      "currentUiApproval": null,
+      "originalPreferenceAction": "ad163d25-f061-4546-863b-057c680516a7",
+      "ordinaryFirstPullStillUnderReview": false,
+      "restoreObligation": {
+        "fulfilled": true,
+        "volume": 70,
+        "syncEnabled": false,
+        "originalDocumentRawExact": true
+      },
+      "newPreferenceSaveApproved": false,
+      "helperApproved": false,
+      "firstPullProof": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/qa024-first-ordinary-pull-independent.json",
+      "firstPullCloudProof": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/c7ad-b2-qa024-cloud-after-first-pull-1103.json",
+      "loginAuthorityQualification": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/qa024-b2-login-authority-reconciliation-independent.json",
+      "acrossLoginBlanketPetRawExact": false,
+      "qa024TargetedFixVerified": true,
+      "finalRoundtripAudit": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/qa024-roundtrip-and-original-settings-independent.json",
+      "resourcePreferenceRevision": 3,
+      "cloudPreferenceRevision": 3,
+      "cloudAuthorityRevision": 23,
+      "originalSettingsRestored": true,
+      "settingsRevision": 7,
+      "lastUiApproval": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/qa024-positive-and-restoration-tail-approval.json",
+      "fullR06ColdMatrixReplayed": false,
+      "fullAccountSyncClaimed": false
+    },
+    "cloudA": {
+      "observedAt": "2026-10-26T12:20:29.597Z",
+      "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+      "mainPid": 20308,
+      "wrapperPid": 12788,
+      "cdp": 57218,
+      "profile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a",
+      "actualSfxAsar": {
+        "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsnF200.tmp\\app\\resources\\app.asar",
+        "sha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355"
+      },
+      "owner": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "uid": "524c5302-19a2-43ec-aa72-b8894bd48efe",
+      "device": "41de040e-a134-487f-b1d3-76b5254a8f97",
+      "scenario": null,
+      "persistence": "secure",
+      "originalSettingsDocumentRestored": true,
+      "settingsRevision": 16,
+      "cloudHead": 32,
+      "cloudChecksum": "1fddde277f380484e676d4f3717d6c4a952725204a5be38aeb29bcc5c7cbc483",
+      "originalCachedPets": 8,
+      "originalBattleTablesRawExact": true,
+      "original13OutboxRowsRawExact": true,
+      "all67TablesRawExact": false,
+      "oldAccountActionsRawExact": false,
+      "mutableReadbackHeadQualification": {
+        "originalRows": 22,
+        "originalRawHashMatches": 21,
+        "currentRows": 24,
+        "currentNewOrRefreshedRows": 3,
+        "normalNewSettingsRevisions": [
+          15,
+          16
+        ],
+        "mutableReadbackHead": {
+          "owner": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "actionId": "companions:verified-head",
+          "kind": "companions-cloud-readback",
+          "metadata": {
+            "cloudRevision": 32,
+            "checksum": "1fddde277f380484e676d4f3717d6c4a952725204a5be38aeb29bcc5c7cbc483",
+            "verifiedAt": "2026-10-26T12:16:24.138Z",
+            "sharedSavePending": false
+          }
+        },
+        "source": "apps/pc-app/runtime/features/companions/cloud-authority.cjs:93 refreshes the mutable companions:verified-head summary on normal authoritative readback; no old hash-to-ID snapshot was captured, so do not claim all original IDs raw exact"
+      },
+      "rootProof": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/clouda-c7ad-cutover-settings-and-business-preservation-independent.json",
+      "warmReportTargetedProof": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/qa023-warm-report-native-independent-review.json",
+      "fullC03MatrixReplayed": false,
+      "helperApproved": false,
+      "originalCloseToTray": true,
+      "syncEnabled": true,
+      "volume": 70
+    },
+    "qa027": {
+      "status": "committed-and-packaged-in-isolated-worktree-awaiting-native-resource-retest",
+      "sourceFile": "apps/pc-app/ui/src/features/resources/useResources.ts",
+      "proposalRoot": "C:/Users/Administrator/Desktop/project/DesktopPet-fresh-worktrees/07/artifacts/qa/c7-resource-hook-proposal-20261026-v2",
+      "proposedSha256": "8fdc9211b9ff8bd454b273d08e87d4bc5a3a0e05d781cb37f365c94b134cf397",
+      "independentRun": "C:/Users/Administrator/Desktop/project/DesktopPet-fresh-worktrees/07/artifacts/qa/c7-resource-hook-proposal-20261026-v2/runs/2026-10-26T12-24-02-475Z/report.json",
+      "passedIsolatedReactDomCases": 22,
+      "strictTypeDiagnostics": 0,
+      "lintErrors": 0,
+      "lintWarnings": 0,
+      "nativePassed": false,
+      "existingFrozenCandidatePreserved": true,
+      "reason": "Background unchanged resource events must preserve unsaved draft and avoid false warning; same-owner session refresh must retain held operation scope and lock",
+      "sourceCommit": "55c9896aea6aceeeda6ffad15fb7e41ab58b6c0d",
+      "sourceTree": "b9a1cac212a6714a4b68f8fafeac01f70ea4e01f",
+      "worktree": "C:/Users/Administrator/.codex/worktrees/acceptance-resource/DesktopPet",
+      "rootBranchStillC7": true,
+      "rootBranchIntegrated": false,
+      "candidateFreeze": "C:/Users/Administrator/Desktop/project/DesktopPet/releases/user-acceptance-55c9896a/candidate-freeze.json",
+      "exe": {
+        "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-55c9896a\\Lingjing-0.1.8-portable-x64.exe",
+        "bytes": 169226019,
+        "sha256": "1f1413db94fa487d05e352d3f52f94447f15730d68348e295501a8f0db51f02e"
+      },
+      "asar": {
+        "path": "C:\\Users\\Administrator\\.codex\\worktrees\\acceptance-resource\\DesktopPet\\artifacts\\pc-cloud-upgrade\\win-unpacked\\resources\\app.asar",
+        "sha256": "634580e50e24693214e4c32a163af89764bf59189b0853813b37bcb441985d6b"
+      },
+      "buildVerification": "C:\\Users\\Administrator\\.codex\\worktrees\\acceptance-resource\\DesktopPet\\artifacts\\qa\\qa027-candidate-build\\ee37cab0-f43f-47dc-81bc-fb4a148d7209\\build.json",
+      "portableSourceRegressionScript": "npm run test:resources-hook",
+      "verifiedUnitCases": 49,
+      "verifiedSourceHookCases": 22,
+      "fullRuntimeCloud611NotRerunForUiOnlyChange": true,
+      "cloudChanges": false
     }
   },
   "activeTeam": {
     "registry": "docs/implementation/handoffs/2026-10-25-fresh-sessions/registry.json",
-    "coordinatorThreadId": "01a172b5-e59a-7c53-a67c-8fc53e6f61cd",
-    "qaThreadId": "01a172b4-d7f0-7213-9a40-092418ee776b",
+    "coordinatorThreadId": "01a1759f-d666-75d1-81dc-e757e748d221",
+    "qaThreadId": "01a1759f-4253-7ef0-bf83-44a87c0a16e8",
     "allFreshSessions": true,
     "fastMode": true,
-    "recoveryVerified": true
+    "recoveryVerified": false,
+    "resourcesThreadId": "01a1759f-33aa-7f30-b7a0-ad411277073d",
+    "accountsThreadId": "01a1759f-3a5d-7fa3-9f1f-027bdb9dc385",
+    "handoffRegistry": "artifacts/qa/user-acceptance/global-serial/handoff-20261026-new-chats.json"
   },
-  "previousQaThreadId": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
-  "inputLeaseStatus": "new09-only; old sessions stopped",
-  "activeCoordinatorThreadId": "01a172b5-e59a-7c53-a67c-8fc53e6f61cd",
+  "previousQaThreadId": "01a172b4-d7f0-7213-9a40-092418ee776b",
+  "inputLeaseStatus": "new09-only; explicit human continue 2026-10-26; old processes must not be inferred",
+  "activeCoordinatorThreadId": "01a1759f-d666-75d1-81dc-e757e748d221",
   "candidateHistory": [
     {
       "status": "historical-candidate; new numbering rules and additional fixes require next build",
@@ -407,10 +769,15 @@
     }
   ],
   "remoteRefresh": {
-    "checkedAt": "2026-10-25T16:20:31.073Z",
-    "command": "git fetch origin main; git pull --ff-only origin main",
+    "checkedAt": "2026-10-26T06:10:24.155Z",
+    "commands": [
+      "git fetch origin",
+      "git pull --ff-only origin main"
+    ],
     "result": "Already up to date.",
-    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086"
+    "head": "32b62eb560e886f3131666afe908c37c64b5a587",
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "trackedClean": true
   },
   "globalSerialAllocationAcceptance": {
     "status": "A1-C2-B3-verified",
@@ -440,5 +807,31 @@
       "nativeUi": false,
       "physicalGps": false
     }
+  },
+  "previousCoordinatorThreadId": "01a172b5-e59a-7c53-a67c-8fc53e6f61cd",
+  "resume": {
+    "humanInstruction": "继续",
+    "coordinatorThreadId": "01a1759f-d666-75d1-81dc-e757e748d221",
+    "at": "2026-10-26T06:10:24.155Z",
+    "status": "active; native gap sweep and source review resumed",
+    "grants": "renewal7 same original four UID/device/scenario pairs through 2026-10-26T11:00:00Z; permanent scopes unchanged; only 1100 CAS cleanup scripts are current",
+    "auth": "v3 exact four requests verified; N physical Auth session and related metadata cleaned; helper exit0; independent native A12 passed",
+    "preparedCommitCount": 14,
+    "virtualReview": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/root-review.json",
+    "all98Complete": false,
+    "progressCounts": {
+      "passed": 70,
+      "pending": 23,
+      "blocked": 2,
+      "failed": 1,
+      "running": 2
+    },
+    "authResult": "artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/auth-four-phase-independent-result.json",
+    "active": "STOPPED_BY_USER; new coordinator report-only",
+    "currentRootHead": "c7ad6837e1569dafd942528f375062debf714c2b",
+    "virtualTree": "75245e3d825807589addd6a8fb556b014b3892ff",
+    "currentSourceTree": "e021c60cf8bfe120ca5054986f09a0ab521037b3",
+    "stoppedByUser": true,
+    "newReportCoordinator": "01a17866-10a9-7960-9606-f65f0490838e"
   }
 }

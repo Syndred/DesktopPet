@@ -1,0 +1,364 @@
+{
+  "format": "lingjing.c11.a-quiet-native-ready/v1",
+  "ready": true,
+  "readyAt": "2026-10-25T21:58:07.931Z",
+  "executorThreadId": "01a172b4-d7f0-7213-9a40-092418ee776b",
+  "sourceProfile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "actor": {
+    "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+    "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe",
+    "deviceId": "41de040e-a134-487f-b1d3-76b5254a8f97",
+    "sessionId": null,
+    "sessionIdQualification": "Public accounts/session does not expose current sessionId. Root must resolve current active session for exact owner/authUser/device from independent live PG; do not reuse historical grant sessionId."
+  },
+  "exitedMain": {
+    "pid": 12112,
+    "creationDate": "2026-10-26T03:54:07.688924+08:00",
+    "executable": "C:/Users/ADMINI~1/AppData/Local/Temp/nss5693.tmp/app/Lingjing.exe",
+    "windowId": 10097098,
+    "debugPort": 57218
+  },
+  "exitedWrapper": {
+    "pid": 15848,
+    "creationDate": "2026-10-26T03:53:57.173016+08:00"
+  },
+  "publicAppInfo": {
+    "ok": true,
+    "data": {
+      "version": "0.1.8",
+      "platform": "win32",
+      "build": {
+        "schemaVersion": 2,
+        "builtAt": "2026-10-25T15:25:16.006Z",
+        "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+        "sourceTree": "1b6b47b23a93bf505c92bb1ff9af5dead75d6273",
+        "sourceDirtyFiles": [],
+        "codeFingerprint": "8d9ba43d4b0da45fd810cb9fd95dd3186948fcdbc925ee002b77b265d616c2f0",
+        "canonicalSourceFingerprint": "6c54036d2e725e972370e90f6f59156836364fc4a9e4b69bfc164bee9b36f174",
+        "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+        "compiledFingerprint": "680068ce6f201848b7d443b230debd650a2cdb66c8c6432ee3c772999c8a4b5c",
+        "codeFiles": 317,
+        "compiledFiles": 89,
+        "toolchain": {
+          "node": "24.21.0",
+          "electron": "44.9.3",
+          "sqlite": "13.0.3",
+          "vite": "7.3.7",
+          "typescript": "5.9.3",
+          "platform": "win32",
+          "arch": "x64"
+        },
+        "entrypoints": {
+          "main": "main/index.cjs",
+          "app": "ui/index.html",
+          "desktop": "ui/desktop.html",
+          "preload": "preload/index.cjs"
+        },
+        "publicCloud": {
+          "projectRef": "jbvrdmrkwpznbrvteive",
+          "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+          "resourcePath": "lingjing-cloud-public.json"
+        },
+        "packageName": "lingjing-desktop",
+        "runtimeClosure": {
+          "manifest": "runtime-closure.json",
+          "files": 118,
+          "edges": 203,
+          "sha256": "4f04d46f3443f8d45b6b1dfeffdeb5d6e46569546cdae4c5b33e43d04e5b0b6f"
+        }
+      },
+      "runtime": {
+        "electron": "44.9.3",
+        "node": "24.22.0",
+        "modules": "149",
+        "napi": "10",
+        "arch": "x64",
+        "tray": {
+          "active": true,
+          "bounds": {
+            "x": 1751,
+            "y": 1150,
+            "width": 33,
+            "height": 49
+          }
+        }
+      },
+      "features": [
+        {
+          "id": "accounts",
+          "commands": [
+            "session",
+            "login",
+            "register",
+            "logout",
+            "profileSave",
+            "passwordChange",
+            "settingsGet",
+            "settingsDefaults",
+            "settingsSave",
+            "backupList",
+            "backupExport",
+            "backupPreview",
+            "backupRestore",
+            "syncStatus",
+            "syncNow",
+            "syncRetry",
+            "cloudPreview",
+            "testNotification",
+            "pointer"
+          ]
+        },
+        {
+          "id": "resources",
+          "commands": [
+            "list",
+            "history",
+            "cloudStatus",
+            "cloudSync",
+            "cloudPull",
+            "resolve",
+            "save",
+            "import"
+          ]
+        },
+        {
+          "id": "companions",
+          "commands": [
+            "list",
+            "get",
+            "combatProfile",
+            "identity",
+            "desktopInput",
+            "adopt",
+            "rename",
+            "desktop",
+            "select",
+            "interact",
+            "perform",
+            "appearance"
+          ]
+        },
+        {
+          "id": "battle",
+          "commands": [
+            "overview",
+            "rules",
+            "context",
+            "settleContext",
+            "selectPet",
+            "startTraining",
+            "snapshot",
+            "act",
+            "retryAction",
+            "search",
+            "invitations",
+            "invite",
+            "respondInvite",
+            "cancelInvite",
+            "createRoom",
+            "joinRoom",
+            "sync",
+            "leave",
+            "listReports",
+            "getReport",
+            "retrySettlement"
+          ]
+        },
+        {
+          "id": "garden",
+          "commands": [
+            "plant",
+            "harvest",
+            "craft",
+            "feed",
+            "garrison",
+            "snapshot",
+            "territoryLocate",
+            "territoryChallenge",
+            "territorySettle"
+          ]
+        },
+        {
+          "id": "discovery",
+          "commands": [
+            "snapshot",
+            "setExploring",
+            "locate",
+            "watch",
+            "stopWatch",
+            "setDemo",
+            "setProvider",
+            "tile",
+            "observe",
+            "begin",
+            "act",
+            "cancel",
+            "confirm",
+            "pokedex",
+            "memories"
+          ]
+        },
+        {
+          "id": "conversations",
+          "commands": [
+            "snapshot",
+            "select",
+            "history",
+            "profile.save",
+            "connection.save",
+            "connection.test",
+            "connection.cancel",
+            "memory.save",
+            "memory.delete",
+            "send",
+            "retry",
+            "cancel",
+            "history.clear",
+            "legacy.preview",
+            "legacy.import"
+          ]
+        }
+      ],
+      "user": {
+        "id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "subjectId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "provider": "runtime",
+        "account": "uat_1025_a_9e486a",
+        "username": "云端验收甲",
+        "revision": 2,
+        "createdAt": "2026-10-25T10:05:01.804833+00:00",
+        "updatedAt": "2026-10-25T20:13:44.955Z",
+        "dataMode": "live",
+        "authKind": "supabase",
+        "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe"
+      }
+    }
+  },
+  "publicSession": {
+    "ok": true,
+    "data": {
+      "currentUser": {
+        "id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "subjectId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "provider": "runtime",
+        "account": "uat_1025_a_9e486a",
+        "username": "云端验收甲",
+        "revision": 2,
+        "createdAt": "2026-10-25T10:05:01.804833+00:00",
+        "updatedAt": "2026-10-25T20:13:44.955Z",
+        "dataMode": "live",
+        "authKind": "supabase",
+        "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe"
+      },
+      "defaultProvider": "runtime",
+      "dataMode": "live",
+      "scenario": null,
+      "secureStorageAvailable": true,
+      "persistence": "secure",
+      "migration": {
+        "status": "absent",
+        "imported": 0,
+        "unresolved": []
+      },
+      "startupIssue": null
+    }
+  },
+  "files": [
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\lingjing.sqlite",
+      "exists": true,
+      "bytes": 1675264,
+      "sha256": "5873a5c2eb11e7999ec795920eea4758147ac89e3cea51aaa9c910d4a119f636"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\lingjing.sqlite-wal",
+      "exists": true,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\lingjing.sqlite-shm",
+      "exists": true,
+      "bytes": 32768,
+      "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\accounts\\verified-session.bin",
+      "exists": true,
+      "bytes": 1497,
+      "sha256": "f765d4b0134aa446ea8c58621249f9cd8267d1e731e47fb07ef676288d0ec98f"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\.lingjing-qa-profile.json",
+      "exists": false
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\lingjing-qa-profile.json",
+      "exists": false
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\accounts\\device.json",
+      "exists": true,
+      "bytes": 63,
+      "sha256": "2fb39c18c95bbb37d1c472f565801684f9438dbc949f46942d8c56186b8689b1"
+    }
+  ],
+  "vaultCiphertextSha256": "f765d4b0134aa446ea8c58621249f9cd8267d1e731e47fb07ef676288d0ec98f",
+  "exitEvidence": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1\\evidence\\b11-a-normal-native-exit-correct-product-filter.json",
+    "exists": true,
+    "bytes": 264,
+    "sha256": "23a64d56df08e8bff6a5d1a53d5bac0cdb3f389d5206be033a5c031a4d55e7a5"
+  },
+  "beforeEvidence": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1\\evidence\\c11-a-quiet-original-profile-before-replay-v2.json",
+    "exists": true,
+    "bytes": 77460,
+    "sha256": "31485527bf0caae8783c6a4ca6a2944c720dd7a7561f4f1270c96c091f4fc19b"
+  },
+  "preservedSettingsPendingRestoration": {
+    "closeToTray": false,
+    "restoreTo": true,
+    "otherDocumentOriginal": {
+      "desktop": {
+        "alwaysOnTop": true,
+        "clickThrough": true,
+        "launchAtLogin": false,
+        "closeToTray": true,
+        "companionLimit": 3,
+        "interactionSounds": true,
+        "volume": 70,
+        "hideInFullscreen": true,
+        "animationsEnabled": true
+      },
+      "notifications": {
+        "enabled": true,
+        "companions": true,
+        "battles": true,
+        "garden": true,
+        "quietEnabled": true,
+        "quietStart": "22:00",
+        "quietEnd": "08:00"
+      },
+      "privacy": {
+        "locationAllowed": false,
+        "locationOnlyWhileExploring": true,
+        "emotionStatistics": false
+      },
+      "sync": {
+        "enabled": true
+      }
+    }
+  },
+  "pausedWrites": true,
+  "otherProducts": "B1 restarted and original settings restored, B2/local remain open; no gameplay/adoption inputs while awaiting fresh before/replay/after",
+  "oneRequestPlan": "09 ready to invoke exact reviewed Electron runner.cjs --approval absolute-new-Root-file once within60sec of fresh-before. No start, vault decode, HTTP, business service, retry or response apply before specific approval.",
+  "supersedesUnsentReady": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1\\evidence\\c11-a-normal-exit-ready-for-root-20261025T2157.json",
+  "readOnlySidecarQualification": "Initial file metadata was captured before first read-only SQLite open; that standard open produced zero-byte WAL and a 32768-byte SHM. Main DB, vault, device bytes and all selected business rows are unchanged. Preserve the sidecars; do not delete. This v2 baseline is taken after closing the read-only handle and is the execution comparison baseline.",
+  "stableAfterReadOnlyHandlesClosed": true
+}

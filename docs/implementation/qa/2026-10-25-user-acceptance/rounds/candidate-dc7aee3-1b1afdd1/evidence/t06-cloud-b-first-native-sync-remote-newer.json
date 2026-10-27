@@ -1,0 +1,95 @@
+{
+  "uiError": "云端已有较新版本，本机原始已保留，请先预览云端存档",
+  "after": {
+    "at": "2026-10-25T18:59:57.504Z",
+    "state": {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "cloud_revision": 0,
+      "last_checksum": null,
+      "last_verified_at": null,
+      "last_error": "SYNC_CONFLICT"
+    },
+    "outbox": [
+      {
+        "action_id": "41777b34-8b8f-47a9-9631-8c87af62a8ae",
+        "base_revision": 0,
+        "checksum": "7d0da466557cd33ab9cccef2f3b2c8785ba84f321aa2b2dceef05b0659e77679",
+        "status": "conflict",
+        "attempts": 1,
+        "created_at": "2026-10-25T18:59:17.009Z",
+        "verified_at": null,
+        "last_error": "SYNC_CONFLICT",
+        "chars": 13206
+      }
+    ],
+    "sources": [
+      {
+        "action_id": "41777b34-8b8f-47a9-9631-8c87af62a8ae",
+        "original_checksum": "7d0da466557cd33ab9cccef2f3b2c8785ba84f321aa2b2dceef05b0659e77679",
+        "archive_action_id": "archive:0464aad6-7812-4832-856c-1e8db49911d6",
+        "authority_pending": 0,
+        "prepared_at": null,
+        "created_at": "2026-10-25T18:59:17.009Z",
+        "cloud_projection_checksum": "7d0da466557cd33ab9cccef2f3b2c8785ba84f321aa2b2dceef05b0659e77679",
+        "cloud_excluded": "[]"
+      }
+    ]
+  },
+  "keyPresence": {
+    "at": "2026-10-25T18:59:57.505Z",
+    "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "selected": {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "selected_pet_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75"
+    },
+    "connections": [
+      {
+        "scope": "account",
+        "scope_id": "",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "model": "模拟验收-DC7-c696c6c03ca2",
+        "key_present": 1,
+        "revision": 1,
+        "updated_at": 1792954441513
+      },
+      {
+        "scope": "pet",
+        "scope_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "model": "模拟验收-DC7-c696c6c03ca2",
+        "key_present": 1,
+        "revision": 1,
+        "updated_at": 1792954551379
+      }
+    ],
+    "credentials": [
+      {
+        "scope": "account",
+        "scope_id": "",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "key_present": 1
+      },
+      {
+        "scope": "pet",
+        "scope_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "key_present": 1
+      }
+    ],
+    "profiles": [
+      {
+        "pet_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "use_override": 1,
+        "revision": 1
+      }
+    ],
+    "messageCount": {
+      "count": 0
+    }
+  },
+  "previewModeShown": "merge preserve local existing records"
+}

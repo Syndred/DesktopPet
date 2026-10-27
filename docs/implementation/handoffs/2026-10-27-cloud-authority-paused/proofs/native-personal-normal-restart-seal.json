@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-26T19:33:51.602Z",
+  "normalExitEvidence": "native-A-normal-exit-before-network-confirmed.json",
+  "newLaunchEvidence": "network-pending-restart-v1/owned-run/launch-result-1.json",
+  "nativeRuntime": "network-pending-restart-v1/native-runtime-ordinal1-allow-evidence.json",
+  "before": "cloudA-two-pet-personal-cross-client.json",
+  "after": "cloudA-network-allow-ordinal1-baseline.json",
+  "originalSecureAccountRestored": true,
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "fourSavedPersonalRecordsPreservedExactly": true,
+  "credentialsRead": false,
+  "limitations": [
+    "Memory edit/delete not yet executed",
+    "Server stale-write CAS not yet exercised"
+  ]
+}

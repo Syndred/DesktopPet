@@ -1,0 +1,98 @@
+{
+  "at": "2026-10-25T18:01:03.960Z",
+  "readOnly": true,
+  "profilePath": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a",
+  "appInfo": {
+    "source": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+    "tree": "1b6b47b23a93bf505c92bb1ff9af5dead75d6273",
+    "runtime": {
+      "electron": "44.9.3",
+      "node": "24.22.0",
+      "modules": "149",
+      "napi": "10",
+      "arch": "x64",
+      "tray": {
+        "active": true,
+        "bounds": {
+          "x": 1751,
+          "y": 1150,
+          "width": 33,
+          "height": 49
+        }
+      }
+    },
+    "scenario": {
+      "id": "unified-battle",
+      "runId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+      "provenance": "simulated",
+      "isolated": true
+    }
+  },
+  "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+  "petId": "pet-8853a238-8730-4970-8e39-885a1f1da97d",
+  "selectedPetId": "pet-8853a238-8730-4970-8e39-885a1f1da97d",
+  "newPetEmptyRows": {
+    "conversation_messages": 0,
+    "conversation_memories": 0,
+    "conversation_profiles": 0,
+    "conversation_connections": {
+      "count": 0,
+      "keyCount": 0
+    },
+    "conversation_credentials": {
+      "count": 0,
+      "keyCount": 0
+    }
+  },
+  "originalFoxRows": [
+    {
+      "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+      "tables": {
+        "conversation_messages": {
+          "count": 4,
+          "sha256": "a25df5ecf143138a214e387547797fb69bc525b8f46a9de0dad8d394be12e55b"
+        },
+        "conversation_memories": {
+          "count": 1,
+          "sha256": "2143b043090983d77eaa831257c314a834dda337a31b5d48febf819e50e54cbd"
+        },
+        "conversation_profiles": {
+          "count": 1,
+          "sha256": "2f6e7f0770e21e4e5eee48891c7df45594e65143b698fb6c1dd9390b7ac39033"
+        }
+      }
+    },
+    {
+      "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+      "tables": {
+        "conversation_messages": {
+          "count": 4,
+          "sha256": "cbb0923bf63751429e6504aafcbae3f862e393f90b515315073c97b998c68331"
+        },
+        "conversation_memories": {
+          "count": 1,
+          "sha256": "1112124d5ebd28a052a154095f74d12a5d8e57b4d9623c86c30b2fc44d92f120"
+        },
+        "conversation_profiles": {
+          "count": 1,
+          "sha256": "02206bf1986365a1f63892769014922b0185194a574e769c2e0e3f5db57ba76d"
+        }
+      }
+    }
+  ],
+  "existingGlobalKeyPresenceOnly": {
+    "conversation_connections": {
+      "count": 1,
+      "keyCount": 1
+    },
+    "conversation_credentials": {
+      "count": 1,
+      "keyCount": 1
+    }
+  },
+  "oldKeyValuesReadOrDecrypted": false,
+  "nativeEmptyUiEvidence": "chat-new-fire-empty-native.jpg",
+  "syntheticMessagesOnly": true,
+  "sourceRootBaseline": "artifacts/qa/user-acceptance/global-serial/root-conversations-before-native-provider-20261025T1747.json",
+  "databasePath": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a/lingjing.sqlite"
+}

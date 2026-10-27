@@ -1,0 +1,127 @@
+{
+  "at": "2026-10-25T18:57:33.709Z",
+  "classification": {
+    "simulatedUpstream": true,
+    "realLoopbackHttp": true,
+    "actualNativeFlow": true,
+    "externalModelSuccess": false
+  },
+  "runId": "b272bb70-7b19-47e4-8d01-30ed0ce64e97",
+  "pid": 10628,
+  "port": 56751,
+  "approvalRef": "root-dc7-chat-cloud-b-20261025T1852",
+  "keyPresence": {
+    "at": "2026-10-25T18:57:33.709Z",
+    "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "selected": {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "selected_pet_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75"
+    },
+    "connections": [
+      {
+        "scope": "account",
+        "scope_id": "",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "model": "模拟验收-DC7-c696c6c03ca2",
+        "key_present": 1,
+        "revision": 1,
+        "updated_at": 1792954441513
+      },
+      {
+        "scope": "pet",
+        "scope_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "model": "模拟验收-DC7-c696c6c03ca2",
+        "key_present": 1,
+        "revision": 1,
+        "updated_at": 1792954551379
+      }
+    ],
+    "credentials": [
+      {
+        "scope": "account",
+        "scope_id": "",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "key_present": 1
+      },
+      {
+        "scope": "pet",
+        "scope_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "key_present": 1
+      }
+    ],
+    "profiles": [
+      {
+        "pet_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "use_override": 1,
+        "revision": 1
+      }
+    ],
+    "messageCount": {
+      "count": 0
+    }
+  },
+  "audit": [
+    {
+      "at": "2026-10-25T18:54:13.562Z",
+      "event": "request_accepted",
+      "requestId": "sim-1",
+      "mode": "json",
+      "bytes": 152,
+      "messageCount": 1,
+      "contentChars": 15
+    },
+    {
+      "at": "2026-10-25T18:54:13.564Z",
+      "event": "response_end",
+      "requestId": "sim-1",
+      "mode": "json",
+      "status": 200
+    },
+    {
+      "at": "2026-10-25T18:54:38.263Z",
+      "event": "request_accepted",
+      "requestId": "sim-2",
+      "mode": "hold",
+      "bytes": 152,
+      "messageCount": 1,
+      "contentChars": 15
+    },
+    {
+      "at": "2026-10-25T18:54:54.299Z",
+      "event": "response_closed",
+      "requestId": "sim-2",
+      "mode": "hold",
+      "reason": "client_closed",
+      "deltas": 14
+    },
+    {
+      "at": "2026-10-25T18:56:37.900Z",
+      "event": "request_accepted",
+      "requestId": "sim-3",
+      "mode": "json",
+      "bytes": 152,
+      "messageCount": 1,
+      "contentChars": 15
+    },
+    {
+      "at": "2026-10-25T18:56:37.909Z",
+      "event": "response_end",
+      "requestId": "sim-3",
+      "mode": "json",
+      "status": 200
+    }
+  ],
+  "nativeEvidence": [
+    "t06-cloud-b-global-json-test-native.jpg",
+    "t06-cloud-b-global-test-cancelled-native.jpg",
+    "t06-cloud-b-global-unsaved-draft-discarded-native.jpg",
+    "t06-cloud-b-b3-independent-key-present-native.jpg",
+    "t06-cloud-b-independent-json-test-native.jpg"
+  ]
+}

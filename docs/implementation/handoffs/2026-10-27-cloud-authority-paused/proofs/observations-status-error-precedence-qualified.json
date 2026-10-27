@@ -1,0 +1,58 @@
+{
+  "at": "2026-10-26T20:05:17.340Z",
+  "stage": "status-error-precedence-qualified",
+  "caseUpdates": [
+    {
+      "id": "S06",
+      "status": "failed",
+      "severity": "P2",
+      "executionState": "executed_failed_cleanup_pending",
+      "actual": "已登录DENY176.558秒原生观测46次目标CONNECT拒绝，Root独立215秒61次/max6每秒，无旧高频连接风暴。原请求跨正常退出、DENY重启、恢复后同ID一次重试，PG原operation/common receipt各1，本机与A2一致；仍因4E6-002状态失真失败：garden pending1被总数及分域报0；三域均当前network错误却因伙伴旧metadata错误优先级使companions及总状态partial。正常退出网络实例、STOP完成，正在无测试代理重开并恢复原全文设置。",
+      "evidence": [
+        "cloudA-denied-single-feed-first-pending.json",
+        "cloudA-denied-observation-after-65-seconds.json",
+        "network-pending-restart-v1/native-logged-in-deny-observation-seal.json",
+        "root-unified-repair-observations.json",
+        "network-pending-restart-v1/root-pending-restart-recovery-independent-seal.json",
+        "network-pending-restart-v1/native-network-cleanup-fully-stopped.json"
+      ],
+      "findingRefs": [
+        "4E6-002"
+      ],
+      "hardTechnicalBlock": false,
+      "blockerGroup": null,
+      "blockerKind": null
+    }
+  ],
+  "newIssues": [],
+  "issueUpdates": [
+    {
+      "id": "4E6-002",
+      "status": "open",
+      "actual": "真实新4e原A在专用Node HTTPS DENY下只正常提交一次carrot1喂养，持久garden pending1而公开总pending及garden.pending均0；背包等待确认条正确。同时三域均当前CLOUD_UNAVAILABLE/category network，companions仍status partial、其余offline、汇总partial；Root独立确认旧metadataError遮住当前网络故障。已完成原请求跨重启恢复、PG唯一operation/receipt和A2同结果，这些通过不消除公开状态失真。",
+      "expected": "公开总状态与园地分域应计入原待确认请求；当前网络错误应优先于旧metadata错误，不得把三域当前离线汇总为部分在线。状态读取保留原请求并保持有界连接，不生成第二请求。",
+      "subFindings": [
+        {
+          "id": "garden-pending-count",
+          "actual": "SQL garden pending1，公开total pending0及garden domain.pending0",
+          "evidence": "cloudA-denied-observation-after-65-seconds.json"
+        },
+        {
+          "id": "network-error-precedence",
+          "actual": "所有当前域error均CLOUD_UNAVAILABLE/category network，伙伴和总状态仍partial；Root独立归因旧metadataError优先级",
+          "evidence": "root-unified-repair-observations.json"
+        }
+      ],
+      "evidence": [
+        "cloudA-denied-single-feed-first-pending.json",
+        "cloudA-denied-observation-after-65-seconds.json",
+        "network-pending-restart-v1/native-original-pending-feed-before-restart.json",
+        "network-pending-restart-v1/native-logged-in-deny-observation-seal.json",
+        "native-A-deny-pending-settled-no-busy.png",
+        "root-unified-repair-observations.json",
+        "network-pending-restart-v1/root-pending-restart-recovery-independent-seal.json"
+      ],
+      "rootCauseQualification": "Actual normal native single-feed scenario plus query-only local journals and documented public syncStatus. Root separately corroborates current network error masked by stale metadataError. The visual garden pending banner is correct. No hidden business IPC or SQL write; no fix made to frozen candidate."
+    }
+  ]
+}

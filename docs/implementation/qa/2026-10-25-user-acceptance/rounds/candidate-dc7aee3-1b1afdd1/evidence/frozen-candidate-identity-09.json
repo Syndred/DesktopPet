@@ -1,0 +1,46 @@
+{
+  "at": "2026-10-25T15:41:24.718Z",
+  "authority": "Root final handoff",
+  "checks": [
+    {
+      "file": "C:/Users/Administrator/Desktop/project/DesktopPet/releases/user-acceptance-dc7aee3/Lingjing-0.1.8-portable-x64.exe",
+      "bytes": 169233443,
+      "sha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "actualBytes": 169233443,
+      "actualSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "match": true
+    },
+    {
+      "file": "C:/Users/Administrator/Desktop/project/DesktopPet/releases/user-acceptance-dc7aee3/candidate-manifest.json",
+      "sha256": "84eebcea6f52e0395ec3939164d9ed88f312b2e13378e8b8e679637feb745425",
+      "actualBytes": 13786,
+      "actualSha256": "84eebcea6f52e0395ec3939164d9ed88f312b2e13378e8b8e679637feb745425",
+      "match": true
+    },
+    {
+      "file": "C:/Users/Administrator/Desktop/project/DesktopPet/releases/user-acceptance-dc7aee3/build-manifest.json",
+      "sha256": "16de8f28dfac812ac61c60fb43c098f92564b0a6cadaf9f8838178ec9e2ebccb",
+      "actualBytes": 1481,
+      "actualSha256": "16de8f28dfac812ac61c60fb43c098f92564b0a6cadaf9f8838178ec9e2ebccb",
+      "match": true
+    },
+    {
+      "file": "C:/Users/Administrator/Desktop/project/DesktopPet/releases/user-acceptance-dc7aee3/files.json",
+      "sha256": "16354c396a031131cc0011310903ba9d8a16a5934fa9a34700965fab52ba3e7a",
+      "actualBytes": 3075,
+      "actualSha256": "16354c396a031131cc0011310903ba9d8a16a5934fa9a34700965fab52ba3e7a",
+      "match": true
+    },
+    {
+      "file": "C:/Users/Administrator/Desktop/project/DesktopPet-fresh-worktrees/01/artifacts/foundation/qa009-launch/capture-per-launch-v2.ps1",
+      "sha256": "e1aed2926c6ec3049476acccc2da3147f461b578ae6d94f6274d2feb3e704bc4",
+      "actualBytes": 19417,
+      "actualSha256": "e1aed2926c6ec3049476acccc2da3147f461b578ae6d94f6274d2feb3e704bc4",
+      "match": true
+    }
+  ],
+  "candidateManifest": "C:/Users/Administrator/Desktop/project/DesktopPet/releases/user-acceptance-dc7aee3/candidate-manifest.json",
+  "rootIndependentReadback": "artifacts/qa/user-acceptance/global-serial/dc7aee3-root-sfx/root-copy-readback.json",
+  "preUpgradeEvidence": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\pre-final-preservation\\20261025T151747Z",
+  "finalAcceptancePassed": false
+}

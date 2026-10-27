@@ -1,0 +1,82 @@
+{
+  "at": "2026-10-26T19:43:41.756Z",
+  "stage": "denied-first-runtime-observation",
+  "caseUpdates": [
+    {
+      "id": "A09",
+      "status": "passed",
+      "severity": "TBD",
+      "executionState": "executed",
+      "actual": "原CloudA原保持登录设置被保留。新4e实例正常UI关闭到托盘临时false后Alt+F4退出，原6进程/SFX/CDP消失；以同一冻结4e便携EXE、同原profile正常重开，未填写密码即secure自动恢复原owner/auth/device，原4宠及业务数据保持。实际ASAR/source与候选一致。",
+      "evidence": [
+        "native-A-normal-exit-before-network-confirmed.json",
+        "network-pending-restart-v1/owned-run/launch-result-1.json",
+        "network-pending-restart-v1/native-runtime-ordinal1-allow-evidence.json",
+        "native-A-network-allow-ordinal1-first-screen.png",
+        "native-personal-normal-restart-seal.json"
+      ],
+      "hardTechnicalBlock": false,
+      "blockerGroup": null,
+      "blockerKind": null
+    },
+    {
+      "id": "S03",
+      "status": "running",
+      "executionState": "partial",
+      "actual": "新4e DENY seq1/active0后正常UI只提交一次pet974/carrot1，原请求e3e48e4c-47ab-4d1a-aa79-394be57ee185持久pending、CLOUD_UNAVAILABLE；input/wireInput UTF8 SHA同c26b5b4c209486ef77eb3d07c39d8285f816586d752475f2f6fd90788b7bcba5。首实例保持登录DENY176.558秒后，全部原输入和不可变字段保持，库存/宠物/战报未变化。尚未退出或恢复，等待Root独立PG封存和下一阶段。",
+      "evidence": [
+        "network-pending-restart-v1/native-original-pending-feed-before-restart.json",
+        "network-pending-restart-v1/native-logged-in-deny-observation-seal.json",
+        "cloudA-denied-single-feed-first-pending.json",
+        "cloudA-denied-observation-after-65-seconds.json",
+        "native-A-deny-single-feed-result.png"
+      ],
+      "hardTechnicalBlock": false,
+      "blockerGroup": null,
+      "blockerKind": null
+    },
+    {
+      "id": "S06",
+      "status": "failed",
+      "severity": "P2",
+      "executionState": "partial_failed",
+      "actual": "新4e已登录DENY176.558秒，拒绝目标CONNECT46、其他host0、active0、无自动放行；未复现旧BC高频连接风暴。界面回到等待确认、停止忙碌并禁用新喂养；但公开syncStatus pending0及garden domain.pending0，漏计同一profile真实garden pending1，形成4E6-002。原请求跨重启恢复和唯一云回执尚待后续验证，继续执行，不因失败提前停止。",
+      "evidence": [
+        "network-pending-restart-v1/native-logged-in-deny-observation-seal.json",
+        "network-pending-restart-v1/native-deny-first-counter-sample.json",
+        "network-pending-restart-v1/native-deny-after-65s-counter-sample.json",
+        "cloudA-denied-observation-after-65-seconds.json",
+        "native-A-deny-pending-settled-no-busy.png"
+      ],
+      "findingRefs": [
+        "4E6-002"
+      ],
+      "hardTechnicalBlock": false,
+      "blockerGroup": null,
+      "blockerKind": null
+    }
+  ],
+  "newIssues": [
+    {
+      "id": "4E6-002",
+      "severity": "P2",
+      "status": "open",
+      "title": "公开同步状态漏计园地待确认请求",
+      "cases": [
+        "S03",
+        "S06"
+      ],
+      "actual": "真实新4e原A在专用Node HTTPS通道DENY下只正常提交一次carrot1喂养，garden_cloud_requests持久pending1，背包黄条正确显示等待确认；但已登录公开accounts:syncStatus总pending=0，domainStates garden.pending=0，两次只读公开投影均如此。public status=partial、recordsInitializedtrue、runningfalse；不能据pending0声称该请求已确认。",
+      "expected": "公开总状态与园地分域应计入未确认的原请求，保持与持久队列和界面一致；状态读取不应重发或生成第二请求。",
+      "evidence": [
+        "cloudA-denied-single-feed-first-pending.json",
+        "cloudA-denied-observation-after-65-seconds.json",
+        "network-pending-restart-v1/native-original-pending-feed-before-restart.json",
+        "network-pending-restart-v1/native-logged-in-deny-observation-seal.json",
+        "native-A-deny-pending-settled-no-busy.png"
+      ],
+      "rootCauseQualification": "Actual normal native single-feed observation plus safe-column query-only SQLite and documented public syncStatus. The visual pending banner is correct; this issue specifically concerns the public aggregate/domain count. No hidden business IPC or SQL write.",
+      "blocksWholeRound": false
+    }
+  ]
+}

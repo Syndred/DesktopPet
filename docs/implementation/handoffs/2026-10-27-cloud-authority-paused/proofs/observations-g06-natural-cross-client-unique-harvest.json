@@ -1,0 +1,25 @@
+{
+  "at": "2026-10-26T22:20:07.932Z",
+  "stage": "g06-natural-cross-client-unique-harvest",
+  "caseUpdates": [
+    {
+      "id": "G06",
+      "status": "passed",
+      "actual": "原B2播种并看到未成熟不可收；超过真实22:07:38.472Z成熟点后，原B1独立客户端普通打开同plot1显示成熟/预计3份。一次快速双击收获仅生成690fbe8d-c0d1-4a19-9853-f52a8c036136原请求与唯一云回执，garden8→9/head33→34，胡萝卜3→6，地块清空/背包6，种子2与其他库存和所有原宠不变。不改时钟/模拟成熟/重复播种。",
+      "evidence": [
+        "native-G05-G06-original-B2-carrot-growing-and-harvest-disabled.png",
+        "native-G05-single-plant-and-natural-growth-seal.json",
+        "native-G06-original-B1-actual-natural-maturity-before-harvest.png",
+        "native-G06-original-B1-rapid-double-harvest-result.png",
+        "native-G06-original-B1-harvest-committed-empty-plot.png",
+        "native-G06-original-B1-backpack-carrot-six.png",
+        "cloudB1-before-g06-real-mature-harvest.json",
+        "cloudB1-after-g06-rapid-double-harvest-first-readback.json",
+        "root-G06-natural-harvest-cloud-independent.json",
+        "native-G06-natural-growth-cross-client-unique-harvest-seal.json"
+      ]
+    }
+  ],
+  "newIssues": [],
+  "issueUpdates": []
+}

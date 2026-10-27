@@ -1,0 +1,122 @@
+[
+  {
+    "text": "记住账号",
+    "rect": {
+      "x": 724.2374877929688,
+      "y": 523.6875,
+      "width": 408.9624938964844,
+      "height": 24,
+      "top": 523.6875,
+      "right": 1133.1999816894531,
+      "bottom": 547.6875,
+      "left": 724.2374877929688
+    },
+    "children": [
+      {
+        "tag": "BUTTON",
+        "role": "checkbox",
+        "class": "peer relative flex size-4 shrink-0 items-center justify-center rounded-[4px] border border-input transition-colors outline-none group-has-disabled/field:opacity-50 group-has-[:focus-visible]/field-label:ring-0 group-has-[:focus-visible]/field-label:not-data-checked:border-input after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 aria-invalid:aria-checked:border-primary dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 data-checked:border-primary data-checked:bg-primary data-checked:text-primary-foreground group-has-[:focus-visible]/field-label:data-checked:border-primary dark:data-checked:bg-primary ac-radix-checkbox",
+        "rect": {
+          "x": 724.2374877929688,
+          "y": 527.6875,
+          "width": 16,
+          "height": 16,
+          "top": 527.6875,
+          "right": 740.2374877929688,
+          "bottom": 543.6875,
+          "left": 724.2374877929688
+        }
+      },
+      {
+        "tag": "INPUT",
+        "role": null,
+        "class": null,
+        "rect": {
+          "x": 708.2374877929688,
+          "y": 527.6875,
+          "width": 16,
+          "height": 16,
+          "top": 527.6875,
+          "right": 724.2374877929688,
+          "bottom": 543.6875,
+          "left": 708.2374877929688
+        }
+      },
+      {
+        "tag": "SPAN",
+        "role": null,
+        "class": null,
+        "rect": {
+          "x": 748.2374877929688,
+          "y": 525.6875,
+          "width": 48,
+          "height": 20,
+          "top": 525.6875,
+          "right": 796.2374877929688,
+          "bottom": 545.6875,
+          "left": 748.2374877929688
+        }
+      }
+    ]
+  },
+  {
+    "text": "保持登录",
+    "rect": {
+      "x": 724.2374877929688,
+      "y": 555.6875,
+      "width": 72,
+      "height": 24,
+      "top": 555.6875,
+      "right": 796.2374877929688,
+      "bottom": 579.6875,
+      "left": 724.2374877929688
+    },
+    "children": [
+      {
+        "tag": "BUTTON",
+        "role": "checkbox",
+        "class": "peer relative flex size-4 shrink-0 items-center justify-center rounded-[4px] border border-input transition-colors outline-none group-has-disabled/field:opacity-50 group-has-[:focus-visible]/field-label:ring-0 group-has-[:focus-visible]/field-label:not-data-checked:border-input after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 aria-invalid:aria-checked:border-primary dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 data-checked:border-primary data-checked:bg-primary data-checked:text-primary-foreground group-has-[:focus-visible]/field-label:data-checked:border-primary dark:data-checked:bg-primary ac-radix-checkbox",
+        "rect": {
+          "x": 724.2374877929688,
+          "y": 559.6875,
+          "width": 16,
+          "height": 16,
+          "top": 559.6875,
+          "right": 740.2374877929688,
+          "bottom": 575.6875,
+          "left": 724.2374877929688
+        }
+      },
+      {
+        "tag": "INPUT",
+        "role": null,
+        "class": null,
+        "rect": {
+          "x": 708.2374877929688,
+          "y": 559.6875,
+          "width": 16,
+          "height": 16,
+          "top": 559.6875,
+          "right": 724.2374877929688,
+          "bottom": 575.6875,
+          "left": 708.2374877929688
+        }
+      },
+      {
+        "tag": "SPAN",
+        "role": null,
+        "class": null,
+        "rect": {
+          "x": 748.2374877929688,
+          "y": 557.6875,
+          "width": 48,
+          "height": 20,
+          "top": 557.6875,
+          "right": 796.2374877929688,
+          "bottom": 577.6875,
+          "left": 748.2374877929688
+        }
+      }
+    ]
+  }
+]

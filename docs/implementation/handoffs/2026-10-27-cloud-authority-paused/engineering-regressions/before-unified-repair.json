@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-26T20:05:47.347Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "candidateChanged": false,
+  "nativePassed": false,
+  "scope": "Engineering only: actual React/DOM source with in-memory CAS and actual garden provider/account status with in-memory SQLite. No real profile or cloud mutation.",
+  "regressionBaseline": "expected failure before unified repair",
+  "ui": {
+    "report": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\unified-regressions-v2\\runs\\23f549ff-2ef8-48c0-9a79-8906c999bb65\\report.json",
+    "passed": 2,
+    "failed": 3,
+    "sourceHashesUnchanged": true,
+    "browserClosed": true,
+    "pageErrors": 0,
+    "consoleErrors": 0,
+    "blockedNetworkRequests": 0
+  },
+  "accountStatus": {
+    "exitCode": 1,
+    "cases": [
+      {
+        "name": "one durable original garden pending is counted without retry, including provider recreation",
+        "passed": false,
+        "actual": 0,
+        "expected": 1
+      },
+      {
+        "name": "primary current network failure outranks optional old serial metadata warning",
+        "passed": false,
+        "actual": "partial",
+        "expected": "offline"
+      }
+    ]
+  },
+  "fileHashes": {
+    "conversation-settings.regressions.jsx": "4335dc18904448dff228f41e772518f5b6ee2b6ac4d32d37b4107926dd46bf7d",
+    "run-conversation-settings.mjs": "87f0a06ac08593c73fb3266144c79f9f5ead2c496f9087fc80b74fc40f17e47f",
+    "account-domain-status.test.cjs": "36b3d10fa8ceee037f823c326b15da09f23a99cdb6e092a60681279cc8c56fc1"
+  }
+}

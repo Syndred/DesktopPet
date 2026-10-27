@@ -1,0 +1,37 @@
+{
+  "at": "2026-10-26T10:12:31.3704406Z",
+  "simulation": "explicit simulated upstream, real loopback HTTP",
+  "execSessionId": 83427,
+  "runId": "9b0d1667-db6f-4ccc-b0dc-3d369a68d327",
+  "pid": 19332,
+  "port": 49905,
+  "baseUrl": "http://127.0.0.1:49905/v1",
+  "model": "模拟验收-C7AD-210fc2da0da4",
+  "startedAt": "2026-10-26T10:11:02.125Z",
+  "status": "listening",
+  "approvalRef": "root-c7ad-qa017-start-fb578c34-bf0a-4ddd-96f0-56e69e8f8a19",
+  "freezeSha256": "9024654eda40f67cbedba97b51cb69a2f8329dcd4d42dce4f6a31a5e130e49ae",
+  "bindingSha256": "8004e47945a22731bed599ae059e887114a18da65f95fa30331a1e12a7401a0c",
+  "runDirectory": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\conversations\\c7ad-qa017-simulated-provider\\run-9b0d1667-db6f-4ccc-b0dc-3d369a68d327",
+  "stateFile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\conversations\\c7ad-qa017-simulated-provider\\run-9b0d1667-db6f-4ccc-b0dc-3d369a68d327\\state.json",
+  "auditFile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\conversations\\c7ad-qa017-simulated-provider\\run-9b0d1667-db6f-4ccc-b0dc-3d369a68d327\\audit.jsonl",
+  "auditExists": false,
+  "process": {
+    "ProcessId": 19332,
+    "ParentProcessId": 12340,
+    "CreationDate": "2026-10-26T18:11:02.079325+08:00",
+    "ExecutablePath": "C:\\Users\\Administrator\\AppData\\Local\\Author Software\\nvm\\installs\\v24.21.0\\node.exe",
+    "CommandLine": "\"C:\\Users\\Administrator\\AppData\\Local\\Author Software\\nvm\\installs\\v24.21.0\\node.exe\" C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/c7ad-qa017-provider-prepared-v1/cli.cjs start --binding C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/conversations/c7ad-qa017-simulated-provider/binding-fish-v1.json --approval-ref root-c7ad-qa017-start-fb578c34-bf0a-4ddd-96f0-56e69e8f8a19 --approved-freeze-sha256 9024654eda40f67cbedba97b51cb69a2f8329dcd4d42dce4f6a31a5e130e49ae --approved-binding-sha256 8004e47945a22731bed599ae059e887114a18da65f95fa30331a1e12a7401a0c"
+  },
+  "listener": [
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 49905,
+      "OwningProcess": 19332
+    }
+  ],
+  "productUiUntouchedAfterStart": true,
+  "dummyKeyNotPrinted": true,
+  "externalModelSuccess": false,
+  "stdoutCaveat": "PowerShell redirected stdout file currently empty while process runs; actual state.json and OS listener used, no second start"
+}

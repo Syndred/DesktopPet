@@ -1,0 +1,88 @@
+{
+  "at": "2026-10-25T12:29:57.785Z",
+  "viewport": {
+    "width": 2048,
+    "height": 1151,
+    "dpr": 1.25
+  },
+  "route": "#/chat",
+  "nodes": [
+    {
+      "tag": "FIGURE",
+      "className": "cv-pet-scene cv-custom-scene",
+      "rect": {
+        "x": 1383.800048828125,
+        "y": 212.5,
+        "width": 407.3999938964844,
+        "height": 225
+      },
+      "data": {
+        "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+        "resourceId": "builtin:lingjing-xiaohu-v1"
+      },
+      "style": null,
+      "overflow": "hidden",
+      "backgroundImage": "linear-gradient(135deg, rgb(232, 238, 255), rgb(251, 252, 255))",
+      "backgroundSize": "auto",
+      "backgroundPosition": "0% 0%",
+      "transform": "none",
+      "objectFit": "fill"
+    },
+    {
+      "tag": "svg",
+      "className": {},
+      "rect": {
+        "x": 1383.800048828125,
+        "y": 212.5,
+        "width": 407.3999938964844,
+        "height": 225
+      },
+      "data": {
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "frame": "frame_0",
+        "framing": "portrait"
+      },
+      "style": null,
+      "overflow": "hidden",
+      "backgroundImage": "none",
+      "backgroundSize": "auto",
+      "backgroundPosition": "0% 0%",
+      "transform": "none",
+      "objectFit": "fill"
+    },
+    {
+      "tag": "image",
+      "className": {},
+      "rect": {
+        "x": 1111.63525390625,
+        "y": -70.09228515625,
+        "width": 3124.263671875,
+        "height": 3124.263671875
+      },
+      "data": {},
+      "style": null,
+      "overflow": "hidden",
+      "backgroundImage": "none",
+      "backgroundSize": "auto",
+      "backgroundPosition": "0% 0%",
+      "transform": "matrix(1, 0, 0, 1, -51, -72)",
+      "objectFit": "fill"
+    }
+  ],
+  "svg": {
+    "viewBox": "58.24 0 163.51999999999998 173.16",
+    "preserveAspectRatio": "xMidYMid slice",
+    "role": "img",
+    "ariaLabel": "小狐，编号 pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3近景",
+    "width": null,
+    "height": null
+  },
+  "geometry": {
+    "renderedViewBoxWidth": 407.3999938964843,
+    "renderedViewBoxHeight": 431.4174592900883,
+    "visibleFractionOfPortraitViewBox": 0.5215366118242989,
+    "figureCanvasCount": 0,
+    "figureCpPortraitCount": 0,
+    "note": "此近景用静态ResourcePortrait SVG；下方聊天反应ResourceStage/canvas不是同一节点，不能拿来替代裁切几何。"
+  }
+}

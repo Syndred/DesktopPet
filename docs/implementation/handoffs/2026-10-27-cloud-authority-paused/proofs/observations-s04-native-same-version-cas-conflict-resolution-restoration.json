@@ -1,0 +1,37 @@
+{
+  "at": "2026-10-26T23:46:56.084Z",
+  "stage": "s04-native-same-version-cas-conflict-resolution-restoration",
+  "caseUpdates": [
+    {
+      "id": "S04",
+      "status": "passed",
+      "executionState": "executed_current_candidate",
+      "hardTechnicalBlock": false,
+      "blockerGroup": null,
+      "blockerKind": null,
+      "actual": "原A/A2同一fox3b在revision2加载不同原生草稿，两个可见聚焦Save连续Return相隔85ms；两意图baseRevision均2，A2紫色成功到3，A1青色被RECORD_CONFLICT阻止并保留。账号页明确显示两版本，普通采用原记录成功到4、原冲突resolved/local且失败意图superseded保留；A2当前版本普通保存恢复原绿色原文到5，双端自动一致。独立PG仅3个成功回执，游戏head43/其他人设/原记忆含deleted4/消息0不变，两端各25项保护表摘要一致。首次坐标映射错误前后0写，未将其计作并发尝试；无第二轮碰撞、无新身份/网络覆盖/SQL写。",
+      "evidence": [
+        "native-S04-concurrent-persona-cas-and-restoration-seal.json",
+        "root-S04-original-A-personal-cloud-final-independent.json",
+        "native-S04-both-drafts-before-first-save-personal-readonly.json",
+        "native-S04-after-cua-first-pair-routing-error-personal-readonly.json",
+        "native-S04-first-keyboard-save-pair-times.json",
+        "native-S04-after-first-native-keyboard-save-pair-personal-readonly.json",
+        "native-S04-after-normal-adopt-original-local-personal-readonly.json",
+        "native-S04-final-converged-original-persona-personal-readonly.json",
+        "native-S04-original-A1-concurrent-persona-draft.png",
+        "native-S04-original-A2-concurrent-persona-draft.png",
+        "native-S04-A1-save-button-keyboard-focus.png",
+        "native-S04-A2-save-button-keyboard-focus.png",
+        "native-S04-original-A1-concurrent-conflict-resolution-dialog.png",
+        "native-S04-original-A1-conflict-resolved-retained-history.png",
+        "native-S04-original-A2-after-local-conflict-resolution.png",
+        "native-S04-original-A1-original-persona-restoration-converged.png",
+        "cloudA-s04-final-converged-and-preserved.json",
+        "cloudASecond-s04-final-converged-and-preserved.json"
+      ]
+    }
+  ],
+  "newIssues": [],
+  "issueUpdates": []
+}

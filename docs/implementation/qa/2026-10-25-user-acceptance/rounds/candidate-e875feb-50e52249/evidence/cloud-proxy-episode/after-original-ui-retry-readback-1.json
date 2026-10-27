@@ -1,0 +1,507 @@
+{
+  "at": "2026-10-25T14:35:06.479Z",
+  "sqlite": {
+    "accounts": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "revision": 2,
+        "initialized_at": 1792935736822
+      }
+    ],
+    "items": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "item_id": "seed:berry",
+        "quantity": 2
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "item_id": "seed:carrot",
+        "quantity": 1
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "item_id": "seed:rice",
+        "quantity": 2
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "item_id": "seed:tomato",
+        "quantity": 2
+      }
+    ],
+    "plots": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "plot_id": "plot-1",
+        "crop_type": "carrot",
+        "planted_at": 1792938859056,
+        "matures_at": 1792939459056,
+        "yield_quantity": 3,
+        "revision": 1
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "plot_id": "plot-2",
+        "crop_type": null,
+        "planted_at": null,
+        "matures_at": null,
+        "yield_quantity": 0,
+        "revision": 0
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "plot_id": "plot-3",
+        "crop_type": null,
+        "planted_at": null,
+        "matures_at": null,
+        "yield_quantity": 0,
+        "revision": 0
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "plot_id": "plot-4",
+        "crop_type": null,
+        "planted_at": null,
+        "matures_at": null,
+        "yield_quantity": 0,
+        "revision": 0
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "plot_id": "plot-5",
+        "crop_type": null,
+        "planted_at": null,
+        "matures_at": null,
+        "yield_quantity": 0,
+        "revision": 0
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "plot_id": "plot-6",
+        "crop_type": null,
+        "planted_at": null,
+        "matures_at": null,
+        "yield_quantity": 0,
+        "revision": 0
+      }
+    ],
+    "cloudState": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "account_revision": 5,
+        "checksum": "d5c44ad62b33aa1e569cb59a2643ca5296a36093755dacd74375d5bbfe8e9f3e",
+        "server_time": 1792938867140
+      }
+    ],
+    "actions": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "action_id": "cloud-garden-initialize:v1",
+        "kind": "initialize",
+        "request_hash": "ac51e8f90788864d1867aaeaebff53b38a6a3e2dc506a8f16aa1ed9ecf4b9fb7",
+        "result_json": "{\"ok\":true,\"data\":{\"initialized\":true,\"plots\":6},\"revision\":1,\"replayed\":false}",
+        "created_at": 1792935736822
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "action_id": "e8156c9e-4b1d-421a-a326-9860f203d402",
+        "kind": "plant",
+        "request_hash": "9ffcc3ec0ff98336f27bd6ca0aa53aabe1548afd645eefadbc11bc0450bb3777",
+        "result_json": "{\"ok\":true,\"data\":{\"plotId\":\"plot-1\",\"cropType\":\"carrot\",\"plantedAt\":1792938859056,\"maturesAt\":1792939459056,\"yieldQuantity\":3},\"revision\":2,\"replayed\":false}",
+        "created_at": 1792938859056
+      }
+    ],
+    "requests": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "action_id": "e8156c9e-4b1d-421a-a326-9860f203d402",
+        "endpoint": "garden-sync",
+        "op": "command",
+        "kind": "plant",
+        "logical_hash": "9ffcc3ec0ff98336f27bd6ca0aa53aabe1548afd645eefadbc11bc0450bb3777",
+        "input_json": "{\"plotId\":\"plot-1\",\"cropType\":\"carrot\",\"sessionOwnerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"actionId\":\"e8156c9e-4b1d-421a-a326-9860f203d402\",\"expectedRevision\":1}",
+        "wire_input_json": "{\"plotId\":\"plot-1\",\"cropType\":\"carrot\",\"sessionOwnerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"actionId\":\"e8156c9e-4b1d-421a-a326-9860f203d402\",\"expectedRevision\":1}",
+        "request_hash": "9ffcc3ec0ff98336f27bd6ca0aa53aabe1548afd645eefadbc11bc0450bb3777",
+        "status": "committed",
+        "response_json": "{\"result\":{\"ok\":true,\"data\":{\"plotId\":\"plot-1\",\"cropType\":\"carrot\",\"maturesAt\":1792939459056,\"plantedAt\":1792938859056,\"yieldQuantity\":3},\"replayed\":false,\"revision\":2},\"actionId\":\"e8156c9e-4b1d-421a-a326-9860f203d402\",\"replayed\":false,\"requestHash\":\"9ffcc3ec0ff98336f27bd6ca0aa53aabe1548afd645eefadbc11bc0450bb3777\",\"accountRevision\":5,\"authorityReceiptId\":\"garden:9ffcc3ec0ff98336f27bd6ca0aa53aabe1548afd645eefadbc11bc0450bb3777\",\"readback\":{\"snapshot\":{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"serverTime\":1792938859712,\"revision\":2,\"plots\":[{\"plotId\":\"plot-1\",\"cropType\":\"carrot\",\"plantedAt\":1792938859056,\"maturesAt\":1792939459056,\"yieldQuantity\":3,\"revision\":1,\"stage\":\"growing\"},{\"plotId\":\"plot-2\",\"cropType\":null,\"plantedAt\":null,\"maturesAt\":null,\"yieldQuantity\":0,\"revision\":0,\"stage\":\"empty\"},{\"plotId\":\"plot-3\",\"cropType\":null,\"plantedAt\":null,\"maturesAt\":null,\"yieldQuantity\":0,\"revision\":0,\"stage\":\"empty\"},{\"plotId\":\"plot-4\",\"cropType\":null,\"plantedAt\":null,\"maturesAt\":null,\"yieldQuantity\":0,\"revision\":0,\"stage\":\"empty\"},{\"plotId\":\"plot-5\",\"cropType\":null,\"plantedAt\":null,\"maturesAt\":null,\"yieldQuantity\":0,\"revision\":0,\"stage\":\"empty\"},{\"plotId\":\"plot-6\",\"cropType\":null,\"plantedAt\":null,\"maturesAt\":null,\"yieldQuantity\":0,\"revision\":0,\"stage\":\"empty\"}],\"items\":[{\"id\":\"seed:carrot\",\"name\":\"胡萝卜种子\",\"icon\":\"🥕\",\"category\":\"seed\",\"source\":\"探索与对战\",\"effects\":null,\"quantity\":1},{\"id\":\"seed:tomato\",\"name\":\"番茄种子\",\"icon\":\"🍅\",\"category\":\"seed\",\"source\":\"探索与对战\",\"effects\":null,\"quantity\":2},{\"id\":\"seed:berry\",\"name\":\"莓果种子\",\"icon\":\"🫐\",\"category\":\"seed\",\"source\":\"探索与对战\",\"effects\":null,\"quantity\":2},{\"id\":\"seed:rice\",\"name\":\"稻米种子\",\"icon\":\"🌾\",\"category\":\"seed\",\"source\":\"探索与对战\",\"effects\":null,\"quantity\":2},{\"id\":\"carrot\",\"name\":\"胡萝卜\",\"icon\":\"🥕\",\"category\":\"food\",\"source\":\"菜园收获\",\"effects\":{\"satiety\":12,\"mood\":2,\"intimacy\":2},\"quantity\":0},{\"id\":\"tomato\",\"name\":\"番茄\",\"icon\":\"🍅\",\"category\":\"food\",\"source\":\"菜园收获\",\"effects\":{\"satiety\":10,\"mood\":3,\"intimacy\":2},\"quantity\":0},{\"id\":\"berry\",\"name\":\"莓果\",\"icon\":\"🫐\",\"category\":\"food\",\"source\":\"菜园收获\",\"effects\":{\"satiety\":8,\"mood\":4,\"intimacy\":3},\"quantity\":0},{\"id\":\"rice\",\"name\":\"稻米\",\"icon\":\"🌾\",\"category\":\"ingredient\",\"source\":\"菜园收获\",\"effects\":null,\"quantity\":0},{\"id\":\"cooked_rice\",\"name\":\"热乎乎的米饭\",\"icon\":\"🍚\",\"category\":\"food\",\"source\":\"稻米制作\",\"effects\":{\"satiety\":20,\"mood\":3,\"intimacy\":4},\"quantity\":0}],\"crops\":[{\"id\":\"carrot\",\"name\":\"胡萝卜\",\"icon\":\"🥕\",\"seedItemId\":\"seed:carrot\",\"harvestItemId\":\"carrot\",\"growMs\":600000,\"yield\":3,\"color\":\"#ed9448\"},{\"id\":\"tomato\",\"name\":\"番茄\",\"icon\":\"🍅\",\"seedItemId\":\"seed:tomato\",\"harvestItemId\":\"tomato\",\"growMs\":900000,\"yield\":3,\"color\":\"#ef7875\"},{\"id\":\"berry\",\"name\":\"莓果\",\"icon\":\"🫐\",\"seedItemId\":\"seed:berry\",\"harvestItemId\":\"berry\",\"growMs\":1200000,\"yield\":4,\"color\":\"#9e8fd4\"},{\"id\":\"rice\",\"name\":\"稻米\",\"icon\":\"🌾\",\"seedItemId\":\"seed:rice\",\"harvestItemId\":\"rice\",\"growMs\":1500000,\"yield\":2,\"color\":\"#d2ad54\"}],\"recipes\":[{\"id\":\"cooked_rice\",\"name\":\"热乎乎的米饭\",\"input\":{\"itemId\":\"rice\",\"quantity\":1},\"output\":{\"itemId\":\"cooked_rice\",\"quantity\":1}}],\"pets\":[{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-40899e45-d323-49c8-9136-743f14be6ce3\",\"templateId\":\"big-fish-gentle\",\"name\":\"鱼丸\",\"serial\":\"40899E45\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-yuwan-v2\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":80,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T10:15:21.267Z\",\"updatedAt\":\"2026-10-25T10:15:21.267Z\"}],\"territories\":[],\"ledger\":[{\"id\":\"d754feda-9201-4f0f-b6a8-695f878d98b5\",\"actionId\":\"e8156c9e-4b1d-421a-a326-9860f203d402\",\"kind\":\"plant\",\"itemId\":\"seed:carrot\",\"delta\":-1,\"balance\":1,\"petId\":null,\"createdAt\":1792938859056},{\"id\":\"2ed7e89c-779c-4a4b-aa2c-40723a310dab\",\"actionId\":\"cloud-garden-initialize:v1\",\"kind\":\"starter\",\"itemId\":\"seed:rice\",\"delta\":2,\"balance\":2,\"petId\":null,\"createdAt\":1792935736822},{\"id\":\"8c83a868-11cf-45ab-bb68-a354c7fb6ba6\",\"actionId\":\"cloud-garden-initialize:v1\",\"kind\":\"starter\",\"itemId\":\"seed:berry\",\"delta\":2,\"balance\":2,\"petId\":null,\"createdAt\":1792935736822},{\"id\":\"64276855-3bee-436c-877e-2cc7e2104f51\",\"actionId\":\"cloud-garden-initialize:v1\",\"kind\":\"starter\",\"itemId\":\"seed:tomato\",\"delta\":2,\"balance\":2,\"petId\":null,\"createdAt\":1792935736822},{\"id\":\"aac383ff-e849-4711-ad86-820eea01d652\",\"actionId\":\"cloud-garden-initialize:v1\",\"kind\":\"starter\",\"itemId\":\"seed:carrot\",\"delta\":2,\"balance\":2,\"petId\":null,\"createdAt\":1792935736822}],\"sync\":{\"mode\":\"cloud\",\"pending\":0,\"conflicts\":0}},\"envelope\":{\"data\":{\"tables\":{},\"modules\":{\"garden\":{\"data\":{\"tables\":{\"garden_items\":[{\"item_id\":\"seed:carrot\",\"quantity\":1,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},{\"item_id\":\"seed:tomato\",\"quantity\":2,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},{\"item_id\":\"seed:berry\",\"quantity\":2,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},{\"item_id\":\"seed:rice\",\"quantity\":2,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"}],\"garden_plots\":[{\"plot_id\":\"plot-1\",\"revision\":1,\"crop_type\":\"carrot\",\"matures_at\":1792939459056,\"planted_at\":1792938859056,\"yield_quantity\":3,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},{\"plot_id\":\"plot-2\",\"revision\":0,\"crop_type\":null,\"matures_at\":null,\"planted_at\":null,\"yield_quantity\":0,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},{\"plot_id\":\"plot-3\",\"revision\":0,\"crop_type\":null,\"matures_at\":null,\"planted_at\":null,\"yield_quantity\":0,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},{\"plot_id\":\"plot-4\",\"revision\":0,\"crop_type\":null,\"matures_at\":null,\"planted_at\":null,\"yield_quantity\":0,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},{\"plot_id\":\"plot-5\",\"revision\":0,\"crop_type\":null,\"matures_at\":null,\"planted_at\":null,\"yield_quantity\":0,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},{\"plot_id\":\"plot-6\",\"revision\":0,\"crop_type\":null,\"matures_at\":null,\"planted_at\":null,\"yield_quantity\":0,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"}],\"garden_events\":[{\"kind\":\"starter\",\"delta\":2,\"pet_id\":null,\"balance\":2,\"item_id\":\"seed:carrot\",\"event_id\":\"aac383ff-e849-4711-ad86-820eea01d652\",\"action_id\":\"cloud-garden-initialize:v1\",\"created_at\":1792935736822,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},{\"kind\":\"starter\",\"delta\":2,\"pet_id\":null,\"balance\":2,\"item_id\":\"seed:tomato\",\"event_id\":\"64276855-3bee-436c-877e-2cc7e2104f51\",\"action_id\":\"cloud-garden-initialize:v1\",\"created_at\":1792935736822,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},{\"kind\":\"starter\",\"delta\":2,\"pet_id\":null,\"balance\":2,\"item_id\":\"seed:berry\",\"event_id\":\"8c83a868-11cf-45ab-bb68-a354c7fb6ba6\",\"action_id\":\"cloud-garden-initialize:v1\",\"created_at\":1792935736822,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},{\"kind\":\"starter\",\"delta\":2,\"pet_id\":null,\"balance\":2,\"item_id\":\"seed:rice\",\"event_id\":\"2ed7e89c-779c-4a4b-aa2c-40723a310dab\",\"action_id\":\"cloud-garden-initialize:v1\",\"created_at\":1792935736822,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},{\"kind\":\"plant\",\"delta\":-1,\"pet_id\":null,\"balance\":1,\"item_id\":\"seed:carrot\",\"event_id\":\"d754feda-9201-4f0f-b6a8-695f878d98b5\",\"action_id\":\"e8156c9e-4b1d-421a-a326-9860f203d402\",\"created_at\":1792938859056,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"}],\"garden_outbox\":[{\"status\":\"synced\",\"attempts\":0,\"action_id\":\"cloud-garden-initialize:v1\",\"created_at\":1792935736822,\"last_error\":null,\"payload_json\":\"{\\\"kind\\\":\\\"initialize\\\",\\\"input\\\":{\\\"actionId\\\":\\\"cloud-garden-initialize:v1\\\",\\\"expectedRevision\\\":0},\\\"result\\\":{\\\"ok\\\":true,\\\"data\\\":{\\\"initialized\\\":true,\\\"plots\\\":6},\\\"revision\\\":1,\\\"replayed\\\":false}}\",\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},{\"status\":\"synced\",\"attempts\":0,\"action_id\":\"e8156c9e-4b1d-421a-a326-9860f203d402\",\"created_at\":1792938859056,\"last_error\":null,\"payload_json\":\"{\\\"kind\\\":\\\"plant\\\",\\\"input\\\":{\\\"plotId\\\":\\\"plot-1\\\",\\\"cropType\\\":\\\"carrot\\\",\\\"sessionOwnerAccountId\\\":\\\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\\\",\\\"actionId\\\":\\\"e8156c9e-4b1d-421a-a326-9860f203d402\\\",\\\"expectedRevision\\\":1},\\\"result\\\":{\\\"ok\\\":true,\\\"data\\\":{\\\"plotId\\\":\\\"plot-1\\\",\\\"cropType\\\":\\\"carrot\\\",\\\"plantedAt\\\":1792938859056,\\\"maturesAt\\\":1792939459056,\\\"yieldQuantity\\\":3},\\\"revision\\\":2,\\\"replayed\\\":false}}\",\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"}],\"garden_actions\":[{\"kind\":\"initialize\",\"action_id\":\"cloud-garden-initialize:v1\",\"created_at\":1792935736822,\"result_json\":\"{\\\"ok\\\":true,\\\"data\\\":{\\\"initialized\\\":true,\\\"plots\\\":6},\\\"revision\\\":1,\\\"replayed\\\":false}\",\"request_hash\":\"ac51e8f90788864d1867aaeaebff53b38a6a3e2dc506a8f16aa1ed9ecf4b9fb7\",\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},{\"kind\":\"plant\",\"action_id\":\"e8156c9e-4b1d-421a-a326-9860f203d402\",\"created_at\":1792938859056,\"result_json\":\"{\\\"ok\\\":true,\\\"data\\\":{\\\"plotId\\\":\\\"plot-1\\\",\\\"cropType\\\":\\\"carrot\\\",\\\"plantedAt\\\":1792938859056,\\\"maturesAt\\\":1792939459056,\\\"yieldQuantity\\\":3},\\\"revision\\\":2,\\\"replayed\\\":false}\",\"request_hash\":\"9ffcc3ec0ff98336f27bd6ca0aa53aabe1548afd645eefadbc11bc0450bb3777\",\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"}],\"garden_accounts\":[{\"revision\":2,\"initialized_at\":1792935736822,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"}],\"garden_garrisons\":[],\"garden_reward_receipts\":[],\"garden_territory_attempts\":[],\"garden_territory_challenges\":[]},\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"territoryArchive\":{\"logs\":[],\"territories\":[]}},\"version\":1},\"settings\":{\"data\":{\"sync\":{\"enabled\":true},\"desktop\":{\"volume\":70,\"alwaysOnTop\":true,\"closeToTray\":false,\"clickThrough\":true,\"launchAtLogin\":false,\"companionLimit\":3,\"hideInFullscreen\":true,\"animationsEnabled\":true,\"interactionSounds\":true},\"privacy\":{\"locationAllowed\":false,\"emotionStatistics\":false,\"locationOnlyWhileExploring\":true},\"notifications\":{\"garden\":true,\"battles\":true,\"enabled\":true,\"quietEnd\":\"08:00\",\"companions\":true,\"quietStart\":\"22:00\",\"quietEnabled\":true}},\"version\":1},\"companions\":{\"data\":{\"tables\":{\"companion_pets\":[{\"pet_id\":\"pet-40899e45-d323-49c8-9136-743f14be6ce3\",\"revision\":1,\"data_json\":\"{\\\"ownerAccountId\\\":\\\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\\\",\\\"petId\\\":\\\"pet-40899e45-d323-49c8-9136-743f14be6ce3\\\",\\\"templateId\\\":\\\"big-fish-gentle\\\",\\\"name\\\":\\\"鱼丸\\\",\\\"serial\\\":\\\"40899E45\\\",\\\"element\\\":\\\"water\\\",\\\"resource\\\":{\\\"resourceId\\\":\\\"builtin:lingjing-yuwan-v2\\\",\\\"kind\\\":\\\"2d\\\"},\\\"source\\\":\\\"adoption\\\",\\\"origin\\\":{},\\\"growth\\\":{\\\"level\\\":1,\\\"experience\\\":0,\\\"mood\\\":60,\\\"satiety\\\":60,\\\"affinity\\\":0,\\\"winsTotal\\\":0,\\\"stats\\\":{\\\"hp\\\":124,\\\"atk\\\":28,\\\"def\\\":24,\\\"spd\\\":20}},\\\"desktop\\\":{\\\"visible\\\":false,\\\"behavior\\\":\\\"quiet\\\",\\\"scale\\\":1,\\\"position\\\":{\\\"x\\\":80,\\\"y\\\":520,\\\"displayId\\\":null}},\\\"revision\\\":1,\\\"createdAt\\\":\\\"2026-10-25T10:15:21.267Z\\\",\\\"updatedAt\\\":\\\"2026-10-25T10:15:21.267Z\\\"}\",\"created_at\":\"2026-10-25T10:15:21.267Z\",\"updated_at\":\"2026-10-25T10:15:21.267Z\",\"template_id\":\"big-fish-gentle\",\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"}],\"companion_actions\":[{\"action_id\":\"a39bdbba-ce65-4bb4-b51f-6da97f713ab7\",\"operation\":\"adopt\",\"created_at\":\"2026-10-25T10:15:21.267Z\",\"result_json\":\"{\\\"ok\\\":true,\\\"data\\\":{\\\"pet\\\":{\\\"ownerAccountId\\\":\\\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\\\",\\\"petId\\\":\\\"pet-40899e45-d323-49c8-9136-743f14be6ce3\\\",\\\"templateId\\\":\\\"big-fish-gentle\\\",\\\"name\\\":\\\"鱼丸\\\",\\\"serial\\\":\\\"40899E45\\\",\\\"element\\\":\\\"water\\\",\\\"resource\\\":{\\\"resourceId\\\":\\\"builtin:lingjing-yuwan-v2\\\",\\\"kind\\\":\\\"2d\\\"},\\\"source\\\":\\\"adoption\\\",\\\"origin\\\":{},\\\"growth\\\":{\\\"level\\\":1,\\\"experience\\\":0,\\\"mood\\\":60,\\\"satiety\\\":60,\\\"affinity\\\":0,\\\"winsTotal\\\":0,\\\"stats\\\":{\\\"hp\\\":124,\\\"atk\\\":28,\\\"def\\\":24,\\\"spd\\\":20}},\\\"desktop\\\":{\\\"visible\\\":false,\\\"behavior\\\":\\\"quiet\\\",\\\"scale\\\":1,\\\"position\\\":{\\\"x\\\":80,\\\"y\\\":520,\\\"displayId\\\":null}},\\\"revision\\\":1,\\\"createdAt\\\":\\\"2026-10-25T10:15:21.267Z\\\",\\\"updatedAt\\\":\\\"2026-10-25T10:15:21.267Z\\\"},\\\"selections\\\":{\\\"chatPetId\\\":null,\\\"battlePetId\\\":null,\\\"guardPetId\\\":null}},\\\"revision\\\":1,\\\"duplicate\\\":false}\",\"request_hash\":\"25ee675a06591494a20b28c0ecc7020b8c98fa75ee9ac5c3fa957b50447c0de0\",\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"}],\"companion_accounts\":[{\"revision\":1,\"selections_json\":\"{\\\"chatPetId\\\":null,\\\"battlePetId\\\":null,\\\"guardPetId\\\":null}\",\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"legacy_imported_at\":\"2026-10-25T10:15:21.267Z\"}],\"companion_interactions\":[],\"companion_legacy_archive\":[],\"companion_capture_receipts\":[]},\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"identityImports\":[]},\"version\":1},\"conversations\":{\"data\":{\"schema\":{\"conversation_memories\":\"id|owner_account_id|pet_id|content|revision|created_at|updated_at\",\"conversation_messages\":\"id|owner_account_id|pet_id|action_id|role|content|status|error_code|provider|model|attempt|created_at|updated_at\",\"conversation_profiles\":\"owner_account_id|pet_id|persona|reply_style|memory_enabled|pause_while_chatting|use_override|revision|updated_at\",\"conversation_connections\":\"owner_account_id|scope|scope_id|provider|base_url|model|context_chars|max_output_tokens|revision|updated_at\",\"conversation_preferences\":\"owner_account_id|selected_pet_id\"},\"tables\":{\"conversation_memories\":[],\"conversation_messages\":[],\"conversation_profiles\":[],\"conversation_connections\":[],\"conversation_preferences\":[]},\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},\"version\":1}}},\"format\":\"lingjing-account-save\",\"version\":1,\"checksum\":\"d5c44ad62b33aa1e569cb59a2643ca5296a36093755dacd74375d5bbfe8e9f3e\",\"excluded\":[\"conversation_credentials\"],\"identity\":{\"provider\":\"runtime\",\"subjectId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},\"createdAt\":\"2026-10-25T14:34:19.164Z\",\"provenance\":{\"mode\":\"live\"},\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},\"accountRevision\":5}}",
+        "error_code": null,
+        "created_at": 1792938389435,
+        "updated_at": 1792938861096
+      }
+    ],
+    "outbox": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "action_id": "cloud-garden-initialize:v1",
+        "payload_json": "{\"kind\":\"initialize\",\"input\":{\"actionId\":\"cloud-garden-initialize:v1\",\"expectedRevision\":0},\"result\":{\"ok\":true,\"data\":{\"initialized\":true,\"plots\":6},\"revision\":1,\"replayed\":false}}",
+        "status": "synced",
+        "attempts": 0,
+        "last_error": null,
+        "created_at": 1792935736822
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "action_id": "e8156c9e-4b1d-421a-a326-9860f203d402",
+        "payload_json": "{\"kind\":\"plant\",\"input\":{\"plotId\":\"plot-1\",\"cropType\":\"carrot\",\"sessionOwnerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"actionId\":\"e8156c9e-4b1d-421a-a326-9860f203d402\",\"expectedRevision\":1},\"result\":{\"ok\":true,\"data\":{\"plotId\":\"plot-1\",\"cropType\":\"carrot\",\"plantedAt\":1792938859056,\"maturesAt\":1792939459056,\"yieldQuantity\":3},\"revision\":2,\"replayed\":false}}",
+        "status": "synced",
+        "attempts": 0,
+        "last_error": null,
+        "created_at": 1792938859056
+      }
+    ],
+    "ledger": []
+  },
+  "ui": {
+    "route": "#/garden/plots",
+    "pendingRaw": null,
+    "visibleText": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n云端验收甲\n\n领地 / 和伙伴的小天地\n\n把小日子，种成好收成。\n\n在这里，和伙伴一起，把平凡的日子种出温柔的惊喜。\n\n收获成熟作物\n领地总览\n我的菜园\n制作食物\n背包与喂养\n✓ 原操作已确认保存。\n账号基础菜园\n慢慢长大，好好收获\n胡萝卜\n09:15\n地块 2\n播种\n地块 3\n播种\n地块 4\n播种\n地块 5\n播种\n地块 6\n播种\n六块小天地，每一份收成都属于你。\n作物的成长过程\n播种\n埋下种子，期待发芽\n生长\n离线时也在慢慢长大\n成熟\n成熟后会一直等你\n收获入库\n直接喂食，或做一碗米饭\n\n正在照料\n\n地块 1 · 胡萝卜\n生长中 · 09:15\n预计收获\n胡萝卜 × 3\n收获\n选择种子 拥有数量\n胡萝卜\n种子 × 1\n番茄\n种子 × 2\n莓果\n种子 × 2\n稻米\n种子 × 2\n从探索和对战中获得种子 ↗",
+    "clicks": [
+      {
+        "at": 1792938856089,
+        "trusted": true,
+        "label": "重试",
+        "route": "#/garden/plots"
+      }
+    ],
+    "disabledButtons": [
+      "收获成熟作物",
+      "收获"
+    ]
+  },
+  "proxy": {
+    "host": "jbvrdmrkwpznbrvteive.supabase.co",
+    "mode": "allow",
+    "accepted": 46,
+    "rejected": 16,
+    "upBytes": 290310,
+    "downBytes": 556848,
+    "closedByControl": 2,
+    "active": 0,
+    "maxBlockedMs": 300000,
+    "blockedUntil": null,
+    "statusWriteFailures": 0,
+    "events": [
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "mode:deny"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-rejected"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-rejected"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-rejected"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-rejected"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-rejected"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-rejected"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-rejected"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-rejected"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-rejected"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-rejected"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-rejected"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-rejected"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-rejected"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-rejected"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-rejected"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-rejected"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "mode:allow"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      }
+    ]
+  }
+}

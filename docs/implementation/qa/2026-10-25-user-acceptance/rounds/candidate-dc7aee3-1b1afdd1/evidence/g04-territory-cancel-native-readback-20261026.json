@@ -1,0 +1,93 @@
+{
+  "at": "2026-10-26T07:45:18.583Z",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "nativeActions": [
+    "visible simulated location refresh",
+    "original owned second fox challenge",
+    "round0 leave then confirm",
+    "return to territory",
+    "continue once into same abandoned session"
+  ],
+  "provenance": "original LocalA path-bound unified-battle; simulated local location/territory, not live cloud",
+  "readOnlyComparison": true,
+  "battle": {
+    "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+    "id": "battle-c6ef8b49-98c2-4cbe-86e3-338ad297a097",
+    "room_id": null,
+    "status": "abandoned",
+    "data_json": "{\"id\":\"battle-c6ef8b49-98c2-4cbe-86e3-338ad297a097\",\"mode\":\"territory\",\"status\":\"abandoned\",\"startedAt\":\"2026-10-26T07:41:07.469Z\",\"player\":{\"petId\":\"pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca\",\"petName\":\"小狐\",\"element\":\"water\",\"level\":1,\"resourceRef\":\"builtin:lingjing-xiaohu-v1\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"appearance2d\":\"builtin:lingjing-xiaohu-v1\"},\"enemy\":{\"petId\":\"guardian:qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:territory:5205:20245\",\"petName\":\"青芽\",\"element\":\"wood\",\"level\":1,\"resource\":{\"resourceId\":\"builtin:lingjing-qingya-v1\",\"kind\":\"2d\"},\"appearance2d\":\"builtin:lingjing-qingya-v1\"},\"snapshot\":{\"round\":0,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":120,\"maxHp\":120,\"anger\":0,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"wood\",\"hp\":120,\"maxHp\":120,\"anger\":0,\"freeDodgeUsed\":false,\"statuses\":[]}},\"rounds\":[],\"winner\":null,\"pendingAction\":null,\"historyComplete\":true,\"rules\":{\"id\":\"five-elements-standard-v1\",\"label\":\"标准五行对战\",\"vitalPolicy\":\"normalized\",\"maxHp\":120,\"maxAnger\":100,\"companionStatsApplied\":false,\"baseDamage\":{\"normal_attack\":10,\"element_attack\":12,\"dodge\":0,\"ultimate\":20},\"ultimateAnger\":50,\"ultimateCost\":50,\"ultimateHeal\":20,\"dodgeMaxCost\":20,\"dodgeRefund\":30,\"advantage\":{\"metal\":\"wood\",\"wood\":\"earth\",\"earth\":\"water\",\"water\":\"fire\",\"fire\":\"metal\"},\"elementEffects\":{\"metal\":{\"label\":\"易伤\",\"description\":\"每层受伤×1.5，最多5层\"},\"wood\":{\"label\":\"寄生\",\"description\":\"每层回合末吸取2生命，最多5层\"},\"earth\":{\"label\":\"迟钝\",\"description\":\"每层伤害×0.5，最多5层\"},\"water\":{\"label\":\"降怒\",\"description\":\"命中后对方怒气向下取半，不增加受击怒气\"},\"fire\":{\"label\":\"燃烧\",\"description\":\"回合末按当前生命8%×层数伤害，最多5层\"}}},\"context\":{\"id\":\"qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:territory:5205:20245:1\",\"territoryId\":\"qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:territory:5205:20245\",\"territoryRevision\":1,\"authority\":\"simulated\",\"scenarioId\":\"f3455e84-59a1-4edb-9b77-975ff32dc45c\"},\"updatedAt\":\"2026-10-26T07:42:18.948Z\",\"revision\":1,\"endedAt\":\"2026-10-26T07:42:18.948Z\",\"reportId\":\"battle-c6ef8b49-98c2-4cbe-86e3-338ad297a097\"}",
+    "revision": 2,
+    "updated_at": "2026-10-26T07:42:18.948Z"
+  },
+  "challenge": {
+    "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+    "battle_id": "battle-c6ef8b49-98c2-4cbe-86e3-338ad297a097",
+    "territory_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:territory:5205:20245",
+    "territory_revision": 1,
+    "settled": 0,
+    "result_json": null
+  },
+  "territoryAttempts": [
+    {
+      "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+      "day_key": "2026-10-26",
+      "count": 1
+    }
+  ],
+  "territoryRecords": [
+    {
+      "territory_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:territory:5205:20245",
+      "owner_account_id": null,
+      "revision": 1,
+      "data_json": "{\"id\":\"qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:territory:5205:20245\",\"name\":\"附近的庭院\",\"regionName\":\"领地演练\",\"ownerAccountId\":null,\"revision\":1,\"captureMultiplier\":2,\"provenance\":\"simulated-geographic\",\"boundary\":[{\"lat\":31.23,\"lng\":121.47},{\"lat\":31.236,\"lng\":121.47},{\"lat\":31.236,\"lng\":121.476},{\"lat\":31.23,\"lng\":121.476}]}",
+      "updated_at": 1792932349426
+    }
+  ],
+  "garrisons": [],
+  "unchangedTables": [
+    "account_settings",
+    "discovery_actions",
+    "discovery_captures",
+    "discovery_encounters",
+    "discovery_memory_tags",
+    "companion_capture_receipts",
+    "battle_reward_receipts",
+    "companion_pets",
+    "garden_territory_records",
+    "garden_garrisons",
+    "garden_reward_receipts",
+    "garden_plots",
+    "garden_items",
+    "garden_ledger",
+    "conversation_profiles",
+    "conversation_preferences",
+    "conversation_messages",
+    "conversation_memories"
+  ],
+  "changedTables": [
+    "battle_sessions",
+    "battle_action_receipts",
+    "battle_reports_v2",
+    "companion_accounts",
+    "companion_actions",
+    "garden_territory_attempts",
+    "garden_territory_challenges",
+    "garden_territory_logs",
+    "garden_accounts",
+    "garden_actions"
+  ],
+  "originalBattleSelectionRestoredThroughNormalChallenge": true,
+  "observations": [
+    "1 legitimate daily attempt consumed",
+    "no occupation/garrison/new capture or reward",
+    "abandoned challenge stays unsettled and native UI has no result confirmation",
+    "remaining daily attempt cannot be started for the only available territory"
+  ],
+  "firstStaleRejection": {
+    "locationScreenshotUtc": "2026-10-26T07:38:25.538Z",
+    "errorScreenshotUtc": "2026-10-26T07:39:03.454Z",
+    "elapsedSeconds": 37.916,
+    "message": "菜园暂时不可用，请稍后重试",
+    "inference": "timing exceeds 30s TTL; subsequent freshly located native challenge succeeds. Exact rejected response code not captured."
+  }
+}

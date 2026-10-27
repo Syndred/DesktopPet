@@ -1,0 +1,54 @@
+{
+  "at": "2026-10-25T10:30:53.902Z",
+  "round": {
+    "id": "candidate-312e5fe-524fd56d",
+    "runId": "6ff8e38f-9f2b-4872-8747-1fb00bd81655",
+    "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+    "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+    "executable": "C:/Users/Administrator/Desktop/project/DesktopPet/releases/user-acceptance-312e5fe/Lingjing-0.1.8-portable-x64.exe",
+    "startedAt": "2026-10-25T10:25:37.765Z"
+  },
+  "launch": {
+    "id": "candidate-312e5fe-524fd56d",
+    "runId": "6ff8e38f-9f2b-4872-8747-1fb00bd81655",
+    "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+    "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+    "executable": "C:/Users/Administrator/Desktop/project/DesktopPet/releases/user-acceptance-312e5fe/Lingjing-0.1.8-portable-x64.exe",
+    "startedAt": "2026-10-25T10:25:37.765Z",
+    "profile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a",
+    "marker": {
+      "schemaVersion": 1,
+      "application": "lingjing",
+      "scenario": "unified-battle",
+      "runId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+      "isolated": true,
+      "profilePath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\6ff8e38f-9f2b-4872-8747-1fb00bd81655\\local-a",
+      "createdAt": "2026-10-25T10:25:57.3Z"
+    },
+    "debugPort": 57215,
+    "duplicatePort": 57216,
+    "launchers": [
+      {
+        "role": "primary",
+        "id": 20688
+      },
+      {
+        "role": "cold-duplicate",
+        "id": 33100
+      }
+    ]
+  },
+  "firstObserved": "Original launcher PIDs absent, no candidate window/child at observation; exit codes not captured; cause unconfirmed.",
+  "individualRetry": {
+    "launcherPid": 23280,
+    "mainPid": 27436,
+    "mainWindowId": 7866562,
+    "buildSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+    "started": true
+  },
+  "ordinaryProtected": [
+    10392,
+    14476,
+    9703220
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "at": "2026-10-26T19:26:18.070Z",
+  "stage": "privacy-and-network-preparation",
+  "caseUpdates": [
+    {
+      "id": "P07",
+      "status": "passed",
+      "severity": "TBD",
+      "executionState": "executed",
+      "actual": "在新4e原A/A2/B2/Local设置页实际查看开机、位置、统计等控制和说明；开机启动false、位置允许false、仅探索更新true、情绪统计false，与四原设置全文一致。未代用户修改OS开机、定位或统计权限；临时修改仅为已有验收范围内本档正常退出closeToTray并已记录全文恢复义务。",
+      "evidence": [
+        "native-A-settings-before-restoration.png",
+        "native-A2-settings-before-restoration.png",
+        "native-B2-settings-before-restoration.png",
+        "native-LocalA-settings-restoration-save-visible.png",
+        "native-four-first-start-restoration-seal.json"
+      ],
+      "hardTechnicalBlock": false,
+      "blockerGroup": null,
+      "blockerKind": null
+    },
+    {
+      "id": "S03",
+      "status": "running",
+      "executionState": "preparation_only",
+      "actual": "新4e专用契约已由Root冻结、离线审查；09读取全契约并逐5文件核对freeze，未启动任何helper。A保留carrot5、原用户名已恢复；仅正常UI保存closeToTrayfalse为24并普通Alt+F4退出，原Main/wrapper/SFX6进程与CDP57234均消失，其他三原客户端仍在。原23全文恢复义务已封存。等待Root独立退出复核与逐阶段新批准，尚未执行本轮网络中断或新喂养。",
+      "evidence": [
+        "network-pending-restart-v1/freeze.json",
+        "network-pending-restart-v1/root-offline-review.json",
+        "native-A-network-normal-exit-restoration-obligation.json",
+        "cloudA-network-temporary-close-false-before-exit.json",
+        "native-A-normal-exit-before-network-confirmed.json"
+      ],
+      "hardTechnicalBlock": false,
+      "blockerGroup": null,
+      "blockerKind": null
+    },
+    {
+      "id": "S06",
+      "status": "running",
+      "executionState": "preparation_only",
+      "actual": "本轮尚未启动网络helper；将按与S03相同的一个原始喂养请求跨产品重启检查连接有界退避、busy与原请求恢复。旧BC连接风暴数字不作为新4e失败或通过。",
+      "evidence": [
+        "network-pending-restart-v1/freeze.json",
+        "network-pending-restart-v1/root-offline-review.json",
+        "native-A-normal-exit-before-network-confirmed.json"
+      ],
+      "hardTechnicalBlock": false,
+      "blockerGroup": null,
+      "blockerKind": null
+    }
+  ],
+  "newIssues": []
+}

@@ -1,0 +1,178 @@
+{
+  "at": "2026-10-25T22:25:35.044Z",
+  "actionId": "companions:desktop-position-0777dcb9-cd8d-4a45-93e3-6d893770e205",
+  "intent": {
+    "status": "verified",
+    "command": "desktop",
+    "input": {
+      "actionId": "desktop-position-0777dcb9-cd8d-4a45-93e3-6d893770e205",
+      "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+      "position": {
+        "x": 320,
+        "y": 520,
+        "displayId": "2568730015"
+      }
+    },
+    "baseRevision": 27,
+    "nativePosition": true,
+    "createdAt": "2026-10-25T22:24:12.681Z",
+    "preparedAt": "2026-10-25T22:24:19.019Z",
+    "sentAt": "2026-10-25T22:24:19.019Z",
+    "result": {
+      "ok": true,
+      "data": {
+        "pet": {
+          "name": "小狐",
+          "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+          "growth": {
+            "mood": 63,
+            "level": 1,
+            "stats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            },
+            "satiety": 80,
+            "affinity": 4,
+            "winsTotal": 0,
+            "experience": 0
+          },
+          "origin": {},
+          "serial": "3B746D1A",
+          "source": "adoption",
+          "desktop": {
+            "scale": 1,
+            "visible": true,
+            "behavior": "quiet",
+            "position": {
+              "x": 320,
+              "y": 520,
+              "displayId": "2568730015"
+            }
+          },
+          "element": "water",
+          "resource": {
+            "kind": "2d",
+            "resourceId": "builtin:lingjing-xiaohu-v1"
+          },
+          "revision": 3,
+          "createdAt": "2026-10-25T16:01:54.342Z",
+          "updatedAt": "2026-10-25T22:24:22.311Z",
+          "templateId": "animal-white-fox",
+          "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+        },
+        "selections": {
+          "chatPetId": null,
+          "guardPetId": null,
+          "battlePetId": "pet-97410828-fdf6-4253-8246-4c5f389d8fba"
+        }
+      },
+      "revision": 8,
+      "duplicate": false,
+      "cloud": {
+        "authority": "live",
+        "actionId": "companions:desktop-position-0777dcb9-cd8d-4a45-93e3-6d893770e205",
+        "revision": 28,
+        "checksum": "3aef52176eee8a5b1f794e5d440acf64b0d9b5253ce418474a603c72c66a97c2",
+        "sharedSavePending": false
+      }
+    },
+    "verifiedAt": "2026-10-25T22:24:26.943Z"
+  },
+  "changedTables": [
+    "companion_accounts",
+    "companion_pets",
+    "companion_actions"
+  ],
+  "beforeOldPet": {
+    "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+    "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+    "templateId": "animal-white-fox",
+    "name": "小狐",
+    "serial": "3B746D1A",
+    "element": "water",
+    "resource": {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "kind": "2d"
+    },
+    "source": "adoption",
+    "origin": {},
+    "growth": {
+      "level": 1,
+      "experience": 0,
+      "mood": 63,
+      "satiety": 80,
+      "affinity": 4,
+      "winsTotal": 0,
+      "stats": {
+        "hp": 124,
+        "atk": 28,
+        "def": 24,
+        "spd": 20
+      }
+    },
+    "desktop": {
+      "visible": true,
+      "behavior": "quiet",
+      "scale": 1,
+      "position": {
+        "x": 320,
+        "y": 520,
+        "displayId": null
+      }
+    },
+    "revision": 2,
+    "createdAt": "2026-10-25T16:01:54.342Z",
+    "updatedAt": "2026-10-25T19:51:17.768Z"
+  },
+  "afterOldPet": {
+    "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+    "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+    "templateId": "animal-white-fox",
+    "name": "小狐",
+    "serial": "3B746D1A",
+    "element": "water",
+    "resource": {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "kind": "2d"
+    },
+    "source": "adoption",
+    "origin": {},
+    "growth": {
+      "level": 1,
+      "experience": 0,
+      "mood": 63,
+      "satiety": 80,
+      "affinity": 4,
+      "winsTotal": 0,
+      "stats": {
+        "hp": 124,
+        "atk": 28,
+        "def": 24,
+        "spd": 20
+      }
+    },
+    "desktop": {
+      "visible": true,
+      "behavior": "quiet",
+      "scale": 1,
+      "position": {
+        "x": 320,
+        "y": 520,
+        "displayId": "2568730015"
+      }
+    },
+    "revision": 3,
+    "createdAt": "2026-10-25T16:01:54.342Z",
+    "updatedAt": "2026-10-25T22:24:22.311Z"
+  },
+  "qualification": "One sidebar coordinate received by overlapping real desktop pet, normal nativePosition receipt verified; same x320/y520, displayId null→2568730015 and ordinary revision/time update only. No repeat/confirm click, no rollback/delete/secret business IPC. Preserve original history and use next baseline after this honest native action.",
+  "checks": {
+    "onlyOldFoxDesktopReceipt": true,
+    "sameXY": true,
+    "growthExact": true,
+    "gardenItemsExact": true,
+    "battleAndRewardExact": true
+  }
+}

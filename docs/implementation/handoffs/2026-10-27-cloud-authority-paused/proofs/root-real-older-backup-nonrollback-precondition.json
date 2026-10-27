@@ -1,0 +1,82 @@
+{
+  "at": "2026-10-26T20:38:26.812Z",
+  "preparedByRoot": true,
+  "readOnlyOriginal": true,
+  "source": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\accounts\\backups\\before-restore-1793020554523-83bae0c3-9fba-4637-9377-c3595a76b60f.lingjing.json",
+  "target": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\native-ui-exports\\B2-older-economy-original-20261026.lingjing.json",
+  "fileSha256": "98d3dce94f93bbf08e05eda5b29c4cdfba72950e14299129f65e7b796ee8889d",
+  "bytes": 5837370,
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "provenance": {
+    "mode": "live"
+  },
+  "headerChecksumVerified": true,
+  "oldCreatedAt": "2026-10-26T13:15:54.447Z",
+  "oldGardenRevision": 2,
+  "currentGardenRevision": 7,
+  "currentCloudRevision": 28,
+  "currentCloudChecksum": "d96ec0d913405cbb927e9df33896a647cb04ab1c09e9eb5e3888f397ea31d40f",
+  "oldItems": [
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "item_id": "seed:berry",
+      "quantity": 2
+    },
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "item_id": "seed:carrot",
+      "quantity": 4
+    },
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "item_id": "seed:rice",
+      "quantity": 2
+    },
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "item_id": "seed:tomato",
+      "quantity": 4
+    }
+  ],
+  "currentItems": [
+    {
+      "item_id": "seed:carrot",
+      "quantity": 3,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "item_id": "seed:tomato",
+      "quantity": 4,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "item_id": "seed:berry",
+      "quantity": 2,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "item_id": "seed:rice",
+      "quantity": 1,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "item_id": "carrot",
+      "quantity": 3,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "item_id": "rice",
+      "quantity": 1,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "item_id": "cooked_rice",
+      "quantity": 1,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    }
+  ],
+  "actualOldAndCurrentEconomyDifferent": true,
+  "productStarted": false,
+  "businessCalls": 0,
+  "requiredVerification": "Normal UI import of this real older same-owner backup must keep the current cloud-owned pet/inventory/game state, while preserving old personal differences and backup originals. This distinguishes the cloud-authority route from an accidental whole-save rollback."
+}

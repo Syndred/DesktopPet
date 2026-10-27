@@ -1,0 +1,47 @@
+{
+  "at": "2026-10-25T18:14:56.909Z",
+  "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+  "petId": "pet-8853a238-8730-4970-8e39-885a1f1da97d",
+  "helperEvents": [
+    {
+      "at": "2026-10-25T18:12:35.910Z",
+      "event": "request_accepted",
+      "requestId": "sim-1",
+      "mode": "stream",
+      "bytes": 152,
+      "messageCount": 1,
+      "contentChars": 15
+    },
+    {
+      "at": "2026-10-25T18:12:42.406Z",
+      "event": "response_end",
+      "requestId": "sim-1",
+      "mode": "stream",
+      "reason": "complete",
+      "status": 200,
+      "deltas": 44
+    },
+    {
+      "at": "2026-10-25T18:14:15.569Z",
+      "event": "request_accepted",
+      "requestId": "sim-2",
+      "mode": "hold",
+      "bytes": 152,
+      "messageCount": 1,
+      "contentChars": 15
+    },
+    {
+      "at": "2026-10-25T18:14:30.801Z",
+      "event": "response_closed",
+      "requestId": "sim-2",
+      "mode": "hold",
+      "reason": "client_closed",
+      "deltas": 14
+    }
+  ],
+  "chatMessagesAfterTests": 0,
+  "oldGlobalFixtureRequests": 8,
+  "simulatedUpstream": true,
+  "realLoopbackHttp": true,
+  "externalModelSuccess": false
+}

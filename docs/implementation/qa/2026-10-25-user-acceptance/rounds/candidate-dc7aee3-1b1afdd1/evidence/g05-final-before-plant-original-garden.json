@@ -1,0 +1,650 @@
+{
+  "at": "2026-10-25T16:23:31.971Z",
+  "snapshot": {
+    "ok": true,
+    "revision": 2,
+    "data": {
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "serverTime": 1792945411172,
+      "revision": 2,
+      "plots": [
+        {
+          "plotId": "plot-1",
+          "cropType": "carrot",
+          "plantedAt": 1792938859056,
+          "maturesAt": 1792939459056,
+          "yieldQuantity": 3,
+          "revision": 1,
+          "stage": "mature"
+        },
+        {
+          "plotId": "plot-2",
+          "cropType": null,
+          "plantedAt": null,
+          "maturesAt": null,
+          "yieldQuantity": 0,
+          "revision": 0,
+          "stage": "empty"
+        },
+        {
+          "plotId": "plot-3",
+          "cropType": null,
+          "plantedAt": null,
+          "maturesAt": null,
+          "yieldQuantity": 0,
+          "revision": 0,
+          "stage": "empty"
+        },
+        {
+          "plotId": "plot-4",
+          "cropType": null,
+          "plantedAt": null,
+          "maturesAt": null,
+          "yieldQuantity": 0,
+          "revision": 0,
+          "stage": "empty"
+        },
+        {
+          "plotId": "plot-5",
+          "cropType": null,
+          "plantedAt": null,
+          "maturesAt": null,
+          "yieldQuantity": 0,
+          "revision": 0,
+          "stage": "empty"
+        },
+        {
+          "plotId": "plot-6",
+          "cropType": null,
+          "plantedAt": null,
+          "maturesAt": null,
+          "yieldQuantity": 0,
+          "revision": 0,
+          "stage": "empty"
+        }
+      ],
+      "items": [
+        {
+          "id": "seed:carrot",
+          "name": "胡萝卜种子",
+          "icon": "🥕",
+          "category": "seed",
+          "source": "探索与对战",
+          "effects": null,
+          "quantity": 1
+        },
+        {
+          "id": "seed:tomato",
+          "name": "番茄种子",
+          "icon": "🍅",
+          "category": "seed",
+          "source": "探索与对战",
+          "effects": null,
+          "quantity": 2
+        },
+        {
+          "id": "seed:berry",
+          "name": "莓果种子",
+          "icon": "🫐",
+          "category": "seed",
+          "source": "探索与对战",
+          "effects": null,
+          "quantity": 2
+        },
+        {
+          "id": "seed:rice",
+          "name": "稻米种子",
+          "icon": "🌾",
+          "category": "seed",
+          "source": "探索与对战",
+          "effects": null,
+          "quantity": 2
+        },
+        {
+          "id": "carrot",
+          "name": "胡萝卜",
+          "icon": "🥕",
+          "category": "food",
+          "source": "菜园收获",
+          "effects": {
+            "satiety": 12,
+            "mood": 2,
+            "intimacy": 2
+          },
+          "quantity": 0
+        },
+        {
+          "id": "tomato",
+          "name": "番茄",
+          "icon": "🍅",
+          "category": "food",
+          "source": "菜园收获",
+          "effects": {
+            "satiety": 10,
+            "mood": 3,
+            "intimacy": 2
+          },
+          "quantity": 0
+        },
+        {
+          "id": "berry",
+          "name": "莓果",
+          "icon": "🫐",
+          "category": "food",
+          "source": "菜园收获",
+          "effects": {
+            "satiety": 8,
+            "mood": 4,
+            "intimacy": 3
+          },
+          "quantity": 0
+        },
+        {
+          "id": "rice",
+          "name": "稻米",
+          "icon": "🌾",
+          "category": "ingredient",
+          "source": "菜园收获",
+          "effects": null,
+          "quantity": 0
+        },
+        {
+          "id": "cooked_rice",
+          "name": "热乎乎的米饭",
+          "icon": "🍚",
+          "category": "food",
+          "source": "稻米制作",
+          "effects": {
+            "satiety": 20,
+            "mood": 3,
+            "intimacy": 4
+          },
+          "quantity": 0
+        }
+      ],
+      "crops": [
+        {
+          "id": "carrot",
+          "name": "胡萝卜",
+          "icon": "🥕",
+          "seedItemId": "seed:carrot",
+          "harvestItemId": "carrot",
+          "growMs": 600000,
+          "yield": 3,
+          "color": "#ed9448"
+        },
+        {
+          "id": "tomato",
+          "name": "番茄",
+          "icon": "🍅",
+          "seedItemId": "seed:tomato",
+          "harvestItemId": "tomato",
+          "growMs": 900000,
+          "yield": 3,
+          "color": "#ef7875"
+        },
+        {
+          "id": "berry",
+          "name": "莓果",
+          "icon": "🫐",
+          "seedItemId": "seed:berry",
+          "harvestItemId": "berry",
+          "growMs": 1200000,
+          "yield": 4,
+          "color": "#9e8fd4"
+        },
+        {
+          "id": "rice",
+          "name": "稻米",
+          "icon": "🌾",
+          "seedItemId": "seed:rice",
+          "harvestItemId": "rice",
+          "growMs": 1500000,
+          "yield": 2,
+          "color": "#d2ad54"
+        }
+      ],
+      "recipes": [
+        {
+          "id": "cooked_rice",
+          "name": "热乎乎的米饭",
+          "input": {
+            "itemId": "rice",
+            "quantity": 1
+          },
+          "output": {
+            "itemId": "cooked_rice",
+            "quantity": 1
+          }
+        }
+      ],
+      "pets": [
+        {
+          "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "serial": "3B746D1A",
+          "element": "water",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "source": "adoption",
+          "origin": {},
+          "growth": {
+            "level": 1,
+            "experience": 0,
+            "mood": 60,
+            "satiety": 60,
+            "affinity": 0,
+            "winsTotal": 0,
+            "stats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          "desktop": {
+            "visible": true,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 320,
+              "y": 520,
+              "displayId": null
+            }
+          },
+          "revision": 1,
+          "createdAt": "2026-10-25T16:01:54.342Z",
+          "updatedAt": "2026-10-25T16:01:54.342Z"
+        },
+        {
+          "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "petId": "pet-40899e45-d323-49c8-9136-743f14be6ce3",
+          "templateId": "big-fish-gentle",
+          "name": "鱼丸",
+          "serial": "40899E45",
+          "element": "water",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "source": "adoption",
+          "origin": {},
+          "growth": {
+            "level": 1,
+            "experience": 0,
+            "mood": 60,
+            "satiety": 60,
+            "affinity": 0,
+            "winsTotal": 0,
+            "stats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          "desktop": {
+            "visible": false,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 80,
+              "y": 520,
+              "displayId": null
+            }
+          },
+          "revision": 1,
+          "createdAt": "2026-10-25T10:15:21.267Z",
+          "updatedAt": "2026-10-25T10:15:21.267Z"
+        }
+      ],
+      "territories": [],
+      "ledger": [
+        {
+          "id": "d754feda-9201-4f0f-b6a8-695f878d98b5",
+          "actionId": "e8156c9e-4b1d-421a-a326-9860f203d402",
+          "kind": "plant",
+          "itemId": "seed:carrot",
+          "delta": -1,
+          "balance": 1,
+          "petId": null,
+          "createdAt": 1792938859056
+        },
+        {
+          "id": "2ed7e89c-779c-4a4b-aa2c-40723a310dab",
+          "actionId": "cloud-garden-initialize:v1",
+          "kind": "starter",
+          "itemId": "seed:rice",
+          "delta": 2,
+          "balance": 2,
+          "petId": null,
+          "createdAt": 1792935736822
+        },
+        {
+          "id": "8c83a868-11cf-45ab-bb68-a354c7fb6ba6",
+          "actionId": "cloud-garden-initialize:v1",
+          "kind": "starter",
+          "itemId": "seed:berry",
+          "delta": 2,
+          "balance": 2,
+          "petId": null,
+          "createdAt": 1792935736822
+        },
+        {
+          "id": "64276855-3bee-436c-877e-2cc7e2104f51",
+          "actionId": "cloud-garden-initialize:v1",
+          "kind": "starter",
+          "itemId": "seed:tomato",
+          "delta": 2,
+          "balance": 2,
+          "petId": null,
+          "createdAt": 1792935736822
+        },
+        {
+          "id": "aac383ff-e849-4711-ad86-820eea01d652",
+          "actionId": "cloud-garden-initialize:v1",
+          "kind": "starter",
+          "itemId": "seed:carrot",
+          "delta": 2,
+          "balance": 2,
+          "petId": null,
+          "createdAt": 1792935736822
+        }
+      ],
+      "sync": {
+        "mode": "cloud",
+        "pending": 0,
+        "conflicts": 0
+      },
+      "territoryChallenges": [],
+      "remainingInvasions": 2
+    }
+  },
+  "db": {
+    "at": "2026-10-25T16:23:31.975Z",
+    "db": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a/lingjing.sqlite",
+    "tables": {
+      "account_actions": {
+        "count": 9,
+        "sha256": "7fec7adf052f759b83e24da803d4c32da47a21674e1a084c2314c145e0e000e8"
+      },
+      "account_aliases": {
+        "count": 1,
+        "sha256": "ef219db333e9afe64559050a522df341f965d3bb81ce440a1b487e68295e3344"
+      },
+      "account_backup_receipts": {
+        "count": 1,
+        "sha256": "1068e880180f369df5ebdb4afd76f198fbd4afde58f8728e827793379131270e"
+      },
+      "account_cloud_links": {
+        "count": 1,
+        "sha256": "738f6a859236d66c8859016d0d8c1ae486db92232a188c8430f4f1ed34c46443"
+      },
+      "account_identities": {
+        "count": 1,
+        "sha256": "665c04f85123721e7f4e7dfe140bdc03061854ff70ed5adcb9129565fc26d769"
+      },
+      "account_legacy_data": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "account_login_sessions": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "account_migration_sources": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "account_qa_profile": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "account_session_control": {
+        "count": 1,
+        "sha256": "0ad2ef1577ddc06c162b972d83eae1f0a3106d147565b06f8399a3e4158ad663"
+      },
+      "account_settings": {
+        "count": 1,
+        "sha256": "12c80d95ee51ee8c15fae0be493737516cd90e8fb1b41b43833e6e6d93452769"
+      },
+      "account_sync_baselines": {
+        "count": 1,
+        "sha256": "e12c203ff6ac0ff18146cf5cb0c652fc75bf2cb4c1fc22eab89c209f978b3024"
+      },
+      "account_sync_checkpoints": {
+        "count": 1,
+        "sha256": "9c3c89ab32e6751353fd704ed768415c29962845e80e4c61bcde49d72b83cdbf"
+      },
+      "account_sync_outbox": {
+        "count": 5,
+        "sha256": "5256620b8420199ab9bbae6eb56998725a8f22d7e44b89beb9afa1be7e870f30"
+      },
+      "account_sync_sources": {
+        "count": 5,
+        "sha256": "e47c3bd2e33dd7e802432cf0d6770ff12897c39096666bdf7b41ba3f2c601cea"
+      },
+      "account_sync_state": {
+        "count": 1,
+        "sha256": "72b6a72560ac60876822db44fece925c70303c360e02588320d8ce797be2b0cb"
+      },
+      "battle_action_receipts": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "battle_reports_v2": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "battle_reward_receipts": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "battle_sessions": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "battle_transport_journal": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "companion_accounts": {
+        "count": 1,
+        "sha256": "17effe0c144b3526293f252ac347ce62207798e7b05e2582dc34807b3e704ce7"
+      },
+      "companion_actions": {
+        "count": 2,
+        "sha256": "b9d9e720fe43c22502f29855762c2bb1f35917113b1fd59c3ae4acdfdd4bb45b"
+      },
+      "companion_capture_receipts": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "companion_identity_imports": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "companion_interactions": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "companion_legacy_archive": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "companion_pets": {
+        "count": 2,
+        "sha256": "dafd3ae05e4140afb984a0833f18e1e658aa10c9c0b56c9afb683ee01087769c"
+      },
+      "conversation_connections": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "conversation_credentials": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "conversation_legacy_imports": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "conversation_memories": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "conversation_messages": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "conversation_preferences": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "conversation_profiles": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "discovery_actions": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "discovery_captures": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "discovery_encounters": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "discovery_memory_tags": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "garden_accounts": {
+        "count": 1,
+        "sha256": "4b490b46e92c95997cb1773afe966e50e89bcbea275c93d04d81d45e1f7af44a"
+      },
+      "garden_actions": {
+        "count": 2,
+        "sha256": "437f05106e3b9d3466d71bdf566287a43bea6f207f247d41ca4bcda69a7a3d1c"
+      },
+      "garden_cloud_requests": {
+        "count": 1,
+        "sha256": "e2c9900829440160984949d9a7410ea5c0ff27054faf31f5620f5362ee72a99a"
+      },
+      "garden_cloud_state": {
+        "count": 1,
+        "sha256": "452ba1581e7f331b98b3f1d1c417902a2e78f9bd4e0139e53d2ed35d29fa0f0d"
+      },
+      "garden_events": {
+        "count": 5,
+        "sha256": "1e32261c697e37bce90adeab241f115fc54c7ed4e8fc4a90856df00961f9a684"
+      },
+      "garden_garrisons": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "garden_identity_imports": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "garden_items": {
+        "count": 4,
+        "sha256": "840d61855ec4e5683c34f39abd79d003db88b417b3f84fdde3c4ee8570668b4d"
+      },
+      "garden_ledger": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "garden_outbox": {
+        "count": 2,
+        "sha256": "7d64a4228b9a7d19b524d1e898fea1636c80ea221c179a1fdad98591d11d8a2a"
+      },
+      "garden_plots": {
+        "count": 6,
+        "sha256": "ea194c108e798352d3013d7b03523dbc96cec501c15e48b8365d7d388ac97c7d"
+      },
+      "garden_reward_receipts": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "garden_territory_attempts": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "garden_territory_challenges": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "garden_territory_logs": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "garden_territory_records": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "lingjing_meta": {
+        "count": 2,
+        "sha256": "53114a1c474de9cbeaea97457f284ccbaaf0d7e71ec1d9d4cc9657c101b0fa02"
+      },
+      "lingjing_migrations": {
+        "count": 28,
+        "sha256": "a20b47194bd97715b9b2e36dad2b0fdc2f6ea3593b12412cbb5a02ca1ad64205"
+      },
+      "lingjing_resource_cloud_downloads": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "lingjing_resource_cloud_outbox": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "lingjing_resource_cloud_receipts": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "lingjing_resource_files": {
+        "count": 18,
+        "sha256": "ec3cf8db382de17b3f59aff60281ca8b6355b94594b360237f64d10f98666ff5"
+      },
+      "lingjing_resource_imports": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "lingjing_resource_preference_cache": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "lingjing_resource_preference_outbox": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "lingjing_resource_preference_state": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "lingjing_resource_preferences": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "lingjing_resources": {
+        "count": 9,
+        "sha256": "7cfdf9497eef59c7561335ceb1426c3a56ce344c13964f77d35fc6f5ba0b39d4"
+      },
+      "sqlite_sequence": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "health": [
+      {
+        "quick_check": "ok"
+      }
+    ]
+  }
+}

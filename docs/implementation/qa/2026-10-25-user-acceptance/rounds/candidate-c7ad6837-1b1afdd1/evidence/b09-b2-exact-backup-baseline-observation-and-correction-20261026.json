@@ -1,0 +1,155 @@
+{
+  "at": "2026-10-26T12:51:59.768Z",
+  "status": "exact_backup_baseline_observation_not_final_acceptance",
+  "readOnly": true,
+  "queryOnlySourceReports": true,
+  "credentialValuesRead": false,
+  "backup": {
+    "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-b-second-device-native/accounts/backups/before-cloud-battle-readback-1793017984437-754260fb-4e7e-4610-ae09-60b3648cf28d.lingjing.json",
+    "createdAt": "2026-10-26T12:33:04.366Z",
+    "sha256": "ece993ef6f0671c920b006b9f82865f69ce7299b88ce2de6403215f1747f4ed0",
+    "excluded": [
+      "conversation_credentials"
+    ]
+  },
+  "observations": [
+    {
+      "table": "battle_sessions",
+      "backupCount": 1,
+      "beforeCount": 1,
+      "currentCount": 2,
+      "backupIds": [
+        "online-d79b783a-b5a5-4715-8e58-ba95483b2d67"
+      ],
+      "newIds": [
+        "battle-dc8b3621-93ed-493f-aef9-3a99d15e7929"
+      ],
+      "backupWithOwnerMatchesOriginalBeforeDigest": true,
+      "allOriginalRowsRawEqualCurrent": true
+    },
+    {
+      "table": "battle_reports_v2",
+      "backupCount": 1,
+      "beforeCount": 1,
+      "currentCount": 2,
+      "backupIds": [
+        "online-d79b783a-b5a5-4715-8e58-ba95483b2d67"
+      ],
+      "newIds": [
+        "battle-dc8b3621-93ed-493f-aef9-3a99d15e7929"
+      ],
+      "backupWithOwnerMatchesOriginalBeforeDigest": true,
+      "allOriginalRowsRawEqualCurrent": true
+    },
+    {
+      "table": "battle_reward_receipts",
+      "backupCount": 1,
+      "beforeCount": 1,
+      "currentCount": 2,
+      "backupIds": [
+        "online-d79b783a-b5a5-4715-8e58-ba95483b2d67"
+      ],
+      "newIds": [
+        "battle-dc8b3621-93ed-493f-aef9-3a99d15e7929"
+      ],
+      "backupWithOwnerMatchesOriginalBeforeDigest": true,
+      "allOriginalRowsRawEqualCurrent": true
+    },
+    {
+      "table": "battle_transport_journal",
+      "backupCount": 17,
+      "beforeCount": 17,
+      "currentCount": 17,
+      "backupIds": [
+        "12191bd8-ace4-435f-8743-8a20c07e82a3",
+        "1dd95526-e0da-4b8a-a2dd-c46ad9f34f92",
+        "2b6ad482-fcd6-48c7-ab23-1f8b18044eaa",
+        "2c5e3edc-4591-4c69-aa44-dbafe2eba60c",
+        "2d2e387a-4bdd-4bf2-8d90-5e5e72a34029",
+        "560a9e0f-05ce-4ba2-8053-5690d5bace69",
+        "60135c18-f831-4d0d-a1ce-14355c575020",
+        "93923a46-eafc-4e0d-8004-8c7bc9b310c3",
+        "94354d91-faa7-4ecf-9154-1526c4a99daf",
+        "accept-confirm:d9946730-4bf1-441c-b8f3-4a6d504b1b55",
+        "accept:d9946730-4bf1-441c-b8f3-4a6d504b1b55",
+        "acf1dcbb-43a6-45d1-836c-927fa1952e15",
+        "c36561de-523f-4033-93a2-1ebbfafcea91",
+        "cloud:join:3ed68aba-5d04-4b16-a706-0b895344b8fc",
+        "e22ff4b2-3ac2-4898-8129-0866f8e25eb0",
+        "reject:5983a129-fb48-42c4-a0fa-4fe2421b3247",
+        "room-cache:online-d79b783a-b5a5-4715-8e58-ba95483b2d67"
+      ],
+      "newIds": [],
+      "backupWithOwnerMatchesOriginalBeforeDigest": false,
+      "allOriginalRowsRawEqualCurrent": false
+    }
+  ],
+  "gardenObservation": {
+    "oldItems": [
+      {
+        "item": "seed:berry",
+        "quantity": 2
+      },
+      {
+        "item": "seed:carrot",
+        "quantity": 2
+      },
+      {
+        "item": "seed:rice",
+        "quantity": 2
+      },
+      {
+        "item": "seed:tomato",
+        "quantity": 4
+      }
+    ],
+    "currentItems": [
+      {
+        "item": "seed:carrot",
+        "quantity": 4
+      },
+      {
+        "item": "seed:tomato",
+        "quantity": 4
+      },
+      {
+        "item": "seed:berry",
+        "quantity": 2
+      },
+      {
+        "item": "seed:rice",
+        "quantity": 2
+      }
+    ],
+    "originalActionIds": [
+      "battle-seeds:friend:d79b783a-b5a5-4715-8e58-ba95483b2d67"
+    ],
+    "currentActionIds": [
+      "battle-seeds:friend:d79b783a-b5a5-4715-8e58-ba95483b2d67",
+      "battle-seeds:training:battle-dc8b3621-93ed-493f-aef9-3a99d15e7929"
+    ],
+    "originalReceiptIds": [
+      "d79b783a-b5a5-4715-8e58-ba95483b2d67"
+    ],
+    "currentReceiptIds": [
+      "d79b783a-b5a5-4715-8e58-ba95483b2d67",
+      "battle-dc8b3621-93ed-493f-aef9-3a99d15e7929"
+    ],
+    "newActionMetadata": [
+      {
+        "id": "battle-seeds:training:battle-dc8b3621-93ed-493f-aef9-3a99d15e7929",
+        "createdAt": 1792974812702
+      }
+    ]
+  },
+  "correction": {
+    "priorClaim": "The1to2 cache increase was described as a newly cached original friend battle without first obtaining old row IDs.",
+    "withdrawn": true,
+    "exactOldBaseline": "The original before-cloud-battle-readback backup contains original friend online-d79 in sessions/reports/rewards. New original training dc8 is the correct candidate addition; exact hashes and independent cloud authority still govern acceptance.",
+    "failedVerifierRetained": "native09-b09-natural-expiry-client-proof-original-failed-before-b2-cache-attribution-20261026.cjs",
+    "failedVerifierProducedSuccessProof": false,
+    "ledgerChanged": false
+  },
+  "next": "Wait for Root independent original common heads11/21/23 and immutable settlements comparison. Do not edit, clear, roll back, retry, or infer newly issued rewards from hydrated local rows.",
+  "nativeUiPausedAt": "#/settings"
+}

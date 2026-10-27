@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-26T11:24:55.572Z",
+  "status": "single_positive_save_client_verified_awaiting_independent_cloud_and_restoration",
+  "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+  "approvalRef": "root-c7ad-qa024-scale106-resume-1115",
+  "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+  "native": {
+    "selectedExactId": true,
+    "context": "desktop",
+    "previousScale": 1.05,
+    "newScale": 1.06,
+    "saves": 1,
+    "otherDocumentFieldsExact": true,
+    "noArrowRightIssued": "One native thumb click already set exact1.06; inspected public DOM and did not increment again",
+    "backgroundDraftNotice": "Readonly public UI observed another-window-update notice from normal resources:changed while dirty. Original persisted base still1/rev1/scale1.05 independently checked before the sole normal Save; native Save succeeded."
+  },
+  "generated": {
+    "actionId": "0879f2f8-a834-4080-ba2b-d3b284ef943a",
+    "localRevision": 2,
+    "baseRevision": 1,
+    "clientStatus": "verified",
+    "attempts": 0,
+    "verifiedAt": "2026-10-26T11:23:06.089Z",
+    "cloudPreferenceRevision": 2,
+    "authorityAction": "resource-pref:0879f2f8-a834-4080-ba2b-d3b284ef943a",
+    "authorityRevision": 22,
+    "authorityChecksum": "83068122a5ed1e0c026a705a249b3a3ee5045dfd656d1f0fdde5ec8637a216e2"
+  },
+  "retainedOldConflictRawExact": true,
+  "all4PostloginPetsRawExact": true,
+  "selectionsRawExact": true,
+  "temporarySettingsRawExact": true,
+  "accountLocalHead": 8,
+  "independentCloudReadbackPending": true,
+  "restorationPending": true,
+  "ledgerNotChanged": true,
+  "filenameCaveat": "size-slider-focused-still105 is an intended label; screenshot shows actual1.06. Public DOM before-save confirms1.06, no second increment."
+}

@@ -1,0 +1,892 @@
+{
+  "format": "lingjing.uat.a12.normal-ui-close-preserve-old-o.v1",
+  "at": "2026-10-26T00:27:12.938Z",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "profile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a",
+  "oldActor": {
+    "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+    "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe",
+    "deviceId": "41de040e-a134-487f-b1d3-76b5254a8f97",
+    "sessionId": "b904724b-ab0d-4a87-bd23-7a59fdeef5d6",
+    "source": "Root independent fresh PG metadata confirmed before the one normal UI save"
+  },
+  "originalUiSettings": {
+    "keepLogin": true,
+    "rememberAccount": true,
+    "closeToTray": true,
+    "settingsDocument": {
+      "desktop": {
+        "alwaysOnTop": true,
+        "clickThrough": true,
+        "launchAtLogin": false,
+        "closeToTray": true,
+        "companionLimit": 3,
+        "interactionSounds": true,
+        "volume": 70,
+        "hideInFullscreen": true,
+        "animationsEnabled": true
+      },
+      "notifications": {
+        "enabled": true,
+        "companions": true,
+        "battles": true,
+        "garden": true,
+        "quietEnabled": true,
+        "quietStart": "22:00",
+        "quietEnd": "08:00"
+      },
+      "privacy": {
+        "locationAllowed": false,
+        "locationOnlyWhileExploring": true,
+        "emotionStatistics": false
+      },
+      "sync": {
+        "enabled": true
+      }
+    }
+  },
+  "temporaryCloseSetting": {
+    "closeToTray": false,
+    "revision": 13,
+    "normalSaveCount": 1,
+    "verifiedCloudRevision": 29,
+    "verifiedActionId": "auto:c763a89b-9f1f-4c82-bef4-a86998575d0e",
+    "pendingBeforeTitleX": 0
+  },
+  "nativeAction": "one normal title X at window3475656 after the saved setting and pending0; no Logout/Login/kill",
+  "process": {
+    "at": "2026-10-26T00:26:47.6060945Z",
+    "oldAProcessesStillPresent": [],
+    "oldADebugListeners": [],
+    "otherMainProcesses": [
+      {
+        "ProcessId": 3364,
+        "ParentProcessId": 23708,
+        "Name": "Lingjing.exe",
+        "CreationDate": "2026-10-26T02:41:46.970025+08:00"
+      },
+      {
+        "ProcessId": 13108,
+        "ParentProcessId": 3788,
+        "Name": "Lingjing.exe",
+        "CreationDate": "2026-10-26T04:51:59.207351+08:00"
+      },
+      {
+        "ProcessId": 32748,
+        "ParentProcessId": 27840,
+        "Name": "Lingjing.exe",
+        "CreationDate": "2026-10-26T05:54:40.320727+08:00"
+      }
+    ],
+    "action": "one normal native title X after one saved closeToTray=false and cloud pending zero",
+    "killedProcesses": false
+  },
+  "immediatePreExit": {
+    "at": "2026-10-26T00:26:17.490Z",
+    "cipher": {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\accounts\\verified-session.bin",
+      "exists": true,
+      "bytes": 1497,
+      "sha256": "21b7c3cac36e52bc51260fb1b5308fcd965f07dc00ea2fb63cde280c4f285b5e"
+    },
+    "device": {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\accounts\\device.json",
+      "exists": true,
+      "bytes": 63,
+      "sha256": "2fb39c18c95bbb37d1c472f565801684f9438dbc949f46942d8c56186b8689b1"
+    },
+    "sync": {
+      "ok": true,
+      "data": {
+        "configured": true,
+        "cloudRevision": 29,
+        "lastVerifiedAt": "2026-10-26T00:26:06.344Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": 29,
+        "lastCloudCheckedAt": "2026-10-26T00:26:06.318Z",
+        "remoteChanged": false
+      }
+    },
+    "oldActor": {
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe",
+      "deviceId": "41de040e-a134-487f-b1d3-76b5254a8f97",
+      "sessionId": "b904724b-ab0d-4a87-bd23-7a59fdeef5d6",
+      "source": "Root independent fresh PG metadata confirmed before the one normal UI save"
+    }
+  },
+  "afterExit": {
+    "at": "2026-10-26T00:26:47.729Z",
+    "cipher": {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\accounts\\verified-session.bin",
+      "exists": true,
+      "bytes": 1497,
+      "sha256": "21b7c3cac36e52bc51260fb1b5308fcd965f07dc00ea2fb63cde280c4f285b5e"
+    },
+    "device": {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\accounts\\device.json",
+      "exists": true,
+      "bytes": 63,
+      "sha256": "2fb39c18c95bbb37d1c472f565801684f9438dbc949f46942d8c56186b8689b1"
+    },
+    "db": {
+      "settings": [
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "revision": 13,
+          "document": "{\"desktop\":{\"alwaysOnTop\":true,\"clickThrough\":true,\"launchAtLogin\":false,\"closeToTray\":false,\"companionLimit\":3,\"interactionSounds\":true,\"volume\":70,\"hideInFullscreen\":true,\"animationsEnabled\":true},\"notifications\":{\"enabled\":true,\"companions\":true,\"battles\":true,\"garden\":true,\"quietEnabled\":true,\"quietStart\":\"22:00\",\"quietEnd\":\"08:00\"},\"privacy\":{\"locationAllowed\":false,\"locationOnlyWhileExploring\":true,\"emotionStatistics\":false},\"sync\":{\"enabled\":true}}",
+          "updated_at": "2026-10-26T00:23:17.387Z"
+        }
+      ],
+      "syncState": [
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "cloud_revision": 29,
+          "last_checksum": "e145c3fadad9e0292ab780ffa8fa35ff297b98c192905b84477c7bb86708a3f0",
+          "last_verified_at": "2026-10-26T00:26:06.344Z",
+          "last_error": null
+        }
+      ],
+      "outbox": [
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "auto:e84a2870-f4ce-4451-89f6-17f8e42a2cc0",
+          "base_revision": 1,
+          "checksum": "23f9bc5bbe44288996c0ac777a0acbca85d06b34072f580b3b8ecf0036b7d782",
+          "status": "verified",
+          "attempts": 0,
+          "next_attempt_at": 0,
+          "last_error": null,
+          "created_at": "2026-10-25T13:40:51.021Z",
+          "verified_at": "2026-10-25T13:40:56.128Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "auto:a24d1e9e-5be6-48b2-b39f-e6bf6f01b4b7",
+          "base_revision": 3,
+          "checksum": "19a9e73e42678e613467c7a2f542fc35300ffde707c673b038a39b3a8043f115",
+          "status": "verified",
+          "attempts": 0,
+          "next_attempt_at": 0,
+          "last_error": null,
+          "created_at": "2026-10-25T14:17:21.628Z",
+          "verified_at": "2026-10-25T14:17:26.069Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "auto:81783bf4-d49d-4508-bc5d-606f019d225c",
+          "base_revision": 5,
+          "checksum": "69a4fb8b743f7c0cf12ae93c4874b45855ea2dd3c17669efb1d8d147d0220d74",
+          "status": "verified",
+          "attempts": 0,
+          "next_attempt_at": 0,
+          "last_error": null,
+          "created_at": "2026-10-25T14:42:04.612Z",
+          "verified_at": "2026-10-25T14:42:08.680Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "auto:7ac68fcb-452c-4736-af70-4f8dc9b34edb",
+          "base_revision": 6,
+          "checksum": "71c9a93a5bfa097120a04a7ee1d7571b26871aabea2aa39000dd0062c7416ca6",
+          "status": "verified",
+          "attempts": 0,
+          "next_attempt_at": 0,
+          "last_error": null,
+          "created_at": "2026-10-25T15:19:35.231Z",
+          "verified_at": "2026-10-25T15:19:39.496Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "auto:6e997737-9a20-4464-ab47-6631b0333c42",
+          "base_revision": 7,
+          "checksum": "c0632fc11fe622d2542bb9b1c04381ee05e4d88934494b50202754ecab356e56",
+          "status": "verified",
+          "attempts": 0,
+          "next_attempt_at": 0,
+          "last_error": null,
+          "created_at": "2026-10-25T15:58:45.704Z",
+          "verified_at": "2026-10-25T15:58:50.093Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "auto:68680138-d8b3-4d27-ac20-b9af029b3a0a",
+          "base_revision": 13,
+          "checksum": "3ad62ca0051a1a532a3c0811f7b843cd8710472e7409c70d0d9c38c46ecc8068",
+          "status": "verified",
+          "attempts": 0,
+          "next_attempt_at": 0,
+          "last_error": null,
+          "created_at": "2026-10-25T19:15:48.637Z",
+          "verified_at": "2026-10-25T19:15:53.078Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "auto:029b68df-c143-4448-9100-2aaf3364b71b",
+          "base_revision": 15,
+          "checksum": "ec614173d4638da3ac2df77c84c271d6d0b2ae748bc07f9e32451006d209aef5",
+          "status": "verified",
+          "attempts": 0,
+          "next_attempt_at": 0,
+          "last_error": null,
+          "created_at": "2026-10-25T19:35:20.385Z",
+          "verified_at": "2026-10-25T19:35:24.191Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "auto:92488164-58ac-46be-a19e-b61c91e7c5f4",
+          "base_revision": 19,
+          "checksum": "0de6230bcaf292bd008c4e6452c3cd57a73ce10fd946d74702896fd9c9e77ced",
+          "status": "verified",
+          "attempts": 0,
+          "next_attempt_at": 0,
+          "last_error": null,
+          "created_at": "2026-10-25T19:53:20.652Z",
+          "verified_at": "2026-10-25T19:53:25.551Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "auto:0e7f9f0c-d7a6-4856-af3f-e81e135978a5",
+          "base_revision": 20,
+          "checksum": "36cd70d6acd90a46669d001c7528ecb24f3cdadfc24e3649f2682eb6e9d5219d",
+          "status": "verified",
+          "attempts": 0,
+          "next_attempt_at": 0,
+          "last_error": null,
+          "created_at": "2026-10-25T19:56:07.977Z",
+          "verified_at": "2026-10-25T19:56:12.558Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "auto:369c580e-b5cd-4682-b0f8-1ebd9a88106d",
+          "base_revision": 25,
+          "checksum": "82fd340f2b16e2a50341e651b8c85504dfd9bb3b9baec77ba9667842b7de1e36",
+          "status": "verified",
+          "attempts": 0,
+          "next_attempt_at": 0,
+          "last_error": null,
+          "created_at": "2026-10-25T21:55:39.770Z",
+          "verified_at": "2026-10-25T21:55:44.688Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "auto:68a9ee6d-24d1-4758-bd04-95dcc72cb8b5",
+          "base_revision": 26,
+          "checksum": "fc67c2e174df7d34d99a335efaac6e1f9b776de56d0b1b1ea9970a1235551692",
+          "status": "verified",
+          "attempts": 0,
+          "next_attempt_at": 0,
+          "last_error": null,
+          "created_at": "2026-10-25T22:07:32.413Z",
+          "verified_at": "2026-10-25T22:07:37.938Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "auto:c763a89b-9f1f-4c82-bef4-a86998575d0e",
+          "base_revision": 28,
+          "checksum": "e145c3fadad9e0292ab780ffa8fa35ff297b98c192905b84477c7bb86708a3f0",
+          "status": "verified",
+          "attempts": 0,
+          "next_attempt_at": 0,
+          "last_error": null,
+          "created_at": "2026-10-26T00:23:34.528Z",
+          "verified_at": "2026-10-26T00:23:39.214Z"
+        }
+      ],
+      "actions": [
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "8b6f8ad8-ed62-4c6b-9c80-d5b562b0a322",
+          "kind": "settings",
+          "input_hash": "533176f9526b79c111520b19835ef9386b798b5c4217697d432b014c43e7ca84",
+          "result": "{\"document\":{\"desktop\":{\"alwaysOnTop\":true,\"clickThrough\":true,\"launchAtLogin\":false,\"closeToTray\":true,\"companionLimit\":3,\"interactionSounds\":true,\"volume\":70,\"hideInFullscreen\":true,\"animationsEnabled\":true},\"notifications\":{\"enabled\":true,\"companions\":true,\"battles\":true,\"garden\":true,\"quietEnabled\":true,\"quietStart\":\"22:00\",\"quietEnd\":\"08:00\"},\"privacy\":{\"locationAllowed\":false,\"locationOnlyWhileExploring\":true,\"emotionStatistics\":false},\"sync\":{\"enabled\":true}},\"revision\":1,\"updatedAt\":\"2026-10-25T10:10:53.045Z\"}",
+          "created_at": "2026-10-25T10:10:53.045Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "companions:a39bdbba-ce65-4bb4-b51f-6da97f713ab7",
+          "kind": "companions-cloud-command",
+          "input_hash": "a769d88801767de10bdfe120ef4a63dda12fa2edd78b20acd07b5bd26aeca93a",
+          "result": "{\"status\":\"verified\",\"command\":\"adopt\",\"input\":{\"actionId\":\"a39bdbba-ce65-4bb4-b51f-6da97f713ab7\",\"templateId\":\"big-fish-gentle\",\"name\":\"鱼丸\",\"showOnDesktop\":false},\"baseRevision\":0,\"nativePosition\":false,\"createdAt\":\"2026-10-25T10:15:13.704Z\",\"preparedAt\":\"2026-10-25T10:15:18.951Z\",\"sentAt\":\"2026-10-25T10:15:18.951Z\",\"result\":{\"ok\":true,\"data\":{\"pet\":{\"name\":\"鱼丸\",\"petId\":\"pet-40899e45-d323-49c8-9136-743f14be6ce3\",\"growth\":{\"mood\":60,\"level\":1,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20},\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"experience\":0},\"origin\":{},\"serial\":\"40899E45\",\"source\":\"adoption\",\"desktop\":{\"scale\":1,\"visible\":false,\"behavior\":\"quiet\",\"position\":{\"x\":80,\"y\":520,\"displayId\":null}},\"element\":\"water\",\"resource\":{\"kind\":\"2d\",\"resourceId\":\"builtin:lingjing-yuwan-v2\"},\"revision\":1,\"createdAt\":\"2026-10-25T10:15:21.267Z\",\"updatedAt\":\"2026-10-25T10:15:21.267Z\",\"templateId\":\"big-fish-gentle\",\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},\"selections\":{\"chatPetId\":null,\"guardPetId\":null,\"battlePetId\":null}},\"revision\":1,\"duplicate\":false,\"cloud\":{\"authority\":\"live\",\"actionId\":\"companions:a39bdbba-ce65-4bb4-b51f-6da97f713ab7\",\"revision\":1,\"checksum\":\"c6f2062b77181a79c63ca550153de182c7fe8945fc5ce9735580938727c461cf\",\"sharedSavePending\":true}},\"verifiedAt\":\"2026-10-25T10:15:25.501Z\"}",
+          "created_at": "2026-10-25T10:15:13.704Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "companions:verified-head",
+          "kind": "companions-cloud-readback",
+          "input_hash": "e0342f038d89b0f8ebc33f224253379078fdf765f4c24c47c7e5a6c371112b5f",
+          "result": "{\"cloudRevision\":28,\"checksum\":\"3aef52176eee8a5b1f794e5d440acf64b0d9b5253ce418474a603c72c66a97c2\",\"verifiedAt\":\"2026-10-25T22:33:57.268Z\",\"sharedSavePending\":false}",
+          "created_at": "2026-10-25T22:33:57.268Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "db487bcf-a01c-4243-a44c-ac39594e42f4",
+          "kind": "restore",
+          "input_hash": "3bdb4f3c8564aca49939e39c37426be012f7301afb3e588eacc5e67f45eb1624",
+          "result": "{\"restored\":true,\"mode\":\"merge\",\"preservedBackup\":{\"id\":\"19907ad4-25df-453c-b210-f1cbee250e96\",\"filePath\":\"C:\\\\Users\\\\Administrator\\\\Desktop\\\\project\\\\DesktopPet\\\\artifacts\\\\qa\\\\user-acceptance\\\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\\\cloud-a\\\\accounts\\\\backups\\\\before-restore-1792935622984-19907ad4-25df-453c-b210-f1cbee250e96.lingjing.json\",\"checksum\":\"7f0f1b1daedd0044f7cc0b4b200df24cd6b39bf8b330672301f3f600d1792709\",\"excluded\":[\"conversation_credentials\"]},\"checksum\":\"d2669d739fa643a320a6ca5286a9aed98db9657a1dcaa1bf2e146f0549c2135c\"}",
+          "created_at": "2026-10-25T13:40:22.990Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "527a416d-d8b9-47b9-b8a2-2823dbd8116c",
+          "kind": "settings",
+          "input_hash": "88c21d97b3830b682922e9b5b59c95756469c0bb6f288747790f0eaea291352f",
+          "result": "{\"document\":{\"desktop\":{\"alwaysOnTop\":true,\"clickThrough\":true,\"launchAtLogin\":false,\"closeToTray\":false,\"companionLimit\":3,\"interactionSounds\":true,\"volume\":70,\"hideInFullscreen\":true,\"animationsEnabled\":true},\"notifications\":{\"enabled\":true,\"companions\":true,\"battles\":true,\"garden\":true,\"quietEnabled\":true,\"quietStart\":\"22:00\",\"quietEnd\":\"08:00\"},\"privacy\":{\"locationAllowed\":false,\"locationOnlyWhileExploring\":true,\"emotionStatistics\":false},\"sync\":{\"enabled\":true}},\"revision\":2,\"updatedAt\":\"2026-10-25T14:16:53.223Z\"}",
+          "created_at": "2026-10-25T14:16:53.223Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "e32306a7-00c3-473e-bf5c-e64b35c2182a",
+          "kind": "settings",
+          "input_hash": "2df6c111f8a57026b940bb3ecfc59d8ab86020d88438dbf3e51a267086c1ebdd",
+          "result": "{\"document\":{\"desktop\":{\"alwaysOnTop\":true,\"clickThrough\":true,\"launchAtLogin\":false,\"closeToTray\":true,\"companionLimit\":3,\"interactionSounds\":true,\"volume\":70,\"hideInFullscreen\":true,\"animationsEnabled\":true},\"notifications\":{\"enabled\":true,\"companions\":true,\"battles\":true,\"garden\":true,\"quietEnabled\":true,\"quietStart\":\"22:00\",\"quietEnd\":\"08:00\"},\"privacy\":{\"locationAllowed\":false,\"locationOnlyWhileExploring\":true,\"emotionStatistics\":false},\"sync\":{\"enabled\":true}},\"revision\":3,\"updatedAt\":\"2026-10-25T14:41:44.051Z\"}",
+          "created_at": "2026-10-25T14:41:44.051Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "9635f945-4b33-4344-a977-db692ac6e9bc",
+          "kind": "settings",
+          "input_hash": "f4f6db9da2516cba50eb9b41093f44e22f7f65a8d4e364d8a937ae0332e3d185",
+          "result": "{\"document\":{\"desktop\":{\"alwaysOnTop\":true,\"clickThrough\":true,\"launchAtLogin\":false,\"closeToTray\":false,\"companionLimit\":3,\"interactionSounds\":true,\"volume\":70,\"hideInFullscreen\":true,\"animationsEnabled\":true},\"notifications\":{\"enabled\":true,\"companions\":true,\"battles\":true,\"garden\":true,\"quietEnabled\":true,\"quietStart\":\"22:00\",\"quietEnd\":\"08:00\"},\"privacy\":{\"locationAllowed\":false,\"locationOnlyWhileExploring\":true,\"emotionStatistics\":false},\"sync\":{\"enabled\":true}},\"revision\":4,\"updatedAt\":\"2026-10-25T15:19:19.513Z\"}",
+          "created_at": "2026-10-25T15:19:19.513Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "0999ee70-2900-4e5a-b5e3-7a3a12ea76e6",
+          "kind": "settings",
+          "input_hash": "823db5c4baaba01a05cfa3e10dea3fdebfc03fefe71018974ca86e0fd2ba99db",
+          "result": "{\"document\":{\"desktop\":{\"alwaysOnTop\":true,\"clickThrough\":true,\"launchAtLogin\":false,\"closeToTray\":true,\"companionLimit\":3,\"interactionSounds\":true,\"volume\":70,\"hideInFullscreen\":true,\"animationsEnabled\":true},\"notifications\":{\"enabled\":true,\"companions\":true,\"battles\":true,\"garden\":true,\"quietEnabled\":true,\"quietStart\":\"22:00\",\"quietEnd\":\"08:00\"},\"privacy\":{\"locationAllowed\":false,\"locationOnlyWhileExploring\":true,\"emotionStatistics\":false},\"sync\":{\"enabled\":true}},\"revision\":5,\"updatedAt\":\"2026-10-25T15:58:15.892Z\"}",
+          "created_at": "2026-10-25T15:58:15.892Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "companions:18a25316-26ac-453e-a34a-ab44ed3f7055",
+          "kind": "companions-cloud-command",
+          "input_hash": "d41cc0210a148f2e8be76a1a6b1535f5c5fac62d1177d5e05414720cd25f5db3",
+          "result": "{\"status\":\"verified\",\"command\":\"adopt\",\"input\":{\"actionId\":\"18a25316-26ac-453e-a34a-ab44ed3f7055\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"showOnDesktop\":true},\"baseRevision\":8,\"nativePosition\":false,\"createdAt\":\"2026-10-25T16:01:44.850Z\",\"preparedAt\":\"2026-10-25T16:01:51.817Z\",\"sentAt\":\"2026-10-25T16:01:51.817Z\",\"result\":{\"ok\":true,\"data\":{\"pet\":{\"name\":\"小狐\",\"petId\":\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"growth\":{\"mood\":60,\"level\":1,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20},\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"experience\":0},\"origin\":{},\"serial\":\"3B746D1A\",\"source\":\"adoption\",\"desktop\":{\"scale\":1,\"visible\":true,\"behavior\":\"quiet\",\"position\":{\"x\":320,\"y\":520,\"displayId\":null}},\"element\":\"water\",\"resource\":{\"kind\":\"2d\",\"resourceId\":\"builtin:lingjing-xiaohu-v1\"},\"revision\":1,\"createdAt\":\"2026-10-25T16:01:54.342Z\",\"updatedAt\":\"2026-10-25T16:01:54.342Z\",\"templateId\":\"animal-white-fox\",\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},\"selections\":{\"chatPetId\":null,\"guardPetId\":null,\"battlePetId\":null}},\"revision\":2,\"duplicate\":false,\"cloud\":{\"authority\":\"live\",\"actionId\":\"companions:18a25316-26ac-453e-a34a-ab44ed3f7055\",\"revision\":9,\"checksum\":\"79a18ba375d3cd56cd00386032c46a9f082085d12a8bb3962a5ebbf8a99b1d38\",\"sharedSavePending\":false}},\"verifiedAt\":\"2026-10-25T16:02:01.640Z\"}",
+          "created_at": "2026-10-25T16:01:44.850Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "auto-restore:cc2103dd-a2a2-41fd-90aa-c07750fa5df9",
+          "kind": "restore",
+          "input_hash": "fa09fa2f86631e17fef7e9bd41ed1fdf44d636420f16fe9d7238734707194235",
+          "result": "{\"restored\":true,\"mode\":\"replace\",\"preservedBackup\":{\"id\":\"3b2090b9-f653-4a61-a96d-2d591b2d8a6c\",\"filePath\":\"C:\\\\Users\\\\Administrator\\\\Desktop\\\\project\\\\DesktopPet\\\\artifacts\\\\qa\\\\user-acceptance\\\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\\\cloud-a\\\\accounts\\\\backups\\\\before-restore-1792945607846-3b2090b9-f653-4a61-a96d-2d591b2d8a6c.lingjing.json\",\"checksum\":\"98ff10331c3fbcf063f2cc1d5b3c2cd0cdb88d46d5d04e4aedfab2be1c7d6267\",\"excluded\":[\"conversation_credentials\"]},\"checksum\":\"17cc2550bcfd511e88c2c65855922d64410c89c2d504ee56ee3a08c4e60bc1bc\"}",
+          "created_at": "2026-10-25T16:26:47.863Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "7c25f883-671e-43f5-a3be-c9410d9ad078",
+          "kind": "settings",
+          "input_hash": "d4a28a393d7e1f9dae69fc44bd2e02eafdb9cb56e381b1ea86a4468c6d336368",
+          "result": "{\"document\":{\"desktop\":{\"alwaysOnTop\":true,\"clickThrough\":true,\"launchAtLogin\":false,\"closeToTray\":false,\"companionLimit\":3,\"interactionSounds\":true,\"volume\":70,\"hideInFullscreen\":true,\"animationsEnabled\":true},\"notifications\":{\"enabled\":true,\"companions\":true,\"battles\":true,\"garden\":true,\"quietEnabled\":true,\"quietStart\":\"22:00\",\"quietEnd\":\"08:00\"},\"privacy\":{\"locationAllowed\":false,\"locationOnlyWhileExploring\":true,\"emotionStatistics\":false},\"sync\":{\"enabled\":true}},\"revision\":7,\"updatedAt\":\"2026-10-25T19:15:30.149Z\"}",
+          "created_at": "2026-10-25T19:15:30.149Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "366319ab-ca51-4739-b9b1-9eaa3628505c",
+          "kind": "settings",
+          "input_hash": "99d3d937adf6605005462ffb29f36c0688e1637170ce9c7e4585c73584f6a8f8",
+          "result": "{\"document\":{\"desktop\":{\"alwaysOnTop\":true,\"clickThrough\":true,\"launchAtLogin\":false,\"closeToTray\":true,\"companionLimit\":3,\"interactionSounds\":true,\"volume\":70,\"hideInFullscreen\":true,\"animationsEnabled\":true},\"notifications\":{\"enabled\":true,\"companions\":true,\"battles\":true,\"garden\":true,\"quietEnabled\":true,\"quietStart\":\"22:00\",\"quietEnd\":\"08:00\"},\"privacy\":{\"locationAllowed\":false,\"locationOnlyWhileExploring\":true,\"emotionStatistics\":false},\"sync\":{\"enabled\":true}},\"revision\":8,\"updatedAt\":\"2026-10-25T19:35:13.876Z\"}",
+          "created_at": "2026-10-25T19:35:13.876Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "17de5e49-3e8f-4944-a7fe-71603ba01b95",
+          "kind": "settings",
+          "input_hash": "f07016827f115e731f3441fb7d4c35f5541e39e1fdcb771425938c42bb655d39",
+          "result": "{\"document\":{\"desktop\":{\"alwaysOnTop\":true,\"clickThrough\":true,\"launchAtLogin\":false,\"closeToTray\":false,\"companionLimit\":3,\"interactionSounds\":true,\"volume\":70,\"hideInFullscreen\":true,\"animationsEnabled\":true},\"notifications\":{\"enabled\":true,\"companions\":true,\"battles\":true,\"garden\":true,\"quietEnabled\":true,\"quietStart\":\"22:00\",\"quietEnd\":\"08:00\"},\"privacy\":{\"locationAllowed\":false,\"locationOnlyWhileExploring\":true,\"emotionStatistics\":false},\"sync\":{\"enabled\":true}},\"revision\":9,\"updatedAt\":\"2026-10-25T19:53:04.890Z\"}",
+          "created_at": "2026-10-25T19:53:04.890Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "337e19e4-7237-4220-add7-09f87b8e96c8",
+          "kind": "settings",
+          "input_hash": "fad08bea0892c36aad57ebd76fe0adfbbc8e4becd01c5e8c0e78cdf3026e0bdd",
+          "result": "{\"document\":{\"desktop\":{\"alwaysOnTop\":true,\"clickThrough\":true,\"launchAtLogin\":false,\"closeToTray\":true,\"companionLimit\":3,\"interactionSounds\":true,\"volume\":70,\"hideInFullscreen\":true,\"animationsEnabled\":true},\"notifications\":{\"enabled\":true,\"companions\":true,\"battles\":true,\"garden\":true,\"quietEnabled\":true,\"quietStart\":\"22:00\",\"quietEnd\":\"08:00\"},\"privacy\":{\"locationAllowed\":false,\"locationOnlyWhileExploring\":true,\"emotionStatistics\":false},\"sync\":{\"enabled\":true}},\"revision\":10,\"updatedAt\":\"2026-10-25T19:55:38.592Z\"}",
+          "created_at": "2026-10-25T19:55:38.592Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "companions:43a06fc3-b63f-4b7e-a807-0ed441753bde",
+          "kind": "companions-cloud-command",
+          "input_hash": "6d6f89b19ccc893ba309cf63bf52d58ee47d6d657046ad16877ce0b245caccf1",
+          "result": "{\"status\":\"verified\",\"command\":\"adopt\",\"input\":{\"actionId\":\"43a06fc3-b63f-4b7e-a807-0ed441753bde\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"showOnDesktop\":false},\"baseRevision\":21,\"nativePosition\":false,\"createdAt\":\"2026-10-25T21:01:19.430Z\",\"preparedAt\":\"2026-10-25T21:01:24.593Z\",\"sentAt\":\"2026-10-25T21:01:24.593Z\",\"result\":{\"ok\":true,\"data\":{\"pet\":{\"name\":\"小狐\",\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"growth\":{\"mood\":60,\"level\":1,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20},\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"experience\":0},\"origin\":{},\"serial\":\"97410828\",\"source\":\"adoption\",\"desktop\":{\"scale\":1,\"visible\":false,\"behavior\":\"quiet\",\"position\":{\"x\":560,\"y\":520,\"displayId\":null}},\"element\":\"water\",\"resource\":{\"kind\":\"2d\",\"resourceId\":\"builtin:lingjing-xiaohu-v1\"},\"revision\":1,\"createdAt\":\"2026-10-25T21:01:27.443Z\",\"updatedAt\":\"2026-10-25T21:01:27.443Z\",\"templateId\":\"animal-white-fox\",\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},\"selections\":{\"chatPetId\":null,\"guardPetId\":null,\"battlePetId\":null}},\"revision\":4,\"duplicate\":false,\"cloud\":{\"authority\":\"live\",\"actionId\":\"companions:43a06fc3-b63f-4b7e-a807-0ed441753bde\",\"revision\":22,\"checksum\":\"5a5b3c2e5c81b7488249ffbd27d3ff5fd853921cdaf8c84c5d12dd4d4272d713\",\"sharedSavePending\":false}},\"verifiedAt\":\"2026-10-25T21:01:32.472Z\"}",
+          "created_at": "2026-10-25T21:01:19.430Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "companions:cc649ea1-eec1-4c71-aa97-2fc267371c2e",
+          "kind": "companions-cloud-command",
+          "input_hash": "4f4dec3be83960aec8825f3f67879ab1cadb4492d9ae67957f6f8d623c2dc589",
+          "result": "{\"status\":\"verified\",\"command\":\"adopt\",\"input\":{\"actionId\":\"cc649ea1-eec1-4c71-aa97-2fc267371c2e\",\"templateId\":\"animal-hat-cat\",\"name\":\"礼帽喵\",\"showOnDesktop\":false},\"baseRevision\":22,\"nativePosition\":false,\"createdAt\":\"2026-10-25T21:15:20.196Z\",\"preparedAt\":\"2026-10-25T21:15:25.731Z\",\"sentAt\":\"2026-10-25T21:15:25.732Z\",\"result\":{\"ok\":true,\"data\":{\"pet\":{\"name\":\"礼帽喵\",\"petId\":\"pet-304685f8-7cae-4868-933c-af6d4bd28312\",\"growth\":{\"mood\":60,\"level\":1,\"stats\":{\"hp\":136,\"atk\":30,\"def\":30,\"spd\":13},\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"experience\":0},\"origin\":{},\"serial\":\"304685F8\",\"source\":\"adoption\",\"desktop\":{\"scale\":1,\"visible\":false,\"behavior\":\"quiet\",\"position\":{\"x\":800,\"y\":520,\"displayId\":null}},\"element\":\"metal\",\"resource\":{\"kind\":\"2d\",\"resourceId\":\"builtin:lingjing-hatcat-v1\"},\"revision\":1,\"createdAt\":\"2026-10-25T21:15:28.243Z\",\"updatedAt\":\"2026-10-25T21:15:28.243Z\",\"templateId\":\"animal-hat-cat\",\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},\"selections\":{\"chatPetId\":null,\"guardPetId\":null,\"battlePetId\":null}},\"revision\":5,\"duplicate\":false,\"cloud\":{\"authority\":\"live\",\"actionId\":\"companions:cc649ea1-eec1-4c71-aa97-2fc267371c2e\",\"revision\":23,\"checksum\":\"b6958f568faca92483ac60311140fb60b178256b5338a8a56124501af7cbab0d\",\"sharedSavePending\":false}},\"verifiedAt\":\"2026-10-25T21:15:32.748Z\"}",
+          "created_at": "2026-10-25T21:15:20.196Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "companions:0b464f12-ee61-4aaf-ab03-f60e3cccc516",
+          "kind": "companions-cloud-command",
+          "input_hash": "a6f41f2f64b1c5330d88b25bd185fa840ceeb9f575a6586b4d30f3ee66062fab",
+          "result": "{\"status\":\"verified\",\"command\":\"select\",\"input\":{\"actionId\":\"0b464f12-ee61-4aaf-ab03-f60e3cccc516\",\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"slot\":\"battlePetId\"},\"baseRevision\":23,\"nativePosition\":false,\"createdAt\":\"2026-10-25T21:18:46.529Z\",\"preparedAt\":\"2026-10-25T21:18:51.874Z\",\"sentAt\":\"2026-10-25T21:18:51.874Z\",\"result\":{\"ok\":true,\"data\":{\"pet\":{\"name\":\"小狐\",\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"growth\":{\"mood\":60,\"level\":1,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20},\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"experience\":0},\"origin\":{},\"serial\":\"97410828\",\"source\":\"adoption\",\"desktop\":{\"scale\":1,\"visible\":false,\"behavior\":\"quiet\",\"position\":{\"x\":560,\"y\":520,\"displayId\":null}},\"element\":\"water\",\"resource\":{\"kind\":\"2d\",\"resourceId\":\"builtin:lingjing-xiaohu-v1\"},\"revision\":1,\"createdAt\":\"2026-10-25T21:01:27.443Z\",\"updatedAt\":\"2026-10-25T21:01:27.443Z\",\"templateId\":\"animal-white-fox\",\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},\"selections\":{\"chatPetId\":null,\"guardPetId\":null,\"battlePetId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\"}},\"revision\":6,\"duplicate\":false,\"cloud\":{\"authority\":\"live\",\"actionId\":\"companions:0b464f12-ee61-4aaf-ab03-f60e3cccc516\",\"revision\":24,\"checksum\":\"7a8b27936eb17a8739eb3a33d23d22475a6cb88cb9446a98cd310ae36063efbd\",\"sharedSavePending\":false}},\"verifiedAt\":\"2026-10-25T21:18:58.461Z\"}",
+          "created_at": "2026-10-25T21:18:46.529Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "58cbf228-1e39-4bf2-8df5-9143cda4a289",
+          "kind": "settings",
+          "input_hash": "1f77a4317ac5b6031b4fef71d374f230d6192f2b13bbe61ac2d41f95f560e153",
+          "result": "{\"document\":{\"desktop\":{\"alwaysOnTop\":true,\"clickThrough\":true,\"launchAtLogin\":false,\"closeToTray\":false,\"companionLimit\":3,\"interactionSounds\":true,\"volume\":70,\"hideInFullscreen\":true,\"animationsEnabled\":true},\"notifications\":{\"enabled\":true,\"companions\":true,\"battles\":true,\"garden\":true,\"quietEnabled\":true,\"quietStart\":\"22:00\",\"quietEnd\":\"08:00\"},\"privacy\":{\"locationAllowed\":false,\"locationOnlyWhileExploring\":true,\"emotionStatistics\":false},\"sync\":{\"enabled\":true}},\"revision\":11,\"updatedAt\":\"2026-10-25T21:55:13.823Z\"}",
+          "created_at": "2026-10-25T21:55:13.823Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "31707363-9f02-440a-b677-3f8f5fb98b66",
+          "kind": "settings",
+          "input_hash": "9487068714e00b7084e08feff2eacfb60f8f141c84404901fc624158ed9ace30",
+          "result": "{\"document\":{\"desktop\":{\"alwaysOnTop\":true,\"clickThrough\":true,\"launchAtLogin\":false,\"closeToTray\":true,\"companionLimit\":3,\"interactionSounds\":true,\"volume\":70,\"hideInFullscreen\":true,\"animationsEnabled\":true},\"notifications\":{\"enabled\":true,\"companions\":true,\"battles\":true,\"garden\":true,\"quietEnabled\":true,\"quietStart\":\"22:00\",\"quietEnd\":\"08:00\"},\"privacy\":{\"locationAllowed\":false,\"locationOnlyWhileExploring\":true,\"emotionStatistics\":false},\"sync\":{\"enabled\":true}},\"revision\":12,\"updatedAt\":\"2026-10-25T22:07:18.122Z\"}",
+          "created_at": "2026-10-25T22:07:18.122Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "companions:desktop-position-0777dcb9-cd8d-4a45-93e3-6d893770e205",
+          "kind": "companions-cloud-command",
+          "input_hash": "b8a01339ddfb9cbedd7c58d10ec9ba7a6dbe5aca12cb403cd6a9d82e9f139fbc",
+          "result": "{\"status\":\"verified\",\"command\":\"desktop\",\"input\":{\"actionId\":\"desktop-position-0777dcb9-cd8d-4a45-93e3-6d893770e205\",\"petId\":\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"position\":{\"x\":320,\"y\":520,\"displayId\":\"2568730015\"}},\"baseRevision\":27,\"nativePosition\":true,\"createdAt\":\"2026-10-25T22:24:12.681Z\",\"preparedAt\":\"2026-10-25T22:24:19.019Z\",\"sentAt\":\"2026-10-25T22:24:19.019Z\",\"result\":{\"ok\":true,\"data\":{\"pet\":{\"name\":\"小狐\",\"petId\":\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"growth\":{\"mood\":63,\"level\":1,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20},\"satiety\":80,\"affinity\":4,\"winsTotal\":0,\"experience\":0},\"origin\":{},\"serial\":\"3B746D1A\",\"source\":\"adoption\",\"desktop\":{\"scale\":1,\"visible\":true,\"behavior\":\"quiet\",\"position\":{\"x\":320,\"y\":520,\"displayId\":\"2568730015\"}},\"element\":\"water\",\"resource\":{\"kind\":\"2d\",\"resourceId\":\"builtin:lingjing-xiaohu-v1\"},\"revision\":3,\"createdAt\":\"2026-10-25T16:01:54.342Z\",\"updatedAt\":\"2026-10-25T22:24:22.311Z\",\"templateId\":\"animal-white-fox\",\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},\"selections\":{\"chatPetId\":null,\"guardPetId\":null,\"battlePetId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\"}},\"revision\":8,\"duplicate\":false,\"cloud\":{\"authority\":\"live\",\"actionId\":\"companions:desktop-position-0777dcb9-cd8d-4a45-93e3-6d893770e205\",\"revision\":28,\"checksum\":\"3aef52176eee8a5b1f794e5d440acf64b0d9b5253ce418474a603c72c66a97c2\",\"sharedSavePending\":false}},\"verifiedAt\":\"2026-10-25T22:24:26.943Z\"}",
+          "created_at": "2026-10-25T22:24:12.681Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "7d9161ee-5463-4b20-b6ef-787f797c86cd",
+          "kind": "settings",
+          "input_hash": "8b8b35dc5bbe75a2035b46ef0ced30cfbd873a0e88b765fcbab52784aaee1f75",
+          "result": "{\"document\":{\"desktop\":{\"alwaysOnTop\":true,\"clickThrough\":true,\"launchAtLogin\":false,\"closeToTray\":false,\"companionLimit\":3,\"interactionSounds\":true,\"volume\":70,\"hideInFullscreen\":true,\"animationsEnabled\":true},\"notifications\":{\"enabled\":true,\"companions\":true,\"battles\":true,\"garden\":true,\"quietEnabled\":true,\"quietStart\":\"22:00\",\"quietEnd\":\"08:00\"},\"privacy\":{\"locationAllowed\":false,\"locationOnlyWhileExploring\":true,\"emotionStatistics\":false},\"sync\":{\"enabled\":true}},\"revision\":13,\"updatedAt\":\"2026-10-26T00:23:17.387Z\"}",
+          "created_at": "2026-10-26T00:23:17.387Z"
+        }
+      ],
+      "sessionCounts": {
+        "count": 0
+      }
+    },
+    "business": {
+      "battle_sessions": [
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "room_id": "d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "status": "finished",
+          "data_json": "{\"id\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"mode\":\"friend\",\"status\":\"finished\",\"startedAt\":\"2026-10-25T21:31:03.589952+00:00\",\"endedAt\":\"2026-10-25T21:49:00.381325+00:00\",\"updatedAt\":\"2026-10-25T21:49:00.381325+00:00\",\"player\":{\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"petName\":\"小狐\",\"element\":\"water\",\"level\":1,\"appearance2d\":\"builtin:lingjing-xiaohu-v1\",\"resourceRef\":\"builtin:lingjing-xiaohu-v1\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"}},\"enemy\":{\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"petName\":\"小狐\",\"element\":\"water\",\"level\":1,\"appearance2d\":\"builtin:lingjing-xiaohu-v1\",\"resourceRef\":\"builtin:lingjing-xiaohu-v1\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"}},\"side\":\"guest\",\"room\":{\"id\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"room_code\":\"1968AE7891\",\"host_user_id\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"guest_user_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"host_account\":\"uat_1025_b09_28e3d0\",\"guest_account\":\"uat_1025_a_9e486a\",\"host_pet_id\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"guest_pet_id\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"host_pet_name\":\"小狐\",\"guest_pet_name\":\"小狐\",\"host_resource_id\":\"builtin:lingjing-xiaohu-v1\",\"guest_resource_id\":\"builtin:lingjing-xiaohu-v1\",\"host_pet_level\":1,\"guest_pet_level\":1,\"host_element\":\"water\",\"guest_element\":\"water\",\"host_hp\":0,\"guest_hp\":110,\"host_anger\":60,\"guest_anger\":5,\"host_statuses\":[],\"guest_statuses\":[],\"host_free_dodge_used\":false,\"guest_free_dodge_used\":false,\"status\":\"finished\",\"current_round\":13,\"last_resolved_round\":12,\"revision\":14,\"winner_side\":\"guest\",\"rules_version\":\"five-elements-standard-v1\",\"core_version\":\"five-elements-standard-v1/2026-10-25\",\"invitation_id\":\"d9946730-4bf1-441c-b8f3-4a6d504b1b55\",\"invited_user_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"created_at\":\"2026-10-25T21:31:03.589952+00:00\",\"updated_at\":\"2026-10-25T21:49:00.381325+00:00\",\"authority\":\"live\",\"protocolVersion\":2},\"snapshot\":{\"round\":12,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":0,\"maxHp\":120,\"anger\":60,\"freeDodgeUsed\":false,\"statuses\":[]}},\"rounds\":[{\"round\":1,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":10},\"directDamage\":{\"player\":10,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":110},\"angerAfter\":{\"player\":5,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[],\"state\":{\"round\":1,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":2,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":100},\"angerAfter\":{\"player\":5,\"enemy\":10},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":2,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":100,\"maxHp\":120,\"anger\":10,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":3,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":90},\"angerAfter\":{\"player\":5,\"enemy\":15},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":3,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":90,\"maxHp\":120,\"anger\":15,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":4,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":80},\"angerAfter\":{\"player\":5,\"enemy\":20},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":4,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":80,\"maxHp\":120,\"anger\":20,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":5,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":70},\"angerAfter\":{\"player\":5,\"enemy\":25},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":5,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":70,\"maxHp\":120,\"anger\":25,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":6,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":60},\"angerAfter\":{\"player\":5,\"enemy\":30},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":6,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":60,\"maxHp\":120,\"anger\":30,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":7,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":50},\"angerAfter\":{\"player\":5,\"enemy\":35},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":7,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":50,\"maxHp\":120,\"anger\":35,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":8,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":40},\"angerAfter\":{\"player\":5,\"enemy\":40},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":8,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":40,\"maxHp\":120,\"anger\":40,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":9,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":30},\"angerAfter\":{\"player\":5,\"enemy\":45},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":9,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":30,\"maxHp\":120,\"anger\":45,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":10,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":20},\"angerAfter\":{\"player\":5,\"enemy\":50},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":10,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":20,\"maxHp\":120,\"anger\":50,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":11,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":10},\"angerAfter\":{\"player\":5,\"enemy\":55},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":11,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":10,\"maxHp\":120,\"anger\":55,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":12,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":0},\"angerAfter\":{\"player\":5,\"enemy\":60},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":\"player\",\"notes\":[\"host action missed\"],\"state\":{\"round\":12,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":0,\"maxHp\":120,\"anger\":60,\"freeDodgeUsed\":false,\"statuses\":[]}}}],\"winner\":\"player\",\"pendingAction\":null,\"historyComplete\":true,\"rules\":{\"id\":\"five-elements-standard-v1\",\"label\":\"标准五行对战\",\"vitalPolicy\":\"normalized\",\"maxHp\":120,\"maxAnger\":100,\"companionStatsApplied\":false,\"baseDamage\":{\"normal_attack\":10,\"element_attack\":12,\"dodge\":0,\"ultimate\":20},\"ultimateAnger\":50,\"ultimateCost\":50,\"ultimateHeal\":20,\"dodgeMaxCost\":20,\"dodgeRefund\":30,\"advantage\":{\"metal\":\"wood\",\"wood\":\"earth\",\"earth\":\"water\",\"water\":\"fire\",\"fire\":\"metal\"},\"elementEffects\":{\"metal\":{\"label\":\"易伤\",\"description\":\"每层受伤×1.5，最多5层\"},\"wood\":{\"label\":\"寄生\",\"description\":\"每层回合末吸取2生命，最多5层\"},\"earth\":{\"label\":\"迟钝\",\"description\":\"每层伤害×0.5，最多5层\"},\"water\":{\"label\":\"降怒\",\"description\":\"命中后对方怒气向下取半，不增加受击怒气\"},\"fire\":{\"label\":\"燃烧\",\"description\":\"回合末按当前生命8%×层数伤害，最多5层\"}}},\"context\":{\"authority\":\"supabase\",\"cloudUserId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"coreVersion\":\"five-elements-standard-v1/2026-10-25\"},\"reward\":{\"actionId\":\"battle:d79b783a-b5a5-4715-8e58-ba95483b2d67:account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"sessionId\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"mode\":\"friend\",\"won\":true,\"experience\":20,\"applied\":true,\"duplicate\":false,\"previousExperience\":0,\"previousLevel\":1,\"currentExperience\":20,\"currentLevel\":1,\"seeds\":{\"source\":\"battle\",\"receiptId\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"itemId\":\"seed:tomato\",\"quantity\":2}},\"reportId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\"}",
+          "revision": 1,
+          "updated_at": "2026-10-25T21:49:00.381325+00:00"
+        }
+      ],
+      "battle_action_receipts": [],
+      "battle_reports_v2": [
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "data_json": "{\"id\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"mode\":\"friend\",\"status\":\"finished\",\"winner\":\"player\",\"player\":{\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"petName\":\"小狐\",\"element\":\"water\",\"level\":1,\"appearance2d\":\"builtin:lingjing-xiaohu-v1\",\"resourceRef\":\"builtin:lingjing-xiaohu-v1\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"}},\"enemy\":{\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"petName\":\"小狐\",\"element\":\"water\",\"level\":1,\"appearance2d\":\"builtin:lingjing-xiaohu-v1\",\"resourceRef\":\"builtin:lingjing-xiaohu-v1\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"}},\"startedAt\":\"2026-10-25T21:31:03.589952+00:00\",\"endedAt\":\"2026-10-25T21:49:00.381325+00:00\",\"rounds\":[{\"round\":1,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":10},\"directDamage\":{\"player\":10,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":110},\"angerAfter\":{\"player\":5,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[],\"state\":{\"round\":1,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":2,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":100},\"angerAfter\":{\"player\":5,\"enemy\":10},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":2,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":100,\"maxHp\":120,\"anger\":10,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":3,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":90},\"angerAfter\":{\"player\":5,\"enemy\":15},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":3,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":90,\"maxHp\":120,\"anger\":15,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":4,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":80},\"angerAfter\":{\"player\":5,\"enemy\":20},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":4,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":80,\"maxHp\":120,\"anger\":20,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":5,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":70},\"angerAfter\":{\"player\":5,\"enemy\":25},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":5,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":70,\"maxHp\":120,\"anger\":25,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":6,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":60},\"angerAfter\":{\"player\":5,\"enemy\":30},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":6,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":60,\"maxHp\":120,\"anger\":30,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":7,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":50},\"angerAfter\":{\"player\":5,\"enemy\":35},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":7,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":50,\"maxHp\":120,\"anger\":35,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":8,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":40},\"angerAfter\":{\"player\":5,\"enemy\":40},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":8,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":40,\"maxHp\":120,\"anger\":40,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":9,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":30},\"angerAfter\":{\"player\":5,\"enemy\":45},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":9,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":30,\"maxHp\":120,\"anger\":45,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":10,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":20},\"angerAfter\":{\"player\":5,\"enemy\":50},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":10,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":20,\"maxHp\":120,\"anger\":50,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":11,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":10},\"angerAfter\":{\"player\":5,\"enemy\":55},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":11,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":10,\"maxHp\":120,\"anger\":55,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":12,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":0},\"angerAfter\":{\"player\":5,\"enemy\":60},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":\"player\",\"notes\":[\"host action missed\"],\"state\":{\"round\":12,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":0,\"maxHp\":120,\"anger\":60,\"freeDodgeUsed\":false,\"statuses\":[]}}}],\"reward\":{\"actionId\":\"battle:d79b783a-b5a5-4715-8e58-ba95483b2d67:account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"sessionId\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"mode\":\"friend\",\"won\":true,\"experience\":20,\"applied\":true,\"duplicate\":false,\"previousExperience\":0,\"previousLevel\":1,\"currentExperience\":20,\"currentLevel\":1,\"seeds\":{\"source\":\"battle\",\"receiptId\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"itemId\":\"seed:tomato\",\"quantity\":2}},\"historyComplete\":true,\"context\":{\"authority\":\"supabase\",\"cloudUserId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"coreVersion\":\"five-elements-standard-v1/2026-10-25\"},\"rules\":{\"id\":\"five-elements-standard-v1\",\"label\":\"标准五行对战\",\"vitalPolicy\":\"normalized\",\"maxHp\":120,\"maxAnger\":100,\"companionStatsApplied\":false,\"baseDamage\":{\"normal_attack\":10,\"element_attack\":12,\"dodge\":0,\"ultimate\":20},\"ultimateAnger\":50,\"ultimateCost\":50,\"ultimateHeal\":20,\"dodgeMaxCost\":20,\"dodgeRefund\":30,\"advantage\":{\"metal\":\"wood\",\"wood\":\"earth\",\"earth\":\"water\",\"water\":\"fire\",\"fire\":\"metal\"},\"elementEffects\":{\"metal\":{\"label\":\"易伤\",\"description\":\"每层受伤×1.5，最多5层\"},\"wood\":{\"label\":\"寄生\",\"description\":\"每层回合末吸取2生命，最多5层\"},\"earth\":{\"label\":\"迟钝\",\"description\":\"每层伤害×0.5，最多5层\"},\"water\":{\"label\":\"降怒\",\"description\":\"命中后对方怒气向下取半，不增加受击怒气\"},\"fire\":{\"label\":\"燃烧\",\"description\":\"回合末按当前生命8%×层数伤害，最多5层\"}}},\"sessionId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\"}",
+          "ended_at": "2026-10-25T21:49:00.381325+00:00"
+        }
+      ],
+      "battle_reward_receipts": [
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "action_id": "battle:d79b783a-b5a5-4715-8e58-ba95483b2d67:account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "pet_id": "pet-97410828-fdf6-4253-8246-4c5f389d8fba",
+          "data_json": "{\"actionId\":\"battle:d79b783a-b5a5-4715-8e58-ba95483b2d67:account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"sessionId\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"mode\":\"friend\",\"won\":true,\"experience\":20,\"applied\":true,\"duplicate\":false,\"previousExperience\":0,\"previousLevel\":1,\"currentExperience\":20,\"currentLevel\":1,\"seeds\":{\"source\":\"battle\",\"receiptId\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"itemId\":\"seed:tomato\",\"quantity\":2}}"
+        }
+      ],
+      "battle_transport_journal": [
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "cloud:invite:6c114ee2-5e59-4545-acd8-3807ff794b36",
+          "session_id": "cloud:invite:6c114ee2-5e59-4545-acd8-3807ff794b36",
+          "command_json": "{\"type\":\"cloud:invite\",\"input\":{\"targetAccount\":\"uat_1025_b09_28e3d0\",\"allowResend\":false}}",
+          "result_json": "{\"ok\":true,\"resent\":false,\"request\":{\"id\":\"5983a129-fb48-42c4-a0fa-4fe2421b3247\",\"fromUserId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"fromAccount\":\"uat_1025_a_9e486a\",\"toUserId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"toAccount\":\"uat_1025_b09_28e3d0\",\"status\":\"pending\",\"roomId\":null,\"roomCode\":null,\"roomStatus\":null,\"createdAt\":\"2026-10-25T21:21:37.731505+00:00\",\"updatedAt\":\"2026-10-25T21:21:37.731505+00:00\"}}",
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "invite:5983a129-fb48-42c4-a0fa-4fe2421b3247",
+          "session_id": "invite:5983a129-fb48-42c4-a0fa-4fe2421b3247",
+          "command_json": "{\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"type\":\"invite\"}",
+          "result_json": null,
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "cloud:invite:88702078-a973-4554-b1f6-45e1ea166147",
+          "session_id": "cloud:invite:88702078-a973-4554-b1f6-45e1ea166147",
+          "command_json": "{\"type\":\"cloud:invite\",\"input\":{\"targetAccount\":\"uat_1025_b09_28e3d0\",\"allowResend\":false}}",
+          "result_json": "{\"ok\":true,\"resent\":false,\"request\":{\"id\":\"ef338dae-6350-4062-849e-dc9d1b019f1b\",\"fromUserId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"fromAccount\":\"uat_1025_a_9e486a\",\"toUserId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"toAccount\":\"uat_1025_b09_28e3d0\",\"status\":\"pending\",\"roomId\":null,\"roomCode\":null,\"roomStatus\":null,\"createdAt\":\"2026-10-25T21:26:01.218246+00:00\",\"updatedAt\":\"2026-10-25T21:26:01.218246+00:00\"}}",
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "invite:ef338dae-6350-4062-849e-dc9d1b019f1b",
+          "session_id": "invite:ef338dae-6350-4062-849e-dc9d1b019f1b",
+          "command_json": "{\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"type\":\"invite\"}",
+          "result_json": null,
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "cancel:ef338dae-6350-4062-849e-dc9d1b019f1b",
+          "session_id": "cancel:ef338dae-6350-4062-849e-dc9d1b019f1b",
+          "command_json": "{\"type\":\"cloud:cancel\",\"input\":{\"requestId\":\"ef338dae-6350-4062-849e-dc9d1b019f1b\"}}",
+          "result_json": "{\"ok\":true,\"request\":{\"id\":\"ef338dae-6350-4062-849e-dc9d1b019f1b\",\"fromUserId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"fromAccount\":\"uat_1025_a_9e486a\",\"toUserId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"toAccount\":\"uat_1025_b09_28e3d0\",\"status\":\"cancelled\",\"roomId\":null,\"roomCode\":null,\"roomStatus\":null,\"createdAt\":\"2026-10-25T21:26:01.218246+00:00\",\"updatedAt\":\"2026-10-25T21:28:04.502989+00:00\"}}",
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "cloud:invite:38a7cbb6-8cbe-4c6d-86d2-838f713a5954",
+          "session_id": "cloud:invite:38a7cbb6-8cbe-4c6d-86d2-838f713a5954",
+          "command_json": "{\"type\":\"cloud:invite\",\"input\":{\"targetAccount\":\"uat_1025_b09_28e3d0\",\"allowResend\":false}}",
+          "result_json": "{\"ok\":true,\"resent\":false,\"request\":{\"id\":\"d9946730-4bf1-441c-b8f3-4a6d504b1b55\",\"fromUserId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"fromAccount\":\"uat_1025_a_9e486a\",\"toUserId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"toAccount\":\"uat_1025_b09_28e3d0\",\"status\":\"pending\",\"roomId\":null,\"roomCode\":null,\"roomStatus\":null,\"createdAt\":\"2026-10-25T21:29:58.529847+00:00\",\"updatedAt\":\"2026-10-25T21:29:58.529847+00:00\"}}",
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "invite:d9946730-4bf1-441c-b8f3-4a6d504b1b55",
+          "session_id": "invite:d9946730-4bf1-441c-b8f3-4a6d504b1b55",
+          "command_json": "{\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"type\":\"invite\"}",
+          "result_json": null,
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "cloud:join:d30c6bf9-3376-45b1-895a-1b70e0f086e8",
+          "session_id": "cloud:join:d30c6bf9-3376-45b1-895a-1b70e0f086e8",
+          "command_json": "{\"type\":\"cloud:join\",\"input\":{\"roomCode\":\"1968AE7891\",\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\"}}",
+          "result_json": "{\"ok\":true,\"room\":{\"id\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"room_code\":\"1968AE7891\",\"status\":\"active\",\"host_user_id\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"host_account\":\"uat_1025_b09_28e3d0\",\"guest_user_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"guest_account\":\"uat_1025_a_9e486a\",\"host_pet_id\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"guest_pet_id\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"host_pet_level\":1,\"guest_pet_level\":1,\"host_resource_id\":\"builtin:lingjing-xiaohu-v1\",\"guest_resource_id\":\"builtin:lingjing-xiaohu-v1\",\"invitation_id\":\"d9946730-4bf1-441c-b8f3-4a6d504b1b55\",\"invited_user_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"host_pet_name\":\"小狐\",\"guest_pet_name\":\"小狐\",\"host_element\":\"water\",\"guest_element\":\"water\",\"current_round\":1,\"last_resolved_round\":0,\"host_hp\":120,\"guest_hp\":120,\"host_anger\":0,\"guest_anger\":0,\"host_free_dodge_used\":false,\"guest_free_dodge_used\":false,\"host_statuses\":[],\"guest_statuses\":[],\"winner_side\":null,\"created_at\":\"2026-10-25T21:31:03.589952+00:00\",\"updated_at\":\"2026-10-25T21:33:16.960504+00:00\"},\"side\":\"guest\"}",
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "room-cache:online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "command_json": "{\"type\":\"friend-cache\",\"roomId\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\"}",
+          "result_json": "{\"session\":{\"id\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"mode\":\"friend\",\"status\":\"active\",\"startedAt\":\"2026-10-25T21:31:03.589952+00:00\",\"player\":{\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"petName\":\"小狐\",\"element\":\"water\",\"level\":1,\"resourceRef\":\"builtin:lingjing-xiaohu-v1\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"appearance2d\":\"builtin:lingjing-xiaohu-v1\"},\"enemy\":{\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"petName\":\"小狐\",\"element\":\"water\",\"level\":1,\"appearance2d\":\"builtin:lingjing-xiaohu-v1\"},\"snapshot\":{\"round\":11,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":10,\"maxHp\":120,\"anger\":55,\"freeDodgeUsed\":false,\"statuses\":[]}},\"room\":{\"id\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"room_code\":\"1968AE7891\",\"status\":\"active\",\"host_user_id\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"host_account\":\"uat_1025_b09_28e3d0\",\"guest_user_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"guest_account\":\"uat_1025_a_9e486a\",\"host_pet_id\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"guest_pet_id\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"host_pet_level\":1,\"guest_pet_level\":1,\"host_resource_id\":\"builtin:lingjing-xiaohu-v1\",\"guest_resource_id\":\"builtin:lingjing-xiaohu-v1\",\"invitation_id\":\"d9946730-4bf1-441c-b8f3-4a6d504b1b55\",\"invited_user_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"host_pet_name\":\"小狐\",\"guest_pet_name\":\"小狐\",\"host_element\":\"water\",\"guest_element\":\"water\",\"current_round\":12,\"last_resolved_round\":11,\"host_hp\":10,\"guest_hp\":110,\"host_anger\":55,\"guest_anger\":5,\"host_free_dodge_used\":false,\"guest_free_dodge_used\":false,\"host_statuses\":[],\"guest_statuses\":[],\"winner_side\":null,\"created_at\":\"2026-10-25T21:31:03.589952+00:00\",\"updated_at\":\"2026-10-25T21:48:33.327949+00:00\"},\"side\":\"guest\",\"rounds\":[{\"round\":1,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":10},\"directDamage\":{\"player\":10,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":110},\"angerAfter\":{\"player\":5,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[],\"state\":{\"round\":1,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}},\"visualEvents\":[{\"id\":\"1:player:windup:action:0\",\"side\":\"player\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"normal_attack\"},{\"id\":\"1:player:release:action:1\",\"side\":\"player\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"normal_attack\",\"element\":\"water\"},{\"id\":\"1:enemy:impact:damage:2\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"damage\",\"amount\":10},{\"id\":\"1:enemy:windup:action:3\",\"side\":\"enemy\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"normal_attack\"},{\"id\":\"1:enemy:release:action:4\",\"side\":\"enemy\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"normal_attack\",\"element\":\"water\"},{\"id\":\"1:player:impact:damage:5\",\"side\":\"player\",\"phase\":\"impact\",\"kind\":\"damage\",\"amount\":10}]},{\"round\":2,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":100},\"angerAfter\":{\"player\":5,\"enemy\":10},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":2,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":100,\"maxHp\":120,\"anger\":10,\"freeDodgeUsed\":false,\"statuses\":[]}},\"visualEvents\":[{\"id\":\"2:player:windup:action:0\",\"side\":\"player\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"normal_attack\"},{\"id\":\"2:player:release:action:1\",\"side\":\"player\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"normal_attack\",\"element\":\"water\"},{\"id\":\"2:enemy:impact:damage:2\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"damage\",\"amount\":10},{\"id\":\"2:enemy:windup:action:3\",\"side\":\"enemy\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"element_attack\"},{\"id\":\"2:enemy:release:action:4\",\"side\":\"enemy\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"element_attack\",\"element\":\"water\"},{\"id\":\"2:enemy:impact:interrupt:5\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"interrupt\"}]},{\"round\":3,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":90},\"angerAfter\":{\"player\":5,\"enemy\":15},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":3,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":90,\"maxHp\":120,\"anger\":15,\"freeDodgeUsed\":false,\"statuses\":[]}},\"visualEvents\":[{\"id\":\"3:player:windup:action:0\",\"side\":\"player\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"normal_attack\"},{\"id\":\"3:player:release:action:1\",\"side\":\"player\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"normal_attack\",\"element\":\"water\"},{\"id\":\"3:enemy:impact:damage:2\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"damage\",\"amount\":10},{\"id\":\"3:enemy:windup:action:3\",\"side\":\"enemy\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"element_attack\"},{\"id\":\"3:enemy:release:action:4\",\"side\":\"enemy\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"element_attack\",\"element\":\"water\"},{\"id\":\"3:enemy:impact:interrupt:5\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"interrupt\"}]},{\"round\":4,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":80},\"angerAfter\":{\"player\":5,\"enemy\":20},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":4,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":80,\"maxHp\":120,\"anger\":20,\"freeDodgeUsed\":false,\"statuses\":[]}},\"visualEvents\":[{\"id\":\"4:player:windup:action:0\",\"side\":\"player\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"normal_attack\"},{\"id\":\"4:player:release:action:1\",\"side\":\"player\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"normal_attack\",\"element\":\"water\"},{\"id\":\"4:enemy:impact:damage:2\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"damage\",\"amount\":10},{\"id\":\"4:enemy:windup:action:3\",\"side\":\"enemy\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"element_attack\"},{\"id\":\"4:enemy:release:action:4\",\"side\":\"enemy\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"element_attack\",\"element\":\"water\"},{\"id\":\"4:enemy:impact:interrupt:5\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"interrupt\"}]},{\"round\":5,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":70},\"angerAfter\":{\"player\":5,\"enemy\":25},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":5,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":70,\"maxHp\":120,\"anger\":25,\"freeDodgeUsed\":false,\"statuses\":[]}},\"visualEvents\":[{\"id\":\"5:player:windup:action:0\",\"side\":\"player\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"normal_attack\"},{\"id\":\"5:player:release:action:1\",\"side\":\"player\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"normal_attack\",\"element\":\"water\"},{\"id\":\"5:enemy:impact:damage:2\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"damage\",\"amount\":10},{\"id\":\"5:enemy:windup:action:3\",\"side\":\"enemy\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"element_attack\"},{\"id\":\"5:enemy:release:action:4\",\"side\":\"enemy\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"element_attack\",\"element\":\"water\"},{\"id\":\"5:enemy:impact:interrupt:5\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"interrupt\"}]},{\"round\":6,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":60},\"angerAfter\":{\"player\":5,\"enemy\":30},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":6,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":60,\"maxHp\":120,\"anger\":30,\"freeDodgeUsed\":false,\"statuses\":[]}},\"visualEvents\":[{\"id\":\"6:player:windup:action:0\",\"side\":\"player\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"normal_attack\"},{\"id\":\"6:player:release:action:1\",\"side\":\"player\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"normal_attack\",\"element\":\"water\"},{\"id\":\"6:enemy:impact:damage:2\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"damage\",\"amount\":10},{\"id\":\"6:enemy:windup:action:3\",\"side\":\"enemy\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"element_attack\"},{\"id\":\"6:enemy:release:action:4\",\"side\":\"enemy\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"element_attack\",\"element\":\"water\"},{\"id\":\"6:enemy:impact:interrupt:5\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"interrupt\"}]},{\"round\":7,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":50},\"angerAfter\":{\"player\":5,\"enemy\":35},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":7,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":50,\"maxHp\":120,\"anger\":35,\"freeDodgeUsed\":false,\"statuses\":[]}},\"visualEvents\":[{\"id\":\"7:player:windup:action:0\",\"side\":\"player\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"normal_attack\"},{\"id\":\"7:player:release:action:1\",\"side\":\"player\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"normal_attack\",\"element\":\"water\"},{\"id\":\"7:enemy:impact:damage:2\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"damage\",\"amount\":10},{\"id\":\"7:enemy:windup:action:3\",\"side\":\"enemy\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"element_attack\"},{\"id\":\"7:enemy:release:action:4\",\"side\":\"enemy\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"element_attack\",\"element\":\"water\"},{\"id\":\"7:enemy:impact:interrupt:5\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"interrupt\"}]},{\"round\":8,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":40},\"angerAfter\":{\"player\":5,\"enemy\":40},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":8,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":40,\"maxHp\":120,\"anger\":40,\"freeDodgeUsed\":false,\"statuses\":[]}},\"visualEvents\":[{\"id\":\"8:player:windup:action:0\",\"side\":\"player\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"normal_attack\"},{\"id\":\"8:player:release:action:1\",\"side\":\"player\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"normal_attack\",\"element\":\"water\"},{\"id\":\"8:enemy:impact:damage:2\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"damage\",\"amount\":10},{\"id\":\"8:enemy:windup:action:3\",\"side\":\"enemy\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"element_attack\"},{\"id\":\"8:enemy:release:action:4\",\"side\":\"enemy\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"element_attack\",\"element\":\"water\"},{\"id\":\"8:enemy:impact:interrupt:5\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"interrupt\"}]},{\"round\":9,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":30},\"angerAfter\":{\"player\":5,\"enemy\":45},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":9,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":30,\"maxHp\":120,\"anger\":45,\"freeDodgeUsed\":false,\"statuses\":[]}},\"visualEvents\":[{\"id\":\"9:player:windup:action:0\",\"side\":\"player\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"normal_attack\"},{\"id\":\"9:player:release:action:1\",\"side\":\"player\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"normal_attack\",\"element\":\"water\"},{\"id\":\"9:enemy:impact:damage:2\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"damage\",\"amount\":10},{\"id\":\"9:enemy:windup:action:3\",\"side\":\"enemy\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"element_attack\"},{\"id\":\"9:enemy:release:action:4\",\"side\":\"enemy\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"element_attack\",\"element\":\"water\"},{\"id\":\"9:enemy:impact:interrupt:5\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"interrupt\"}]},{\"round\":10,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":20},\"angerAfter\":{\"player\":5,\"enemy\":50},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":10,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":20,\"maxHp\":120,\"anger\":50,\"freeDodgeUsed\":false,\"statuses\":[]}},\"visualEvents\":[{\"id\":\"10:player:windup:action:0\",\"side\":\"player\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"normal_attack\"},{\"id\":\"10:player:release:action:1\",\"side\":\"player\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"normal_attack\",\"element\":\"water\"},{\"id\":\"10:enemy:impact:damage:2\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"damage\",\"amount\":10},{\"id\":\"10:enemy:windup:action:3\",\"side\":\"enemy\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"element_attack\"},{\"id\":\"10:enemy:release:action:4\",\"side\":\"enemy\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"element_attack\",\"element\":\"water\"},{\"id\":\"10:enemy:impact:interrupt:5\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"interrupt\"}]},{\"round\":11,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"element_attack\"},\"damageTaken\":{\"player\":0,\"enemy\":10},\"directDamage\":{\"player\":0,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":10},\"angerAfter\":{\"player\":5,\"enemy\":55},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":11,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":10,\"maxHp\":120,\"anger\":55,\"freeDodgeUsed\":false,\"statuses\":[]}},\"visualEvents\":[{\"id\":\"11:player:windup:action:0\",\"side\":\"player\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"normal_attack\"},{\"id\":\"11:player:release:action:1\",\"side\":\"player\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"normal_attack\",\"element\":\"water\"},{\"id\":\"11:enemy:impact:damage:2\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"damage\",\"amount\":10},{\"id\":\"11:enemy:windup:action:3\",\"side\":\"enemy\",\"phase\":\"windup\",\"kind\":\"action\",\"action\":\"element_attack\"},{\"id\":\"11:enemy:release:action:4\",\"side\":\"enemy\",\"phase\":\"release\",\"kind\":\"action\",\"action\":\"element_attack\",\"element\":\"water\"},{\"id\":\"11:enemy:impact:interrupt:5\",\"side\":\"enemy\",\"phase\":\"impact\",\"kind\":\"interrupt\"}]}],\"winner\":null,\"pendingAction\":{\"actionId\":\"0566dc3e-09b9-420b-8642-25eb4946644e\",\"action\":\"normal_attack\",\"roundNo\":12,\"uncertain\":false},\"historyComplete\":true,\"rules\":{\"id\":\"five-elements-standard-v1\",\"label\":\"标准五行对战\",\"vitalPolicy\":\"normalized\",\"maxHp\":120,\"maxAnger\":100,\"companionStatsApplied\":false,\"baseDamage\":{\"normal_attack\":10,\"element_attack\":12,\"dodge\":0,\"ultimate\":20},\"ultimateAnger\":50,\"ultimateCost\":50,\"ultimateHeal\":20,\"dodgeMaxCost\":20,\"dodgeRefund\":30,\"advantage\":{\"metal\":\"wood\",\"wood\":\"earth\",\"earth\":\"water\",\"water\":\"fire\",\"fire\":\"metal\"},\"elementEffects\":{\"metal\":{\"label\":\"易伤\",\"description\":\"每层受伤×1.5，最多5层\"},\"wood\":{\"label\":\"寄生\",\"description\":\"每层回合末吸取2生命，最多5层\"},\"earth\":{\"label\":\"迟钝\",\"description\":\"每层伤害×0.5，最多5层\"},\"water\":{\"label\":\"降怒\",\"description\":\"命中后对方怒气向下取半，不增加受击怒气\"},\"fire\":{\"label\":\"燃烧\",\"description\":\"回合末按当前生命8%×层数伤害，最多5层\"}}},\"context\":{\"authority\":\"supabase\",\"cloudUserId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"},\"revision\":288,\"updatedAt\":\"2026-10-25T21:49:02.930Z\"}}",
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "67d34737-e19f-46ad-a7e8-2974f28fb8b6",
+          "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "command_json": "{\"action\":\"normal_attack\",\"roundNo\":1}",
+          "result_json": "{\"sessionId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"revision\":55,\"resolvedRound\":1}",
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "3429ee0c-876d-444e-b42c-aebf78a917cd",
+          "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "command_json": "{\"action\":\"normal_attack\",\"roundNo\":2}",
+          "result_json": "{\"sessionId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"revision\":118,\"resolvedRound\":2}",
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "328d5a8a-fed5-474a-ab5a-4e1c8c722811",
+          "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "command_json": "{\"action\":\"normal_attack\",\"roundNo\":3}",
+          "result_json": "{\"sessionId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"revision\":137,\"resolvedRound\":3}",
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "2fedb48d-b80d-4053-b6cb-85762abdf021",
+          "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "command_json": "{\"action\":\"normal_attack\",\"roundNo\":4}",
+          "result_json": "{\"sessionId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"revision\":150,\"resolvedRound\":4}",
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "56481b0b-0872-42d4-a2d0-43e86a4c4c72",
+          "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "command_json": "{\"action\":\"normal_attack\",\"roundNo\":5}",
+          "result_json": "{\"sessionId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"revision\":163,\"resolvedRound\":5}",
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "652549d0-b14a-44ab-9db1-d4c6ba0b05f7",
+          "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "command_json": "{\"action\":\"normal_attack\",\"roundNo\":6}",
+          "result_json": "{\"sessionId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"revision\":183,\"resolvedRound\":6}",
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "6d61d610-6658-44d0-ac34-7b57bc2ee814",
+          "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "command_json": "{\"action\":\"normal_attack\",\"roundNo\":7}",
+          "result_json": "{\"sessionId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"revision\":250,\"resolvedRound\":7}",
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "940bb91a-01f3-4ed8-b68c-32bc2ccc213d",
+          "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "command_json": "{\"action\":\"normal_attack\",\"roundNo\":8}",
+          "result_json": "{\"sessionId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"revision\":258,\"resolvedRound\":8}",
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "eaec3042-0567-4e35-8a8a-af47ba6a5188",
+          "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "command_json": "{\"action\":\"normal_attack\",\"roundNo\":9}",
+          "result_json": "{\"sessionId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"revision\":265,\"resolvedRound\":9}",
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "a8072840-880a-438b-9b7b-7515d341a377",
+          "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "command_json": "{\"action\":\"normal_attack\",\"roundNo\":10}",
+          "result_json": "{\"sessionId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"revision\":274,\"resolvedRound\":10}",
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "b70485a1-f2ba-4c7d-813e-a22d9d7b7fb6",
+          "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "command_json": "{\"action\":\"normal_attack\",\"roundNo\":11}",
+          "result_json": "{\"sessionId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"revision\":281,\"resolvedRound\":11}",
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "0566dc3e-09b9-420b-8642-25eb4946644e",
+          "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "command_json": "{\"action\":\"normal_attack\",\"roundNo\":12}",
+          "result_json": "{\"sessionId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"revision\":1,\"resolvedRound\":12}",
+          "legacy_row_json": null,
+          "projection_origin": null,
+          "authority_json": null
+        }
+      ],
+      "companion_accounts": [
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "revision": 8,
+          "selections_json": "{\"chatPetId\":null,\"battlePetId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"guardPetId\":null}",
+          "legacy_imported_at": "2026-10-25T10:15:21.267Z"
+        }
+      ],
+      "companion_pets": [
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "pet_id": "pet-304685f8-7cae-4868-933c-af6d4bd28312",
+          "template_id": "animal-hat-cat",
+          "revision": 1,
+          "data_json": "{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-304685f8-7cae-4868-933c-af6d4bd28312\",\"templateId\":\"animal-hat-cat\",\"name\":\"礼帽喵\",\"serial\":\"304685F8\",\"element\":\"metal\",\"resource\":{\"resourceId\":\"builtin:lingjing-hatcat-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":136,\"atk\":30,\"def\":30,\"spd\":13}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":800,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T21:15:28.243Z\",\"updatedAt\":\"2026-10-25T21:15:28.243Z\"}",
+          "created_at": "2026-10-25T21:15:28.243Z",
+          "updated_at": "2026-10-25T21:15:28.243Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "pet_id": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+          "template_id": "animal-white-fox",
+          "revision": 3,
+          "data_json": "{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"3B746D1A\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":63,\"satiety\":80,\"affinity\":4,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":320,\"y\":520,\"displayId\":\"2568730015\"}},\"revision\":3,\"createdAt\":\"2026-10-25T16:01:54.342Z\",\"updatedAt\":\"2026-10-25T22:24:22.311Z\"}",
+          "created_at": "2026-10-25T16:01:54.342Z",
+          "updated_at": "2026-10-25T22:24:22.311Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "pet_id": "pet-40899e45-d323-49c8-9136-743f14be6ce3",
+          "template_id": "big-fish-gentle",
+          "revision": 1,
+          "data_json": "{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-40899e45-d323-49c8-9136-743f14be6ce3\",\"templateId\":\"big-fish-gentle\",\"name\":\"鱼丸\",\"serial\":\"40899E45\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-yuwan-v2\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":80,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T10:15:21.267Z\",\"updatedAt\":\"2026-10-25T10:15:21.267Z\"}",
+          "created_at": "2026-10-25T10:15:21.267Z",
+          "updated_at": "2026-10-25T10:15:21.267Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "pet_id": "pet-97410828-fdf6-4253-8246-4c5f389d8fba",
+          "template_id": "animal-white-fox",
+          "revision": 2,
+          "data_json": "{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"97410828\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":20,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":1,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":560,\"y\":520,\"displayId\":null}},\"revision\":2,\"createdAt\":\"2026-10-25T21:01:27.443Z\",\"updatedAt\":\"2026-10-25T21:49:00.381Z\"}",
+          "created_at": "2026-10-25T21:01:27.443Z",
+          "updated_at": "2026-10-25T21:49:00.381Z"
+        }
+      ],
+      "companion_actions": [
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "0b464f12-ee61-4aaf-ab03-f60e3cccc516",
+          "operation": "select",
+          "request_hash": "a7219e878a4bd3a01fbc98e3d5bc8b067b0d810a4d88f3e83cd2fe2a72f7a703",
+          "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"97410828\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":560,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T21:01:27.443Z\",\"updatedAt\":\"2026-10-25T21:01:27.443Z\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"guardPetId\":null}},\"revision\":6,\"duplicate\":false}",
+          "created_at": "2026-10-25T21:18:54.319Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "18a25316-26ac-453e-a34a-ab44ed3f7055",
+          "operation": "adopt",
+          "request_hash": "ed0763689feb0d681fbf90d94d51d0803002f83f932a4becc1ea0e095ea54f3f",
+          "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"3B746D1A\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":320,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T16:01:54.342Z\",\"updatedAt\":\"2026-10-25T16:01:54.342Z\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":null,\"guardPetId\":null}},\"revision\":2,\"duplicate\":false}",
+          "created_at": "2026-10-25T16:01:54.342Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "43a06fc3-b63f-4b7e-a807-0ed441753bde",
+          "operation": "adopt",
+          "request_hash": "c564810f0cdf2a8ff6a5aaf367c7f620c1a937657de45d2ec31ecd657fb2eb33",
+          "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"97410828\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":560,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T21:01:27.443Z\",\"updatedAt\":\"2026-10-25T21:01:27.443Z\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":null,\"guardPetId\":null}},\"revision\":4,\"duplicate\":false}",
+          "created_at": "2026-10-25T21:01:27.443Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "a39bdbba-ce65-4bb4-b51f-6da97f713ab7",
+          "operation": "adopt",
+          "request_hash": "25ee675a06591494a20b28c0ecc7020b8c98fa75ee9ac5c3fa957b50447c0de0",
+          "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-40899e45-d323-49c8-9136-743f14be6ce3\",\"templateId\":\"big-fish-gentle\",\"name\":\"鱼丸\",\"serial\":\"40899E45\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-yuwan-v2\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":80,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T10:15:21.267Z\",\"updatedAt\":\"2026-10-25T10:15:21.267Z\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":null,\"guardPetId\":null}},\"revision\":1,\"duplicate\":false}",
+          "created_at": "2026-10-25T10:15:21.267Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "battle:d79b783a-b5a5-4715-8e58-ba95483b2d67:account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "operation": "growth",
+          "request_hash": "ccfccc105fa220608332c5dcf43b1a7065e5b37dc2ae682f9eb00cb42529785f",
+          "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"97410828\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":20,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":1,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":560,\"y\":520,\"displayId\":null}},\"revision\":2,\"createdAt\":\"2026-10-25T21:01:27.443Z\",\"updatedAt\":\"2026-10-25T21:49:00.381Z\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"guardPetId\":null},\"battleReward\":{\"actionId\":\"battle:d79b783a-b5a5-4715-8e58-ba95483b2d67:account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"sessionId\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"mode\":\"friend\",\"won\":true,\"experience\":20,\"applied\":true,\"duplicate\":false,\"previousExperience\":0,\"previousLevel\":1,\"currentExperience\":20,\"currentLevel\":1}},\"revision\":7,\"duplicate\":false}",
+          "created_at": "2026-10-25T21:49:00.381Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "cc649ea1-eec1-4c71-aa97-2fc267371c2e",
+          "operation": "adopt",
+          "request_hash": "9f6ebf68cb8a782ea5828b18d87a7f97cc55bc9c32aafe97404717e1296b88c0",
+          "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-304685f8-7cae-4868-933c-af6d4bd28312\",\"templateId\":\"animal-hat-cat\",\"name\":\"礼帽喵\",\"serial\":\"304685F8\",\"element\":\"metal\",\"resource\":{\"resourceId\":\"builtin:lingjing-hatcat-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":136,\"atk\":30,\"def\":30,\"spd\":13}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":800,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T21:15:28.243Z\",\"updatedAt\":\"2026-10-25T21:15:28.243Z\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":null,\"guardPetId\":null}},\"revision\":5,\"duplicate\":false}",
+          "created_at": "2026-10-25T21:15:28.243Z"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "action_id": "desktop-position-0777dcb9-cd8d-4a45-93e3-6d893770e205",
+          "operation": "desktop",
+          "request_hash": "58f70d08bec4c45166e61e02ae566dfa43380b9b621aa6d6c107583ec219b8b6",
+          "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"3B746D1A\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":63,\"satiety\":80,\"affinity\":4,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":320,\"y\":520,\"displayId\":\"2568730015\"}},\"revision\":3,\"createdAt\":\"2026-10-25T16:01:54.342Z\",\"updatedAt\":\"2026-10-25T22:24:22.311Z\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"guardPetId\":null}},\"revision\":8,\"duplicate\":false}",
+          "created_at": "2026-10-25T22:24:22.311Z"
+        }
+      ],
+      "garden_items": [
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "item_id": "seed:carrot",
+          "quantity": 0
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "item_id": "seed:tomato",
+          "quantity": 3
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "item_id": "seed:berry",
+          "quantity": 1
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "item_id": "seed:rice",
+          "quantity": 1
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "item_id": "carrot",
+          "quantity": 6
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "item_id": "tomato",
+          "quantity": 3
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "item_id": "berry",
+          "quantity": 4
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "item_id": "rice",
+          "quantity": 0
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "item_id": "cooked_rice",
+          "quantity": 1
+        }
+      ],
+      "garden_reward_receipts": [
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "source": "battle",
+          "receipt_id": "d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "action_id": "battle-seeds:friend:d79b783a-b5a5-4715-8e58-ba95483b2d67",
+          "result_json": "{\"source\":\"battle\",\"receiptId\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"itemId\":\"seed:tomato\",\"quantity\":2}"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "mainAndWrapperAndAllRecordedChildrenGone": true,
+    "debugPortClosed": true,
+    "otherThreeMainsRemain": true,
+    "cipherBytesAndShaExactAcrossTitleX": true,
+    "deviceShaExactAcrossTitleX": true,
+    "allTenBusinessTablesExact": true,
+    "noUnverifiedOutbox": true
+  },
+  "qualification": "Earlier running-Main cipher 979fc... to 21b... raw false is retained in the after-one-save evidence. Root independently reconfirmed same old O after that change; 21b... is the actual immediate-before/title-X baseline. No secret blob/token/key/proof read or decryption. Root post-close auth/18-scope review and new boot approval still required; helper has not been launched."
+}

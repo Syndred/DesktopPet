@@ -1,0 +1,253 @@
+{
+  "at": "2026-10-26T23:40:49.633Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "policy": "Read-only source and existing native captures; no frozen product change",
+  "findings": [
+    {
+      "ref": "4E6-001",
+      "behavior": "Cross-client profile update replaces an unsaved persona draft",
+      "cause": [
+        "PersonaForm key includes data.profile.revision and remounts on a new cloud version",
+        "PersonaForm submits current prop revision, so simply removing the key would permit saving the old draft against a new unseen revision",
+        "ConnectionForm has the same remount and submit-revision pattern"
+      ],
+      "repairRequirements": [
+        "Keep original edit base revision with draft",
+        "Keep dirty draft when remote revision changes and show a clear choice to load updated content",
+        "Clean forms may adopt a newer remote revision",
+        "Saving a stale draft must use its edit base revision and surface the existing record conflict without overwriting another client",
+        "Reset all draft and secret fields on account/session/pet identity change"
+      ],
+      "nativeEvidence": [
+        "native-A2-persona-unsaved-same-version.png",
+        "native-A2-stale-draft-after-A-save.png"
+      ]
+    },
+    {
+      "ref": "4E6-002",
+      "behavior": "Account aggregate and garden-domain pending counters omit actual garden pending; network error is masked by an older metadata error",
+      "capture": {
+        "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\cloudA-denied-single-feed-first-pending.json",
+        "sha256": "c8eb0c1efd0c1e710fde30d9f1799b3df01ec90d6a27722592ad2c76c6b45bf9"
+      },
+      "observedPublicStatus": {
+        "status": "partial",
+        "pending": 0,
+        "domainStates": [
+          {
+            "domain": "companions",
+            "checkedAt": "2026-10-26T19:39:51.885Z",
+            "error": "CLOUD_UNAVAILABLE",
+            "category": "network",
+            "pending": 0,
+            "status": "partial"
+          },
+          {
+            "domain": "garden",
+            "checkedAt": "2026-10-26T19:39:51.885Z",
+            "error": "CLOUD_UNAVAILABLE",
+            "category": "network",
+            "pending": 0,
+            "status": "offline"
+          },
+          {
+            "domain": "conversations",
+            "checkedAt": "2026-10-26T19:39:51.885Z",
+            "error": "CLOUD_UNAVAILABLE",
+            "category": "network",
+            "pending": 0,
+            "status": "offline"
+          }
+        ]
+      },
+      "cause": [
+        "Garden provider exposes refreshCloud but no cloudStatus; response pending is nested in data.sync",
+        "AccountsService aggregate sums companions and conversations only",
+        "domainObservation chooses error CLOUD_UNAVAILABLE but value.metadataError still causes status partial, even though category is network"
+      ],
+      "repairRequirements": [
+        "Expose garden status from the durable journal and latest cloud read state",
+        "Aggregate each domain exactly once, including garden pending/conflicts",
+        "A primary network/permission error takes precedence over optional metadata warnings",
+        "Recompute live per-domain state between automatic refreshes",
+        "Keep unknown requests and economy unchanged; no retries from a status getter"
+      ],
+      "qualification": "The native source capture already proves companion category network/status partial under outage; no extra outage needed",
+      "relatedCachedProjection": {
+        "source": "apps/pc-app/runtime/features/garden/index.cjs",
+        "observation": "The cached snapshot fallback explicitly sets data.sync.pending=0 even if garden_cloud_requests contains an original pending row.",
+        "repairRequirement": "Use the same durable owner-scoped garden status for account aggregate, refresh result and cached snapshot; a status read must never retry a business command.",
+        "nextRegression": "Before applying fixes, extend copied tracked regressions with a cached garden snapshot after a controlled original feed failure; assert cached pending1 and no replay of the original command. Preserve the original artifact red baseline unchanged."
+      }
+    },
+    {
+      "ref": "4E6-003",
+      "severity": "P1",
+      "behavior": "A second explicit normal-UI import of the same backup after a previous resolution and later deletion reports complete but leaves the original memory deleted, with no new reviewable difference.",
+      "nativeAndIndependentEvidence": [
+        "cloudA-synthetic-memory-deleted-import-result.json",
+        "root-A-synthetic-memory-deletion-cloud-independent.json",
+        "root-4E6-003-repeated-memory-restore-local-independent.json",
+        "root-4E6-003-repeated-memory-restore-cloud-independent.json"
+      ],
+      "cause": [
+        "importData derives conflict reason only from backup data checksum",
+        "preserve uses INSERT OR IGNORE with owner/collection/recordId/reason as the key",
+        "the old resolved conflict therefore swallows a new confirmed restore intent"
+      ],
+      "repairRequirements": [
+        "Distinguish a fresh confirmed import intent from a retry of that same import",
+        "Pass the original restore action identity through the personal-record import path; keep retry identity stable in the UI",
+        "Offer a new reviewable candidate for a fresh import even when the same backup was previously resolved and the cloud revision is unchanged",
+        "Preserve old resolved rows and their decision history; do not clear/reset them",
+        "A repeated call for one import intent must not duplicate review rows or cloud writes",
+        "Restore the original memory ID through an explicit record choice and current CAS; never create a replacement memory ID",
+        "Other pet records, original archives, cloud game state and credentials must remain untouched"
+      ],
+      "regressionBaseline": {
+        "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\unified-regressions-v2\\before-memory-reimport-repair.json",
+        "sha256": "a2ca2a1ccca7998e0ad7f6e0f30d1b0e6f8d00bc66c134e3e161e443d9028c0f"
+      },
+      "policy": "Collect fixed candidate completely before one unified product repair; no live data workaround."
+    },
+    {
+      "ref": "4E6-004",
+      "severity": "P3",
+      "behavior": "Cold login screen omits visible version while public appInfo is the correct 0.1.8",
+      "repairRequirements": [
+        "Show version from actual public appInfo/build source in the cold login screen",
+        "Verify visually in native package; do not characterize it as a wrong package version"
+      ],
+      "nativeEvidence": [
+        "native-A01-fresh-ordinary-profile-first-login-screen.png",
+        "cloudBResourceFresh-first-cold-start-unauthenticated.json"
+      ]
+    },
+    {
+      "ref": "4E6-005",
+      "classification": "authorization precondition; full numbering consistency not verified",
+      "behavior": "Fresh original B client shows pending serial while older original clients retain cached assigned numbers",
+      "independentEvidence": "root-numbering-current-scope-independent.json",
+      "source": "infra/supabase/migrations/20261025115122_lingjing_global_pet_serials.sql",
+      "verifiedFacts": [
+        "Both original owners remain in the fixed user-acceptance-790f5b6d namespace",
+        "Both original grants expired at 2026-10-25T13:37:34.896538Z",
+        "Both original owners still have four canonical assignments",
+        "Public owned serial RPC first enforces actor namespace guard, including new-device escape protection"
+      ],
+      "repairRequirements": [
+        "Retain real observation and C03/C11 unverified state until legitimate authorization",
+        "Do not bypass guards, renew grants, invent numbers, change accounts or allocate in a different namespace"
+      ]
+    },
+    {
+      "ref": "4E6-006",
+      "severity": "P1",
+      "classification": "Native normal restore failure with independent readonly audit; fault cleaned",
+      "behavior": "Valid same-owner backup cannot begin restoring a missing current asset: the protective snapshot first exports the missing file and throws ENOENT.",
+      "nativeAndIndependentEvidence": [
+        "native-R05-valid-backup-missing-file-recovery-failure-seal.json",
+        "root-R05-failed-restore-and-cleanup-independent.json"
+      ],
+      "cause": [
+        "Accounts.restoreBackup creates before-record-import protection snapshot before inserting restore state or applying modules",
+        "Resource export synchronously reads current registered files and fails when the cache file is missing",
+        "Resource merge separately skips any existing resource ID, so fixing protection ordering alone is insufficient"
+      ],
+      "repairRequirements": [
+        "Repair only validated known matching cache bytes before protection snapshot export",
+        "Validate complete backup pack hash against both backup and current immutable content_hash, not only adjusted per-file hashes or outer checksum",
+        "Retain original resource identity, authored row/revision, imports, preferences, pet assignments and history",
+        "Cover normal cloud-account restore plus existing-resource merge with targeted regressions",
+        "Do not count background cloud hydration as backup-origin restoration",
+        "Also allow valid-backup preview when a known matching cache asset was already missing; preview must not import new business records/configuration or register a completed restore. Only exact known cache regeneration is permitted before confirmation."
+      ],
+      "qualification": "One new QA resource PNG only, original bytes archived intact. One fault and one actual confirm. Native failed. All8 registered file bytes/paths returned to originals,70 historical table digests unchanged,no restore action committed after fault,held suffix absent.",
+      "scopeCleanupComplete": true,
+      "backupOriginRecoveryProven": false,
+      "productSourceChanged": false,
+      "fullAccountRestoreRedBaseline": {
+        "file": "unified-regressions-v2\\before-account-backup-missing-cache-repair.json",
+        "sha256": "0984156f6866224a54b40265e86f51964fdbd5c5fb5d3b7aa0080ec82ad59935",
+        "result": "0pass1fail ENOENT in actual resource export before protection snapshot",
+        "scope": "Real production AccountsService/SupabaseRemote/BackupManager/resource adapter, injected synthetic auth only, in-memory SQLite and isolated fixture files; no actual profile/cloud/network"
+      },
+      "additionalPreviewOrdering": {
+        "source": "BackupManager.preview calls dataChecksum -> snapshot -> resource export",
+        "observed": "An already-missing asset prevents preview before any confirmation; same ENOENT reproduced in isolated real production services",
+        "regression": "unified-regressions-v2/before-account-backup-preview-missing-cache-repair.json",
+        "nativeFaultRepeated": false
+      }
+    }
+  ],
+  "regressionBaseline": {
+    "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\unified-regressions-v2\\before-unified-repair.json",
+    "sha256": "e0f400fd68ac0bfaac6dfbf0567abbc8f71fd3edc7046ad764f764bc67a396f3",
+    "qualification": "Engineering only: actual React/DOM source with in-memory CAS and actual garden provider/account status with in-memory SQLite. No real profile or cloud mutation."
+  },
+  "resourceMergeEngineeringObservation": {
+    "classification": "Engineering merge baseline linked to native full restore failure; not a native pass",
+    "source": "apps/pc-app/runtime/core/resource-backup.cjs:79",
+    "actual": "Merge restore skips an existing resource ID even when a registered physical asset is missing",
+    "baseline": "artifacts\\qa\\cloud-authority-convergence\\20261026\\unified-regressions-v2\\before-cached-garden-and-resource-merge-repair.json",
+    "scope": "Only a disposable fixture asset was renamed to .preserved within a verified canonical temporary root; all original bytes retained; no live cache touched",
+    "completePathConcern": "Cloud-account restore first creates a protective backup. Resource export reads local files synchronously and may fail before merge when a cached asset is missing. A future repair must cover the normal UI path and preserve authored metadata and original identities.",
+    "sourceHashContract": "package-2d.cjs:67-69 and cloud-packages.cjs:21-34 compute SHA256 over asset keys sorted with localeCompare, key+NUL+exact file bytes",
+    "integrityRepairRequirement": "Before any cache repair under an existing resource ID, validate exact package hash against both backup/current immutable content_hash; retain authored row/revision/imports/preferences. Do not trust an unkeyed outer checksum or attacker-adjusted file SHA.",
+    "positiveBaseline": "current4e6 validates substituted format but skips existing-resource merge, so unsafe substituted PNG is not installed;1pass. This existing protection must survive missing-file repair.",
+    "positiveRegression": "unified-regressions-v2/resource-backup-cache-integrity.regression.test.cjs",
+    "nativePlan": "R05 completed once with an actual normal-UI failure; independent cleanup proof root-R05-failed-restore-and-cleanup-independent.json; no additional fault authorized.",
+    "linkedNativeIssue": "4E6-006"
+  },
+  "animationPolicyDiagnosis": {
+    "classification": "current environment restriction, not a reproduced animation defect",
+    "evidence": "native-R02-public-motion-gates-and-frames-readonly.json",
+    "pageVisible": true,
+    "systemPrefersReducedMotion": true,
+    "closestMotionBoundary": "reduced",
+    "sampleSpacingMs": 1100,
+    "actualFrame": 0,
+    "source": "apps/pc-app/ui/src/features/resources/ResourceStage.tsx:88",
+    "nativeIssue006Created": false,
+    "fullContinuousPlaybackVerified": false,
+    "policy": "Keep OS/product preferences; use an authorized normal-motion environment for the remaining dynamic acceptance."
+  },
+  "versionDiagnosticsSourceObservation": {
+    "classification": "source read supports native P08 missing-entry observation; Native09 assigns final case/issue IDs",
+    "source": [
+      "apps/pc-app/ui/src/features/accounts/account.tsx:15",
+      "apps/pc-app/runtime/main/index.ts:139",
+      "apps/pc-app/runtime/main/index.ts:169"
+    ],
+    "facts": [
+      "Settings navigation has five groups and no about/version/log/update entry",
+      "Entire UI has no relevant entry text",
+      "Main application menu is explicitly disabled",
+      "Public app:info exposes correct version/build"
+    ],
+    "repairRequirements": [
+      "Show version/build from public runtime info rather than hardcoding another version",
+      "Provide truthful local diagnostics and a real update path appropriate for the portable package",
+      "Do not fabricate an online-update service, claim automatic updates or upload private logs",
+      "Verify actual page/entry availability on the new package, including login version4E6-004"
+    ],
+    "productSourceChanged": false,
+    "currentUpdateConfiguration": {
+      "source": [
+        "package.json",
+        "apps/pc-app/package.json",
+        "apps/pc-app/runtime/features/accounts/startup.cjs"
+      ],
+      "officialHomepageOrPublishChannelDeclared": false,
+      "existingDownloadOrUpdateUrlFound": false,
+      "existingPortableTargetResolver": "loginItemTarget",
+      "requirement": "Provide truthful portable update instructions and a usable verified original program location when available. Never invent a download URL or treat the extracted TEMP child as the user executable. Public version/build already available before login."
+    }
+  },
+  "startupProfilePropagationObservation": {
+    "file": "root-P09-stable-exe-but-no-profile-source-observation.json",
+    "classification": "engineering-only startup profile propagation observation; not actual Windows registration or native issue",
+    "actual": "Current startup target identifies the stable outer EXE but carries no custom profile argument. Main currently derives non-default profile only from transient PET_USER_DATA_DIR.",
+    "limit": "No actual OS startup registration has been performed. Native P09 must verify expected profile semantics and real entry; this source finding is not a native pass or assigned issue."
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-26T12:25:25.153Z",
+  "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+  "exeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+  "asarSha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355",
+  "roundId": "candidate-c7ad6837-1b1afdd1",
+  "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+  "scope": "QA023 warm existing report regression only: original live A fox4/B fox5 report on c7ad; list/detail/round1 and round12 replay plus roster/detail visit and warm reentry retain standard names and numeric identities. No new battle/invite in this completed stage. Whole C03 adoption/chat/desktop/cross-user naming matrix not replayed.",
+  "qa023NativeFixVerified": true,
+  "c03WholeCaseStatus": "pending",
+  "targetedCurrentCandidatePassed": true,
+  "reportSessionId": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+  "identities": {
+    "a": {
+      "petId": "pet-97410828-fdf6-4253-8246-4c5f389d8fba",
+      "name": "小狐",
+      "displayNumber": "0004"
+    },
+    "b": {
+      "petId": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+      "name": "小狐",
+      "displayNumber": "0005"
+    }
+  },
+  "originalBusinessRowsRawExact": true,
+  "rootReview": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/clouda-c7ad-cutover-settings-and-business-preservation-independent.json",
+  "rootNativeScreenshotReview": "Root explicitly inspected first/last replay and warm-reentry screenshots and authorized QA023 native verified; broader C03 pending retained."
+}

@@ -1,0 +1,212 @@
+{
+  "at": "2026-10-25T13:31:53.458Z",
+  "result": {
+    "ok": true,
+    "data": {
+      "version": "0.1.8",
+      "platform": "win32",
+      "build": {
+        "schemaVersion": 2,
+        "builtAt": "2026-10-25T12:48:36.490Z",
+        "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+        "sourceTree": "2d8977dc36e95ede498d3e3f14a26f1f9b392a16",
+        "sourceDirtyFiles": [],
+        "codeFingerprint": "a3122d871bbc372c8ffc9a84e15b5b9565b5daace1a6cff29eb0bfadeedb2fbf",
+        "canonicalSourceFingerprint": "4b0266609b34857edf22a87530c32f1ab0d8ea7d87aed631f8bc73efc5fb1f50",
+        "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+        "compiledFingerprint": "c7ed77da99cfc2c803640a25ddc5dff61cb837aa79d2e83729b976b1a4351bd2",
+        "codeFiles": 312,
+        "compiledFiles": 89,
+        "toolchain": {
+          "node": "24.21.0",
+          "electron": "44.9.3",
+          "sqlite": "13.0.3",
+          "vite": "7.3.7",
+          "typescript": "5.9.3",
+          "platform": "win32",
+          "arch": "x64"
+        },
+        "entrypoints": {
+          "main": "main/index.cjs",
+          "app": "ui/index.html",
+          "desktop": "ui/desktop.html",
+          "preload": "preload/index.cjs"
+        },
+        "publicCloud": {
+          "projectRef": "jbvrdmrkwpznbrvteive",
+          "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+          "resourcePath": "lingjing-cloud-public.json"
+        },
+        "packageName": "lingjing-desktop",
+        "runtimeClosure": {
+          "manifest": "runtime-closure.json",
+          "files": 116,
+          "edges": 199,
+          "sha256": "1df30187a94a9ff92ea18e2c1376031491730f7ebe56c434b8dc1fdd5a7b0be9"
+        }
+      },
+      "runtime": {
+        "electron": "44.9.3",
+        "node": "24.22.0",
+        "modules": "149",
+        "napi": "10",
+        "arch": "x64",
+        "tray": {
+          "active": true,
+          "bounds": {
+            "x": 1751,
+            "y": 1150,
+            "width": 33,
+            "height": 49
+          }
+        }
+      },
+      "features": [
+        {
+          "id": "accounts",
+          "commands": [
+            "session",
+            "login",
+            "register",
+            "logout",
+            "profileSave",
+            "passwordChange",
+            "settingsGet",
+            "settingsDefaults",
+            "settingsSave",
+            "backupList",
+            "backupExport",
+            "backupPreview",
+            "backupRestore",
+            "syncStatus",
+            "syncNow",
+            "syncRetry",
+            "cloudPreview",
+            "testNotification",
+            "pointer"
+          ]
+        },
+        {
+          "id": "resources",
+          "commands": [
+            "list",
+            "history",
+            "cloudStatus",
+            "cloudSync",
+            "cloudPull",
+            "resolve",
+            "save",
+            "import"
+          ]
+        },
+        {
+          "id": "companions",
+          "commands": [
+            "list",
+            "get",
+            "combatProfile",
+            "identity",
+            "desktopInput",
+            "adopt",
+            "rename",
+            "desktop",
+            "select",
+            "interact",
+            "perform",
+            "appearance"
+          ]
+        },
+        {
+          "id": "battle",
+          "commands": [
+            "overview",
+            "rules",
+            "context",
+            "settleContext",
+            "selectPet",
+            "startTraining",
+            "snapshot",
+            "act",
+            "retryAction",
+            "search",
+            "invitations",
+            "invite",
+            "respondInvite",
+            "cancelInvite",
+            "createRoom",
+            "joinRoom",
+            "sync",
+            "leave",
+            "listReports",
+            "getReport",
+            "retrySettlement",
+            "qaPreset"
+          ]
+        },
+        {
+          "id": "garden",
+          "commands": [
+            "plant",
+            "harvest",
+            "craft",
+            "feed",
+            "garrison",
+            "snapshot",
+            "territoryLocate",
+            "territoryChallenge",
+            "territorySettle"
+          ]
+        },
+        {
+          "id": "discovery",
+          "commands": [
+            "snapshot",
+            "setExploring",
+            "locate",
+            "watch",
+            "stopWatch",
+            "setDemo",
+            "setProvider",
+            "tile",
+            "qaTarget",
+            "observe",
+            "begin",
+            "act",
+            "cancel",
+            "confirm",
+            "pokedex",
+            "memories"
+          ]
+        },
+        {
+          "id": "conversations",
+          "commands": [
+            "snapshot",
+            "select",
+            "history",
+            "profile.save",
+            "connection.save",
+            "connection.test",
+            "connection.cancel",
+            "memory.save",
+            "memory.delete",
+            "send",
+            "retry",
+            "cancel",
+            "history.clear",
+            "legacy.preview",
+            "legacy.import"
+          ]
+        }
+      ],
+      "user": null,
+      "scenario": {
+        "id": "unified-battle",
+        "runId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+        "provenance": "simulated",
+        "isolated": true
+      }
+    }
+  }
+}

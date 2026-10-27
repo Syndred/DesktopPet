@@ -1,0 +1,128 @@
+{
+  "at": "2026-10-26T22:18:31.180Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "petId": "pet-825f6af9-402b-4244-988a-481563b7a587",
+  "runId": "75e04efd-0856-4ca2-bf07-94dbb832e9eb",
+  "simulatedUpstream": true,
+  "externalModelSuccess": false,
+  "realLoopbackHttp": true,
+  "actualNativeStreamAndCancel": true,
+  "credentialCounts": {
+    "originB2": 1,
+    "peerB1": 0
+  },
+  "messages": [
+    {
+      "id": "7843cb6c-7a50-49aa-9999-6ac62ebc3f5f",
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+      "action_id": "49180763-530f-4087-b5a4-4e15597a136e",
+      "role": "assistant",
+      "content": "【模拟验收 / 4E6】这是",
+      "status": "cancelled",
+      "created_at": 1793052629538,
+      "updated_at": 1793052664703,
+      "provider": "openai_compatible",
+      "model": "模拟验收-4E6-c5093dca6b4a",
+      "attempt": 1,
+      "error_code": "CANCELLED"
+    },
+    {
+      "id": "948527c3-47f5-49f4-bcc4-4532ac784497",
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+      "action_id": "49180763-530f-4087-b5a4-4e15597a136e",
+      "role": "user",
+      "content": "模拟验收/4E6 T04 取消轮：请保持生成，随后由我停止。",
+      "status": "complete",
+      "created_at": 1793052629538,
+      "updated_at": 1793052629538,
+      "provider": null,
+      "model": null,
+      "attempt": 1,
+      "error_code": null
+    },
+    {
+      "id": "44e206ea-2536-45ad-89f3-17f07fdf0d2d",
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+      "action_id": "0882799c-2985-4ac7-beb5-6091c7fbd8e3",
+      "role": "assistant",
+      "content": "【模拟验收 / 4E6】这是本机协议夹具逐字回传，供应商为模拟；本次模式 stream。",
+      "status": "complete",
+      "created_at": 1793052535146,
+      "updated_at": 1793052545089,
+      "provider": "openai_compatible",
+      "model": "模拟验收-4E6-c5093dca6b4a",
+      "attempt": 1,
+      "error_code": null
+    },
+    {
+      "id": "94f688fc-530e-4cd7-ac62-d117ee95e2ca",
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+      "action_id": "0882799c-2985-4ac7-beb5-6091c7fbd8e3",
+      "role": "user",
+      "content": "模拟验收/4E6 T04 第一轮：请显示本机模拟流式回复。",
+      "status": "complete",
+      "created_at": 1793052535146,
+      "updated_at": 1793052535146,
+      "provider": null,
+      "model": null,
+      "attempt": 1,
+      "error_code": null
+    }
+  ],
+  "auditAtThisStage": [
+    {
+      "at": "2026-10-26T22:08:58.560Z",
+      "event": "request_accepted",
+      "requestId": "sim-1",
+      "mode": "stream",
+      "bytes": 607,
+      "messageCount": 2,
+      "contentChars": 161
+    },
+    {
+      "at": "2026-10-26T22:09:05.072Z",
+      "event": "response_end",
+      "requestId": "sim-1",
+      "mode": "stream",
+      "reason": "complete",
+      "status": 200,
+      "deltas": 44
+    },
+    {
+      "at": "2026-10-26T22:10:31.411Z",
+      "event": "request_accepted",
+      "requestId": "sim-2",
+      "mode": "hold",
+      "bytes": 848,
+      "messageCount": 4,
+      "contentChars": 235
+    },
+    {
+      "at": "2026-10-26T22:11:04.701Z",
+      "event": "response_closed",
+      "requestId": "sim-2",
+      "mode": "hold",
+      "reason": "client_closed",
+      "deltas": 14
+    }
+  ],
+  "evidence": [
+    "native-T04-v2-stream-first-native-observation.png",
+    "native-T04-v2-stream-second-native-observation.png",
+    "native-T04-v2-hold-generation-started.png",
+    "native-T04-v2-hold-partial-reply-and-stop-visible.png",
+    "native-T04-v2-hold-cancel-button-result.png",
+    "native-T04-v2-original-B1-peer-history-first-view.png",
+    "native-T04-v2-original-B1-peer-first-round-history.png",
+    "cloudB2-after-model-v2-first-stream-reply.json",
+    "cloudB2-after-v2-hold-cancel-model-records.json",
+    "cloudB1-v2-after-original-peer-cancel-model-records.json",
+    "root-T04-first-stream-and-cancel-cloud-independent.json",
+    "root-T04-stream-cancel-three-client-readback-independent.json"
+  ]
+}

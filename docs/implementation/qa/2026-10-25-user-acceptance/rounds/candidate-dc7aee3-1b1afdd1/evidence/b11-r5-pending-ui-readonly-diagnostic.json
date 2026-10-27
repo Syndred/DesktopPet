@@ -1,0 +1,83 @@
+{
+  "at": "2026-10-25T21:42:30.217Z",
+  "aDom": {
+    "body": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n云端验收甲\nLv.01\n小狐\n编号 0004\n110/120\n5/100\n回合 6\n不限时\n—\nLv.01\n小狐\n编号 0005\n70/120\n25/100\n10%\n大招\n需要至少 50 怒气\n攻击\n打断属性攻击；基础伤害 10\n属性\n命中后对方怒气向下取半，不增加受击怒气；基础伤害 12\n闪避\n躲开普通攻击；零怒气可免费一次；有怒气时最多消耗 20；成功躲开普攻返还 30 怒气；本次消耗 5 怒气\n回合记录\n全部\n回合 5\n小狐使用普通攻击\n小狐使用属性攻击\n小狐受到 10 点直接伤害\n回合 4\n小狐使用普通攻击\n小狐使用属性攻击\n小狐受到 10 点直接伤害\n回合 3\n小狐使用普通攻击\n小狐使用属性攻击\n小狐受到 10 点直接伤害\n回合 2\n小狐使用普通攻击\n小狐使用属性攻击\n小狐受到 10 点直接伤害\n回合 1\n小狐使用普通攻击\n小狐受到 10 点直接伤害\n小狐使用普通攻击\n小狐受到 10 点直接伤害\n# 1968AE7891\n离开",
+    "buttons": [
+      {
+        "t": "攻击",
+        "disabled": false
+      },
+      {
+        "t": "属性",
+        "disabled": false
+      }
+    ]
+  },
+  "bDom": {
+    "body": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n云验收乙09\nLv.01\n小狐\n编号 0005\n70/120\n25/100\n回合 6\n不限时\n—\nLv.01\n小狐\n编号 0004\n110/120\n5/100\n50%\n大招\n需要至少 50 怒气\n攻击\n打断属性攻击；基础伤害 10\n属性\n命中后对方怒气向下取半，不增加受击怒气；基础伤害 12\n闪避\n躲开普通攻击；零怒气可免费一次；有怒气时最多消耗 20；成功躲开普攻返还 30 怒气；本次消耗 20 怒气\n回合记录\n全部\n回合 5\n小狐使用属性攻击\n小狐受到 10 点直接伤害\n小狐使用普通攻击\n回合 4\n小狐使用属性攻击\n小狐受到 10 点直接伤害\n小狐使用普通攻击\n回合 3\n小狐使用属性攻击\n小狐受到 10 点直接伤害\n小狐使用普通攻击\n回合 2\n小狐使用属性攻击\n小狐受到 10 点直接伤害\n小狐使用普通攻击\n回合 1\n小狐使用普通攻击\n小狐受到 10 点直接伤害\n小狐使用普通攻击\n小狐受到 10 点直接伤害\n# 1968AE7891\n离开"
+  },
+  "aActions": [
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "action_id": "328d5a8a-fed5-474a-ab5a-4e1c8c722811",
+      "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+      "command_json": "{\"action\":\"normal_attack\",\"roundNo\":3}",
+      "result_json": "{\"sessionId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"revision\":137,\"resolvedRound\":3}",
+      "legacy_row_json": null,
+      "projection_origin": null,
+      "authority_json": null
+    },
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "action_id": "2fedb48d-b80d-4053-b6cb-85762abdf021",
+      "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+      "command_json": "{\"action\":\"normal_attack\",\"roundNo\":4}",
+      "result_json": "{\"sessionId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"revision\":150,\"resolvedRound\":4}",
+      "legacy_row_json": null,
+      "projection_origin": null,
+      "authority_json": null
+    },
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "action_id": "56481b0b-0872-42d4-a2d0-43e86a4c4c72",
+      "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+      "command_json": "{\"action\":\"normal_attack\",\"roundNo\":5}",
+      "result_json": "{\"sessionId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"revision\":163,\"resolvedRound\":5}",
+      "legacy_row_json": null,
+      "projection_origin": null,
+      "authority_json": null
+    }
+  ],
+  "bActions": [
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "action_id": "acf1dcbb-43a6-45d1-836c-927fa1952e15",
+      "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+      "command_json": "{\"action\":\"element_attack\",\"roundNo\":3}",
+      "result_json": "{\"sessionId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"revision\":183,\"resolvedRound\":3}",
+      "legacy_row_json": null,
+      "projection_origin": null,
+      "authority_json": null
+    },
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "action_id": "12191bd8-ace4-435f-8743-8a20c07e82a3",
+      "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+      "command_json": "{\"action\":\"element_attack\",\"roundNo\":4}",
+      "result_json": "{\"sessionId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"revision\":197,\"resolvedRound\":4}",
+      "legacy_row_json": null,
+      "projection_origin": null,
+      "authority_json": null
+    },
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "action_id": "2b6ad482-fcd6-48c7-ab23-1f8b18044eaa",
+      "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+      "command_json": "{\"action\":\"element_attack\",\"roundNo\":5}",
+      "result_json": "{\"sessionId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"revision\":211,\"resolvedRound\":5}",
+      "legacy_row_json": null,
+      "projection_origin": null,
+      "authority_json": null
+    }
+  ]
+}

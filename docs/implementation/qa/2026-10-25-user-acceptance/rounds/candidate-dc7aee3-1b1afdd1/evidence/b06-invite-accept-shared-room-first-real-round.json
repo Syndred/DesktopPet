@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-25T21:38:24.035Z",
+  "checks": {
+    "sameActualRoom": true,
+    "oppositeSides": true,
+    "originalExplicitInstances": true,
+    "sameServerRoom": true,
+    "firstRoundBothCompleted": true,
+    "bothNormalChoices": true,
+    "canonicalHpAndAnger": true,
+    "noEarlyReward": true
+  },
+  "sessionId": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+  "requestId": "d9946730-4bf1-441c-b8f3-4a6d504b1b55",
+  "roomId": "d79b783a-b5a5-4715-8e58-ba95483b2d67",
+  "flow": "normal native A search/invite → B accept → A enter accepted invitation; B automatic native waiting→active and R1→R2 captured before corresponding business read, no manual sync",
+  "evidence": [
+    "b06-third-real-invite-before-accept.json",
+    "b06-b-accepted-real-waiting-room.json",
+    "b06-actual-shared-active-room-before-round-one.json",
+    "b06-first-real-round-authority-both-views.json",
+    "b06-b-auto-shared-room-active-without-manual-sync-native.jpg",
+    "b06-b-round-one-automatic-result-before-business-read-native.jpg"
+  ],
+  "qualification": "Actual live Supabase authority and natural app auto updates; no claim of separately captured WebSocket-only transport."
+}

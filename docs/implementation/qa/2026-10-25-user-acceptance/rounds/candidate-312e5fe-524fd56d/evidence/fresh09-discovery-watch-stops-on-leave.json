@@ -1,0 +1,50 @@
+{
+  "scope": "historical-312-native-QA-location-watch-lifecycle",
+  "enabled": {
+    "at": "2026-10-25T12:53:02.892Z",
+    "location": {
+      "mode": "real",
+      "status": "ready",
+      "permission": "unknown",
+      "fix": {
+        "lat": 31.230299999999996,
+        "lng": 121.47389999999999,
+        "accuracyMeters": 5,
+        "timestampMs": 1792932773940,
+        "coordinateSystem": "wgs84",
+        "source": "simulated",
+        "scenarioId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+        "provider": "qa-discovery",
+        "positionSource": "Scenario"
+      },
+      "lastError": null,
+      "watching": true
+    },
+    "scenario": "qa"
+  },
+  "leftExplorationForBackpack": {
+    "at": "2026-10-25T12:53:54.342Z",
+    "location": {
+      "mode": "real",
+      "status": "stale",
+      "permission": "unknown",
+      "fix": {
+        "lat": 31.230299999999996,
+        "lng": 121.47389999999999,
+        "accuracyMeters": 5,
+        "timestampMs": 1792932788940,
+        "coordinateSystem": "wgs84",
+        "source": "simulated",
+        "scenarioId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+        "provider": "qa-discovery",
+        "positionSource": "Scenario"
+      },
+      "lastError": {
+        "code": "LOCATION_STALE",
+        "message": "位置已过期，请重新定位"
+      },
+      "watching": false
+    },
+    "scenario": "qa"
+  }
+}

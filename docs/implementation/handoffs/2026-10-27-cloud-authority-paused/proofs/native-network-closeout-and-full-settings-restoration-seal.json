@@ -1,0 +1,97 @@
+{
+  "at": "2026-10-26T20:08:31.268Z",
+  "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a",
+  "nativeWindowId": 14092268,
+  "cdp": 57234,
+  "runtime": {
+    "mainPid": 25084,
+    "wrapperPid": 21924,
+    "mainParent": 21924,
+    "mainExecutable": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsw430F.tmp\\app\\Lingjing.exe",
+    "wrapperExecutable": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-4e6c3de4\\Lingjing-0.1.8-portable-x64.exe",
+    "mainCreatedUtc": "2026-10-26T20:04:09.6963210Z",
+    "wrapperCreatedUtc": "2026-10-26T20:03:59.8438890Z",
+    "mainExeSha256": "2905e061a4bd6409f6d8dc7c2155f3700d1ce61ecc8701796f109a03733a2d0c",
+    "asarSha256": "3be5ce049efb9ad93a83f6090994a6f8ae26cf0f319b614c1d8e5ae6e8ab0568",
+    "proxyRemaining": 0,
+    "proxyListenersRemaining": 0
+  },
+  "publicSession": {
+    "dataMode": "live",
+    "persistence": "secure",
+    "secureStorageAvailable": true,
+    "startupIssue": null,
+    "user": {
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "provider": "runtime",
+      "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe"
+    }
+  },
+  "settingsRevision": 25,
+  "entireOriginal23SettingsDocumentMatched": true,
+  "originalSettingsDocument": {
+    "desktop": {
+      "alwaysOnTop": true,
+      "clickThrough": true,
+      "launchAtLogin": false,
+      "closeToTray": true,
+      "companionLimit": 3,
+      "interactionSounds": true,
+      "volume": 70,
+      "hideInFullscreen": true,
+      "animationsEnabled": true
+    },
+    "notifications": {
+      "enabled": true,
+      "companions": true,
+      "battles": true,
+      "garden": true,
+      "quietEnabled": true,
+      "quietStart": "22:00",
+      "quietEnd": "08:00"
+    },
+    "privacy": {
+      "locationAllowed": false,
+      "locationOnlyWhileExploring": true,
+      "emotionStatistics": false
+    },
+    "sync": {
+      "enabled": true
+    }
+  },
+  "restorationObligationFulfilled": "native-A-network-normal-exit-restoration-obligation.json",
+  "normalLaunch": "launch-cloudA-post-network-normal-restore.json",
+  "mainEnvironmentReadbackVerified": false,
+  "testProxyFullyStopped": true,
+  "independentPgOperationCount": 1,
+  "independentPgCommonReceiptCount": 1,
+  "independentProof": {
+    "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\network-pending-restart-v1\\root-pending-restart-recovery-independent-seal.json",
+    "sha256": "1df2892052ca403c2db361bc32fa92b22514d2f2cfeb257e58ee3a5fdef967d5"
+  },
+  "originalActionId": "e3e48e4c-47ab-4d1a-aa79-394be57ee185",
+  "requestStatus": "committed",
+  "carrot": 4,
+  "accountRevision": 40,
+  "gardenRevision": 14,
+  "postCommitNormalRestartAndSettingsSaveDidNotResettle": true,
+  "businessTablesUnchanged": [
+    "companion_pets",
+    "garden_items",
+    "garden_accounts",
+    "garden_cloud_requests",
+    "battle_sessions",
+    "battle_reports_v2",
+    "battle_reward_receipts",
+    "conversation_profiles",
+    "conversation_memories",
+    "conversation_messages",
+    "conversation_cloud_records",
+    "conversation_cloud_outbox"
+  ],
+  "privateCredentialValuesRead": false,
+  "remainingKnownIssue": "S06 stays failed for 4E6-002 state aggregation; no claim of full outage of Chromium or all application transports",
+  "nativeEvidence": "cloudA-post-network-full-original-settings-restored.json"
+}

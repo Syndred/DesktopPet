@@ -1,0 +1,302 @@
+{
+  "outcome": {
+    "at": "2026-10-25T16:20:24.822Z",
+    "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+    "detailViewed": [
+      "growth",
+      "skills",
+      "memories",
+      "appearance"
+    ],
+    "nativeBackClickedOnce": true,
+    "returnedHref": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsc4E9.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/companions",
+    "allAPetRawRowsUnchanged": true,
+    "selections": {
+      "chatPetId": null,
+      "battlePetId": null,
+      "guardPetId": null
+    },
+    "returnContextText": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n云端验收甲\n\n我的灵宠 / 全部伙伴\n\n今天，也有小家伙在等你。\n\n已拥有 2 只 · 桌面陪伴 1 只\n\n领养伙伴\n鱼丸\nLv.01\n编号 0001\n在灵境里休息\n\n安静温柔的鲸尾少女，喜欢陪你度过日常。\n\n摸摸\n喂食\n聊聊天\n鱼丸\n编号 0001\n\n水\n\n60\n60\n0\n行为模式\n安静陪伴\n外观大小\n100%\n在桌面显示\n设为出战伙伴\n查看伙伴详情\n我的伙伴\n全部 2\n桌面中 1\n鱼丸\n编号 0001\nLv.01\n水\n小狐\n桌面中\n编号 0001\nLv.01\n水\n去附近探索\n寻找下一份特别的相遇\n和伙伴并肩出发\n前往对战中心"
+  },
+  "runtime": {
+    "at": "2026-10-25T16:20:21.750Z",
+    "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsc4E9.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/companions",
+    "text": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n云端验收甲\n\n我的灵宠 / 全部伙伴\n\n今天，也有小家伙在等你。\n\n已拥有 2 只 · 桌面陪伴 1 只\n\n领养伙伴\n鱼丸\nLv.01\n编号 0001\n在灵境里休息\n\n安静温柔的鲸尾少女，喜欢陪你度过日常。\n\n摸摸\n喂食\n聊聊天\n鱼丸\n编号 0001\n\n水\n\n60\n60\n0\n行为模式\n安静陪伴\n外观大小\n100%\n在桌面显示\n设为出战伙伴\n查看伙伴详情\n我的伙伴\n全部 2\n桌面中 1\n鱼丸\n编号 0001\nLv.01\n水\n小狐\n桌面中\n编号 0001\nLv.01\n水\n去附近探索\n寻找下一份特别的相遇\n和伙伴并肩出发\n前往对战中心",
+    "petDom": [
+      {
+        "tag": "BUTTON",
+        "petId": "pet-40899e45-d323-49c8-9136-743f14be6ce3",
+        "selected": null
+      },
+      {
+        "tag": "BUTTON",
+        "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+        "selected": null
+      }
+    ],
+    "companions": {
+      "ok": true,
+      "data": {
+        "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "pets": [
+          {
+            "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+            "petId": "pet-40899e45-d323-49c8-9136-743f14be6ce3",
+            "templateId": "big-fish-gentle",
+            "name": "鱼丸",
+            "serial": "40899E45",
+            "element": "water",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            },
+            "source": "adoption",
+            "origin": {},
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 124,
+                "atk": 28,
+                "def": 24,
+                "spd": 20
+              }
+            },
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 80,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "revision": 1,
+            "createdAt": "2026-10-25T10:15:21.267Z",
+            "updatedAt": "2026-10-25T10:15:21.267Z",
+            "globalSerial": "1"
+          },
+          {
+            "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+            "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+            "templateId": "animal-white-fox",
+            "name": "小狐",
+            "serial": "3B746D1A",
+            "element": "water",
+            "resource": {
+              "resourceId": "builtin:lingjing-xiaohu-v1",
+              "kind": "2d"
+            },
+            "source": "adoption",
+            "origin": {},
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 124,
+                "atk": 28,
+                "def": 24,
+                "spd": 20
+              }
+            },
+            "desktop": {
+              "visible": true,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 320,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "revision": 1,
+            "createdAt": "2026-10-25T16:01:54.342Z",
+            "updatedAt": "2026-10-25T16:01:54.342Z",
+            "globalSerial": "1"
+          }
+        ],
+        "selections": {
+          "chatPetId": null,
+          "battlePetId": null,
+          "guardPetId": null
+        },
+        "templates": [
+          {
+            "templateId": "big-fish-gentle",
+            "name": "鱼丸",
+            "category": "big-fish",
+            "element": "water",
+            "description": "安静温柔的鲸尾少女，喜欢陪你度过日常。",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          {
+            "templateId": "big-fish-cheerful",
+            "name": "小蓝",
+            "category": "big-fish",
+            "element": "water",
+            "description": "活泼的侧马尾伙伴，穿着宽松鲸鱼斗篷。",
+            "resource": {
+              "resourceId": "builtin:lingjing-xiaolan-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          {
+            "templateId": "big-fish-foodie",
+            "name": "饭团",
+            "category": "big-fish",
+            "element": "water",
+            "description": "盘着双丸子头的美食家，认真珍惜每一顿饭。",
+            "resource": {
+              "resourceId": "builtin:lingjing-fantuan-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          {
+            "templateId": "animal-shiba",
+            "name": "焰柴",
+            "category": "animal",
+            "element": "fire",
+            "description": "热情勇敢的柴犬，星星项圈总是闪闪发亮。",
+            "resource": {
+              "resourceId": "builtin:lingjing-shiba-v2",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 118,
+              "atk": 33,
+              "def": 20,
+              "spd": 22
+            }
+          },
+          {
+            "templateId": "animal-hat-cat",
+            "name": "礼帽喵",
+            "category": "animal",
+            "element": "metal",
+            "description": "戴着礼帽的燕尾猫，擅长温柔的小魔术。",
+            "resource": {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 136,
+              "atk": 30,
+              "def": 30,
+              "spd": 13
+            }
+          },
+          {
+            "templateId": "animal-white-fox",
+            "name": "小狐",
+            "category": "animal",
+            "element": "water",
+            "description": "安静机灵的雪白小狐，像雪花一样轻盈。",
+            "resource": {
+              "resourceId": "builtin:lingjing-xiaohu-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          {
+            "templateId": "animal-wood-deer",
+            "name": "青芽",
+            "category": "animal",
+            "element": "wood",
+            "description": "戴着枝叶小角的林间幼鹿，喜欢收集新芽。",
+            "resource": {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 130,
+              "atk": 26,
+              "def": 26,
+              "spd": 18
+            }
+          },
+          {
+            "templateId": "animal-earth-pangolin",
+            "name": "岩团",
+            "category": "animal",
+            "element": "earth",
+            "description": "披着暖褐鳞甲的小穿山甲，稳稳守住每一步。",
+            "resource": {
+              "resourceId": "builtin:lingjing-yantuan-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 142,
+              "atk": 24,
+              "def": 34,
+              "spd": 11
+            }
+          }
+        ],
+        "revision": 2,
+        "sync": {
+          "mode": "cloud",
+          "status": "ready",
+          "pending": 0,
+          "cloudRevision": 9,
+          "sharedSavePending": false
+        }
+      },
+      "revision": 2
+    }
+  },
+  "rawPets": [
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "pet_id": "pet-40899e45-d323-49c8-9136-743f14be6ce3",
+      "template_id": "big-fish-gentle",
+      "revision": 1,
+      "data_json": "{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-40899e45-d323-49c8-9136-743f14be6ce3\",\"templateId\":\"big-fish-gentle\",\"name\":\"鱼丸\",\"serial\":\"40899E45\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-yuwan-v2\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":80,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T10:15:21.267Z\",\"updatedAt\":\"2026-10-25T10:15:21.267Z\"}",
+      "created_at": "2026-10-25T10:15:21.267Z",
+      "updated_at": "2026-10-25T10:15:21.267Z"
+    },
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "pet_id": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+      "template_id": "animal-white-fox",
+      "revision": 1,
+      "data_json": "{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"3B746D1A\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":320,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T16:01:54.342Z\",\"updatedAt\":\"2026-10-25T16:01:54.342Z\"}",
+      "created_at": "2026-10-25T16:01:54.342Z",
+      "updated_at": "2026-10-25T16:01:54.342Z"
+    }
+  ]
+}

@@ -1,0 +1,509 @@
+{
+  "baseline": {
+    "profile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/local-a",
+    "capturedAt": "2026-10-25T11:04:02.416Z",
+    "content": {
+      "companion_pets": [
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "pet_id": "pet-3b40de99-bcb5-465a-bba4-c91465063ff1",
+          "template_id": "animal-white-fox",
+          "revision": 12,
+          "data_json": "{\"ownerAccountId\":\"qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147\",\"petId\":\"pet-3b40de99-bcb5-465a-bba4-c91465063ff1\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"3B40DE99\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":0,\"y\":462,\"displayId\":\"2568730015\"}},\"revision\":12,\"createdAt\":\"2026-10-25T09:34:00.008Z\",\"updatedAt\":\"2026-10-25T10:26:44.759Z\"}",
+          "created_at": "2026-10-25T09:34:00.008Z",
+          "updated_at": "2026-10-25T10:26:44.759Z"
+        },
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "pet_id": "pet-30793a4f-85e5-41dc-999e-3f24a8095969",
+          "template_id": "animal-white-fox",
+          "revision": 2,
+          "data_json": "{\"ownerAccountId\":\"qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147\",\"petId\":\"pet-30793a4f-85e5-41dc-999e-3f24a8095969\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"30793A4F\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":38,\"y\":264,\"displayId\":\"2568730015\"}},\"revision\":2,\"createdAt\":\"2026-10-25T09:34:35.594Z\",\"updatedAt\":\"2026-10-25T10:26:37.034Z\"}",
+          "created_at": "2026-10-25T09:34:35.594Z",
+          "updated_at": "2026-10-25T10:26:37.034Z"
+        },
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "pet_id": "pet-1da5a63f-c32a-4d74-a88b-8878e09732ee",
+          "template_id": "animal-white-fox",
+          "revision": 1,
+          "data_json": "{\"ownerAccountId\":\"qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147\",\"petId\":\"pet-1da5a63f-c32a-4d74-a88b-8878e09732ee\",\"templateId\":\"animal-white-fox\",\"name\":\"验收昵称\",\"serial\":\"1DA5A63F\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":560,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T09:40:45.860Z\",\"updatedAt\":\"2026-10-25T09:40:45.860Z\"}",
+          "created_at": "2026-10-25T09:40:45.860Z",
+          "updated_at": "2026-10-25T09:40:45.860Z"
+        }
+      ],
+      "companion_actions": [
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "action_id": "9aa7ba5f-0a4c-473e-8e67-87f4668511ef",
+          "operation": "adopt",
+          "request_hash": "d716794677e5ad9ff95c9fb2195eb72c2507e293e3daa4db9ef9d15003258d56",
+          "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147\",\"petId\":\"pet-3b40de99-bcb5-465a-bba4-c91465063ff1\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"3B40DE99\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":80,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T09:34:00.008Z\",\"updatedAt\":\"2026-10-25T09:34:00.008Z\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":null,\"guardPetId\":null}},\"revision\":2,\"duplicate\":false}",
+          "created_at": "2026-10-25T09:34:00.009Z"
+        },
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "action_id": "4a6be4aa-84a3-4d83-ab45-59520445810e",
+          "operation": "adopt",
+          "request_hash": "d3962ea1bc95b83e53265734bb3891b56536362680995ec6ebc54b6e366f5684",
+          "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147\",\"petId\":\"pet-30793a4f-85e5-41dc-999e-3f24a8095969\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"30793A4F\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":320,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T09:34:35.594Z\",\"updatedAt\":\"2026-10-25T09:34:35.594Z\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":null,\"guardPetId\":null}},\"revision\":3,\"duplicate\":false}",
+          "created_at": "2026-10-25T09:34:35.594Z"
+        },
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "action_id": "1c7f0df6-ef13-4266-bd46-058e560fee7c",
+          "operation": "adopt",
+          "request_hash": "5592637b7c4a27df37271d2ba57c64a9d5c0ed8d8e2e255823737061fab9941f",
+          "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147\",\"petId\":\"pet-1da5a63f-c32a-4d74-a88b-8878e09732ee\",\"templateId\":\"animal-white-fox\",\"name\":\"验收昵称\",\"serial\":\"1DA5A63F\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":560,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T09:40:45.860Z\",\"updatedAt\":\"2026-10-25T09:40:45.860Z\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":null,\"guardPetId\":null}},\"revision\":14,\"duplicate\":false}",
+          "created_at": "2026-10-25T09:40:45.860Z"
+        },
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "action_id": "1db0ec97-f586-4b31-9b78-142fd497d917",
+          "operation": "select",
+          "request_hash": "dd502f7a9a75e1460d7fed73c5662b2b1fceb99abb116be4ee98a3d3aae32821",
+          "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147\",\"petId\":\"pet-30793a4f-85e5-41dc-999e-3f24a8095969\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"30793A4F\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":320,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T09:34:35.594Z\",\"updatedAt\":\"2026-10-25T09:34:35.594Z\"},\"selections\":{\"chatPetId\":\"pet-30793a4f-85e5-41dc-999e-3f24a8095969\",\"battlePetId\":null,\"guardPetId\":null}},\"revision\":15,\"duplicate\":false}",
+          "created_at": "2026-10-25T09:45:05.211Z"
+        },
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "action_id": "encounter-37de0fe5-a57d-4a0a-bd46-cb5211177974:battle:selection",
+          "operation": "select",
+          "request_hash": "6e4e763637db0543a7e38d96003396545633d5af714b24f7dc048d8c821ff09b",
+          "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147\",\"petId\":\"pet-3b40de99-bcb5-465a-bba4-c91465063ff1\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"3B40DE99\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":80,\"y\":520,\"displayId\":\"2568730015\"}},\"revision\":11,\"createdAt\":\"2026-10-25T09:34:00.008Z\",\"updatedAt\":\"2026-10-25T09:39:36.939Z\"},\"selections\":{\"chatPetId\":\"pet-30793a4f-85e5-41dc-999e-3f24a8095969\",\"battlePetId\":\"pet-3b40de99-bcb5-465a-bba4-c91465063ff1\",\"guardPetId\":null}},\"revision\":16,\"duplicate\":false}",
+          "created_at": "2026-10-25T09:49:23.531Z"
+        }
+      ],
+      "companion_interactions": [],
+      "companion_legacy_archive": [],
+      "conversation_profiles": [
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "pet_id": "pet-30793a4f-85e5-41dc-999e-3f24a8095969",
+          "persona": "第二只小狐专属人设：喜欢春雨，只使用自己的独立记忆。",
+          "reply_style": "natural",
+          "memory_enabled": 1,
+          "pause_while_chatting": 1,
+          "use_override": 0,
+          "revision": 1,
+          "updated_at": 1792921624603
+        }
+      ],
+      "conversation_memories": [],
+      "conversation_messages": [],
+      "conversation_preferences": [
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "selected_pet_id": "pet-30793a4f-85e5-41dc-999e-3f24a8095969"
+        }
+      ],
+      "battle_reports_v2": [
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "id": "battle-633e8e3f-dfb5-45c5-a69b-16323ac4e367",
+          "session_id": "battle-633e8e3f-dfb5-45c5-a69b-16323ac4e367",
+          "data_json": "{\"id\":\"battle-633e8e3f-dfb5-45c5-a69b-16323ac4e367\",\"sessionId\":\"battle-633e8e3f-dfb5-45c5-a69b-16323ac4e367\",\"mode\":\"wild\",\"status\":\"abandoned\",\"winner\":null,\"player\":{\"petId\":\"pet-3b40de99-bcb5-465a-bba4-c91465063ff1\",\"petName\":\"小狐\",\"element\":\"water\",\"level\":1,\"resourceRef\":\"builtin:lingjing-xiaohu-v1\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"appearance2d\":\"builtin:lingjing-xiaohu-v1\"},\"enemy\":{\"petId\":\"wild-2d-v2-f3621dbe19-498033-52049-202456\",\"petName\":\"青芽\",\"element\":\"wood\",\"resourceRef\":\"builtin:lingjing-qingya-v1\",\"appearance2d\":\"builtin:lingjing-qingya-v1\"},\"startedAt\":\"2026-10-25T09:49:23.531Z\",\"endedAt\":\"2026-10-25T09:51:13.160Z\",\"rounds\":[],\"reward\":null,\"historyComplete\":true,\"context\":{\"id\":\"wild-2d-v2-f3621dbe19-498033-52049-202456\",\"spawnId\":\"wild-2d-v2-f3621dbe19-498033-52049-202456\",\"expiresAt\":1792922400000,\"origin\":\"discovery\",\"encounterId\":\"encounter-37de0fe5-a57d-4a0a-bd46-cb5211177974\",\"scenario\":\"qa\",\"returnPath\":\"/discovery/encounter/encounter-37de0fe5-a57d-4a0a-bd46-cb5211177974\",\"authority\":\"simulated\",\"scenarioId\":\"54f0fb7d-bc8a-45cd-8896-754333d59d31\"},\"rules\":{\"id\":\"five-elements-standard-v1\",\"label\":\"标准五行对战\",\"vitalPolicy\":\"normalized\",\"maxHp\":120,\"maxAnger\":100,\"companionStatsApplied\":false,\"baseDamage\":{\"normal_attack\":10,\"element_attack\":12,\"dodge\":0,\"ultimate\":20},\"ultimateAnger\":50,\"ultimateCost\":50,\"ultimateHeal\":20,\"dodgeMaxCost\":20,\"dodgeRefund\":30,\"advantage\":{\"metal\":\"wood\",\"wood\":\"earth\",\"earth\":\"water\",\"water\":\"fire\",\"fire\":\"metal\"},\"elementEffects\":{\"metal\":{\"label\":\"易伤\",\"description\":\"每层受伤×1.5，最多5层\"},\"wood\":{\"label\":\"寄生\",\"description\":\"每层回合末吸取2生命，最多5层\"},\"earth\":{\"label\":\"迟钝\",\"description\":\"每层伤害×0.5，最多5层\"},\"water\":{\"label\":\"降怒\",\"description\":\"命中后对方怒气向下取半，不增加受击怒气\"},\"fire\":{\"label\":\"燃烧\",\"description\":\"回合末按当前生命8%×层数伤害，最多5层\"}}}}",
+          "ended_at": "2026-10-25T09:51:13.160Z"
+        }
+      ],
+      "battle_reward_receipts": [],
+      "garden_items": [
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "item_id": "seed:carrot",
+          "quantity": 1
+        },
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "item_id": "seed:tomato",
+          "quantity": 2
+        },
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "item_id": "seed:berry",
+          "quantity": 2
+        },
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "item_id": "seed:rice",
+          "quantity": 1
+        }
+      ],
+      "garden_plots": [
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "plot_id": "plot-1",
+          "crop_type": "carrot",
+          "planted_at": 1792922309678,
+          "matures_at": 1792922909678,
+          "yield_quantity": 3,
+          "revision": 1
+        },
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "plot_id": "plot-2",
+          "crop_type": null,
+          "planted_at": null,
+          "matures_at": null,
+          "yield_quantity": 0,
+          "revision": 0
+        },
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "plot_id": "plot-3",
+          "crop_type": null,
+          "planted_at": null,
+          "matures_at": null,
+          "yield_quantity": 0,
+          "revision": 0
+        },
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "plot_id": "plot-4",
+          "crop_type": "rice",
+          "planted_at": 1792922930989,
+          "matures_at": 1792924430989,
+          "yield_quantity": 2,
+          "revision": 1
+        },
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "plot_id": "plot-5",
+          "crop_type": null,
+          "planted_at": null,
+          "matures_at": null,
+          "yield_quantity": 0,
+          "revision": 0
+        },
+        {
+          "owner_account_id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "plot_id": "plot-6",
+          "crop_type": null,
+          "planted_at": null,
+          "matures_at": null,
+          "yield_quantity": 0,
+          "revision": 0
+        }
+      ],
+      "garden_ledger": [],
+      "garden_reward_receipts": [],
+      "lingjing_resource_preferences": []
+    },
+    "summary": {
+      "companion_pets": {
+        "rows": 3,
+        "sha256": "9eae29aa1a5580bf8e2affe442fd38ae0b2bb70a022f66b72ddff2769d47d0a2"
+      },
+      "companion_actions": {
+        "rows": 5,
+        "sha256": "48fcbfc02f1ab3976089a9ff9fd478652012a5f22be0598795087afc01fa5809"
+      },
+      "companion_interactions": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "companion_legacy_archive": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conversation_profiles": {
+        "rows": 1,
+        "sha256": "32f3e4d78dbd8a723c8ba2305c4018158f5885f269d472aeb6115b9b3e914b61"
+      },
+      "conversation_memories": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conversation_messages": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conversation_preferences": {
+        "rows": 1,
+        "sha256": "9092fb5d64bb5ac072c51c96e0d5dff5bd410e03860fdd0b473a4a5840f23dbd"
+      },
+      "battle_reports_v2": {
+        "rows": 1,
+        "sha256": "8b913396a417ab71f915b750b29e1861f3c662f695a976ff155023683ab27c8c"
+      },
+      "battle_reward_receipts": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "garden_items": {
+        "rows": 4,
+        "sha256": "4b38acf30be034abbb14bbf6c021b8ee668c8e86c6dde9ec858f24092af6b28d"
+      },
+      "garden_plots": {
+        "rows": 6,
+        "sha256": "0d970aecce46573cbccfced2407af3ac00acae28734b0880e0709824e7efe17b"
+      },
+      "garden_ledger": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "garden_reward_receipts": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "lingjing_resource_preferences": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    }
+  },
+  "candidate312": {
+    "profile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a",
+    "capturedAt": "2026-10-25T11:04:02.420Z",
+    "content": {
+      "companion_pets": [
+        {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "pet_id": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+          "template_id": "animal-white-fox",
+          "revision": 51,
+          "data_json": "{\"ownerAccountId\":\"qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f\",\"petId\":\"pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"EA1F0CF6\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":442,\"y\":33,\"displayId\":\"2568730015\"}},\"revision\":51,\"createdAt\":\"2026-10-25T10:31:12.593Z\",\"updatedAt\":\"2026-10-25T10:57:57.312Z\"}",
+          "created_at": "2026-10-25T10:31:12.593Z",
+          "updated_at": "2026-10-25T10:57:57.312Z"
+        },
+        {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+          "template_id": "animal-white-fox",
+          "revision": 1,
+          "data_json": "{\"ownerAccountId\":\"qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f\",\"petId\":\"pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"0CB7DABE\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":320,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T10:31:36.582Z\",\"updatedAt\":\"2026-10-25T10:31:36.582Z\"}",
+          "created_at": "2026-10-25T10:31:36.582Z",
+          "updated_at": "2026-10-25T10:31:36.582Z"
+        }
+      ],
+      "companion_actions": [
+        {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "action_id": "a5018d94-8471-4309-ae27-e9dc1c3bc75d",
+          "operation": "adopt",
+          "request_hash": "9d3ebd4f8ea4ce7cc51da05536635fca26b806455843c14305e09ac83797758b",
+          "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f\",\"petId\":\"pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"EA1F0CF6\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":80,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T10:31:12.593Z\",\"updatedAt\":\"2026-10-25T10:31:12.593Z\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":null,\"guardPetId\":null}},\"revision\":2,\"duplicate\":false}",
+          "created_at": "2026-10-25T10:31:12.594Z"
+        },
+        {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "action_id": "9a7ca9f5-eeca-4c91-abd0-165aaccaf02f",
+          "operation": "adopt",
+          "request_hash": "67eca95391b36947096c5eecb5cb82af8dc563956f7a3b430304eed55c3abf2c",
+          "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f\",\"petId\":\"pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"0CB7DABE\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":320,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T10:31:36.582Z\",\"updatedAt\":\"2026-10-25T10:31:36.582Z\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":null,\"guardPetId\":null}},\"revision\":3,\"duplicate\":false}",
+          "created_at": "2026-10-25T10:31:36.582Z"
+        },
+        {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "action_id": "baa77889-3f8f-406c-a11d-993432fcee72",
+          "operation": "desktop",
+          "request_hash": "b358925c5d9dbbac032e8eecd3b0298e093ede821975cab47e2849600190768e",
+          "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f\",\"petId\":\"pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"EA1F0CF6\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"wander\",\"scale\":1,\"position\":{\"x\":80,\"y\":520,\"displayId\":\"2568730015\"}},\"revision\":12,\"createdAt\":\"2026-10-25T10:31:12.593Z\",\"updatedAt\":\"2026-10-25T10:35:18.908Z\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":null,\"guardPetId\":null}},\"revision\":14,\"duplicate\":false}",
+          "created_at": "2026-10-25T10:35:18.908Z"
+        },
+        {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "action_id": "d9960c35-2af7-47ab-a50f-e2981f423b84",
+          "operation": "desktop",
+          "request_hash": "dc08869bdb6aad4d8c6d41ac05ede49dd0f59c65239f40fa49277d230a3f3712",
+          "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f\",\"petId\":\"pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"EA1F0CF6\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"follow\",\"scale\":1,\"position\":{\"x\":518,\"y\":535,\"displayId\":\"2568730015\"}},\"revision\":38,\"createdAt\":\"2026-10-25T10:31:12.593Z\",\"updatedAt\":\"2026-10-25T10:37:31.190Z\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":null,\"guardPetId\":null}},\"revision\":40,\"duplicate\":false}",
+          "created_at": "2026-10-25T10:37:31.191Z"
+        },
+        {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "action_id": "a344ba50-0dc2-4579-8cd9-5817987c1709",
+          "operation": "desktop",
+          "request_hash": "ffec118143499295ccdd8f3d1d25ad762a74a28df599b0f623bf55a1f49157ac",
+          "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f\",\"petId\":\"pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"EA1F0CF6\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":837,\"y\":159,\"displayId\":\"2568730015\"}},\"revision\":49,\"createdAt\":\"2026-10-25T10:31:12.593Z\",\"updatedAt\":\"2026-10-25T10:44:45.467Z\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":null,\"guardPetId\":null}},\"revision\":51,\"duplicate\":false}",
+          "created_at": "2026-10-25T10:44:45.468Z"
+        },
+        {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "action_id": "8b431ceb-f1dc-4c8e-984e-0c269588e272",
+          "operation": "select",
+          "request_hash": "ff2485864aaab3db8130859e9c0d4158d711ea8c71558057d4518b2f1dc34cb0",
+          "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f\",\"petId\":\"pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"0CB7DABE\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":320,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T10:31:36.582Z\",\"updatedAt\":\"2026-10-25T10:31:36.582Z\"},\"selections\":{\"chatPetId\":\"pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca\",\"battlePetId\":null,\"guardPetId\":null}},\"revision\":53,\"duplicate\":false}",
+          "created_at": "2026-10-25T10:47:53.654Z"
+        }
+      ],
+      "companion_interactions": [],
+      "companion_legacy_archive": [],
+      "conversation_profiles": [
+        {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+          "persona": "候选第二只小狐：喜欢春雨，只使用自己的独立记忆。",
+          "reply_style": "natural",
+          "memory_enabled": 1,
+          "pause_while_chatting": 1,
+          "use_override": 0,
+          "revision": 1,
+          "updated_at": 1792925308447
+        }
+      ],
+      "conversation_memories": [
+        {
+          "id": "12d3b792-ad2d-4648-8f52-28f98d4c6e6a",
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+          "content": "第二只小狐记忆：今天在候选验收中种下胡萝卜。",
+          "revision": 1,
+          "created_at": 1792925542630,
+          "updated_at": 1792925542630
+        }
+      ],
+      "conversation_messages": [],
+      "conversation_preferences": [
+        {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "selected_pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca"
+        }
+      ],
+      "battle_reports_v2": [],
+      "battle_reward_receipts": [],
+      "garden_items": [
+        {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "item_id": "seed:carrot",
+          "quantity": 1
+        },
+        {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "item_id": "seed:tomato",
+          "quantity": 2
+        },
+        {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "item_id": "seed:berry",
+          "quantity": 2
+        },
+        {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "item_id": "seed:rice",
+          "quantity": 1
+        }
+      ],
+      "garden_plots": [
+        {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "plot_id": "plot-1",
+          "crop_type": "carrot",
+          "planted_at": 1792925195329,
+          "matures_at": 1792925795329,
+          "yield_quantity": 3,
+          "revision": 1
+        },
+        {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "plot_id": "plot-2",
+          "crop_type": null,
+          "planted_at": null,
+          "matures_at": null,
+          "yield_quantity": 0,
+          "revision": 0
+        },
+        {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "plot_id": "plot-3",
+          "crop_type": null,
+          "planted_at": null,
+          "matures_at": null,
+          "yield_quantity": 0,
+          "revision": 0
+        },
+        {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "plot_id": "plot-4",
+          "crop_type": "rice",
+          "planted_at": 1792925212870,
+          "matures_at": 1792926712870,
+          "yield_quantity": 2,
+          "revision": 1
+        },
+        {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "plot_id": "plot-5",
+          "crop_type": null,
+          "planted_at": null,
+          "matures_at": null,
+          "yield_quantity": 0,
+          "revision": 0
+        },
+        {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "plot_id": "plot-6",
+          "crop_type": null,
+          "planted_at": null,
+          "matures_at": null,
+          "yield_quantity": 0,
+          "revision": 0
+        }
+      ],
+      "garden_ledger": [],
+      "garden_reward_receipts": [],
+      "lingjing_resource_preferences": []
+    },
+    "summary": {
+      "companion_pets": {
+        "rows": 2,
+        "sha256": "f10011af441e2ccbc56f6f08a00bfc5771a721b5da114dafe78ecdfe4ce97cf8"
+      },
+      "companion_actions": {
+        "rows": 6,
+        "sha256": "ef3cb9159a14961f57844957a8e0f674c2839960964039aff475e66475653e86"
+      },
+      "companion_interactions": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "companion_legacy_archive": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conversation_profiles": {
+        "rows": 1,
+        "sha256": "02206bf1986365a1f63892769014922b0185194a574e769c2e0e3f5db57ba76d"
+      },
+      "conversation_memories": {
+        "rows": 1,
+        "sha256": "cd0bed63284930a79a55e411bec0c3114d8b75e58fe5bc9e29c2bbfec9a9e998"
+      },
+      "conversation_messages": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conversation_preferences": {
+        "rows": 1,
+        "sha256": "6a37eb0282fef63527adf1653433fc0315bfa583b62e2253a46c4f4c4fc06c57"
+      },
+      "battle_reports_v2": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "battle_reward_receipts": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "garden_items": {
+        "rows": 4,
+        "sha256": "314ca720eb7b23988c43295812fca420af1052d2fad70945a0def6413b7212dd"
+      },
+      "garden_plots": {
+        "rows": 6,
+        "sha256": "c14c92eff5587c8ecddab4c1b36032638961dceff4750493115f44dab5f0a1dc"
+      },
+      "garden_ledger": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "garden_reward_receipts": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "lingjing_resource_preferences": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    }
+  }
+}

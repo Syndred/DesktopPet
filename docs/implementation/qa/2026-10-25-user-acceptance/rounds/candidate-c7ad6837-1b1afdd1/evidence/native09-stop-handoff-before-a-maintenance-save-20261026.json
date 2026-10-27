@@ -1,0 +1,53 @@
+{
+  "at": "2026-10-26T13:28:59.7467671Z",
+  "status": "stopped_without_new_business_request",
+  "reason": "User stop-all instruction relayed by 08; no resumption without explicit user instruction",
+  "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+  "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+  "round": "candidate-c7ad6837-1b1afdd1",
+  "lastNativeAction": "One ordinary Cancel of B2 failed restore dialog",
+  "lastNativeActionEvidence": "a13-b2-failed-dialog-normal-cancel-issued-20261026.json",
+  "cloudA": {
+    "mainPid": 20308,
+    "wrapperPid": 12788,
+    "cdp": 57218,
+    "settingsRevision": 16,
+    "closeToTray": true,
+    "confirmedCloudRevision": 32,
+    "maintenanceSaveIssued": false,
+    "exitIssued": false,
+    "relaunchIssued": false
+  },
+  "cloudB2": {
+    "mainPid": 17232,
+    "wrapperPid": 10512,
+    "cdp": 57221,
+    "settingsRevision": 7,
+    "closeToTray": true,
+    "confirmedCloudRevision": 8,
+    "incomingCloudRevision": 23,
+    "defaultMergeConfirmations": 1,
+    "failure": "两端有不同的人设、记忆或连接，请保留备份后选择要恢复的版本。",
+    "failedDialogCancelled": true,
+    "retryIssued": false,
+    "newBackupFileWithoutReceipt": "before-restore-1793020554523-83bae0c3-9fba-4637-9377-c3595a76b60f.lingjing.json"
+  },
+  "b10s04": {
+    "proxyStarts": 0,
+    "productRelaunches": 0,
+    "newInvites": 0,
+    "newRooms": 0,
+    "businessCommands": 0
+  },
+  "pendingRequest": "No new business request in flight from this stage; B2 restore failed before confirmation of head23, A maintenance not started",
+  "profileHandling": "Existing windows and original profiles retained; closeToTray true, no setting mutation or force-kill for cleanup",
+  "ledger": "Cumulative retained matrix 70 passed / 23 pending / 1 failed / 2 blocked / 2 running; 98 original case IDs; no status changed by this stop",
+  "evidence": [
+    "cloudA-flow-b10-maintenance-before-final-normal-save-20261026.json",
+    "cloudA-app-info-b10-maintenance-fresh-before-save-20261026.json",
+    "cloudB2-authority-flow-a13-after-one-normal-cancel-20261026.json",
+    "a13-b2-sole-default-merge-rejected-original-data-retained-20261026.json"
+  ],
+  "helpers": "No B10/S04 helper started; previously completed QA017 helper already stopped",
+  "cloudPull": "Frozen runtime retained; no fetch/pull during stop. Root owns latest cloud verification before task completion."
+}

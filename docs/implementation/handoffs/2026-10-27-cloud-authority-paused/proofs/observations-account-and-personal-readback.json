@@ -1,0 +1,45 @@
+{
+  "at": "2026-10-26T19:25:15.110Z",
+  "stage": "account-and-personal-readback",
+  "caseUpdates": [
+    {
+      "id": "S01",
+      "status": "passed",
+      "severity": "TBD",
+      "executionState": "executed",
+      "actual": "实际4e原A账号身份/设备和保持登录状态正确；原生账号页分别展示伙伴部分可用、菜园与库存已读取、聊天与记忆已读取，不再把序列号metadata错误写成整账号离线。正常UI保存合成用户名，再正常UI恢复原名，均显示已保存；公开状态/本机分域读回head39一致且pending0。原桌面action按原云33回执转为device-local，原输入/base32/历史保留；独立Root原PG回执计数仍1。",
+      "evidence": [
+        "native-A-account-domains-first.png",
+        "native-A-synthetic-username-saved.png",
+        "native-A-original-username-restored.png",
+        "cloudA-original-name-restored-pre-network-exit.json",
+        "cloudA-original-receipt-migration-verified.json",
+        "root-A-initialization-and-original-receipt-independent.json"
+      ],
+      "hardTechnicalBlock": false,
+      "blockerGroup": null,
+      "blockerKind": null
+    },
+    {
+      "id": "T02",
+      "status": "running",
+      "executionState": "partial",
+      "actual": "原A小狐0001与原A2小狐0004分别通过正常UI保存不同合成人设和记忆，两独立原profile的4份原始document_json逐字相同、owner/petId正确、cursor24、各写入outbox均verified；原生界面显示各自独立内容。未调用模型。仍需记忆编辑删除和重启回查；4E6-001未保存草稿覆盖保持open，不能算全部通过。",
+      "evidence": [
+        "native-A-fox-one-memory-visible.png",
+        "native-A2-fox-four-persona-saved.png",
+        "native-A-fox-four-persona-memory-readback.png",
+        "native-two-pet-personal-cross-client-seal.json",
+        "cloudA-two-pet-personal-cross-client.json",
+        "cloudASecond-two-pet-personal-cross-client.json"
+      ],
+      "findingRefs": [
+        "4E6-001"
+      ],
+      "hardTechnicalBlock": false,
+      "blockerGroup": null,
+      "blockerKind": null
+    }
+  ],
+  "newIssues": []
+}

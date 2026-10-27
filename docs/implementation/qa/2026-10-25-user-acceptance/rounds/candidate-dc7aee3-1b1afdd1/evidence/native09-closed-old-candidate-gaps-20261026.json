@@ -1,0 +1,304 @@
+{
+  "format": "lingjing.native09.closed-old-candidate-local-sweep.v1",
+  "at": "2026-10-26T08:24:26.123Z",
+  "round": "candidate-dc7aee3-1b1afdd1",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "counts": {
+    "passed": 64,
+    "pending": 20,
+    "failed": 10,
+    "blocked": 2,
+    "running": 2
+  },
+  "newPassesThisResume": [
+    "M01",
+    "A12",
+    "A08",
+    "A11",
+    "G01",
+    "C09",
+    "T01"
+  ],
+  "newFailures": [
+    "M05/QA025",
+    "G04/QA026"
+  ],
+  "oldCandidateIndependentActionsRemaining": "Root stopped further branches while unified candidate builds; no new old-candidate work will start.",
+  "categories": [
+    {
+      "key": "new-candidate-fix-retest-or-dependent",
+      "ids": [
+        "C03",
+        "D01",
+        "T06",
+        "M05",
+        "B09",
+        "G04",
+        "I01",
+        "R06",
+        "P01",
+        "A13",
+        "G02",
+        "G03",
+        "C08",
+        "P03"
+      ],
+      "reason": "10 failed cases preserve original failures; 4 dependent partial cases await exact new EXE/ASAR and normal UI recovery. No source-only pass.",
+      "cases": [
+        {
+          "id": "C03",
+          "title": "固定角色名和唯一编号 QA-003",
+          "status": "failed",
+          "actual": "真实好友战斗中双方新狐0004/0005编号准确，但十二回合自然终局后的双方战报把对手列表/卡片/回顾编号全部退回待同步，QA-023；我方编号及唯一结算正确。其余重启/同步视图后续继续。"
+        },
+        {
+          "id": "D01",
+          "title": "显示隐藏与上限",
+          "status": "failed",
+          "actual": "原生已覆盖实际1/2/3/4显示及第五请求被策略隐藏，限制和每宠原生收回有效；但QA-016成立：设置已出场5/1、MyPets桌面中5/第五标桌面中误导，整项不能判通过。已恢复原limit3、第一scale1/quiet/显示、第二不显示，新增三只保留但不显示；原对局未变。"
+        },
+        {
+          "id": "T06",
+          "title": "凭据边界与失联",
+          "status": "failed",
+          "actual": "全部授权凭据边界已完成：localA新fire错误合成key/恢复/独立清key不回退原global；普通cloudB空全局+新B3独立槽保存/测试/取消/放弃草稿，在两新dummy仍rev1且cipher/vault不变时完成真实备份及自动同步(base4→rev5, exact PG唯一action)，实际outbox/source/serializer重建/备份全字节dummy/cipher0，重建与HTTPS回执分开标注。正常merge保原3pet、冲突原action保留superseded；正常stopowned helper、一次本机失联Test公开网络错误；最终两slot rev2/key0/vault0、B3overridefalse、原全部设置(syncfalse)与原聊天青芽选择恢复、无聊天新增。仅QA-017实际SSE socket断流误归PROVIDER_REJECTED仍失败，待统一新候选复验；不声称外部模型成功。"
+        },
+        {
+          "id": "M05",
+          "title": "野外相遇到捕捉",
+          "status": "failed",
+          "actual": "原LocalA明确模拟场景，旧过期岩团正常离开无奖；新鱼丸实际11回合自然胜利，过期位置首确认正确拒绝，但错误藏在modal背景blur（QA-025）。经普通取消/可见重新定位/继续同胜利/确认，成功唯一新pet f31270e4，resource builtin:yuwan-v2，原4非出战宠raw保持。详情/图鉴/重入一致，6pet/1capture/同奖励回执不重复。正向已成立，整体因QA025待新包复验失败。"
+        },
+        {
+          "id": "B09",
+          "title": "邀请过期",
+          "status": "failed",
+          "actual": "QA-022明确功能缺口：DC7邀请无产品TTL/expiry schema/服务器到期拒绝，04及Root独立确认；无法自然等待一个不存在的产品到期规则，未用手改fixture或时钟冒充。待新实现/新候选真实5分钟验证；本轮正常邀请ID后续追加。"
+        },
+        {
+          "id": "G04",
+          "title": "竞争失败取消和占用",
+          "status": "failed",
+          "actual": "QA-026：普通round0离开并确认，未占领/未发胜利奖励正确；但取消后挑战settled=0，领地页仅继续同一abandoned战斗且缺确认结果，剩余1次无法开始。自然失败/他人占领冲突分支未执行。"
+        },
+        {
+          "id": "I01",
+          "title": "分类与空背包",
+          "status": "failed",
+          "actual": "实际四分类数量与只读库存一致，种子选中显示播种用途、零库存米饭不可喂；但无搜索的装扮空类误用搜索文案，并跨分类残留米饭喂养详情，QA-018。"
+        },
+        {
+          "id": "R06",
+          "title": "偏好与资源云端恢复",
+          "status": "failed",
+          "actual": "25项新岩团冷恢复正向检查均true：真实无缓存基线、原始JSON/PNG/chunk哈希、live资源authority15/偏好17、36个实际ready非fallback纹理帧、独立桌面/战斗配置、旧宠/聊天/战报/奖励保留。另现存青芽同文档旧偏好conflict在pull确认后仍阻断该资源后续job，原生仅同步未完成。Root已定QA-024 P2 release blocker，故R06整体暂failed，保留全部正向证据及原冲突历史等新候选定向修复验收。 Root已完成独立download/bytes/prefs/36纹理帧及云端companions/battle/garden无二次奖励复核，正向结论成立，冻结包QA024阻塞仍保留。"
+        },
+        {
+          "id": "P01",
+          "title": "所有设置分组可达",
+          "status": "failed",
+          "actual": "五个设置分组均以真实UI打开，标题/内容可见，AI页Tab焦点和长页下部记忆可达，设置文档原值全同；但AI侧栏通知与隐私真实href#/settings，原生Return错跳桌面行为，QA-019。"
+        },
+        {
+          "id": "A13",
+          "title": "存档待核对提示与正常确认",
+          "status": "failed",
+          "actual": "QA-021：B2正常合并/自动备份及原3宠7actions完整已实证；本机sync=false对云true的真实个人分支被保留，但已核对后仍统一待核对并循环引向恢复，缺少准确原因/下一步指引。Root/08只读确认；不报数据丢失，不清gate或开sync掩盖。"
+        },
+        {
+          "id": "G02",
+          "title": "驻守选宠与更换",
+          "status": "pending",
+          "actual": "当前领地仍未占领，QA-026挡住正向占领，因此真实驻守/换宠尚未可执行。未用DB或fixture制造owned领地。"
+        },
+        {
+          "id": "G03",
+          "title": "竞争胜利占领",
+          "status": "pending",
+          "actual": "已正常进入原演练领地挑战；QA-026取消后入口被未结算abandoned局占住，无法继续正向自然胜利占领。保留原ID/次数，待新候选正常恢复后补验。"
+        },
+        {
+          "id": "C08",
+          "title": "每宠独立选择",
+          "status": "pending",
+          "actual": "已原生同时设桌面ea1、聊天0cb、训练8d67，readonly三者独立，切页保持；未启动新训练。驻守因QA026未占领仍待新包补验。现已原生恢复chat ea1/battle0cb/guardnull、全部desktopfalse及scale1，聊天历史不变。"
+        },
+        {
+          "id": "P03",
+          "title": "桌面上限音量尺寸",
+          "status": "pending",
+          "actual": "本轮原生将第一狐scale1→1.45，桌宠实际可见放大；再正常恢复1/全部desktopfalse，全部宠visible/behavior/scale/x/y均恢复，ea1显示器绑定ID从旧2568730015变为1448891685如实保留，其他5宠desktop全同。数量仅合法1–4，实存limit1/volume0与limit4/volume100，最后精确恢复原limit3/volume70及完整settings文档。初次点到volume1和恢复时68均保留截图，再经键盘精确纠正。保存/UI/SQLite成立；未以截图证明听感。整项保留同DC7 D01已确认QA016计数显示缺陷等待统一新包，不重复制造上限场景。"
+        }
+      ]
+    },
+    {
+      "key": "fresh-cloud-freeze-protocol-and-readback",
+      "ids": [
+        "B10",
+        "S04",
+        "S02",
+        "S05",
+        "C11",
+        "C12",
+        "M07"
+      ],
+      "reason": "B10/S04 old copies explicitly deferred by Root; fresh final-candidate rebind required. Other cloud/serial/migration portions need current identity-bound native actions and independent readback; preserve old action IDs and B2 QA024 conflict.",
+      "cases": [
+        {
+          "id": "B10",
+          "title": "断网重连与重复操作",
+          "status": "pending",
+          "actual": "尚未在此候选实际执行"
+        },
+        {
+          "id": "S04",
+          "title": "双端并发冲突",
+          "status": "pending",
+          "actual": "尚未在此候选实际执行"
+        },
+        {
+          "id": "S02",
+          "title": "自动同步完整域",
+          "status": "pending",
+          "actual": "尚未在此候选实际执行"
+        },
+        {
+          "id": "S05",
+          "title": "权限与跨账号隔离",
+          "status": "pending",
+          "actual": "尚未在此候选实际执行 新Auth v3真实A读B已知owner一次返回严格HTTP403 OWNER_MISMATCH/errorOnly，Root18scope/Auth独立复核未变；技术403成立，原生本地缓存/频道全部隔离覆盖仍待继续，保持pending。"
+        },
+        {
+          "id": "C11",
+          "title": "同类型跨用户连续数字编号",
+          "status": "running",
+          "actual": "已实际原生A1/4、B3/5+Root原C2捕获继承链，PG同类型1–5/counter5原owner不变；两native客户端未确认区间overlap9.799s、sent至读回3.529s，空sampler明确排除，未宣称同时PG锁。礼帽喵正常单击独立0→1、原3宠不变，B1正常读回新5。尚需原ID真实重复RPC及后续同步/重启/切账号保号闭环。 新Auth v3同原A1请求action18a/base8真实HTTP200一次，outerDuplicate=true/innerDuplicate=false及原753B/SHA/原A1pet匹配；每阶段Root18scope/Auth/原回执独立复核未变，旧返回未apply。仍缺后续native同步/切号等完整编号闭环，保持running。"
+        },
+        {
+          "id": "C12",
+          "title": "旧档案升级保留身份与历史",
+          "status": "running",
+          "actual": "最终包实际打开原a9三宠档：三个petId/完整data_json/revision原文完全一致，旧名验收昵称仍保存在原文，原生三卡均显示标准名小狐。另原6ff非空聊天/战报/进行中局数据表保持。待原档再启与真实云编号稳定回读，不冒称本机待同步号已取得云号。"
+        },
+        {
+          "id": "M07",
+          "title": "网络异常与重新定位",
+          "status": "pending",
+          "actual": "尚未在此候选实际执行"
+        }
+      ]
+    },
+    {
+      "key": "human-environment-or-explicit-account-boundary",
+      "ids": [
+        "A04",
+        "A05",
+        "A06",
+        "A14",
+        "A15",
+        "M03",
+        "D05",
+        "D09",
+        "P09"
+      ],
+      "reason": "Registration/new credentials/legal steps or physical OS/location/multi-monitor/startup/tray surfaces are outside this closed local sweep. Keep pending/blocked accurately; do not weaken QA isolation.",
+      "cases": [
+        {
+          "id": "A04",
+          "title": "注册校验",
+          "status": "pending",
+          "actual": "尚未在此候选实际执行"
+        },
+        {
+          "id": "A05",
+          "title": "合成QA本地注册",
+          "status": "pending",
+          "actual": "尚未在此候选实际执行"
+        },
+        {
+          "id": "A06",
+          "title": "云端合成账号注册登录",
+          "status": "pending",
+          "actual": "尚未在此候选实际执行"
+        },
+        {
+          "id": "A14",
+          "title": "本机合成QA账号修改密码",
+          "status": "pending",
+          "actual": "尚未在此候选实际执行"
+        },
+        {
+          "id": "A15",
+          "title": "真实云端合成QA账号修改密码",
+          "status": "pending",
+          "actual": "尚未在此候选实际执行"
+        },
+        {
+          "id": "M03",
+          "title": "真实定位精度准入",
+          "status": "pending",
+          "actual": "尚未在此候选实际执行"
+        },
+        {
+          "id": "D05",
+          "title": "DPI与多显示器",
+          "status": "blocked",
+          "actual": "当前单屏真实125% DPI已完成10次拖动及四边/大小/重启；Win32DPI120，实际OS仅DISPLAY1。跨DPI、多显示器组合缺少硬件，未修改OS缩放或模拟补证。"
+        },
+        {
+          "id": "D09",
+          "title": "托盘全部显示隐藏",
+          "status": "blocked",
+          "actual": "CUA实际surface inventory不暴露Windows任务栏/通知区可控制窗口，无法原生点击托盘菜单；未使用脚本代点或伪造托盘动作。应用原生tray active/bounds已读到，菜单显示/隐藏全部待人工或可用原生界面补证。"
+        },
+        {
+          "id": "P09",
+          "title": "便携版开机启动路径稳定",
+          "status": "pending",
+          "actual": "尚未在此候选实际执行"
+        }
+      ]
+    },
+    {
+      "key": "partial-natural-availability-or-scope",
+      "ids": [
+        "M04",
+        "M06",
+        "N04",
+        "P08"
+      ],
+      "reason": "M04 no-result not manufactured; M06 natural loss/target-expiry capture not fabricated; N04 tray recovery surface remains unavailable; P08 Root scope decision preserved without invented UI.",
+      "cases": [
+        {
+          "id": "M04",
+          "title": "探索扫描与无结果",
+          "status": "pending",
+          "actual": "已真实可见QA入口生成15实际附近候选，距离/选中与位置自然过期提示均已观察；未制造无结果或改marker。扫描/重试和无结果剩余覆盖保留，继续原路径。"
+        },
+        {
+          "id": "M06",
+          "title": "失败逃跑与过期",
+          "status": "pending",
+          "actual": "旧岩团spawn自然07:00Z过期后，普通继续仍保持原round0；经离开确认→abandoned/cancelled，无capture/新奖/宠物。另新胜利相遇自然位置过期收服被明确拒绝，后正常重新定位可恢复。尚未额外制造自然失败或单独未取消目标过期捕捉，保留剩余覆盖。"
+        },
+        {
+          "id": "N04",
+          "title": "关闭到托盘与恢复",
+          "status": "pending",
+          "actual": "尚未在此候选实际执行"
+        },
+        {
+          "id": "P08",
+          "title": "版本日志和更新入口",
+          "status": "pending",
+          "actual": "实际原生设置/账号导航未见About/版本/日志浏览器/检查更新入口；同包实际EXE/ASAR与0.1.8 manifest匹配。Root接受01原需求范围核查：未承诺这些产品入口，不新增功能或据此报缺陷；日志观测与脱敏NFR仍存在，未在本项据此声称其实现验收完成。保留范围裁决pending。"
+        }
+      ]
+    }
+  ],
+  "restorationEvidence": "rounds/candidate-dc7aee3-1b1afdd1/evidence/native09-old-local-sweep-restoration-20261026.json",
+  "localAMain17596IntentionallyRetained": true,
+  "cloudAB1B2Preserved": true,
+  "networkHelpersStartedThisSweep": false
+}

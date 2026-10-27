@@ -1,0 +1,19 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const read=f=>JSON.parse(fs.readFileSync(path.join(__dirname,f),'utf8').replace(/^\uFEFF/,''));
+const before=read('cloudB2-authority-flow-a13-before-sole-normal-cloud-preview-20261026.json'),after=read('cloudB2-authority-flow-a13-sole-normal-preview-complete-before-any-confirmation-20261026.json'),click=read('a13-b2-normal-cloud-preview-single-click-issued-20261026.json'),ui=read('cloudB2-preview-public-ui-sole-normal-preview-first-observation-20261026.json');
+assert.equal(click.normalPreviewClicks,1);assert.equal(click.restoreConfirmations,0);assert.equal(click.privateStateRead,false);assert.equal(ui.result.route,'#/account');assert.equal(ui.result.dialogs.length,1);
+const dialog=ui.result.dialogs[0];assert.ok(dialog.text.includes('恢复备份')&&dialog.text.includes('2026/10/26 19:31:31')&&dialog.text.includes('6 项内容'));
+const mode=dialog.choices.find(c=>c.role==='combobox'&&c.label==='恢复方式');assert.equal(mode.text,'合并，保留本机现有记录');assert.equal(dialog.buttons.find(b=>b.text==='确认恢复').disabled,false);
+for(const module of ['战报','菜园','设置','伙伴','聊天','其他数据'])assert.ok(ui.result.visibleText.includes(module));
+for(const t of ['account_settings','account_sync_state','account_sync_outbox','account_sync_sources','account_sync_baselines','account_sync_checkpoints','account_backup_receipts','companion_pets','companion_accounts'])assert.deepEqual(before.tables[t],after.tables[t]);
+for(const t of Object.keys(before.digests).filter(t=>t.startsWith('battle_')||t.startsWith('garden_')||t.startsWith('conversation_')))assert.deepEqual(before.digests[t],after.digests[t]);
+assert.equal(after.tables.account_sync_state[0].cloud_revision,8);assert.equal(after.tables.account_settings[0].revision,7);assert.equal(JSON.parse(after.tables.account_settings[0].document).sync.enabled,false);
+const changedTables=Object.keys(before.digests).filter(t=>JSON.stringify(before.digests[t])!==JSON.stringify(after.digests[t]));
+const proof={at:new Date().toISOString(),status:'sole_normal_cloud_preview_visible_default_merge_no_confirmation',approvalRef:click.approvalRef,sourceCommit:'c7ad6837e1569dafd942528f375062debf714c2b',owner:after.owner,deviceId:after.deviceId,normalPreviewClicks:1,restoreConfirmations:0,
+ visible:{dialog:'恢复备份',createdAtLabel:'2026/10/26 19:31:31',moduleCount:6,moduleNames:['战报','菜园','设置','伙伴','聊天','其他数据'],mode:mode.text,confirmEnabled:true,cancelEnabled:true},
+ notPubliclyExposed:{previewId:null,previewRevision:null,previewChecksum:null,previewOwner:null,tableCounts:null,qualification:'This product dialog does not expose these fields; private Map/React state and hidden business calls were never read or invoked.'},
+ sourceBindingForRoot:{runtimeOwner:after.owner,rootPreviouslyObservedHead:23,headChecksumNotReadFromDialog:true,rootMustIndependentlyBindCurrentActorAndUnchangedPgHead:true},
+ preservation:{settings7AndWholeOriginalDocumentRawExact:true,confirmedHeadStill8:true,outboxSourcesBaselinesCheckpointsBackupsPetsAndChoicesRawExact:true,battleGardenConversationDigestsExact:true,changedTables},
+ noFurtherInput:true,dialogRemainsOpen:true,noModeChange:true,noSettingSaveOrSyncToggle:true,noNewProfileAuthOrHelper:true,ledgerNotChanged:true,
+ evidence:{clickAt:click.at,publicUiAt:ui.at,before:before.at,after:after.at,screenshot:'a13-b2-sole-normal-cloud-preview-complete-default-merge-20261026.png'},next:'Wait for Root binding of this actual visible preview and one explicit normal default-merge confirmation scope; never reuse an old preview or fabricate its ID.'};
+const output=path.join(__dirname,'a13-b2-sole-normal-preview-visible-unconfirmed-20261026.json');fs.writeFileSync(output,JSON.stringify(proof,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({output,...proof}));

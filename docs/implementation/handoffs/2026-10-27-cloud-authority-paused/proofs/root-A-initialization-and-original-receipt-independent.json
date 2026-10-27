@@ -1,0 +1,54 @@
+{
+  "at": "2026-10-26T19:03:19.737Z",
+  "readOnly": true,
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "owner": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+  "originalActionId": "companions:desktop-position-3b3d5c97-5352-4c4e-b659-80283cafe752",
+  "status": "device-local",
+  "baseRevision": 32,
+  "originalInputHash": "12ba11c6c528424c8d9a482654597ce6bad097b5bbbf4f0a99a09f91df989112",
+  "headerInputHashMatches": true,
+  "deviceMigration": {
+    "previousStatus": "retry",
+    "at": "2026-10-26T18:57:35.845Z",
+    "applied": true,
+    "actionId": "desktop-position-3b3d5c97-5352-4c4e-b659-80283cafe752",
+    "receipt": {
+      "actionId": "companions:desktop-position-3b3d5c97-5352-4c4e-b659-80283cafe752",
+      "revision": 33,
+      "checksum": "5a1ae46389a43b79489f8c607e540ebc2ff9ce51bc29226738c52b4afcf337bc"
+    }
+  },
+  "personalState": {
+    "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+    "cursor": 0,
+    "initialized": 1,
+    "last_error": null
+  },
+  "personalOutbox": [],
+  "petIds": [
+    "pet-304685f8-7cae-4868-933c-af6d4bd28312",
+    "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+    "pet-40899e45-d323-49c8-9136-743f14be6ce3",
+    "pet-97410828-fdf6-4253-8246-4c5f389d8fba"
+  ],
+  "readbacks": [
+    {
+      "domain": "companions",
+      "cloud_revision": 36,
+      "envelope_checksum": "ed4b24e408d601bd5521233ff1f7fe5d528dc1e4e9140bd4cb9878bd1ad610b4"
+    },
+    {
+      "domain": "garden",
+      "cloud_revision": 36,
+      "envelope_checksum": "ed4b24e408d601bd5521233ff1f7fe5d528dc1e4e9140bd4cb9878bd1ad610b4"
+    }
+  ],
+  "settings": {
+    "revision": 23,
+    "closeToTray": true,
+    "volume": 70,
+    "entireOriginalDocumentRestored": true
+  },
+  "credentialValuesRead": false
+}

@@ -1,0 +1,519 @@
+{
+  "at": "2026-10-26T06:52:56.893Z",
+  "profile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a",
+  "owner": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+  "label": "before-native-B-switch",
+  "readOnly": true,
+  "queryOnly": true,
+  "credentialsRead": false,
+  "vaultRead": false,
+  "ordinaryProfileNoMarker": true,
+  "tables": {
+    "account_actions": {
+      "count": 22,
+      "sha256": "2cccfc27cc1de7bce5c45bdfd7c3ace1b33c12e0d99765dbe886b77bb7428743",
+      "excludedColumns": []
+    },
+    "account_aliases": {
+      "count": 1,
+      "sha256": "f198ecaa1ab343d391b96e409ebd8cc6ee09b04c1323bf0ed76faa778e1586af",
+      "excludedColumns": []
+    },
+    "account_backup_receipts": {
+      "count": 3,
+      "sha256": "7bad2e37a26f5cd6c45d2e3c37bc4dcfa2015d6971c068b6a556c8aac5ad45cc",
+      "excludedColumns": []
+    },
+    "account_cloud_links": {
+      "count": 1,
+      "sha256": "c98f01b7b0bb690b7ef34af27403090265aba9c86ccee20c38f6439b6b154fb9",
+      "excludedColumns": []
+    },
+    "account_identities": {
+      "count": 1,
+      "sha256": "c6b2a99ad85de991efd97d7567431c33463f9d7b4afedbfba79f36875eeaa457",
+      "excludedColumns": [
+        "password_hash"
+      ]
+    },
+    "account_legacy_data": {
+      "count": 0,
+      "method": "count-only-sensitive-table"
+    },
+    "account_login_sessions": {
+      "count": 0,
+      "method": "count-only-sensitive-table"
+    },
+    "account_migration_sources": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "account_qa_profile": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "account_session_control": {
+      "count": 1,
+      "sha256": "0eed0bd536ccbfebaab17edbc9a5f25a1a26945db1d5f519d0a179d04d7e99d3",
+      "excludedColumns": []
+    },
+    "account_settings": {
+      "count": 1,
+      "sha256": "f30f62d9d85809a9322a737437bde384141114f5d1a6a28b002e9cb8b8e6839c",
+      "excludedColumns": []
+    },
+    "account_sync_baselines": {
+      "count": 1,
+      "sha256": "2d587fd1cc560f07b71fbf291b56576f7b78fea78a75d5391ad56bb2952d515b",
+      "excludedColumns": []
+    },
+    "account_sync_checkpoints": {
+      "count": 1,
+      "sha256": "ef39f5429d23e46f5077643424f49649649237a88089487093e60d306d80db1f",
+      "excludedColumns": []
+    },
+    "account_sync_outbox": {
+      "count": 13,
+      "sha256": "fa4d89e484f794f0edcdf37a93c02a7666d5c80da922e125037dee19695897f7",
+      "excludedColumns": []
+    },
+    "account_sync_sources": {
+      "count": 13,
+      "sha256": "ceced25e9054fb4141b74f35ef386d023734ac08f70733a2953d43b941677f96",
+      "excludedColumns": []
+    },
+    "account_sync_state": {
+      "count": 1,
+      "sha256": "6a9115cef6363686f5f631d4fa1843eddd3f630488b4a045af272e38a410d7fb",
+      "excludedColumns": []
+    },
+    "battle_action_receipts": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "battle_reports_v2": {
+      "count": 1,
+      "sha256": "6debc4b497f22cd17946123e90036b7708c76120c7efccb70226b4769717f2a2",
+      "excludedColumns": []
+    },
+    "battle_reward_receipts": {
+      "count": 1,
+      "sha256": "3505c7f9005107b12b96f201a76d45c49789a20cd7245960b6ca639023b87edc",
+      "excludedColumns": []
+    },
+    "battle_sessions": {
+      "count": 1,
+      "sha256": "5685a333ef8ab740a054ccec60ca8825f0c9443b43c91af0fadae6a6757537b2",
+      "excludedColumns": []
+    },
+    "battle_transport_journal": {
+      "count": 21,
+      "sha256": "999d52d9f30e939072e469aa362591da1bd08b4ea37646ee7305fe9d82c30256",
+      "excludedColumns": []
+    },
+    "companion_accounts": {
+      "count": 1,
+      "sha256": "aff9110c5b8955ebefaa0b115782e31798dde5e6a1e1879610bc9e73940f8c4f",
+      "excludedColumns": []
+    },
+    "companion_actions": {
+      "count": 7,
+      "sha256": "86596ab577bc29821ae037c52004eef23951c88997eac6a9f318f6896fee8835",
+      "excludedColumns": []
+    },
+    "companion_capture_receipts": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "companion_identity_imports": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "companion_interactions": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "companion_legacy_archive": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "companion_pets": {
+      "count": 4,
+      "sha256": "4d4bd02219de10679abd0aadf4f4d70e406a1a5aba0961861bb5c65e4a26005f",
+      "excludedColumns": []
+    },
+    "conversation_connections": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": [
+        "encrypted_key",
+        "max_output_tokens"
+      ]
+    },
+    "conversation_credentials": {
+      "count": 0,
+      "method": "count-only-sensitive-table"
+    },
+    "conversation_legacy_imports": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "conversation_memories": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "conversation_messages": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "conversation_preferences": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "conversation_profiles": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "discovery_actions": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "discovery_captures": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "discovery_encounters": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "discovery_memory_tags": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "garden_accounts": {
+      "count": 1,
+      "sha256": "ef9a98e5c0a000065415698b9225bfadf61599b7395686a7353d8b64c24f969f",
+      "excludedColumns": []
+    },
+    "garden_actions": {
+      "count": 11,
+      "sha256": "becde216dfd01fa8f3a12536d105b2da4c3f4eef02b8608dc96a042e72dd4b48",
+      "excludedColumns": []
+    },
+    "garden_cloud_requests": {
+      "count": 9,
+      "sha256": "7df079abffe275136058444ed93a57a470bf4ddd1402f229f161b446762ac135",
+      "excludedColumns": []
+    },
+    "garden_cloud_state": {
+      "count": 1,
+      "sha256": "5bbd5cb1e9b3f20562089af2925331d0483d524c9d989d94f34a3a561cf5d527",
+      "excludedColumns": []
+    },
+    "garden_events": {
+      "count": 18,
+      "sha256": "7b104cae133c6bea6fbee59e02e5a9175bcd68045b0ec37df3202626ac55bf32",
+      "excludedColumns": []
+    },
+    "garden_garrisons": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "garden_identity_imports": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "garden_items": {
+      "count": 9,
+      "sha256": "896c5f556f44f0222f0b91210de6eaa5f10f68274b709338b8655d1366863ddd",
+      "excludedColumns": []
+    },
+    "garden_ledger": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "garden_outbox": {
+      "count": 11,
+      "sha256": "f05bd3561b8aac5f1a2056dc0594909c106fb081fc67e0a33db332598fdbbe90",
+      "excludedColumns": []
+    },
+    "garden_plots": {
+      "count": 6,
+      "sha256": "5b75224b77bf3d080753c3b5de122bd1fd6c1436c1e809826913ba27f3196f1b",
+      "excludedColumns": []
+    },
+    "garden_reward_receipts": {
+      "count": 1,
+      "sha256": "dfe2f334c89c19636619df488e70bb2c0fea4f0413c41bfd498b403fb95fff37",
+      "excludedColumns": []
+    },
+    "garden_territory_attempts": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "garden_territory_challenges": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "garden_territory_logs": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "garden_territory_records": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "lingjing_meta": {
+      "count": 2,
+      "sha256": "5b412a3c12287a5f22ef225383b17315e97d2ab70f997c45bc7c61748d08fe5c",
+      "excludedColumns": []
+    },
+    "lingjing_migrations": {
+      "count": 28,
+      "sha256": "3ddee7d2f230bbdeb8e2c3ebd97e22bba5e1667a9831483f384f51bab2dbaa7f",
+      "excludedColumns": []
+    },
+    "lingjing_resource_cloud_downloads": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "lingjing_resource_cloud_outbox": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "lingjing_resource_cloud_receipts": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "lingjing_resource_files": {
+      "count": 18,
+      "sha256": "d9bd372aa0ebc0e1a89374438c259c07bacea4c419ccbf0bfeb9aa8d5ce03e5d",
+      "excludedColumns": []
+    },
+    "lingjing_resource_imports": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "lingjing_resource_preference_cache": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "lingjing_resource_preference_outbox": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "lingjing_resource_preference_state": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "lingjing_resource_preferences": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "excludedColumns": []
+    },
+    "lingjing_resources": {
+      "count": 9,
+      "sha256": "7074a02435a859803ab9a0063671168381a3cd8639e5b9ac1c643887942bbb27",
+      "excludedColumns": []
+    }
+  },
+  "counts": {
+    "account_actions": 22,
+    "account_aliases": 1,
+    "account_backup_receipts": 3,
+    "account_cloud_links": 1,
+    "account_identities": 1,
+    "account_legacy_data": 0,
+    "account_login_sessions": 0,
+    "account_migration_sources": 0,
+    "account_qa_profile": 0,
+    "account_session_control": 1,
+    "account_settings": 1,
+    "account_sync_baselines": 1,
+    "account_sync_checkpoints": 1,
+    "account_sync_outbox": 13,
+    "account_sync_sources": 13,
+    "account_sync_state": 1,
+    "battle_action_receipts": 0,
+    "battle_reports_v2": 1,
+    "battle_reward_receipts": 1,
+    "battle_sessions": 1,
+    "battle_transport_journal": 21,
+    "companion_accounts": 1,
+    "companion_actions": 7,
+    "companion_capture_receipts": 0,
+    "companion_identity_imports": 0,
+    "companion_interactions": 0,
+    "companion_legacy_archive": 0,
+    "companion_pets": 4,
+    "conversation_connections": 0,
+    "conversation_credentials": 0,
+    "conversation_legacy_imports": 0,
+    "conversation_memories": 0,
+    "conversation_messages": 0,
+    "conversation_preferences": 0,
+    "conversation_profiles": 0,
+    "discovery_actions": 0,
+    "discovery_captures": 0,
+    "discovery_encounters": 0,
+    "discovery_memory_tags": 0,
+    "garden_accounts": 1,
+    "garden_actions": 11,
+    "garden_cloud_requests": 9,
+    "garden_cloud_state": 1,
+    "garden_events": 18,
+    "garden_garrisons": 0,
+    "garden_identity_imports": 0,
+    "garden_items": 9,
+    "garden_ledger": 0,
+    "garden_outbox": 11,
+    "garden_plots": 6,
+    "garden_reward_receipts": 1,
+    "garden_territory_attempts": 0,
+    "garden_territory_challenges": 0,
+    "garden_territory_logs": 0,
+    "garden_territory_records": 0,
+    "lingjing_meta": 2,
+    "lingjing_migrations": 28,
+    "lingjing_resource_cloud_downloads": 0,
+    "lingjing_resource_cloud_outbox": 0,
+    "lingjing_resource_cloud_receipts": 0,
+    "lingjing_resource_files": 18,
+    "lingjing_resource_imports": 0,
+    "lingjing_resource_preference_cache": 0,
+    "lingjing_resource_preference_outbox": 0,
+    "lingjing_resource_preference_state": 0,
+    "lingjing_resource_preferences": 0,
+    "lingjing_resources": 9
+  },
+  "safeFilesMetadata": [
+    {
+      "relative": "accounts/device.json",
+      "bytes": 63,
+      "mtime": "2026-10-25T10:01:31.167Z",
+      "birthtime": "2026-10-25T10:01:31.167Z"
+    }
+  ],
+  "settings": [
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "revision": 14,
+      "document": "{\"desktop\":{\"alwaysOnTop\":true,\"clickThrough\":true,\"launchAtLogin\":false,\"closeToTray\":true,\"companionLimit\":3,\"interactionSounds\":true,\"volume\":70,\"hideInFullscreen\":true,\"animationsEnabled\":true},\"notifications\":{\"enabled\":true,\"companions\":true,\"battles\":true,\"garden\":true,\"quietEnabled\":true,\"quietStart\":\"22:00\",\"quietEnd\":\"08:00\"},\"privacy\":{\"locationAllowed\":false,\"locationOnlyWhileExploring\":true,\"emotionStatistics\":false},\"sync\":{\"enabled\":true}}",
+      "updated_at": "2026-10-26T06:41:55.534Z"
+    }
+  ],
+  "pets": [
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "pet_id": "pet-304685f8-7cae-4868-933c-af6d4bd28312",
+      "template_id": "animal-hat-cat",
+      "revision": 1,
+      "data_json": "{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-304685f8-7cae-4868-933c-af6d4bd28312\",\"templateId\":\"animal-hat-cat\",\"name\":\"礼帽喵\",\"serial\":\"304685F8\",\"element\":\"metal\",\"resource\":{\"resourceId\":\"builtin:lingjing-hatcat-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":136,\"atk\":30,\"def\":30,\"spd\":13}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":800,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T21:15:28.243Z\",\"updatedAt\":\"2026-10-25T21:15:28.243Z\"}",
+      "created_at": "2026-10-25T21:15:28.243Z",
+      "updated_at": "2026-10-25T21:15:28.243Z"
+    },
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "pet_id": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+      "template_id": "animal-white-fox",
+      "revision": 3,
+      "data_json": "{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"3B746D1A\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":63,\"satiety\":80,\"affinity\":4,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":320,\"y\":520,\"displayId\":\"2568730015\"}},\"revision\":3,\"createdAt\":\"2026-10-25T16:01:54.342Z\",\"updatedAt\":\"2026-10-25T22:24:22.311Z\"}",
+      "created_at": "2026-10-25T16:01:54.342Z",
+      "updated_at": "2026-10-25T22:24:22.311Z"
+    },
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "pet_id": "pet-40899e45-d323-49c8-9136-743f14be6ce3",
+      "template_id": "big-fish-gentle",
+      "revision": 1,
+      "data_json": "{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-40899e45-d323-49c8-9136-743f14be6ce3\",\"templateId\":\"big-fish-gentle\",\"name\":\"鱼丸\",\"serial\":\"40899E45\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-yuwan-v2\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":80,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T10:15:21.267Z\",\"updatedAt\":\"2026-10-25T10:15:21.267Z\"}",
+      "created_at": "2026-10-25T10:15:21.267Z",
+      "updated_at": "2026-10-25T10:15:21.267Z"
+    },
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "pet_id": "pet-97410828-fdf6-4253-8246-4c5f389d8fba",
+      "template_id": "animal-white-fox",
+      "revision": 2,
+      "data_json": "{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"97410828\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":20,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":1,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":560,\"y\":520,\"displayId\":null}},\"revision\":2,\"createdAt\":\"2026-10-25T21:01:27.443Z\",\"updatedAt\":\"2026-10-25T21:49:00.381Z\"}",
+      "created_at": "2026-10-25T21:01:27.443Z",
+      "updated_at": "2026-10-25T21:49:00.381Z"
+    }
+  ],
+  "selections": [
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "revision": 8,
+      "selections_json": "{\"chatPetId\":null,\"battlePetId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"guardPetId\":null}",
+      "legacy_imported_at": "2026-10-25T10:15:21.267Z"
+    }
+  ],
+  "identity": [
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "provider": "runtime"
+    }
+  ],
+  "queues": {
+    "account_sync_outbox": [
+      {
+        "status": "verified",
+        "n": 13
+      }
+    ],
+    "garden_outbox": [
+      {
+        "status": "synced",
+        "n": 11
+      }
+    ],
+    "lingjing_resource_preference_outbox": []
+  },
+  "changedTables": [
+    "account_actions",
+    "account_cloud_links",
+    "account_identities",
+    "account_session_control",
+    "account_settings",
+    "account_sync_baselines",
+    "account_sync_checkpoints",
+    "account_sync_outbox",
+    "account_sync_sources",
+    "account_sync_state",
+    "lingjing_meta",
+    "lingjing_resource_files"
+  ],
+  "settingsExact": false,
+  "petsExact": true,
+  "selectionsExact": true
+}

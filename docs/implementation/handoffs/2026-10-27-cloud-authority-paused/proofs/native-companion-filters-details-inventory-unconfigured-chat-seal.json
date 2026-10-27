@@ -1,0 +1,60 @@
+{
+  "at": "2026-10-26T21:41:15.393Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "originalPets": 4,
+  "adoptionIssued": false,
+  "feedingIssued": false,
+  "craftIssued": false,
+  "originalConflictsResolved": false,
+  "modelCredentialsCreated": false,
+  "externalModelCalled": false,
+  "T03": {
+    "syntheticDraft": "模拟验收/4E6 T03：这是一条未配置连接的验收消息。",
+    "disabledSend": true,
+    "messagesBefore": 0,
+    "messagesAfter": 0,
+    "fabricatedReply": false,
+    "recoveryVisible": "设置连接",
+    "draftClearedNormallyAfterObservation": true
+  },
+  "artifactLabelCorrection": {
+    "native-I01-original-B2-tools-category-empty.png": "Filename suffix empty is inaccurate: actual screenshot correctly shows five tools/material entries and choose-an-item detail empty state."
+  },
+  "groups": {
+    "C01": [
+      "native-C01-adoption-all-elements.png",
+      "native-C01-C04-adoption-metal-filter.png",
+      "native-C01-C04-adoption-wood-filter.png",
+      "native-C01-C04-adoption-water-filter.png",
+      "native-C01-C04-adoption-fire-filter.png",
+      "native-C01-C04-adoption-earth-filter.png"
+    ],
+    "C04": [
+      "native-C04-adoption-owned-metal-empty.png",
+      "native-C04-adoption-clear-owned-recovers-metal.png",
+      "native-C04-adoption-owned-all-three-species-four-pets.png"
+    ],
+    "C06": [
+      "native-C06-original-B2-qingya-detail-loaded.png",
+      "native-C06-original-B2-qingya-skills-tab.png",
+      "native-C06-original-B2-qingya-memories-tab.png",
+      "native-C06-original-B2-qingya-appearance-loaded.png",
+      "native-C06-original-B2-detail-return-context.png"
+    ],
+    "I01": [
+      "native-N01-original-B2-backpack-actual-result.png",
+      "native-I01-original-B2-zero-stock-tomato.png",
+      "native-I01-original-B2-food-category.png",
+      "native-I01-original-B2-appearance-category-empty.png",
+      "native-I01-original-B2-tools-category-empty.png",
+      "native-I01-original-B2-seed-detail-and-usage.png"
+    ],
+    "T03": [
+      "native-T03-original-B2-unconfigured-message-prepared.png",
+      "native-T03-original-B2-unconfigured-send-result.png",
+      "cloudB2-before-t03-unconfigured-synthetic-message.json",
+      "cloudB2-after-t03-disabled-unconfigured-send.json"
+    ]
+  }
+}

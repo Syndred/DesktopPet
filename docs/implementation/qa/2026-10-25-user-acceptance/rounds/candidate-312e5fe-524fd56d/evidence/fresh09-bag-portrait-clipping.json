@@ -1,0 +1,345 @@
+{
+  "at": "2026-10-25T11:57:08.041Z",
+  "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+  "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+  "provenance": "Actual native UI observation plus read-only DOM/render geometry; no UI state injected",
+  "initial": {
+    "at": "2026-10-25T11:56:13.667Z",
+    "canvases": [
+      {
+        "width": 306,
+        "height": 306,
+        "rect": {
+          "x": 1271.5999755859375,
+          "y": 495.70001220703125,
+          "w": 244.8000030517578,
+          "h": 244.8000030517578
+        },
+        "ancestors": [
+          {
+            "tag": "CANVAS",
+            "class": "",
+            "rect": {
+              "x": 1271.5999755859375,
+              "y": 495.70001220703125,
+              "w": 244.8000030517578,
+              "h": 244.8000030517578
+            },
+            "data": {}
+          },
+          {
+            "tag": "DIV",
+            "class": "resource-sprite-host",
+            "rect": {
+              "x": 1271.5999755859375,
+              "y": 495.70001220703125,
+              "w": 244.60000610351562,
+              "h": 244.60000610351562
+            },
+            "data": {
+              "data-renderer": "pixi-spritesheet",
+              "data-frame": "0",
+              "data-frame-texture": "3",
+              "data-texture-frame": "51,72,224,222",
+              "data-content-bounds": "{\"x\":49.161205479452065,\"y\":58.01424657534247,\"width\":146.47758904109588,\"height\":145.16975342465753,\"canvasWidth\":244.8,\"canvasHeight\":244.8}",
+              "data-texture-key": "lingjing-resource://asset/builtin%3Alingjing-xiaohu-v1/sprites.png:05ef8e37a7519f64d6e9ccdfeb73292269dedf10ea836e285d997d265cb9e4da",
+              "data-texture-source": "2"
+            }
+          },
+          {
+            "tag": "DIV",
+            "class": "resource-stage-transform",
+            "rect": {
+              "x": 1271.5999755859375,
+              "y": 495.70001220703125,
+              "w": 244.60000610351562,
+              "h": 244.60000610351562
+            },
+            "data": {}
+          },
+          {
+            "tag": "DIV",
+            "class": "resource-stage ",
+            "rect": {
+              "x": 1271.5999755859375,
+              "y": 495.70001220703125,
+              "w": 244.60000610351562,
+              "h": 244.60000610351562
+            },
+            "data": {
+              "data-resource-id": "builtin:lingjing-xiaohu-v1",
+              "data-pet-id": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+              "data-action": "idle",
+              "data-clip": "idle",
+              "data-fallback": "false",
+              "data-status": "ready"
+            }
+          }
+        ]
+      },
+      {
+        "width": 306,
+        "height": 306,
+        "rect": {
+          "x": 1534.800048828125,
+          "y": 495.70001220703125,
+          "w": 244.8000030517578,
+          "h": 244.8000030517578
+        },
+        "ancestors": [
+          {
+            "tag": "CANVAS",
+            "class": "",
+            "rect": {
+              "x": 1534.800048828125,
+              "y": 495.70001220703125,
+              "w": 244.8000030517578,
+              "h": 244.8000030517578
+            },
+            "data": {}
+          },
+          {
+            "tag": "DIV",
+            "class": "resource-sprite-host",
+            "rect": {
+              "x": 1534.800048828125,
+              "y": 495.70001220703125,
+              "w": 244.60000610351562,
+              "h": 244.60000610351562
+            },
+            "data": {
+              "data-renderer": "pixi-spritesheet",
+              "data-frame": "0",
+              "data-frame-texture": "3",
+              "data-texture-frame": "51,72,224,222",
+              "data-content-bounds": "{\"x\":49.161205479452065,\"y\":58.01424657534247,\"width\":146.47758904109588,\"height\":145.16975342465753,\"canvasWidth\":244.8,\"canvasHeight\":244.8}",
+              "data-texture-key": "lingjing-resource://asset/builtin%3Alingjing-xiaohu-v1/sprites.png:05ef8e37a7519f64d6e9ccdfeb73292269dedf10ea836e285d997d265cb9e4da",
+              "data-texture-source": "2"
+            }
+          },
+          {
+            "tag": "DIV",
+            "class": "resource-stage-transform",
+            "rect": {
+              "x": 1534.800048828125,
+              "y": 495.70001220703125,
+              "w": 244.60000610351562,
+              "h": 244.60000610351562
+            },
+            "data": {}
+          },
+          {
+            "tag": "DIV",
+            "class": "resource-stage ",
+            "rect": {
+              "x": 1534.800048828125,
+              "y": 495.70001220703125,
+              "w": 244.60000610351562,
+              "h": 244.60000610351562
+            },
+            "data": {
+              "data-resource-id": "builtin:lingjing-xiaohu-v1",
+              "data-pet-id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+              "data-action": "idle",
+              "data-clip": "idle",
+              "data-fallback": "false",
+              "data-status": "ready"
+            }
+          }
+        ]
+      }
+    ],
+    "images": [],
+    "filters": [
+      "全部",
+      "食物",
+      "道具"
+    ]
+  },
+  "confirmed": [
+    {
+      "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+      "status": "ready",
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "stage": {
+        "x": 1271.5999755859375,
+        "y": 495.70001220703125,
+        "width": 244.60000610351562,
+        "height": 244.60000610351562
+      },
+      "content": {
+        "x": 49.161205479452065,
+        "y": 58.01424657534247,
+        "width": 146.47758904109588,
+        "height": 145.16975342465753,
+        "canvasWidth": 244.8,
+        "canvasHeight": 244.8
+      },
+      "clip": {
+        "left": 1271.5999755859375,
+        "top": 495.70001220703125,
+        "right": 1516.1999816894531,
+        "bottom": 563.7000122070312
+      },
+      "visible": {
+        "width": 146.47758904109583,
+        "height": 9.98575342465756
+      },
+      "visibleRatio": 0.06878673545340226,
+      "ancestors": [
+        {
+          "class": "cp-portrait",
+          "rect": {
+            "x": 1271.5999755859375,
+            "y": 495.70001220703125,
+            "w": 244.60000610351562,
+            "h": 244.60000610351562
+          },
+          "overflowX": "hidden",
+          "overflowY": "hidden",
+          "clips": true
+        },
+        {
+          "class": "garden-pet-portrait",
+          "rect": {
+            "x": 1271.5999755859375,
+            "y": 495.70001220703125,
+            "w": 244.60000610351562,
+            "h": 68
+          },
+          "overflowX": "hidden",
+          "overflowY": "hidden",
+          "clips": true
+        },
+        {
+          "class": "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 garden-pet",
+          "rect": {
+            "x": 1265.800048828125,
+            "y": 489.8999938964844,
+            "w": 256.20001220703125,
+            "h": 167.3000030517578
+          },
+          "overflowX": "visible",
+          "overflowY": "visible",
+          "clips": false
+        },
+        {
+          "class": "garden-pet-picker",
+          "rect": {
+            "x": 1263.800048828125,
+            "y": 487.8999938964844,
+            "w": 523.4000244140625,
+            "h": 174.3000030517578
+          },
+          "overflowX": "auto",
+          "overflowY": "hidden",
+          "clips": true
+        },
+        {
+          "class": "garden-card garden-feeding ",
+          "rect": {
+            "x": 1243,
+            "y": 270.1000061035156,
+            "w": 565,
+            "h": 665.7250366210938
+          },
+          "overflowX": "visible",
+          "overflowY": "visible",
+          "clips": false
+        }
+      ]
+    },
+    {
+      "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+      "status": "ready",
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "stage": {
+        "x": 1534.800048828125,
+        "y": 495.70001220703125,
+        "width": 244.60000610351562,
+        "height": 244.60000610351562
+      },
+      "content": {
+        "x": 49.161205479452065,
+        "y": 58.01424657534247,
+        "width": 146.47758904109588,
+        "height": 145.16975342465753,
+        "canvasWidth": 244.8,
+        "canvasHeight": 244.8
+      },
+      "clip": {
+        "left": 1534.800048828125,
+        "top": 495.70001220703125,
+        "right": 1779.4000549316406,
+        "bottom": 563.7000122070312
+      },
+      "visible": {
+        "width": 146.47758904109583,
+        "height": 9.98575342465756
+      },
+      "visibleRatio": 0.06878673545340226,
+      "ancestors": [
+        {
+          "class": "cp-portrait",
+          "rect": {
+            "x": 1534.800048828125,
+            "y": 495.70001220703125,
+            "w": 244.60000610351562,
+            "h": 244.60000610351562
+          },
+          "overflowX": "hidden",
+          "overflowY": "hidden",
+          "clips": true
+        },
+        {
+          "class": "garden-pet-portrait",
+          "rect": {
+            "x": 1534.800048828125,
+            "y": 495.70001220703125,
+            "w": 244.60000610351562,
+            "h": 68
+          },
+          "overflowX": "hidden",
+          "overflowY": "hidden",
+          "clips": true
+        },
+        {
+          "class": "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 garden-pet",
+          "rect": {
+            "x": 1529,
+            "y": 489.8999938964844,
+            "w": 256.20001220703125,
+            "h": 167.3000030517578
+          },
+          "overflowX": "visible",
+          "overflowY": "visible",
+          "clips": false
+        },
+        {
+          "class": "garden-pet-picker",
+          "rect": {
+            "x": 1263.800048828125,
+            "y": 487.8999938964844,
+            "w": 523.4000244140625,
+            "h": 174.3000030517578
+          },
+          "overflowX": "auto",
+          "overflowY": "hidden",
+          "clips": true
+        },
+        {
+          "class": "garden-card garden-feeding ",
+          "rect": {
+            "x": 1243,
+            "y": 270.1000061035156,
+            "w": 565,
+            "h": 665.7250366210938
+          },
+          "overflowX": "visible",
+          "overflowY": "visible",
+          "clips": false
+        }
+      ]
+    }
+  ]
+}

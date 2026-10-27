@@ -1,0 +1,278 @@
+{
+  "provenance": "three actual UI adoptions; third typed custom name",
+  "pets": [
+    {
+      "ownerAccountId": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+      "petId": "pet-3b40de99-bcb5-465a-bba4-c91465063ff1",
+      "templateId": "animal-white-fox",
+      "name": "小狐",
+      "serial": "3B40DE99",
+      "element": "water",
+      "resource": {
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "kind": "2d"
+      },
+      "source": "adoption",
+      "origin": {},
+      "growth": {
+        "level": 1,
+        "experience": 0,
+        "mood": 60,
+        "satiety": 60,
+        "affinity": 0,
+        "winsTotal": 0,
+        "stats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        }
+      },
+      "desktop": {
+        "visible": true,
+        "behavior": "quiet",
+        "scale": 1,
+        "position": {
+          "x": 80,
+          "y": 520,
+          "displayId": "2568730015"
+        }
+      },
+      "revision": 11,
+      "createdAt": "2026-10-25T09:34:00.008Z",
+      "updatedAt": "2026-10-25T09:39:36.939Z"
+    },
+    {
+      "ownerAccountId": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+      "petId": "pet-30793a4f-85e5-41dc-999e-3f24a8095969",
+      "templateId": "animal-white-fox",
+      "name": "小狐",
+      "serial": "30793A4F",
+      "element": "water",
+      "resource": {
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "kind": "2d"
+      },
+      "source": "adoption",
+      "origin": {},
+      "growth": {
+        "level": 1,
+        "experience": 0,
+        "mood": 60,
+        "satiety": 60,
+        "affinity": 0,
+        "winsTotal": 0,
+        "stats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        }
+      },
+      "desktop": {
+        "visible": true,
+        "behavior": "quiet",
+        "scale": 1,
+        "position": {
+          "x": 320,
+          "y": 520,
+          "displayId": null
+        }
+      },
+      "revision": 1,
+      "createdAt": "2026-10-25T09:34:35.594Z",
+      "updatedAt": "2026-10-25T09:34:35.594Z"
+    },
+    {
+      "ownerAccountId": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+      "petId": "pet-1da5a63f-c32a-4d74-a88b-8878e09732ee",
+      "templateId": "animal-white-fox",
+      "name": "验收昵称",
+      "serial": "1DA5A63F",
+      "element": "water",
+      "resource": {
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "kind": "2d"
+      },
+      "source": "adoption",
+      "origin": {},
+      "growth": {
+        "level": 1,
+        "experience": 0,
+        "mood": 60,
+        "satiety": 60,
+        "affinity": 0,
+        "winsTotal": 0,
+        "stats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        }
+      },
+      "desktop": {
+        "visible": false,
+        "behavior": "quiet",
+        "scale": 1,
+        "position": {
+          "x": 560,
+          "y": 520,
+          "displayId": null
+        }
+      },
+      "revision": 1,
+      "createdAt": "2026-10-25T09:40:45.860Z",
+      "updatedAt": "2026-10-25T09:40:45.860Z"
+    }
+  ],
+  "sqlite": {
+    "queryOnly": {
+      "query_only": 1
+    },
+    "rows": [
+      {
+        "pet_id": "pet-3b40de99-bcb5-465a-bba4-c91465063ff1",
+        "template_id": "animal-white-fox",
+        "revision": 11,
+        "data": {
+          "ownerAccountId": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "petId": "pet-3b40de99-bcb5-465a-bba4-c91465063ff1",
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "serial": "3B40DE99",
+          "element": "water",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "source": "adoption",
+          "origin": {},
+          "growth": {
+            "level": 1,
+            "experience": 0,
+            "mood": 60,
+            "satiety": 60,
+            "affinity": 0,
+            "winsTotal": 0,
+            "stats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          "desktop": {
+            "visible": true,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 80,
+              "y": 520,
+              "displayId": "2568730015"
+            }
+          },
+          "revision": 11,
+          "createdAt": "2026-10-25T09:34:00.008Z",
+          "updatedAt": "2026-10-25T09:39:36.939Z"
+        }
+      },
+      {
+        "pet_id": "pet-30793a4f-85e5-41dc-999e-3f24a8095969",
+        "template_id": "animal-white-fox",
+        "revision": 1,
+        "data": {
+          "ownerAccountId": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "petId": "pet-30793a4f-85e5-41dc-999e-3f24a8095969",
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "serial": "30793A4F",
+          "element": "water",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "source": "adoption",
+          "origin": {},
+          "growth": {
+            "level": 1,
+            "experience": 0,
+            "mood": 60,
+            "satiety": 60,
+            "affinity": 0,
+            "winsTotal": 0,
+            "stats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          "desktop": {
+            "visible": true,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 320,
+              "y": 520,
+              "displayId": null
+            }
+          },
+          "revision": 1,
+          "createdAt": "2026-10-25T09:34:35.594Z",
+          "updatedAt": "2026-10-25T09:34:35.594Z"
+        }
+      },
+      {
+        "pet_id": "pet-1da5a63f-c32a-4d74-a88b-8878e09732ee",
+        "template_id": "animal-white-fox",
+        "revision": 1,
+        "data": {
+          "ownerAccountId": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+          "petId": "pet-1da5a63f-c32a-4d74-a88b-8878e09732ee",
+          "templateId": "animal-white-fox",
+          "name": "验收昵称",
+          "serial": "1DA5A63F",
+          "element": "water",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "source": "adoption",
+          "origin": {},
+          "growth": {
+            "level": 1,
+            "experience": 0,
+            "mood": 60,
+            "satiety": 60,
+            "affinity": 0,
+            "winsTotal": 0,
+            "stats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          "desktop": {
+            "visible": false,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 560,
+              "y": 520,
+              "displayId": null
+            }
+          },
+          "revision": 1,
+          "createdAt": "2026-10-25T09:40:45.860Z",
+          "updatedAt": "2026-10-25T09:40:45.860Z"
+        }
+      }
+    ]
+  },
+  "ui": {
+    "title": "灵境 · 桌面伙伴",
+    "route": "#/companions",
+    "visibleText": "我的灵宠 / 全部伙伴\n\n今天，也有小家伙在等你。\n\n已拥有 3 只 · 桌面陪伴 2 只\n\n领养伙伴\n小狐\nLv.01\n正在桌面陪你\n\n安静机灵的雪白小狐，像雪花一样轻盈。\n\n摸摸\n喂食\n聊聊天\n小狐\n\n小狐 ·\n水\n\n60\n60\n0\n行为模式\n安静陪伴\n外观大小\n100%\n在桌面显示\n设为出战伙伴\n查看伙伴详情\n我的伙伴\n全部 3\n桌面中 2\n小狐\n桌面中\nLv.01\n水\n小狐\n桌面中\nLv.01\n水\n验收昵称\nLv.01\n水\n去附近探索\n寻找下一份特别的相遇\n和伙伴并肩出发\n前往对战中心"
+  }
+}

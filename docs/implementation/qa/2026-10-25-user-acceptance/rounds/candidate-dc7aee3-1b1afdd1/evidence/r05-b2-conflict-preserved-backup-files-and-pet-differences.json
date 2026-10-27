@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-25T23:31:04.605Z",
+  "files": [
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\accounts\\backups\\before-restore-1792961743811-fdc89544-8008-4039-a5d6-d5de54648431.lingjing.json",
+      "bytes": 20924,
+      "createdAt": "2026-10-25T20:55:43.813Z",
+      "modifiedAt": "2026-10-25T20:55:43.813Z",
+      "sha256": "2ef14ded1920d7c5c5c61f018f56108a6a59a9074caace1105c90540de1b28ea"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\accounts\\backups\\before-restore-1792971005015-635605ef-8189-4f7a-ac8b-b55fc9774f24.lingjing.json",
+      "bytes": 25109,
+      "createdAt": "2026-10-25T23:30:05.016Z",
+      "modifiedAt": "2026-10-25T23:30:05.016Z",
+      "sha256": "360e4578ae00786b23a771c2ad6b6dfc726dac5b574e6266180672ad6a5b1fde"
+    }
+  ],
+  "differences": [
+    {
+      "petId": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+      "fields": [
+        "revision",
+        "data_json",
+        "updated_at"
+      ],
+      "before": {
+        "revision": 1,
+        "data_json": "{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"2EC1523D\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":800,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T21:01:31.876Z\",\"updatedAt\":\"2026-10-25T21:01:31.876Z\"}",
+        "updated_at": "2026-10-25T21:01:31.876Z"
+      },
+      "incoming": {
+        "revision": 2,
+        "data_json": "{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"2EC1523D\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":5,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":800,\"y\":520,\"displayId\":null}},\"revision\":2,\"createdAt\":\"2026-10-25T21:01:31.876Z\",\"updatedAt\":\"2026-10-25T21:49:00.381Z\"}",
+        "updated_at": "2026-10-25T21:49:00.381Z"
+      }
+    }
+  ]
+}

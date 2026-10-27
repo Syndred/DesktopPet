@@ -1,0 +1,128 @@
+{
+  "at": "2026-10-25T22:10:24.063Z",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "checks": {
+    "draftOffRendered": true,
+    "unsavedFormalDocumentNeverChanged": true,
+    "unsavedFormalRevisionNeverChanged": true,
+    "returnedUiOriginalSoundTrue": true,
+    "afterFormalDocumentExact": true,
+    "afterFormalRevisionExact": true,
+    "savedCloseToTrayFalseBeforeNormalExit": true,
+    "savedFalseSurvivedActualOrdinaryRestart": true,
+    "originalWholeSettingsRestored": true
+  },
+  "after": {
+    "at": "2026-10-25T22:10:24.059Z",
+    "settings": {
+      "ok": true,
+      "data": {
+        "document": {
+          "desktop": {
+            "alwaysOnTop": true,
+            "clickThrough": true,
+            "launchAtLogin": false,
+            "closeToTray": true,
+            "companionLimit": 3,
+            "interactionSounds": true,
+            "volume": 70,
+            "hideInFullscreen": true,
+            "animationsEnabled": true
+          },
+          "notifications": {
+            "enabled": true,
+            "companions": true,
+            "battles": true,
+            "garden": true,
+            "quietEnabled": true,
+            "quietStart": "22:00",
+            "quietEnd": "08:00"
+          },
+          "privacy": {
+            "locationAllowed": false,
+            "locationOnlyWhileExploring": true,
+            "emotionStatistics": false
+          },
+          "sync": {
+            "enabled": true
+          }
+        },
+        "revision": 12,
+        "updatedAt": "2026-10-25T22:07:18.122Z",
+        "host": {
+          "startup": false,
+          "fullscreenMonitor": true,
+          "fullscreenMonitorReady": true,
+          "foregroundFullscreen": false,
+          "fullscreenSource": null,
+          "companionWindows": 1,
+          "clickThroughWindows": [
+            3
+          ],
+          "windows": [
+            {
+              "id": 3,
+              "alwaysOnTop": true,
+              "visible": true
+            }
+          ],
+          "locationAllowed": false,
+          "emotionStatistics": false,
+          "closeToTrayConnected": true,
+          "companionLimitConnected": true
+        }
+      }
+    },
+    "ui": {
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nse19BD.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/settings",
+      "switches": [
+        {
+          "checked": "true",
+          "text": "始终置顶"
+        },
+        {
+          "checked": "true",
+          "text": "透明区域鼠标穿透\n透明区域不拦截鼠标，伙伴本体仍可互动。"
+        },
+        {
+          "checked": "false",
+          "text": "开机启动"
+        },
+        {
+          "checked": "true",
+          "text": "关闭窗口后留在托盘\n关闭主界面时，伙伴仍会在桌面与系统托盘继续陪伴。"
+        },
+        {
+          "checked": "true",
+          "text": "互动音效"
+        },
+        {
+          "checked": "true",
+          "text": "全屏应用时暂时隐藏"
+        },
+        {
+          "checked": "true",
+          "text": "启用安静时段"
+        },
+        {
+          "checked": "false",
+          "text": "允许附近探索使用位置\n用于附近探索，仍需系统授权。"
+        },
+        {
+          "checked": "true",
+          "text": "位置仅在探索时更新"
+        },
+        {
+          "checked": "false",
+          "text": "情绪统计\n仅记录互动统计，不读取聊天内容。"
+        },
+        {
+          "checked": "true",
+          "text": "界面动效"
+        }
+      ]
+    }
+  },
+  "qualification": "Saved/restart leg reuses actual B11 ordinary restart closeToTray preference; cancellation leg independently toggles interactionSounds off without save, navigates away and returns true. No additional restart or product business write needed."
+}

@@ -1,0 +1,164 @@
+{
+  "at": "2026-10-26T08:12:31.696Z",
+  "profile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/e71b9c11-e62a-46a6-aa4d-decdd34c4200/local-b-concurrency",
+  "label": "before-native-start",
+  "marker": {
+    "schemaVersion": 1,
+    "application": "lingjing",
+    "scenario": "unified-battle",
+    "runId": "4fe4b514-04d4-4832-98bc-c1128a1601f7",
+    "isolated": true,
+    "profilePath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\e71b9c11-e62a-46a6-aa4d-decdd34c4200\\local-b-concurrency",
+    "createdAt": "2026-10-25T13:25:30.115Z"
+  },
+  "markerSha256": "93c4f40ed59fe02854fcbbe7fe600a043b9a684cf9c45ec09ca30fa4142c0fcd",
+  "readOnly": true,
+  "queryOnly": true,
+  "credentialsRead": false,
+  "tables": {
+    "account_settings": [
+      {
+        "owner_account_id": "qa:4fe4b514-04d4-4832-98bc-c1128a1601f7:local-816a18c2-f98b-4c56-9a78-d07ac42d170f",
+        "revision": 1,
+        "document": "{\"desktop\":{\"alwaysOnTop\":true,\"clickThrough\":true,\"launchAtLogin\":false,\"closeToTray\":false,\"companionLimit\":3,\"interactionSounds\":true,\"volume\":70,\"hideInFullscreen\":true,\"animationsEnabled\":true},\"notifications\":{\"enabled\":true,\"companions\":true,\"battles\":true,\"garden\":true,\"quietEnabled\":true,\"quietStart\":\"22:00\",\"quietEnd\":\"08:00\"},\"privacy\":{\"locationAllowed\":false,\"locationOnlyWhileExploring\":true,\"emotionStatistics\":false},\"sync\":{\"enabled\":false}}",
+        "updated_at": "2026-10-25T13:29:12.130Z"
+      }
+    ],
+    "account_qa_profile": [
+      {
+        "singleton": 1,
+        "profile_id": "4fe4b514-04d4-4832-98bc-c1128a1601f7",
+        "scenario_id": "unified-battle"
+      }
+    ],
+    "companion_accounts": [
+      {
+        "owner_account_id": "qa:4fe4b514-04d4-4832-98bc-c1128a1601f7:local-816a18c2-f98b-4c56-9a78-d07ac42d170f",
+        "revision": 1,
+        "selections_json": "{\"chatPetId\":null,\"battlePetId\":null,\"guardPetId\":null}",
+        "legacy_imported_at": "2026-10-25T13:28:45.202Z"
+      }
+    ],
+    "companion_pets": [],
+    "companion_actions": [],
+    "conversation_profiles": [],
+    "conversation_preferences": [],
+    "conversation_messages": [],
+    "conversation_memories": [],
+    "battle_sessions": [],
+    "battle_action_receipts": [],
+    "battle_reward_receipts": [],
+    "battle_reports_v2": [],
+    "discovery_actions": [],
+    "discovery_encounters": [],
+    "discovery_captures": [],
+    "garden_accounts": [],
+    "garden_actions": [],
+    "garden_territory_attempts": [],
+    "garden_territory_challenges": [],
+    "garden_territory_records": [],
+    "garden_territory_logs": [],
+    "garden_garrisons": []
+  },
+  "digests": {
+    "account_settings": {
+      "count": 1,
+      "sha256": "3c712108c3ca1f9068a56b00d17702e189bacadc661d2d0d29ef1db894259a31"
+    },
+    "account_qa_profile": {
+      "count": 1,
+      "sha256": "4cb1445147a4588fd7af9941aab92633bc14f3cc8b956a5e1dbedd5ce7b0b937"
+    },
+    "companion_accounts": {
+      "count": 1,
+      "sha256": "fdb9b7ab55ac1fb8ed1b202f20034ea93c8459564e8d78ee575a66ae12957df0"
+    },
+    "companion_pets": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "companion_actions": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "conversation_profiles": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "conversation_preferences": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "conversation_messages": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "conversation_memories": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "battle_sessions": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "battle_action_receipts": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "battle_reward_receipts": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "battle_reports_v2": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "discovery_actions": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "discovery_encounters": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "discovery_captures": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "garden_accounts": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "garden_actions": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "garden_territory_attempts": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "garden_territory_challenges": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "garden_territory_records": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "garden_territory_logs": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "garden_garrisons": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "publicIdentities": [
+    {
+      "owner_account_id": "qa:4fe4b514-04d4-4832-98bc-c1128a1601f7:local-816a18c2-f98b-4c56-9a78-d07ac42d170f",
+      "username": "并行验收乙",
+      "provider": "local"
+    }
+  ]
+}

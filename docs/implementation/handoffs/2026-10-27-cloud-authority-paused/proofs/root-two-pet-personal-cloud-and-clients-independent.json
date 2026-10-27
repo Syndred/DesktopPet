@@ -1,0 +1,108 @@
+{
+  "at": "2026-10-26T19:28:20.630Z",
+  "readOnly": true,
+  "credentialValuesRead": false,
+  "owner": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+  "independentSource": "Supabase direct Postgres table read and readonly SQLite of two original independently logged-in clients",
+  "cloudRows": 5,
+  "verifiedDocumentCount": 4,
+  "clients": [
+    {
+      "client": "A",
+      "profile": "artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a",
+      "documents": [
+        {
+          "collection": "conversation_profiles",
+          "id": "[\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\"]",
+          "revision": 2,
+          "documentSha256": "1757ad8c97b71cf42b7106dc8ea58e81e506e89ab26920a98995d6d3d42c078d",
+          "localRevision": 2,
+          "exactDocumentMatch": true,
+          "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273"
+        },
+        {
+          "collection": "conversation_memories",
+          "id": "[\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"466a65e0-80a2-4825-bc87-d7e2432eb870\"]",
+          "revision": 1,
+          "documentSha256": "2a5dc6cae2fe9cdf887cd6556f67eed90d5e8a6bf9233b9c087eb6e24c94703d",
+          "localRevision": 1,
+          "exactDocumentMatch": true,
+          "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273"
+        },
+        {
+          "collection": "conversation_profiles",
+          "id": "[\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\"]",
+          "revision": 1,
+          "documentSha256": "57c0a7787d9c1b9538e1ea18f9172f048a5e2d8cc88ab2865091456771abefb3",
+          "localRevision": 1,
+          "exactDocumentMatch": true,
+          "petId": "pet-97410828-fdf6-4253-8246-4c5f389d8fba"
+        },
+        {
+          "collection": "conversation_memories",
+          "id": "[\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"6d8df6f1-43db-4e14-8371-8b8dd5d78580\"]",
+          "revision": 1,
+          "documentSha256": "da653bac7e3de076dacc25ef532452011b47947fd15a9da8e4372a8555930a5f",
+          "localRevision": 1,
+          "exactDocumentMatch": true,
+          "petId": "pet-97410828-fdf6-4253-8246-4c5f389d8fba"
+        }
+      ],
+      "state": {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "cursor": 24,
+        "initialized": 1,
+        "last_error": null
+      }
+    },
+    {
+      "client": "A2",
+      "profile": "artifacts/qa/cloud-authority-convergence/20261026/candidate-bc6598d3-1b1afdd1/profiles/cloud-a-second-device",
+      "documents": [
+        {
+          "collection": "conversation_profiles",
+          "id": "[\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\"]",
+          "revision": 2,
+          "documentSha256": "1757ad8c97b71cf42b7106dc8ea58e81e506e89ab26920a98995d6d3d42c078d",
+          "localRevision": 2,
+          "exactDocumentMatch": true,
+          "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273"
+        },
+        {
+          "collection": "conversation_memories",
+          "id": "[\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"466a65e0-80a2-4825-bc87-d7e2432eb870\"]",
+          "revision": 1,
+          "documentSha256": "2a5dc6cae2fe9cdf887cd6556f67eed90d5e8a6bf9233b9c087eb6e24c94703d",
+          "localRevision": 1,
+          "exactDocumentMatch": true,
+          "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273"
+        },
+        {
+          "collection": "conversation_profiles",
+          "id": "[\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\"]",
+          "revision": 1,
+          "documentSha256": "57c0a7787d9c1b9538e1ea18f9172f048a5e2d8cc88ab2865091456771abefb3",
+          "localRevision": 1,
+          "exactDocumentMatch": true,
+          "petId": "pet-97410828-fdf6-4253-8246-4c5f389d8fba"
+        },
+        {
+          "collection": "conversation_memories",
+          "id": "[\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"6d8df6f1-43db-4e14-8371-8b8dd5d78580\"]",
+          "revision": 1,
+          "documentSha256": "da653bac7e3de076dacc25ef532452011b47947fd15a9da8e4372a8555930a5f",
+          "localRevision": 1,
+          "exactDocumentMatch": true,
+          "petId": "pet-97410828-fdf6-4253-8246-4c5f389d8fba"
+        }
+      ],
+      "state": {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "cursor": 24,
+        "initialized": 1,
+        "last_error": null
+      }
+    }
+  ],
+  "qualification": "Actual profile/memory cloud storage and both native clients; no model response generation or nonempty old-message migration claimed"
+}

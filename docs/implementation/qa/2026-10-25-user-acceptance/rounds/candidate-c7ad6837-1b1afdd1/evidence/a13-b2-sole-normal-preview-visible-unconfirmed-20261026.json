@@ -1,0 +1,64 @@
+{
+  "at": "2026-10-26T13:12:14.505Z",
+  "status": "sole_normal_cloud_preview_visible_default_merge_no_confirmation",
+  "approvalRef": "root-c7ad-a13-b2-real-head23-preview-only",
+  "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+  "owner": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "deviceId": "351797b0-cad7-4b8f-9f93-8d0e806c49c3",
+  "normalPreviewClicks": 1,
+  "restoreConfirmations": 0,
+  "visible": {
+    "dialog": "恢复备份",
+    "createdAtLabel": "2026/10/26 19:31:31",
+    "moduleCount": 6,
+    "moduleNames": [
+      "战报",
+      "菜园",
+      "设置",
+      "伙伴",
+      "聊天",
+      "其他数据"
+    ],
+    "mode": "合并，保留本机现有记录",
+    "confirmEnabled": true,
+    "cancelEnabled": true
+  },
+  "notPubliclyExposed": {
+    "previewId": null,
+    "previewRevision": null,
+    "previewChecksum": null,
+    "previewOwner": null,
+    "tableCounts": null,
+    "qualification": "This product dialog does not expose these fields; private Map/React state and hidden business calls were never read or invoked."
+  },
+  "sourceBindingForRoot": {
+    "runtimeOwner": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "rootPreviouslyObservedHead": 23,
+    "headChecksumNotReadFromDialog": true,
+    "rootMustIndependentlyBindCurrentActorAndUnchangedPgHead": true
+  },
+  "preservation": {
+    "settings7AndWholeOriginalDocumentRawExact": true,
+    "confirmedHeadStill8": true,
+    "outboxSourcesBaselinesCheckpointsBackupsPetsAndChoicesRawExact": true,
+    "battleGardenConversationDigestsExact": true,
+    "changedTables": [
+      "lingjing_resource_cloud_downloads",
+      "lingjing_resource_cloud_receipts"
+    ]
+  },
+  "noFurtherInput": true,
+  "dialogRemainsOpen": true,
+  "noModeChange": true,
+  "noSettingSaveOrSyncToggle": true,
+  "noNewProfileAuthOrHelper": true,
+  "ledgerNotChanged": true,
+  "evidence": {
+    "clickAt": "2026-10-26T13:08:03.646Z",
+    "publicUiAt": "2026-10-26T13:08:43.077Z",
+    "before": "2026-10-26T13:04:27.058Z",
+    "after": "2026-10-26T13:10:29.819Z",
+    "screenshot": "a13-b2-sole-normal-cloud-preview-complete-default-merge-20261026.png"
+  },
+  "next": "Wait for Root binding of this actual visible preview and one explicit normal default-merge confirmation scope; never reuse an old preview or fabricate its ID."
+}

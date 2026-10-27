@@ -1,0 +1,609 @@
+[
+  {
+    "at": 1792969339144,
+    "event": "native search 鱼丸; selected visible builtin card"
+  },
+  {
+    "at": 1792969347467,
+    "resource": "鱼丸",
+    "expectedAction": "blink",
+    "method": "combobox Home Down Return"
+  },
+  {
+    "at": 1792969376717,
+    "resource": "鱼丸",
+    "expectedAction": "walk",
+    "method": "native combobox keyboard"
+  },
+  {
+    "at": 1792969379971,
+    "resource": "鱼丸",
+    "expectedAction": "wave",
+    "method": "native combobox keyboard"
+  },
+  {
+    "at": 1792969383281,
+    "resource": "鱼丸",
+    "expectedAction": "eat",
+    "method": "native combobox keyboard"
+  },
+  {
+    "at": 1792969386613,
+    "resource": "鱼丸",
+    "expectedAction": "attack_windup",
+    "method": "native combobox keyboard"
+  },
+  {
+    "at": 1792969389979,
+    "resource": "鱼丸",
+    "expectedAction": "attack_release",
+    "method": "native combobox keyboard"
+  },
+  {
+    "at": 1792969393363,
+    "resource": "鱼丸",
+    "expectedAction": "attack",
+    "method": "native combobox keyboard"
+  },
+  {
+    "at": 1792969396794,
+    "resource": "鱼丸",
+    "expectedAction": "hit",
+    "method": "native combobox keyboard"
+  },
+  {
+    "at": 1792969400261,
+    "resource": "鱼丸",
+    "expectedAction": "skill",
+    "method": "native combobox keyboard"
+  },
+  {
+    "at": 1792969403751,
+    "resource": "鱼丸",
+    "expectedAction": "victory",
+    "method": "native combobox keyboard"
+  },
+  {
+    "at": 1792969407323,
+    "resource": "鱼丸",
+    "expectedAction": "sleep",
+    "method": "native combobox keyboard"
+  },
+  {
+    "at": 1792969438590,
+    "resource": "小蓝",
+    "expectedAction": "idle",
+    "method": "native search card and combo Home Return"
+  },
+  {
+    "at": 1792969441780,
+    "resource": "小蓝",
+    "expectedAction": "blink",
+    "method": "native combo keyboard"
+  },
+  {
+    "at": 1792969445078,
+    "resource": "小蓝",
+    "expectedAction": "walk",
+    "method": "native combo keyboard"
+  },
+  {
+    "at": 1792969448337,
+    "resource": "小蓝",
+    "expectedAction": "wave",
+    "method": "native combo keyboard"
+  },
+  {
+    "at": 1792969451735,
+    "resource": "小蓝",
+    "expectedAction": "eat",
+    "method": "native combo keyboard"
+  },
+  {
+    "at": 1792969455115,
+    "resource": "小蓝",
+    "expectedAction": "attack_windup",
+    "method": "native combo keyboard"
+  },
+  {
+    "at": 1792969458475,
+    "resource": "小蓝",
+    "expectedAction": "attack_release",
+    "method": "native combo keyboard"
+  },
+  {
+    "at": 1792969461865,
+    "resource": "小蓝",
+    "expectedAction": "attack",
+    "method": "native combo keyboard"
+  },
+  {
+    "at": 1792969465280,
+    "resource": "小蓝",
+    "expectedAction": "hit",
+    "method": "native combo keyboard"
+  },
+  {
+    "at": 1792969468742,
+    "resource": "小蓝",
+    "expectedAction": "skill",
+    "method": "native combo keyboard"
+  },
+  {
+    "at": 1792969472271,
+    "resource": "小蓝",
+    "expectedAction": "victory",
+    "method": "native combo keyboard"
+  },
+  {
+    "at": 1792969475823,
+    "resource": "小蓝",
+    "expectedAction": "sleep",
+    "method": "native combo keyboard"
+  },
+  {
+    "at": 1792969503185,
+    "resource": "饭团",
+    "expectedAction": "idle"
+  },
+  {
+    "at": 1792969506364,
+    "resource": "饭团",
+    "expectedAction": "blink"
+  },
+  {
+    "at": 1792969509592,
+    "resource": "饭团",
+    "expectedAction": "walk"
+  },
+  {
+    "at": 1792969512855,
+    "resource": "饭团",
+    "expectedAction": "wave"
+  },
+  {
+    "at": 1792969516162,
+    "resource": "饭团",
+    "expectedAction": "eat"
+  },
+  {
+    "at": 1792969519474,
+    "resource": "饭团",
+    "expectedAction": "attack_windup"
+  },
+  {
+    "at": 1792969522826,
+    "resource": "饭团",
+    "expectedAction": "attack_release"
+  },
+  {
+    "at": 1792969526247,
+    "resource": "饭团",
+    "expectedAction": "attack"
+  },
+  {
+    "at": 1792969529685,
+    "resource": "饭团",
+    "expectedAction": "hit"
+  },
+  {
+    "at": 1792969533122,
+    "resource": "饭团",
+    "expectedAction": "skill"
+  },
+  {
+    "at": 1792969536604,
+    "resource": "饭团",
+    "expectedAction": "victory"
+  },
+  {
+    "at": 1792969540157,
+    "resource": "饭团",
+    "expectedAction": "sleep"
+  },
+  {
+    "at": 1792969563138,
+    "resource": "焰柴",
+    "expectedAction": "idle"
+  },
+  {
+    "at": 1792969566324,
+    "resource": "焰柴",
+    "expectedAction": "blink"
+  },
+  {
+    "at": 1792969569565,
+    "resource": "焰柴",
+    "expectedAction": "walk"
+  },
+  {
+    "at": 1792969572810,
+    "resource": "焰柴",
+    "expectedAction": "wave"
+  },
+  {
+    "at": 1792969576112,
+    "resource": "焰柴",
+    "expectedAction": "eat"
+  },
+  {
+    "at": 1792969579453,
+    "resource": "焰柴",
+    "expectedAction": "attack_windup"
+  },
+  {
+    "at": 1792969582814,
+    "resource": "焰柴",
+    "expectedAction": "attack_release"
+  },
+  {
+    "at": 1792969586282,
+    "resource": "焰柴",
+    "expectedAction": "attack"
+  },
+  {
+    "at": 1792969589745,
+    "resource": "焰柴",
+    "expectedAction": "hit"
+  },
+  {
+    "at": 1792969593197,
+    "resource": "焰柴",
+    "expectedAction": "skill"
+  },
+  {
+    "at": 1792969596725,
+    "resource": "焰柴",
+    "expectedAction": "victory"
+  },
+  {
+    "at": 1792969600268,
+    "resource": "焰柴",
+    "expectedAction": "sleep"
+  },
+  {
+    "at": 1792969628461,
+    "resource": "礼帽喵",
+    "expectedAction": "idle"
+  },
+  {
+    "at": 1792969631640,
+    "resource": "礼帽喵",
+    "expectedAction": "blink"
+  },
+  {
+    "at": 1792969634922,
+    "resource": "礼帽喵",
+    "expectedAction": "walk"
+  },
+  {
+    "at": 1792969638207,
+    "resource": "礼帽喵",
+    "expectedAction": "wave"
+  },
+  {
+    "at": 1792969641508,
+    "resource": "礼帽喵",
+    "expectedAction": "eat"
+  },
+  {
+    "at": 1792969644901,
+    "resource": "礼帽喵",
+    "expectedAction": "attack_windup"
+  },
+  {
+    "at": 1792969648279,
+    "resource": "礼帽喵",
+    "expectedAction": "attack_release"
+  },
+  {
+    "at": 1792969651671,
+    "resource": "礼帽喵",
+    "expectedAction": "attack"
+  },
+  {
+    "at": 1792969655228,
+    "resource": "礼帽喵",
+    "expectedAction": "hit"
+  },
+  {
+    "at": 1792969658725,
+    "resource": "礼帽喵",
+    "expectedAction": "skill"
+  },
+  {
+    "at": 1792969662211,
+    "resource": "礼帽喵",
+    "expectedAction": "victory"
+  },
+  {
+    "at": 1792969665746,
+    "resource": "礼帽喵",
+    "expectedAction": "sleep"
+  },
+  {
+    "at": 1792969718670,
+    "resource": "小狐",
+    "expectedAction": "idle"
+  },
+  {
+    "at": 1792969721851,
+    "resource": "小狐",
+    "expectedAction": "blink"
+  },
+  {
+    "at": 1792969725073,
+    "resource": "小狐",
+    "expectedAction": "walk"
+  },
+  {
+    "at": 1792969728348,
+    "resource": "小狐",
+    "expectedAction": "wave"
+  },
+  {
+    "at": 1792969731812,
+    "resource": "小狐",
+    "expectedAction": "eat"
+  },
+  {
+    "at": 1792969735168,
+    "resource": "小狐",
+    "expectedAction": "attack_windup"
+  },
+  {
+    "at": 1792969738604,
+    "resource": "小狐",
+    "expectedAction": "attack_release"
+  },
+  {
+    "at": 1792969742002,
+    "resource": "小狐",
+    "expectedAction": "attack"
+  },
+  {
+    "at": 1792969745464,
+    "resource": "小狐",
+    "expectedAction": "hit"
+  },
+  {
+    "at": 1792969748935,
+    "resource": "小狐",
+    "expectedAction": "skill"
+  },
+  {
+    "at": 1792969752459,
+    "resource": "小狐",
+    "expectedAction": "victory"
+  },
+  {
+    "at": 1792969756074,
+    "resource": "小狐",
+    "expectedAction": "sleep"
+  },
+  {
+    "at": 1792969782384,
+    "resource": "内置青芽",
+    "expectedAction": "idle"
+  },
+  {
+    "at": 1792969785585,
+    "resource": "内置青芽",
+    "expectedAction": "blink"
+  },
+  {
+    "at": 1792969788907,
+    "resource": "内置青芽",
+    "expectedAction": "walk"
+  },
+  {
+    "at": 1792969792204,
+    "resource": "内置青芽",
+    "expectedAction": "wave"
+  },
+  {
+    "at": 1792969795511,
+    "resource": "内置青芽",
+    "expectedAction": "eat"
+  },
+  {
+    "at": 1792969798861,
+    "resource": "内置青芽",
+    "expectedAction": "attack_windup"
+  },
+  {
+    "at": 1792969802210,
+    "resource": "内置青芽",
+    "expectedAction": "attack_release"
+  },
+  {
+    "at": 1792969805621,
+    "resource": "内置青芽",
+    "expectedAction": "attack"
+  },
+  {
+    "at": 1792969809073,
+    "resource": "内置青芽",
+    "expectedAction": "hit"
+  },
+  {
+    "at": 1792969812554,
+    "resource": "内置青芽",
+    "expectedAction": "skill"
+  },
+  {
+    "at": 1792969816060,
+    "resource": "内置青芽",
+    "expectedAction": "victory"
+  },
+  {
+    "at": 1792969819591,
+    "resource": "内置青芽",
+    "expectedAction": "sleep"
+  },
+  {
+    "at": 1792969845854,
+    "resource": "岩团",
+    "expectedAction": "idle"
+  },
+  {
+    "at": 1792969849054,
+    "resource": "岩团",
+    "expectedAction": "blink"
+  },
+  {
+    "at": 1792969852276,
+    "resource": "岩团",
+    "expectedAction": "walk"
+  },
+  {
+    "at": 1792969855536,
+    "resource": "岩团",
+    "expectedAction": "wave"
+  },
+  {
+    "at": 1792969858829,
+    "resource": "岩团",
+    "expectedAction": "eat"
+  },
+  {
+    "at": 1792969862173,
+    "resource": "岩团",
+    "expectedAction": "attack_windup"
+  },
+  {
+    "at": 1792969865561,
+    "resource": "岩团",
+    "expectedAction": "attack_release"
+  },
+  {
+    "at": 1792969869084,
+    "resource": "岩团",
+    "expectedAction": "attack"
+  },
+  {
+    "at": 1792969872803,
+    "resource": "岩团",
+    "expectedAction": "hit"
+  },
+  {
+    "at": 1792969876328,
+    "resource": "岩团",
+    "expectedAction": "skill"
+  },
+  {
+    "at": 1792969879821,
+    "resource": "岩团",
+    "expectedAction": "victory"
+  },
+  {
+    "at": 1792969883489,
+    "resource": "岩团",
+    "expectedAction": "sleep"
+  },
+  {
+    "at": 1792969921443,
+    "resource": "本地导入青芽",
+    "expectedAction": "idle"
+  },
+  {
+    "at": 1792969924646,
+    "resource": "本地导入青芽",
+    "expectedAction": "blink"
+  },
+  {
+    "at": 1792969927869,
+    "resource": "本地导入青芽",
+    "expectedAction": "walk"
+  },
+  {
+    "at": 1792969931222,
+    "resource": "本地导入青芽",
+    "expectedAction": "wave"
+  },
+  {
+    "at": 1792969934530,
+    "resource": "本地导入青芽",
+    "expectedAction": "eat"
+  },
+  {
+    "at": 1792969937843,
+    "resource": "本地导入青芽",
+    "expectedAction": "attack_windup"
+  },
+  {
+    "at": 1792969941240,
+    "resource": "本地导入青芽",
+    "expectedAction": "attack_release"
+  },
+  {
+    "at": 1792969944667,
+    "resource": "本地导入青芽",
+    "expectedAction": "attack"
+  },
+  {
+    "at": 1792969948104,
+    "resource": "本地导入青芽",
+    "expectedAction": "hit"
+  },
+  {
+    "at": 1792969951591,
+    "resource": "本地导入青芽",
+    "expectedAction": "skill"
+  },
+  {
+    "at": 1792969955113,
+    "resource": "本地导入青芽",
+    "expectedAction": "victory"
+  },
+  {
+    "at": 1792969958627,
+    "resource": "本地导入青芽",
+    "expectedAction": "sleep"
+  },
+  {
+    "at": 1792969978193,
+    "resource": "本地导入青芽",
+    "event": "native pause walk"
+  },
+  {
+    "at": 1792969997551,
+    "resource": "本地导入青芽",
+    "event": "native resume walk"
+  },
+  {
+    "at": 1792970004255,
+    "resource": "本地导入青芽",
+    "action": "skill",
+    "event": "native replay",
+    "sequence": 1
+  },
+  {
+    "at": 1792970007413,
+    "resource": "本地导入青芽",
+    "action": "skill",
+    "event": "native replay",
+    "sequence": 2
+  },
+  {
+    "at": 1792970029846,
+    "resource": "本地导入青芽",
+    "event": "native enable dual comparison"
+  },
+  {
+    "at": 1792970043972,
+    "resource": "本地导入青芽",
+    "event": "native change right-only action",
+    "expectedAction": "hit"
+  },
+  {
+    "at": 1792970066122,
+    "resource": "本地导入青芽",
+    "event": "native change left-only action",
+    "expectedAction": "walk"
+  },
+  {
+    "at": 1792970089198,
+    "event": "native comparison collapsed and idle restored"
+  }
+]

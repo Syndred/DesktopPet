@@ -1,0 +1,37 @@
+{
+  "observedAt": "2026-10-25T21:56:00.3212444Z",
+  "scope": "A ordinary native Alt+F4 after closeToTray=false saved",
+  "exitedMain": {
+    "pid": 12112,
+    "creationDate": "2026-10-26T03:54:07.688924+08:00",
+    "executablePath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nss5693.tmp\\app\\Lingjing.exe"
+  },
+  "exitedWrapper": {
+    "pid": 15848,
+    "creationDate": "2026-10-26T03:53:57.173016+08:00",
+    "executablePath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-dc7aee3\\Lingjing-0.1.8-portable-x64.exe"
+  },
+  "remaining": [
+    {
+      "ProcessId": 24016,
+      "ParentProcessId": 6296,
+      "ExecutablePath": "C:\\Users\\Administrator\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "CreationDate": "2026-10-26T05:55:59.972655+08:00"
+    }
+  ],
+  "portListening": [],
+  "newB": [
+    {
+      "ProcessId": 27840,
+      "ParentProcessId": 28872,
+      "ExecutablePath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-dc7aee3\\Lingjing-0.1.8-portable-x64.exe",
+      "CreationDate": "2026-10-26T05:54:29.614052+08:00"
+    },
+    {
+      "ProcessId": 32748,
+      "ParentProcessId": 27840,
+      "ExecutablePath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsuB239.tmp\\app\\Lingjing.exe",
+      "CreationDate": "2026-10-26T05:54:40.320727+08:00"
+    }
+  ]
+}

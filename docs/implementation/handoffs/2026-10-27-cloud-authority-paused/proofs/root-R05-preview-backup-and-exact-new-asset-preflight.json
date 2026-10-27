@@ -1,0 +1,73 @@
+{
+  "at": "2026-10-26T22:55:20.998Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "readOnly": true,
+  "credentialValuesRead": false,
+  "backup": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\native-ui-exports\\B2-R05-qingya-backup-origin-4e6.lingjing.json",
+    "bytes": 11136568,
+    "sha256": "a3e78b361260166059d5e434330b15d4b0073b7306a581edc5c4302bfda8c8f5",
+    "createdAt": "2026-10-26T22:50:23.027Z",
+    "headerValid": true,
+    "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "resources": 4,
+    "files": 8,
+    "allFileAndPackHashesVerified": true
+  },
+  "targetProfile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09",
+  "targetProfileRealpath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09",
+  "actualResourceId": "b773fb41-e95a-4935-af1e-c0ed2fb5e9a4",
+  "target": {
+    "row": {
+      "resourceId": "b773fb41-e95a-4935-af1e-c0ed2fb5e9a4",
+      "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "contentHash": "1aa494f867cbc95f683fe8233d6742fd1839dfb1ec5b6df55135328082a5dd5a",
+      "revision": 1
+    },
+    "file": {
+      "asset_key": "sprites.png",
+      "file_path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\restore-7dfb3fc0-a4fd-4dbf-ac05-483ad5e3e179\\sprites.png"
+    },
+    "appliedPets": [],
+    "downloads": [
+      {
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "resource_id": "b773fb41-e95a-4935-af1e-c0ed2fb5e9a4",
+        "auth_user_id": "2028f0af-f501-47f5-9abb-de59487dad46",
+        "manifest_sha256": "fbfad69f653c25ce4ab4c188813c60f6b043620ae76bcfe8a6847c2032a47f17",
+        "directory": "restore-7dfb3fc0-a4fd-4dbf-ac05-483ad5e3e179",
+        "status": "verified",
+        "last_error": null,
+        "verified_at": "2026-10-26T22:55:08.216Z",
+        "data_mode": "live",
+        "authority_registered": 1,
+        "manifestSha256": "fbfad69f653c25ce4ab4c188813c60f6b043620ae76bcfe8a6847c2032a47f17"
+      }
+    ],
+    "receipts": [
+      {
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "resource_id": "b773fb41-e95a-4935-af1e-c0ed2fb5e9a4",
+        "auth_user_id": "2028f0af-f501-47f5-9abb-de59487dad46",
+        "manifest_sha256": "fbfad69f653c25ce4ab4c188813c60f6b043620ae76bcfe8a6847c2032a47f17",
+        "content_hash": "1aa494f867cbc95f683fe8233d6742fd1839dfb1ec5b6df55135328082a5dd5a",
+        "direction": "download",
+        "verified_at": "2026-10-26T22:55:08.216Z",
+        "data_mode": "live",
+        "authority_action_id": "resources:b773fb41-e95a-4935-af1e-c0ed2fb5e9a4:fbfad69f653c25ce4ab4c188813c60f6b043620ae76bcfe8a6847c2032a47f17",
+        "authority_revision": 35,
+        "authority_checksum": "d42162fbeb5a7b87342d49e75def18910d54ed139b3656597151ba0a36402750"
+      }
+    ]
+  },
+  "asset": {
+    "registeredPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\restore-7dfb3fc0-a4fd-4dbf-ac05-483ad5e3e179\\sprites.png",
+    "canonicalPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\restore-7dfb3fc0-a4fd-4dbf-ac05-483ad5e3e179\\sprites.png",
+    "relativePath": "character-resources\\restore-7dfb3fc0-a4fd-4dbf-ac05-483ad5e3e179\\sprites.png",
+    "preservedPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\restore-7dfb3fc0-a4fd-4dbf-ac05-483ad5e3e179\\sprites.png.qa-preserved-r05-b773fb41",
+    "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693",
+    "bytes": 1802491
+  },
+  "faultAuthorized": false,
+  "scope": "Only the one newly imported QA resource; no original resource, pet assignment or business row touched. Normal preview is separate native evidence."
+}

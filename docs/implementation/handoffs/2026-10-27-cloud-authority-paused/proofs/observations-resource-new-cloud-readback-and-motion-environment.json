@@ -1,0 +1,36 @@
+{
+  "at": "2026-10-26T21:32:48.434Z",
+  "stage": "resource-new-cloud-readback-and-motion-environment",
+  "caseUpdates": [
+    {
+      "id": "R02",
+      "status": "blocked",
+      "actual": "当前原生系统 prefers-reduced-motion=true，预览host上级data-motion=reduced，页面visible且playing图标开启时播放器按策略停在frame0。两次真实公开DOM采样相隔1100ms；不修改OS或产品动态设置，不误记为动画冻结缺陷。此前原生截图仅证明可见图像/动作选择，未证明13动作连续播放，动态验收待正常动态环境。",
+      "blocker": "current-system-prefers-reduced-motion",
+      "evidence": [
+        "native-R02-public-motion-gates-and-frames-readonly.json",
+        "native-R02-builtin-Yantuan-walk-for-public-motion-readback.png",
+        "native-resource-new-cloud-readback-and-motion-environment-seal.json"
+      ]
+    },
+    {
+      "id": "R06",
+      "status": "passed",
+      "actual": "全新普通profile正常登录同一原B，在未进资源页/未导入备份前自动云恢复2原resourceId、2imports及4原PNG/JSON字节，新managed路径SHA逐个匹配真实原UI备份。两套原校准与动作映射完全相同；原生青芽1.05/mirror与战斗rotation2、岩团1.06/mirror及真实动画预览已显示。这是自动云恢复，不冒充R05备份写回。；补充：本轮新饭团资源3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6经普通UI导入及云端真实发布后，独立原B2普通资源页自动出现并实际渲染；无再次导入/手工拷贝，独立注册表与实际JSON/PNG文件逐字节SHA一致。",
+      "evidence": [
+        "native-cold-auth-and-resource-cloud-hydration-seal.json",
+        "resource-fresh-profile-v1/after-original-login-before-any-resource-page-or-import.json",
+        "native-R06-cloud-restored-Qingya-calibration-visible.png",
+        "native-R06-Qingya-battle-calibration-restored.png",
+        "native-R06-cloud-restored-Yantuan-calibration-visible.png",
+        "native-R06-original-B2-auto-restored-new-fantuan-preview.png",
+        "cloudB2-after-new-fantuan-cloud-auto-restore-preview.json",
+        "root-resource-registered-files-cloud-readback-phase1.json",
+        "root-R03-resource-published-cloud-independent.json",
+        "native-resource-new-cloud-readback-and-motion-environment-seal.json"
+      ]
+    }
+  ],
+  "newIssues": [],
+  "issueUpdates": []
+}

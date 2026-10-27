@@ -1,0 +1,41 @@
+{
+  "acceptancePassed": false,
+  "environmentRestored": true,
+  "environmentAtLaunch": [
+    {
+      "present": false,
+      "name": "ELECTRON_RUN_AS_NODE"
+    },
+    {
+      "present": false,
+      "name": "NODE_OPTIONS"
+    },
+    {
+      "present": false,
+      "name": "LINGJING_QA_SCENARIO"
+    },
+    {
+      "present": false,
+      "name": "PET_RUNTIME_DATA_FILE"
+    },
+    {
+      "present": false,
+      "name": "ELECTRON_RENDERER_URL"
+    }
+  ],
+  "expectedSourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+  "arguments": [
+    "--remote-debugging-port=57218"
+  ],
+  "automaticRetry": false,
+  "markerAbsent": true,
+  "pid": 17108,
+  "sha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+  "executable": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-e875feb\\Lingjing-0.1.8-portable-x64.exe",
+  "at": "2026-10-25T13:35:39.9537706Z",
+  "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a",
+  "shell": {
+    "dotnet": "10.0.11",
+    "ps": "7.6.5"
+  }
+}

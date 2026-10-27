@@ -1,0 +1,484 @@
+{
+  "at": "2026-10-25T14:42:23.214Z",
+  "wrapperPid": 16100,
+  "mainPid": 11672,
+  "windowId": 8589428,
+  "payloadRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nsxCEAA.tmp/app",
+  "source": "e875febf3430be341191a639668d43e7f09826dc",
+  "scenario": null,
+  "user": {
+    "id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+    "subjectId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+    "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+    "provider": "runtime",
+    "account": "uat_1025_a_9e486a",
+    "username": "云端验收甲",
+    "revision": 0,
+    "createdAt": "2026-10-25T10:05:01.804833+00:00",
+    "updatedAt": "2026-10-25T14:40:06.365Z",
+    "dataMode": "live",
+    "authKind": "supabase",
+    "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe"
+  },
+  "desktop": {
+    "alwaysOnTop": true,
+    "clickThrough": true,
+    "launchAtLogin": false,
+    "closeToTray": true,
+    "companionLimit": 3,
+    "interactionSounds": true,
+    "volume": 70,
+    "hideInFullscreen": true,
+    "animationsEnabled": true
+  },
+  "originalDesktop": {
+    "alwaysOnTop": true,
+    "clickThrough": true,
+    "launchAtLogin": false,
+    "closeToTray": true,
+    "companionLimit": 3,
+    "interactionSounds": true,
+    "volume": 70,
+    "hideInFullscreen": true,
+    "animationsEnabled": true
+  },
+  "desktopExactRestored": true,
+  "sync": {
+    "ok": true,
+    "data": {
+      "configured": true,
+      "cloudRevision": 6,
+      "lastVerifiedAt": "2026-10-25T14:42:10.948Z",
+      "lastError": null,
+      "pending": 0,
+      "conflicts": 0,
+      "localChanged": false,
+      "unverifiedLocal": 0,
+      "privacyRedactions": 0,
+      "running": false,
+      "observedCloudRevision": 6,
+      "lastCloudCheckedAt": "2026-10-25T14:42:10.935Z",
+      "remoteChanged": false
+    }
+  },
+  "requestRows": [
+    {
+      "actionId": "e8156c9e-4b1d-421a-a326-9860f203d402",
+      "status": "committed",
+      "requestHash": "9ffcc3ec0ff98336f27bd6ca0aa53aabe1548afd645eefadbc11bc0450bb3777"
+    }
+  ],
+  "items": [
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "item_id": "seed:berry",
+      "quantity": 2
+    },
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "item_id": "seed:carrot",
+      "quantity": 1
+    },
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "item_id": "seed:rice",
+      "quantity": 2
+    },
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "item_id": "seed:tomato",
+      "quantity": 2
+    }
+  ],
+  "plots": [
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "plot_id": "plot-1",
+      "crop_type": "carrot",
+      "planted_at": 1792938859056,
+      "matures_at": 1792939459056,
+      "yield_quantity": 3,
+      "revision": 1
+    },
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "plot_id": "plot-2",
+      "crop_type": null,
+      "planted_at": null,
+      "matures_at": null,
+      "yield_quantity": 0,
+      "revision": 0
+    },
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "plot_id": "plot-3",
+      "crop_type": null,
+      "planted_at": null,
+      "matures_at": null,
+      "yield_quantity": 0,
+      "revision": 0
+    },
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "plot_id": "plot-4",
+      "crop_type": null,
+      "planted_at": null,
+      "matures_at": null,
+      "yield_quantity": 0,
+      "revision": 0
+    },
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "plot_id": "plot-5",
+      "crop_type": null,
+      "planted_at": null,
+      "matures_at": null,
+      "yield_quantity": 0,
+      "revision": 0
+    },
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "plot_id": "plot-6",
+      "crop_type": null,
+      "planted_at": null,
+      "matures_at": null,
+      "yield_quantity": 0,
+      "revision": 0
+    }
+  ],
+  "proxy": {
+    "host": "jbvrdmrkwpznbrvteive.supabase.co",
+    "mode": "stopped",
+    "accepted": 66,
+    "rejected": 16,
+    "upBytes": 386987,
+    "downBytes": 738910,
+    "closedByControl": 2,
+    "active": 0,
+    "maxBlockedMs": 300000,
+    "blockedUntil": null,
+    "statusWriteFailures": 0,
+    "events": [
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      }
+    ]
+  }
+}

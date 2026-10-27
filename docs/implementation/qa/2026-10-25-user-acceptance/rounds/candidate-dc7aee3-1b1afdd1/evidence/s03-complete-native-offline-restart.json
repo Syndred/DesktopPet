@@ -1,0 +1,142 @@
+{
+  "at": "2026-10-25T19:37:04.695Z",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+  "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe",
+  "actionId": "b913c10c-7b1d-45a5-9e8e-e2bd058f5550",
+  "operation": "harvest",
+  "target": [
+    "plot-1"
+  ],
+  "seed": {
+    "mainPid": 4364,
+    "wrapperPid": 25052,
+    "sfxRoot": "nsd7622",
+    "pendingRawSha256": "99c906f89b7f22b837f8283cf1463827d297d205aff6793608ea212fb709ca86"
+  },
+  "resume": {
+    "mainPid": 3640,
+    "wrapperPid": 13896,
+    "sfxRoot": "nsx360E",
+    "checks": {
+      "at": "2026-10-25T19:26:31.452Z",
+      "mainPid": 3640,
+      "wrapperPid": 13896,
+      "mainWindowId": 11407708,
+      "seedRoot": "nsd7622",
+      "resumeRoot": "nsx360E",
+      "appInfoUser": null,
+      "pendingActionId": "b913c10c-7b1d-45a5-9e8e-e2bd058f5550",
+      "pendingRawExact": true,
+      "journalLogicalExact": true,
+      "journalRequestExact": true,
+      "journalWireExact": true,
+      "lsExact": true,
+      "idbExact": true,
+      "proxyPid": 25336,
+      "proxyPort": 59084,
+      "proxyMode": "deny",
+      "environmentProvenance": "explicit-child-launch-configuration-not-main-environment-readback",
+      "mainEnvironmentReadbackVerified": false
+    }
+  },
+  "originalLogicalHash": "8b286f1d575a52b14b74b87cb3f90c9a45062b224daed3179ea0235e8fed201b",
+  "originalRequestHash": "8b286f1d575a52b14b74b87cb3f90c9a45062b224daed3179ea0235e8fed201b",
+  "originalWireRawSha256": "0fae9e520726d55c04c8bcfd9db8d736a2fc27f64d3702fb37e89623e19aa81a",
+  "networkControl": {
+    "ownedProxyPid": 25336,
+    "port": 59084,
+    "allowSequence": 0,
+    "denySequence": 1,
+    "explicitRestoreAllowSequence": 2,
+    "stopSequence": 3,
+    "defaultFailOpen": false,
+    "systemProxyChanged": false,
+    "parentEnvironmentChanged": false,
+    "normalNativeReadProvedRoute": {
+      "at": "2026-10-25T19:20:01.960Z",
+      "before": {
+        "accepted": 7,
+        "upBytes": 35559,
+        "downBytes": 68431
+      },
+      "after": {
+        "accepted": 10,
+        "upBytes": 60719,
+        "downBytes": 122390,
+        "mode": "allow",
+        "active": 0
+      },
+      "trigger": "native left navigation garden overview only; no health probe or injected business mutation",
+      "acceptedIncreased": true,
+      "upIncreased": true,
+      "downIncreased": true,
+      "mainPid": 4364
+    }
+  },
+  "environmentProvenance": "explicit-child-launch-configuration-not-main-environment-readback",
+  "mainEnvironmentReadbackVerified": false,
+  "actualNativeFlow": {
+    "newHarvestClicksBeforeRestart": 1,
+    "originalRetryClicksAfterRestart": 1,
+    "noNewReplacementAction": true,
+    "offlineAuthUserNullObserved": true,
+    "originalOwnerReauthenticatedViaNormalUI": true
+  },
+  "rootIndependentPgReadback": {
+    "beforeRows": 0,
+    "afterExactActionRows": 1,
+    "requestHash": "8b286f1d575a52b14b74b87cb3f90c9a45062b224daed3179ea0235e8fed201b",
+    "accountRevisionBefore": 14,
+    "accountRevisionAfter": 15,
+    "gardenRevisionBefore": 6,
+    "gardenRevisionAfter": 7,
+    "harvestEventsForAction": 1,
+    "carrotDelta": 3,
+    "carrotBalance": 3,
+    "otherFivePlotsExact": true,
+    "fourSeedsExact": true,
+    "gardenRewardReceiptRows": 0,
+    "note": "Harvest uses operation receipt plus garden_events and inventory delta; no fabricated garden_reward_receipts row"
+  },
+  "afterOriginalRetryChecks": {
+    "ownerSame": true,
+    "pendingCleared": true,
+    "sameLogicalHash": true,
+    "sameRequestHash": true,
+    "sameWireBytes": true,
+    "otherFourPlotsExact": true,
+    "petsExact": true,
+    "lsExact": true,
+    "idbExact": true
+  },
+  "ordinaryFinalReopen": {
+    "mainPid": 13892,
+    "wrapperPid": 23112,
+    "mainWindowId": 3016904,
+    "sfxRoot": "nsmD7AB",
+    "proxy": false,
+    "checks": {
+      "sourceExact": true,
+      "ownerSame": true,
+      "noScenario": true,
+      "allSettingsRestored": true,
+      "petsExact": true,
+      "plotsExact": true,
+      "itemsExact": true,
+      "pendingNull": true,
+      "lsExact": true,
+      "idbExact": true,
+      "originalJournalCommitted": true,
+      "originalWireExact": true
+    }
+  },
+  "status": "passed",
+  "references": [
+    "s03-seed-real-pending-summary.json",
+    "s03-resume-original-pending-exact-summary.json",
+    "s03-original-retry-confirmed-readback.json",
+    "s03-final-ordinary-reopen-and-restored-settings.json"
+  ]
+}

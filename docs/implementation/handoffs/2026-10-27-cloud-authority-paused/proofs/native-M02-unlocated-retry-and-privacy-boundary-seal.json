@@ -1,0 +1,33 @@
+{
+  "at": "2026-10-26T22:57:38.649Z",
+  "caseId": "M02",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "appLocationAllowedBefore": false,
+  "appLocationAllowedAfter": false,
+  "settingsUnchanged": true,
+  "nativeRetryClickedOnce": true,
+  "nativeResult": [
+    "应用内定位尚未开启，或当前不在可定位的探索页面。请检查设置中的位置隐私选项。"
+  ],
+  "nearbyCount": 0,
+  "realLocationClaimed": false,
+  "osSettingsModified": false,
+  "modeChangedToDemo": false,
+  "preservedTables": [
+    "companion_pets",
+    "garden_items",
+    "garden_plots",
+    "garden_territory_records",
+    "garden_garrisons",
+    "conversation_messages",
+    "conversation_credentials"
+  ],
+  "qualification": "Actual unlocated normal cloud profile; no OS permission was granted or changed, and no synthetic coordinate substituted. Real map pan/zoom and territory selection remain unverified.",
+  "evidence": [
+    "native-M02-original-B2-app-location-disabled-before-retry.png",
+    "native-M02-original-B2-location-retry-rejected-without-permission-change.png",
+    "cloudB2-m02-before-location-retry.json",
+    "cloudB2-m02-after-location-retry-denied.json",
+    "native-G01-original-B2-territory-unlocated-initial-state.png"
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "at": "2026-10-25T18:45:13.333Z",
+  "onlyThisRunNewFireClear": true,
+  "fireMessages": [],
+  "newPersonasMemories": {
+    "at": "2026-10-25T18:45:13.335Z",
+    "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+    "selectedPetId": "pet-8853a238-8730-4970-8e39-885a1f1da97d",
+    "pets": [
+      {
+        "petId": "pet-8d67a86f-8053-46fe-93e2-df62ca116a45",
+        "profile": {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "pet_id": "pet-8d67a86f-8053-46fe-93e2-df62ca116a45",
+          "persona": "【DC7合成·木宠甲/8d67】喜欢松果，回答简短。",
+          "reply_style": "natural",
+          "memory_enabled": 1,
+          "pause_while_chatting": 1,
+          "use_override": 0,
+          "revision": 1,
+          "updated_at": 1792953202580
+        },
+        "memories": [
+          {
+            "id": "d8034bb2-8090-4e15-a86b-1a650a0d1c43",
+            "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+            "pet_id": "pet-8d67a86f-8053-46fe-93e2-df62ca116a45",
+            "content": "【DC7合成木宠甲/8d67】甲实例记住松果。",
+            "revision": 1,
+            "created_at": 1792953316735,
+            "updated_at": 1792953316735
+          }
+        ],
+        "messageCount": 0
+      },
+      {
+        "petId": "pet-e9f2413c-f9c3-4e9e-a625-935b4da87ee4",
+        "profile": {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "pet_id": "pet-e9f2413c-f9c3-4e9e-a625-935b4da87ee4",
+          "persona": "【DC7合成·木宠乙/e9f2】喜欢竹叶，回答温柔。",
+          "reply_style": "natural",
+          "memory_enabled": 1,
+          "pause_while_chatting": 1,
+          "use_override": 0,
+          "revision": 1,
+          "updated_at": 1792953331948
+        },
+        "memories": [
+          {
+            "id": "9e0d1471-f1f8-46bb-9b1c-e5c82f675283",
+            "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+            "pet_id": "pet-e9f2413c-f9c3-4e9e-a625-935b4da87ee4",
+            "content": "【DC7合成木宠乙/e9f2】乙实例记住竹叶。",
+            "revision": 1,
+            "created_at": 1792953341404,
+            "updated_at": 1792953341404
+          }
+        ],
+        "messageCount": 0
+      },
+      {
+        "petId": "pet-8853a238-8730-4970-8e39-885a1f1da97d",
+        "profile": {
+          "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "pet_id": "pet-8853a238-8730-4970-8e39-885a1f1da97d",
+          "persona": "",
+          "reply_style": "natural",
+          "memory_enabled": 1,
+          "pause_while_chatting": 1,
+          "use_override": 1,
+          "revision": 1,
+          "updated_at": 1792951608604
+        },
+        "memories": [],
+        "messageCount": 0
+      }
+    ]
+  },
+  "originalFoxHashes": [
+    {
+      "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+      "tables": {
+        "conversation_messages": {
+          "count": 4,
+          "sha256": "ad8d453eb72e9788a137b4522063ad9f1fe6bb2d2a0d746e1bf37397bab523f2",
+          "exact": false
+        },
+        "conversation_memories": {
+          "count": 1,
+          "sha256": "2143b043090983d77eaa831257c314a834dda337a31b5d48febf819e50e54cbd",
+          "exact": true
+        },
+        "conversation_profiles": {
+          "count": 1,
+          "sha256": "2f6e7f0770e21e4e5eee48891c7df45594e65143b698fb6c1dd9390b7ac39033",
+          "exact": true
+        }
+      }
+    },
+    {
+      "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+      "tables": {
+        "conversation_messages": {
+          "count": 4,
+          "sha256": "55619a1b530d077e5bfc64b29fef5c1e718123f3b28e26f63bce9b77d3621f7d",
+          "exact": false
+        },
+        "conversation_memories": {
+          "count": 1,
+          "sha256": "1112124d5ebd28a052a154095f74d12a5d8e57b4d9623c86c30b2fc44d92f120",
+          "exact": true
+        },
+        "conversation_profiles": {
+          "count": 1,
+          "sha256": "02206bf1986365a1f63892769014922b0185194a574e769c2e0e3f5db57ba76d",
+          "exact": true
+        }
+      }
+    }
+  ],
+  "settings": {
+    "ok": true,
+    "data": {
+      "document": {
+        "desktop": {
+          "alwaysOnTop": true,
+          "clickThrough": true,
+          "launchAtLogin": false,
+          "closeToTray": true,
+          "companionLimit": 3,
+          "interactionSounds": true,
+          "volume": 70,
+          "hideInFullscreen": true,
+          "animationsEnabled": true
+        },
+        "notifications": {
+          "enabled": true,
+          "companions": true,
+          "battles": true,
+          "garden": true,
+          "quietEnabled": true,
+          "quietStart": "22:00",
+          "quietEnd": "08:00"
+        },
+        "privacy": {
+          "locationAllowed": false,
+          "locationOnlyWhileExploring": true,
+          "emotionStatistics": false
+        },
+        "sync": {
+          "enabled": false
+        }
+      },
+      "revision": 17,
+      "updatedAt": "2026-10-25T18:43:45.847Z",
+      "host": {
+        "startup": false,
+        "fullscreenMonitor": true,
+        "fullscreenMonitorReady": true,
+        "foregroundFullscreen": false,
+        "fullscreenSource": null,
+        "companionWindows": 1,
+        "clickThroughWindows": [
+          3
+        ],
+        "windows": [
+          {
+            "id": 3,
+            "alwaysOnTop": true,
+            "visible": true
+          }
+        ],
+        "locationAllowed": false,
+        "emotionStatistics": false,
+        "closeToTrayConnected": true,
+        "companionLimitConnected": true
+      }
+    }
+  },
+  "originalFoxCanonicalProtection": [
+    {
+      "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+      "tables": {
+        "conversation_messages": {
+          "count": 4,
+          "expectedSha256": "a25df5ecf143138a214e387547797fb69bc525b8f46a9de0dad8d394be12e55b",
+          "originalExactBytesHashMatched": true,
+          "currentCanonicalRowSetSha256": "997f771278277b14dad00e73b29c28aad8bea9023814fcf1169ede91bac5d2b4"
+        },
+        "conversation_memories": {
+          "count": 1,
+          "expectedSha256": "2143b043090983d77eaa831257c314a834dda337a31b5d48febf819e50e54cbd",
+          "originalExactBytesHashMatched": true,
+          "currentCanonicalRowSetSha256": "1e05886ab21555525fca8ca9a39585c79cab1186e34eb4e69f3908fe52ed248a"
+        },
+        "conversation_profiles": {
+          "count": 1,
+          "expectedSha256": "2f6e7f0770e21e4e5eee48891c7df45594e65143b698fb6c1dd9390b7ac39033",
+          "originalExactBytesHashMatched": true,
+          "currentCanonicalRowSetSha256": "291dd83d7e7d2d02e0da0c82bdb29f7f07ed212b1411705d84a1c87f70b93e0a"
+        }
+      }
+    },
+    {
+      "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+      "tables": {
+        "conversation_messages": {
+          "count": 4,
+          "expectedSha256": "cbb0923bf63751429e6504aafcbae3f862e393f90b515315073c97b998c68331",
+          "originalExactBytesHashMatched": true,
+          "currentCanonicalRowSetSha256": "12e3dec3ed5b263b5c8606f2548f81a1bf4a047a09bebfc7441ab3e9e277b468"
+        },
+        "conversation_memories": {
+          "count": 1,
+          "expectedSha256": "1112124d5ebd28a052a154095f74d12a5d8e57b4d9623c86c30b2fc44d92f120",
+          "originalExactBytesHashMatched": true,
+          "currentCanonicalRowSetSha256": "d9b2d0274c54cb7dab4c4d667890005784f037e83172b61193b2b57823b89301"
+        },
+        "conversation_profiles": {
+          "count": 1,
+          "expectedSha256": "02206bf1986365a1f63892769014922b0185194a574e769c2e0e3f5db57ba76d",
+          "originalExactBytesHashMatched": true,
+          "currentCanonicalRowSetSha256": "35bae73a86608f4846c9685fdf48228562dfe9b0e398183901497edae0711b4e"
+        }
+      }
+    }
+  ],
+  "hashOrderDiagnostic": "Earlier raw rowid summary differed solely by unspecified order; original reference hash matched exact same rows after reordering (at most 4 rows). No old credential values read."
+}

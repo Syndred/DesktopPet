@@ -1,0 +1,64 @@
+{
+  "at": "2026-10-26T23:45:56.944Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "owner": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+  "pet": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+  "actualConcurrentAttempts": 1,
+  "simulatedCas": false,
+  "networkOverride": false,
+  "newIdentity": false,
+  "baseRevisionBoth": 2,
+  "nativeSavePair": {
+    "a1Before": "2026-10-26T23:42:03.917Z",
+    "a1After": "2026-10-26T23:42:03.967Z",
+    "a2After": "2026-10-26T23:42:04.002Z"
+  },
+  "nativePairIntervalMs": 85,
+  "actions": {
+    "firstConflict": "record:c4c950e0-bc4b-4150-87da-db7942c3d154",
+    "secondVerified": "record:cafd4277-82bc-4d22-9e0f-b348d7724dd2",
+    "normalLocalResolution": "record:7c292606-8e94-44e5-87af-a894215adb11",
+    "normalOriginalPersonaRestoration": "record:bdf7bc26-c462-4aa4-9fc8-1426fb8f1a1a"
+  },
+  "revisionProgress": [
+    2,
+    3,
+    4,
+    5
+  ],
+  "originalPersonaRestoredBoth": true,
+  "conflictHistoryRetained": true,
+  "preservation": [
+    {
+      "alias": "cloudA",
+      "protectedTables": 25,
+      "pending": 0,
+      "conflicts": 0
+    },
+    {
+      "alias": "cloudASecond",
+      "protectedTables": 25,
+      "pending": 0,
+      "conflicts": 0
+    }
+  ],
+  "qualification": "The initial coordinate call failed with unknown screenshotId before either write; independent before/after records and outboxes are identical. The actual pair used two visibly focused native Save buttons and adjacent Return activations, without screenshot or delay between them. Saving-in-progress screenshots are not claimed as completion. No second concurrent pair was needed. Known unrelated GLOBAL_SERIAL_SCOPE_REVOKED remains separately classified.",
+  "evidence": [
+    "native-S04-both-drafts-before-first-save-personal-readonly.json",
+    "native-S04-after-cua-first-pair-routing-error-personal-readonly.json",
+    "native-S04-first-keyboard-save-pair-times.json",
+    "native-S04-after-first-native-keyboard-save-pair-personal-readonly.json",
+    "native-S04-after-normal-adopt-original-local-personal-readonly.json",
+    "native-S04-final-converged-original-persona-personal-readonly.json",
+    "native-S04-original-A1-concurrent-persona-draft.png",
+    "native-S04-original-A2-concurrent-persona-draft.png",
+    "native-S04-A1-save-button-keyboard-focus.png",
+    "native-S04-A2-save-button-keyboard-focus.png",
+    "native-S04-original-A1-concurrent-conflict-resolution-dialog.png",
+    "native-S04-original-A1-conflict-resolved-retained-history.png",
+    "native-S04-original-A2-after-local-conflict-resolution.png",
+    "native-S04-original-A1-original-persona-restoration-converged.png",
+    "cloudA-s04-final-converged-and-preserved.json",
+    "cloudASecond-s04-final-converged-and-preserved.json"
+  ]
+}

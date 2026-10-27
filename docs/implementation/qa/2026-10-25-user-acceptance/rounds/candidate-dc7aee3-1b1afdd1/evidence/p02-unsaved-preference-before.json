@@ -1,0 +1,123 @@
+{
+  "at": "2026-10-25T22:09:21.832Z",
+  "settings": {
+    "ok": true,
+    "data": {
+      "document": {
+        "desktop": {
+          "alwaysOnTop": true,
+          "clickThrough": true,
+          "launchAtLogin": false,
+          "closeToTray": true,
+          "companionLimit": 3,
+          "interactionSounds": true,
+          "volume": 70,
+          "hideInFullscreen": true,
+          "animationsEnabled": true
+        },
+        "notifications": {
+          "enabled": true,
+          "companions": true,
+          "battles": true,
+          "garden": true,
+          "quietEnabled": true,
+          "quietStart": "22:00",
+          "quietEnd": "08:00"
+        },
+        "privacy": {
+          "locationAllowed": false,
+          "locationOnlyWhileExploring": true,
+          "emotionStatistics": false
+        },
+        "sync": {
+          "enabled": true
+        }
+      },
+      "revision": 12,
+      "updatedAt": "2026-10-25T22:07:18.122Z",
+      "host": {
+        "startup": false,
+        "fullscreenMonitor": true,
+        "fullscreenMonitorReady": true,
+        "foregroundFullscreen": false,
+        "fullscreenSource": null,
+        "companionWindows": 1,
+        "clickThroughWindows": [
+          3
+        ],
+        "windows": [
+          {
+            "id": 3,
+            "alwaysOnTop": true,
+            "visible": true
+          }
+        ],
+        "locationAllowed": false,
+        "emotionStatistics": false,
+        "closeToTrayConnected": true,
+        "companionLimitConnected": true
+      }
+    }
+  },
+  "ui": {
+    "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nse19BD.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/settings",
+    "text": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n云端验收甲\n桌面与行为\n通知与隐私\nAI 对话\n角色资源\n账号与同步\n按你的节奏，安静陪伴。\n桌面表现\n始终置顶\n透明区域鼠标穿透\n透明区域不拦截鼠标，伙伴本体仍可互动。\n开机启动\n关闭窗口后留在托盘\n关闭主界面时，伙伴仍会在桌面与系统托盘继续陪伴。\n桌面陪伴数量\n同时在桌面显示的伙伴数量（1–4）。\n3\n1\n2\n3\n4\n互动音效\n音量\n70%\n全屏应用时暂时隐藏\n启用安静时段\n开始时间\n至\n结束时间\n桌面预览\n穿透预览\n\n已出场 1 / 3\n\n位置与隐私\n允许附近探索使用位置\n用于附近探索，仍需系统授权。\n位置仅在探索时更新\n情绪统计\n仅记录互动统计，不读取聊天内容。\n恢复默认设置\n界面动效\n保存设置",
+    "checkboxes": [
+      {
+        "checked": true,
+        "name": "",
+        "id": ""
+      },
+      {
+        "checked": true,
+        "name": "",
+        "id": ""
+      },
+      {
+        "checked": false,
+        "name": "",
+        "id": ""
+      },
+      {
+        "checked": true,
+        "name": "",
+        "id": ""
+      },
+      {
+        "checked": true,
+        "name": "",
+        "id": ""
+      },
+      {
+        "checked": true,
+        "name": "",
+        "id": ""
+      },
+      {
+        "checked": true,
+        "name": "",
+        "id": ""
+      },
+      {
+        "checked": false,
+        "name": "",
+        "id": ""
+      },
+      {
+        "checked": true,
+        "name": "",
+        "id": ""
+      },
+      {
+        "checked": false,
+        "name": "",
+        "id": ""
+      },
+      {
+        "checked": true,
+        "name": "",
+        "id": ""
+      }
+    ]
+  }
+}

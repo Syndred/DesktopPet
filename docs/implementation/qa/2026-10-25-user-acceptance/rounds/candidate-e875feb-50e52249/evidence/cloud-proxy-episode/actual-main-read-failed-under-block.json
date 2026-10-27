@@ -1,0 +1,464 @@
+{
+  "at": "2026-10-25T14:25:48.169Z",
+  "startedAt": "2026-10-25T14:25:48.155Z",
+  "cloudMainPid": 9444,
+  "cloudWrapperPid": 32968,
+  "command": "accounts.cloudPreview readonly actual HTTPS",
+  "result": {
+    "ok": false,
+    "code": "CLOUD_UNAVAILABLE",
+    "message": "云端连接失败，待同步记录已保留。"
+  },
+  "beforeProxy": {
+    "host": "jbvrdmrkwpznbrvteive.supabase.co",
+    "mode": "deny",
+    "accepted": 25,
+    "rejected": 0,
+    "upBytes": 149403,
+    "downBytes": 278411,
+    "closedByControl": 2,
+    "active": 0,
+    "maxBlockedMs": 300000,
+    "blockedUntil": 1792938634672,
+    "statusWriteFailures": 0,
+    "events": [
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "mode:allow"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "mode:deny"
+      }
+    ]
+  },
+  "afterProxy": {
+    "host": "jbvrdmrkwpznbrvteive.supabase.co",
+    "mode": "deny",
+    "accepted": 25,
+    "rejected": 1,
+    "upBytes": 149403,
+    "downBytes": 278411,
+    "closedByControl": 2,
+    "active": 0,
+    "maxBlockedMs": 300000,
+    "blockedUntil": 1792938634672,
+    "statusWriteFailures": 0,
+    "events": [
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "mode:allow"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "mode:deny"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-rejected"
+      }
+    ]
+  },
+  "rendererOfflineNotUsed": true,
+  "globalFetchNotPatched": true
+}

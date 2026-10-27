@@ -1,0 +1,84 @@
+{
+  "at": "2026-10-25T21:18:09.073Z",
+  "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+  "nativeProof": "c02-c10-live-two-fox-and-double-click.json",
+  "rootProof": "artifacts/qa/user-acceptance/global-serial/root-c11-exact-native-pair-adoption-receipts-20261026.json",
+  "checks": [
+    {
+      "owner": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "inputId": "43a06fc3-b63f-4b7e-a807-0ed441753bde",
+      "checks": {
+        "oneImmutableReceipt": true,
+        "originalCanonicalAction": true,
+        "rawLocalActionMatchesIndependentCloud": true,
+        "receiptMatchesNativeMainReadback": true,
+        "oldPetsPreserved": true,
+        "oneNewPet": true
+      }
+    },
+    {
+      "owner": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "inputId": "9b87c36b-e8aa-401d-b80f-81c878761a2e",
+      "checks": {
+        "oneImmutableReceipt": true,
+        "originalCanonicalAction": true,
+        "rawLocalActionMatchesIndependentCloud": true,
+        "receiptMatchesNativeMainReadback": true,
+        "oldPetsPreserved": true,
+        "oneNewPet": true
+      }
+    }
+  ],
+  "counter": {
+    "last": "5",
+    "rows": [
+      {
+        "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+        "spawnId": null,
+        "namespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+        "templateId": "animal-white-fox",
+        "globalSerial": "1",
+        "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+      },
+      {
+        "petId": "pet-5a242002-0e1d-41ad-a0d9-ec3ec97659ee",
+        "spawnId": "wild-2d-v2-f3621dbe19-498040-51998-202333",
+        "namespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+        "templateId": "animal-white-fox",
+        "globalSerial": "2",
+        "ownerAccountId": "account:0521a3e5-adf4-4b0b-9c0b-0923a7b63fe9"
+      },
+      {
+        "petId": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "spawnId": null,
+        "namespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+        "templateId": "animal-white-fox",
+        "globalSerial": "3",
+        "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+      },
+      {
+        "petId": "pet-97410828-fdf6-4253-8246-4c5f389d8fba",
+        "spawnId": null,
+        "namespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+        "templateId": "animal-white-fox",
+        "globalSerial": "4",
+        "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+      },
+      {
+        "petId": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+        "spawnId": null,
+        "namespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+        "templateId": "animal-white-fox",
+        "globalSerial": "5",
+        "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+      }
+    ]
+  },
+  "allChecks": true,
+  "evidence": [
+    "c02-b2-two-independent-fox-three-and-five-native.jpg",
+    "c10-b2-reentered-same-new-fox-detail-stable-native.jpg",
+    "c11-a-new-fox-four-success-native.jpg",
+    "c11-b1-normal-navigation-pulls-b2-created-instance.json"
+  ]
+}

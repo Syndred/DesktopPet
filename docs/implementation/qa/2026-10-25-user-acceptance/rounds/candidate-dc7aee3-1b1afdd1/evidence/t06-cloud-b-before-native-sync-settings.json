@@ -1,0 +1,118 @@
+{
+  "at": "2026-10-25T18:57:15.455Z",
+  "settings": {
+    "ok": true,
+    "data": {
+      "document": {
+        "desktop": {
+          "alwaysOnTop": true,
+          "clickThrough": true,
+          "launchAtLogin": false,
+          "closeToTray": true,
+          "companionLimit": 3,
+          "interactionSounds": true,
+          "volume": 70,
+          "hideInFullscreen": true,
+          "animationsEnabled": true
+        },
+        "notifications": {
+          "enabled": true,
+          "companions": true,
+          "battles": true,
+          "garden": true,
+          "quietEnabled": true,
+          "quietStart": "22:00",
+          "quietEnd": "08:00"
+        },
+        "privacy": {
+          "locationAllowed": false,
+          "locationOnlyWhileExploring": true,
+          "emotionStatistics": false
+        },
+        "sync": {
+          "enabled": false
+        }
+      },
+      "revision": 0,
+      "updatedAt": "2026-10-25T16:12:34.170Z",
+      "host": {
+        "startup": false,
+        "fullscreenMonitor": true,
+        "fullscreenMonitorReady": true,
+        "foregroundFullscreen": false,
+        "fullscreenSource": null,
+        "companionWindows": 1,
+        "clickThroughWindows": [
+          2
+        ],
+        "windows": [
+          {
+            "id": 2,
+            "alwaysOnTop": true,
+            "visible": true
+          }
+        ],
+        "locationAllowed": false,
+        "emotionStatistics": false,
+        "closeToTrayConnected": true,
+        "companionLimitConnected": true
+      }
+    }
+  },
+  "keyPresence": {
+    "at": "2026-10-25T18:57:15.455Z",
+    "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "selected": {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "selected_pet_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75"
+    },
+    "connections": [
+      {
+        "scope": "account",
+        "scope_id": "",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "model": "模拟验收-DC7-c696c6c03ca2",
+        "key_present": 1,
+        "revision": 1,
+        "updated_at": 1792954441513
+      },
+      {
+        "scope": "pet",
+        "scope_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "model": "模拟验收-DC7-c696c6c03ca2",
+        "key_present": 1,
+        "revision": 1,
+        "updated_at": 1792954551379
+      }
+    ],
+    "credentials": [
+      {
+        "scope": "account",
+        "scope_id": "",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "key_present": 1
+      },
+      {
+        "scope": "pet",
+        "scope_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "key_present": 1
+      }
+    ],
+    "profiles": [
+      {
+        "pet_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "use_override": 1,
+        "revision": 1
+      }
+    ],
+    "messageCount": {
+      "count": 0
+    }
+  }
+}

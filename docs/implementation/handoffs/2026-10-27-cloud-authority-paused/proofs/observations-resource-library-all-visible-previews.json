@@ -1,0 +1,47 @@
+{
+  "at": "2026-10-26T21:26:56.625Z",
+  "stage": "resource-library-all-visible-previews",
+  "caseUpdates": [
+    {
+      "id": "R01",
+      "status": "passed",
+      "executionState": "executed_current_candidate",
+      "actual": "实际资源库逐一搜索并选择八项目角色及3份导入资源，图片/名称/属性可见，无占位替代；同名项目和导入项可区分，空结果提示及清除筛选恢复正确。场景/动作选择及两套独立校准可达；临时帧率草稿全部正常放弃，原资源偏好及petId/桌面/库存/战报hash未变，未应用资源到错误伙伴。连续帧推进另列R02未通过判定。",
+      "evidence": [
+        "native-resource-library-all-previews-and-draft-cleanup-seal.json",
+        "native-R01-resource-search-empty-state.png",
+        "native-R01-resource-search-cleared-all.png",
+        "native-R01-builtin-Yuwan-preview.png",
+        "native-R01-builtin-Xiaolan-preview.png",
+        "native-R01-builtin-Fantuan-preview.png",
+        "native-R01-builtin-Hatcat-preview.png",
+        "native-R01-builtin-Qingya-preview.png",
+        "native-R01-builtin-Shiba-preview.png",
+        "native-R01-builtin-Xiaohu-preview.png",
+        "native-R01-builtin-Yantuan-preview.png",
+        "native-R06-cloud-restored-Qingya-calibration-visible.png",
+        "native-R06-cloud-restored-Yantuan-calibration-visible.png",
+        "native-R03-positive-original-fantuan-import-result.png"
+      ]
+    },
+    {
+      "id": "C05",
+      "status": "passed",
+      "executionState": "executed_current_candidate",
+      "actual": "逐个打开鱼丸/小蓝/饭团/礼帽喵/青芽/焰柴/小狐/岩团的实际项目角色预览，固定名与五行标签正确、真实完整角色资源可见，无占位图替代。此项为八角色可见性，连续动画全套推进仍单列R02。",
+      "evidence": [
+        "native-resource-library-all-previews-and-draft-cleanup-seal.json",
+        "native-R01-builtin-Yuwan-preview.png",
+        "native-R01-builtin-Xiaolan-preview.png",
+        "native-R01-builtin-Fantuan-preview.png",
+        "native-R01-builtin-Hatcat-preview.png",
+        "native-R01-builtin-Qingya-preview.png",
+        "native-R01-builtin-Shiba-preview.png",
+        "native-R01-builtin-Xiaohu-preview.png",
+        "native-R01-builtin-Yantuan-preview.png"
+      ]
+    }
+  ],
+  "newIssues": [],
+  "issueUpdates": []
+}

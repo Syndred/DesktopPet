@@ -1,0 +1,304 @@
+{
+  "at": "2026-10-26T22:18:26.602045+00:00",
+  "head": {
+    "items": [
+      {
+        "item_id": "seed:carrot",
+        "quantity": 2,
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+      },
+      {
+        "item_id": "seed:tomato",
+        "quantity": 4,
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+      },
+      {
+        "item_id": "seed:berry",
+        "quantity": 2,
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+      },
+      {
+        "item_id": "seed:rice",
+        "quantity": 1,
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+      },
+      {
+        "item_id": "carrot",
+        "quantity": 6,
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+      },
+      {
+        "item_id": "rice",
+        "quantity": 1,
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+      },
+      {
+        "item_id": "cooked_rice",
+        "quantity": 1,
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+      }
+    ],
+    "actionId": "garden:5c8c7b3c090844f9f539191f47ef0555462494d27cdac023eaeb589f7aa6d333",
+    "checksum": "44d58f7da542cadc4d1859471e06c1eaa112a1a09ae4932a79ad8628ee4bb6b4",
+    "revision": 34,
+    "gardenAccounts": [
+      {
+        "revision": 9,
+        "initialized_at": 1792964940381,
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+      }
+    ]
+  },
+  "actionId": "690fbe8d-c0d1-4a19-9853-f52a8c036136",
+  "readOnly": true,
+  "receipts": [
+    {
+      "actionId": "garden:5c8c7b3c090844f9f539191f47ef0555462494d27cdac023eaeb589f7aa6d333",
+      "checksum": "44d58f7da542cadc4d1859471e06c1eaa112a1a09ae4932a79ad8628ee4bb6b4",
+      "revision": 34,
+      "createdAt": "2026-10-26T22:15:20.76154+00:00",
+      "inputHash": "168f13cf15a393deaab84748cad040549b179806161aedcc7e9cb351e7cbaae1",
+      "baseRevision": 33
+    }
+  ],
+  "afterItems": [
+    {
+      "item_id": "seed:carrot",
+      "quantity": 2,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "item_id": "seed:tomato",
+      "quantity": 4,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "item_id": "seed:berry",
+      "quantity": 2,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "item_id": "seed:rice",
+      "quantity": 1,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "item_id": "carrot",
+      "quantity": 6,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "item_id": "rice",
+      "quantity": 1,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "item_id": "cooked_rice",
+      "quantity": 1,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    }
+  ],
+  "afterPlots": [
+    {
+      "plot_id": "plot-1",
+      "revision": 4,
+      "crop_type": null,
+      "matures_at": null,
+      "planted_at": null,
+      "yield_quantity": 0,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "plot_id": "plot-2",
+      "revision": 2,
+      "crop_type": null,
+      "matures_at": null,
+      "planted_at": null,
+      "yield_quantity": 0,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "plot_id": "plot-3",
+      "revision": 0,
+      "crop_type": null,
+      "matures_at": null,
+      "planted_at": null,
+      "yield_quantity": 0,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "plot_id": "plot-4",
+      "revision": 0,
+      "crop_type": null,
+      "matures_at": null,
+      "planted_at": null,
+      "yield_quantity": 0,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "plot_id": "plot-5",
+      "revision": 0,
+      "crop_type": null,
+      "matures_at": null,
+      "planted_at": null,
+      "yield_quantity": 0,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "plot_id": "plot-6",
+      "revision": 0,
+      "crop_type": null,
+      "matures_at": null,
+      "planted_at": null,
+      "yield_quantity": 0,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    }
+  ],
+  "operations": [
+    {
+      "actionId": "690fbe8d-c0d1-4a19-9853-f52a8c036136",
+      "response": {
+        "result": {
+          "ok": true,
+          "data": {
+            "harvested": [
+              {
+                "itemId": "carrot",
+                "plotId": "plot-1",
+                "quantity": 3
+              }
+            ]
+          },
+          "replayed": false,
+          "revision": 9
+        },
+        "actionId": "690fbe8d-c0d1-4a19-9853-f52a8c036136",
+        "replayed": false,
+        "requestHash": "5c8c7b3c090844f9f539191f47ef0555462494d27cdac023eaeb589f7aa6d333",
+        "accountRevision": 34,
+        "authorityReceiptId": "garden:5c8c7b3c090844f9f539191f47ef0555462494d27cdac023eaeb589f7aa6d333"
+      },
+      "createdAt": "2026-10-26T22:15:20.76154+00:00",
+      "requestHash": "5c8c7b3c090844f9f539191f47ef0555462494d27cdac023eaeb589f7aa6d333",
+      "accountRevision": 34
+    }
+  ],
+  "beforeItems": [
+    {
+      "item_id": "seed:carrot",
+      "quantity": 2,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "item_id": "seed:tomato",
+      "quantity": 4,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "item_id": "seed:berry",
+      "quantity": 2,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "item_id": "seed:rice",
+      "quantity": 1,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "item_id": "carrot",
+      "quantity": 3,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "item_id": "rice",
+      "quantity": 1,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "item_id": "cooked_rice",
+      "quantity": 1,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    }
+  ],
+  "beforePlots": [
+    {
+      "plot_id": "plot-1",
+      "revision": 3,
+      "crop_type": "carrot",
+      "matures_at": 1793052458472,
+      "planted_at": 1793051858472,
+      "yield_quantity": 3,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "plot_id": "plot-2",
+      "revision": 2,
+      "crop_type": null,
+      "matures_at": null,
+      "planted_at": null,
+      "yield_quantity": 0,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "plot_id": "plot-3",
+      "revision": 0,
+      "crop_type": null,
+      "matures_at": null,
+      "planted_at": null,
+      "yield_quantity": 0,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "plot_id": "plot-4",
+      "revision": 0,
+      "crop_type": null,
+      "matures_at": null,
+      "planted_at": null,
+      "yield_quantity": 0,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "plot_id": "plot-5",
+      "revision": 0,
+      "crop_type": null,
+      "matures_at": null,
+      "planted_at": null,
+      "yield_quantity": 0,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "plot_id": "plot-6",
+      "revision": 0,
+      "crop_type": null,
+      "matures_at": null,
+      "planted_at": null,
+      "yield_quantity": 0,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    }
+  ],
+  "requestHash": "5c8c7b3c090844f9f539191f47ef0555462494d27cdac023eaeb589f7aa6d333",
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "afterGardenAccounts": [
+    {
+      "revision": 9,
+      "initialized_at": 1792964940381,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    }
+  ],
+  "beforeGardenAccounts": [
+    {
+      "revision": 8,
+      "initialized_at": 1792964940381,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    }
+  ],
+  "unrelatedEnvelopeFieldsEqual": true,
+  "newGardenOperationsSinceBeforeHarvest": [
+    {
+      "actionId": "690fbe8d-c0d1-4a19-9853-f52a8c036136",
+      "createdAt": "2026-10-26T22:15:20.76154+00:00",
+      "requestHash": "5c8c7b3c090844f9f539191f47ef0555462494d27cdac023eaeb589f7aa6d333",
+      "accountRevision": 34
+    }
+  ]
+}

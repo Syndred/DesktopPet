@@ -1,0 +1,32 @@
+{
+  "at": "2026-10-26T22:20:07.930Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "plantedOn": "original-B2",
+  "harvestedOn": "original-B1",
+  "plotId": "plot-1",
+  "maturesAtUtc": "2026-10-26T22:07:38.472Z",
+  "harvestAction": "690fbe8d-c0d1-4a19-9853-f52a8c036136",
+  "requestHash": "5c8c7b3c090844f9f539191f47ef0555462494d27cdac023eaeb589f7aa6d333",
+  "nativeInput": "One ordinary rapid double-click on mature plot-1 harvest button",
+  "newRequests": 1,
+  "gardenRevision": 9,
+  "accountRevision": 34,
+  "carrotBefore": 3,
+  "carrotAfter": 6,
+  "otherInventoryUnchanged": true,
+  "originalPetsUnchanged": true,
+  "clockChanged": false,
+  "replantIssued": false,
+  "evidence": [
+    "native-G05-G06-original-B2-carrot-growing-and-harvest-disabled.png",
+    "native-G05-single-plant-and-natural-growth-seal.json",
+    "native-G06-original-B1-actual-natural-maturity-before-harvest.png",
+    "native-G06-original-B1-rapid-double-harvest-result.png",
+    "native-G06-original-B1-harvest-committed-empty-plot.png",
+    "native-G06-original-B1-backpack-carrot-six.png",
+    "cloudB1-before-g06-real-mature-harvest.json",
+    "cloudB1-after-g06-rapid-double-harvest-first-readback.json",
+    "root-G06-natural-harvest-cloud-independent.json"
+  ]
+}

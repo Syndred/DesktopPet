@@ -1,0 +1,85 @@
+{
+  "at": "2026-10-26T22:11:25.144Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "backup": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\native-ui-exports\\B2-v2-dummy-key-present-4e6.lingjing.json",
+    "bytes": 8707500,
+    "sha256": "f85fd4aa3fb65879ee4279a6c5e062da8e41613249befa3bc66286463cea600b",
+    "createdAt": "2026-10-26T22:06:33.633Z",
+    "headerChecksumValid": true,
+    "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "identityMatchesOriginal": true,
+    "provenance": {
+      "mode": "live"
+    }
+  },
+  "keyStillPresentDuringIndependentInspection": {
+    "credentialRows": 1,
+    "connectionHasKey": 1
+  },
+  "userCredentialValuesRead": false,
+  "generatedDummyValueIncludedInReport": false,
+  "scanUsesDerivedSyntheticMarker": true,
+  "credentialFieldsAbsent": true,
+  "generatedDummyAbsentFromRawAndDecodedBytes": true,
+  "jsonDocuments": 97,
+  "decodedBuffers": 43,
+  "decodedBytes": 6393733,
+  "originalPublicConnections": [
+    {
+      "scope": "account",
+      "scopeId": "",
+      "revision": 2,
+      "preserved": true
+    },
+    {
+      "scope": "pet",
+      "scopeId": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+      "revision": 2,
+      "preserved": true
+    }
+  ],
+  "originalPreservationModuleUnchanged": true,
+  "resourceCount": 3,
+  "allResourceFiles": [
+    {
+      "resourceId": "3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6",
+      "key": "character.json",
+      "sha256": "d69de3c105f41da3c35abcdb3b2a04a17c29e810e6c1947b7565c9d95f2760ac",
+      "bytes": 9453
+    },
+    {
+      "resourceId": "3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6",
+      "key": "sprites.png",
+      "sha256": "4b1eb6d06ba4c737a3cd2a10f567a2ff2af80bfec3be260e7df304af4bdb80f8",
+      "bytes": 2119970
+    },
+    {
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "key": "character.json",
+      "sha256": "e2e976b69f7ea9049527251e458517e048c05aa5ab4cd1e13ffa47c38821708e",
+      "bytes": 9406
+    },
+    {
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "key": "sprites.png",
+      "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693",
+      "bytes": 1802491
+    },
+    {
+      "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+      "key": "character.json",
+      "sha256": "cd3b4c9faefa8afc71bd108932bcc7878bc4929d28131d27005e37a5fa1bbfdd",
+      "bytes": 9402
+    },
+    {
+      "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+      "key": "sprites.png",
+      "sha256": "f03bc1b8cd1c20c5ef6d466d20db9fb7f9584b7739f21414d22fc2c91c01d886",
+      "bytes": 2441235
+    }
+  ],
+  "originalResourceRowsImportsPreferencesPreserved": true,
+  "preRequestMessageCount": 0,
+  "qualification": "Actual ordinary UI export while this new synthetic key remained in local secure storage. Reads inspect original bytes and nested JSON/base64 only. No user credential values or encrypted secret fields are returned, and no product-profile restore/import/write occurs."
+}

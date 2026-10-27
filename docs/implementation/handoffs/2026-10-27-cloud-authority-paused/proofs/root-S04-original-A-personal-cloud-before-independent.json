@@ -1,0 +1,111 @@
+{
+  "readOnly": true,
+  "credentialValuesRead": false,
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "at": "2026-10-26T23:32:11.840482+00:00",
+  "owner": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+  "gameHead": {
+    "actionId": "companions:cb324902-6345-410c-a380-ca60ed2d68c7",
+    "checksum": "69da297d7286094682f78a800cb993d373b6f7fd0d863044abb5a8cc69ecc1c5",
+    "revision": 43
+  },
+  "messageCount": 0,
+  "personalRecords": [
+    {
+      "deleted": true,
+      "document": {
+        "id": "466a65e0-80a2-4825-bc87-d7e2432eb870",
+        "pet_id": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+        "content": "4e6甲狐记忆：蓝色积木放在左边。",
+        "revision": 3,
+        "created_at": 1793041966804,
+        "updated_at": 1793047109169,
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+      },
+      "owner_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "position": 13,
+      "revision": 4,
+      "record_id": "[\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"466a65e0-80a2-4825-bc87-d7e2432eb870\"]",
+      "collection": "conversation_memories",
+      "updated_at": "2026-10-26T20:40:18.207848+00:00",
+      "change_sequence": 34
+    },
+    {
+      "deleted": false,
+      "document": {
+        "id": "6d8df6f1-43db-4e14-8371-8b8dd5d78580",
+        "pet_id": "pet-97410828-fdf6-4253-8246-4c5f389d8fba",
+        "content": "4e6乙狐记忆：橙色风筝放在右边。",
+        "revision": 1,
+        "created_at": 1793042400922,
+        "updated_at": 1793042400922,
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+      },
+      "owner_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "position": 23,
+      "revision": 1,
+      "record_id": "[\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"6d8df6f1-43db-4e14-8371-8b8dd5d78580\"]",
+      "collection": "conversation_memories",
+      "updated_at": "2026-10-26T19:20:02.86542+00:00",
+      "change_sequence": 24
+    },
+    {
+      "deleted": false,
+      "document": {
+        "selected_pet_id": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+      },
+      "owner_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "position": 9,
+      "revision": 5,
+      "record_id": "[\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"]",
+      "collection": "conversation_preferences",
+      "updated_at": "2026-10-26T20:43:51.715569+00:00",
+      "change_sequence": 40
+    },
+    {
+      "deleted": false,
+      "document": {
+        "pet_id": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+        "persona": "4e6并发甲新稿：绿色积木。",
+        "revision": 2,
+        "updated_at": 1793042045303,
+        "reply_style": "natural",
+        "use_override": 0,
+        "memory_enabled": 1,
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "pause_while_chatting": 1
+      },
+      "owner_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "position": 11,
+      "revision": 2,
+      "record_id": "[\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\"]",
+      "collection": "conversation_profiles",
+      "updated_at": "2026-10-26T19:14:07.326621+00:00",
+      "change_sequence": 17
+    },
+    {
+      "deleted": false,
+      "document": {
+        "pet_id": "pet-97410828-fdf6-4253-8246-4c5f389d8fba",
+        "persona": "4e6验收乙狐：喜欢橙色风筝。",
+        "revision": 1,
+        "updated_at": 1793042358574,
+        "reply_style": "natural",
+        "use_override": 0,
+        "memory_enabled": 1,
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "pause_while_chatting": 1
+      },
+      "owner_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "position": 21,
+      "revision": 1,
+      "record_id": "[\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\"]",
+      "collection": "conversation_profiles",
+      "updated_at": "2026-10-26T19:19:20.935399+00:00",
+      "change_sequence": 22
+    }
+  ],
+  "privateActionCount": 13,
+  "latestPrivateActionAt": "2026-10-26T20:43:51.715569+00:00"
+}

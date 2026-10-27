@@ -1,0 +1,92 @@
+{
+  "at": "2026-10-25T16:39:46.660Z",
+  "desktopPages": [
+    {
+      "url": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nst40C.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+      "dom": {
+        "at": "2026-10-25T16:39:46.658Z",
+        "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nst40C.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+        "text": "",
+        "buttons": [
+          {
+            "text": "",
+            "aria": "摸摸小狐",
+            "title": "",
+            "disabled": false
+          },
+          {
+            "text": "",
+            "aria": "收回小狐",
+            "title": "",
+            "disabled": false
+          }
+        ],
+        "canvases": [
+          {
+            "width": 268,
+            "height": 314,
+            "rect": {
+              "x": 9,
+              "y": 25,
+              "w": 214.40000915527344,
+              "h": 251.1999969482422
+            },
+            "data": {},
+            "parentData": {
+              "renderer": "pixi-spritesheet",
+              "frame": "0",
+              "frameTexture": "3",
+              "textureFrame": "51,72,224,222",
+              "contentBounds": "{\"x\":43.05621917808219,\"y\":81.35386301369861,\"width\":128.28756164383563,\"height\":127.14213698630137,\"canvasWidth\":214.4,\"canvasHeight\":251.2}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-xiaohu-v1/sprites.png:05ef8e37a7519f64d6e9ccdfeb73292269dedf10ea836e285d997d265cb9e4da",
+              "textureSource": "2"
+            }
+          }
+        ],
+        "stage": [
+          {
+            "tag": "MAIN",
+            "data": {
+              "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+              "resourceId": "builtin:lingjing-xiaohu-v1",
+              "element": "water"
+            }
+          },
+          {
+            "tag": "DIV",
+            "data": {
+              "resourceId": "builtin:lingjing-xiaohu-v1",
+              "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+              "action": "idle",
+              "clip": "idle",
+              "fallback": "false",
+              "status": "ready"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "rawPets": [
+    {
+      "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+      "pet_id": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+      "template_id": "animal-white-fox",
+      "revision": 55,
+      "data_json": "{\"ownerAccountId\":\"qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f\",\"petId\":\"pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"EA1F0CF6\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":564,\"y\":33,\"displayId\":\"2568730015\"}},\"revision\":55,\"createdAt\":\"2026-10-25T10:31:12.593Z\",\"updatedAt\":\"2026-10-25T14:01:40.940Z\"}",
+      "created_at": "2026-10-25T10:31:12.593Z",
+      "updated_at": "2026-10-25T14:01:40.940Z"
+    },
+    {
+      "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+      "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+      "template_id": "animal-white-fox",
+      "revision": 3,
+      "data_json": "{\"ownerAccountId\":\"qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f\",\"petId\":\"pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"0CB7DABE\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":20,\"mood\":63,\"satiety\":80,\"affinity\":4,\"winsTotal\":1,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":320,\"y\":520,\"displayId\":null}},\"revision\":3,\"createdAt\":\"2026-10-25T10:31:36.582Z\",\"updatedAt\":\"2026-10-25T12:27:55.786Z\"}",
+      "created_at": "2026-10-25T10:31:36.582Z",
+      "updated_at": "2026-10-25T12:27:55.786Z"
+    }
+  ],
+  "clickThroughTemporaryFalse": true,
+  "windowOwnerMap": "native-window-owner-map-before-desktop-context.json"
+}

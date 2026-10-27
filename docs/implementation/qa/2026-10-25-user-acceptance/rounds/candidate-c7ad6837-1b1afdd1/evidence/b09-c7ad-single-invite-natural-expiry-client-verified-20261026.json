@@ -1,0 +1,131 @@
+{
+  "at": "2026-10-26T12:54:38.115Z",
+  "status": "actual_natural_deadline_ui_expired_with_independently_reconciled_preservation_verified",
+  "approvalRef": "root-c7ad-b09-natural-expiry-1222",
+  "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+  "exeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+  "actual": {
+    "actionId": "fdaa963e-441e-4b9f-8cad-a50d218011f5",
+    "inviteId": "61dedf29-011e-4816-81a1-e8e8df91f4c7",
+    "host": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+    "guest": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "createdAt": "2026-10-26T12:28:21.751706+00:00",
+    "expiresAt": "2026-10-26T12:33:21.751706+00:00",
+    "serverMicrosecondPrecisionRetained": true,
+    "durationMs": 300000,
+    "roomId": null,
+    "resultOk": true,
+    "resentFlag": false,
+    "boundPetId": "pet-97410828-fdf6-4253-8246-4c5f389d8fba"
+  },
+  "nativeBudget": {
+    "sendClicks": 1,
+    "manualOriginalRequestRetry": 0,
+    "resend": 0,
+    "newRoom": 0,
+    "battleCommands": 0,
+    "accept": 0,
+    "cancel": 0,
+    "normalRefreshAfterDeadline": {
+      "a": 1,
+      "b": 1
+    },
+    "helper": 0
+  },
+  "timeline": {
+    "initialImmediateUi": "发送结果待确认; original request preserved",
+    "initialErrorCode": "not captured; no timeout or HTTP status inferred",
+    "laterUiConvergedWithoutManualRecovery": {
+      "at": "2026-10-26T12:29:31.346Z",
+      "text": "等待回应; 有效至10/26 20:33"
+    },
+    "afterDeadline": {
+      "a": "2026-10-26T12:37:36.228Z",
+      "b": "2026-10-26T12:37:36.246Z"
+    },
+    "filenameCaveat": "only-send-first-unknown-result UI/flow label refers to the initial stage; the actual saved12:29:31 public projection already shows pending and a successful original receipt."
+  },
+  "naturalExpiry": {
+    "aUiExpired": true,
+    "bUiExpired": true,
+    "bAcceptControlAbsent": true,
+    "lateAcceptAttempted": false,
+    "http409Observed": false,
+    "bBeforeDeadlinePendingUiObserved": false,
+    "beforeDeadlineLimitation": "B first navigation captures were loading. First loaded B observation was after the real server deadline, so no pre-expiry B acceptance state is claimed.",
+    "noClockGpsRngOrRowsChanged": true
+  },
+  "retention": {
+    "hostBusinessDigestTablesExact": [
+      "account_settings",
+      "companion_pets",
+      "companion_accounts",
+      "companion_actions",
+      "battle_sessions",
+      "battle_reports_v2",
+      "battle_reward_receipts",
+      "garden_items",
+      "garden_ledger",
+      "garden_reward_receipts",
+      "conversation_messages"
+    ],
+    "guestUnaffectedTablesRawExact": [
+      "account_settings",
+      "companion_pets",
+      "companion_accounts",
+      "companion_actions",
+      "garden_ledger",
+      "conversation_messages",
+      "battle_transport_journal"
+    ],
+    "guestOldFriendRowsRawExact": true,
+    "guestOnlyOldTrainingAddedToCache": true,
+    "guestGardenClosedAtExistingAuthority23": true,
+    "guestCurrentBusinessMatchesIndependentExistingHead23": true,
+    "original21AJournalRowsRawExact": true,
+    "only2NewOriginalInviteTransportRows": true,
+    "originalInviteReceiptRawPendingRetained": true,
+    "oldRoomAndReportsNotRecreated": true,
+    "settingsAndBattleChoicesRawExact": true,
+    "aHead": 32,
+    "bLocalHead": 8,
+    "allProfileIdsRetained": true
+  },
+  "correction": {
+    "originalImmutableCacheAssumptionFailedBeforeWritingSuccess": true,
+    "originalFailedVerifierRetained": "native09-b09-natural-expiry-client-proof-original-failed-before-b2-cache-attribution-20261026.cjs",
+    "wrongNewFriendClaimWithdrawn": true,
+    "exactBackupBaselineObservation": "b09-b2-exact-backup-baseline-observation-and-correction-20261026.json",
+    "backupTransportJournalIsExportProjection": "Its projected rows are not claimed identical to all SQL columns; the direct before/current journal digests are exact and independently verified."
+  },
+  "rootReceipt": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/b09-original-invite-exact-cloud-receipt.json",
+  "rootSqlQualification": "Root confirms list_invites is a read-only expired DTO projection; raw pending and original dates may remain unchanged after the deadline. Do not alter raw status or infer a failure from that.",
+  "rootIndependent": {
+    "cacheReview": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/b09-b2-authority-cache-and-old-backup-reconciliation-independent.json",
+    "cacheAssertions": 21,
+    "finalReview": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/b09-natural-expiry-and-legacy-preservation-independent.json",
+    "finalAssertions": 13,
+    "original12LegacyRowsAndNullableExpiryRawExact": true,
+    "exactlyOneNewInviteAndCommand": true,
+    "noNewCloudRoomOrSettlement": true
+  },
+  "screenshots": [
+    {
+      "file": "b09-cloudA-sole-invite-send-first-native-result-20261026.png",
+      "savedAt": "2026-10-26T12:28:22.704Z"
+    },
+    {
+      "file": "b09-cloudB2-first-loaded-observation-after-real-deadline-20261026.png",
+      "savedAt": "2026-10-26T12:34:41.244Z"
+    },
+    {
+      "file": "b09-cloudB2-expired-after-one-normal-refresh-20261026.png",
+      "savedAt": "2026-10-26T12:35:45.825Z"
+    },
+    {
+      "file": "b09-cloudA-expired-after-one-normal-refresh-20261026.png",
+      "savedAt": "2026-10-26T12:36:44.095Z"
+    }
+  ],
+  "ledgerNotChanged": true
+}

@@ -1,0 +1,53 @@
+{
+  "at": "2026-10-26T09:15:55.260Z",
+  "candidate": "c7ad6837e1569dafd942528f375062debf714c2b",
+  "exeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+  "asarSha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355",
+  "scenario": "original path-bound local simulated QA",
+  "nativeIssuesVerified": [
+    "QA-018",
+    "QA-019",
+    "QA-020",
+    "QA-026"
+  ],
+  "staleRejectedWithoutBusinessWrite": true,
+  "oldAbandonedRowsExact": true,
+  "naturalBattle": {
+    "id": "battle-283743f8-eeec-426c-940f-0982b5f8b028",
+    "rounds": 17,
+    "winner": "enemy",
+    "playerHp": 0,
+    "enemyHp": 64
+  },
+  "confirmedLoss": {
+    "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+    "battle_id": "battle-283743f8-eeec-426c-940f-0982b5f8b028",
+    "territory_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:territory:5205:20245",
+    "territory_revision": 1,
+    "settled": 1,
+    "result_json": "{\"territoryId\":\"qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:territory:5205:20245\",\"won\":false,\"ownerAccountId\":null,\"territoryRevision\":2,\"captureMultiplier\":1}"
+  },
+  "quota": 2,
+  "ownership": null,
+  "territoryRevision": 2,
+  "garrisonCount": 0,
+  "normalParticipationReward": {
+    "xp": 5,
+    "winsIncrease": 0,
+    "seeds": "seed:berry",
+    "quantity": 2,
+    "exactVisibleText": "17 回合\n经验 +5\n莓果种子 +2",
+    "duplicate": false
+  },
+  "uiOnlyRetestsAll28DigestsUnchanged": true,
+  "inventoryCounts": {
+    "all": 9,
+    "food": 4,
+    "tools": 5,
+    "decoration": 0
+  },
+  "filenameCaveat": "qa018...tools-empty filename was an intended label before seeing outcome; actual screenshot shows5 tool/seed entries. Result and counts explicitly follow observed screenshot.",
+  "noNewCombatForRewardCheck": true,
+  "remainingNativeTerritoryPositive": "G02/G03 and C08 guard remain pending because natural loss used final daily attempt, not because QA026 still blocks",
+  "rootIndependent": "artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/c7ad-qa026-natural-loss-independent.json"
+}

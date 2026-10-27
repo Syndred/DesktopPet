@@ -1,0 +1,60 @@
+{
+  "at": "2026-10-26T21:05:25.830Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "actualNativeUi": true,
+  "readOnly": true,
+  "credentialValuesRead": false,
+  "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\profiles\\cloud-b-resource-fresh-4e6",
+  "deviceId": "aafbd28c-326a-4b6f-8497-abcb6b60ead7",
+  "loginPreference": {
+    "rememberAccount": false,
+    "keepSignedIn": false,
+    "sessionPersistence": "memory"
+  },
+  "initialSessionNull": true,
+  "invalidSubmissionsCreatedNoLocalIdentityOrSession": true,
+  "sourceOfRestoredFiles": "automatic-cloud-hydration-before-resource-page-or-backup-import",
+  "restoredFiles": [
+    {
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "key": "character.json",
+      "newManagedPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\profiles\\cloud-b-resource-fresh-4e6\\character-resources\\restore-dea3b913-c419-41ff-84bb-8dcfd92df0db\\character.json",
+      "bytes": 9406,
+      "sha256": "e2e976b69f7ea9049527251e458517e048c05aa5ab4cd1e13ffa47c38821708e"
+    },
+    {
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "key": "sprites.png",
+      "newManagedPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\profiles\\cloud-b-resource-fresh-4e6\\character-resources\\restore-dea3b913-c419-41ff-84bb-8dcfd92df0db\\sprites.png",
+      "bytes": 1802491,
+      "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693"
+    },
+    {
+      "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+      "key": "character.json",
+      "newManagedPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\profiles\\cloud-b-resource-fresh-4e6\\character-resources\\restore-1514bc13-d4bd-400a-a468-b54d60671382\\character.json",
+      "bytes": 9402,
+      "sha256": "cd3b4c9faefa8afc71bd108932bcc7878bc4929d28131d27005e37a5fa1bbfdd"
+    },
+    {
+      "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+      "key": "sprites.png",
+      "newManagedPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\profiles\\cloud-b-resource-fresh-4e6\\character-resources\\restore-1514bc13-d4bd-400a-a468-b54d60671382\\sprites.png",
+      "bytes": 2441235,
+      "sha256": "f03bc1b8cd1c20c5ef6d466d20db9fb7f9584b7739f21414d22fc2c91c01d886"
+    }
+  ],
+  "preferencesAndImportsMatchedOriginalOwnerIds": true,
+  "coldLoginVersion": {
+    "publicAppInfo": "0.1.8",
+    "visibleLoginVersion": false
+  },
+  "globalNumberReadback": {
+    "error": "GLOBAL_SERIAL_SCOPE_REVOKED",
+    "ui": "待同步",
+    "newProfileHadNoOldSerialCache": true
+  },
+  "limitations": [
+    "R06 proves automatic cloud file/preferences restore. It does not prove that a later backup import wrote initially absent resource files."
+  ]
+}

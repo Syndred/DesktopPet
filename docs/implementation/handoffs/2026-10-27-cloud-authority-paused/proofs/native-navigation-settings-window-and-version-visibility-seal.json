@@ -1,0 +1,121 @@
+{
+  "at": "2026-10-26T21:54:33.095Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "actualVersion": "0.1.8",
+  "settingsGroups": 5,
+  "settingsWritten": false,
+  "backupImportDialogCancelledWithoutFileSelection": true,
+  "backupReceiptsUnchanged": true,
+  "originalPreservedConflictRowsUnchanged": true,
+  "versionVisibleEntryFound": false,
+  "aboutLogUpdateEntryFound": false,
+  "sourceExcerpts": [
+    {
+      "file": "apps/pc-app/ui/src/features/accounts/account.tsx",
+      "sha256": "6f26e57fd3d45d98d1d06f323ce9a194bdca871d7342964dc5386e323d50fa8c",
+      "startLine": 14,
+      "endLine": 28,
+      "excerpt": "\nexport function SettingsNavigation() {\n  const path = usePath();\n  return <nav className=\"ac-settings-nav\" aria-label=\"设置分类\">\n    <a href=\"#/settings\" aria-current={path === \"/settings\" ? \"page\" : undefined}><Monitor size={19} /><span>桌面与行为</span></a><a href=\"#/settings/privacy\" aria-current={path === \"/settings/privacy\" ? \"page\" : undefined}><Bell size={19} /><span>通知与隐私</span></a>\n    <a href=\"#/settings/ai\" aria-current={path === \"/settings/ai\" ? \"page\" : undefined}><MessageCircle size={19} /><span>AI 对话</span></a><a href=\"#/resources\" aria-current={path === \"/resources\" ? \"page\" : undefined}><Box size={19} /><span>角色资源</span></a>\n    <a href=\"#/account\" aria-current={path === \"/account\" ? \"page\" : undefined}><RefreshCw size={19} /><span>账号与云端</span></a>\n  </nav>;\n}\nfunction dateText(value?: string | null) { return value ? new Date(value).toLocaleString(\"zh-CN\") : \"尚未完成\"; }\n\nfunction AccountDetails({ user, session, refreshSession }: { user: AccountUser; session: AccountsSession; refreshSession: () => Promise<void> }) {\n  const authoritative = user.authKind === 'supabase';\n  const [label, setLabel] = useState(user.username);\n  const [profilePassword, setProfilePassword] = useState(\"\");"
+    },
+    {
+      "file": "apps/pc-app/runtime/main/index.ts",
+      "sha256": "5d5caf1004ece5f9156f1c114e53263b56c50366c6fed463d7090c808a6921fe",
+      "startLine": 133,
+      "endLine": 176,
+      "excerpt": "    window?.show(); window?.focus();\n  },\n  emit\n};\n\nif (profileInstance.primary) app.whenReady().then(async () => {\n  Menu.setApplicationMenu(null);\n  session.defaultSession.setPermissionRequestHandler((_contents, _permission, callback) => callback(false));\n  const userData = app.getPath('userData');\n  const legacyDataFile = process.env.PET_RUNTIME_DATA_FILE || join(userData, 'pet-runtime-data.json');\n  // Refuse invalid QA configuration before reading, backing up or opening saves.\n  const qaScenario = readQaScenario({ userData });\n  const accountContext = qaScenario ? require(join(runtime, 'features/accounts/qa-scenario.cjs')).resolveQaScenario({ userData, legacyDataFile,\n    foundationScenario: qaScenario, productionDirectories: ['Lingjing', 'qingpet-desktop-runtime', 'qingpet-lord-3d'].map(name => join(app.getPath('appData'), name)) }) : null;\n  const db = openDatabase(join(userData, 'lingjing.sqlite'));\n  const sourceKey = `legacy-source:${legacyDataFile}`;\n  const sourceMarker = db.prepare('SELECT value FROM lingjing_meta WHERE key=?').get(sourceKey);\n  const legacyDataExisted = sourceMarker ? sourceMarker.value === 'existing' : existsSync(legacyDataFile);\n  if (!sourceMarker) db.prepare('INSERT INTO lingjing_meta(key,value) VALUES(?,?)').run(sourceKey, legacyDataExisted ? 'existing' : 'new');\n  backupLegacy(legacyDataFile);\n  const legacy = createRuntimeCompatibility({ userData, legacyDataFile });\n  compatibility = legacy;\n  services = createServices({ db, legacy, paths: { userData, assets: join(runtime, 'assets'), legacyDataFile, legacyDataExisted }, windows, safeStorage });\n  if (qaScenario) {\n    services.provide('qaProfile', Object.freeze({ ...qaScenario, accountContext }));\n    services.provide('qaScenario', Object.freeze({ ...qaScenario, requireIdentity() {\n      const identity = services.get('qaIdentity');\n      if (!identity) throw Object.assign(new Error('验收身份尚未就绪。'), { code: 'QA_IDENTITY_UNAVAILABLE' });\n      return identity.requireIdentity();\n    } }));\n  }\n  features = discoverFeatures(join(runtime, 'features'), services);\n  await require(join(runtime, 'core/builtin-art.cjs')).registerBuiltinArt(services);\n  if (services.get('backups') && services.get('companions')?.backupAdapter && !services.get('backups').adapters.has('companions')) services.get('backups').register(services.get('companions').backupAdapter);\n  if (services.get('backups') && services.get('resources')) services.get('backups').register(require(join(runtime, 'core/resource-backup.cjs')).createResourceBackupAdapter(services));\n  if (services.get('backups') && services.get('conversations')) services.get('backups').register(services.get('conversations').createBackupAdapter());\n  services.ipc.handle('app:info', () => ({ version: app.getVersion(), platform: process.platform, build,\n    runtime: { electron: process.versions.electron, node: process.versions.node, modules: process.versions.modules, napi: process.versions.napi, arch: process.arch,\n      tray: { active: Boolean(tray && !tray.isDestroyed()), ...(tray && !tray.isDestroyed() && process.platform === 'win32' ? { bounds: tray.getBounds() } : {}) } },\n    features: features.map(x => ({ id: x.id, commands: x.commands })), user: services.session.getCurrentUser(), ...(qaScenario ? { scenario: qaScenario.descriptor } : {}) }), { public: true });\n  ipcMain.handle('lingjing:invoke', async (event, request) => {\n    if (quitting) return { ok: false, code: 'APP_CLOSING', message: '应用正在关闭。' };\n    if (!trusted(event)) return { ok: false, code: 'UNTRUSTED_SENDER', message: '请求来源无效。' };\n    const desktopPetId = [...companionWindows].find(([, host]) => host.webContents === event.sender)?.[0];"
+    }
+  ],
+  "dimensions": [
+    {
+      "file": "native-N02-original-B2-keyboard-resize-minimum-account.png",
+      "width": 7864320,
+      "height": 4292542531
+    },
+    {
+      "file": "native-N02-original-B2-minimum-account-bottom-scroll.png",
+      "width": 7864320,
+      "height": 4292542531
+    },
+    {
+      "file": "native-N02-original-B2-minimum-open-backup-dialog-full-child.png",
+      "width": 7864320,
+      "height": 4292542531
+    },
+    {
+      "file": "native-N02-original-B2-maximized-account.png",
+      "width": 7864320,
+      "height": 4292542531
+    },
+    {
+      "file": "native-N02-original-B2-restored-minimum-account.png",
+      "width": 7864320,
+      "height": 4292542531
+    },
+    {
+      "file": "native-N02-original-B2-minimum-ai-top.png",
+      "width": 7864320,
+      "height": 4292542531
+    },
+    {
+      "file": "native-N02-original-B2-minimum-ai-bottom-scroll.png",
+      "width": 7864320,
+      "height": 4292542531
+    },
+    {
+      "file": "native-N02-original-B2-minimum-chat.png",
+      "width": 7864320,
+      "height": 4292542531
+    },
+    {
+      "file": "native-N02-original-B2-minimum-chat-outer-scroll.png",
+      "width": 7864320,
+      "height": 4292542531
+    },
+    {
+      "file": "native-N02-original-B2-minimum-resource-page.png",
+      "width": 7864320,
+      "height": 4292542531
+    },
+    {
+      "file": "native-N01-N02-original-B2-minimum-companions-return.png",
+      "width": 7864320,
+      "height": 4292542531
+    }
+  ],
+  "resizeMethod": {
+    "minimum": "Native Windows titlebar System Size command with ordinary direction keys",
+    "maximum": "Actual product maximize and restore buttons",
+    "mouseBorderResizeCompleted": false,
+    "limitation": "CUA bounds reject drag endpoints outside the current window; in-window border drags did not resize. This is recorded as an input-method limitation, not as a claimed product defect."
+  },
+  "artifactLabelCorrections": {
+    "native-P01-settings-ai-keyboard-opened.png": "Actually desktop group after focus reset; excluded from AI-group evidence.",
+    "native-N02-original-B2-minimum-preservation-dialog.png": "Actual product uses inline expanded preservation panel, not a modal.",
+    "native-N02-original-B2-mouse-resize-minimum-account.png": "Attempt did not resize; excluded from minimum-size proof.",
+    "native-N02-original-B2-mouse-shrink-supported-minimum.png": "Attempt did not resize; excluded from minimum-size proof."
+  },
+  "p1": [
+    "native-N01-P01-original-B2-settings-desktop.png",
+    "native-P01-settings-keyboard-group-focus.png",
+    "native-P01-settings-notifications-keyboard-opened.png",
+    "native-P01-settings-ai-actual-opened.png",
+    "native-P01-settings-ai-bottom-scroll.png",
+    "native-P01-original-B2-account-settings-top.png",
+    "native-P01-P08-original-B2-account-bottom-visible-entries.png",
+    "native-R06-original-B2-auto-restored-new-fantuan-preview.png"
+  ],
+  "n2": [
+    "native-N02-original-B2-keyboard-resize-minimum-account.png",
+    "native-N02-original-B2-minimum-account-bottom-scroll.png",
+    "native-N02-original-B2-minimum-open-backup-dialog-full-child.png",
+    "native-N02-original-B2-maximized-account.png",
+    "native-N02-original-B2-restored-minimum-account.png",
+    "native-N02-original-B2-minimum-ai-top.png",
+    "native-N02-original-B2-minimum-ai-bottom-scroll.png",
+    "native-N02-original-B2-minimum-chat.png",
+    "native-N02-original-B2-minimum-chat-outer-scroll.png",
+    "native-N02-original-B2-minimum-resource-page.png",
+    "native-N01-N02-original-B2-minimum-companions-return.png"
+  ]
+}

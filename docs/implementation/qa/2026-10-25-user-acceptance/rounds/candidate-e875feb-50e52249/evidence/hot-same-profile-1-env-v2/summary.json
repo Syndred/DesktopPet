@@ -1,0 +1,210 @@
+{
+  "shell": {
+    "powershell": "7.6.5",
+    "dotnet": "10.0.11",
+    "executable": "C:\\Users\\Administrator\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe"
+  },
+  "expectedSourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+  "executableAfter": {
+    "bytes": 169213223,
+    "sha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-e875feb\\Lingjing-0.1.8-portable-x64.exe"
+  },
+  "noProfilesOrPayloadsDeleted": true,
+  "markerRunId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+  "payloadRoots": [
+    {
+      "root": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsiA443.tmp\\app",
+      "firstFiles": [
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsiA443.tmp\\app\\Lingjing.exe",
+          "sha256": "12fee592f3bb57ae348fb0b5974e486f5a05c6b54e39b7fbb49f4be604643bd6",
+          "exists": true,
+          "bytes": 246846464
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsiA443.tmp\\app\\resources\\app.asar",
+          "exists": false
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsiA443.tmp\\app\\resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node",
+          "exists": false
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsiA443.tmp\\app\\resources\\lingjing-cloud-public.json",
+          "exists": false
+        }
+      ],
+      "observedMainPid": 19820,
+      "finalFiles": [
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsiA443.tmp\\app\\Lingjing.exe",
+          "sha256": "12fee592f3bb57ae348fb0b5974e486f5a05c6b54e39b7fbb49f4be604643bd6",
+          "exists": true,
+          "bytes": 246846464
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsiA443.tmp\\app\\resources\\app.asar",
+          "exists": false
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsiA443.tmp\\app\\resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node",
+          "exists": false
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsiA443.tmp\\app\\resources\\lingjing-cloud-public.json",
+          "exists": false
+        }
+      ],
+      "firstSeenAt": "2026-10-25T13:23:26.5109096Z"
+    },
+    {
+      "root": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsaAC1.tmp\\app",
+      "firstFiles": [
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsaAC1.tmp\\app\\Lingjing.exe",
+          "sha256": "12fee592f3bb57ae348fb0b5974e486f5a05c6b54e39b7fbb49f4be604643bd6",
+          "exists": true,
+          "bytes": 246846464
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsaAC1.tmp\\app\\resources\\app.asar",
+          "sha256": "993a2b91463223fd0c12e4c596459a6bde46d250baff9a2267c8fc2a66c8871d",
+          "exists": true,
+          "bytes": 267484870
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsaAC1.tmp\\app\\resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node",
+          "sha256": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a",
+          "exists": true,
+          "bytes": 1989632
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsaAC1.tmp\\app\\resources\\lingjing-cloud-public.json",
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+          "exists": true,
+          "bytes": 194
+        }
+      ],
+      "observedMainPid": 26956,
+      "finalFiles": [
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsaAC1.tmp\\app\\Lingjing.exe",
+          "sha256": "12fee592f3bb57ae348fb0b5974e486f5a05c6b54e39b7fbb49f4be604643bd6",
+          "exists": true,
+          "bytes": 246846464
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsaAC1.tmp\\app\\resources\\app.asar",
+          "sha256": "993a2b91463223fd0c12e4c596459a6bde46d250baff9a2267c8fc2a66c8871d",
+          "exists": true,
+          "bytes": 267484870
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsaAC1.tmp\\app\\resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node",
+          "sha256": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a",
+          "exists": true,
+          "bytes": 1989632
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsaAC1.tmp\\app\\resources\\lingjing-cloud-public.json",
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+          "exists": true,
+          "bytes": 194
+        }
+      ],
+      "firstSeenAt": "2026-10-25T13:23:15.1406881Z"
+    }
+  ],
+  "captureError": null,
+  "launchers": [
+    {
+      "issuedAt": "2026-10-25T13:23:15.1562768Z",
+      "startedAt": "2026-10-25T13:23:15.1774685Z",
+      "pid": 14932,
+      "exitCode": 0,
+      "exitCaptured": true,
+      "number": 1,
+      "exitAt": "2026-10-25T13:23:26.4341272Z"
+    }
+  ],
+  "processTraceEvents": 3,
+  "captureVersion": 2,
+  "sha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+  "criticalEnvironmentBefore": [
+    {
+      "valueIsNull": true,
+      "present": false,
+      "valueLength": null,
+      "name": "ELECTRON_RUN_AS_NODE",
+      "valueIsEmpty": false
+    },
+    {
+      "valueIsNull": true,
+      "present": false,
+      "valueLength": null,
+      "name": "NODE_OPTIONS",
+      "valueIsEmpty": false
+    },
+    {
+      "valueIsNull": true,
+      "present": false,
+      "valueLength": null,
+      "name": "PET_RUNTIME_DATA_FILE",
+      "valueIsEmpty": false
+    },
+    {
+      "valueIsNull": true,
+      "present": false,
+      "valueLength": null,
+      "name": "ELECTRON_RENDERER_URL",
+      "valueIsEmpty": false
+    }
+  ],
+  "startedAt": "2026-10-25T13:23:14.4843783Z",
+  "mode": "HotSameProfile",
+  "at": "2026-10-25T13:23:56.7014073Z",
+  "executable": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-e875feb\\Lingjing-0.1.8-portable-x64.exe",
+  "criticalEnvironmentAtLaunch": [
+    {
+      "valueIsNull": true,
+      "present": false,
+      "valueLength": null,
+      "name": "ELECTRON_RUN_AS_NODE",
+      "valueIsEmpty": false
+    },
+    {
+      "valueIsNull": true,
+      "present": false,
+      "valueLength": null,
+      "name": "NODE_OPTIONS",
+      "valueIsEmpty": false
+    },
+    {
+      "valueIsNull": true,
+      "present": false,
+      "valueLength": null,
+      "name": "PET_RUNTIME_DATA_FILE",
+      "valueIsEmpty": false
+    },
+    {
+      "valueIsNull": true,
+      "present": false,
+      "valueLength": null,
+      "name": "ELECTRON_RENDERER_URL",
+      "valueIsEmpty": false
+    }
+  ],
+  "launcherShellEnvironmentRestored": true,
+  "required09Evidence": "Native UI/window activation, app.info source/profile, first payload integrity, same-profile different actual payload roots, LS/IDB sentinel and ORIGINAL garden pending actionId/owner/command/payload + Node outbox independently read back.",
+  "noProcessesClosedOrKilled": true,
+  "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\6ff8e38f-9f2b-4872-8747-1fb00bd81655\\local-a",
+  "limitations": [
+    "Polling can miss short-lived paths; WMI event delivery must itself be checked. Missing events do not prove no process ran.",
+    "WMI TIME_CREATED is provider event-generation time, not exact process lifetime; StopTrace parent may be zero. Correlate PID with StartTrace and retained handle times.",
+    "The cold precondition checks this exact SFX path, not arbitrary renamed/copied executables. 09 controls the run inventory.",
+    "Expected source/profile are operator-supplied until09 independent app.info readback.",
+    "ProcessTrace exit status does not identify the underlying NSIS/Electron failure cause."
+  ],
+  "status": "capture-only-no-acceptance-verdict"
+}

@@ -1,0 +1,290 @@
+{
+  "at": "2026-10-26T23:10:22.557Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "readOnly": true,
+  "queryOnly": true,
+  "credentialValuesRead": false,
+  "caseId": "R05",
+  "issueId": "4E6-006",
+  "originalFaultConsumed": true,
+  "newFaultAuthorized": false,
+  "backup": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\native-ui-exports\\B2-R05-qingya-backup-origin-4e6.lingjing.json",
+    "bytes": 11136568,
+    "sha256": "a3e78b361260166059d5e434330b15d4b0073b7306a581edc5c4302bfda8c8f5",
+    "createdAt": "2026-10-26T22:50:23.027Z",
+    "headerValid": true,
+    "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "resources": 4,
+    "files": 8,
+    "allFileAndPackHashesVerified": true,
+    "fileAndWholePackHashesVerified": true
+  },
+  "actualRestore": {
+    "result": "failed-ENOENT-before-protection-snapshot-completed",
+    "screenshotIndependentlyViewed": "native-R05-original-B1-one-confirm-after-preserved-file-fault.png",
+    "sourceActuallyMissing": true,
+    "preservedOriginalSha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693",
+    "confirms": 1,
+    "backupOriginRecoveryProven": false
+  },
+  "historicalProtection": {
+    "beforeAt": "2026-10-26T22:51:14.240Z",
+    "afterAt": "2026-10-26T23:02:50.483Z",
+    "unchangedTableCount": 70,
+    "unchangedTables": [
+      "account_aliases",
+      "account_backup_receipts",
+      "account_cloud_links",
+      "account_identities",
+      "account_legacy_data",
+      "account_login_sessions",
+      "account_migration_sources",
+      "account_qa_profile",
+      "account_session_control",
+      "account_settings",
+      "account_sync_baselines",
+      "account_sync_checkpoints",
+      "account_sync_outbox",
+      "account_sync_sources",
+      "account_sync_state",
+      "battle_action_receipts",
+      "battle_reports_v2",
+      "battle_reward_receipts",
+      "battle_sessions",
+      "battle_transport_journal",
+      "companion_accounts",
+      "companion_actions",
+      "companion_capture_receipts",
+      "companion_device_actions",
+      "companion_device_desktop",
+      "companion_device_initialization",
+      "companion_identity_imports",
+      "companion_interactions",
+      "companion_legacy_archive",
+      "companion_pets",
+      "conversation_cloud_archives",
+      "conversation_cloud_conflicts",
+      "conversation_cloud_outbox",
+      "conversation_cloud_records",
+      "conversation_cloud_state",
+      "conversation_connections",
+      "conversation_credentials",
+      "conversation_legacy_imports",
+      "conversation_memories",
+      "conversation_messages",
+      "conversation_preferences",
+      "conversation_profiles",
+      "discovery_actions",
+      "discovery_captures",
+      "discovery_encounters",
+      "discovery_memory_tags",
+      "garden_accounts",
+      "garden_actions",
+      "garden_cloud_requests",
+      "garden_events",
+      "garden_garrisons",
+      "garden_identity_imports",
+      "garden_items",
+      "garden_ledger",
+      "garden_outbox",
+      "garden_plots",
+      "garden_reward_receipts",
+      "garden_territory_attempts",
+      "garden_territory_challenges",
+      "garden_territory_logs",
+      "garden_territory_records",
+      "lingjing_meta",
+      "lingjing_migrations",
+      "lingjing_resource_cloud_outbox",
+      "lingjing_resource_files",
+      "lingjing_resource_imports",
+      "lingjing_resource_preference_cache",
+      "lingjing_resource_preference_outbox",
+      "lingjing_resource_preferences",
+      "lingjing_resources"
+    ],
+    "changedOperationalTables": [
+      "account_actions",
+      "account_cloud_readbacks",
+      "garden_cloud_state",
+      "lingjing_resource_cloud_downloads",
+      "lingjing_resource_cloud_receipts",
+      "lingjing_resource_preference_state"
+    ]
+  },
+  "current": {
+    "files": [
+      {
+        "resource_id": "3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6",
+        "asset_key": "character.json",
+        "file_path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\restore-5d4593cd-f402-41f0-af46-4a8e413a87f4\\character.json",
+        "content_hash": "c395254032588907ecbca1a0fc31497c3c184cee0e59231485a10860d60e240b",
+        "revision": 1,
+        "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\restore-5d4593cd-f402-41f0-af46-4a8e413a87f4\\character.json",
+        "canonicalPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\restore-5d4593cd-f402-41f0-af46-4a8e413a87f4\\character.json",
+        "bytes": 9453,
+        "sha256": "d69de3c105f41da3c35abcdb3b2a04a17c29e810e6c1947b7565c9d95f2760ac"
+      },
+      {
+        "resource_id": "3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6",
+        "asset_key": "sprites.png",
+        "file_path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\restore-5d4593cd-f402-41f0-af46-4a8e413a87f4\\sprites.png",
+        "content_hash": "c395254032588907ecbca1a0fc31497c3c184cee0e59231485a10860d60e240b",
+        "revision": 1,
+        "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\restore-5d4593cd-f402-41f0-af46-4a8e413a87f4\\sprites.png",
+        "canonicalPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\restore-5d4593cd-f402-41f0-af46-4a8e413a87f4\\sprites.png",
+        "bytes": 2119970,
+        "sha256": "4b1eb6d06ba4c737a3cd2a10f567a2ff2af80bfec3be260e7df304af4bdb80f8"
+      },
+      {
+        "resource_id": "866b735a-9351-414f-a797-6bab290144c2",
+        "asset_key": "character.json",
+        "file_path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\866b735a-9351-414f-a797-6bab290144c2\\character.json",
+        "content_hash": "1cd0626ea29767476b371519ec4dc00fc43c528bfcd92627166275b937db2060",
+        "revision": 1,
+        "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\866b735a-9351-414f-a797-6bab290144c2\\character.json",
+        "canonicalPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\866b735a-9351-414f-a797-6bab290144c2\\character.json",
+        "bytes": 9406,
+        "sha256": "e2e976b69f7ea9049527251e458517e048c05aa5ab4cd1e13ffa47c38821708e"
+      },
+      {
+        "resource_id": "866b735a-9351-414f-a797-6bab290144c2",
+        "asset_key": "sprites.png",
+        "file_path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\866b735a-9351-414f-a797-6bab290144c2\\sprites.png",
+        "content_hash": "1cd0626ea29767476b371519ec4dc00fc43c528bfcd92627166275b937db2060",
+        "revision": 1,
+        "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\866b735a-9351-414f-a797-6bab290144c2\\sprites.png",
+        "canonicalPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\866b735a-9351-414f-a797-6bab290144c2\\sprites.png",
+        "bytes": 1802491,
+        "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693"
+      },
+      {
+        "resource_id": "b773fb41-e95a-4935-af1e-c0ed2fb5e9a4",
+        "asset_key": "qingya-r05-4e6-1b1afdd1.json",
+        "file_path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\restore-7dfb3fc0-a4fd-4dbf-ac05-483ad5e3e179\\qingya-r05-4e6-1b1afdd1.json",
+        "content_hash": "1aa494f867cbc95f683fe8233d6742fd1839dfb1ec5b6df55135328082a5dd5a",
+        "revision": 1,
+        "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\restore-7dfb3fc0-a4fd-4dbf-ac05-483ad5e3e179\\qingya-r05-4e6-1b1afdd1.json",
+        "canonicalPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\restore-7dfb3fc0-a4fd-4dbf-ac05-483ad5e3e179\\qingya-r05-4e6-1b1afdd1.json",
+        "bytes": 9406,
+        "sha256": "e2e976b69f7ea9049527251e458517e048c05aa5ab4cd1e13ffa47c38821708e"
+      },
+      {
+        "resource_id": "b773fb41-e95a-4935-af1e-c0ed2fb5e9a4",
+        "asset_key": "sprites.png",
+        "file_path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\restore-7dfb3fc0-a4fd-4dbf-ac05-483ad5e3e179\\sprites.png",
+        "content_hash": "1aa494f867cbc95f683fe8233d6742fd1839dfb1ec5b6df55135328082a5dd5a",
+        "revision": 1,
+        "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\restore-7dfb3fc0-a4fd-4dbf-ac05-483ad5e3e179\\sprites.png",
+        "canonicalPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\restore-7dfb3fc0-a4fd-4dbf-ac05-483ad5e3e179\\sprites.png",
+        "bytes": 1802491,
+        "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693"
+      },
+      {
+        "resource_id": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+        "asset_key": "character.json",
+        "file_path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\ee33b6a6-2bd1-4d79-bbfe-166498a4950f\\character.json",
+        "content_hash": "09b4b0bd591c07daea0a588386f39cfbe19226fd0d39664bdb8342fc4912fa09",
+        "revision": 1,
+        "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\ee33b6a6-2bd1-4d79-bbfe-166498a4950f\\character.json",
+        "canonicalPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\ee33b6a6-2bd1-4d79-bbfe-166498a4950f\\character.json",
+        "bytes": 9402,
+        "sha256": "cd3b4c9faefa8afc71bd108932bcc7878bc4929d28131d27005e37a5fa1bbfdd"
+      },
+      {
+        "resource_id": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+        "asset_key": "sprites.png",
+        "file_path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\ee33b6a6-2bd1-4d79-bbfe-166498a4950f\\sprites.png",
+        "content_hash": "09b4b0bd591c07daea0a588386f39cfbe19226fd0d39664bdb8342fc4912fa09",
+        "revision": 1,
+        "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\ee33b6a6-2bd1-4d79-bbfe-166498a4950f\\sprites.png",
+        "canonicalPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\ee33b6a6-2bd1-4d79-bbfe-166498a4950f\\sprites.png",
+        "bytes": 2441235,
+        "sha256": "f03bc1b8cd1c20c5ef6d466d20db9fb7f9584b7739f21414d22fc2c91c01d886"
+      }
+    ],
+    "downloads": [
+      {
+        "resource_id": "b773fb41-e95a-4935-af1e-c0ed2fb5e9a4",
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "directory": "restore-7dfb3fc0-a4fd-4dbf-ac05-483ad5e3e179",
+        "status": "verified",
+        "last_error": null,
+        "verified_at": "2026-10-26T23:10:08.750Z",
+        "data_mode": "live",
+        "authority_registered": 1,
+        "manifest_sha256": "fbfad69f653c25ce4ab4c188813c60f6b043620ae76bcfe8a6847c2032a47f17"
+      }
+    ],
+    "appliedPets": [],
+    "restoreActions": [
+      {
+        "action_id": "0bbb39b8-07ad-4835-a61b-ab791f24524b",
+        "kind": "restore",
+        "input_hash": "43ba12896a1f5a9dfdda8909971d7ce70bbda2021115f667b155038a51c8aed6",
+        "created_at": "2026-10-25T19:05:06.248Z"
+      },
+      {
+        "action_id": "50202382-b342-40c7-9497-304fec650ce2",
+        "kind": "restore-records",
+        "input_hash": "cf8a307645b5c15a76efdc4523cd066f9e9e687d711e2496791705eb144fb4dd",
+        "created_at": "2026-10-26T20:27:49.475Z"
+      },
+      {
+        "action_id": "1b06cd6c-8fd9-4d82-b826-0cba10329f94",
+        "kind": "restore-records",
+        "input_hash": "535d0521ed0261b6751e1288c850226bd5f36d57fa20e7b73458be5f923d3168",
+        "created_at": "2026-10-26T20:49:56.545Z"
+      }
+    ],
+    "restoreActionsAfterFault": 0,
+    "protectionBackupReceiptCount": 7
+  },
+  "heldArchive": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\native-preserved\\R05-b773fb41-preserved-original-sprites.png",
+    "canonicalPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\native-preserved\\R05-b773fb41-preserved-original-sprites.png",
+    "bytes": 1802491,
+    "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693"
+  },
+  "profileHeldSuffixAbsent": true,
+  "scopeCleanupComplete": true,
+  "cloudRefill": {
+    "before": [
+      {
+        "resource_id": "b773fb41-e95a-4935-af1e-c0ed2fb5e9a4",
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "directory": "restore-7dfb3fc0-a4fd-4dbf-ac05-483ad5e3e179",
+        "status": "verified",
+        "last_error": null,
+        "verified_at": "2026-10-26T23:00:09.939Z",
+        "data_mode": "live",
+        "authority_registered": 1,
+        "manifest_sha256": "fbfad69f653c25ce4ab4c188813c60f6b043620ae76bcfe8a6847c2032a47f17"
+      }
+    ],
+    "afterFailure": [
+      {
+        "resource_id": "b773fb41-e95a-4935-af1e-c0ed2fb5e9a4",
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "directory": "restore-7dfb3fc0-a4fd-4dbf-ac05-483ad5e3e179",
+        "status": "verified",
+        "last_error": null,
+        "verified_at": "2026-10-26T23:00:40.295Z",
+        "data_mode": "live",
+        "authority_registered": 1,
+        "manifest_sha256": "fbfad69f653c25ce4ab4c188813c60f6b043620ae76bcfe8a6847c2032a47f17"
+      }
+    ],
+    "qualification": "Independent cloud download repaired the registered file; this does not establish backup restoration."
+  },
+  "repairRequirements": [
+    "Validated matching backup bytes must be able to repair missing cache before the protection snapshot exports resources.",
+    "Existing resource IDs must retain original rows, revisions, imports, preferences, pet assignments and history.",
+    "Recompute full pack hash and match both backup and current immutable content_hash before repair.",
+    "Cover normal cloud-account restore ordering and existing-resource merge; changing one path is insufficient."
+  ],
+  "productSourceChanged": false,
+  "noCloudWrites": true,
+  "noProductWrites": true
+}

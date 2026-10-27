@@ -1,0 +1,123 @@
+{
+  "at": "2026-10-25T17:21:16.944Z",
+  "checks": {
+    "sameOriginalPets": true,
+    "sameSelections": true,
+    "sameBattleSession": true,
+    "normalExitAll68TablesExact": true,
+    "localStorageSentinelExact": true,
+    "indexedDbSentinelExact": true
+  },
+  "changedTablesAfterReLogin": [
+    {
+      "table": "account_login_sessions",
+      "before": {
+        "count": 6,
+        "sha256": "18dabd7dc112f57d0878ef32c43d56b933eb42b0fd20336ed867069db0b4d8b2"
+      },
+      "after": {
+        "count": 7,
+        "sha256": "039f28be4cfa2f3bfde8efd090423c0db1ceeca8fad5ef6ad6fe1f6906dc92e4"
+      }
+    },
+    {
+      "table": "lingjing_meta",
+      "before": {
+        "count": 2,
+        "sha256": "cdc22b6e130537da32c7d10a6a37019a2153d6dad12453c89d5757e3c65a41ac"
+      },
+      "after": {
+        "count": 2,
+        "sha256": "6698d981294a0d53473a8c37d1bdb17bc4c834b614d431967d3661f11335b4ed"
+      }
+    },
+    {
+      "table": "lingjing_resource_files",
+      "before": {
+        "count": 18,
+        "sha256": "e202ce4d005a776b23bafe8aac24a80e9fa2582dbbda2ac778e15846399ba3b3"
+      },
+      "after": {
+        "count": 18,
+        "sha256": "7f4ab66060d8d90259f009bedcd34f48a78231d43383b92bac1856c5a5144f8c"
+      }
+    }
+  ],
+  "qa015": {
+    "before": {
+      "at": 1792948743852,
+      "url": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsdED32.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+      "ready": "complete",
+      "position": [
+        1588,
+        0
+      ],
+      "inner": [
+        463,
+        560
+      ],
+      "outer": [
+        463,
+        560
+      ],
+      "dpr": 1.25,
+      "visualViewportScale": 1,
+      "cssZoom": "1",
+      "canvas": [
+        {
+          "width": 556,
+          "height": 659,
+          "rect": {
+            "x": 9,
+            "y": 25,
+            "width": 444.8000183105469,
+            "height": 527.2000122070312
+          },
+          "parent": "<div class=\"resource-sprite-host\" data-renderer=\"pixi-spritesheet\" data-frame=\"9\" data-frame-texture=\"3\" data-texture-frame=\"51,72,224,222\" data-content-bounds=\"{&quot;x&quot;:89.32558904109587,&quot;y&quot;:173.80350684931506,&quot;width&quot;:266.1488219178083,&quot;height&quot;:263.77249315068497,&quot;canvasWidth&quot;:444.8,&quot;canvasHeight&quot;:527.2}\" data-texture-key=\"lingjing-resource://asset/builtin%3Alingjing-xiaohu-v1/sprites.png:05ef8e37a7519f64d6e9ccdfeb73292269dedf10ea836e285d997d265cb9e4da\" data-texture-source=\"2\"><canvas width=\"556\" height=\"659\" aria-label=\"小狐 · 2D 动画\" style=\"width: 444.8px; height: 527.2px; touch-action: none;\"></canvas></div>"
+        }
+      ]
+    },
+    "after": {
+      "at": 1792948846096,
+      "url": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsdED32.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+      "ready": "complete",
+      "position": [
+        1538,
+        30
+      ],
+      "inner": [
+        460,
+        560
+      ],
+      "outer": [
+        461,
+        561
+      ],
+      "dpr": 1.25,
+      "visualViewportScale": 1,
+      "cssZoom": "1",
+      "canvas": [
+        {
+          "width": 553,
+          "height": 659,
+          "rect": {
+            "width": 442.3999938964844,
+            "height": 527.2000122070312
+          },
+          "hostAttributes": {
+            "class": "resource-sprite-host",
+            "data-renderer": "pixi-spritesheet",
+            "data-frame": "11",
+            "data-frame-texture": "3",
+            "data-texture-frame": "51,72,224,222",
+            "data-content-bounds": "{\"x\":88.84361643835615,\"y\":175.2267397260274,\"width\":264.7127671232877,\"height\":262.3492602739726,\"canvasWidth\":442.4,\"canvasHeight\":527.2}",
+            "data-texture-key": "lingjing-resource://asset/builtin%3Alingjing-xiaohu-v1/sprites.png:05ef8e37a7519f64d6e9ccdfeb73292269dedf10ea836e285d997d265cb9e4da",
+            "data-texture-source": "2"
+          }
+        }
+      ]
+    },
+    "mainBoundsUnavailable": true
+  },
+  "scope": "same original marker profile and exact DC7; first-init geometry observation retained separately"
+}

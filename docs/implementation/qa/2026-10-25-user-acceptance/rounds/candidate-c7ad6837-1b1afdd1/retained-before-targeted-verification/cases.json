@@ -1,0 +1,3293 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-25T09:24:08.155Z",
+  "baseline": {
+    "executable": "C:/Users/Administrator/Desktop/project/DesktopPet/releases/final-a9acd7f/Lingjing-0.1.8-portable-x64.exe",
+    "sourceCommit": "a9acd7f",
+    "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289"
+  },
+  "cases": [
+    {
+      "id": "A01",
+      "domain": "启动登录",
+      "title": "首次冷启动",
+      "owner": "01",
+      "reproducibleSteps": [
+        "新档案运行原便携EXE",
+        "等待登录界面与插画"
+      ],
+      "expected": "不读取普通档案；无白屏；显示版本与可用登录入口",
+      "actual": "最终EXE首次冷启，实际AppInfo source/tree/ASAR与冻结包一致，原独立profile/marker匹配；原生登录无白屏；LS/IDB sentinel保留，未读取普通Roaming档。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/cold-first-login-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/cold-first-readonly-info-storage.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/startup/cold-single-1"
+      ],
+      "status": "passed",
+      "updatedAt": "2026-10-25T15:44:20.295Z",
+      "history": [
+        {
+          "roundId": "baseline-a9acd7f-790f5b6d",
+          "sourceCommit": "a9acd7f",
+          "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+          "status": "passed",
+          "actual": "原SFX启动到登录，实际manifest a9acd7f；档案与namespaced模拟场景绑定",
+          "evidence": [
+            "evidence/baseline-login.png",
+            "run-manifest.json"
+          ]
+        },
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "passed",
+          "actual": "候选SFX独立启动完整登录；app.info source312e5fe匹配。冷并发首次未起另纳入N05。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/candidate-login.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/runtime-info-local-a.json"
+          ]
+        },
+        {
+          "roundId": "candidate-e875feb-50e52249",
+          "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+          "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+          "status": "passed",
+          "actual": "同一e875 EXE经修正v2启动工具冷启动，原生登录页正常、原账号登录成功；app.info实际source/tree/QA marker匹配，实际SFX payload ASAR全hash匹配。旧工具空key失败完整保留，属于无效启动环境；仅此首轮冷启动通过。",
+          "evidence": [
+            "rounds/candidate-e875feb-50e52249/evidence/cold-single-1/summary.json",
+            "rounds/candidate-e875feb-50e52249/evidence/cold-single-1/timeline.jsonl",
+            "rounds/candidate-e875feb-50e52249/evidence/cold-single-1/environment-diagnosis-update.json",
+            "rounds/candidate-e875feb-50e52249/evidence/cold-single-2-env-v2/summary.json",
+            "rounds/candidate-e875feb-50e52249/evidence/cold-single-2-env-v2/app-info-before-login.json",
+            "rounds/candidate-e875feb-50e52249/evidence/e875-first-login-native.jpg"
+          ]
+        }
+      ],
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "A02",
+      "domain": "启动登录",
+      "title": "登录保持行对齐 QA-001",
+      "owner": "08",
+      "reproducibleSteps": [
+        "观察默认登录表单",
+        "逐一聚焦记住账号、保持登录与锁图标"
+      ],
+      "expected": "文字、复选框、锁图标垂直居中；焦点和提示清晰",
+      "actual": "最终包125%DPI实际登录页保持行label/checkbox/文字/锁徽标/SVG中心均567.6875DIP，Tab焦点可到登录保护且显示明确说明。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/login-lock-focus-layout.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/login-lock-focused-native.jpg"
+      ],
+      "status": "passed",
+      "updatedAt": "2026-10-25T15:46:00.855Z",
+      "history": [
+        {
+          "roundId": "baseline-a9acd7f-790f5b6d",
+          "sourceCommit": "a9acd7f",
+          "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+          "status": "failed",
+          "actual": "保持登录锁图标上偏，复现QA-001",
+          "evidence": [
+            "evidence/baseline-login.png",
+            "evidence/QA-001-login-geometry.json"
+          ]
+        },
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "passed",
+          "actual": "125%DPI下保持行label/checkbox/文字/badge/svg中心716.8125DIP一致，键盘锁提示可见。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/QA-001-aligned-register.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/login-lock-focused.jpg"
+          ]
+        }
+      ],
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "A03",
+      "domain": "启动登录",
+      "title": "空值与错误登录",
+      "owner": "08",
+      "reproducibleSteps": [
+        "空表单提交",
+        "无效账号或错误密码提交"
+      ],
+      "expected": "保留输入；明确错误；不创建会话",
+      "actual": "原生空表单触发中文必填提示；一次错误密码明确账号或密码不正确并保留输入，实际AppInfo user=null，未创建业务会话。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/login-empty-validation-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/login-invalid-password-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/login-invalid-password-readonly.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T15:44:20.298Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "running",
+          "actual": "旧312重开后原生空密码提交被required原生提示拦截；一次错误密码明确提示且未创建会话，正确原凭据恢复原owner。全空表单仍待新候选，未据本段关闭全项。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-human-reopen-readback.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-reopen-wrong-password.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "A04",
+      "domain": "启动登录",
+      "title": "注册校验",
+      "owner": "08",
+      "reproducibleSteps": [
+        "切注册",
+        "输入短账号、密码不一致、重复账号并提交"
+      ],
+      "expected": "对应校验明确；失败不创建重复身份",
+      "actual": "尚未在此候选实际执行",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [],
+      "status": "pending",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T10:30:53.915Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "passed",
+          "actual": "空值提交提示请填写此字段；不一致密码显示明确错误；改正确后成功。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/register-empty-field-validation.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/register-password-mismatch.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "A05",
+      "domain": "启动登录",
+      "title": "合成QA本地注册",
+      "owner": "08",
+      "reproducibleSteps": [
+        "填写独立QA身份",
+        "正常提交注册"
+      ],
+      "expected": "进入主界面；独立owner/device与模拟提示准确",
+      "actual": "尚未在此候选实际执行",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [],
+      "status": "pending",
+      "updatedAt": "2026-10-25T13:29:35.066Z",
+      "history": [
+        {
+          "roundId": "baseline-a9acd7f-790f5b6d",
+          "sourceCommit": "a9acd7f",
+          "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+          "status": "passed",
+          "actual": "正常UI填四字段、Enter注册成功；独立QA owner，模拟标识明确",
+          "evidence": [
+            "evidence/baseline-registration-filled.png",
+            "evidence/baseline-registration-submit.png",
+            "evidence/local-registration-session.json"
+          ]
+        },
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "passed",
+          "actual": "原生正常注册本机合成QA候选验收甲，进入空伙伴页。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/local-register-success.jpg"
+          ]
+        },
+        {
+          "roundId": "candidate-e875feb-50e52249",
+          "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+          "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+          "status": "passed",
+          "actual": "e875全新独立local-b通过正常本地注册创建“并行验收乙”，账号和owner/runId独立，登录后0只宠物正确；未用云端账号/模拟API注册替代UI。",
+          "evidence": [
+            "rounds/candidate-e875feb-50e52249/evidence/second-profile-native-outcome.json",
+            "rounds/candidate-e875feb-50e52249/evidence/e875-second-profile-own-empty-account-native.jpg"
+          ]
+        }
+      ],
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "A06",
+      "domain": "启动登录",
+      "title": "云端合成账号注册登录",
+      "owner": "08",
+      "reproducibleSteps": [
+        "全新普通隔离档案注册独立QA账号",
+        "正常登录"
+      ],
+      "expected": "实际Auth成功；云端独立回读匹配；不触及真人凭据",
+      "actual": "尚未在此候选实际执行",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [],
+      "status": "pending",
+      "updatedAt": "2026-10-25T10:10:20.933Z",
+      "history": [
+        {
+          "roundId": "baseline-a9acd7f-790f5b6d",
+          "sourceCommit": "a9acd7f",
+          "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+          "status": "running",
+          "actual": "原EXE正常UI新云端档案注册成功，live/Auth user与独立Supabase lingjing_accounts行匹配；保持登录secure；新候选另行实测",
+          "evidence": [
+            "evidence/cloud-runtime-identity.json",
+            "evidence/baseline-cloud-registered-native.jpg"
+          ]
+        }
+      ],
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "A07",
+      "domain": "启动登录",
+      "title": "显隐密码与键盘顺序",
+      "owner": "08",
+      "reproducibleSteps": [
+        "切换密码眼睛",
+        "Tab/Shift+Tab走完整表单",
+        "Enter提交"
+      ],
+      "expected": "密码值一致；焦点顺序自然；按钮有名称",
+      "actual": "使用非凭据测试值核实显隐保持同值，按钮分别显示/隐藏密码有名称；原生Tab/Shift+Tab从账号类型经账号、密码、眼睛、记住账号、保护说明到提交，Enter以原凭据成功登录。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/login-layout-visible-test-password.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/login-show-test-password-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/login-keyboard-account-type-focused-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/first-login-original-owner-battle-preservation.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T15:46:00.858Z"
+    },
+    {
+      "id": "A08",
+      "domain": "启动登录",
+      "title": "记住账号",
+      "owner": "08",
+      "reproducibleSteps": [
+        "勾记住账号登录",
+        "退出并重启"
+      ],
+      "expected": "仅恢复账号提示；密码不明文保存",
+      "actual": "DC7真实冷启原A/LocalA恢复原账号提示且密码框空；原生正常退出后仍仅账号提示、密码空。只读当前renderer指定账号提示元数据实际仅account/provider两字段，旧plaintext偏好key不存在；未读取密码/旧Vault或量密码长度。DC7同源Auth写入仅两公开字段，保持登录另用safeStorage保存owner/proof，未与A09混算。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/coldpair-login-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/coldpair-before-login-cross-root-preservation.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a08-native-remembered-account-and-public-hint-complete-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a08-actual-remembered-hint-public-keys-only-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a12-native-revoked-old-O-returned-to-login-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a12-native-R-normal-logout-one-click-result-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/native09-resume-original-localA-login-gate-20261026.png"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-26T07:00:38.438Z"
+    },
+    {
+      "id": "A09",
+      "domain": "启动登录",
+      "title": "保持登录重启",
+      "owner": "08",
+      "reproducibleSteps": [
+        "云账号勾保持登录",
+        "退出应用并重启同档案"
+      ],
+      "expected": "安全会话恢复且账号归属正确",
+      "actual": "S03正常原生登录保持登录已选；I04正常退出7进程/同档案普通重开后自动恢复同A AuthUID/owner。当前账号页Windows PC明确已保持登录，公开accounts.session persistence=secure/secureStorageAvailable=true/live且无scenario；实际新SFX四文件hash相同，数据不变。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a09-normal-kept-login-secure-restart.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a09-reopened-current-device-secure-login-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/i04-normal-restart-economic-continuity.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T20:09:10.929Z"
+    },
+    {
+      "id": "A10",
+      "domain": "启动登录",
+      "title": "未保持登录重启",
+      "owner": "08",
+      "reproducibleSteps": [
+        "不勾保持登录正常登录",
+        "关闭重开"
+      ],
+      "expected": "要求登录；持久业务数据保留",
+      "actual": "最终包本机隔离QA运行内登录，未保持会话；正常UI退出后跨新解压目录重启要求原凭据登录，原两宠、进行中战斗和业务数据保持。该模式保持登录被产品明确禁用并有说明。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/coldpair-login-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/coldpair-before-login-cross-root-preservation.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/coldpair-final-outcome.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T15:55:46.274Z"
+    },
+    {
+      "id": "A11",
+      "domain": "启动登录",
+      "title": "账号切换隔离",
+      "owner": "08",
+      "reproducibleSteps": [
+        "甲领养写状态并退出",
+        "乙登录",
+        "甲再登录"
+      ],
+      "expected": "宠物/聊天/战报/设置/桌面不串归属",
+      "actual": "同原物理档案实际A退出→既有B正常登录→B正常退出→原A登录。B身份/设置/空chat独立；B当时UI0宠与战报通道warning如实保留，稍后只自动载入B原owner历史，不宣称完整下载/全频道通过。返回A原4宠/数字/桌面、设置与按owner全业务exact，原remember/keep/close true恢复。Root PG独立确认临时B会话清理、新A3f0734cf active，A30/B21 heads未动、未新发奖。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a11-B-on-A-physical-device-partial-safe-readback-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a11-native-existing-B-on-original-A-device-first-result-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a11-native-B-companions-settled-scope-boundary-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a11-native-A-B-A-restored-complete-await-root-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a11-native-B-chat-empty-no-A-history-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a11-native-B-report-scope-limited-settled-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a11-native-B-own-sync-off-before-normal-logout-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a11-native-B-normal-logout-once-before-return-A-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a11-native-return-A-original-remember-keep-true-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a11-native-return-A-four-pets-settled-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a11-native-return-A-original-close-to-tray-settings-restored-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a11-root-independent-after-confirmed-20261026.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-26T07:12:00.524Z"
+    },
+    {
+      "id": "A12",
+      "domain": "启动登录",
+      "title": "退出与失效会话",
+      "owner": "08",
+      "reproducibleSteps": [
+        "退出登录",
+        "重复访问业务页",
+        "云端撤销专用QA会话后继续操作"
+      ],
+      "expected": "立即清理私有可见数据并要求重新认证",
+      "actual": "原CloudA旧O经正常撤销后原生回登录并提示请重新登录；原生登录R后账号页退出按钮一次即时清私有导航/资料/桌面宠，Alt+Left仍为登录页。Root独立确认R真实Auth行gone、Core revoked与explicit-device-revoke账本，原A/B heads及宠物/历史/资源保持。仅此DC7候选通过；原keeptrue仍待账号切换最后恢复。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1\\evidence\\a12-a-normal-title-x-exit-preserved-secure-old-o.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1\\evidence\\a12-a-normal-close-protected-before.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1\\evidence\\a12-a-normal-close-to-tray-off-after-one-save.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a12-v3-four-request-technical-complete-native-pending-20261026.json",
+        "C:/Users/Administrator/Desktop/project/DesktopPet-fresh-worktrees/08/artifacts/accounts/a12-normal-auth-four-phase-prepared-20261026-v3/execution-once/state.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a12-native-revoked-O-login-R-restored-original-close-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a12-native-revoked-old-O-returned-to-login-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a12-native-CloudA-original-close-to-tray-saved-once-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a12-native-normal-R-logout-private-clear-safe-readback-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a12-native-R-account-menu-before-normal-logout-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a12-native-R-normal-logout-one-click-result-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a12-native-after-logout-back-navigation-stays-login-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a12-complete-native-and-root-auth-20261026.json",
+        "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/native-R-normal-logout-independent-auth.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-26T06:57:24.227Z"
+    },
+    {
+      "id": "N01",
+      "domain": "导航窗口",
+      "title": "所有主导航入口",
+      "owner": "01",
+      "reproducibleSteps": [
+        "依次点击全部主导航",
+        "前进后退并返回"
+      ],
+      "expected": "目标页正确；激活状态和标题一致；无空白",
+      "actual": "最终包普通A实际逐点8个主导航，完成加载后标题/路由与唯一激活项逐项对应、无空白；原生AI页回到聊天箭头及聊天设置再进入AI均正确。AltLeft未绑定未声称快捷后退成功；独立P01子分类路由缺陷QA019保持failed。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/n01-eight-main-navigation-and-return.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/n01-ai-return-to-chat-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/n01-chat-settings-reenter-ai-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T20:12:48.327Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "running",
+          "actual": "旧312本轮已原生走我的灵宠、附近探索、对战中心、领地、背包、聊天、角色资源、设置，目标页/激活导航/标题一致；原生图鉴返回和取消详情正常。全前进后退、最终包留待统一验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-uiux-broad-scan.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N02",
+      "domain": "导航窗口",
+      "title": "最小尺寸与最大化",
+      "owner": "01",
+      "reproducibleSteps": [
+        "鼠标缩到支持最小尺寸",
+        "最大化",
+        "恢复"
+      ],
+      "expected": "主要表单/弹窗/滚动均可达；无错位遮挡",
+      "actual": "同DC7普通A真实原生系统大小菜单/方向键缩到960×700，设置保存区、8角色长列表、背包内联详情、资源控制区均无水平溢出且滚动可达；实际自有文件选择对话框正常打开/取消，10资源表exact。最大化2048视口正常；最后真实Win32只读确认原rect(356,125,1732,1110)逐值恢复。多QA桌宠覆盖引发的唯一同坐标位置回执另有Root独立界定并保留，不当布局缺陷或未发生。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/n02-n03-real-native-resize-scroll-and-modal-complete.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/n02-native-system-size-true-minimum-both-dimensions.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/n02-minimum-settings-save-and-privacy-reachable-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/n02-minimum-file-dialog-screenshot-1.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/n02-native-full-original-restore-geometry.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T22:44:22.574Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "running",
+          "actual": "旧312原生切换1332×912普通窗口与2048×1151最大化；均可导航，近景宽窗裁切另列QA011。支持最小尺寸/高DPI边界及最终包仍待验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-chat-portrait-normal-window.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-chat-portrait-clipping-native.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N03",
+      "domain": "导航窗口",
+      "title": "窗口连续缩放与滚动",
+      "owner": "01",
+      "reproducibleSteps": [
+        "多页反复缩放",
+        "滚动长列表和弹窗"
+      ],
+      "expected": "布局稳定；不丢选中实体或未提交内容",
+      "actual": "真实原生多页最大化/恢复、系统方向键连续缩放，0004选中伙伴在各尺寸全文保持；设置未提交音效草稿跨max/restore保持off但正式document/rev保持原true。8角色长页和资源内嵌长列表可滚动到末项，真实文件弹窗取消无导入，最终原settings/资源表及已界定位置事件之后10业务表均exact，原窗口rect恢复。背包/领养是内联/整页，未冒称modal。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/n02-n03-real-native-resize-scroll-and-modal-complete.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/n03-unsaved-draft-preserved-across-native-maximize-restore.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/n03-maximized-selected-fox-four-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/n03-minimum-adoption-page-last-cards-and-controls-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/n02-minimum-file-dialog-cancelled-no-import-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T22:44:22.578Z"
+    },
+    {
+      "id": "N04",
+      "domain": "导航窗口",
+      "title": "关闭到托盘与恢复",
+      "owner": "08",
+      "reproducibleSteps": [
+        "点击关闭",
+        "托盘打开",
+        "退出自身进程"
+      ],
+      "expected": "行为符合设置；可恢复；不关闭其他进程",
+      "actual": "尚未在此候选实际执行",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [],
+      "status": "pending",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "C01",
+      "domain": "灵宠",
+      "title": "属性图标分类 QA-002",
+      "owner": "02",
+      "reproducibleSteps": [
+        "进入领养页",
+        "切全部与金木水火土"
+      ],
+      "expected": "以属性图标分类；去掉大肥鱼/动物伙伴类型标签",
+      "actual": "最终包原生领养页按金木水火土属性图标分类，8个模板使用各自属性徽标；公开页面不再出现大肥鱼/动物伙伴类型分组标签。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a1-adoption-page-before-selection.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a1-confirmation-selected-xiaohu-native.jpg"
+      ],
+      "status": "passed",
+      "updatedAt": "2026-10-25T16:05:48.170Z",
+      "history": [
+        {
+          "roundId": "baseline-a9acd7f-790f5b6d",
+          "sourceCommit": "a9acd7f",
+          "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+          "status": "failed",
+          "actual": "原包领养分类为大肥鱼/动物伙伴；属性被放到下拉菜单，复现QA-002",
+          "evidence": [
+            "evidence/baseline-adoption.png"
+          ]
+        },
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "passed",
+          "actual": "全部/金/木/水/火/土图标分类，原生逐项切换礼帽喵/青芽/4水角色/焰柴/岩团。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/adopt-five-elements.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/adopt-metal.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/adopt-wood.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/adopt-water.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/adopt-fire.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/adopt-earth.jpg"
+          ]
+        }
+      ],
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "C02",
+      "domain": "灵宠",
+      "title": "同模板连续领养",
+      "owner": "02",
+      "reproducibleSteps": [
+        "同模板正常领养两次",
+        "查看拥有列表"
+      ],
+      "expected": "两独立实例；固定标准名与唯一稳定编号",
+      "actual": "同一DC7普通云账号正常再次领养：A两狐编号0001/0004、B两狐0003/0005，各标准名小狐而petId/serial独立。新A/新B各唯一原ID immutable云receipt与本机action逐字段同，旧宠全行不变；B1正常导航拉回B2新5。Root独立PG原编号1–5及owner一致。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d01-four-instances-native-readback.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c02-c10-live-two-fox-and-double-click.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c02-c10-root-independent-complete.json"
+      ],
+      "status": "passed",
+      "updatedAt": "2026-10-25T21:18:09.074Z",
+      "history": [
+        {
+          "roundId": "baseline-a9acd7f-790f5b6d",
+          "sourceCommit": "a9acd7f",
+          "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+          "status": "passed",
+          "actual": "通过真实键盘两次正常领养同模板小狐；实例petId和serial不同，待固定名/编号需求修复复验",
+          "evidence": [
+            "evidence/two-foxes-readback.json"
+          ]
+        },
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "passed",
+          "actual": "原生正常连续领养两只小狐，两者固定名称相同而完整petId不同；第二次快速Return2次只新增1只。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/first-fox-adopted.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/second-fox-rapid-submit.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/two-fox-identities.json"
+          ]
+        }
+      ],
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "C03",
+      "domain": "灵宠",
+      "title": "固定角色名和唯一编号 QA-003",
+      "owner": "02",
+      "reproducibleSteps": [
+        "领养",
+        "查看列表/详情/桌面/聊天/对战",
+        "重启与同步回读",
+        "按2026-10-25新增规则核对公开界面数字编号、桌面无名无编号"
+      ],
+      "expected": "固定角色标准名；公开界面同类型跨全部用户连续阿拉伯数字编号0001起，内部petId保持；桌面仅形象",
+      "actual": "真实好友战斗中双方新狐0004/0005编号准确，但十二回合自然终局后的双方战报把对手列表/卡片/回顾编号全部退回待同步，QA-023；我方编号及唯一结算正确。其余重启/同步视图后续继续。",
+      "severity": "P2-release-blocker",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a1-complete-09-manifest.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a1-pet-detail-number-0001-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c03-friend-reports-opponent-global-number-pending.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b11-real-friend-a-terminal-report-settled-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b11-real-friend-b-terminal-report-native.jpg"
+      ],
+      "status": "failed",
+      "updatedAt": "2026-10-25T21:52:54.559Z",
+      "history": [
+        {
+          "roundId": "baseline-a9acd7f-790f5b6d",
+          "sourceCommit": "a9acd7f",
+          "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+          "status": "failed",
+          "actual": "同模板列表两只仅同名、无编号；可把第三只标准小狐改为验收昵称。后端UUID/短serial存在，需固定标准名和完整编号投影各域，QA-003复现",
+          "evidence": [
+            "evidence/QA-003-three-instances.json",
+            "evidence/QA-003-three-instances-renderer.png"
+          ]
+        },
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "failed",
+          "actual": "312旧候选仍公开完整petId/GUID且桌面带名号，符合旧修复方向但不满足新增数字编号及桌面无标签；等待新源候选，不得关闭QA003。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/two-fox-identities.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/two-fox-list-identities.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/follow-pet-visible.jpg"
+          ]
+        }
+      ],
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "C04",
+      "domain": "灵宠",
+      "title": "五行筛选与拥有筛选",
+      "owner": "02",
+      "reproducibleSteps": [
+        "逐个五行筛选",
+        "切只看已拥有",
+        "空结果与恢复"
+      ],
+      "expected": "结果准确；已选预览与筛选一致；可清空筛选",
+      "actual": "已正常UI逐一筛选五行（金1/木1/水4/火1/土1），已拥有木为空时有明确空态，切水恢复仅已有小狐（2只），取消已拥有和恢复全部后8模板可见；原pet对象不变。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c04-c05-eight-templates-complete.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c04-owned-wood-empty-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c04-all-eight-restored-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T17:47:28.254Z"
+    },
+    {
+      "id": "C05",
+      "domain": "灵宠",
+      "title": "八角色详情与动画",
+      "owner": "02",
+      "reproducibleSteps": [
+        "逐个打开八角色预览/详情"
+      ],
+      "expected": "实际角色资源可见；属性/固定名正确；无占位替代",
+      "actual": "已逐个原生打开8角色实际预览，8个独立正确资源键、正面积可见canvas，且每个读到至少2个真实texture-frame（饭团/焰柴补齐完整待机周期）；8角色原生画面均已保存，无占位加载冒充成功。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c04-c05-eight-templates-complete.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c05-fantuan-full-idle-cycle-readback.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c05-shiba-full-cycle.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T17:47:28.259Z"
+    },
+    {
+      "id": "C06",
+      "domain": "灵宠",
+      "title": "详情页全部页签",
+      "owner": "02",
+      "reproducibleSteps": [
+        "打开灵宠详情",
+        "依次成长/技能/记忆/外观等页签"
+      ],
+      "expected": "内容与petId一致；导航返回保留上下文",
+      "actual": "同一A1 petId原生查看成长/技能/回忆/外观四页签并返回原伙伴列表，保持此前鱼丸列表上下文；全A宠物原始行和chat/battle/guard选择均未改变。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a1-pet-detail-number-0001-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c06-a1-skills-tab-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c06-a1-memories-tab-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c06-a1-appearance-tab-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c06-a1-returned-list-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c06-a1-four-tabs-and-return-readback.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T16:23:31.977Z"
+    },
+    {
+      "id": "C07",
+      "domain": "灵宠",
+      "title": "养成互动与冷却",
+      "owner": "02",
+      "reproducibleSteps": [
+        "指定甲互动",
+        "立即重复",
+        "查看乙"
+      ],
+      "expected": "仅甲变化；冷却反馈清楚；不重复扣奖",
+      "actual": "指定第一pet真实互动后约3秒重复，第二次未重复结算；两组合法首触总计mood60→64、affinity0→2，只有2条原始interact回执/本pet冷却记录，第二pet完整对象精确未变。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d07-c07-complete-native-readback.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c07-response-then-repeat-native-input.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T17:33:32.486Z"
+    },
+    {
+      "id": "C08",
+      "domain": "灵宠",
+      "title": "每宠独立选择",
+      "owner": "02",
+      "reproducibleSteps": [
+        "甲放桌面",
+        "乙聊天",
+        "丙训练",
+        "丁驻守"
+      ],
+      "expected": "不同功能各自选宠；不随全局选中交叉更换",
+      "actual": "已原生同时设桌面ea1、聊天0cb、训练8d67，readonly三者独立，切页保持；未启动新训练。驻守因QA026未占领仍待新包补验。现已原生恢复chat ea1/battle0cb/guardnull、全部desktopfalse及scale1，聊天历史不变。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c08-native-first-fox-desktop-shown-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c08-t01-native-second-fox-chat-identity-and-history-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c08-native-third-wood-battle-selection-only-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/local-flow-c08-three-independent-choices-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/native09-old-local-sweep-restoration-20261026.json"
+      ],
+      "status": "pending",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-26T08:24:26.109Z"
+    },
+    {
+      "id": "C09",
+      "domain": "灵宠",
+      "title": "无宠物空状态",
+      "owner": "02",
+      "reproducibleSteps": [
+        "新账号访问详情/桌面/聊天/训练"
+      ],
+      "expected": "引导领养；无伪造实体或崩溃",
+      "actual": "同一DC7打开原LocalB空宠账号，正常登录一次；灵宠首页显示第一份陪伴/领养，聊天暂无伙伴，训练选择一位伙伴/领养，桌面0/3；领养引导可达但未领养。原owner/0pet/0action/0chat/0battle及settings rev1完整不变，实际ASAR/fileVersion0.1.8匹配；原closeToTray=false正常AltF4退出，main/wrapper/children/端口全消失。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c09-localB-native-original-existing-login-result-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t01-c09-localB-native-chat-empty-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c09-localB-native-adoption-guide-only-no-adopt-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c09-localB-native-training-empty-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c09-localB-native-desktop-zero-and-original-closefalse-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/localB-before-native-start-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/localB-after-native-empty-flow-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/localB-native-runtime-identity-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/localB-native-normal-exit-20261026.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-26T08:24:26.099Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "passed",
+          "actual": "初次无宠物清晰空态及领养入口，点击正常进入。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/local-register-success.jpg"
+          ]
+        },
+        {
+          "roundId": "candidate-e875feb-50e52249",
+          "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+          "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+          "status": "passed",
+          "actual": "e875全新本地账号原生显示“第一份陪伴，从这里开始”与领养入口；只读companions/list为空，未混入原local-a两狐。",
+          "evidence": [
+            "rounds/candidate-e875feb-50e52249/evidence/second-profile-native-outcome.json",
+            "rounds/candidate-e875feb-50e52249/evidence/e875-second-profile-own-empty-account-native.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "C10",
+      "domain": "灵宠",
+      "title": "领养快速连点与返回",
+      "owner": "02",
+      "reproducibleSteps": [
+        "快速重复点击领养",
+        "返回列表再进入"
+      ],
+      "expected": "明确成功数；幂等或用户意图数量正确；无幽灵实例",
+      "actual": "B2实际原生clickCount2领养小狐，只产生1个原intent/input9b87...、1个新pet2ec/0005；正常返回列表并重进同一实例，宠物/原动作不再增加。Root独立云原IDreceipt恰1，旧3宠/历史精确保留。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c11-dual-native-input-times.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c02-c10-live-two-fox-and-double-click.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c02-c10-root-independent-complete.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T21:18:09.077Z"
+    },
+    {
+      "id": "D01",
+      "domain": "桌面",
+      "title": "显示隐藏与上限",
+      "owner": "02",
+      "reproducibleSteps": [
+        "显示1至4只",
+        "尝试超限",
+        "隐藏后再显示",
+        "桌面仅保留灵宠形象，不显示名字或编号"
+      ],
+      "expected": "遵守1–4上限；设置更低时遵守设置；实例不串",
+      "actual": "原生已覆盖实际1/2/3/4显示及第五请求被策略隐藏，限制和每宠原生收回有效；但QA-016成立：设置已出场5/1、MyPets桌面中5/第五标桌面中误导，整项不能判通过。已恢复原limit3、第一scale1/quiet/显示、第二不显示，新增三只保留但不显示；原对局未变。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d01-before-additional-native-adoptions.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d01-limit1-policy-vs-ui-count.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d01-desktop-batch-restored-state.json"
+      ],
+      "status": "failed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T17:59:16.143Z"
+    },
+    {
+      "id": "D02",
+      "domain": "桌面",
+      "title": "重复拖动变大 QA-004",
+      "owner": "02",
+      "reproducibleSteps": [
+        "正常拖动同一灵宠至少10次",
+        "每次读取DIP/DPI和实际精灵尺寸"
+      ],
+      "expected": "只改变位置；窗口、stage、scale不累乘",
+      "actual": "完成10次真实原生拖动，逐次读DPR/实际canvas：均DPR1.25、canvas266×309、savedScale1，另一pet raw和甲growth未变，不累积放大。native外宽231/232为取整；首拖前268×314→266×309单列OBS-DC7-001初建几何观察，未混称全部尺寸相等。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d02-native-drags.jsonl",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d02-ten-native-drags-complete.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d02-ten-drags-metrics-and-d01-recall.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d02-after-ten-drags-native.jpg",
+        "observations.json"
+      ],
+      "status": "passed",
+      "updatedAt": "2026-10-25T16:58:53.089Z",
+      "history": [
+        {
+          "roundId": "baseline-a9acd7f-790f5b6d",
+          "sourceCommit": "a9acd7f",
+          "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+          "status": "failed",
+          "actual": "125% DPI真实10次拖动：窗口232×280→252×300 DIP；stage214×222.9→234×242.9，保存scale全程1；每次输入均isTrusted，复现QA-004",
+          "evidence": [
+            "evidence/QA-004-drag-series.json",
+            "evidence/QA-004-drag-events.json",
+            "evidence/QA-004-drag-00.png",
+            "evidence/QA-004-drag-10.png"
+          ]
+        },
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "passed",
+          "actual": "10次真实拖动、20可信事件；180帧散步及180帧鼠标跟随（105个不同坐标）无累增，窗口范围231–232x280–281 DIP、canvas266x246、scale1；125%取整有限波动。D06重启另待。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/QA-004-drag-series.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/QA-004-native-events.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/QA-004-wander-series.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/QA-004-follow-moving-series.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/follow-pet-visible.jpg"
+          ]
+        }
+      ],
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "D03",
+      "domain": "桌面",
+      "title": "边缘与越界恢复",
+      "owner": "02",
+      "reproducibleSteps": [
+        "拖向四边",
+        "关闭重启"
+      ],
+      "expected": "可找回；持久位置被安全限制于有效屏幕",
+      "actual": "四边真实拖动分别达到x=0/1588、y=0/592（2048x1152有效屏幕、460x560窗口）；正常退出重启找回同pet/原1588,0位置。初始化几何微差另列QA-015。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d06-before-normal-exit.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d03-d04-before-normal-restart.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d06-preservation-and-qa015-first-drag.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d06-original-owner-after-relogin-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T17:23:07.764Z"
+    },
+    {
+      "id": "D04",
+      "domain": "桌面",
+      "title": "单宠大小偏好",
+      "owner": "02",
+      "reproducibleSteps": [
+        "详情调甲大小",
+        "观察乙",
+        "保存重开"
+      ],
+      "expected": "仅甲变化；范围有效；重启后尺寸稳定",
+      "actual": "原生滑块实际覆盖50%与200%，仅第一pet尺寸变化，第二pet完整对象保持不变；正常重启scale2偏好精确保留，随后已原生恢复100%。初建几何微差另列非阻塞QA-015。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d04-first-only-scale-105-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d04-first-scale-105-other-unchanged.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d03-d04-before-normal-restart.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d06-preservation-and-qa015-first-drag.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d06-original-owner-after-relogin-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T17:23:07.769Z"
+    },
+    {
+      "id": "D05",
+      "domain": "桌面",
+      "title": "DPI与多显示器",
+      "owner": "02",
+      "reproducibleSteps": [
+        "当前DPI真实拖动",
+        "有硬件时跨DPI屏拖动"
+      ],
+      "expected": "DIP/像素转换正确；缺少硬件的组合明确受阻",
+      "actual": "当前单屏真实125% DPI已完成10次拖动及四边/大小/重启；Win32DPI120，实际OS仅DISPLAY1。跨DPI、多显示器组合缺少硬件，未修改OS缩放或模拟补证。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d05-actual-hardware-inventory.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d02-ten-native-drags-complete.json"
+      ],
+      "status": "blocked",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T17:39:28.554Z"
+    },
+    {
+      "id": "D06",
+      "domain": "桌面",
+      "title": "拖动持久化与重启",
+      "owner": "02",
+      "reproducibleSteps": [
+        "拖到新位置",
+        "退出自身应用",
+        "重开登录"
+      ],
+      "expected": "恢复同一编号/位置/尺寸；不额外生成实例",
+      "actual": "正常Alt+F4退出自身档案并用同一DC7最终包重新打开、正常原账号登录；两pet完整对象、选择、活动对局完全相同，LS/IDB哨兵相同，退出时68表精确一致；重登仅登录会话/元数据/资源文件路径表变化，无多生成实例。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d06-before-normal-exit.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d03-d04-before-normal-restart.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d06-preservation-and-qa015-first-drag.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d06-original-owner-after-relogin-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T17:23:07.772Z"
+    },
+    {
+      "id": "D07",
+      "domain": "桌面",
+      "title": "行为与鼠标交互",
+      "owner": "02",
+      "reproducibleSteps": [
+        "切站立/行走/跟随等真实可用模式",
+        "单击/右键观察"
+      ],
+      "expected": "行为匹配；拖动不误触；右键入口可用",
+      "actual": "已原生切换自由散步/安静陪伴/跟随鼠标/好好休息。散步250个实际位置、跟随88个位置，均真实walk纹理与恒定266x309画布；休息原生画面及30实际render frame为sleep/静止。单击/右键均可展开本宠摸摸/收回控制，拖动不误触另有D02证据。已恢复quiet行为。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d07-c07-complete-native-readback.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d07-mode-readback.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d07-rest-render-frame-readback.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d07-right-click-toolbar-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T17:33:32.491Z"
+    },
+    {
+      "id": "D08",
+      "domain": "桌面",
+      "title": "穿透与全屏隐藏",
+      "owner": "02",
+      "reproducibleSteps": [
+        "使用正常UI切换穿透",
+        "观察全屏隐藏策略"
+      ],
+      "expected": "有可恢复控制；不永久失去交互；各宠独立",
+      "actual": "正常UI穿透开关false→true后，原生点击本pet透明角落对应的下方主窗口被接受；主窗口原生最大化形成DWM可见帧0,0–2560,1440覆盖实际屏幕时，4个桌宠Win32可见=false。仅本档案关闭隐藏后仅其两只恢复；重开隐藏后二次隐藏，退出覆盖后原4实例恢复。偏好与pet对象/选择已恢复且无改写。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d08-monitor-covering-hidden-win32.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d08-fullscreen-setting-off-native-window-inventory.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d08-transparent-corner-native-click.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d08-after-leaving-monitor-cover-native-inventory.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d08-policy-and-restored-state.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T17:38:43.436Z"
+    },
+    {
+      "id": "D09",
+      "domain": "桌面",
+      "title": "托盘全部显示隐藏",
+      "owner": "08",
+      "reproducibleSteps": [
+        "正常托盘显示/隐藏全部",
+        "回到主窗口"
+      ],
+      "expected": "正确作用于本档案桌面实例；保持选择归属",
+      "actual": "CUA实际surface inventory不暴露Windows任务栏/通知区可控制窗口，无法原生点击托盘菜单；未使用脚本代点或伪造托盘动作。应用原生tray active/bounds已读到，菜单显示/隐藏全部待人工或可用原生界面补证。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d09-native-surface-inventory.json"
+      ],
+      "status": "blocked",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T17:38:43.440Z"
+    },
+    {
+      "id": "T01",
+      "domain": "聊天",
+      "title": "空状态和切宠",
+      "owner": "06",
+      "reproducibleSteps": [
+        "无宠访问聊天",
+        "有宠选甲后选乙"
+      ],
+      "expected": "空状态明确；头像/名字/会话归属一致",
+      "actual": "同一DC7 LocalB零宠聊天显示暂无伙伴与前往领养；LocalA原生第一狐→第二狐→第一狐切换，旧消息、人设、各自专属记忆随petId正确变化，未发新消息。readonly聊天四表全不变，原chat ea1与battle0cb已恢复；未以本地协议历史声称外部模型成功。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t01-c09-localB-native-chat-empty-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c08-native-chat-entry-before-independent-switch-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c08-t01-native-second-fox-chat-identity-and-history-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c08-t01-native-first-chat-original-selection-restored-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/local-flow-c08-three-independent-choices-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/native09-old-local-sweep-restoration-20261026.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-26T08:24:26.104Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "running",
+          "actual": "旧312真实UI在有宠状态切第二→第一，头像/人设/记忆/消息按petId独立；第一初始无消息，发送后SQL第一2条、第二4条。服务请求各含本宠人设/记忆、不含另一只完整记忆。零宠聊天与最终包仍待验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-chat-first-owner-readback.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T02",
+      "domain": "聊天",
+      "title": "人设与记忆独立",
+      "owner": "06",
+      "reproducibleSteps": [
+        "分别编辑甲乙人设/记忆",
+        "切换并重开",
+        "合成记忆新增、编辑、删除；切换两只同模板宠物回查归属与重启"
+      ],
+      "expected": "各petId独立持久化；不串实例",
+      "actual": "同一DC7真实UI为两只同模板新青芽分别保存不同persona与专属memory，甲记忆新增→原ID revision2编辑→取消删除→确认删除→新建保留记忆，只读SQLite证明各petId独立。切回及一次计划内正常退出/重开后persona、memory ID/内容/revision逐项精确相等；原两狐profile/memory/messages原摘要匹配。未请求旧global模型。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t02-two-new-wood-personas-memories-saved.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t02-new-wood-memory-created.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t02-new-wood-memory-edited.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t02-new-wood-memory-deleted.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t02-wood4-persona-memory-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t02-wood3-restored-persona-memory-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t02-t05-after-normal-restart.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t02-wood3-after-restart-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t02-wood4-after-restart-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t02-t05-originals-protection-canonical-readback.json"
+      ],
+      "status": "passed",
+      "updatedAt": "2026-10-25T18:46:42.709Z",
+      "history": [
+        {
+          "roundId": "baseline-a9acd7f-790f5b6d",
+          "sourceCommit": "a9acd7f",
+          "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+          "status": "running",
+          "actual": "正常UI选第二只并保存独立人设，snapshot对应第二只petId revision1；记忆/切回/重启待最终包",
+          "evidence": [
+            "evidence/chat-persona-second-after.json"
+          ]
+        },
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "running",
+          "actual": "旧312真实UI完成两只独立人设、专属记忆新增、第二只记忆rev1→2编辑、第一只新建可丢弃样本并确认删除；只读SQLite只删目标id，两只保留记忆和petId归属正确；切回第二只可见正确内容。重启及最终包复验仍待做。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-memory-edited-before-save.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-memory-edited-readback.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-first-persona-readback.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-memory-delete-readback.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-memory-delete-confirm.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-memory-delete-after.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-first-persona-native.jpg"
+          ]
+        }
+      ],
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "T03",
+      "domain": "聊天",
+      "title": "无供应商配置错误",
+      "owner": "06",
+      "reproducibleSteps": [
+        "未配有效LLM发送合成消息"
+      ],
+      "expected": "清晰可恢复错误；不显示伪造模型回复",
+      "actual": "新焰柴明确启用并保存独立override、该pet连接和key均空；输入合成消息并正常Enter，界面未配置/设置连接入口清晰、发送禁用且不绕过。SQL本pet0消息、无伪助手，原全局夹具请求仍8，新helper0请求，未回退原global。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t03-empty-override-send-blocked-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t03-empty-override-send-guard-readback.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T18:09:20.880Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "passed",
+          "actual": "旧312未配置模型时真实输入草稿按Enter；发送禁用、草稿保留、有未配置/设置连接入口；SQLite消息0条，无伪造回复。最终包仍重验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-chat-unconfigured-readback.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-chat-unconfigured-native.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T04",
+      "domain": "聊天",
+      "title": "发送流式与取消",
+      "owner": "06",
+      "reproducibleSteps": [
+        "配置专用测试供应商或标明模拟",
+        "发送",
+        "生成中取消"
+      ],
+      "expected": "用户消息一次；正确流式或错误；取消不残留busy",
+      "actual": "仅新焰柴独立槽：真实本机HTTP/SSE模拟回复，原生半段/完成画面及44delta回执；正常点击停止后同一assistant持久cancelled/CANCELLED、busy解除。连接测试stream成功与hold原生取消均实证，测试不新增聊天记录。明确模拟upstream，非真实外部模型成功。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t04-only-new-fire-connection-readback.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t04-native-stream-and-cancel-complete.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t04-chat-stream-partial-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t04-chat-stream-complete-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t04-native-connection-test-success-and-cancel.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T18:19:12.317Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "running",
+          "actual": "旧312真实UI连接本机SSE协议夹具，完成中文流式、真实首段可见和停止回复，网络响应被abort；SQL cancelled及CANCELLED准确，停止后busy结束。供应商明确模拟，真实云模型和最终包仍待验，不据此完成验收。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-chat-stream-cancel-retry.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-chat-streaming-before-cancel.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-chat-cancelled.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T05",
+      "domain": "聊天",
+      "title": "历史与再生成",
+      "owner": "06",
+      "reproducibleSteps": [
+        "正常发送多轮",
+        "离开返回",
+        "重启",
+        "重试或再生成"
+      ],
+      "expected": "历史按petId一致；状态和分支明确",
+      "actual": "同一DC7新fire三轮实际本机HTTP模拟聊天已留证；Stop原轮次再生成保持同action/assistant ID、attempt2，T06错误链同轮attempt7无重复用户。离开设置返回、切换伙伴及一次正常退出/重开后6条消息全字段精确相等。清空确认分别保留记录/关闭均未清；只清已留证的新fire6条合成历史，切离切回为空且SQLite0；两新青芽人设/记忆与原两狐全部保护。模拟上游明确标注，不声称外部模型成功。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t04-native-stream-and-cancel-complete.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t05-original-round-native-retry.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t05-new-fire-clear-confirmation-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t05-fire-history-after-normal-restart-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t05-new-fire-cleared-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t05-fire-cleared-after-pet-switch-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t02-t05-after-normal-restart.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t02-t05-originals-protection-canonical-readback.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T18:46:42.713Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "running",
+          "actual": "旧312真实UI从已停止消息重试，本机模拟SSE回复成功；保留原actionId、原assistantId，attempt2，同action用户1条/助手1条，总消息4条，不重复写入。历史重启和真实云模型、最终包仍待验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-chat-stream-cancel-retry.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T06",
+      "domain": "聊天",
+      "title": "凭据边界与失联",
+      "owner": "06",
+      "reproducibleSteps": [
+        "专用无效key配置",
+        "请求失败/断网",
+        "查看同步载荷",
+        "全局和独立连接切换、保存和取消、测试连接和取消；清除自己QA密钥并观察状态"
+      ],
+      "expected": "密钥不入云/备份；错误可重试；不泄露凭据",
+      "actual": "全部授权凭据边界已完成：localA新fire错误合成key/恢复/独立清key不回退原global；普通cloudB空全局+新B3独立槽保存/测试/取消/放弃草稿，在两新dummy仍rev1且cipher/vault不变时完成真实备份及自动同步(base4→rev5, exact PG唯一action)，实际outbox/source/serializer重建/备份全字节dummy/cipher0，重建与HTTPS回执分开标注。正常merge保原3pet、冲突原action保留superseded；正常stopowned helper、一次本机失联Test公开网络错误；最终两slot rev2/key0/vault0、B3overridefalse、原全部设置(syncfalse)与原聊天青芽选择恢复、无聊天新增。仅QA-017实际SSE socket断流误归PROVIDER_REJECTED仍失败，待统一新候选复验；不声称外部模型成功。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t06-real-http-errors-and-original-json-recovery.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t06-new-fire-wrong-dummy-and-restored.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t06-new-fire-invalid-dummy-test-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t06-fire-cleared-key-no-fallback-readback.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t06-fire-cleared-key-no-global-fallback-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t06-local-provider-owned-run-stop.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t06-cloud-b-appinfo-and-empty-slots-checkpoint.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t06-complete-credential-cloud-backup-boundaries.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t06-cloud-b-configured-native-tests.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t06-cloud-b-after-native-preserving-merge.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t06-cloud-b-native-key-present-backup-inspection.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t06-cloud-b-auto-sync-after-merge-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t06-cloud-b-stopped-provider-network-error-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t06-cloud-b-cleanup-and-preservation-final.json"
+      ],
+      "status": "failed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T19:12:50.677Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "running",
+          "actual": "旧312真实UI配置仅127.0.0.1模拟协议连接；主进程401/429错误固定脱敏，故意echo的合成key不在界面/消息表/launch.stderr；encrypted_key长度108、plaintextMatch0。真实UI原actionId连续重试至attempt3成功，总消息8条无重复用户。备份/真实云凭据边界及最终包仍待验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-chat-error-recovery.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-chat-auth-redacted.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-chat-rate-error.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M01",
+      "domain": "探索地图",
+      "title": "地图初始与图层",
+      "owner": "03",
+      "reproducibleSteps": [
+        "打开附近",
+        "等待地图",
+        "缩放/平移"
+      ],
+      "expected": "实际地图加载；可区分未定位、加载、失败",
+      "actual": "原6ff LocalA/DC7真实原生打开附近：未定位空态明确；可见QA模拟位置后实际OpenStreetMap瓦片/15候选及标记加载，正常+缩放/拖动平移；已配置OSM与未配置地图服务说明准确，演示模式保持off。位置自然超时后提示更新并限制挑战。只证明地图/UI，QA±5m不是实测GPS。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m01-native-map-positive-with-simulated-location-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m01-native-qa-location-first-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m01-native-map-zoom-in-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m01-native-map-pan-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m01-native-map-provider-options-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m01-native-map-ready-before-encounter-20261026.png"
+      ],
+      "status": "passed",
+      "updatedAt": "2026-10-26T06:20:12.875Z",
+      "history": [
+        {
+          "roundId": "baseline-a9acd7f-790f5b6d",
+          "sourceCommit": "a9acd7f",
+          "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+          "status": "running",
+          "actual": "实际打开未定位空态，经明确QA位置入口加载OSM/MapLibre底图和真实角色标记；模拟定位来源已保存，平移缩放待最终包",
+          "evidence": [
+            "evidence/discovery-explicit-qa-map.json",
+            "evidence/discovery-explicit-qa-map-renderer.png"
+          ]
+        },
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "running",
+          "actual": "旧312演练位置来源QA可辨，实际底图及15附近对象可见；领地共用地图已原生缩放/拖动/回中/重载。探索独立图层/异常底图与最终包仍待验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-uiux-broad-scan.json"
+          ]
+        }
+      ],
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "M02",
+      "domain": "探索地图",
+      "title": "定位未授权与重试",
+      "owner": "03",
+      "reproducibleSteps": [
+        "未授权定位状态查看",
+        "重试定位"
+      ],
+      "expected": "不假定位；状态解释清晰；不自动改OS隐私设置",
+      "actual": "普通云A应用定位原为关闭，原生点获取系统位置一次明确APP_LOCATION_DISABLED；快照real/privacy_disabled/fix=null/watchingfalse，零发现无假位置，设置全文保持原值且未弹OS权限。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m02-unapproved-location-native-retry-readback.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m02-app-location-off-native-retry.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T20:01:36.847Z"
+    },
+    {
+      "id": "M03",
+      "domain": "探索地图",
+      "title": "真实定位精度准入",
+      "owner": "03",
+      "reproducibleSteps": [
+        "正常定位",
+        "查看精度",
+        "尝试准入"
+      ],
+      "expected": "沿用80米门槛；硬件不合格受阻而非绕过",
+      "actual": "尚未在此候选实际执行",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [],
+      "status": "pending",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "M04",
+      "domain": "探索地图",
+      "title": "探索扫描与无结果",
+      "owner": "03",
+      "reproducibleSteps": [
+        "合格定位或明确模拟场景扫描",
+        "切范围与重试"
+      ],
+      "expected": "正确空态/结果/冷却；不重复发奖",
+      "actual": "已真实可见QA入口生成15实际附近候选，距离/选中与位置自然过期提示均已观察；未制造无结果或改marker。扫描/重试和无结果剩余覆盖保留，继续原路径。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m01-native-map-positive-with-simulated-location-20261026.json"
+      ],
+      "status": "pending",
+      "updatedAt": "2026-10-26T06:20:12.884Z",
+      "history": [
+        {
+          "roundId": "baseline-a9acd7f-790f5b6d",
+          "sourceCommit": "a9acd7f",
+          "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+          "status": "running",
+          "actual": "正常QA位置刷新得到15个相遇，位置过期会禁用挑战；刷新后恢复。真实定位与空结果/冷却后续验证",
+          "evidence": [
+            "evidence/discovery-explicit-qa-map.json",
+            "evidence/discovery-encounter-before-battle.json"
+          ]
+        },
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "running",
+          "actual": "旧312明确本地QA模拟定位，15附近对象列表，原生选择57m青芽、详情、先离开与空图鉴返回正常；位置stale时错误距离提示已另报QA013。空结果/扫描冷却及最终包待验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-discovery-catalog-empty.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-discovery-disabled-freshness-readback.json"
+          ]
+        }
+      ],
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "M05",
+      "domain": "探索地图",
+      "title": "野外相遇到捕捉",
+      "owner": "03",
+      "reproducibleSteps": [
+        "打开相遇",
+        "正常战斗胜利",
+        "尝试捕捉"
+      ],
+      "expected": "胜利才可捕捉；生成指定资源新petId与receipt",
+      "actual": "原LocalA明确模拟场景，旧过期岩团正常离开无奖；新鱼丸实际11回合自然胜利，过期位置首确认正确拒绝，但错误藏在modal背景blur（QA-025）。经普通取消/可见重新定位/继续同胜利/确认，成功唯一新pet f31270e4，resource builtin:yuwan-v2，原4非出战宠raw保持。详情/图鉴/重入一致，6pet/1capture/同奖励回执不重复。正向已成立，整体因QA025待新包复验失败。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m05-native-first-wild-battle-actual-identities-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m05-m06-safe-native-checkpoint-before-auth-v3-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m05-m06-native-safe-persisted-checkpoint-before-auth-v3-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m05-positive-single-capture-with-QA025-modal-error-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m05-native-capture-confirm-first-visible-result-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m05-native-capture-cancel-exposes-real-location-error-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/local-ui-errors-capture-validation-behind-modal-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/local-flow-fish-capture-stale-position-rejected-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m05-native-fresh-location-capture-normal-confirm-result-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m05-native-pokedex-single-captured-fish-entry-20261026.png"
+      ],
+      "status": "failed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-26T07:29:34.346Z"
+    },
+    {
+      "id": "M06",
+      "domain": "探索地图",
+      "title": "失败逃跑与过期",
+      "owner": "03",
+      "reproducibleSteps": [
+        "相遇逃跑/失败",
+        "过期后重试",
+        "离页返回"
+      ],
+      "expected": "不能错误捕捉；状态可恢复；不重复结算",
+      "actual": "旧岩团spawn自然07:00Z过期后，普通继续仍保持原round0；经离开确认→abandoned/cancelled，无capture/新奖/宠物。另新胜利相遇自然位置过期收服被明确拒绝，后正常重新定位可恢复。尚未额外制造自然失败或单独未取消目标过期捕捉，保留剩余覆盖。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m05-m06-safe-native-checkpoint-before-auth-v3-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m06-native-toolbar-return-retains-wild-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m06-native-continued-existing-wild-same-round-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m06-original-expired-normal-abandon-readback-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m06-native-expired-original-wild-abandoned-through-ui-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/local-flow-fish-capture-stale-position-rejected-20261026.json"
+      ],
+      "status": "pending",
+      "updatedAt": "2026-10-26T07:29:34.352Z",
+      "history": [
+        {
+          "roundId": "baseline-a9acd7f-790f5b6d",
+          "sourceCommit": "a9acd7f",
+          "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+          "status": "running",
+          "actual": "真实UI相遇→共用战斗页；离开确认可取消并恢复，再确认离开显示已离开/回合0。权威为明确QA模拟；失败和过期其他分支待最终包",
+          "evidence": [
+            "evidence/wild-abandoned-readback.json",
+            "evidence/wild-abandoned-renderer.png"
+          ]
+        }
+      ],
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "M07",
+      "domain": "探索地图",
+      "title": "网络异常与重新定位",
+      "owner": "03",
+      "reproducibleSteps": [
+        "专用进程断网",
+        "地图/相遇请求",
+        "恢复网络"
+      ],
+      "expected": "错误明确；旧结果不冒充新位置；可恢复",
+      "actual": "尚未在此候选实际执行",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [],
+      "status": "pending",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T12:58:50.138Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "running",
+          "actual": "旧312真实位置自然过期后刷新恢复准入，source始终qa-discovery/simulated且未改阈值；错误禁用原因QA013派03。持续位置更新true→原生离开探索到背包→false已读回。进程网络中断/恢复和最终包待验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-discovery-watch-stops-on-leave.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-discovery-watch-enabled.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-discovery-stale-wrong-disable-reason.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B01",
+      "domain": "对战",
+      "title": "训练选择与开始",
+      "owner": "04",
+      "reproducibleSteps": [
+        "选指定宠物",
+        "选择训练配置",
+        "点击开始"
+      ],
+      "expected": "双方真实资源；属性与实例正确；进入共用战斗页",
+      "actual": "正常UI明确选择新木宠甲8d67并配土training-earth，一次Start创建876a...唯一新session。指定pet/resource精确，真实青芽/岩团双canvas ready有实际纹理和像素；初始规范化HP120/怒气0，5pet成长原行/原聊天选择不变，无新奖励。Root独立SQLite确认指定新session/player/enemy及midflow数据。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b01-before-new-wood-earth-training.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b01-new-training-canonical-native-start.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b01-new-wood-earth-training-start-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T20:41:05.948Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "passed",
+          "actual": "旧312真实UI选择第二只0cb7开始标准水→火训练，正常进入新会话battle-5f702c9e，双canonical形象与规则120HP/0怒气可见；实际1次普通攻击已提交。最终包仍须重验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-selected-second.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-round1.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-first-action.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B02",
+      "domain": "对战",
+      "title": "全部招式与回合反馈",
+      "owner": "04",
+      "reproducibleSteps": [
+        "普通/技能/防御/治疗逐项操作"
+      ],
+      "expected": "按钮可用性与消耗正确；每操作一回合；动画对应",
+      "actual": "按实际4招普通/属性/闪避/大招逐正常UI覆盖：普攻连续r3/r4不同实事件key且真实texture首帧重启；大招怒气50消耗与有效回血8/20；新木土r4属性直伤14+寄生吸2，r5闪避挡普攻、消耗20返30。5阶段与实际Pixi texture帧均捕获；零怒气大招禁用点击全SQL不变。原3段漏采明示排除，未当正证据；本机隔离模拟authority。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b02-all-four-real-moves-and-insufficient-complete.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b02-new-wood-r4-successful-element-real-textures.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b02-new-wood-r5-successful-dodge-real-textures.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b02-zero-anger-disabled-no-action.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T20:41:37.513Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "passed",
+          "actual": "旧312原生执行普攻/属性/首次与后续闪避/大招，22回合自然胜利；怒气阈值启禁用、克制打断、燃烧、治疗所见反馈与SQLite记录一致。被动观察281个非idle真实纹理采样，含attack_windup/release、skill、walk、hit、victory。仅历史包通过，最终包重验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-round2-after-normal.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-first-action.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-all-actions-textures.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-after-element.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-after-dodge.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-ultimate-enabled.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-after-ultimate.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B03",
+      "domain": "对战",
+      "title": "自然胜负与奖励",
+      "owner": "04",
+      "reproducibleSteps": [
+        "持续正常操作到自然终局",
+        "确认",
+        "重开战报"
+      ],
+      "expected": "奖励只发一次；HP/XP/种子与持久receipt一致",
+      "actual": "原保留训练前2回合历史精确保留，DC7原生继续3–14自然胜利HP54:0；唯一battle reward/companion award/garden seed receipt，明确第二旧狐xp20→40/wins1→2，种子carrot+2、另4宠全行不变。终局禁用点击/战报14回合遍历/两次播放暂停返回后所有账本全同；Root独立SQLite确认。本机隔离模拟authority，非云在线战斗。 补充DC7新开青芽土敌31回合自然胜利HP76:0，仅8d67经验0→20/胜1、tomato种子+2；另4宠/旧报告精确保留，原battle选择0cb已正常恢复。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b03-original-natural-victory-14-rounds.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b03-original-reward-once-after-disabled-click.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b03-b04-b05-original-battle-complete.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b03-new-wood-complete-and-selection-restored.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T20:57:17.592Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "passed",
+          "actual": "旧312完全原生22回合自然胜利，唯一session/report/reward；第二只经验0→20、胜场0→1，稻种1→3，第一只全行不变。原生回放、离页重开战报后奖励/库存/宠物/报告均完全不变；模拟隔离账号训练，不作云权威或最终包通过。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-natural-win.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-natural-end.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-report-reopen-no-duplicate.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B04",
+      "domain": "对战",
+      "title": "进行中返回恢复",
+      "owner": "04",
+      "reproducibleSteps": [
+        "训练数回合",
+        "离开返回",
+        "重开应用"
+      ],
+      "expected": "可恢复或明确放弃；不重复开始/结算",
+      "actual": "依既定训练分支：原1fc session多次正常离开/保留本场/跨真实SFX根重开，最终仍同ID/原2rounds/HP120:106/anger20:5与宠物，原生继续后自然完成；原历史前缀与最终14rounds前2条精确相同，不新开或重结算。好友等待/在线分支另在B06/B10验证不借此通过。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/old-active-battle-resumed-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/coldpair-final-outcome.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b04-original-active-before-final-native-moves.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b04-original-session-continued-before-final-moves-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t02-t05-after-normal-restart.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b03-b04-b05-original-battle-complete.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T20:31:27.407Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "failed",
+          "actual": "旧312侧栏切聊天再回对战可完整恢复同一会话与既有1回合；但左上返回按钮trusted真实点击立即被自动重定向回本场，视觉无响应，已登记QA012派04。正常退出重启与最终包仍待验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-battle-route-away-chat.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-route-recovery.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-active-battle-back-noop.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-before-return.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-route-return.jpg"
+          ]
+        },
+        {
+          "roundId": "candidate-e875feb-50e52249",
+          "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+          "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+          "status": "running",
+          "actual": "e875原生训练2回合后返回大厅→战报→再来一局返回大厅→继续本场：同battle-1fc23b9e...完整session逐值相同（已完成2回合，双方HP120/106、怒气20/5、2条历史）；大厅可停留。SQLite实际表逐项计数留证，无新奖励。好友等待/进行中路径及最终EXE仍待。",
+          "evidence": [
+            "rounds/candidate-e875feb-50e52249/evidence/qa012-native-return-report-continue-outcome.json",
+            "rounds/candidate-e875feb-50e52249/evidence/qa012-lobby-retained-session-native.jpg",
+            "rounds/candidate-e875feb-50e52249/evidence/qa012-training-resumed-native.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B05",
+      "domain": "对战",
+      "title": "历史和回放",
+      "owner": "04",
+      "reproducibleSteps": [
+        "打开本轮真实战报",
+        "逐回合回顾"
+      ],
+      "expected": "双方/招式/HP/属性/终局与原记录一致",
+      "actual": "原生打开本轮自然终局战报，以键盘依次选全14回合；每回合标题/双方招式/HP/怒气均与原record一致。第14回合两次正常播放，真实skill/walk纹理帧与4行逐条推进，可立即暂停并返回训练中心；所有奖励/报表/5宠/库存全行不变，Root独立SQLite复核。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b05-all-fourteen-native-round-readbacks.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b05-round14-first-real-replay-textures.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b05-round14-second-real-replay-textures.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b03-b04-b05-original-battle-complete.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T20:31:27.410Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "running",
+          "actual": "旧312原生打开该22回合真实战报，检查第1与第22回合并播放终局回顾；双方/招式/HP/怒气/燃烧/治疗日志与本场SQLite一致，回顾完成与重开均不再结算。其余逐回合按钮、正常退出重启与最终包仍待验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-report-first-round.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-report-final-round.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-report-replay-complete.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-report-reopen-no-duplicate.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B06",
+      "domain": "对战",
+      "title": "好友邀请和接受",
+      "owner": "04",
+      "reproducibleSteps": [
+        "双独立合成账号建立联系",
+        "甲邀请乙",
+        "乙接受"
+      ],
+      "expected": "双方一致session；自然真实Reatime推进",
+      "actual": "真实A搜索/邀请d994...→B原生接受→A进入同一online-d79...房；双方0004↔0005反向一致，waiting→active及首轮自动结果均在业务只读前原生观察，无手动sync。Root仅SELECT独立R1两原actor/action唯一submit、唯一round/HP110:110/anger5:5/0settlement共11checks通过。未冒充单独抓到WebSocket-only传输。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b06-invite-accept-shared-room-first-real-round.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b06-first-real-round-authority-both-views.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T21:42:30.211Z"
+    },
+    {
+      "id": "B07",
+      "domain": "对战",
+      "title": "好友拒绝",
+      "owner": "04",
+      "reproducibleSteps": [
+        "甲邀请乙",
+        "乙拒绝"
+      ],
+      "expected": "双方终止；不发战斗奖；可再次邀请",
+      "actual": "A真实邀请5983...由B正常婉拒，双方rejected且原生邀请均移除；唯一reject原ID成功，未生成房间/结算/奖励/成长/库存变化；A随后正常重新邀请ef338...成功。Root独立PG8checks确认原invite/命令/无room无settlement。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b07-rejected-once-and-can-reinvite.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b07-rejection-after-exact-window-bind-readback.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b07-a-rejected-invitation-removed-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b07-b-rejected-invitation-removed-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T21:28:21.704Z"
+    },
+    {
+      "id": "B08",
+      "domain": "对战",
+      "title": "好友取消",
+      "owner": "04",
+      "reproducibleSteps": [
+        "甲发邀请",
+        "甲取消",
+        "乙尝试接受"
+      ],
+      "expected": "取消可见；不能接受已取消邀请",
+      "actual": "A原生取消第二invite ef338...，双方cancelled/roomnull；乙正常界面接受入口移除，原空位置单击不发命令，不启动会话。Root独立PG唯一原cancel、无room/settlement8checks与本机8checks吻合；未隐藏提交accept，也未宣称已实际验证服务端accept拒绝。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b08-cancelled-no-accept-no-reward-complete.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b08-second-invite-cancelled-both-readbacks.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T21:30:20.315Z"
+    },
+    {
+      "id": "B09",
+      "domain": "对战",
+      "title": "邀请过期",
+      "owner": "04",
+      "reproducibleSteps": [
+        "发真实或明确模拟过期邀请",
+        "等待产品过期",
+        "接受"
+      ],
+      "expected": "双方状态一致；过期不能启动",
+      "actual": "QA-022明确功能缺口：DC7邀请无产品TTL/expiry schema/服务器到期拒绝，04及Root独立确认；无法自然等待一个不存在的产品到期规则，未用手改fixture或时钟冒充。待新实现/新候选真实5分钟验证；本轮正常邀请ID后续追加。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b12-b-real-friends-empty-state-native.jpg"
+      ],
+      "status": "failed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T21:15:58.958Z"
+    },
+    {
+      "id": "B10",
+      "domain": "对战",
+      "title": "断网重连与重复操作",
+      "owner": "04",
+      "reproducibleSteps": [
+        "双端对战",
+        "仅QA进程网络中断",
+        "恢复并继续"
+      ],
+      "expected": "权威回合一致；补回原回合；不双发奖励",
+      "actual": "尚未在此候选实际执行",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [],
+      "status": "pending",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "B11",
+      "domain": "对战",
+      "title": "好友自然终局和重启",
+      "owner": "04",
+      "reproducibleSteps": [
+        "真实双方自然打至终局",
+        "两端重开",
+        "独立云回读"
+      ],
+      "expected": "双方战报与结算相同；原session与奖励唯一",
+      "actual": "真实A/B共享房间d79b...原生12回合自然终局，A新狐0004胜20XP/胜次+1，B新狐0005败5XP；各唯一tomato种子+2。双端同原profile普通重启并正常UI开原报告，10业务表全exact、原settings恢复；Root40项自然终局+最终PG确认仍12round/24choice、原2receipt/result/三个protected模块不变，无二次结算。QA023温态编号显示缺口独立C03失败保留。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b06-third-real-invite-before-accept.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b06-first-real-round-authority-both-views.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b11-live-friend-natural-terminal-both-restarts-complete.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b11-real-friend-natural-terminal-a-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b11-real-friend-natural-terminal-b-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b11-a-normal-reopened-original-report-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/qa023-b-normal-cold-restart-correct-opponent-number-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T22:10:24.065Z"
+    },
+    {
+      "id": "B12",
+      "domain": "对战",
+      "title": "未知对手与空态",
+      "owner": "04",
+      "reproducibleSteps": [
+        "无好友/离线对手/信息未到时打开邀请"
+      ],
+      "expected": "不伪造头像/属性/HP；显示等待或明确错误",
+      "actual": "同DC7真实好友空态/未知账号搜索未找到玩家、空房间码禁用点击无命令；NOQA09仅保留原未确认join且明确失败提示，无房间/奖励。B接受真实invite后guest资料均null，界面只画1player及1份HP/怒气，明确等待好友，不显示内部waiting-peer占位的木/HP。Root独立waiting-room12checks确认未虚构guest/结算。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b12-real-empty-unknown-and-waiting-opponent-complete.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T21:38:24.037Z"
+    },
+    {
+      "id": "G01",
+      "domain": "领地菜园",
+      "title": "领地初始地图与列表",
+      "owner": "05",
+      "reproducibleSteps": [
+        "打开领地/菜园",
+        "缩放与选领地"
+      ],
+      "expected": "地图/边界/状态真实；定位限制说明正确",
+      "actual": "同一DC7原生领地页加载实际OSM底图；普通缩小/滚轮/平移呈现地理矩形边界，列表与右侧同一未占领演练领地一致；每次2次、选择原有第二狐后地图操作不串宠。可见QA定位入口明确演练来源，不作真实GPS或云权威结论。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g01-native-original-localA-garden-territory-entry-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g01-native-map-minus-shows-territory-boundary-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g01-native-map-pan-preserves-selected-territory-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/local-flow-territory-prechallenge-20261026.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-26T07:45:18.587Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "running",
+          "actual": "旧312正常点击查看演练领地加载实际OSM底图；原生缩放/拖动/回当前位置/重载底图，领地及已选第一只保持；占领记录为空文案准确。本地模拟定位明确，不作真实云地理准入；最终包待验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-territory-empty-location.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-territory-map-controls.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-territory-known-qa010-geometry.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "G02",
+      "domain": "领地菜园",
+      "title": "驻守选宠与更换",
+      "owner": "05",
+      "reproducibleSteps": [
+        "选择甲驻守",
+        "查看乙",
+        "更换为丙"
+      ],
+      "expected": "归属独立；只有选中领地/宠物改变",
+      "actual": "当前领地仍未占领，QA-026挡住正向占领，因此真实驻守/换宠尚未可执行。未用DB或fixture制造owned领地。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g04-territory-cancel-native-readback-20261026.json"
+      ],
+      "status": "pending",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-26T07:45:18.602Z"
+    },
+    {
+      "id": "G03",
+      "domain": "领地菜园",
+      "title": "竞争胜利占领",
+      "owner": "05",
+      "reproducibleSteps": [
+        "合格定位或明确模拟领地竞争",
+        "自然胜利",
+        "确认占领"
+      ],
+      "expected": "仅胜利占领；服务端/本机receipt一致",
+      "actual": "已正常进入原演练领地挑战；QA-026取消后入口被未结算abandoned局占住，无法继续正向自然胜利占领。保留原ID/次数，待新候选正常恢复后补验。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g04-territory-cancel-native-readback-20261026.json"
+      ],
+      "status": "pending",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-26T07:45:18.597Z"
+    },
+    {
+      "id": "G04",
+      "domain": "领地菜园",
+      "title": "竞争失败取消和占用",
+      "owner": "05",
+      "reproducibleSteps": [
+        "竞争失败/取消",
+        "重复占领",
+        "他人已占领场景"
+      ],
+      "expected": "失败确认无占领；冲突清楚；不重复扣奖",
+      "actual": "QA-026：普通round0离开并确认，未占领/未发胜利奖励正确；但取消后挑战settled=0，领地页仅继续同一abandoned战斗且缺确认结果，剩余1次无法开始。自然失败/他人占领冲突分支未执行。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g04-territory-cancel-native-readback-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/local-flow-territory-cancel-reentry-stuck-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g04-native-territory-leave-confirm-dialog-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g04-native-territory-abandoned-confirmed-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g04-native-territory-return-after-abandon-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g04-native-continue-abandoned-territory-stays-ended-20261026.png"
+      ],
+      "status": "failed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-26T07:45:18.593Z"
+    },
+    {
+      "id": "G05",
+      "domain": "领地菜园",
+      "title": "种植与库存扣减",
+      "owner": "05",
+      "reproducibleSteps": [
+        "指定地块种可用种子",
+        "重复点击",
+        "查看背包"
+      ],
+      "expected": "仅成功种植一次扣种；地块与库存一致",
+      "actual": "普通云A原生各播种一次carrot/tomato/berry/rice至plot2–5；4个原action均committed，每次只扣1粒，种子分别1→0/2→1/2→1/2→1。真实生长时长600000/900000/1200000/1500000ms，原plot1成熟作物与plot6空地保持；无种时按钮明确禁用。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g05-original-mature-carrot-and-empty-plots-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g05-carrot-plot2-native-click.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g05-carrot-plot2-committed-readback.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g05-four-native-plants-natural-timers.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g05-empty-plot-no-carrot-seed-disabled-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g05-four-crops-growing-native.jpg"
+      ],
+      "status": "passed",
+      "updatedAt": "2026-10-25T16:31:07.873Z",
+      "history": [
+        {
+          "roundId": "baseline-a9acd7f-790f5b6d",
+          "sourceCommit": "a9acd7f",
+          "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+          "status": "running",
+          "actual": "正常UI地块1确认播种胡萝卜，种子2→1；界面进入原有10分钟生长且收获禁用。等待自然成熟，重复点击/其他种植待最终包",
+          "evidence": [
+            "evidence/garden-first-plant.json",
+            "evidence/garden-first-plant-renderer.png"
+          ]
+        },
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "passed",
+          "actual": "原生UI在地块1种胡萝卜、地块4种稻米，种子各2→1，种植生长与禁提前收获正常；真实时间不改钟。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/garden-carrot-planted.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/garden-rice-planted.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/garden-two-plants-readback.json"
+          ]
+        },
+        {
+          "roundId": "candidate-e875feb-50e52249",
+          "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+          "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+          "status": "running",
+          "actual": "e875已普通真实云A原生plant一条合法胡萝卜操作并经断网重开原ID恢复，独立server唯一回执、seed2→1/plot1种一次；全播种按钮、库存不足及同最终包完整覆盖仍待。",
+          "evidence": [
+            "rounds/candidate-e875feb-50e52249/evidence/cloud-proxy-episode/episode-final-manifest.json"
+          ]
+        }
+      ],
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "G06",
+      "domain": "领地菜园",
+      "title": "成熟等待与收获",
+      "owner": "05",
+      "reproducibleSteps": [
+        "查看未成熟",
+        "到实际/明确模拟成熟点",
+        "收获和重试"
+      ],
+      "expected": "未成熟不可收；成熟奖励一次且receipt一致",
+      "actual": "四新作物真实自然10/15/20/25分钟成熟，未成熟禁收；一次原生HarvestAll4/d55e282b...，garden7→8，4harvest事件，carrot+3/tomato+3/berry+4/rice+2，种子和2宠不变。后点禁用入口账本全同，Root独立PG唯一1行且canonical receipt一致。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g05-four-native-plants-natural-timers.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g05-four-crops-growing-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g06-four-crops-harvested-once.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g06-four-crops-harvested-once-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T19:50:43.239Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "passed",
+          "actual": "旧312按实际时间自然成熟；原生单收胡萝卜3、批量收剩余稻米2，再点禁用入口无新动作。只读SQLite两地块清空rev2，garden_actions种植2+收获2共4，库存carrot3/rice2，种子不重复扣。非live-cloud；原actionId网络重试及最终包另待。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-garden-natural-mature-before.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-garden-harvest-readback.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-garden-harvest-after.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "G07",
+      "domain": "领地菜园",
+      "title": "离线与云端冲突",
+      "owner": "05",
+      "reproducibleSteps": [
+        "双QA端修改同领地或断网写入",
+        "恢复"
+      ],
+      "expected": "按权威决策；冲突不丢失或重复经济动作",
+      "actual": "矩阵OR分支取真实断网写入恢复：同一action/hash/wire跨SFX根和离线登录页完整保留；恢复原身份后仅点原重试一次，PG0→1，garden6→7，胡萝卜0→3且唯一次harvest事件。S04双端并发仍待验。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-complete-native-offline-restart.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T19:46:42.670Z"
+    },
+    {
+      "id": "I01",
+      "domain": "背包喂养",
+      "title": "分类与空背包",
+      "owner": "05",
+      "reproducibleSteps": [
+        "逐分类查看",
+        "选择物品",
+        "无库存状态"
+      ],
+      "expected": "数量/说明/用途准确；空态明确",
+      "actual": "实际四分类数量与只读库存一致，种子选中显示播种用途、零库存米饭不可喂；但无搜索的装扮空类误用搜索文案，并跨分类残留米饭喂养详情，QA-018。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/qa018-empty-category-readback.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/qa018-empty-appearance-stale-food-detail-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/i01-seed-selected-use-native.jpg"
+      ],
+      "status": "failed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T19:46:42.666Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "passed",
+          "actual": "旧312真实UI逐看全部/食物/装扮/道具；装扮分类明确空状态，零库存米饭不可喂养；稻米2份明确需制作并有真实入口。数量与只读SQLite一致；头像显示另列QA010。最终包仍须复验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-bag-zero-food-selected-pet.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-bag-empty-category.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-bag-rice-material.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I02",
+      "domain": "背包喂养",
+      "title": "合成成功与不足",
+      "owner": "05",
+      "reproducibleSteps": [
+        "选择配方",
+        "足量合成",
+        "不足时重试"
+      ],
+      "expected": "材料与产物原子变化；不足不扣减",
+      "actual": "原料0时入口禁用；正常UI按材料上限制作2，唯一09188c2d.../garden8→9，rice-2和cooked+2原子两事件。耗尽后再点无请求/扣减，2宠和地块全同；Root独立PG唯一receipt+events匹配，后续feed扣1闭环。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/i02-craft-two-atomic-and-insufficient.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/i02-craft-two-completed-rice-empty-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T19:57:50.184Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "passed",
+          "actual": "旧312真实UI数量上限按原料2限制为2，点一次批量制作后rice2→0/cooked_rice0→2，仅新增1个craft action a524acf4；耗尽后入口禁用，再点无新action或库存变化。只读SQLite原子变化匹配。最终包仍须复验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-craft-quantity-cap.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-craft-result-insufficient.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-craft-feed-readback.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I03",
+      "domain": "背包喂养",
+      "title": "指定实例喂养",
+      "owner": "05",
+      "reproducibleSteps": [
+        "选甲喂一个物品",
+        "查乙",
+        "重复点击"
+      ],
+      "expected": "只甲成长与饱食变化；库存扣一次",
+      "actual": "明确选择新A1狐pet3b746...、米饭1份，快速双击只产生1个4b0d62dc.../feed事件。米饭2→1，仅目标sat60→80/mood60→63/aff0→4/rev1→2；鱼丸全行、chat/battle/guard选择全同，原生鱼丸预览60；Root独立PG唯一/全表/receipt均一致。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/i03-explicit-instance-double-click-single-feed.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/i03-a1-fox-fed-once-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/i03-other-fish-unchanged-sixty-preview-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T19:57:50.188Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "running",
+          "actual": "旧312真实UI明确选第二只0cb7并喂1份米饭：只有该pet饱食60→80、心情60→63、好感affinity0→4（经验不变）、rev1→2，第一只原行完全不变；熟饭2→1，仅1个feed action。聊天/对战/驻守选择字段不变；账户总revision57→58为正常变更。重复点击/原request重试及最终包仍待验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-feed-second-before.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-feed-second-after.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-craft-feed-readback.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I04",
+      "domain": "背包喂养",
+      "title": "库存重启同步",
+      "owner": "05",
+      "reproducibleSteps": [
+        "本轮真实经济操作后重启/同步",
+        "独立读receipt"
+      ],
+      "expected": "数量/归属保持；不再结算",
+      "actual": "本轮真实HarvestAll4/craft2/feed1后正常退出7进程，唯一重开同A档至新SFX根nss5693，实际4payload hash精确DC7。9经济/实例表和LS/IDB/origin/pending全同，完整设置已恢复；Root独立PG19:58:59仍3原动作各1、7events不变，garden10/库存/2pets/三选择全一致，save21为设置保存正常增量。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/i04-normal-restart-economic-continuity.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/i04-reopened-inventory-and-food-count-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T20:01:36.844Z"
+    },
+    {
+      "id": "R01",
+      "domain": "角色资源",
+      "title": "库筛选预览与偏好",
+      "owner": "07",
+      "reproducibleSteps": [
+        "打开资源库",
+        "分类筛选",
+        "选角色和动作"
+      ],
+      "expected": "全部资源可渲染；偏好不改变错误petId",
+      "actual": "DC7 8内置+1自有资源名称筛选/实际渲染全覆盖，空搜索明确无匹配，三页签实验；B1同owner动作映射/desktop-battle校准正式保存并经B2实际恢复验证。另在原隔离localA明确选新pet-8d67...（非全局chat ea1）应用内置岩团，仅该宠变；其详情真实petId/resourceId/纹理帧匹配。再正常UI恢复青芽，保留2条合法appearance回执；其他4宠全行、原聊天/战斗/菜园/动作历史和chat/battle/guard选择原样，未跨owner使用B私有UUID。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r02-native-input-steps.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r02-real-all-actions-replay-pause-dual-complete.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r01-owned-two-scenes-and-sleep-map-actual-saved-readback.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r01-local-explicit-target-before-one-apply.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r01-local-after-one-explicit-resource-apply.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r01-local-target-detail-actual-pet-resource-frame-readback.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r01-local-exact-target-yantuan-detail-native.jpg",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r01-local-no-match-search-readback.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r01-local-action-calibration-tab-real-native.jpg",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r01-local-all-five-original-appearances-restored-native.jpg",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r01-local-final-protected-five-pets-and-history-readback.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-p05-normal-account-restore-original-resource-and-preservation-complete.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r01-library-search-preferences-and-explicit-pet-ownership-complete.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T23:58:08.794Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "running",
+          "actual": "旧312资源库8形象可见，真实选鱼丸、打开动作列表、三页签与应用选宠弹层，取消后焦点回原按钮；全部资源/筛选/偏好归属和最终包待验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-resources-library-wide.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-resources-apply-picker.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R02",
+      "domain": "角色资源",
+      "title": "真实动作全套与重复播放",
+      "owner": "07",
+      "reproducibleSteps": [
+        "各角色播放idle/walk/attack/hit等可用动作",
+        "连续相同招式"
+      ],
+      "expected": "实际canvas/纹理帧推进；同动作可重播",
+      "actual": "DC7 原生名称搜索逐个选取 8 内置+1 自有导入资源，并以真实菜单逐项播放 12 公开动作，共108组合。12526次只读实际帧观察全部覆盖 ready、正尺寸canvas、素材定义的多帧/单帧；导入青芽同一skill playbackKey0→1→2每次真实帧0→4和3种纹理；行走暂停固定、恢复推进；双实例左右动作独立。全部资源表、托管bytes和10个业务表原样保留。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r02-progress-seven-builtin-frame-coverage.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r02-frozen-actual-asar-manifests-windows-path-corrected.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r02-real-all-actions-replay-pause-dual-complete.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r02-all-nine-resources-108-actions-full-raw-frame-samples.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r02-native-input-steps.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r02-pause-resume-and-same-skill-replay-readback.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r02-dual-left-walk-right-hit-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T23:15:20.021Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "running",
+          "actual": "旧312正常原生选择鱼丸skill并点重播，实际canonical ready/fallback=false，playbackKey0→1且纹理帧0→4真实变化；全角色/全动作/重复动作与最终包仍待验，结束帧静止不误判动画失败。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-resources-native-replay-textures.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-resources-native-pause-play.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R03",
+      "domain": "角色资源",
+      "title": "本地资源导入",
+      "owner": "07",
+      "reproducibleSteps": [
+        "用新QA样本从正常文件选择导入"
+      ],
+      "expected": "资源可见可渲染；manifest/字节/历史正确",
+      "actual": "B1正常原生文件选择导入自有青芽JSON一次，资源库8→9；得到ownerB私有UUID866b735a...、contentHash1cd0626e...，唯一原import流水d1c4f212...。managed原JSON/PNG SHA均与审核源逐字节相同，原18builtin映射与伙伴/战报/库存10表exact；真实可见青芽preview ready，2.6s读到17个实际frame索引与2个实际textureFrame。未应用到旧宠，sync仍原false；早期OS文件名输入问题不当产品导入或R04通过。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/r03-owned-qingya-native-import-bytes-history-and-frame-complete.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/r03-b1-actual-qingya-import-and-preview-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/r03-b1-actual-qingya-import-readback.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T22:56:04.296Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "running",
+          "actual": "旧312真实打开许可来源弹层和原生导入文件窗口，取消回原资源页并明确已取消导入。有效新样本导入、字节/历史与最终包待验；未使用下载目录中其他项目文件。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-resources-import-cancelled.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R04",
+      "domain": "角色资源",
+      "title": "无效导入与路径边界",
+      "owner": "07",
+      "reproducibleSteps": [
+        "导入无效包/缺文件/路径穿越样本"
+      ],
+      "expected": "拒绝且明确原因；已有资源和文件不破坏",
+      "actual": "DC7 原生文件选择器各一次提交已审核的错误结构、缺PNG和路径越界样本，分别显示明确中文拒绝。每次后只读资源全部表、托管目录及文件SHA、10个业务表均与原青芽导入后基线完全一致，无新增半成品/导入记录/偏好/云队列。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r04-three-invalid-before-original-qingya-protected.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r04-existing-approved-fixture-byte-precheck.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r04-b1-catalog-format-rejected-native.jpg",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r04-b1-missing-png-rejected-native.jpg",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r04-b1-path-traversal-rejected-native.jpg",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r04-format-after-readback.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r04-missing-png-after-readback.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r04-path-traversal-after-readback.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r04-native-three-invalid-rejections-no-residue-complete.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T23:01:20.419Z"
+    },
+    {
+      "id": "R05",
+      "domain": "角色资源",
+      "title": "资源随账户备份导出与恢复",
+      "owner": "07",
+      "reproducibleSteps": [
+        "正常UI导入自有青芽包",
+        "账号与同步导出本地备份",
+        "同owner同环境第二普通profile正常UI恢复",
+        "只读比对原resourceId、PNG/JSON原bytes、动作映射、校准与历史"
+      ],
+      "expected": "正式账户备份嵌入真实原文件与SHA；新managed路径恢复保留原resourceId/imports/preferences/action map；不改owner、不手拷旧包充当UI导出",
+      "actual": "DC7 正式账户UI导出/恢复完成：自有青芽原UUID、JSON/PNG原bytes/SHA、import/provenance历史、sleep→sleep_seated映射及desktop/battle独立校准在同owner B2新managed路径exact并真实渲染。默认merge遇新狐实际XP差异正确拒绝且无partial；经Root完整保护审查后fresh原生预览显式“恢复到此备份版本”一次成功。原3宠及全部旧动作保护；原friend结果复制无新结算；B2原聊天有效配置/会话memory保留，syncfalse。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-b-fresh09/uat-exports/r05-dc7-qingya-actions-20261026.lingjing.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-p04-official-export-original-bytes-and-secrets-audit.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-b2-original-preserving-before-backup-restore.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-b2-preserving-merge-conflict-no-partial-write.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-b2-conflict-preserved-backup-files-and-pet-differences.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\accounts\\backups\\before-restore-1792971005015-635605ef-8189-4f7a-ac8b-b55fc9774f24.lingjing.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\accounts\\backups\\before-restore-1792971585814-3561386c-a896-43db-9a0c-073a2566c311.lingjing.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-b2-fresh-full-preview-immediately-before-confirm.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-b2-successful-full-restore-original-readback.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-b2-restored-real-render-and-scenes-readback.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-p05-complete-restore-checks-and-chat-cleanup.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-b2-original-chat-profile-formally-restored-native.jpg",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-p05-normal-account-restore-original-resource-and-preservation-complete.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "procedureHistory": [
+        {
+          "at": "2026-10-25T15:07:06.687Z",
+          "title": "导出和重导入",
+          "steps": [
+            "正常导出QA资源",
+            "全新档案重新导入"
+          ],
+          "expected": "字节/动作映射一致；路径可选",
+          "reason": "Root aligned test with approved scope22/cloud-resource-contract account backup exporter. No independent resource-page export feature was required."
+        }
+      ],
+      "updatedAt": "2026-10-25T23:47:21.419Z"
+    },
+    {
+      "id": "R06",
+      "domain": "角色资源",
+      "title": "偏好与资源云端恢复",
+      "owner": "07",
+      "reproducibleSteps": [
+        "云QA端导入与改偏好",
+        "第二新档案同步"
+      ],
+      "expected": "实际字节校验和一致；私有owner正确",
+      "actual": "25项新岩团冷恢复正向检查均true：真实无缓存基线、原始JSON/PNG/chunk哈希、live资源authority15/偏好17、36个实际ready非fallback纹理帧、独立桌面/战斗配置、旧宠/聊天/战报/奖励保留。另现存青芽同文档旧偏好conflict在pull确认后仍阻断该资源后续job，原生仅同步未完成。Root已定QA-024 P2 release blocker，故R06整体暂failed，保留全部正向证据及原冲突历史等新候选定向修复验收。 Root已完成独立download/bytes/prefs/36纹理帧及云端companions/battle/garden无二次奖励复核，正向结论成立，冻结包QA024阻塞仍保留。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r06-separate-yantuan-original-b1-b2-before-import.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1\\evidence\\r06-real-cold-private-resource-positive-and-retained-conflict.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1\\evidence\\qa024-r06-old-qingya-stale-conflict-with-identical-pulled-state.json",
+        "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-r06-b2-exact-yantuan-manifest-cold-before-20261026.json",
+        "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-r06-yantuan-publication-and-b2-release-20261026.json",
+        "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-r06-real-cold-download-positive-independent-review-20261026.json",
+        "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-r06-cloud-protected-data-no-second-reward-20261026.json"
+      ],
+      "status": "failed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-26T00:25:13.431Z"
+    },
+    {
+      "id": "S01",
+      "domain": "账号同步",
+      "title": "账户页资料与状态",
+      "owner": "08",
+      "reproducibleSteps": [
+        "查看用户/设备/同步状态",
+        "修改合成用户名"
+      ],
+      "expected": "身份明确；revision正确；不错误展示成功",
+      "actual": "普通云A原生账号页正确账号/设备/已同步/安全保持登录；仅改合成显示名并正常保存，local rev0→1，Root独立PG确认新名；原生恢复原名rev2，RootPG和本机只读再核原名/原owner/AuthUID/account，2宠和经济动作全同。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/s01-complete-profile-save-and-restore.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/s01-original-display-name-restored-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T20:15:08.093Z"
+    },
+    {
+      "id": "S02",
+      "domain": "账号同步",
+      "title": "自动同步完整域",
+      "owner": "08",
+      "reproducibleSteps": [
+        "云QA端写宠物/聊天/战报/领地/背包/偏好",
+        "第二端正常登录"
+      ],
+      "expected": "完整域自动出现；独立云原文匹配",
+      "actual": "尚未在此候选实际执行",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [],
+      "status": "pending",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "S03",
+      "domain": "账号同步",
+      "title": "离线写入恢复",
+      "owner": "08",
+      "reproducibleSteps": [
+        "只中断QA进程业务网络",
+        "修改",
+        "重开后联网"
+      ],
+      "expected": "outbox原请求保留；恢复后仅提交一次",
+      "actual": "同一DC7原普通cloudA，仅专用Main网络经冻结透明CONNECT代理（TLS不解密、系统代理/防火墙不变）。正常UI在线只读刷新证实真实字节增量；显式deny/active0下一次地块1收获生成新pending b913，原LS raw+SQLite logical/request/wire保存。正常退出→新SFX重开仍deny，原pending原字节/请求/哨兵精确相等，离线AppInfo.usernull如实留证。显式allow seq2、原UI登录同A、原重试一次，Root PG exact0→1、原hash不变，garden6→7、carrot0→3仅1harvest event，其余5plots/4seeds未变。正常退出proxied并stop专用helper/端口释放，再普通无proxy重开，原owner/pendingnull/committed原wire/plots/items/两pets/LS-IDB保持、全部设置含closeToTraytrue恢复。环境字段明确为launcher子进程配置来源，不冒称Main env实读。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-before-plain-cloud-a-normal-exit.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-plain-cloud-a-normal-exit.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-complete-native-offline-restart.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-seed-one-native-harvest-pending.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-resume-deny-offline-login-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-resume-original-pending-before-retry-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-resume-original-retry-settled-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-final-ordinary-reopen-result-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T19:37:04.697Z",
+      "history": [
+        {
+          "roundId": "candidate-e875feb-50e52249",
+          "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+          "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+          "status": "passed",
+          "actual": "e875普通真实cloud-a、实际Node主进程专属透明TLS代理断网：一次原生plant形成LS原intent及SQLite cloud_requests pending；正常退出→不同真实SFX root重开，LS/IDB哨兵及原actionId/body/hash全部原字节保持。只原生重试原ID一次后committed，LS清空、Node outbox synced、canonical garden_events仅1次-1。Root独立SQL garden_operations原ID恰1/request_hash相同，seed2→1仅plot1种植，其他seed/plot不变；不是模拟/renderer offline。",
+          "evidence": [
+            "rounds/candidate-e875feb-50e52249/evidence/cloud-proxy-episode/actual-main-read-failed-under-block.json",
+            "rounds/candidate-e875feb-50e52249/evidence/cloud-proxy-episode/real-pending-before-normal-exit.json",
+            "rounds/candidate-e875feb-50e52249/evidence/cloud-proxy-episode/original-pending-resumed-before-ui-retry.json",
+            "rounds/candidate-e875feb-50e52249/evidence/cloud-proxy-episode/original-action-recovery-complete.json",
+            "rounds/candidate-e875feb-50e52249/evidence/cloud-proxy-episode/original-action-recovered-native.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S04",
+      "domain": "账号同步",
+      "title": "双端并发冲突",
+      "owner": "08",
+      "reproducibleSteps": [
+        "甲乙基于同版本更改",
+        "先后同步",
+        "解决冲突"
+      ],
+      "expected": "显式冲突或正确CAS；不静默覆盖",
+      "actual": "尚未在此候选实际执行",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [],
+      "status": "pending",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "S05",
+      "domain": "账号同步",
+      "title": "权限与跨账号隔离",
+      "owner": "08",
+      "reproducibleSteps": [
+        "甲写私有数据",
+        "乙访问甲已知ID与频道"
+      ],
+      "expected": "服务端拒绝；本地缓存不串；无泄露",
+      "actual": "尚未在此候选实际执行 新Auth v3真实A读B已知owner一次返回严格HTTP403 OWNER_MISMATCH/errorOnly，Root18scope/Auth独立复核未变；技术403成立，原生本地缓存/频道全部隔离覆盖仍待继续，保持pending。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a12-v3-four-request-technical-complete-native-pending-20261026.json",
+        "C:/Users/Administrator/Desktop/project/DesktopPet-fresh-worktrees/08/artifacts/accounts/a12-normal-auth-four-phase-prepared-20261026-v3/execution-once/state.json"
+      ],
+      "status": "pending",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-26T06:35:22.467Z"
+    },
+    {
+      "id": "S06",
+      "domain": "账号同步",
+      "title": "同步错误与手动重试",
+      "owner": "08",
+      "reproducibleSteps": [
+        "模拟/真实专用网络错",
+        "点重试",
+        "恢复"
+      ],
+      "expected": "状态准确；busy结束；无重试风暴或双发",
+      "actual": "与S03同一DC7真实专用网络拒绝episode联合验收：一次正常收获遇CLOUD_UNAVAILABLE，原生等待确认/重试状态准确且busy解除；同原owner/action/请求字节跨正常重启保留。显式恢复连通后只点原重试一次，未造新action；UI原操作已确认保存，SQLite同journal committed/pending清除、Root服务端exact action仅1条且库存仅+3，无重复经济结算。专用helper正常退出，普通网络重开结果持久化。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-complete-native-offline-restart.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-seed-one-native-harvest-pending.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-resume-deny-offline-login-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-resume-original-pending-before-retry-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-resume-original-retry-settled-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-final-ordinary-reopen-result-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T19:37:04.702Z"
+    },
+    {
+      "id": "P01",
+      "domain": "设置备份",
+      "title": "所有设置分组可达",
+      "owner": "08",
+      "reproducibleSteps": [
+        "逐设置页签",
+        "键盘与滚动"
+      ],
+      "expected": "分组/标签/控件状态清楚；无布局遮挡",
+      "actual": "五个设置分组均以真实UI打开，标题/内容可见，AI页Tab焦点和长页下部记忆可达，设置文档原值全同；但AI侧栏通知与隐私真实href#/settings，原生Return错跳桌面行为，QA-019。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/qa019-ai-settings-privacy-route-readback.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/qa019-ai-privacy-link-opens-desktop-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/p01-all-settings-groups-and-keyboard-scroll.json"
+      ],
+      "status": "failed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T20:11:20.671Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "running",
+          "actual": "旧312五设置入口均原生可达，AI全局/独立/高级项、资源三页签、数量菜单、弹层Escape及返回焦点正常；全控件键盘/窄窗和最终包仍待验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-settings-desktop-wide.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-account-sync-local-wide.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-uiux-broad-scan.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P02",
+      "domain": "设置备份",
+      "title": "保存取消与重启",
+      "owner": "08",
+      "reproducibleSteps": [
+        "改非安全偏好",
+        "不保存离开",
+        "再保存并重开"
+      ],
+      "expected": "取消不持久化；保存值正确恢复",
+      "actual": "原生关闭互动音效但不保存，正式document/revision12均不变；离开设置并返回后控件恢复true。已保存关闭到托盘false确实跨B11普通重启保留，随后原整个settingsdocument恢复true并独立读回。9项完整检查true，复用同次正常重启。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/p02-native-unsaved-cancel-saved-restart-complete.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/p02-unsaved-interaction-sounds-off-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/p02-unsaved-leave-return-original-value-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b11-a-normal-restart-first-complete-readback.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b11-a-original-settings-restored-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T22:10:24.069Z"
+    },
+    {
+      "id": "P03",
+      "domain": "设置备份",
+      "title": "桌面上限音量尺寸",
+      "owner": "08",
+      "reproducibleSteps": [
+        "1–4上限与音量正常修改",
+        "保存",
+        "核对桌面"
+      ],
+      "expected": "合法范围；实际生效；每宠状态归属正确",
+      "actual": "本轮原生将第一狐scale1→1.45，桌宠实际可见放大；再正常恢复1/全部desktopfalse，全部宠visible/behavior/scale/x/y均恢复，ea1显示器绑定ID从旧2568730015变为1448891685如实保留，其他5宠desktop全同。数量仅合法1–4，实存limit1/volume0与limit4/volume100，最后精确恢复原limit3/volume70及完整settings文档。初次点到volume1和恢复时68均保留截图，再经键盘精确纠正。保存/UI/SQLite成立；未以截图证明听感。整项保留同DC7 D01已确认QA016计数显示缺陷等待统一新包，不重复制造上限场景。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/p03-native-first-fox-scale-changed-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/local-flow-p03-first-fox-scale145-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/p03-native-first-fox-original100-confirmed-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/p03-native-desktop-limit-legal-options-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/p03-native-saved-limit1-volume0-confirmed-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/local-flow-p03-limit1-volume0-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/p03-native-saved-limit4-volume100-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/local-flow-p03-limit4-volume100-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/p03-native-original-limit3-volume70-exact-restored-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/native09-old-local-sweep-restoration-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d01-limit1-policy-vs-ui-count.json"
+      ],
+      "status": "pending",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-26T08:24:26.114Z"
+    },
+    {
+      "id": "P04",
+      "domain": "设置备份",
+      "title": "导出本地备份",
+      "owner": "08",
+      "reproducibleSteps": [
+        "正常UI导出QA备份",
+        "读取文件"
+      ],
+      "expected": "模块完整；无密码/API密钥；provenance明确",
+      "actual": "DC7 B1 通过账号与同步的正式导出及原生另存为生成新2507321B lingjing.json；live/runtime归属和7业务模块完整。JSON/PNG嵌入解码与托管原件逐字节/SHA一致，原resource/import/preference行完整；conversation_credentials明确excluded、递归敏感key路径为空，原QA密码全文检索不包含（值未输出）。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-b-fresh09/uat-exports/r05-dc7-qingya-actions-20261026.lingjing.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-p04-official-export-original-bytes-and-secrets-audit.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-b1-official-account-backup-exported-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T23:23:12.648Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "passed",
+          "actual": "旧312正常UI导出149371字节独立JSON备份，7模块包含伙伴/对战/菜园/资源/聊天/设置/旧数据，simulated场景与runId明确；原合成密码和本地协议APIKey全文检索均未包含，敏感键路径为空。文件保留在本QA profile的uat-exports，非最终包证据。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-account-native-backup-exported.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-native-backup-readback.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P05",
+      "domain": "设置备份",
+      "title": "恢复备份与回滚",
+      "owner": "08",
+      "reproducibleSteps": [
+        "导出后改变QA状态",
+        "正常UI恢复",
+        "读取原件保护备份"
+      ],
+      "expected": "恢复正确；恢复前档案保留；不污染普通账号",
+      "actual": "DC7 真实进度冲突merge已完整回滚；fresh正式UI完整恢复一次成功，唯一restore回执bfa7ee7a...和独立保护backup3561386c...均落库。25109B原件保护文件checksum有效、七模块data与恢复前原档exact，旧保护文件和原导出均留存。恢复后全4宠/10garden/5battle域与来源一致、原3宠/原历史保留，无二次奖励；用正常UI恢复B2原聊天选择/override，保留合法新revision/time。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-b2-preserving-merge-conflict-no-partial-write.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\accounts\\backups\\before-restore-1792971005015-635605ef-8189-4f7a-ac8b-b55fc9774f24.lingjing.json",
+        "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-b-fresh09/uat-exports/r05-dc7-qingya-actions-20261026.lingjing.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\accounts\\backups\\before-restore-1792971585814-3561386c-a896-43db-9a0c-073a2566c311.lingjing.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-p04-official-export-original-bytes-and-secrets-audit.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-b2-fresh-full-preview-immediately-before-confirm.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-b2-successful-full-restore-original-readback.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-b2-restored-real-render-and-scenes-readback.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-p05-complete-restore-checks-and-chat-cleanup.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-b2-original-chat-profile-formally-restored-native.jpg",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-p05-normal-account-restore-original-resource-and-preservation-complete.json"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T23:47:21.423Z"
+    },
+    {
+      "id": "P06",
+      "domain": "设置备份",
+      "title": "无效跨身份备份",
+      "owner": "08",
+      "reproducibleSteps": [
+        "选择损坏或其他身份/模拟来源备份"
+      ],
+      "expected": "产品边界拒绝或警告明确；原数据保留",
+      "actual": "DC7 B2原生文件选择器各一次选取：仅checksum损坏副本→完整性校验失败；真实账号甲live备份→其他账号拒绝；既存真实模拟来源备份→测试/正式不能互相恢复。三次后67表均与基线一致（63非敏感表全行SHA+4敏感/legacy表只计数），资源表和托管文件exact，三个原备份hash完整保留，无导入/恢复写入。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/p06-inputs-native-original-preserving-precheck.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/p06-b2-67-table-fingerprint-before.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/p06-three-native-invalid-owner-environment-rejections-complete.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/p06-invalid-checksum-rejected-native.jpg",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/p06-real-other-owner-backup-rejected-native.jpg",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/p06-existing-simulated-source-rejected-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T23:37:13.998Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "running",
+          "actual": "旧312正常UI选取独立副本（仅校验和置零）恢复，明确拒绝为备份完整性校验失败；只读比较67表记录数+hash完全不变，原备份hash仍40209454…。跨身份/模拟来源及最终包待验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-invalid-backup-rejected.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-invalid-backup-no-data-change.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P07",
+      "domain": "设置备份",
+      "title": "通知开机和隐私边界",
+      "owner": "08",
+      "reproducibleSteps": [
+        "查看开机/位置/统计等设置和说明"
+      ],
+      "expected": "界面准确；需OS/隐私实改者记录边界，不代用户修改",
+      "actual": "原生查看开机启动关闭、位置授权关闭/仅探索更新开启/统计关闭及各说明，完整settings原值未变；原安静时段22–08内点测试已保存通知，真实UI明确当前未发送：正处于安静时段。未改OS隐私或开机配置。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/p07-settings-privacy-notifications-boundaries.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/p07-saved-quiet-hours-notification-not-delivered-native.jpg"
+      ],
+      "status": "passed",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-25T20:05:26.398Z",
+      "history": [
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "running",
+          "actual": "旧312本地演练原生通知测试被阻且显示泛化文案，root确认qaHost原因qa-scenario，08已给精确原因修复；未改OS启动或定位隐私，真实通知与最终包待验。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-settings-notification-feedback.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P08",
+      "domain": "设置备份",
+      "title": "版本日志和更新入口",
+      "owner": "01",
+      "reproducibleSteps": [
+        "打开关于/版本/日志/更新等实际入口"
+      ],
+      "expected": "版本与运行manifest一致；入口真实；不打开敏感日志外传",
+      "actual": "实际原生设置/账号导航未见About/版本/日志浏览器/检查更新入口；同包实际EXE/ASAR与0.1.8 manifest匹配。Root接受01原需求范围核查：未承诺这些产品入口，不新增功能或据此报缺陷；日志观测与脱敏NFR仍存在，未在本项据此声称其实现验收完成。保留范围裁决pending。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/p03-p08-native-local-settings-entry-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/frozen-candidate-identity-09.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/localB-native-runtime-identity-20261026.json",
+        "C:/Users/Administrator/Desktop/project/DesktopPet-fresh-worktrees/01/artifacts/foundation/p08-p09-requirement-scope-20261026.md"
+      ],
+      "status": "pending",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "updatedAt": "2026-10-26T08:24:26.117Z"
+    },
+    {
+      "id": "A13",
+      "domain": "启动登录",
+      "title": "存档待核对提示与正常确认",
+      "owner": "08",
+      "reproducibleSteps": [
+        "正常新QA账号领养",
+        "观察伙伴已保存/其他存档待核对提示",
+        "正常界面核对与返回"
+      ],
+      "expected": "首次确认合理且能完成；不丢宠物/历史/资源/固定名或编号；普通新档案不无故卡住",
+      "actual": "QA-021：B2正常合并/自动备份及原3宠7actions完整已实证；本机sync=false对云true的真实个人分支被保留，但已核对后仍统一待核对并循环引向恢复，缺少准确原因/下一步指引。Root/08只读确认；不报数据丢失，不清gate或开sync掩盖。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a13-b2-normal-pending-save-review-merge.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a13-b2-post-confirmation-still-pending-review.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a13-b2-returned-library-after-review-native.jpg"
+      ],
+      "status": "failed",
+      "updatedAt": "2026-10-25T21:15:58.955Z",
+      "history": [
+        {
+          "roundId": "baseline-a9acd7f-790f5b6d",
+          "sourceCommit": "a9acd7f",
+          "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+          "status": "running",
+          "actual": "全新云端零宠物时提示伙伴已保存/其他待核对；正常核对进入账号页，同步初始关闭，启用后预览/立即同步返回云端无存档；随后正常领养鱼丸成功，独立云端存档revision1。是否可正常完成首次核对留到候选继续，不预判为缺陷。",
+          "evidence": [
+            "evidence/baseline-cloud-registered-native.jpg",
+            "evidence/baseline-cloud-review-entry-native.jpg",
+            "evidence/cloud-before-first-review.json",
+            "evidence/baseline-cloud-preview-request-native.jpg",
+            "evidence/baseline-cloud-first-adoption-completed-native.jpg",
+            "evidence/baseline-live-cloud-independent.json"
+          ]
+        },
+        {
+          "roundId": "candidate-e875feb-50e52249",
+          "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+          "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+          "status": "passed",
+          "actual": "e875原cloud-a真实自动保持登录后出现存档待核对；原生核对→预览→取消可返回，再正常默认合并确认恢复；UI恢复完成且自动备份原存档，原fish pet-40899e45.../globalSerial1及同owner保留，自动syncStatus无错/无pending。正常云流程非脚本恢复。",
+          "evidence": [
+            "rounds/candidate-e875feb-50e52249/evidence/cloud-a-remote-preview-metadata.json",
+            "rounds/candidate-e875feb-50e52249/evidence/cloud-a-native-review-result.json",
+            "rounds/candidate-e875feb-50e52249/evidence/cloud-a-online-baseline-readback.json",
+            "rounds/candidate-e875feb-50e52249/evidence/cloud-a-cloud-review-merge-preview-native.jpg"
+          ]
+        }
+      ],
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "N05",
+      "domain": "导航窗口",
+      "title": "同一档案重复启动",
+      "owner": "01",
+      "reproducibleSteps": [
+        "同一独立profile再次启动同一EXE",
+        "比较进程/窗口/同宠窗口与SQLite占用"
+      ],
+      "expected": "第二次只聚焦既有主窗口；不同profile允许独立设备测试",
+      "actual": "同一最终EXE真实ColdSingle、HotSameProfile、SecondProfile和ColdPair通过：重复启动器exit0且仅一主窗口；热启恢复原窗口前台；两隔离档案不串存储；实际解压根由nsk43F9切为nst40C后LS/IDB及原活动局保留，ASAR完整SHA一致。",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/startup",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/hot-original-window-after-before-input.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/old-three-profile-upgrade-readback.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/coldpair-final-outcome.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/coldpair-before-login-cross-root-preservation.json"
+      ],
+      "status": "passed",
+      "updatedAt": "2026-10-25T15:55:46.271Z",
+      "history": [
+        {
+          "roundId": "baseline-a9acd7f-790f5b6d",
+          "sourceCommit": "a9acd7f",
+          "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+          "status": "failed",
+          "actual": "同profile原SFX重复启动产生第二主进程和登录窗口，原窗口仍在；复现QA-006",
+          "evidence": [
+            "evidence/QA-006-duplicate-profile.json",
+            "evidence/QA-006-duplicate-login-native.png"
+          ]
+        },
+        {
+          "roundId": "candidate-312e5fe-524fd56d",
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "status": "failed",
+          "actual": "受控热重复SFX17496在32.479s后exit9，无新主进程，原实例仍最小化未唤醒；ASAR/EXE哈希不变，原窗可由本验收正常恢复。真正冷双/异profile待后续候选。",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/cold-launch-observation.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/qa006-hot-captured-01/summary.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/qa006-hot-captured-01/timeline.jsonl",
+            "rounds/candidate-312e5fe-524fd56d/evidence/qa006-hot-native-outcome.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/qa006-original-restored-after-failure.jpg"
+          ]
+        },
+        {
+          "roundId": "candidate-e875feb-50e52249",
+          "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+          "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+          "status": "passed",
+          "actual": "e875经v2有效环境已实际通过ColdSingle、最小化原窗热同profile唤醒、ColdPair仅一常驻main、独立新local-b并行/注册且原67表不变；两实际新解包根下原LS/IDB哨兵保持，真实cloud-a原garden pending重开保留并原ID单次服务器提交。原v1空RUN_AS_NODE退出9历史保留为harness-invalid。",
+          "evidence": [
+            "rounds/candidate-e875feb-50e52249/evidence/cold-single-1/summary.json",
+            "rounds/candidate-e875feb-50e52249/evidence/cold-single-1/timeline.jsonl",
+            "rounds/candidate-e875feb-50e52249/evidence/cold-single-1/native-windows-after.json",
+            "rounds/candidate-e875feb-50e52249/evidence/hot-same-profile-1-env-v2/summary.json",
+            "rounds/candidate-e875feb-50e52249/evidence/hot-same-profile-native-outcome.json",
+            "rounds/candidate-e875feb-50e52249/evidence/e875-hot-repeat-restored-original-native.jpg",
+            "rounds/candidate-e875feb-50e52249/evidence/second-profile-native-outcome.json",
+            "rounds/candidate-e875feb-50e52249/evidence/cold-pair-native-outcome.json",
+            "rounds/candidate-e875feb-50e52249/evidence/cloud-proxy-episode/original-action-recovery-complete.json"
+          ]
+        }
+      ],
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "P09",
+      "domain": "设置备份",
+      "title": "便携版开机启动路径稳定",
+      "owner": "08",
+      "reproducibleSteps": [
+        "核对正常开机启动配置所用可执行路径",
+        "确认不是会清理的SFX临时解压Lingjing.exe",
+        "不用注销或重启系统"
+      ],
+      "expected": "注册持久且存在的便携SFX路径，带正确profile语义；不破坏用户原启动项",
+      "actual": "尚未在此候选实际执行",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "evidence": [],
+      "status": "pending",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587"
+    },
+    {
+      "id": "A14",
+      "domain": "启动登录",
+      "title": "本机合成QA账号修改密码",
+      "owner": "08",
+      "reproducibleSteps": [
+        "只使用本验收创建的合成local账号",
+        "错误当前密码与确认不一致",
+        "正确改密后旧密码拒绝、新密码可登录",
+        "回查宠物历史/设备归属与持久会话"
+      ],
+      "expected": "校验明确；正确改密生效；数据与身份归属不变；符合会话规则",
+      "actual": "尚未在此候选实际执行",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "A15",
+      "domain": "启动登录",
+      "title": "真实云端合成QA账号修改密码",
+      "owner": "08",
+      "reproducibleSteps": [
+        "只使用本验收创建的合成cloud账号",
+        "错误当前密码与确认不一致",
+        "正确改密后旧密码拒绝、新密码可登录",
+        "回查宠物历史/设备归属与持久会话"
+      ],
+      "expected": "校验明确；正确改密生效；数据与身份归属不变；符合会话规则",
+      "actual": "尚未在此候选实际执行",
+      "severity": "TBD",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "C11",
+      "domain": "伙伴与桌面",
+      "title": "同类型跨用户连续数字编号",
+      "owner": "02/08",
+      "reproducibleSteps": [
+        "两个真实合成云账号同类型分别领养，0001起连续递增",
+        "该类型野外捕获接续相同序列",
+        "野外权威相遇阶段已有编号；重复刷新/战斗离开再进保持同一号，捕获后继承同号，不因每次刷新新分配",
+        "并发创建、原actionId重复重试不重复编号",
+        "另一类型独立从其序列起点递增",
+        "重启/同步/切账号后编号不变且归属正确"
+      ],
+      "expected": "同类型全局原子分配，无跨用户撞号/回退/重试重复；不同类型独立；公开界面数字编号一致",
+      "actual": "已实际原生A1/4、B3/5+Root原C2捕获继承链，PG同类型1–5/counter5原owner不变；两native客户端未确认区间overlap9.799s、sent至读回3.529s，空sampler明确排除，未宣称同时PG锁。礼帽喵正常单击独立0→1、原3宠不变，B1正常读回新5。尚需原ID真实重复RPC及后续同步/重启/切账号保号闭环。 新Auth v3同原A1请求action18a/base8真实HTTP200一次，outerDuplicate=true/innerDuplicate=false及原753B/SHA/原A1pet匹配；每阶段Root18scope/Auth/原回执独立复核未变，旧返回未apply。仍缺后续native同步/切号等完整编号闭环，保持running。",
+      "severity": "P1",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a1-complete-09-manifest.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c11-dual-native-adoption-after.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c11-independent-metal-cat-sequence-one.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c02-c10-root-independent-complete.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a12-v3-four-request-technical-complete-native-pending-20261026.json",
+        "C:/Users/Administrator/Desktop/project/DesktopPet-fresh-worktrees/08/artifacts/accounts/a12-normal-auth-four-phase-prepared-20261026-v3/execution-once/state.json"
+      ],
+      "status": "running",
+      "updatedAt": "2026-10-26T06:35:22.461Z"
+    },
+    {
+      "id": "C12",
+      "domain": "伙伴与桌面",
+      "title": "旧档案升级保留身份与历史",
+      "owner": "02/08",
+      "reproducibleSteps": [
+        "正常关闭自己旧QA包后以新候选开启原profile",
+        "核对3只同模板含旧昵称，内部petId不变且旧昵称不覆盖标准名",
+        "旧人设/记忆/聊天/战报/花园库存保存",
+        "重启和同步后数字编号不变"
+      ],
+      "expected": "增量迁移保留所有旧数据、内部归属与历史原文，数字编号稳定",
+      "actual": "最终包实际打开原a9三宠档：三个petId/完整data_json/revision原文完全一致，旧名验收昵称仍保存在原文，原生三卡均显示标准名小狐。另原6ff非空聊天/战报/进行中局数据表保持。待原档再启与真实云编号稳定回读，不冒称本机待同步号已取得云号。",
+      "severity": "P1",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/old-three-original-pets-canonical-names-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/old-three-profile-upgrade-readback.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/first-login-original-owner-battle-preservation.json"
+      ],
+      "status": "running",
+      "updatedAt": "2026-10-25T15:52:35.937Z"
+    }
+  ],
+  "activeRound": {
+    "id": "candidate-dc7aee3-1b1afdd1",
+    "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+    "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+    "sourceTree": "1b6b47b23a93bf505c92bb1ff9af5dead75d6273",
+    "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+    "executable": "C:/Users/Administrator/Desktop/project/DesktopPet/releases/user-acceptance-dc7aee3/Lingjing-0.1.8-portable-x64.exe",
+    "asarSha256": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba",
+    "startedAt": "2026-10-25T15:41:24.716Z",
+    "acceptanceScope": "All 98 cases on this exact final candidate; no intermediate passes inherited",
+    "profilePath": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a",
+    "scenarioRunId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+    "provenance": "local unified-battle explicitly simulated; ordinary cloud profiles live and no client QA marker",
+    "knownOutstandingIssues": [],
+    "rootAuthorizedLaunch": true,
+    "latestRemotePull": {
+      "confirmedBy": [
+        "Root",
+        "01"
+      ],
+      "remoteMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+      "result": "fetch + pull Already up to date; frozen worktree clean"
+    },
+    "economicAndFoxAllocationFrozen": true
+  },
+  "uiUxAcceptanceDimensions": [
+    "布局与裁切",
+    "禁用理由",
+    "加载/错误/成功/不确定状态",
+    "空态",
+    "返回/取消",
+    "键盘焦点",
+    "窄窗与DPI"
+  ]
+}

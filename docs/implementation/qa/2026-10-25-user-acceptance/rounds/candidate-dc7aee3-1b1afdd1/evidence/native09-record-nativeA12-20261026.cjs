@@ -1,0 +1,30 @@
+const fs=require('node:fs'),path=require('node:path');
+const {DatabaseSync}=require('node:sqlite');
+const qa=path.resolve(__dirname,'../../..');
+const before=JSON.parse(fs.readFileSync(path.join(__dirname,'native09-cloudA-before-launch-20261026.json'),'utf8'));
+const after=JSON.parse(fs.readFileSync(path.join(__dirname,'native09-cloudA-post-native-R-close-restored-20261026.json'),'utf8'));
+const expected=JSON.parse(before.settings[0].document),actual=JSON.parse(after.settings[0].document);
+expected.desktop.closeToTray=true;
+if(JSON.stringify(expected)!==JSON.stringify(actual))throw Error('Other settings changed');
+const db=new DatabaseSync(path.join(after.profile,'lingjing.sqlite'),{readOnly:true});
+let receipt,state;
+try{
+ db.exec('PRAGMA query_only=ON');
+ receipt=db.prepare('SELECT owner_account_id,action_id,base_revision,status,attempts,last_error,verified_at FROM account_sync_outbox ORDER BY rowid DESC LIMIT 1').get();
+ state=db.prepare('SELECT owner_account_id,cloud_revision,last_error FROM account_sync_state').all();
+}finally{db.close();}
+const rel='rounds/candidate-dc7aee3-1b1afdd1/evidence/a12-native-revoked-O-login-R-restored-original-close-20261026.json';
+const report={at:new Date().toISOString(),mainPid:11360,wrapperPid:16580,windowId:655548,port:57218,profile:after.profile,ordinaryNoMarker:true,source:'real native CUA + query_only safe-column baseline',revokedOldONativeMessage:'请重新登录。',oldVaultProductCleared:true,oldVaultManuallyRead:false,oldVaultCopied:false,oldVaultDecrypted:false,normalNativeLoginAttemptCount:1,existingSyntheticCredentialOneRamRead:true,passwordPrinted:false,passwordHashed:false,passwordLengthMeasured:false,passwordWrittenToEvidence:false,rememberRestoredTrue:true,keepRestoredTrue:true,settingsOnlyCloseToTrayChanged:true,settingsRevisionBefore:13,settingsRevisionAfter:14,closeToTrayOriginal:true,closeToTrayCurrent:true,saveCount:1,receipt,state,petsExact:after.petsExact,selectionsExact:after.selectionsExact,changedTables:after.changedTables,protectedTablesExact:Object.fromEntries(Object.entries(before.tables).filter(([t])=>!t.startsWith('account_')&&!['lingjing_meta','lingjing_resource_files'].includes(t)).map(([t,v])=>[t,JSON.stringify(v)===JSON.stringify(after.tables[t])])),nativeLogoutButtonCovered:false,nativeAccountSwitchCovered:false,nativeA12FullPassed:false};
+fs.writeFileSync(path.join(qa,rel),JSON.stringify(report,null,2)+'\n');
+const manage=require(path.join(qa,'manage-qa.cjs'));
+const row=manage.read('cases.json').cases.find(x=>x.id==='A12');
+manage.updateCase('A12',row.status,row.actual+' 原CloudA固定DC7正常启动，撤销旧O后真实界面回登录并提示请重新登录，私有页不可见且产品清旧secure文件。正常原生登录R一次，原4pet/raw/选择与业务历史保持；keep/remember原true、closeToTray经正常UI原true恢复，rev14/auto0c7 base29→cloud30 verified。仍缺原生正常退出按钮等完整闭环，不提前pass。',[rel,'rounds/candidate-dc7aee3-1b1afdd1/evidence/a12-native-revoked-old-O-returned-to-login-20261026.png','rounds/candidate-dc7aee3-1b1afdd1/evidence/a12-native-CloudA-original-close-to-tray-saved-once-20261026.png']);
+const sessionPath=path.join(qa,'active-session.json');
+const session=JSON.parse(fs.readFileSync(sessionPath,'utf8'));
+session.phase='cloudA-native-R-original-settings-restored-await-root-readback';
+session.activeNativeTarget={profileId:'final-dc7-cloud-a',mainPid:11360,wrapperPid:16580,mainWindowId:655548,debugPort:57218};
+session.uiRoute='CloudA #/settings; original closeToTraytrue saved once; LocalA retained wild2303';
+session.resume.cloudA={at:report.at,nativeOldOInvalidated:true,nativeLoginOnce:true,remember:true,keep:true,closeToTray:true,proof:rel,receipt};
+session.requiredRestorations.push({scope:'original CloudA A12',field:'closeToTray',original:true,current:true,restored:true,restoredAt:report.at,localRevision:14,cloudRevision:30,actionId:receipt.action_id});
+fs.writeFileSync(sessionPath,JSON.stringify(session,null,2)+'\n');
+console.log(JSON.stringify({proof:rel,receipt,state,allProtectedExact:Object.values(report.protectedTablesExact).every(Boolean),countsChanged:false}));

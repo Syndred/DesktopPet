@@ -1,0 +1,487 @@
+{
+  "at": "2026-10-25T11:27:00.052Z",
+  "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+  "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+  "provenance": "Actual native app UI/IPC/main transport/SQLite; provider is an explicitly simulated loopback SSE fixture, not a real cloud model",
+  "connection": {
+    "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+    "globalConnection": {
+      "provider": "openai_compatible",
+      "baseUrl": "http://127.0.0.1:63040/v1",
+      "model": "qa-protocol-model",
+      "contextChars": 24000,
+      "maxOutputTokens": 512,
+      "hasKey": true,
+      "revision": 1
+    },
+    "connection": null,
+    "secureStorageAvailable": true,
+    "visibleTestResult": "可用 · 1.7 秒"
+  },
+  "successSecond": {
+    "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+    "messages": [
+      {
+        "id": "4fb610ab-1e56-4cd7-87bb-6fad580c086a",
+        "sequence": 1,
+        "actionId": "7851cf3e-fe53-4e9a-a11b-9f6ddfb5e147",
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "role": "user",
+        "content": "协议成功验收：这是第二只小狐的第1条保留对话，仅用本机模拟供应商。",
+        "status": "complete",
+        "errorCode": null,
+        "provider": null,
+        "model": null,
+        "attempt": 1,
+        "createdAt": 1792927506088,
+        "updatedAt": 1792927506088
+      },
+      {
+        "id": "91a7d400-7fc0-4783-b08a-8604f58a231f",
+        "sequence": 2,
+        "actionId": "7851cf3e-fe53-4e9a-a11b-9f6ddfb5e147",
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "role": "assistant",
+        "content": "【本机协议夹具】已收到当前小狐的测试消息。",
+        "status": "complete",
+        "errorCode": null,
+        "provider": "openai_compatible",
+        "model": "qa-protocol-model",
+        "attempt": 1,
+        "createdAt": 1792927506088,
+        "updatedAt": 1792927507604
+      }
+    ],
+    "profile": {
+      "persona": "候选第二只小狐：喜欢春雨，只使用自己的独立记忆。",
+      "replyStyle": "natural",
+      "memoryEnabled": true,
+      "pauseWhileChatting": true,
+      "useOverride": false,
+      "revision": 1
+    },
+    "memories": [
+      {
+        "id": "12d3b792-ad2d-4648-8f52-28f98d4c6e6a",
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "content": "第二只小狐记忆：2026年10月25日，新会话接手后修改；只属于第二只，喜欢春雨。",
+        "revision": 2,
+        "createdAt": 1792925542630,
+        "updatedAt": 1792926485579
+      }
+    ],
+    "focus": "给小狐，编号 pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca发消息"
+  },
+  "promptScope": {
+    "requestId": 2,
+    "authorized": true,
+    "mode": "success",
+    "containsSecondPersona": true,
+    "containsSecondMemory": true,
+    "containsFirstMemory": false
+  },
+  "streaming": {
+    "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+    "messages": [
+      {
+        "id": "4fb610ab-1e56-4cd7-87bb-6fad580c086a",
+        "sequence": 1,
+        "actionId": "7851cf3e-fe53-4e9a-a11b-9f6ddfb5e147",
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "role": "user",
+        "content": "协议成功验收：这是第二只小狐的第1条保留对话，仅用本机模拟供应商。",
+        "status": "complete",
+        "errorCode": null,
+        "provider": null,
+        "model": null,
+        "attempt": 1,
+        "createdAt": 1792927506088,
+        "updatedAt": 1792927506088
+      },
+      {
+        "id": "91a7d400-7fc0-4783-b08a-8604f58a231f",
+        "sequence": 2,
+        "actionId": "7851cf3e-fe53-4e9a-a11b-9f6ddfb5e147",
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "role": "assistant",
+        "content": "【本机协议夹具】已收到当前小狐的测试消息。",
+        "status": "complete",
+        "errorCode": null,
+        "provider": "openai_compatible",
+        "model": "qa-protocol-model",
+        "attempt": 1,
+        "createdAt": 1792927506088,
+        "updatedAt": 1792927507604
+      },
+      {
+        "id": "db94e0e1-452f-498c-b480-72dbdfc71c3f",
+        "sequence": 3,
+        "actionId": "e4010d62-cf74-49ab-915f-037ef6f54a77",
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "role": "user",
+        "content": "取消验收：这是第二只小狐的第2条测试消息；收到首段后由真实界面取消。",
+        "status": "complete",
+        "errorCode": null,
+        "provider": null,
+        "model": null,
+        "attempt": 1,
+        "createdAt": 1792927534440,
+        "updatedAt": 1792927534440
+      },
+      {
+        "id": "39f5a4e9-95fa-48bd-b1ca-3419bfa4b4fb",
+        "sequence": 4,
+        "actionId": "e4010d62-cf74-49ab-915f-037ef6f54a77",
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "role": "assistant",
+        "content": "【本机协议夹具】",
+        "status": "streaming",
+        "errorCode": null,
+        "provider": "openai_compatible",
+        "model": "qa-protocol-model",
+        "attempt": 1,
+        "createdAt": 1792927534440,
+        "updatedAt": 1792927534446
+      }
+    ],
+    "buttons": [
+      {
+        "label": "停止回复",
+        "disabled": false
+      },
+      {
+        "label": "发送快捷键",
+        "disabled": false
+      }
+    ]
+  },
+  "streamingSqlite": [
+    {
+      "sequence": 1,
+      "id": "4fb610ab-1e56-4cd7-87bb-6fad580c086a",
+      "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+      "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+      "action_id": "7851cf3e-fe53-4e9a-a11b-9f6ddfb5e147",
+      "role": "user",
+      "content": "协议成功验收：这是第二只小狐的第1条保留对话，仅用本机模拟供应商。",
+      "status": "complete",
+      "error_code": null,
+      "provider": null,
+      "model": null,
+      "attempt": 1,
+      "created_at": 1792927506088,
+      "updated_at": 1792927506088
+    },
+    {
+      "sequence": 2,
+      "id": "91a7d400-7fc0-4783-b08a-8604f58a231f",
+      "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+      "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+      "action_id": "7851cf3e-fe53-4e9a-a11b-9f6ddfb5e147",
+      "role": "assistant",
+      "content": "【本机协议夹具】已收到当前小狐的测试消息。",
+      "status": "complete",
+      "error_code": null,
+      "provider": "openai_compatible",
+      "model": "qa-protocol-model",
+      "attempt": 1,
+      "created_at": 1792927506088,
+      "updated_at": 1792927507604
+    },
+    {
+      "sequence": 3,
+      "id": "db94e0e1-452f-498c-b480-72dbdfc71c3f",
+      "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+      "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+      "action_id": "e4010d62-cf74-49ab-915f-037ef6f54a77",
+      "role": "user",
+      "content": "取消验收：这是第二只小狐的第2条测试消息；收到首段后由真实界面取消。",
+      "status": "complete",
+      "error_code": null,
+      "provider": null,
+      "model": null,
+      "attempt": 1,
+      "created_at": 1792927534440,
+      "updated_at": 1792927534440
+    },
+    {
+      "sequence": 4,
+      "id": "39f5a4e9-95fa-48bd-b1ca-3419bfa4b4fb",
+      "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+      "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+      "action_id": "e4010d62-cf74-49ab-915f-037ef6f54a77",
+      "role": "assistant",
+      "content": "【本机协议夹具】",
+      "status": "streaming",
+      "error_code": null,
+      "provider": "openai_compatible",
+      "model": "qa-protocol-model",
+      "attempt": 1,
+      "created_at": 1792927534440,
+      "updated_at": 1792927534446
+    }
+  ],
+  "cancelled": {
+    "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+    "messages": [
+      {
+        "id": "4fb610ab-1e56-4cd7-87bb-6fad580c086a",
+        "sequence": 1,
+        "actionId": "7851cf3e-fe53-4e9a-a11b-9f6ddfb5e147",
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "role": "user",
+        "content": "协议成功验收：这是第二只小狐的第1条保留对话，仅用本机模拟供应商。",
+        "status": "complete",
+        "errorCode": null,
+        "provider": null,
+        "model": null,
+        "attempt": 1,
+        "createdAt": 1792927506088,
+        "updatedAt": 1792927506088
+      },
+      {
+        "id": "91a7d400-7fc0-4783-b08a-8604f58a231f",
+        "sequence": 2,
+        "actionId": "7851cf3e-fe53-4e9a-a11b-9f6ddfb5e147",
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "role": "assistant",
+        "content": "【本机协议夹具】已收到当前小狐的测试消息。",
+        "status": "complete",
+        "errorCode": null,
+        "provider": "openai_compatible",
+        "model": "qa-protocol-model",
+        "attempt": 1,
+        "createdAt": 1792927506088,
+        "updatedAt": 1792927507604
+      },
+      {
+        "id": "db94e0e1-452f-498c-b480-72dbdfc71c3f",
+        "sequence": 3,
+        "actionId": "e4010d62-cf74-49ab-915f-037ef6f54a77",
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "role": "user",
+        "content": "取消验收：这是第二只小狐的第2条测试消息；收到首段后由真实界面取消。",
+        "status": "complete",
+        "errorCode": null,
+        "provider": null,
+        "model": null,
+        "attempt": 1,
+        "createdAt": 1792927534440,
+        "updatedAt": 1792927534440
+      },
+      {
+        "id": "39f5a4e9-95fa-48bd-b1ca-3419bfa4b4fb",
+        "sequence": 4,
+        "actionId": "e4010d62-cf74-49ab-915f-037ef6f54a77",
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "role": "assistant",
+        "content": "【本机协议夹具】",
+        "status": "cancelled",
+        "errorCode": "CANCELLED",
+        "provider": "openai_compatible",
+        "model": "qa-protocol-model",
+        "attempt": 1,
+        "createdAt": 1792927534440,
+        "updatedAt": 1792927561263
+      }
+    ],
+    "buttons": [
+      {
+        "label": "发送",
+        "disabled": true,
+        "rect": {
+          "x": 1298.2000732421875,
+          "y": 893.2999877929688,
+          "w": 42,
+          "h": 39.60000228881836
+        }
+      },
+      {
+        "label": "发送快捷键",
+        "disabled": false,
+        "rect": {
+          "x": 838.7999877929688,
+          "y": 942.9000244140625,
+          "w": 22,
+          "h": 22
+        }
+      }
+    ]
+  },
+  "retried": {
+    "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+    "messages": [
+      {
+        "id": "4fb610ab-1e56-4cd7-87bb-6fad580c086a",
+        "sequence": 1,
+        "actionId": "7851cf3e-fe53-4e9a-a11b-9f6ddfb5e147",
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "role": "user",
+        "content": "协议成功验收：这是第二只小狐的第1条保留对话，仅用本机模拟供应商。",
+        "status": "complete",
+        "errorCode": null,
+        "provider": null,
+        "model": null,
+        "attempt": 1,
+        "createdAt": 1792927506088,
+        "updatedAt": 1792927506088
+      },
+      {
+        "id": "91a7d400-7fc0-4783-b08a-8604f58a231f",
+        "sequence": 2,
+        "actionId": "7851cf3e-fe53-4e9a-a11b-9f6ddfb5e147",
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "role": "assistant",
+        "content": "【本机协议夹具】已收到当前小狐的测试消息。",
+        "status": "complete",
+        "errorCode": null,
+        "provider": "openai_compatible",
+        "model": "qa-protocol-model",
+        "attempt": 1,
+        "createdAt": 1792927506088,
+        "updatedAt": 1792927507604
+      },
+      {
+        "id": "db94e0e1-452f-498c-b480-72dbdfc71c3f",
+        "sequence": 3,
+        "actionId": "e4010d62-cf74-49ab-915f-037ef6f54a77",
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "role": "user",
+        "content": "取消验收：这是第二只小狐的第2条测试消息；收到首段后由真实界面取消。",
+        "status": "complete",
+        "errorCode": null,
+        "provider": null,
+        "model": null,
+        "attempt": 1,
+        "createdAt": 1792927534440,
+        "updatedAt": 1792927534440
+      },
+      {
+        "id": "39f5a4e9-95fa-48bd-b1ca-3419bfa4b4fb",
+        "sequence": 4,
+        "actionId": "e4010d62-cf74-49ab-915f-037ef6f54a77",
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "role": "assistant",
+        "content": "【本机协议夹具】已收到当前小狐的测试消息。",
+        "status": "complete",
+        "errorCode": null,
+        "provider": "openai_compatible",
+        "model": "qa-protocol-model",
+        "attempt": 2,
+        "createdAt": 1792927534440,
+        "updatedAt": 1792927589325
+      }
+    ],
+    "stopPresent": false,
+    "composerDisabled": false
+  },
+  "retriedSqlite": {
+    "queryOnly": {
+      "query_only": 1
+    },
+    "messages": [
+      {
+        "sequence": 1,
+        "id": "4fb610ab-1e56-4cd7-87bb-6fad580c086a",
+        "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "action_id": "7851cf3e-fe53-4e9a-a11b-9f6ddfb5e147",
+        "role": "user",
+        "content": "协议成功验收：这是第二只小狐的第1条保留对话，仅用本机模拟供应商。",
+        "status": "complete",
+        "error_code": null,
+        "provider": null,
+        "model": null,
+        "attempt": 1,
+        "created_at": 1792927506088,
+        "updated_at": 1792927506088
+      },
+      {
+        "sequence": 2,
+        "id": "91a7d400-7fc0-4783-b08a-8604f58a231f",
+        "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "action_id": "7851cf3e-fe53-4e9a-a11b-9f6ddfb5e147",
+        "role": "assistant",
+        "content": "【本机协议夹具】已收到当前小狐的测试消息。",
+        "status": "complete",
+        "error_code": null,
+        "provider": "openai_compatible",
+        "model": "qa-protocol-model",
+        "attempt": 1,
+        "created_at": 1792927506088,
+        "updated_at": 1792927507604
+      },
+      {
+        "sequence": 3,
+        "id": "db94e0e1-452f-498c-b480-72dbdfc71c3f",
+        "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "action_id": "e4010d62-cf74-49ab-915f-037ef6f54a77",
+        "role": "user",
+        "content": "取消验收：这是第二只小狐的第2条测试消息；收到首段后由真实界面取消。",
+        "status": "complete",
+        "error_code": null,
+        "provider": null,
+        "model": null,
+        "attempt": 1,
+        "created_at": 1792927534440,
+        "updated_at": 1792927534440
+      },
+      {
+        "sequence": 4,
+        "id": "39f5a4e9-95fa-48bd-b1ca-3419bfa4b4fb",
+        "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "action_id": "e4010d62-cf74-49ab-915f-037ef6f54a77",
+        "role": "assistant",
+        "content": "【本机协议夹具】已收到当前小狐的测试消息。",
+        "status": "complete",
+        "error_code": null,
+        "provider": "openai_compatible",
+        "model": "qa-protocol-model",
+        "attempt": 2,
+        "created_at": 1792927534440,
+        "updated_at": 1792927589325
+      }
+    ]
+  },
+  "invariants": {
+    "messageRows": 4,
+    "userRowsForOriginal": 1,
+    "assistantRowsForOriginal": 1,
+    "originalAssistantIdPreserved": true,
+    "stopPresent": false,
+    "composerDisabled": false
+  },
+  "wire": [
+    {
+      "id": 1,
+      "mode": "success",
+      "authorized": true,
+      "aborted": false,
+      "closedAt": "2026-10-25T11:24:09.859Z"
+    },
+    {
+      "id": 2,
+      "mode": "success",
+      "authorized": true,
+      "aborted": false,
+      "closedAt": "2026-10-25T11:25:07.602Z"
+    },
+    {
+      "id": 3,
+      "mode": "wait",
+      "authorized": true,
+      "aborted": true,
+      "closedAt": "2026-10-25T11:26:01.262Z"
+    },
+    {
+      "id": 4,
+      "mode": "success",
+      "authorized": true,
+      "aborted": false,
+      "closedAt": "2026-10-25T11:26:29.324Z"
+    }
+  ]
+}

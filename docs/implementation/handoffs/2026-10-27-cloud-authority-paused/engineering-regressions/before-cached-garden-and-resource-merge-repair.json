@@ -1,0 +1,25 @@
+{
+  "at": "2026-10-26T21:28:06.4927956Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "candidateChanged": false,
+  "nativePassed": false,
+  "exitCode": 1,
+  "scope": "Engineering-only disposable SQLite/files and throwing cloud transport. No real profile or cloud mutation.",
+  "cases": [
+    {
+      "name": "cached garden projection retains original pending",
+      "actual": 0,
+      "expected": 1,
+      "passed": false,
+      "sha256": "c50424cf675496f499cdbb8150b8ca31798df0b0872f4528889e9898e3202c64"
+    },
+    {
+      "name": "merge restore repairs missing cached original asset",
+      "actual": "MISSING_ASSET",
+      "expected": "original asset bytes restored with same resource identity and metadata",
+      "passed": false,
+      "sha256": "1d36d3bc8110a6f7a43c1d3c34c350bc2070c5e869397383ea70dd8fda08c643"
+    }
+  ],
+  "qualification": "First earlier resource test attempt failed its fixture path guard and is excluded. Current native realpath guard passes and the failure is the actual MISSING_ASSET from ResourcesService.assetFile."
+}

@@ -1,0 +1,45 @@
+{
+  "at": "2026-10-25T15:28:02.7221314Z",
+  "authority": "Root explicit exact-PID stale QA authorization on 2026-10-25",
+  "nativeWindowInventory": "CUA listWindows: only ChatGPT 23528694; no product windows",
+  "oldNormalExitAttempt": {
+    "at": "2026-10-25T09:55:11.055Z",
+    "ownedLauncher": 16196,
+    "ownedMain": 18500,
+    "profile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/local-a",
+    "method": "Owned Browser.close protocol attempted once; timed out and node kernel reset. Both original QA and ordinary user processes remain. No force kill.",
+    "status": "pending-normal-UI-exit"
+  },
+  "backup": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\e71b9c11-e62a-46a6-aa4d-decdd34c4200\\a9-stale-cleanup-20261025T152715Z\\lingjing-private.sqlite",
+  "backupVerified": true,
+  "processes": [
+    {
+      "ProcessId": 16196,
+      "ParentProcessId": 28540,
+      "ExecutablePath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\final-a9acd7f\\Lingjing-0.1.8-portable-x64.exe",
+      "CommandLine": "\"C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\final-a9acd7f\\Lingjing-0.1.8-portable-x64.exe\" --remote-debugging-port=54995 --force-renderer-accessibility",
+      "CreationUtc": "2026-10-25T09:51:56.6325420Z"
+    },
+    {
+      "ProcessId": 18500,
+      "ParentProcessId": 16196,
+      "ExecutablePath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\3LBAQALUKgWr1yvvvscHsCaqSpQ\\Lingjing.exe",
+      "CommandLine": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\3LBAQALUKgWr1yvvvscHsCaqSpQ\\Lingjing.exe --remote-debugging-port=54995 --force-renderer-accessibility",
+      "CreationUtc": "2026-10-25T09:52:25.4166610Z"
+    },
+    {
+      "ProcessId": 25972,
+      "ParentProcessId": 18500,
+      "ExecutablePath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\3LBAQALUKgWr1yvvvscHsCaqSpQ\\Lingjing.exe",
+      "CommandLine": "\"C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\3LBAQALUKgWr1yvvvscHsCaqSpQ\\Lingjing.exe\" --type=gpu-process --user-data-dir=\"C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\local-a\" --gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA= --field-trial-handle=1732,i,12112891294612129795,1690680044330745034,262144 --enable-features=AllowWindowCaptureExclusionInRemoteSessions,PdfUseShowSaveFilePicker --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,NetworkServiceSandbox,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1736,i,11312856180789760884,12093585042866726803,4 --trace-process-track-uuid=3190708988185955192 --mojo-platform-channel-handle=1728 /prefetch:2",
+      "CreationUtc": "2026-10-25T09:52:25.5990950Z"
+    },
+    {
+      "ProcessId": 31172,
+      "ParentProcessId": 18500,
+      "ExecutablePath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\3LBAQALUKgWr1yvvvscHsCaqSpQ\\Lingjing.exe",
+      "CommandLine": "\"C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\3LBAQALUKgWr1yvvvscHsCaqSpQ\\Lingjing.exe\" --type=utility --utility-sub-type=network.mojom.NetworkService --lang=zh-CN --service-sandbox-type=none --user-data-dir=\"C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\local-a\" --standard-schemes=lingjing-resource --secure-schemes=lingjing-resource --cors-schemes=lingjing-resource --fetch-schemes=lingjing-resource --streaming-schemes=lingjing-resource --field-trial-handle=1732,i,12112891294612129795,1690680044330745034,262144 --enable-features=AllowWindowCaptureExclusionInRemoteSessions,PdfUseShowSaveFilePicker --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,NetworkServiceSandbox,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1736,i,11312856180789760884,12093585042866726803,4 --trace-process-track-uuid=3190708989122997041 --mojo-platform-channel-handle=1948 /prefetch:11",
+      "CreationUtc": "2026-10-25T09:52:25.5997850Z"
+    }
+  ]
+}

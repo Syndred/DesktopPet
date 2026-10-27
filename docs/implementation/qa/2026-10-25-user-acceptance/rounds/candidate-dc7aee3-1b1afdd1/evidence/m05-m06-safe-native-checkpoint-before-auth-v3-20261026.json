@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-26T06:23:11.600Z",
+  "source": "native UI route-return and continue + readonly database",
+  "uiFrozenForRootAuthV3": true,
+  "mainPid": 17596,
+  "route": "discovery",
+  "encounterId": "encounter-ec4de4ff-f66c-4f1c-a8a2-7c6bf8bdbb26",
+  "battleId": "battle-23030283-276b-4e98-86e6-9a7263bbd1df",
+  "petId": "pet-8d67a86f-8053-46fe-93e2-df62ca116a45",
+  "round": 0,
+  "playerHp": 120,
+  "enemyHp": 120,
+  "nativeInputsSentForMoves": 0,
+  "naturalOutcomeForced": false,
+  "encounterRetained": true,
+  "expectedCaptureCount": 0,
+  "originalFivePetsExact": true,
+  "expectedRestoration": {
+    "selection": "battlePetId",
+    "original": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+    "current": "pet-8d67a86f-8053-46fe-93e2-df62ca116a45",
+    "restoreVia": "normal UI after current retained battle concludes"
+  }
+}

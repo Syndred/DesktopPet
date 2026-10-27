@@ -1,0 +1,118 @@
+{
+  "at": "2026-10-25T12:44:55.597Z",
+  "backupPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\6ff8e38f-9f2b-4872-8747-1fb00bd81655\\local-a\\uat-exports\\fresh09-native-312-backup.json",
+  "bytes": 149371,
+  "sha256": "40209454204d7ff6fbd0b99d08524f2e19ed55dd3a2bd970242b6ad62d112d54",
+  "topKeys": [
+    "format",
+    "version",
+    "ownerAccountId",
+    "provenance",
+    "identity",
+    "createdAt",
+    "data",
+    "excluded",
+    "checksum"
+  ],
+  "format": "lingjing-account-save",
+  "version": 1,
+  "provenance": {
+    "mode": "simulated",
+    "scenarioId": "unified-battle",
+    "runId": "f3455e84-59a1-4edb-9b77-975ff32dc45c"
+  },
+  "moduleNames": [
+    "legacy",
+    "settings",
+    "companions",
+    "battle",
+    "garden",
+    "character-resources",
+    "conversations"
+  ],
+  "syntheticCredentialMatches": [
+    {
+      "field": "password",
+      "found": false
+    }
+  ],
+  "protocolFixtureApiKeyPresent": false,
+  "sensitiveKeyPaths": [],
+  "moduleSummary": {
+    "legacy": {
+      "version": 1,
+      "keys": [],
+      "counts": {}
+    },
+    "settings": {
+      "version": 1,
+      "keys": [
+        "desktop",
+        "notifications",
+        "privacy",
+        "sync"
+      ],
+      "counts": {}
+    },
+    "companions": {
+      "version": 1,
+      "keys": [
+        "ownerAccountId",
+        "tables",
+        "identityImports"
+      ],
+      "counts": {
+        "identityImports": 0
+      }
+    },
+    "battle": {
+      "version": 2,
+      "keys": [
+        "sessions",
+        "actions",
+        "reports",
+        "rewards",
+        "transportJournal"
+      ],
+      "counts": {
+        "sessions": 1,
+        "actions": 23,
+        "reports": 1,
+        "rewards": 1,
+        "transportJournal": 0
+      }
+    },
+    "garden": {
+      "version": 1,
+      "keys": [
+        "ownerAccountId",
+        "tables",
+        "territoryArchive"
+      ],
+      "counts": {}
+    },
+    "character-resources": {
+      "version": 1,
+      "keys": [
+        "ownerAccountId",
+        "resources",
+        "imports",
+        "preferences"
+      ],
+      "counts": {
+        "resources": 0,
+        "imports": 0,
+        "preferences": 0
+      }
+    },
+    "conversations": {
+      "version": 1,
+      "keys": [
+        "ownerAccountId",
+        "schema",
+        "tables"
+      ],
+      "counts": {}
+    }
+  }
+}

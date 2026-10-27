@@ -1,0 +1,461 @@
+{
+  "at": "2026-10-25T19:11:19.783Z",
+  "keyPresence": {
+    "at": "2026-10-25T19:11:19.783Z",
+    "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "selected": {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "selected_pet_id": "pet-96de9234-462d-413b-ac72-81cfc1add244"
+    },
+    "connections": [
+      {
+        "scope": "account",
+        "scope_id": "",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "model": "模拟验收-DC7-c696c6c03ca2",
+        "key_present": 0,
+        "revision": 2,
+        "updated_at": 1792955398970
+      },
+      {
+        "scope": "pet",
+        "scope_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "model": "模拟验收-DC7-c696c6c03ca2",
+        "key_present": 0,
+        "revision": 2,
+        "updated_at": 1792955419075
+      }
+    ],
+    "credentials": [],
+    "profiles": [
+      {
+        "pet_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "use_override": 0,
+        "revision": 2
+      }
+    ],
+    "messageCount": {
+      "count": 0
+    }
+  },
+  "settings": {
+    "ok": true,
+    "data": {
+      "document": {
+        "desktop": {
+          "alwaysOnTop": true,
+          "clickThrough": true,
+          "launchAtLogin": false,
+          "closeToTray": true,
+          "companionLimit": 3,
+          "interactionSounds": true,
+          "volume": 70,
+          "hideInFullscreen": true,
+          "animationsEnabled": true
+        },
+        "notifications": {
+          "enabled": true,
+          "companions": true,
+          "battles": true,
+          "garden": true,
+          "quietEnabled": true,
+          "quietStart": "22:00",
+          "quietEnd": "08:00"
+        },
+        "privacy": {
+          "locationAllowed": false,
+          "locationOnlyWhileExploring": true,
+          "emotionStatistics": false
+        },
+        "sync": {
+          "enabled": false
+        }
+      },
+      "revision": 2,
+      "updatedAt": "2026-10-25T19:09:38.618Z",
+      "host": {
+        "startup": false,
+        "fullscreenMonitor": true,
+        "fullscreenMonitorReady": true,
+        "foregroundFullscreen": false,
+        "fullscreenSource": null,
+        "companionWindows": 1,
+        "clickThroughWindows": [
+          2
+        ],
+        "windows": [
+          {
+            "id": 2,
+            "alwaysOnTop": true,
+            "visible": true
+          }
+        ],
+        "locationAllowed": false,
+        "emotionStatistics": false,
+        "closeToTrayConnected": true,
+        "companionLimitConnected": true
+      }
+    }
+  },
+  "companions": {
+    "ok": true,
+    "data": {
+      "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "pets": [
+        {
+          "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+          "petId": "pet-96de9234-462d-413b-ac72-81cfc1add244",
+          "templateId": "animal-wood-deer",
+          "name": "并发验收木鹿乙",
+          "serial": "96DE9234",
+          "element": "wood",
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "source": "adoption",
+          "origin": {},
+          "growth": {
+            "level": 1,
+            "experience": 0,
+            "mood": 60,
+            "satiety": 60,
+            "affinity": 0,
+            "winsTotal": 0,
+            "stats": {
+              "hp": 130,
+              "atk": 26,
+              "def": 26,
+              "spd": 18
+            }
+          },
+          "desktop": {
+            "visible": false,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 80,
+              "y": 520,
+              "displayId": null
+            }
+          },
+          "revision": 1,
+          "createdAt": "2026-10-25T12:07:23.190Z",
+          "updatedAt": "2026-10-25T12:07:23.190Z",
+          "globalSerial": "2"
+        },
+        {
+          "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+          "petId": "pet-825f6af9-402b-4244-988a-481563b7a587",
+          "templateId": "animal-earth-pangolin",
+          "name": "并发验收木鹿乙",
+          "serial": "825F6AF9",
+          "element": "earth",
+          "resource": {
+            "resourceId": "builtin:lingjing-yantuan-v1",
+            "kind": "2d"
+          },
+          "source": "adoption",
+          "origin": {},
+          "growth": {
+            "level": 1,
+            "experience": 0,
+            "mood": 60,
+            "satiety": 60,
+            "affinity": 0,
+            "winsTotal": 0,
+            "stats": {
+              "hp": 142,
+              "atk": 24,
+              "def": 34,
+              "spd": 11
+            }
+          },
+          "desktop": {
+            "visible": false,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 320,
+              "y": 520,
+              "displayId": null
+            }
+          },
+          "revision": 1,
+          "createdAt": "2026-10-25T12:20:31.991Z",
+          "updatedAt": "2026-10-25T12:20:31.991Z",
+          "globalSerial": "2"
+        },
+        {
+          "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+          "petId": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "serial": "74C6A89C",
+          "element": "water",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "source": "adoption",
+          "origin": {},
+          "growth": {
+            "level": 1,
+            "experience": 0,
+            "mood": 60,
+            "satiety": 60,
+            "affinity": 0,
+            "winsTotal": 0,
+            "stats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          "desktop": {
+            "visible": true,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 560,
+              "y": 520,
+              "displayId": null
+            }
+          },
+          "revision": 1,
+          "createdAt": "2026-10-25T16:15:42.590Z",
+          "updatedAt": "2026-10-25T16:15:42.590Z",
+          "globalSerial": "3"
+        }
+      ],
+      "selections": {
+        "chatPetId": "pet-96de9234-462d-413b-ac72-81cfc1add244",
+        "battlePetId": null,
+        "guardPetId": null
+      },
+      "templates": [
+        {
+          "templateId": "big-fish-gentle",
+          "name": "鱼丸",
+          "category": "big-fish",
+          "element": "water",
+          "description": "安静温柔的鲸尾少女，喜欢陪你度过日常。",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "big-fish-cheerful",
+          "name": "小蓝",
+          "category": "big-fish",
+          "element": "water",
+          "description": "活泼的侧马尾伙伴，穿着宽松鲸鱼斗篷。",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaolan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "big-fish-foodie",
+          "name": "饭团",
+          "category": "big-fish",
+          "element": "water",
+          "description": "盘着双丸子头的美食家，认真珍惜每一顿饭。",
+          "resource": {
+            "resourceId": "builtin:lingjing-fantuan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "animal-shiba",
+          "name": "焰柴",
+          "category": "animal",
+          "element": "fire",
+          "description": "热情勇敢的柴犬，星星项圈总是闪闪发亮。",
+          "resource": {
+            "resourceId": "builtin:lingjing-shiba-v2",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 20,
+            "spd": 22
+          }
+        },
+        {
+          "templateId": "animal-hat-cat",
+          "name": "礼帽喵",
+          "category": "animal",
+          "element": "metal",
+          "description": "戴着礼帽的燕尾猫，擅长温柔的小魔术。",
+          "resource": {
+            "resourceId": "builtin:lingjing-hatcat-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 136,
+            "atk": 30,
+            "def": 30,
+            "spd": 13
+          }
+        },
+        {
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "category": "animal",
+          "element": "water",
+          "description": "安静机灵的雪白小狐，像雪花一样轻盈。",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "animal-wood-deer",
+          "name": "青芽",
+          "category": "animal",
+          "element": "wood",
+          "description": "戴着枝叶小角的林间幼鹿，喜欢收集新芽。",
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 18
+          }
+        },
+        {
+          "templateId": "animal-earth-pangolin",
+          "name": "岩团",
+          "category": "animal",
+          "element": "earth",
+          "description": "披着暖褐鳞甲的小穿山甲，稳稳守住每一步。",
+          "resource": {
+            "resourceId": "builtin:lingjing-yantuan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 142,
+            "atk": 24,
+            "def": 34,
+            "spd": 11
+          }
+        }
+      ],
+      "revision": 5,
+      "sync": {
+        "mode": "cloud",
+        "status": "ready",
+        "pending": 0,
+        "cloudRevision": 6,
+        "sharedSavePending": true
+      }
+    },
+    "revision": 5
+  },
+  "outbox": {
+    "at": "2026-10-25T19:11:22.609Z",
+    "state": {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "cloud_revision": 5,
+      "last_checksum": "d4d280f9c20065b9cce78895c6ba36a08b10e2633c0a51fe8b545e1927bc3b16",
+      "last_verified_at": "2026-10-25T19:09:15.004Z",
+      "last_error": null
+    },
+    "outbox": [
+      {
+        "action_id": "41777b34-8b8f-47a9-9631-8c87af62a8ae",
+        "base_revision": 0,
+        "checksum": "7d0da466557cd33ab9cccef2f3b2c8785ba84f321aa2b2dceef05b0659e77679",
+        "status": "superseded",
+        "attempts": 1,
+        "created_at": "2026-10-25T18:59:17.009Z",
+        "verified_at": null,
+        "last_error": "CLOUD_RESTORE_SUPERSEDED",
+        "chars": 13206
+      },
+      {
+        "action_id": "auto:f229a446-b520-4316-b126-ecd2c4de1903",
+        "base_revision": 4,
+        "checksum": "d4d280f9c20065b9cce78895c6ba36a08b10e2633c0a51fe8b545e1927bc3b16",
+        "status": "verified",
+        "attempts": 0,
+        "created_at": "2026-10-25T19:05:13.195Z",
+        "verified_at": "2026-10-25T19:05:16.998Z",
+        "last_error": null,
+        "chars": 10869
+      }
+    ],
+    "sources": [
+      {
+        "action_id": "41777b34-8b8f-47a9-9631-8c87af62a8ae",
+        "original_checksum": "7d0da466557cd33ab9cccef2f3b2c8785ba84f321aa2b2dceef05b0659e77679",
+        "archive_action_id": "archive:0464aad6-7812-4832-856c-1e8db49911d6",
+        "authority_pending": 0,
+        "prepared_at": null,
+        "created_at": "2026-10-25T18:59:17.009Z",
+        "cloud_projection_checksum": "7d0da466557cd33ab9cccef2f3b2c8785ba84f321aa2b2dceef05b0659e77679",
+        "cloud_excluded": "[]"
+      },
+      {
+        "action_id": "auto:f229a446-b520-4316-b126-ecd2c4de1903",
+        "original_checksum": "be2530c758b37261f40491711a21128264228707103be986adeb6442ad1ddd3e",
+        "archive_action_id": "archive:c5d3185a-c230-4ac4-8985-6696d3d7e08c",
+        "authority_pending": 0,
+        "prepared_at": "2026-10-25T19:05:14.646Z",
+        "created_at": "2026-10-25T19:05:13.195Z",
+        "cloud_projection_checksum": "be2530c758b37261f40491711a21128264228707103be986adeb6442ad1ddd3e",
+        "cloud_excluded": "[]"
+      }
+    ]
+  },
+  "helper": {
+    "runId": "b272bb70-7b19-47e4-8d01-30ed0ce64e97",
+    "status": "stopped",
+    "pid": 10628,
+    "port": 56751,
+    "stoppedAt": "2026-10-25T19:08:20.038Z"
+  },
+  "networkErrorNativeEvidence": "t06-cloud-b-stopped-provider-network-error-native.jpg",
+  "checks": {
+    "allNewKeySlotsEmpty": true,
+    "vaultEmpty": true,
+    "newB3OverrideRestoredFalse": true,
+    "allSettingsRestoredExact": true,
+    "threePetsExact": true,
+    "messageCountStillZero": true
+  }
+}

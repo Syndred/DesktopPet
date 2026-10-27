@@ -1,0 +1,98 @@
+{
+  "at": "2026-10-25T22:01:23.236Z",
+  "approvalPath": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/c11-a1-replay-root-20261025T215947Z/root-approval.json",
+  "approvalSha256": "337c009f03bb864a3f5e5c73a043fac17a942184c741fd231b30617ae1a271d2",
+  "startedAt": "2026-10-25T22:00:48.7607536Z",
+  "independentBeforeAt": "2026-10-25T21:59:47.188365+00:00",
+  "ageAtStartMs": 61572,
+  "pid": 26872,
+  "exitCode": 1,
+  "sends": 0,
+  "errorCode": "INDEPENDENT_BEFORE_STALE",
+  "vaultNotDecodedBySourceGateOrder": true,
+  "technicalReplayResponseVerified": false,
+  "c11Passed": false,
+  "noAutomaticRetry": true,
+  "executionClaimDirectoryExists": false,
+  "beforeFiles": [
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\lingjing.sqlite",
+      "exists": true,
+      "bytes": 1675264,
+      "sha256": "5873a5c2eb11e7999ec795920eea4758147ac89e3cea51aaa9c910d4a119f636"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\lingjing.sqlite-wal",
+      "exists": true,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\lingjing.sqlite-shm",
+      "exists": true,
+      "bytes": 32768,
+      "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\accounts\\verified-session.bin",
+      "exists": true,
+      "bytes": 1497,
+      "sha256": "f765d4b0134aa446ea8c58621249f9cd8267d1e731e47fb07ef676288d0ec98f"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\.lingjing-qa-profile.json",
+      "exists": false
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\lingjing-qa-profile.json",
+      "exists": false
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\accounts\\device.json",
+      "exists": true,
+      "bytes": 63,
+      "sha256": "2fb39c18c95bbb37d1c472f565801684f9438dbc949f46942d8c56186b8689b1"
+    }
+  ],
+  "afterFiles": [
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\lingjing.sqlite",
+      "exists": true,
+      "bytes": 1675264,
+      "sha256": "5873a5c2eb11e7999ec795920eea4758147ac89e3cea51aaa9c910d4a119f636"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\lingjing.sqlite-wal",
+      "exists": true,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\lingjing.sqlite-shm",
+      "exists": true,
+      "bytes": 32768,
+      "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\accounts\\verified-session.bin",
+      "exists": true,
+      "bytes": 1497,
+      "sha256": "f765d4b0134aa446ea8c58621249f9cd8267d1e731e47fb07ef676288d0ec98f"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\.lingjing-qa-profile.json",
+      "exists": false
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\lingjing-qa-profile.json",
+      "exists": false
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\accounts\\device.json",
+      "exists": true,
+      "bytes": 63,
+      "sha256": "2fb39c18c95bbb37d1c472f565801684f9438dbc949f46942d8c56186b8689b1"
+    }
+  ],
+  "allProtectedFilesExact": true
+}

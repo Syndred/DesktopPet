@@ -1,0 +1,66 @@
+{
+  "at": "2026-10-25T23:37:13.993Z",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "owner": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "inputs": {
+    "at": "2026-10-25T23:33:24.081Z",
+    "validNativeExport": {
+      "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-b-fresh09/uat-exports/r05-dc7-qingya-actions-20261026.lingjing.json",
+      "exists": true,
+      "bytes": 2507321,
+      "sha256": "f148d3858f2ef68464a331ab779b3b3ded8e80d0ca8b6252ffbe6602b16bd496"
+    },
+    "invalidChecksumCopy": {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/p06-invalid-checksum-native-input.lingjing.json",
+      "exists": true,
+      "bytes": 2507321,
+      "sha256": "5cae234ae90a6dab731a98e2ae1f1ec61075af5cb2676b76a5d62fa4266d5dc8"
+    },
+    "corruptOnlyChecksum": true,
+    "sourceEnvelopeValid": true,
+    "invalidEnvelopeRejectedByChecksum": true,
+    "foreignActualA": {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\accounts\\backups\\before-cloud-battle-readback-1792964950918-d1165fc6-277a-4c2b-b6cf-c20f0f9a19bc.lingjing.json",
+      "exists": true,
+      "bytes": 77684,
+      "sha256": "57bcd207994d97f2d9642676a9753591fc2a061b1c39a7fce17889a6c3dade05"
+    },
+    "foreignEnvelopeValid": true,
+    "foreignOwner": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+    "targetOwner": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "foreignProvenance": {
+      "mode": "live"
+    }
+  },
+  "simulatedInput": {
+    "file": {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\6ff8e38f-9f2b-4872-8747-1fb00bd81655\\local-a\\uat-exports\\fresh09-native-312-backup.json",
+      "exists": true,
+      "bytes": 149371,
+      "sha256": "40209454204d7ff6fbd0b99d08524f2e19ed55dd3a2bd970242b6ad62d112d54"
+    },
+    "hashMatchesOriginalExport": true,
+    "envelopeValid": true,
+    "format": "lingjing-account-save",
+    "version": 1,
+    "provenance": {
+      "mode": "simulated",
+      "scenarioId": "unified-battle",
+      "runId": "f3455e84-59a1-4edb-9b77-975ff32dc45c"
+    },
+    "qualification": "Existing actual older native export used only as invalid-environment input to current DC7. No old candidate success inherited."
+  },
+  "checks": {
+    "invalidChecksumExplicitlyRejected": true,
+    "actualForeignOwnerExplicitlyRejected": true,
+    "simulatedOriginExplicitlyRejected": true,
+    "three67TableReadbacksExact": true,
+    "managedFilesExact": true,
+    "resourceRowsExact": true,
+    "originalExportUnchanged": true,
+    "originalForeignBackupUnchanged": true,
+    "originalSimulatedBackupUnchanged": true
+  },
+  "qualification": "67 tables: 63 non-secret tables compared by full-row aggregate SHA; conversation_credentials/account_login_sessions/account_identities/account_legacy_data count only. No credential values selected, no direct business mutation, one native Open each invalid input, no restore confirm exposed."
+}

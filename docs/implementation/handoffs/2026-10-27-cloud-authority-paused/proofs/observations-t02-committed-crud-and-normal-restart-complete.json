@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-26T20:48:26.181Z",
+  "stage": "t02-committed-crud-and-normal-restart-complete",
+  "caseUpdates": [
+    {
+      "id": "T02",
+      "status": "passed",
+      "executionState": "executed_current_candidate",
+      "actual": "两只原同模板小狐已提交人设/记忆owner+petId独立，合成甲记忆正常新增rev1→编辑rev2→采用备份原文rev3→普通UI删除rev4，双原客户端及独立PG一致，另一只乙记忆rev1原文未变。原A普通退出重开后原始个人记录hash/删除状态及另一只数据均保持，原设置全文恢复revision29。未提交草稿覆盖归N03/4E6-001、重复备份恢复失败归P05/4E6-003，均仍open，未据此声称恢复通过。",
+      "evidence": [
+        "native-two-pet-personal-cross-client-seal.json",
+        "native-T02-memory-edit-visible-success.png",
+        "native-T02-selected-fox-memory-deleted.png",
+        "native-T02-other-same-template-memory-preserved.png",
+        "cloudASecond-synthetic-memory-delete-mirrored.json",
+        "root-A-synthetic-memory-deletion-cloud-independent.json",
+        "native-T02-crud-normal-restart-seal.json",
+        "native-T02-restart-original-settings-restored.png"
+      ]
+    }
+  ],
+  "newIssues": [],
+  "issueUpdates": []
+}

@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-25T13:24:20.888Z",
+  "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+  "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+  "original": {
+    "wrapperPid": 26024,
+    "mainPid": 26956,
+    "windowId": 4853864,
+    "profile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a"
+  },
+  "before": {
+    "at": "2026-10-25T13:23:05.4103193Z",
+    "windowId": 4853864,
+    "isIconic": true,
+    "foregroundWindow": 23528694
+  },
+  "after": {
+    "at": "2026-10-25T13:23:48.6603917Z",
+    "windowId": 4853864,
+    "isIconic": false,
+    "foregroundWindow": 4853864
+  },
+  "launchers": [
+    {
+      "issuedAt": "2026-10-25T13:23:15.1562768Z",
+      "startedAt": "2026-10-25T13:23:15.1774685Z",
+      "pid": 14932,
+      "exitCode": 0,
+      "exitCaptured": true,
+      "number": 1,
+      "exitAt": "2026-10-25T13:23:26.4341272Z"
+    }
+  ],
+  "changedTablesFromAfterLogin": [
+    "account_actions",
+    "account_settings"
+  ],
+  "note": "Only UI settings save closeToTray restoration preceded this test; no business gameplay actions."
+}

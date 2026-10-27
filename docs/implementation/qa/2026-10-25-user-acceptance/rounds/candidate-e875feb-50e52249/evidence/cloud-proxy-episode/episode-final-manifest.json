@@ -1,0 +1,529 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-25T14:45:36.079Z",
+  "status": "critical-live-cloud-outage-and-original-pending-recovery-passed",
+  "candidate": {
+    "id": "candidate-e875feb-50e52249",
+    "runId": "e71b9c11-e62a-46a6-aa4d-decdd34c4200",
+    "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+    "sourceTree": "2d8977dc36e95ede498d3e3f14a26f1f9b392a16",
+    "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+    "executable": "C:/Users/Administrator/Desktop/project/DesktopPet/releases/user-acceptance-e875feb/Lingjing-0.1.8-portable-x64.exe",
+    "asarSha256": "993a2b91463223fd0c12e4c596459a6bde46d250baff9a2267c8fc2a66c8871d",
+    "startedAt": "2026-10-25T13:08:13.396Z",
+    "acceptanceScope": "Critical gates; QA013 absent, not final98 acceptance",
+    "profilePath": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a",
+    "scenarioRunId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+    "provenance": "simulated/unified-battle"
+  },
+  "originalOwner": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+  "deviceId": "41de040e-a134-487f-b1d3-76b5254a8f97",
+  "sessionId": "7deaf22a-df64-461a-92fc-9fe1b0e8b0dd",
+  "operation": {
+    "at": "2026-10-25T14:37:37.371Z",
+    "oldRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nsnDC3E.tmp/app",
+    "newRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nseD633.tmp/app",
+    "originalActionId": "e8156c9e-4b1d-421a-a326-9860f203d402",
+    "originalOwner": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+    "originalRawIntentSha256": "0c4bfd4b194e727e8647e192d4b0e0732b4d45fb39cc5ac6e5dc7eb2752fbc22",
+    "originalRequestHash": "9ffcc3ec0ff98336f27bd6ca0aa53aabe1548afd645eefadbc11bc0450bb3777",
+    "afterRequestHash": "9ffcc3ec0ff98336f27bd6ca0aa53aabe1548afd645eefadbc11bc0450bb3777",
+    "wireBodyUnchanged": true,
+    "requestStatus": "committed",
+    "response": {
+      "actionId": "e8156c9e-4b1d-421a-a326-9860f203d402",
+      "authorityReceiptId": "garden:9ffcc3ec0ff98336f27bd6ca0aa53aabe1548afd645eefadbc11bc0450bb3777",
+      "requestHash": "9ffcc3ec0ff98336f27bd6ca0aa53aabe1548afd645eefadbc11bc0450bb3777",
+      "accountRevision": 5,
+      "result": {
+        "ok": true,
+        "data": {
+          "plotId": "plot-1",
+          "cropType": "carrot",
+          "maturesAt": 1792939459056,
+          "plantedAt": 1792938859056,
+          "yieldQuantity": 3
+        },
+        "replayed": false,
+        "revision": 2
+      }
+    },
+    "localActionRows": 1,
+    "localPlantLedger": [],
+    "outbox": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "action_id": "e8156c9e-4b1d-421a-a326-9860f203d402",
+        "payload_json": "{\"kind\":\"plant\",\"input\":{\"plotId\":\"plot-1\",\"cropType\":\"carrot\",\"sessionOwnerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"actionId\":\"e8156c9e-4b1d-421a-a326-9860f203d402\",\"expectedRevision\":1},\"result\":{\"ok\":true,\"data\":{\"plotId\":\"plot-1\",\"cropType\":\"carrot\",\"plantedAt\":1792938859056,\"maturesAt\":1792939459056,\"yieldQuantity\":3},\"revision\":2,\"replayed\":false}}",
+        "status": "synced",
+        "attempts": 0,
+        "last_error": null,
+        "created_at": 1792938859056
+      }
+    ],
+    "plot1": {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "plot_id": "plot-1",
+      "crop_type": "carrot",
+      "planted_at": 1792938859056,
+      "matures_at": 1792939459056,
+      "yield_quantity": 3,
+      "revision": 1
+    },
+    "items": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "item_id": "seed:berry",
+        "quantity": 2
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "item_id": "seed:carrot",
+        "quantity": 1
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "item_id": "seed:rice",
+        "quantity": 2
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "item_id": "seed:tomato",
+        "quantity": 2
+      }
+    ],
+    "realPendingCleared": true,
+    "lsSentinelExact": true,
+    "idbSentinelExact": true,
+    "syncStatus": {
+      "ok": true,
+      "data": {
+        "configured": true,
+        "cloudRevision": 5,
+        "lastVerifiedAt": "2026-10-25T14:37:24.776Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": 5,
+        "lastCloudCheckedAt": "2026-10-25T14:37:24.761Z",
+        "remoteChanged": false
+      }
+    },
+    "serverIndependentReadback": {
+      "operatorThread": "01a172b5-e59a-7c53-a67c-8fc53e6f61cd",
+      "checkedAt": "2026-10-25T14:36:35.916777Z",
+      "proofPath": "artifacts/qa/user-acceptance/global-serial/garden-real-outage-after-private.json",
+      "gardenOperationsCount": 1,
+      "serverRequestHash": "9ffcc3ec0ff98336f27bd6ca0aa53aabe1548afd645eefadbc11bc0450bb3777",
+      "saveActionsCount": 0,
+      "receiptStore": "garden_operations dedicated domain path, save_actions0 is expected",
+      "gardenRevisionBefore": 1,
+      "gardenRevisionAfter": 2,
+      "saveRevisionBefore": 4,
+      "saveRevisionAfter": 5,
+      "carrotSeedBefore": 2,
+      "carrotSeedAfter": 1,
+      "otherSeedQuantitiesUnchanged": true,
+      "onlyPlot1Planted": true
+    },
+    "proxy": {
+      "host": "jbvrdmrkwpznbrvteive.supabase.co",
+      "mode": "allow",
+      "accepted": 57,
+      "rejected": 16,
+      "upBytes": 343951,
+      "downBytes": 656359,
+      "closedByControl": 2,
+      "active": 0,
+      "maxBlockedMs": 300000,
+      "blockedUntil": null,
+      "statusWriteFailures": 0,
+      "events": [
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-rejected"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-rejected"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-rejected"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-rejected"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-rejected"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-rejected"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-rejected"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-rejected"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-rejected"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-rejected"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-rejected"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-rejected"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-rejected"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-rejected"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-rejected"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "mode:allow"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "connect-accepted"
+        },
+        {
+          "host": "jbvrdmrkwpznbrvteive.supabase.co",
+          "status": "transparent-tcp-tunnel"
+        }
+      ]
+    },
+    "canonicalLocalPlantEvents": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "event_id": "d754feda-9201-4f0f-b6a8-695f878d98b5",
+        "action_id": "e8156c9e-4b1d-421a-a326-9860f203d402",
+        "kind": "plant",
+        "item_id": "seed:carrot",
+        "delta": -1,
+        "balance": 1,
+        "pet_id": null,
+        "created_at": 1792938859056
+      }
+    ],
+    "legacyGardenLedgerRows": 0
+  },
+  "cleanup": {
+    "rootConfirmedDaemonPid": 22236,
+    "rootConfirmedListenerPort": 53815,
+    "rootConfirmedDaemonNormalExitCode": 0,
+    "independent09ProcessAbsent": true,
+    "independent09ListenerAbsent": true,
+    "proxyStatus": "stopped",
+    "proxyActive": 0,
+    "finalOrdinaryA": {
+      "wrapperPid": 16100,
+      "mainPid": 11672,
+      "windowId": 8589428,
+      "debugPort": 57218,
+      "payloadRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nsxCEAA.tmp/app",
+      "source": "e875febf3430be341191a639668d43e7f09826dc",
+      "scenario": null,
+      "owner": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+    },
+    "desktopExactRestored": true,
+    "closeToTray": true,
+    "finalSync": {
+      "configured": true,
+      "cloudRevision": 6,
+      "lastVerifiedAt": "2026-10-25T14:42:10.948Z",
+      "lastError": null,
+      "pending": 0,
+      "conflicts": 0,
+      "localChanged": false,
+      "unverifiedLocal": 0,
+      "privacyRedactions": 0,
+      "running": false,
+      "observedCloudRevision": 6,
+      "lastCloudCheckedAt": "2026-10-25T14:42:10.935Z",
+      "remoteChanged": false
+    },
+    "systemFirewallProfilesStillDisabled": true,
+    "parentProxyEnvironmentAbsent": true,
+    "noSystemProxyChanges": true
+  },
+  "limits": [
+    "This is intermediate e875 critical-gate acceptance, not all98 final pass.",
+    "QA013 and QA014 require next exact final package.",
+    "Local garden_events is the canonical cloud economic ledger; legacy garden_ledger is empty.",
+    "Dedicated server receipt store is garden_operations; save_actions0 is expected.",
+    "No new actionId/repeated planting, no cloud fox allocation."
+  ]
+}

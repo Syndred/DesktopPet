@@ -1,0 +1,218 @@
+{
+  "at": "2026-10-26T23:32:11.736Z",
+  "readOnly": true,
+  "queryOnly": true,
+  "credentialValuesRead": false,
+  "owner": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+  "clients": [
+    {
+      "alias": "cloudA",
+      "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a",
+      "profiles": [
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "pet_id": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+          "persona": "4e6并发甲新稿：绿色积木。",
+          "reply_style": "natural",
+          "memory_enabled": 1,
+          "pause_while_chatting": 1,
+          "use_override": 0,
+          "revision": 2,
+          "updated_at": 1793042045303
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "pet_id": "pet-97410828-fdf6-4253-8246-4c5f389d8fba",
+          "persona": "4e6验收乙狐：喜欢橙色风筝。",
+          "reply_style": "natural",
+          "memory_enabled": 1,
+          "pause_while_chatting": 1,
+          "use_override": 0,
+          "revision": 1,
+          "updated_at": 1793042358574
+        }
+      ],
+      "memories": [
+        {
+          "id": "6d8df6f1-43db-4e14-8371-8b8dd5d78580",
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "pet_id": "pet-97410828-fdf6-4253-8246-4c5f389d8fba",
+          "content": "4e6乙狐记忆：橙色风筝放在右边。",
+          "revision": 1,
+          "created_at": 1793042400922,
+          "updated_at": 1793042400922
+        }
+      ],
+      "archives": [
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "checksum": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "document_json": "{}",
+          "created_at": 1793041078795
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "checksum": "fa1cb50697e1ac8032231d529411ea548dc6968d70f8f5e83023d9787141765d",
+          "document_json": "{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"schema\":{\"conversation_profiles\":\"owner_account_id|pet_id|persona|reply_style|memory_enabled|pause_while_chatting|use_override|revision|updated_at\",\"conversation_connections\":\"owner_account_id|scope|scope_id|provider|base_url|model|context_chars|max_output_tokens|revision|updated_at\",\"conversation_messages\":\"id|owner_account_id|pet_id|action_id|role|content|status|error_code|provider|model|attempt|created_at|updated_at\",\"conversation_memories\":\"id|owner_account_id|pet_id|content|revision|created_at|updated_at\",\"conversation_preferences\":\"owner_account_id|selected_pet_id\"},\"tables\":{\"conversation_profiles\":[{\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"pet_id\":\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"persona\":\"4e6并发甲新稿：绿色积木。\",\"reply_style\":\"natural\",\"memory_enabled\":1,\"pause_while_chatting\":1,\"use_override\":0,\"revision\":2,\"updated_at\":1793042045303},{\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"pet_id\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"persona\":\"4e6验收乙狐：喜欢橙色风筝。\",\"reply_style\":\"natural\",\"memory_enabled\":1,\"pause_while_chatting\":1,\"use_override\":0,\"revision\":1,\"updated_at\":1793042358574}],\"conversation_connections\":[],\"conversation_messages\":[],\"conversation_memories\":[{\"id\":\"466a65e0-80a2-4825-bc87-d7e2432eb870\",\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"pet_id\":\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"content\":\"4e6甲狐记忆：蓝色积木放在左边。\",\"revision\":1,\"created_at\":1793041966804,\"updated_at\":1793041966804},{\"id\":\"6d8df6f1-43db-4e14-8371-8b8dd5d78580\",\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"pet_id\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"content\":\"4e6乙狐记忆：橙色风筝放在右边。\",\"revision\":1,\"created_at\":1793042400922,\"updated_at\":1793042400922}],\"conversation_preferences\":[{\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"selected_pet_id\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\"}]}}",
+          "created_at": 1793047046245
+        }
+      ],
+      "conflicts": [
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "collection": "conversation_memories",
+          "record_id": "[\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"466a65e0-80a2-4825-bc87-d7e2432eb870\"]",
+          "local_document": "{\"id\":\"466a65e0-80a2-4825-bc87-d7e2432eb870\",\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"pet_id\":\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"content\":\"4e6甲狐记忆：蓝色积木放在左边。\",\"revision\":1,\"created_at\":1793041966804,\"updated_at\":1793041966804}",
+          "cloud_document": "{\"id\":\"466a65e0-80a2-4825-bc87-d7e2432eb870\",\"pet_id\":\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"content\":\"4e6甲狐记忆编辑：蓝色积木移到中间。\",\"revision\":2,\"created_at\":1793041966804,\"updated_at\":1793046961910,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"}",
+          "reason": "backup-import:fa1cb50697e1ac8032231d529411ea548dc6968d70f8f5e83023d9787141765d",
+          "created_at": 1793047049067,
+          "resolved_at": 1793047112272,
+          "resolution": "local"
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "collection": "conversation_preferences",
+          "record_id": "[\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"]",
+          "local_document": "{\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"selected_pet_id\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\"}",
+          "cloud_document": "{\"selected_pet_id\":\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"}",
+          "reason": "backup-import:fa1cb50697e1ac8032231d529411ea548dc6968d70f8f5e83023d9787141765d",
+          "created_at": 1793047049067,
+          "resolved_at": 1793047146298,
+          "resolution": "cloud"
+        }
+      ],
+      "outbox": [
+        {
+          "action_id": "record:88d3cacf-94da-459c-9c70-c5117adf38dc",
+          "status": "verified",
+          "created_at": 1793041833061,
+          "last_error": null
+        },
+        {
+          "action_id": "record:fe37c42f-a8e7-4355-8b87-6cf176dfbd00",
+          "status": "verified",
+          "created_at": 1793041921352,
+          "last_error": null
+        },
+        {
+          "action_id": "record:fc39bd70-e786-4aba-a032-980c0f5529c9",
+          "status": "verified",
+          "created_at": 1793041966805,
+          "last_error": null
+        },
+        {
+          "action_id": "record:95e3859a-1a35-4e9f-bb38-3bdd31767dcb",
+          "status": "verified",
+          "created_at": 1793042045304,
+          "last_error": null
+        },
+        {
+          "action_id": "record:32a7b274-c084-481d-a6e8-0b1349046e69",
+          "status": "verified",
+          "created_at": 1793046922083,
+          "last_error": null
+        },
+        {
+          "action_id": "record:1b34f655-703f-496a-9a1b-1b63b3455c5c",
+          "status": "verified",
+          "created_at": 1793046961912,
+          "last_error": null
+        },
+        {
+          "action_id": "record:ff6ef975-a038-4ecc-8e3d-d8bdf12ca312",
+          "status": "verified",
+          "created_at": 1793047109169,
+          "last_error": null
+        },
+        {
+          "action_id": "record:3ff1112c-6cb3-4afb-852a-5fb0f34207b8",
+          "status": "verified",
+          "created_at": 1793047216094,
+          "last_error": null
+        },
+        {
+          "action_id": "record:f1a3d889-d3e2-46ef-9b56-ba105fd477b8",
+          "status": "verified",
+          "created_at": 1793047258588,
+          "last_error": null
+        },
+        {
+          "action_id": "record:62c8dfc5-f6a1-4034-944b-8465957c34d2",
+          "status": "verified",
+          "created_at": 1793047429613,
+          "last_error": null
+        }
+      ],
+      "credentials": 0
+    },
+    {
+      "alias": "cloudASecond",
+      "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-bc6598d3-1b1afdd1\\profiles\\cloud-a-second-device",
+      "profiles": [
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "pet_id": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+          "persona": "4e6并发甲新稿：绿色积木。",
+          "reply_style": "natural",
+          "memory_enabled": 1,
+          "pause_while_chatting": 1,
+          "use_override": 0,
+          "revision": 2,
+          "updated_at": 1793042045303
+        },
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "pet_id": "pet-97410828-fdf6-4253-8246-4c5f389d8fba",
+          "persona": "4e6验收乙狐：喜欢橙色风筝。",
+          "reply_style": "natural",
+          "memory_enabled": 1,
+          "pause_while_chatting": 1,
+          "use_override": 0,
+          "revision": 1,
+          "updated_at": 1793042358574
+        }
+      ],
+      "memories": [
+        {
+          "id": "6d8df6f1-43db-4e14-8371-8b8dd5d78580",
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "pet_id": "pet-97410828-fdf6-4253-8246-4c5f389d8fba",
+          "content": "4e6乙狐记忆：橙色风筝放在右边。",
+          "revision": 1,
+          "created_at": 1793042400922,
+          "updated_at": 1793042400922
+        }
+      ],
+      "archives": [
+        {
+          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "checksum": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "document_json": "{}",
+          "created_at": 1793041405036
+        }
+      ],
+      "conflicts": [],
+      "outbox": [
+        {
+          "action_id": "record:2ecb2d71-6f1e-4a25-b39e-1fa099d919c3",
+          "status": "verified",
+          "created_at": 1793042328707,
+          "last_error": null
+        },
+        {
+          "action_id": "record:67bcab0e-2c4c-4f80-b68e-336a48dd56d3",
+          "status": "verified",
+          "created_at": 1793042358575,
+          "last_error": null
+        },
+        {
+          "action_id": "record:968ca451-d0ca-4c0e-80bc-78c43eb50c52",
+          "status": "verified",
+          "created_at": 1793042400923,
+          "last_error": null
+        }
+      ],
+      "credentials": 0
+    }
+  ]
+}

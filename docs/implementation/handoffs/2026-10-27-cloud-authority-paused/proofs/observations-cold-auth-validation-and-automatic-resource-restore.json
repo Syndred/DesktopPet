@@ -1,0 +1,159 @@
+{
+  "at": "2026-10-26T21:05:25.834Z",
+  "stage": "cold-auth-validation-and-automatic-resource-restore",
+  "caseUpdates": [
+    {
+      "id": "A01",
+      "status": "failed",
+      "severity": "P3",
+      "executionState": "executed_current_candidate",
+      "findingRefs": [
+        "4E6-004"
+      ],
+      "actual": "原空目录以冻结便携EXE首次启动，未登录/无白屏/插画与登录入口正常，身份表0，公开appInfo为0.1.8。原case要求登录时显示版本，但首次登录屏及DOM正文均无版本标识；按此显示子项记录P3，未误报包版本错误。",
+      "evidence": [
+        "cloudBResourceFresh-first-cold-start-unauthenticated.json",
+        "cloudBResourceFresh-validation-failures-before-original-login.json",
+        "native-cold-auth-and-resource-cloud-hydration-seal.json",
+        "native-A01-fresh-ordinary-profile-first-login-screen.png"
+      ]
+    },
+    {
+      "id": "A02",
+      "status": "passed",
+      "executionState": "executed_current_candidate",
+      "actual": "默认登录行及勾选状态文字、checkbox、锁居中；Tab逐一聚焦记住账号/保持登录/锁时焦点清楚，锁聚焦显示“在这台电脑上保持登录，密码不会保存在页面中”。两项可独立勾选并恢复false/false。",
+      "evidence": [
+        "native-A02-remember-keep-controls-checked.png",
+        "native-A02-keyboard-focus-remember-account.png",
+        "native-A02-keyboard-focus-keep-login.png",
+        "native-A02-keyboard-focus-secure-lock-hint.png"
+      ]
+    },
+    {
+      "id": "A03",
+      "status": "passed",
+      "executionState": "executed_current_candidate",
+      "actual": "空表单原生required提示；不存在的测试账号及原B使用合成错误密码分别仅提交一次，均显示账号或密码不正确并保留输入。之后只读确认user=null/persistence none/identity0，没有产生会话或重复身份。",
+      "evidence": [
+        "cloudBResourceFresh-first-cold-start-unauthenticated.json",
+        "cloudBResourceFresh-validation-failures-before-original-login.json",
+        "native-cold-auth-and-resource-cloud-hydration-seal.json",
+        "native-A03-empty-login-validation.png",
+        "native-A03-invalid-account-rejected.png",
+        "native-A03-original-account-wrong-password-rejected.png"
+      ]
+    },
+    {
+      "id": "A04",
+      "status": "passed",
+      "executionState": "executed_current_candidate",
+      "actual": "注册表单实测2字符账号被minLength3拒绝；密码确认不一致明确提示；原B重复账号正常提交显示账号已存在。失败后本profile身份表仍0、未登录，没有新建或替换原B身份。",
+      "evidence": [
+        "cloudBResourceFresh-first-cold-start-unauthenticated.json",
+        "cloudBResourceFresh-validation-failures-before-original-login.json",
+        "native-cold-auth-and-resource-cloud-hydration-seal.json",
+        "native-A04-short-account-rejected.png",
+        "native-A04-password-confirmation-mismatch.png",
+        "native-A04-existing-original-account-rejected.png"
+      ]
+    },
+    {
+      "id": "A07",
+      "status": "passed",
+      "executionState": "executed_current_candidate",
+      "actual": "仅用合成错误密码验证眼睛显隐，内容保持；密码→眼睛→记住账号→保持登录→锁的Tab顺序及Shift+Tab回退可见，密码框Enter触发正常错误登录；公开DOM按钮名称有显示密码/记住账号/保持登录。真实原B密码仅在掩码状态填写后普通登录，未显示或打印。",
+      "evidence": [
+        "native-A07-synthetic-password-visibility.png",
+        "native-A07-tab-focus-password-toggle.png",
+        "native-A02-keyboard-focus-secure-lock-hint.png",
+        "cloudBResourceFresh-first-cold-start-unauthenticated.json",
+        "cloudBResourceFresh-validation-failures-before-original-login.json",
+        "native-cold-auth-and-resource-cloud-hydration-seal.json"
+      ]
+    },
+    {
+      "id": "R06",
+      "status": "passed",
+      "executionState": "executed_current_candidate",
+      "actual": "全新普通profile正常登录同一原B，在未进资源页/未导入备份前自动云恢复2原resourceId、2imports及4原PNG/JSON字节，新managed路径SHA逐个匹配真实原UI备份。两套原校准与动作映射完全相同；原生青芽1.05/mirror与战斗rotation2、岩团1.06/mirror及真实动画预览已显示。这是自动云恢复，不冒充R05备份写回。",
+      "evidence": [
+        "native-cold-auth-and-resource-cloud-hydration-seal.json",
+        "resource-fresh-profile-v1/after-original-login-before-any-resource-page-or-import.json",
+        "native-R06-cloud-restored-Qingya-calibration-visible.png",
+        "native-R06-Qingya-battle-calibration-restored.png",
+        "native-R06-cloud-restored-Yantuan-calibration-visible.png"
+      ]
+    },
+    {
+      "id": "C03",
+      "status": "failed",
+      "severity": "P2",
+      "executionState": "executed_current_candidate",
+      "findingRefs": [
+        "4E6-005"
+      ],
+      "actual": "旧原客户端可显示缓存编号与标准名；新普通客户端正常登录同一原B后4宠标准名/历史昵称/petId正确，但所有编号均待同步，公开当前错误GLOBAL_SERIAL_SCOPE_REVOKED。原云编号读回在新会话仍不可用，未用UUID或本机编号伪装。桌面纯图另在原A窗口实际可见。",
+      "evidence": [
+        "cloudBResourceFresh-post-login-before-resources.json",
+        "native-R06-fresh-original-B-after-ordinary-login.png",
+        "native-cold-auth-and-resource-cloud-hydration-seal.json"
+      ]
+    },
+    {
+      "id": "C11",
+      "status": "blocked",
+      "severity": "P2",
+      "executionState": "current_precondition_blocked",
+      "hardTechnicalBlock": true,
+      "blockerGroup": "CURRENT_GLOBAL_SERIAL_SCOPE",
+      "blockerKind": "current_cloud_permission_readback",
+      "findingRefs": [
+        "4E6-005"
+      ],
+      "actual": "本候选的新普通原B登录已实际验证GLOBAL_SERIAL_SCOPE_REVOKED且全4宠待同步，全局编号权威读回前置失败。保留原身份/动作，不为同一编号前置重复新建领养或捕获请求；原C11跨用户分配和重试完整子项未执行，待统一修复后补验。",
+      "evidence": [
+        "cloudBResourceFresh-post-login-before-resources.json",
+        "native-R06-fresh-original-B-after-ordinary-login.png",
+        "native-cold-auth-and-resource-cloud-hydration-seal.json"
+      ]
+    }
+  ],
+  "newIssues": [
+    {
+      "id": "4E6-004",
+      "severity": "P3",
+      "status": "open",
+      "title": "首次登录屏未显示原冷启动用例要求的版本",
+      "caseIds": [
+        "A01"
+      ],
+      "expected": "首次冷启动应能看到可用登录入口和当前版本标识。",
+      "actual": "空普通profile真实首次登录界面及正文无0.1.8版本标识，公开appInfo实际版本正确0.1.8，启动与登录入口正常。",
+      "evidence": [
+        "native-A01-fresh-ordinary-profile-first-login-screen.png",
+        "cloudBResourceFresh-first-cold-start-unauthenticated.json"
+      ],
+      "qualification": "仅UI版本可见性；非包版本、白屏或登录故障。"
+    },
+    {
+      "id": "4E6-005",
+      "severity": "P2",
+      "status": "open",
+      "title": "正常新设备登录后全局编号读取被权限拒绝",
+      "caseIds": [
+        "C03",
+        "C11"
+      ],
+      "expected": "正常登录原账号的新设备应读取其原宠物权威全局编号。",
+      "actual": "冻结4e6全新普通profile正常登录原B，原4宠及资源正常恢复，编号全部待同步；当前syncStatus=partial/error GLOBAL_SERIAL_SCOPE_REVOKED，原B1/B2已有缓存仍显示0002/0003/0005。",
+      "evidence": [
+        "cloudBResourceFresh-post-login-before-resources.json",
+        "native-R06-fresh-original-B-after-ordinary-login.png",
+        "native-cold-auth-and-resource-cloud-hydration-seal.json"
+      ],
+      "qualification": "保留待同步显示和原petId；未回退UUID/本地重编号。C11分配与捕获子项因当前读回前置未执行。"
+    }
+  ],
+  "issueUpdates": []
+}

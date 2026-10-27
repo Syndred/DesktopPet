@@ -1,0 +1,751 @@
+{
+  "at": "2026-10-25T12:13:48.326Z",
+  "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+  "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+  "provenance": "Actual native UI + real local training engine/SQLite and passive renderer texture observation; profile authority explicitly simulated; no multiplayer/live-cloud claim",
+  "initial": {
+    "id": "battle-5f702c9e-6ccb-4086-b09a-72061424139f",
+    "mode": "training",
+    "status": "active",
+    "startedAt": "2026-10-25T12:08:37.189Z",
+    "player": {
+      "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+      "petName": "小狐",
+      "element": "water",
+      "level": 1,
+      "resourceRef": "builtin:lingjing-xiaohu-v1",
+      "resource": {
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "kind": "2d"
+      },
+      "appearance2d": "builtin:lingjing-xiaohu-v1"
+    },
+    "enemy": {
+      "petId": "training-fire",
+      "petName": "焰柴",
+      "element": "fire",
+      "level": 1,
+      "resourceRef": "builtin:lingjing-shiba-v2",
+      "appearance2d": "builtin:lingjing-shiba-v2",
+      "resource": {
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "kind": "2d"
+      }
+    },
+    "snapshot": {
+      "round": 0,
+      "player": {
+        "id": "player",
+        "element": "water",
+        "hp": 120,
+        "maxHp": 120,
+        "anger": 0,
+        "freeDodgeUsed": false,
+        "statuses": []
+      },
+      "enemy": {
+        "id": "enemy",
+        "element": "fire",
+        "hp": 120,
+        "maxHp": 120,
+        "anger": 0,
+        "freeDodgeUsed": false,
+        "statuses": []
+      }
+    },
+    "rounds": [],
+    "winner": null,
+    "pendingAction": null,
+    "historyComplete": true,
+    "rules": {
+      "id": "five-elements-standard-v1",
+      "label": "标准五行对战",
+      "vitalPolicy": "normalized",
+      "maxHp": 120,
+      "maxAnger": 100,
+      "companionStatsApplied": false,
+      "baseDamage": {
+        "normal_attack": 10,
+        "element_attack": 12,
+        "dodge": 0,
+        "ultimate": 20
+      },
+      "ultimateAnger": 50,
+      "ultimateCost": 50,
+      "ultimateHeal": 20,
+      "dodgeMaxCost": 20,
+      "dodgeRefund": 30,
+      "advantage": {
+        "metal": "wood",
+        "wood": "earth",
+        "earth": "water",
+        "water": "fire",
+        "fire": "metal"
+      },
+      "elementEffects": {
+        "metal": {
+          "label": "易伤",
+          "description": "每层受伤×1.5，最多5层"
+        },
+        "wood": {
+          "label": "寄生",
+          "description": "每层回合末吸取2生命，最多5层"
+        },
+        "earth": {
+          "label": "迟钝",
+          "description": "每层伤害×0.5，最多5层"
+        },
+        "water": {
+          "label": "降怒",
+          "description": "命中后对方怒气向下取半，不增加受击怒气"
+        },
+        "fire": {
+          "label": "燃烧",
+          "description": "回合末按当前生命8%×层数伤害，最多5层"
+        }
+      }
+    },
+    "context": {
+      "id": "training:fire",
+      "authority": "simulated",
+      "scenarioId": "f3455e84-59a1-4edb-9b77-975ff32dc45c"
+    },
+    "updatedAt": "2026-10-25T12:08:37.191Z",
+    "revision": 1
+  },
+  "afterFirstAction": {
+    "id": "battle-5f702c9e-6ccb-4086-b09a-72061424139f",
+    "mode": "training",
+    "status": "active",
+    "startedAt": "2026-10-25T12:08:37.189Z",
+    "player": {
+      "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+      "petName": "小狐",
+      "element": "water",
+      "level": 1,
+      "resourceRef": "builtin:lingjing-xiaohu-v1",
+      "resource": {
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "kind": "2d"
+      },
+      "appearance2d": "builtin:lingjing-xiaohu-v1"
+    },
+    "enemy": {
+      "petId": "training-fire",
+      "petName": "焰柴",
+      "element": "fire",
+      "level": 1,
+      "resourceRef": "builtin:lingjing-shiba-v2",
+      "appearance2d": "builtin:lingjing-shiba-v2",
+      "resource": {
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "kind": "2d"
+      }
+    },
+    "snapshot": {
+      "round": 1,
+      "player": {
+        "id": "player",
+        "element": "water",
+        "hp": 120,
+        "maxHp": 120,
+        "anger": 0,
+        "freeDodgeUsed": false,
+        "statuses": []
+      },
+      "enemy": {
+        "id": "enemy",
+        "element": "fire",
+        "hp": 120,
+        "maxHp": 120,
+        "anger": 30,
+        "freeDodgeUsed": true,
+        "statuses": []
+      }
+    },
+    "rounds": [
+      {
+        "round": 1,
+        "actions": {
+          "player": "normal_attack",
+          "enemy": "dodge"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 0
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 0
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 120,
+          "enemy": 120
+        },
+        "angerAfter": {
+          "player": 0,
+          "enemy": 30
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy uses first free dodge",
+          "player action missed",
+          "enemy dodged normal attack and refunded 30 anger"
+        ],
+        "state": {
+          "round": 1,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 120,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "fire",
+            "hp": 120,
+            "maxHp": 120,
+            "anger": 30,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "1:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "1:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "1:enemy:impact:dodge:2",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "dodge"
+          },
+          {
+            "id": "1:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "dodge"
+          },
+          {
+            "id": "1:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "dodge",
+            "element": "fire"
+          }
+        ]
+      }
+    ],
+    "winner": null,
+    "pendingAction": null,
+    "historyComplete": true,
+    "rules": {
+      "id": "five-elements-standard-v1",
+      "label": "标准五行对战",
+      "vitalPolicy": "normalized",
+      "maxHp": 120,
+      "maxAnger": 100,
+      "companionStatsApplied": false,
+      "baseDamage": {
+        "normal_attack": 10,
+        "element_attack": 12,
+        "dodge": 0,
+        "ultimate": 20
+      },
+      "ultimateAnger": 50,
+      "ultimateCost": 50,
+      "ultimateHeal": 20,
+      "dodgeMaxCost": 20,
+      "dodgeRefund": 30,
+      "advantage": {
+        "metal": "wood",
+        "wood": "earth",
+        "earth": "water",
+        "water": "fire",
+        "fire": "metal"
+      },
+      "elementEffects": {
+        "metal": {
+          "label": "易伤",
+          "description": "每层受伤×1.5，最多5层"
+        },
+        "wood": {
+          "label": "寄生",
+          "description": "每层回合末吸取2生命，最多5层"
+        },
+        "earth": {
+          "label": "迟钝",
+          "description": "每层伤害×0.5，最多5层"
+        },
+        "water": {
+          "label": "降怒",
+          "description": "命中后对方怒气向下取半，不增加受击怒气"
+        },
+        "fire": {
+          "label": "燃烧",
+          "description": "回合末按当前生命8%×层数伤害，最多5层"
+        }
+      }
+    },
+    "context": {
+      "id": "training:fire",
+      "authority": "simulated",
+      "scenarioId": "f3455e84-59a1-4edb-9b77-975ff32dc45c"
+    },
+    "updatedAt": "2026-10-25T12:11:07.392Z",
+    "revision": 2
+  },
+  "pausedObservation": {
+    "at": "2026-10-25T12:13:48.318Z",
+    "documentFocused": true,
+    "session": {
+      "id": "battle-5f702c9e-6ccb-4086-b09a-72061424139f",
+      "mode": "training",
+      "status": "active",
+      "startedAt": "2026-10-25T12:08:37.189Z",
+      "player": {
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "petName": "小狐",
+        "element": "water",
+        "level": 1,
+        "resourceRef": "builtin:lingjing-xiaohu-v1",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "kind": "2d"
+        },
+        "appearance2d": "builtin:lingjing-xiaohu-v1"
+      },
+      "enemy": {
+        "petId": "training-fire",
+        "petName": "焰柴",
+        "element": "fire",
+        "level": 1,
+        "resourceRef": "builtin:lingjing-shiba-v2",
+        "appearance2d": "builtin:lingjing-shiba-v2",
+        "resource": {
+          "resourceId": "builtin:lingjing-shiba-v2",
+          "kind": "2d"
+        }
+      },
+      "snapshot": {
+        "round": 1,
+        "player": {
+          "id": "player",
+          "element": "water",
+          "hp": 120,
+          "maxHp": 120,
+          "anger": 0,
+          "freeDodgeUsed": false,
+          "statuses": []
+        },
+        "enemy": {
+          "id": "enemy",
+          "element": "fire",
+          "hp": 120,
+          "maxHp": 120,
+          "anger": 30,
+          "freeDodgeUsed": true,
+          "statuses": []
+        }
+      },
+      "rounds": [
+        {
+          "round": 1,
+          "actions": {
+            "player": "normal_attack",
+            "enemy": "dodge"
+          },
+          "damageTaken": {
+            "player": 0,
+            "enemy": 0
+          },
+          "directDamage": {
+            "player": 0,
+            "enemy": 0
+          },
+          "dotDamageEvents": {
+            "player": [],
+            "enemy": []
+          },
+          "healEvents": {
+            "player": [],
+            "enemy": []
+          },
+          "hpAfter": {
+            "player": 120,
+            "enemy": 120
+          },
+          "angerAfter": {
+            "player": 0,
+            "enemy": 30
+          },
+          "statusesAfter": {
+            "player": [],
+            "enemy": []
+          },
+          "winner": null,
+          "notes": [
+            "enemy uses first free dodge",
+            "player action missed",
+            "enemy dodged normal attack and refunded 30 anger"
+          ],
+          "state": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "water",
+              "hp": 120,
+              "maxHp": 120,
+              "anger": 0,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "fire",
+              "hp": 120,
+              "maxHp": 120,
+              "anger": 30,
+              "freeDodgeUsed": true,
+              "statuses": []
+            }
+          },
+          "visualEvents": [
+            {
+              "id": "1:player:windup:action:0",
+              "side": "player",
+              "phase": "windup",
+              "kind": "action",
+              "action": "normal_attack"
+            },
+            {
+              "id": "1:player:release:action:1",
+              "side": "player",
+              "phase": "release",
+              "kind": "action",
+              "action": "normal_attack",
+              "element": "water"
+            },
+            {
+              "id": "1:enemy:impact:dodge:2",
+              "side": "enemy",
+              "phase": "impact",
+              "kind": "dodge"
+            },
+            {
+              "id": "1:enemy:windup:action:3",
+              "side": "enemy",
+              "phase": "windup",
+              "kind": "action",
+              "action": "dodge"
+            },
+            {
+              "id": "1:enemy:release:action:4",
+              "side": "enemy",
+              "phase": "release",
+              "kind": "action",
+              "action": "dodge",
+              "element": "fire"
+            }
+          ]
+        }
+      ],
+      "winner": null,
+      "pendingAction": null,
+      "historyComplete": true,
+      "rules": {
+        "id": "five-elements-standard-v1",
+        "label": "标准五行对战",
+        "vitalPolicy": "normalized",
+        "maxHp": 120,
+        "maxAnger": 100,
+        "companionStatsApplied": false,
+        "baseDamage": {
+          "normal_attack": 10,
+          "element_attack": 12,
+          "dodge": 0,
+          "ultimate": 20
+        },
+        "ultimateAnger": 50,
+        "ultimateCost": 50,
+        "ultimateHeal": 20,
+        "dodgeMaxCost": 20,
+        "dodgeRefund": 30,
+        "advantage": {
+          "metal": "wood",
+          "wood": "earth",
+          "earth": "water",
+          "water": "fire",
+          "fire": "metal"
+        },
+        "elementEffects": {
+          "metal": {
+            "label": "易伤",
+            "description": "每层受伤×1.5，最多5层"
+          },
+          "wood": {
+            "label": "寄生",
+            "description": "每层回合末吸取2生命，最多5层"
+          },
+          "earth": {
+            "label": "迟钝",
+            "description": "每层伤害×0.5，最多5层"
+          },
+          "water": {
+            "label": "降怒",
+            "description": "命中后对方怒气向下取半，不增加受击怒气"
+          },
+          "fire": {
+            "label": "燃烧",
+            "description": "回合末按当前生命8%×层数伤害，最多5层"
+          }
+        }
+      },
+      "context": {
+        "id": "training:fire",
+        "authority": "simulated",
+        "scenarioId": "f3455e84-59a1-4edb-9b77-975ff32dc45c"
+      },
+      "updatedAt": "2026-10-25T12:11:07.392Z",
+      "revision": 2
+    },
+    "frames": [
+      {
+        "at": 1792930267427,
+        "index": 0,
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "status": "ready",
+        "action": "attack_windup",
+        "clip": "attack_windup",
+        "textureFrame": "51,72,224,222",
+        "frame": "5",
+        "textureSource": "2",
+        "contentBounds": "{\"x\":177.30488888888888,\"y\":51.56533333333334,\"width\":315.7902222222222,\"height\":312.97066666666666,\"canvasWidth\":670.4,\"canvasHeight\":439.2}"
+      },
+      {
+        "at": 1792930267427,
+        "index": 1,
+        "petId": "training-fire",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "status": "ready",
+        "action": "walk",
+        "clip": "walk",
+        "textureFrame": "40,84,224,229",
+        "frame": "4",
+        "textureSource": "12",
+        "contentBounds": "{\"x\":179.23043902439022,\"y\":45.63395121951214,\"width\":311.93912195121953,\"height\":318.90204878048786,\"canvasWidth\":670.4,\"canvasHeight\":439.2}"
+      },
+      {
+        "at": 1792930267430,
+        "index": 1,
+        "petId": "training-fire",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "status": "ready",
+        "action": "walk",
+        "clip": "walk",
+        "textureFrame": "40,84,224,229",
+        "frame": "5",
+        "textureSource": "12",
+        "contentBounds": "{\"x\":179.23043902439022,\"y\":45.63395121951214,\"width\":311.93912195121953,\"height\":318.90204878048786,\"canvasWidth\":670.4,\"canvasHeight\":439.2}"
+      },
+      {
+        "at": 1792930267435,
+        "index": 0,
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "status": "ready",
+        "action": "attack_windup",
+        "clip": "attack_windup",
+        "textureFrame": "50,698,237,189",
+        "frame": "0",
+        "textureSource": "2",
+        "contentBounds": "{\"x\":168.8462222222222,\"y\":98.08800000000002,\"width\":334.11733333333336,\"height\":266.448,\"canvasWidth\":670.4,\"canvasHeight\":439.2}"
+      },
+      {
+        "at": 1792930267435,
+        "index": 1,
+        "petId": "training-fire",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "status": "ready",
+        "action": "walk",
+        "clip": "walk",
+        "textureFrame": "652,83,223,230",
+        "frame": "0",
+        "textureSource": "12",
+        "contentBounds": "{\"x\":180.62302439024387,\"y\":44.24136585365852,\"width\":310.54653658536586,\"height\":320.2946341463415,\"canvasWidth\":670.4,\"canvasHeight\":439.2}"
+      },
+      {
+        "at": 1792930267596,
+        "index": 1,
+        "petId": "training-fire",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "status": "ready",
+        "action": "walk",
+        "clip": "walk",
+        "textureFrame": "968,83,238,230",
+        "frame": "1",
+        "textureSource": "12",
+        "contentBounds": "{\"x\":169.4823414634146,\"y\":44.24136585365852,\"width\":331.4353170731708,\"height\":320.2946341463415,\"canvasWidth\":670.4,\"canvasHeight\":439.2}"
+      },
+      {
+        "at": 1792930267706,
+        "index": 0,
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "status": "ready",
+        "action": "attack_release",
+        "clip": "attack_release",
+        "textureFrame": "345,686,272,212",
+        "frame": "0",
+        "textureSource": "2",
+        "contentBounds": "{\"x\":143.47022222222222,\"y\":65.6631111111111,\"width\":383.45955555555554,\"height\":298.8728888888889,\"canvasWidth\":670.4,\"canvasHeight\":439.2}"
+      },
+      {
+        "at": 1792930267706,
+        "index": 1,
+        "petId": "training-fire",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "status": "ready",
+        "action": "walk",
+        "clip": "walk",
+        "textureFrame": "652,83,223,230",
+        "frame": "0",
+        "textureSource": "12",
+        "contentBounds": "{\"x\":180.62302439024387,\"y\":44.24136585365852,\"width\":310.54653658536586,\"height\":320.2946341463415,\"canvasWidth\":670.4,\"canvasHeight\":439.2}"
+      },
+      {
+        "at": 1792930267875,
+        "index": 1,
+        "petId": "training-fire",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "status": "ready",
+        "action": "walk",
+        "clip": "walk",
+        "textureFrame": "968,83,238,230",
+        "frame": "1",
+        "textureSource": "12",
+        "contentBounds": "{\"x\":169.4823414634146,\"y\":44.24136585365852,\"width\":331.4353170731708,\"height\":320.2946341463415,\"canvasWidth\":670.4,\"canvasHeight\":439.2}"
+      },
+      {
+        "at": 1792930268044,
+        "index": 1,
+        "petId": "training-fire",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "status": "ready",
+        "action": "walk",
+        "clip": "walk",
+        "textureFrame": "652,83,223,230",
+        "frame": "0",
+        "textureSource": "12",
+        "contentBounds": "{\"x\":180.62302439024387,\"y\":44.24136585365852,\"width\":310.54653658536586,\"height\":320.2946341463415,\"canvasWidth\":670.4,\"canvasHeight\":439.2}"
+      },
+      {
+        "at": 1792930268214,
+        "index": 1,
+        "petId": "training-fire",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "status": "ready",
+        "action": "walk",
+        "clip": "walk",
+        "textureFrame": "968,83,238,230",
+        "frame": "1",
+        "textureSource": "12",
+        "contentBounds": "{\"x\":169.4823414634146,\"y\":44.24136585365852,\"width\":331.4353170731708,\"height\":320.2946341463415,\"canvasWidth\":670.4,\"canvasHeight\":439.2}"
+      },
+      {
+        "at": 1792930268368,
+        "index": 1,
+        "petId": "training-fire",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "status": "ready",
+        "action": "walk",
+        "clip": "walk",
+        "textureFrame": "652,83,223,230",
+        "frame": "0",
+        "textureSource": "12",
+        "contentBounds": "{\"x\":180.62302439024387,\"y\":44.24136585365852,\"width\":310.54653658536586,\"height\":320.2946341463415,\"canvasWidth\":670.4,\"canvasHeight\":439.2}"
+      },
+      {
+        "at": 1792930268535,
+        "index": 1,
+        "petId": "training-fire",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "status": "ready",
+        "action": "walk",
+        "clip": "walk",
+        "textureFrame": "968,83,238,230",
+        "frame": "1",
+        "textureSource": "12",
+        "contentBounds": "{\"x\":169.4823414634146,\"y\":44.24136585365852,\"width\":331.4353170731708,\"height\":320.2946341463415,\"canvasWidth\":670.4,\"canvasHeight\":439.2}"
+      },
+      {
+        "at": 1792930268699,
+        "index": 1,
+        "petId": "training-fire",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "status": "ready",
+        "action": "walk",
+        "clip": "walk",
+        "textureFrame": "652,83,223,230",
+        "frame": "0",
+        "textureSource": "12",
+        "contentBounds": "{\"x\":180.62302439024387,\"y\":44.24136585365852,\"width\":310.54653658536586,\"height\":320.2946341463415,\"canvasWidth\":670.4,\"canvasHeight\":439.2}"
+      },
+      {
+        "at": 1792930268869,
+        "index": 1,
+        "petId": "training-fire",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "status": "ready",
+        "action": "walk",
+        "clip": "walk",
+        "textureFrame": "968,83,238,230",
+        "frame": "1",
+        "textureSource": "12",
+        "contentBounds": "{\"x\":169.4823414634146,\"y\":44.24136585365852,\"width\":331.4353170731708,\"height\":320.2946341463415,\"canvasWidth\":670.4,\"canvasHeight\":439.2}"
+      }
+    ],
+    "clicks": [
+      {
+        "at": 1792930267390,
+        "trusted": true,
+        "tag": "BUTTON",
+        "label": "普通攻击",
+        "text": "攻击",
+        "clientX": 1088,
+        "clientY": 970
+      }
+    ]
+  },
+  "reasonForInputPause": "Human input was detected and foreground overlay observed; no app click sent after that guard"
+}

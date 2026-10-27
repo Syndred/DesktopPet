@@ -1,0 +1,407 @@
+{
+  "at": "2026-10-25T14:32:11.930Z",
+  "wrapperPid": 15444,
+  "mainPid": 1456,
+  "oldRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nsnDC3E.tmp/app",
+  "newRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nseD633.tmp/app",
+  "rootsDifferent": true,
+  "appInfo": {
+    "ok": true,
+    "data": {
+      "version": "0.1.8",
+      "platform": "win32",
+      "build": {
+        "schemaVersion": 2,
+        "builtAt": "2026-10-25T12:48:36.490Z",
+        "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+        "sourceTree": "2d8977dc36e95ede498d3e3f14a26f1f9b392a16",
+        "sourceDirtyFiles": [],
+        "codeFingerprint": "a3122d871bbc372c8ffc9a84e15b5b9565b5daace1a6cff29eb0bfadeedb2fbf",
+        "canonicalSourceFingerprint": "4b0266609b34857edf22a87530c32f1ab0d8ea7d87aed631f8bc73efc5fb1f50",
+        "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+        "compiledFingerprint": "c7ed77da99cfc2c803640a25ddc5dff61cb837aa79d2e83729b976b1a4351bd2",
+        "codeFiles": 312,
+        "compiledFiles": 89,
+        "toolchain": {
+          "node": "24.21.0",
+          "electron": "44.9.3",
+          "sqlite": "13.0.3",
+          "vite": "7.3.7",
+          "typescript": "5.9.3",
+          "platform": "win32",
+          "arch": "x64"
+        },
+        "entrypoints": {
+          "main": "main/index.cjs",
+          "app": "ui/index.html",
+          "desktop": "ui/desktop.html",
+          "preload": "preload/index.cjs"
+        },
+        "publicCloud": {
+          "projectRef": "jbvrdmrkwpznbrvteive",
+          "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+          "resourcePath": "lingjing-cloud-public.json"
+        },
+        "packageName": "lingjing-desktop",
+        "runtimeClosure": {
+          "manifest": "runtime-closure.json",
+          "files": 116,
+          "edges": 199,
+          "sha256": "1df30187a94a9ff92ea18e2c1376031491730f7ebe56c434b8dc1fdd5a7b0be9"
+        }
+      },
+      "runtime": {
+        "electron": "44.9.3",
+        "node": "24.22.0",
+        "modules": "149",
+        "napi": "10",
+        "arch": "x64",
+        "tray": {
+          "active": true,
+          "bounds": {
+            "x": 1751,
+            "y": 1150,
+            "width": 33,
+            "height": 49
+          }
+        }
+      },
+      "features": [
+        {
+          "id": "accounts",
+          "commands": [
+            "session",
+            "login",
+            "register",
+            "logout",
+            "profileSave",
+            "passwordChange",
+            "settingsGet",
+            "settingsDefaults",
+            "settingsSave",
+            "backupList",
+            "backupExport",
+            "backupPreview",
+            "backupRestore",
+            "syncStatus",
+            "syncNow",
+            "syncRetry",
+            "cloudPreview",
+            "testNotification",
+            "pointer"
+          ]
+        },
+        {
+          "id": "resources",
+          "commands": [
+            "list",
+            "history",
+            "cloudStatus",
+            "cloudSync",
+            "cloudPull",
+            "resolve",
+            "save",
+            "import"
+          ]
+        },
+        {
+          "id": "companions",
+          "commands": [
+            "list",
+            "get",
+            "combatProfile",
+            "identity",
+            "desktopInput",
+            "adopt",
+            "rename",
+            "desktop",
+            "select",
+            "interact",
+            "perform",
+            "appearance"
+          ]
+        },
+        {
+          "id": "battle",
+          "commands": [
+            "overview",
+            "rules",
+            "context",
+            "settleContext",
+            "selectPet",
+            "startTraining",
+            "snapshot",
+            "act",
+            "retryAction",
+            "search",
+            "invitations",
+            "invite",
+            "respondInvite",
+            "cancelInvite",
+            "createRoom",
+            "joinRoom",
+            "sync",
+            "leave",
+            "listReports",
+            "getReport",
+            "retrySettlement"
+          ]
+        },
+        {
+          "id": "garden",
+          "commands": [
+            "plant",
+            "harvest",
+            "craft",
+            "feed",
+            "garrison",
+            "snapshot",
+            "territoryLocate",
+            "territoryChallenge",
+            "territorySettle"
+          ]
+        },
+        {
+          "id": "discovery",
+          "commands": [
+            "snapshot",
+            "setExploring",
+            "locate",
+            "watch",
+            "stopWatch",
+            "setDemo",
+            "setProvider",
+            "tile",
+            "observe",
+            "begin",
+            "act",
+            "cancel",
+            "confirm",
+            "pokedex",
+            "memories"
+          ]
+        },
+        {
+          "id": "conversations",
+          "commands": [
+            "snapshot",
+            "select",
+            "history",
+            "profile.save",
+            "connection.save",
+            "connection.test",
+            "connection.cancel",
+            "memory.save",
+            "memory.delete",
+            "send",
+            "retry",
+            "cancel",
+            "history.clear",
+            "legacy.preview",
+            "legacy.import"
+          ]
+        }
+      ],
+      "user": {
+        "id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "subjectId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "provider": "runtime",
+        "account": "uat_1025_a_9e486a",
+        "username": "云端验收甲",
+        "revision": 0,
+        "createdAt": "2026-10-25T10:05:01.804833+00:00",
+        "updatedAt": "2026-10-25T14:31:25.326Z",
+        "dataMode": "live",
+        "authKind": "supabase",
+        "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe"
+      }
+    }
+  },
+  "payload": [
+    {
+      "relative": "Lingjing.exe",
+      "bytes": 246846464,
+      "sha256": "12fee592f3bb57ae348fb0b5974e486f5a05c6b54e39b7fbb49f4be604643bd6"
+    },
+    {
+      "relative": "resources/app.asar",
+      "bytes": 267484870,
+      "sha256": "993a2b91463223fd0c12e4c596459a6bde46d250baff9a2267c8fc2a66c8871d"
+    },
+    {
+      "relative": "resources/app.asar.unpacked/node_modules/better-sqlite3/prebuilds/win32-x64.node",
+      "bytes": 1989632,
+      "sha256": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a"
+    },
+    {
+      "relative": "resources/lingjing-cloud-public.json",
+      "bytes": 194,
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda"
+    }
+  ],
+  "storage": {
+    "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nseD633.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/companions",
+    "origin": "file://",
+    "ls": {
+      "runId": "e71b9c11-e62a-46a6-aa4d-decdd34c4200",
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "profilePath": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a",
+      "nonce": "53375681-47cf-4092-a65c-5648fe472bdb",
+      "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+      "createdAt": "2026-10-25T14:24:31.463Z",
+      "kind": "Explicit isolated QA sentinel; independent of real garden pending"
+    },
+    "idb": {
+      "runId": "e71b9c11-e62a-46a6-aa4d-decdd34c4200",
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "profilePath": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a",
+      "nonce": "53375681-47cf-4092-a65c-5648fe472bdb",
+      "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+      "createdAt": "2026-10-25T14:24:31.463Z",
+      "kind": "Explicit isolated QA sentinel; independent of real garden pending"
+    },
+    "dbExists": true,
+    "realPendingRaw": "{\"owner\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"command\":\"plant\",\"input\":{\"plotId\":\"plot-1\",\"cropType\":\"carrot\",\"sessionOwnerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"actionId\":\"e8156c9e-4b1d-421a-a326-9860f203d402\",\"expectedRevision\":1}}"
+  },
+  "lsSentinelExact": true,
+  "idbSentinelExact": true,
+  "realPendingRawExact": true,
+  "sqlite": {
+    "accounts": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "revision": 1,
+        "initialized_at": 1792935736822
+      }
+    ],
+    "items": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "item_id": "seed:berry",
+        "quantity": 2
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "item_id": "seed:carrot",
+        "quantity": 2
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "item_id": "seed:rice",
+        "quantity": 2
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "item_id": "seed:tomato",
+        "quantity": 2
+      }
+    ],
+    "plots": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "plot_id": "plot-1",
+        "crop_type": null,
+        "planted_at": null,
+        "matures_at": null,
+        "yield_quantity": 0,
+        "revision": 0
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "plot_id": "plot-2",
+        "crop_type": null,
+        "planted_at": null,
+        "matures_at": null,
+        "yield_quantity": 0,
+        "revision": 0
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "plot_id": "plot-3",
+        "crop_type": null,
+        "planted_at": null,
+        "matures_at": null,
+        "yield_quantity": 0,
+        "revision": 0
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "plot_id": "plot-4",
+        "crop_type": null,
+        "planted_at": null,
+        "matures_at": null,
+        "yield_quantity": 0,
+        "revision": 0
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "plot_id": "plot-5",
+        "crop_type": null,
+        "planted_at": null,
+        "matures_at": null,
+        "yield_quantity": 0,
+        "revision": 0
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "plot_id": "plot-6",
+        "crop_type": null,
+        "planted_at": null,
+        "matures_at": null,
+        "yield_quantity": 0,
+        "revision": 0
+      }
+    ],
+    "cloudState": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "account_revision": 4,
+        "checksum": "19a9e73e42678e613467c7a2f542fc35300ffde707c673b038a39b3a8043f115",
+        "server_time": 1792938241411
+      }
+    ],
+    "actions": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "action_id": "cloud-garden-initialize:v1",
+        "kind": "initialize",
+        "request_hash": "ac51e8f90788864d1867aaeaebff53b38a6a3e2dc506a8f16aa1ed9ecf4b9fb7",
+        "result_json": "{\"ok\":true,\"data\":{\"initialized\":true,\"plots\":6},\"revision\":1,\"replayed\":false}",
+        "created_at": 1792935736822
+      }
+    ],
+    "requests": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "action_id": "e8156c9e-4b1d-421a-a326-9860f203d402",
+        "endpoint": "garden-sync",
+        "op": "command",
+        "kind": "plant",
+        "logical_hash": "9ffcc3ec0ff98336f27bd6ca0aa53aabe1548afd645eefadbc11bc0450bb3777",
+        "input_json": "{\"plotId\":\"plot-1\",\"cropType\":\"carrot\",\"sessionOwnerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"actionId\":\"e8156c9e-4b1d-421a-a326-9860f203d402\",\"expectedRevision\":1}",
+        "wire_input_json": "{\"plotId\":\"plot-1\",\"cropType\":\"carrot\",\"sessionOwnerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"actionId\":\"e8156c9e-4b1d-421a-a326-9860f203d402\",\"expectedRevision\":1}",
+        "request_hash": "9ffcc3ec0ff98336f27bd6ca0aa53aabe1548afd645eefadbc11bc0450bb3777",
+        "status": "pending",
+        "response_json": null,
+        "error_code": "CLOUD_UNAVAILABLE",
+        "created_at": 1792938389435,
+        "updated_at": 1792938389438
+      }
+    ],
+    "outbox": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "action_id": "cloud-garden-initialize:v1",
+        "payload_json": "{\"kind\":\"initialize\",\"input\":{\"actionId\":\"cloud-garden-initialize:v1\",\"expectedRevision\":0},\"result\":{\"ok\":true,\"data\":{\"initialized\":true,\"plots\":6},\"revision\":1,\"replayed\":false}}",
+        "status": "synced",
+        "attempts": 0,
+        "last_error": null,
+        "created_at": 1792935736822
+      }
+    ],
+    "ledger": []
+  },
+  "wireBodyExact": true
+}

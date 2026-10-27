@@ -1,0 +1,155 @@
+{
+  "at": "2026-10-26T22:46:07.720Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "petId": "pet-825f6af9-402b-4244-988a-481563b7a587",
+  "runId": "75e04efd-0856-4ca2-bf07-94dbb832e9eb",
+  "simulatedUpstream": true,
+  "externalModelSuccess": false,
+  "realLoopbackHttp": true,
+  "normalExitAndSameProfileRestart": true,
+  "nonkeepLoginRequired": true,
+  "unobscuredNativeLoginEvidence": "native-A10-T05-original-B2-unobscured-login-required.png",
+  "excludedOccludedLoginScreenshot": "native-A10-T05-original-B2-normal-restart-login-required.png",
+  "settingsFullOriginalRestored": true,
+  "settingsRevision": 13,
+  "originalMessagesAfterRestart": [
+    {
+      "id": "7843cb6c-7a50-49aa-9999-6ac62ebc3f5f",
+      "role": "assistant",
+      "status": "complete",
+      "attempt": 5,
+      "error_code": null
+    },
+    {
+      "id": "948527c3-47f5-49f4-bcc4-4532ac784497",
+      "role": "user",
+      "status": "complete",
+      "attempt": 1,
+      "error_code": null
+    },
+    {
+      "id": "44e206ea-2536-45ad-89f3-17f07fdf0d2d",
+      "role": "assistant",
+      "status": "complete",
+      "attempt": 1,
+      "error_code": null
+    },
+    {
+      "id": "94f688fc-530e-4cd7-ac62-d117ee95e2ca",
+      "role": "user",
+      "status": "complete",
+      "attempt": 1,
+      "error_code": null
+    }
+  ],
+  "originalAssistantAttempts": [
+    {
+      "file": "cloudB2-after-v2-hold-cancel-model-records.json",
+      "id": "7843cb6c-7a50-49aa-9999-6ac62ebc3f5f",
+      "attempt": 1,
+      "status": "cancelled",
+      "error": "CANCELLED"
+    },
+    {
+      "file": "cloudB2-after-v2-original-assistant-retry-http401-model-records.json",
+      "id": "7843cb6c-7a50-49aa-9999-6ac62ebc3f5f",
+      "attempt": 2,
+      "status": "failed",
+      "error": "PROVIDER_AUTH"
+    },
+    {
+      "file": "cloudB2-after-v2-original-assistant-retry-http429-model-records.json",
+      "id": "7843cb6c-7a50-49aa-9999-6ac62ebc3f5f",
+      "attempt": 3,
+      "status": "failed",
+      "error": "RATE_LIMITED"
+    },
+    {
+      "file": "cloudB2-after-v2-original-assistant-retry-disconnect-model-records.json",
+      "id": "7843cb6c-7a50-49aa-9999-6ac62ebc3f5f",
+      "attempt": 4,
+      "status": "failed",
+      "error": "INVALID_RESPONSE"
+    },
+    {
+      "file": "cloudB2-after-v2-original-assistant-recovered-complete-model-records.json",
+      "id": "7843cb6c-7a50-49aa-9999-6ac62ebc3f5f",
+      "attempt": 5,
+      "status": "complete",
+      "error": null
+    }
+  ],
+  "protectedTablesUnchanged": [
+    "companion_pets",
+    "garden_items",
+    "garden_plots",
+    "companion_legacy_archive",
+    "conversation_memories",
+    "conversation_cloud_conflicts",
+    "lingjing_resource_imports",
+    "lingjing_resource_preferences"
+  ],
+  "originalTwoPublicConnectionsExact": true,
+  "finalOwnTestCredentialCount": 0,
+  "effectiveDefaultsRestored": {
+    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+    "persona": "",
+    "reply_style": "natural",
+    "memory_enabled": 1,
+    "use_override": 0,
+    "pause_while_chatting": 1,
+    "revision": 2,
+    "updated_at": 1793054637919
+  },
+  "actualInvalidCredentialRejection": {
+    "at": "2026-10-26T22:43:22.628Z",
+    "event": "request_rejected",
+    "requestId": "sim-9",
+    "code": "DUMMY_AUTH_REJECTED",
+    "status": 401
+  },
+  "helperStopped": {
+    "at": "2026-10-26T22:44:06.399Z",
+    "reason": "owned_stop_command",
+    "pid": 12484,
+    "pidAlive": false,
+    "port": 55217,
+    "listenerCount": 0
+  },
+  "qualification": "Local synthetic provider, actual native UI and loopback transport. No external model success or quality claim. Existing global and other pet connections preserved. Synthetic history and public test metadata retained; no deletion.",
+  "evidence": [
+    "native-T04-real-loopback-stream-cancel-and-peer-seal.json",
+    "native-T05-original-B2-restart-first-round-history.png",
+    "native-T05-original-B2-restart-second-round-recovered-history.png",
+    "native-T05-original-B2-restart-independent-key-preserved.png",
+    "native-A10-T05-original-B2-unobscured-login-required.png",
+    "native-T05-old-runtime-normal-exit-readback.json",
+    "launch-cloudB2-t05-history-normal-restart.json",
+    "native-T05-original-B2-original-close-to-tray-setting-restored.png",
+    "native-T05-v2-original-assistant-retry-recovered-complete.png",
+    "native-T05-T06-v2-original-record-http401-retry-error.png",
+    "native-T06-v2-original-record-http429-retry-error.png",
+    "native-T06-v2-original-record-simulated-disconnect-error.png",
+    "native-T06-v2-connection-test-hold-busy-and-cancel.png",
+    "native-T06-v2-connection-test-cancelled-result.png",
+    "native-T06-v2-connection-test-normal-success.png",
+    "native-T06-v2-independent-unsaved-connection-draft.png",
+    "native-T06-v2-global-original-configuration-preserved-on-switch.png",
+    "native-T06-v2-independent-unsaved-draft-discarded-original-model-restored.png",
+    "native-T06-v2-invalid-dummy-variant-saved.png",
+    "native-T06-v2-invalid-dummy-variant-test-result.png",
+    "native-T06-v2-test-key-cleared.png",
+    "native-T06-v2-original-effective-defaults-restored.png",
+    "native-T06-v2-helper-stop-readback.json",
+    "root-T05-normal-restart-history-and-settings-independent.json",
+    "root-T06-original-message-authority-history-phase1.json",
+    "root-model-v2-key-present-ui-export-independent.json",
+    "root-model-v2-export-all-resource-bytes-independent.json",
+    "root-model-v2-device-key-presence-independent.json",
+    "cloudB2-after-t06-model-cleanup-stopped-helper.json",
+    "cloudB2-after-t06-final-cleanup-model-records.json",
+    "model-protocol-v2/owned-runs/run-75e04efd-0856-4ca2-bf07-94dbb832e9eb/audit.jsonl"
+  ]
+}

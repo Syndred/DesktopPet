@@ -1,0 +1,50 @@
+{
+  "at": "2026-10-26T22:18:31.182Z",
+  "stage": "t04-native-stream-cancel-and-peer-readback",
+  "caseUpdates": [
+    {
+      "id": "T04",
+      "status": "passed",
+      "actual": "同原B2账号原825空独立槽配置本轮明确模拟的loopback OAI夹具。第一轮真实HTTP SSE44增量完成，用户消息一次/原生完整模拟回复；第二轮hold真实显示14字部分回复及busy，普通停止按钮取消后发送恢复，夹具记录client_closed，assistant为cancelled/CANCELLED。独立PG恰4消息且仅原825；原B1普通聊天页原文/停止状态可见，三端13字段/顺序与云逐字匹配，其他端无密钥。此为模拟上游协议与真实产品流程验收，不是外部模型质量/供应商成功。",
+      "evidence": [
+        "native-T04-v2-stream-first-native-observation.png",
+        "native-T04-v2-stream-second-native-observation.png",
+        "native-T04-v2-hold-generation-started.png",
+        "native-T04-v2-hold-partial-reply-and-stop-visible.png",
+        "native-T04-v2-hold-cancel-button-result.png",
+        "native-T04-v2-original-B1-peer-history-first-view.png",
+        "native-T04-v2-original-B1-peer-first-round-history.png",
+        "cloudB2-after-model-v2-first-stream-reply.json",
+        "cloudB2-after-v2-hold-cancel-model-records.json",
+        "cloudB1-v2-after-original-peer-cancel-model-records.json",
+        "root-T04-first-stream-and-cancel-cloud-independent.json",
+        "root-T04-stream-cancel-three-client-readback-independent.json",
+        "native-T04-real-loopback-stream-cancel-and-peer-seal.json"
+      ]
+    },
+    {
+      "id": "T05",
+      "status": "running",
+      "actual": "首轮完成与第二轮取消的4条原始合成历史已在原B2/B1/FreshB和真实PG逐字一致，原B1普通页面可见；正常多轮、离开返回、实际重启及显式原消息重试/再生成继续采集。",
+      "evidence": [
+        "native-T04-real-loopback-stream-cancel-and-peer-seal.json"
+      ]
+    },
+    {
+      "id": "T06",
+      "status": "running",
+      "actual": "只新增原825空独立槽的本轮dummy key，原2连接保持；key仍存在时已普通UI导出实际备份(8707500bytes/f85fd4aa...)，Root独立原字节/嵌套JSON/base64排除dummy与凭据字段，3资源6文件及原保全/2连接不变。真实PG新连接/配置只有公开元数据，B1/FreshB读到相同元数据但key0。后续错误/取消测试、正常移除本轮key与恢复有效默认值尚待完成。",
+      "evidence": [
+        "native-T04-real-loopback-stream-cancel-and-peer-seal.json",
+        "cloudB2-after-model-v2-new-independent-connection-and-profile-save.json",
+        "native-ui-exports/B2-v2-dummy-key-present-4e6.lingjing.json",
+        "root-model-v2-key-present-ui-export-independent.json",
+        "root-model-v2-export-all-resource-bytes-independent.json",
+        "root-model-v2-pet-connection-cloud-independent.json",
+        "root-model-v2-device-key-presence-independent.json"
+      ]
+    }
+  ],
+  "newIssues": [],
+  "issueUpdates": []
+}

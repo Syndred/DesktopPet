@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "format": "desktop-pet.cloud-authority-candidate/v1",
+  "roundId": "candidate-4e6c3de4-1b1afdd1",
+  "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+  "frozenAt": "2026-10-26T18:50:08.978Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "sourceTree": "be5cee0e7839811e62dc4be49517e34daed0c984",
+  "coordinatorThreadId": "01a17866-10a9-7960-9606-f65f0490838e",
+  "nativeOperatorThreadId": "01a1759f-4253-7ef0-bf83-44a87c0a16e8",
+  "executable": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-4e6c3de4\\Lingjing-0.1.8-portable-x64.exe",
+  "exeSha256": "49e7c00055acf533bd2e0418157ac446cc88e13bda9cbaf9185248c9b0c87d61",
+  "asar": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-4e6c3de4\\win-unpacked\\resources\\app.asar",
+  "asarSha256": "3be5ce049efb9ad93a83f6090994a6f8ae26cf0f319b614c1d8e5ae6e8ab0568",
+  "buildManifest": {
+    "schemaVersion": 2,
+    "builtAt": "2026-10-26T18:40:20.368Z",
+    "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+    "sourceTree": "be5cee0e7839811e62dc4be49517e34daed0c984",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "8f44ba153c7bd9c6e4d287c528f5298770118f736ca71b793b9a7116d22d2ab9",
+    "canonicalSourceFingerprint": "03b9a168c0c560b32f459858a7d3e18532b427567ac695df9597f971065f80dd",
+    "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+    "compiledFingerprint": "14dc43e6a81b56b7ac8044ff781fa9cf480054a00329aa6adacc7eca3d78a99c",
+    "codeFiles": 326,
+    "compiledFiles": 90,
+    "toolchain": {
+      "node": "24.21.0",
+      "electron": "44.9.3",
+      "sqlite": "13.0.3",
+      "vite": "7.3.7",
+      "typescript": "5.9.3",
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "entrypoints": {
+      "main": "main/index.cjs",
+      "app": "ui/index.html",
+      "desktop": "ui/desktop.html",
+      "preload": "preload/index.cjs"
+    },
+    "publicCloud": {
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "resourcePath": "lingjing-cloud-public.json"
+    },
+    "packageName": "lingjing-desktop",
+    "runtimeClosure": {
+      "manifest": "runtime-closure.json",
+      "files": 124,
+      "edges": 218,
+      "sha256": "4aef03926533908558ff6a309e3cdc5587de1ce3b2f379ee642d5801277f7062"
+    }
+  },
+  "sourceWorktree": "C:/Users/Administrator/.codex/worktrees/cloud-authority-unified-4e6c3de4/DesktopPet",
+  "doNotModifyBuildOrArchive": true,
+  "packageAudit": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\unified-fixes-v1\\package-audit.json",
+  "cloudDeploymentReceipt": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\unified-fixes-v1\\cloud-deployment-readback.json",
+  "profilesPreserved": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\profiles-before-4e6c3de4-verified",
+  "profilesPreservationManifest": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\profiles-before-4e6c3de4-verified.manifest.json",
+  "originalRegisters": [
+    {
+      "name": "cases.json",
+      "sha256": "015450b08a1aaa73cd5c000b63551f406949c98a8cd7e423f26e626fba9b6cd5"
+    },
+    {
+      "name": "issues.json",
+      "sha256": "a89906ce613bbb8b79b60bcaf0fb87b9d95780fd820140848c00479e0994ca49"
+    },
+    {
+      "name": "run-manifest.json",
+      "sha256": "18cf594f641086859bb9bd1447913c7301d324455140656a862b1c765e5d213f"
+    },
+    {
+      "name": "coordination.json",
+      "sha256": "34f619b1aca1ad4f4df3b999e1e1f8c822e061217bd9ed8aff77f7ad8888051c"
+    },
+    {
+      "name": "matrix.md",
+      "sha256": "1f9a44e5ab602835b74605c2a3363f64c82848cfd732983cc0a2345f49b51d44"
+    },
+    {
+      "name": "observations.json",
+      "sha256": "bceb7a75669ac5ec63a7bcb6251fe45dfa4663b7382255056619d5afe40e4f4a"
+    }
+  ],
+  "originalRegisterDirectory": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\original-register-preserved",
+  "results": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\results.json",
+  "issues": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\issues.json",
+  "previousRoundCloseout": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-bc6598d3-1b1afdd1\\native-round-closeout-report.json",
+  "settingsRestorationObligations": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-bc6598d3-1b1afdd1\\bc-normal-shutdown-settings-restoration-obligations.json",
+  "acceptance": {
+    "nativeVerified": false,
+    "collectFirstFixLater": true,
+    "noCandidateSwitch": true,
+    "noNewChatsOrAgents": true,
+    "originalRunAndCaseIdsRetained": true,
+    "oldPassesNotInherited": true,
+    "noBusinessSqlWrites": true,
+    "noFakeTimeLocationQuotaRandomnessOrRewards": true,
+    "oldHelperContractsNotAuthorized": true,
+    "ordinaryUiBatchAuthorizedByCurrentHumanPlan": true,
+    "all98CasesStillRequired": true
+  },
+  "latestRemote": {
+    "main": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "pull": "Already up to date at goal start; fetch and ancestry reconfirmed before candidate build"
+  }
+}

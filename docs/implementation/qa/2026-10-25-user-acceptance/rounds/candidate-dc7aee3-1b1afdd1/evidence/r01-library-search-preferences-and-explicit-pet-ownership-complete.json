@@ -1,0 +1,99 @@
+{
+  "at": "2026-10-25T23:57:48.258Z",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "checks": {
+    "allNineResourcesRealReady": true,
+    "positiveSearchAllEightPlusOwned": true,
+    "emptySearchExplicitMessage": true,
+    "onlyExpectedNewPetChanged": true,
+    "actualDetailPetAndResourceMatch": true,
+    "otherFourPetRowsRawExact": true,
+    "targetEffectiveDataFullyRestored": true,
+    "allOriginalActionsRetained": true,
+    "exactlyTwoTargetAppearanceReceipts": true,
+    "allThreeSelectionsUnchanged": true,
+    "chatHistoryAndMetadataRawExact": true,
+    "allBattleAndGardenTablesRawExact": true,
+    "localResourceTablesRawExact": true,
+    "localPrivateOwnerNotContaminated": true,
+    "accountBOwnedPreferenceCorrect": true,
+    "savedPreferencePersistenceAcrossRealRestore": true
+  },
+  "explicitLocalTarget": {
+    "at": "2026-10-25T23:51:57.230Z",
+    "owner": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+    "provenance": "simulated isolated local profile, actual DC7 native EXE UI",
+    "resourceId": "builtin:lingjing-yantuan-v1",
+    "companionOptionsOrder": [
+      {
+        "index": 0,
+        "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+        "name": "小狐"
+      },
+      {
+        "index": 1,
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "name": "小狐"
+      },
+      {
+        "index": 2,
+        "petId": "pet-8d67a86f-8053-46fe-93e2-df62ca116a45",
+        "name": "青芽"
+      },
+      {
+        "index": 3,
+        "petId": "pet-e9f2413c-f9c3-4e9e-a625-935b4da87ee4",
+        "name": "青芽"
+      },
+      {
+        "index": 4,
+        "petId": "pet-8853a238-8730-4970-8e39-885a1f1da97d",
+        "name": "焰柴"
+      }
+    ],
+    "nativeSelectedOptionIndex": 2,
+    "expectedPetId": "pet-8d67a86f-8053-46fe-93e2-df62ca116a45",
+    "globalChatPetId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+    "button": {
+      "x": 1062.9375,
+      "y": 661.375,
+      "width": 165.2625732421875,
+      "height": 36
+    },
+    "currentBusinessUnchanged": true
+  },
+  "appearanceReceipts": [
+    {
+      "actionId": "4775d8c1-6f43-48f4-a1c7-87e7a85fd3cc",
+      "operation": "appearance",
+      "at": "2026-10-25T23:52:09.429Z"
+    },
+    {
+      "actionId": "12b98f73-3521-4707-9084-8008aee44cd4",
+      "operation": "appearance",
+      "at": "2026-10-25T23:54:59.455Z"
+    }
+  ],
+  "qualifications": [
+    "8 builtin plus1 same-owner imported resource native search/render coverage reuses current DC7 R02 evidence only.",
+    "UI has name search and element labels, not element filter buttons. Preferences are action maps/calibration, not a favorite feature.",
+    "Local apply is original isolated simulated profile through actual DC7 native UI, not cloud business evidence. B private UUID never applied across owner boundaries.",
+    "Before episode old local fox revision133/desktop false derives preserved f42fbe7c-e7c1-4731-b21e-595ebe387daf at21:22:38.381Z; earlier summary132/true stale and not used.",
+    "Initial coordinate card click covered by desktop pet; preview stayed fish and zero apply writes verified. Canceled and used exact focused yantuan card native Tab/Enter. Wrong-resource picker excluded as success.",
+    "Original target appearance restored through UI, keeping two new receipts and versions. No history rewritten."
+  ],
+  "evidence": [
+    "r02-real-all-actions-replay-pause-dual-complete.json",
+    "r01-owned-two-scenes-and-sleep-map-actual-saved-readback.json",
+    "r01-local-explicit-target-before-one-apply.json",
+    "r01-local-after-one-explicit-resource-apply.json",
+    "r01-local-target-detail-actual-pet-resource-frame-readback.json",
+    "r01-local-exact-target-yantuan-detail-native.jpg",
+    "r01-local-no-match-search-readback.json",
+    "r01-local-action-calibration-tab-real-native.jpg",
+    "r01-local-all-five-original-appearances-restored-native.jpg",
+    "r01-local-final-protected-five-pets-and-history-readback.json",
+    "r05-p05-normal-account-restore-original-resource-and-preservation-complete.json"
+  ]
+}

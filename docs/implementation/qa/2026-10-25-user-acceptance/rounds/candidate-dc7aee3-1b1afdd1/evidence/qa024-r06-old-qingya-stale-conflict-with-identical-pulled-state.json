@@ -1,0 +1,43 @@
+{
+  "at": "2026-10-26T00:16:49.315Z",
+  "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+  "job": {
+    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "resource_id": "866b735a-9351-414f-a797-6bab290144c2",
+    "local_revision": 1,
+    "action_id": "ad163d25-f061-4546-863b-057c680516a7",
+    "auth_user_id": "2028f0af-f501-47f5-9abb-de59487dad46",
+    "base_revision": 0,
+    "document_json": "{\"actions\":{\"attack\":\"attack\",\"attack_release\":\"attack_release\",\"attack_windup\":\"attack_windup\",\"blink\":\"blink\",\"eat\":\"eat\",\"hit\":\"hit\",\"idle\":\"idle\",\"skill\":\"skill\",\"sleep\":\"sleep_seated\",\"victory\":\"victory\",\"walk\":\"walk\",\"wave\":\"wave\"},\"calibration\":{\"battle\":{\"anchorX\":0.5,\"anchorY\":0.849609375,\"fps\":0,\"mirrorX\":false,\"rotationDeg\":2,\"scale\":1,\"verticalOffset\":0},\"desktop\":{\"anchorX\":0.5,\"anchorY\":0.849609375,\"fps\":0,\"mirrorX\":true,\"rotationDeg\":0,\"scale\":1.05,\"verticalOffset\":0}}}",
+    "status": "conflict",
+    "attempts": 1,
+    "next_attempt_at": 1792973402270,
+    "last_error": "RESOURCE_PREFERENCE_CONFLICT",
+    "created_at": "2026-10-26T00:09:32.568Z",
+    "verified_at": null
+  },
+  "local": {
+    "resource_id": "866b735a-9351-414f-a797-6bab290144c2",
+    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "calibration_json": "{\"desktop\":{\"scale\":1.05,\"rotationDeg\":0,\"verticalOffset\":0,\"mirrorX\":true,\"anchorX\":0.5,\"anchorY\":0.849609375,\"fps\":0},\"battle\":{\"scale\":1,\"rotationDeg\":2,\"verticalOffset\":0,\"mirrorX\":false,\"anchorX\":0.5,\"anchorY\":0.849609375,\"fps\":0}}",
+    "actions_json": "{\"idle\":\"idle\",\"blink\":\"blink\",\"walk\":\"walk\",\"wave\":\"wave\",\"eat\":\"eat\",\"attack_windup\":\"attack_windup\",\"attack_release\":\"attack_release\",\"attack\":\"attack\",\"hit\":\"hit\",\"skill\":\"skill\",\"victory\":\"victory\",\"sleep\":\"sleep_seated\"}",
+    "revision": 1
+  },
+  "state": {
+    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "resource_id": "866b735a-9351-414f-a797-6bab290144c2",
+    "cloud_revision": 1,
+    "local_revision": 1,
+    "document_json": "{\"actions\":{\"attack\":\"attack\",\"attack_release\":\"attack_release\",\"attack_windup\":\"attack_windup\",\"blink\":\"blink\",\"eat\":\"eat\",\"hit\":\"hit\",\"idle\":\"idle\",\"skill\":\"skill\",\"sleep\":\"sleep_seated\",\"victory\":\"victory\",\"walk\":\"walk\",\"wave\":\"wave\"},\"calibration\":{\"battle\":{\"anchorX\":0.5,\"anchorY\":0.849609375,\"fps\":0,\"mirrorX\":false,\"rotationDeg\":2,\"scale\":1,\"verticalOffset\":0},\"desktop\":{\"anchorX\":0.5,\"anchorY\":0.849609375,\"fps\":0,\"mirrorX\":true,\"rotationDeg\":0,\"scale\":1.05,\"verticalOffset\":0}}}",
+    "authority_action_id": "resource-pref:88c2655e-6f5c-41df-9d7b-7339acca4909",
+    "authority_revision": 16,
+    "authority_checksum": "f18f30968f391354caba3269300e25bd2b96041266f021d713ab5fd525f838d3",
+    "verified_at": "2026-10-26T00:13:44.638Z"
+  },
+  "effectiveJobAndLocalExact": true,
+  "effectiveJobAndPulledStateExact": true,
+  "nativeAccountText": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n云验收乙09\n\n设置 / 账号与同步\n\n把每一段陪伴，好好保存。\n桌面与行为\n通知与隐私\nAI 对话\n角色资源\n账号与同步\n账号资料\n云验收乙09\n\n@uat_1025_b09_28e3d0 · 云端账号\n\n用户名\n保存资料\n修改密码\n当前密码\n新密码\n确认新密码\n保存密码\n伙伴与记录\n同步未完成\n开启存档同步\n立即同步\n导出本地备份\n恢复本地备份\n预览云端存档\n当前设备\nWindows PC\n\n本次登录\n\n退出登录\n\n存档同步已关闭，待处理记录已保留。",
+  "visibleSpecificConflictCount": false,
+  "nativeEvidence": "r06-b2-sync-off-outstanding-resource-conflict-native.jpg",
+  "qualification": "No replay, save, repair, deletion or SQL mutation. Source and target sync have both been normally restored to false. Positive ee33 cold hydration remains separate from the retained old Qingya preference conflict."
+}

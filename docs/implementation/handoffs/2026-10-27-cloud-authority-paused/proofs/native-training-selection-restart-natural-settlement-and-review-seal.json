@@ -1,0 +1,256 @@
+{
+  "at": "2026-10-26T23:34:39.551Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "sessionId": "battle-4b454308-b59f-4d52-9e98-96abdf075fae",
+  "petId": "pet-96de9234-462d-413b-ac72-81cfc1add244",
+  "simulatedGameSettlement": false,
+  "actualStarts": 1,
+  "actualRounds": 14,
+  "actualSettlements": 1,
+  "allFourCurrentActions": true,
+  "healingObserved": {
+    "ultimate": 20,
+    "parasite": 2
+  },
+  "dodgeActualCost": 20,
+  "misnamedScreenshotQualification": "native-B02-original-B2-free-dodge-issued.png names the first dodge attempt, but it was not free: actual rage 49 to29, cost20. The correctly named resolved screenshot and round3 record govern.",
+  "normalSameProfileRestart": {
+    "oldMain": 19132,
+    "newMain": 18768,
+    "wrapper": 20788,
+    "sameFourRoundPrefix": true,
+    "fullOriginalSettingsRestoredAtRevision": 15
+  },
+  "finalSnapshot": {
+    "enemy": {
+      "hp": 0,
+      "id": "enemy",
+      "anger": 44,
+      "maxHp": 120,
+      "element": "earth",
+      "statuses": [],
+      "freeDodgeUsed": true
+    },
+    "round": 14,
+    "player": {
+      "hp": 94,
+      "id": "player",
+      "anger": 42,
+      "maxHp": 120,
+      "element": "wood",
+      "statuses": [],
+      "freeDodgeUsed": true
+    }
+  },
+  "reward": {
+    "actionId": "battle:battle-4b454308-b59f-4d52-9e98-96abdf075fae:account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "petId": "pet-96de9234-462d-413b-ac72-81cfc1add244",
+    "sessionId": "battle-4b454308-b59f-4d52-9e98-96abdf075fae",
+    "mode": "training",
+    "won": true,
+    "experience": 20,
+    "applied": true,
+    "duplicate": false,
+    "previousExperience": 0,
+    "previousLevel": 1,
+    "currentExperience": 20,
+    "currentLevel": 1,
+    "seeds": {
+      "source": "battle",
+      "receiptId": "battle-4b454308-b59f-4d52-9e98-96abdf075fae",
+      "itemId": "seed:berry",
+      "quantity": 2
+    }
+  },
+  "authority": {
+    "actionId": "battle-authority:training:4b454308-b59f-4d52-9e98-96abdf075fae",
+    "baseRevision": 37,
+    "revision": 38,
+    "checksum": "84e39238fa1cda93c0c2a279887ac17b51e745b7351e3c2460c5346672521635",
+    "exactlyOneSettlement": true
+  },
+  "allFourteenRoundViewsVisuallyInspected": [
+    {
+      "round": 1,
+      "playerHp": 112,
+      "enemyHp": 108,
+      "playerAnger": 24,
+      "enemyAnger": 6,
+      "screenshot": "native-B05-original-B2-report-round-01.png"
+    },
+    {
+      "round": 2,
+      "playerHp": 104,
+      "enemyHp": 92,
+      "playerAnger": 49,
+      "enemyAnger": 13,
+      "screenshot": "native-B05-original-B2-report-round-02.png"
+    },
+    {
+      "round": 3,
+      "playerHp": 106,
+      "enemyHp": 90,
+      "playerAnger": 29,
+      "enemyAnger": 0,
+      "screenshot": "native-B05-original-B2-report-round-03.png"
+    },
+    {
+      "round": 4,
+      "playerHp": 100,
+      "enemyHp": 82,
+      "playerAnger": 53,
+      "enemyAnger": 3,
+      "screenshot": "native-B05-original-B2-report-round-04.png"
+    },
+    {
+      "round": 5,
+      "playerHp": 112,
+      "enemyHp": 56,
+      "playerAnger": 8,
+      "enemyAnger": 15,
+      "screenshot": "native-B05-original-B2-report-round-05.png"
+    },
+    {
+      "round": 6,
+      "playerHp": 106,
+      "enemyHp": 54,
+      "playerAnger": 12,
+      "enemyAnger": 15,
+      "screenshot": "native-B05-original-B2-report-round-06.png"
+    },
+    {
+      "round": 7,
+      "playerHp": 100,
+      "enemyHp": 46,
+      "playerAnger": 36,
+      "enemyAnger": 18,
+      "screenshot": "native-B05-original-B2-report-round-07.png"
+    },
+    {
+      "round": 8,
+      "playerHp": 100,
+      "enemyHp": 46,
+      "playerAnger": 36,
+      "enemyAnger": 30,
+      "screenshot": "native-B05-original-B2-report-round-08.png"
+    },
+    {
+      "round": 9,
+      "playerHp": 92,
+      "enemyHp": 46,
+      "playerAnger": 40,
+      "enemyAnger": 30,
+      "screenshot": "native-B05-original-B2-report-round-09.png"
+    },
+    {
+      "round": 10,
+      "playerHp": 84,
+      "enemyHp": 34,
+      "playerAnger": 64,
+      "enemyAnger": 36,
+      "screenshot": "native-B05-original-B2-report-round-10.png"
+    },
+    {
+      "round": 11,
+      "playerHp": 106,
+      "enemyHp": 8,
+      "playerAnger": 14,
+      "enemyAnger": 28,
+      "screenshot": "native-B05-original-B2-report-round-11.png"
+    },
+    {
+      "round": 12,
+      "playerHp": 108,
+      "enemyHp": 6,
+      "playerAnger": 14,
+      "enemyAnger": 38,
+      "screenshot": "native-B05-original-B2-report-round-12.png"
+    },
+    {
+      "round": 13,
+      "playerHp": 102,
+      "enemyHp": 4,
+      "playerAnger": 18,
+      "enemyAnger": 38,
+      "screenshot": "native-B05-original-B2-report-round-13.png"
+    },
+    {
+      "round": 14,
+      "playerHp": 94,
+      "enemyHp": 0,
+      "playerAnger": 42,
+      "enemyAnger": 44,
+      "screenshot": "native-B05-original-B2-report-round-14.png"
+    }
+  ],
+  "postReviewReopenNoDuplicateTables": [
+    "battle_sessions",
+    "battle_reports_v2",
+    "battle_reward_receipts",
+    "garden_reward_receipts",
+    "garden_items",
+    "garden_plots",
+    "companion_pets",
+    "account_settings",
+    "conversation_messages",
+    "conversation_connections",
+    "conversation_credentials",
+    "conversation_profiles",
+    "conversation_cloud_conflicts",
+    "lingjing_resources",
+    "lingjing_resource_imports",
+    "lingjing_resource_preferences"
+  ],
+  "reportCount": 3,
+  "rewardReceiptCount": 3,
+  "credentialsCountOnly": 0,
+  "animationQualification": "Actual live scene respects OS prefers-reduced-motion/data-motion=reduced. Actions, costs, status and heal feedback passed. Continuous dynamic frame acceptance remains blocked by the current environment and is not inferred from static poses or replay clip changes.",
+  "evidence": [
+    "cloudB2-before-b01-b05-natural-training.json",
+    "cloudB2-b01-training-round-zero-ready.json",
+    "native-B01-original-B2-qingya-versus-yantuan-training-config.png",
+    "native-B01-original-B2-common-battle-qingya-yantuan-round-zero.png",
+    "native-B02-original-B2-round-one-normal-resolved.png",
+    "native-B02-original-B2-round-two-element-and-statuses-resolved.png",
+    "native-B02-original-B2-first-dodge-cost-twenty-resolved.png",
+    "native-B02-original-B2-ultimate-consumption-and-healing-resolved.png",
+    "native-B02-public-motion-policy-and-actor-frames-readonly.json",
+    "native-B04-original-B2-four-rounds-active-before-leaving.png",
+    "native-B04-C08-original-B2-chat-keeps-original-yantuan-selection.png",
+    "native-B04-original-B2-retained-session-continue-entry.png",
+    "native-B04-original-B2-four-rounds-resumed-after-navigation-ready.png",
+    "native-B04-before-normal-exit-checkpoint-guard.json",
+    "native-B04-old-runtime-normal-exit-readback.json",
+    "launch-cloudB2-b04-active-training-normal-restart.json",
+    "native-B04-new-runtime-exact-frozen-binding.json",
+    "native-B04-original-B2-normal-restart-login-required.png",
+    "native-B04-original-B2-full-original-settings-restored.png",
+    "native-B04-original-B2-restarted-retained-session-continue-entry.png",
+    "native-B04-original-B2-same-four-rounds-restored-in-new-main.png",
+    "root-B04-new-Main-and-candidate-binding-independent.json",
+    "root-B04-original-four-rounds-and-full-settings-after-restart-independent.json",
+    "native-B03-original-B2-natural-fourteen-round-victory.png",
+    "cloudB2-b03-natural-terminal-and-settlement-first-readback.json",
+    "cloudB2-b03-b05-after-all-fourteen-reviews-and-report-reopen.json",
+    "native-B03-B05-original-B2-report-reopened-same-reward-view.png",
+    "native-B05-original-B2-round-fourteen-review-button-result.png",
+    "native-B05-original-B2-round-fourteen-review-paused.png",
+    "root-B01-B05-natural-training-final-cloud-independent.json",
+    "root-B01-B05-natural-training-exact-effects-independent.json",
+    "native-B05-original-B2-report-round-01.png",
+    "native-B05-original-B2-report-round-02.png",
+    "native-B05-original-B2-report-round-03.png",
+    "native-B05-original-B2-report-round-04.png",
+    "native-B05-original-B2-report-round-05.png",
+    "native-B05-original-B2-report-round-06.png",
+    "native-B05-original-B2-report-round-07.png",
+    "native-B05-original-B2-report-round-08.png",
+    "native-B05-original-B2-report-round-09.png",
+    "native-B05-original-B2-report-round-10.png",
+    "native-B05-original-B2-report-round-11.png",
+    "native-B05-original-B2-report-round-12.png",
+    "native-B05-original-B2-report-round-13.png",
+    "native-B05-original-B2-report-round-14.png"
+  ]
+}

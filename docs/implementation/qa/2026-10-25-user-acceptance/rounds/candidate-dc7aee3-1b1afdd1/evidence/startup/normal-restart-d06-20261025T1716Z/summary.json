@@ -1,0 +1,318 @@
+{
+  "shell": {
+    "dotnet": "10.0.11",
+    "path": "C:\\Users\\Administrator\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+    "powershell": "7.6.5"
+  },
+  "schemaVersion": 1,
+  "noProfilesCreatedOrDeleted": true,
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "environmentAtLaunch": [
+    {
+      "valueIsNull": false,
+      "name": "PET_USER_DATA_DIR",
+      "present": true,
+      "valueLength": 123,
+      "valueIsEmpty": false
+    },
+    {
+      "valueIsNull": false,
+      "name": "LINGJING_QA_SCENARIO",
+      "present": true,
+      "valueLength": 14,
+      "valueIsEmpty": false
+    },
+    {
+      "valueIsNull": true,
+      "name": "ELECTRON_RUN_AS_NODE",
+      "present": false,
+      "valueLength": null,
+      "valueIsEmpty": false
+    },
+    {
+      "valueIsNull": true,
+      "name": "PET_RUNTIME_DATA_FILE",
+      "present": false,
+      "valueLength": null,
+      "valueIsEmpty": false
+    },
+    {
+      "valueIsNull": true,
+      "name": "ELECTRON_RENDERER_URL",
+      "present": false,
+      "valueLength": null,
+      "valueIsEmpty": false
+    },
+    {
+      "valueIsNull": true,
+      "name": "NODE_OPTIONS",
+      "present": false,
+      "valueLength": null,
+      "valueIsEmpty": false
+    },
+    {
+      "valueIsNull": true,
+      "name": "NODE_PATH",
+      "present": false,
+      "valueLength": null,
+      "valueIsEmpty": false
+    }
+  ],
+  "launchAttempted": true,
+  "source": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "environmentRestored": true,
+  "independentPeers": [
+    {
+      "payloadRoot": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsc4E9.tmp\\app",
+      "payloadFiles": [
+        {
+          "sha256": "466204ae9c78143ad665b494cf6c104cd24ec7b08425bb6bb7544f2559d035e9",
+          "bytes": 246846464,
+          "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\nsc4E9.tmp\\app\\Lingjing.exe",
+          "matchesFrozen": true,
+          "relative": "Lingjing.exe"
+        },
+        {
+          "sha256": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba",
+          "bytes": 267512721,
+          "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\nsc4E9.tmp\\app\\resources\\app.asar",
+          "matchesFrozen": true,
+          "relative": "resources\\app.asar"
+        },
+        {
+          "sha256": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a",
+          "bytes": 1989632,
+          "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\nsc4E9.tmp\\app\\resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node",
+          "matchesFrozen": true,
+          "relative": "resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node"
+        },
+        {
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+          "bytes": 194,
+          "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\nsc4E9.tmp\\app\\resources\\lingjing-cloud-public.json",
+          "matchesFrozen": true,
+          "relative": "resources\\lingjing-cloud-public.json"
+        }
+      ],
+      "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a",
+      "id": "final-dc7-cloud-a",
+      "actualUserDataDir": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a",
+      "wrapper": {
+        "ProcessId": 21204,
+        "ParentProcessId": 15628,
+        "CreationDate": "2026-10-25T23:56:34.978329+08:00",
+        "ExecutablePath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-dc7aee3\\Lingjing-0.1.8-portable-x64.exe",
+        "Name": "Lingjing-0.1.8-portable-x64.exe",
+        "CommandLine": "\"C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-dc7aee3\\Lingjing-0.1.8-portable-x64.exe\" --remote-debugging-port=57218"
+      },
+      "main": {
+        "ProcessId": 5292,
+        "ParentProcessId": 21204,
+        "CreationDate": "2026-10-25T23:56:45.436708+08:00",
+        "ExecutablePath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsc4E9.tmp\\app\\Lingjing.exe",
+        "Name": "Lingjing.exe",
+        "CommandLine": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsc4E9.tmp\\app\\Lingjing.exe --remote-debugging-port=57218"
+      }
+    },
+    {
+      "payloadRoot": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsbC12A.tmp\\app",
+      "payloadFiles": [
+        {
+          "sha256": "466204ae9c78143ad665b494cf6c104cd24ec7b08425bb6bb7544f2559d035e9",
+          "bytes": 246846464,
+          "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\nsbC12A.tmp\\app\\Lingjing.exe",
+          "matchesFrozen": true,
+          "relative": "Lingjing.exe"
+        },
+        {
+          "sha256": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba",
+          "bytes": 267512721,
+          "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\nsbC12A.tmp\\app\\resources\\app.asar",
+          "matchesFrozen": true,
+          "relative": "resources\\app.asar"
+        },
+        {
+          "sha256": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a",
+          "bytes": 1989632,
+          "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\nsbC12A.tmp\\app\\resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node",
+          "matchesFrozen": true,
+          "relative": "resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node"
+        },
+        {
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+          "bytes": 194,
+          "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\nsbC12A.tmp\\app\\resources\\lingjing-cloud-public.json",
+          "matchesFrozen": true,
+          "relative": "resources\\lingjing-cloud-public.json"
+        }
+      ],
+      "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09",
+      "id": "final-dc7-cloud-b",
+      "actualUserDataDir": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09",
+      "wrapper": {
+        "ProcessId": 17276,
+        "ParentProcessId": 27520,
+        "CreationDate": "2026-10-26T00:10:29.584664+08:00",
+        "ExecutablePath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-dc7aee3\\Lingjing-0.1.8-portable-x64.exe",
+        "Name": "Lingjing-0.1.8-portable-x64.exe",
+        "CommandLine": "\"C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-dc7aee3\\Lingjing-0.1.8-portable-x64.exe\" --remote-debugging-port=57219"
+      },
+      "main": {
+        "ProcessId": 12052,
+        "ParentProcessId": 17276,
+        "CreationDate": "2026-10-26T00:10:40.282807+08:00",
+        "ExecutablePath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsbC12A.tmp\\app\\Lingjing.exe",
+        "Name": "Lingjing.exe",
+        "CommandLine": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsbC12A.tmp\\app\\Lingjing.exe --remote-debugging-port=57219"
+      }
+    }
+  ],
+  "executable": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-dc7aee3\\Lingjing-0.1.8-portable-x64.exe",
+  "profile": {
+    "runId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\6ff8e38f-9f2b-4872-8747-1fb00bd81655\\local-a",
+    "markerSha256": "a1cc2d0b6b58e7a736fcbc74dcd75cca65dc7273bc95422e642bf443fd8e4e6d"
+  },
+  "debugPort": 57215,
+  "noProcessesClosedOrKilled": true,
+  "captureError": null,
+  "status": "capture-only-no-native-acceptance-verdict",
+  "required09Readback": "Actual native window, AppInfo source/profile/scenario/runId, target D06/C12 and preserved original data. This helper cannot claim product acceptance.",
+  "startedAt": "2026-10-25T17:17:18.3737799Z",
+  "environmentBefore": [
+    {
+      "valueIsNull": true,
+      "name": "PET_USER_DATA_DIR",
+      "present": false,
+      "valueLength": null,
+      "valueIsEmpty": false
+    },
+    {
+      "valueIsNull": true,
+      "name": "LINGJING_QA_SCENARIO",
+      "present": false,
+      "valueLength": null,
+      "valueIsEmpty": false
+    },
+    {
+      "valueIsNull": true,
+      "name": "ELECTRON_RUN_AS_NODE",
+      "present": false,
+      "valueLength": null,
+      "valueIsEmpty": false
+    },
+    {
+      "valueIsNull": true,
+      "name": "PET_RUNTIME_DATA_FILE",
+      "present": false,
+      "valueLength": null,
+      "valueIsEmpty": false
+    },
+    {
+      "valueIsNull": true,
+      "name": "ELECTRON_RENDERER_URL",
+      "present": false,
+      "valueLength": null,
+      "valueIsEmpty": false
+    },
+    {
+      "valueIsNull": true,
+      "name": "NODE_OPTIONS",
+      "present": false,
+      "valueLength": null,
+      "valueIsEmpty": false
+    },
+    {
+      "valueIsNull": true,
+      "name": "NODE_PATH",
+      "present": false,
+      "valueLength": null,
+      "valueIsEmpty": false
+    }
+  ],
+  "automaticRetry": false,
+  "at": "2026-10-25T17:18:04.8491628Z",
+  "executableAfterSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "wrapper": {
+    "exitCode": null,
+    "exited": false,
+    "pid": 26232
+  },
+  "tree": "1b6b47b23a93bf505c92bb1ff9af5dead75d6273",
+  "actualPayload": {
+    "firstSeenAt": "2026-10-25T17:17:29.9385354Z",
+    "root": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsdED32.tmp\\app",
+    "finalFiles": [
+      {
+        "sha256": "466204ae9c78143ad665b494cf6c104cd24ec7b08425bb6bb7544f2559d035e9",
+        "bytes": 246846464,
+        "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\nsdED32.tmp\\app\\Lingjing.exe",
+        "matchesFrozen": true,
+        "relative": "Lingjing.exe"
+      },
+      {
+        "sha256": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba",
+        "bytes": 267512721,
+        "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\nsdED32.tmp\\app\\resources\\app.asar",
+        "matchesFrozen": true,
+        "relative": "resources\\app.asar"
+      },
+      {
+        "sha256": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a",
+        "bytes": 1989632,
+        "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\nsdED32.tmp\\app\\resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node",
+        "matchesFrozen": true,
+        "relative": "resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node"
+      },
+      {
+        "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+        "bytes": 194,
+        "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\nsdED32.tmp\\app\\resources\\lingjing-cloud-public.json",
+        "matchesFrozen": true,
+        "relative": "resources\\lingjing-cloud-public.json"
+      }
+    ],
+    "firstFiles": [
+      {
+        "sha256": "466204ae9c78143ad665b494cf6c104cd24ec7b08425bb6bb7544f2559d035e9",
+        "bytes": 246846464,
+        "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\nsdED32.tmp\\app\\Lingjing.exe",
+        "matchesFrozen": true,
+        "relative": "Lingjing.exe"
+      },
+      {
+        "sha256": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba",
+        "bytes": 267512721,
+        "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\nsdED32.tmp\\app\\resources\\app.asar",
+        "matchesFrozen": true,
+        "relative": "resources\\app.asar"
+      },
+      {
+        "sha256": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a",
+        "bytes": 1989632,
+        "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\nsdED32.tmp\\app\\resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node",
+        "matchesFrozen": true,
+        "relative": "resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node"
+      },
+      {
+        "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+        "bytes": 194,
+        "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\nsdED32.tmp\\app\\resources\\lingjing-cloud-public.json",
+        "matchesFrozen": true,
+        "relative": "resources\\lingjing-cloud-public.json"
+      }
+    ],
+    "main": {
+      "ProcessId": 32388,
+      "ParentProcessId": 26232,
+      "CreationDate": "2026-10-26T01:17:29.531627+08:00",
+      "ExecutablePath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsdED32.tmp\\app\\Lingjing.exe",
+      "Name": "Lingjing.exe",
+      "CommandLine": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsdED32.tmp\\app\\Lingjing.exe --remote-debugging-port=57215"
+    },
+    "actualUserDataDirs": [
+      "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\6ff8e38f-9f2b-4872-8747-1fb00bd81655\\local-a"
+    ]
+  },
+  "helper": "dc7-independent-marker-profile-once"
+}

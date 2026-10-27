@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-26T23:13:15.936Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "classification": "engineering-only expected red baseline for native4E6-006",
+  "nativeAcceptance": false,
+  "liveProfileTouched": false,
+  "networkRequests": false,
+  "exitCode": 1,
+  "testFile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\unified-regressions-v2\\account-backup-missing-cache.regression.test.cjs",
+  "testSha256": "bf8e21d688acd6f7dd0171c776960a4c300726f78601bdd458d79964cd523df8",
+  "stdout": "TAP version 13\n# Subtest: normal cloud-account restore repairs a known missing cache before protection export, retaining identity and stable retry\nnot ok 1 - normal cloud-account restore repairs a known missing cache before protection export, retaining identity and stable retry\n  ---\n  duration_ms: 260.7283\n  type: 'test'\n  location: 'C:\\\\Users\\\\Administrator\\\\Desktop\\\\project\\\\DesktopPet\\\\artifacts\\\\qa\\\\cloud-authority-convergence\\\\20261026\\\\unified-regressions-v2\\\\account-backup-missing-cache.regression.test.cjs:17:1'\n  failureType: 'testCodeFailure'\n  error: \"ENOENT: no such file or directory, open 'C:\\\\Users\\\\Administrator\\\\Desktop\\\\project\\\\DesktopPet\\\\artifacts\\\\qa\\\\cloud-authority-convergence\\\\20261026\\\\unified-regressions-v2\\\\account-backup-missing-fixture-aBRrLl\\\\managed\\\\fd75acc8-00b2-4536-9b7f-d8b6152a7bad\\\\sprites.png'\"\n  code: 'ENOENT'\n  stack: |-\n    Object.openSync (node:fs:621:18)\n    Object.readFileSync (node:fs:487:35)\n    C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\apps\\pc-app\\runtime\\core\\resource-backup.cjs:18:24\n    Array.map (<anonymous>)\n    C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\apps\\pc-app\\runtime\\core\\resource-backup.cjs:17:192\n    Array.map (<anonymous>)\n    Object.exportData [as export] (C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\apps\\pc-app\\runtime\\core\\resource-backup.cjs:17:36)\n    C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\apps\\pc-app\\runtime\\features\\accounts\\backups.cjs:72:36\n    transaction (C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\apps\\pc-app\\runtime\\features\\accounts\\util.cjs:62:19)\n    BackupManager.snapshot (C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\apps\\pc-app\\runtime\\features\\accounts\\backups.cjs:69:12)\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 0\n# fail 1\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 366.5734\n",
+  "stderr": ""
+}

@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-26T00:26:17.490Z",
+  "cipher": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\accounts\\verified-session.bin",
+    "exists": true,
+    "bytes": 1497,
+    "sha256": "21b7c3cac36e52bc51260fb1b5308fcd965f07dc00ea2fb63cde280c4f285b5e"
+  },
+  "device": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\accounts\\device.json",
+    "exists": true,
+    "bytes": 63,
+    "sha256": "2fb39c18c95bbb37d1c472f565801684f9438dbc949f46942d8c56186b8689b1"
+  },
+  "sync": {
+    "ok": true,
+    "data": {
+      "configured": true,
+      "cloudRevision": 29,
+      "lastVerifiedAt": "2026-10-26T00:26:06.344Z",
+      "lastError": null,
+      "pending": 0,
+      "conflicts": 0,
+      "localChanged": false,
+      "unverifiedLocal": 0,
+      "privacyRedactions": 0,
+      "running": false,
+      "observedCloudRevision": 29,
+      "lastCloudCheckedAt": "2026-10-26T00:26:06.318Z",
+      "remoteChanged": false
+    }
+  },
+  "oldActor": {
+    "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+    "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe",
+    "deviceId": "41de040e-a134-487f-b1d3-76b5254a8f97",
+    "sessionId": "b904724b-ab0d-4a87-bd23-7a59fdeef5d6",
+    "source": "Root independent fresh PG metadata confirmed before the one normal UI save"
+  }
+}

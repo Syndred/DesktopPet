@@ -1,0 +1,15 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const read=f=>JSON.parse(fs.readFileSync(path.join(__dirname,f),'utf8').replace(/^\uFEFF/,''));
+const before=read('cloudA-flow-original-dc7-before-close-change-20261026.json'),after=read('cloudA-flow-dc7-close-false-single-save-auto-record-20261026.json'),app=read('cloudA-app-info-original-dc7-before-cutover-20261026.json');
+const owner=before.owner,b=before.tables.account_settings.find(r=>r.owner_account_id===owner),a=after.tables.account_settings.find(r=>r.owner_account_id===owner);
+const bd=JSON.parse(b.document),ad=JSON.parse(a.document);assert.deepEqual([b.revision,a.revision,bd.desktop.closeToTray,ad.desktop.closeToTray],[14,15,true,false]);ad.desktop.closeToTray=true;assert.deepEqual(ad,bd);
+assert.equal(app.result.user.ownerAccountId,owner);assert.equal(app.result.user.authUserId,'524c5302-19a2-43ec-aa72-b8894bd48efe');assert.equal(app.result.scenario,null);assert.equal(app.result.publicSession.persistence,'secure');
+assert.equal(before.deviceId,'41de040e-a134-487f-b1d3-76b5254a8f97');assert.equal(after.deviceId,before.deviceId);
+assert.deepEqual(before.tables.companion_pets,after.tables.companion_pets);assert.deepEqual(before.tables.companion_accounts,after.tables.companion_accounts);
+for(const row of before.tables.account_sync_outbox)assert.ok(after.tables.account_sync_outbox.some(r=>JSON.stringify(r)===JSON.stringify(row)),'Old outbox changed');
+const jobs=after.tables.account_sync_outbox.filter(r=>!before.tables.account_sync_outbox.some(b=>b.action_id===r.action_id));assert.equal(jobs.length,1);const j=jobs[0];assert.deepEqual([j.status,j.attempts,j.last_error,j.base_revision],['verified',0,null,30]);assert.ok(j.verified_at);
+assert.equal(after.tables.account_sync_state[0].cloud_revision,31);assert.equal(after.tables.account_sync_state[0].last_checksum,j.checksum);
+const unchangedCore=Object.keys(before.digests).filter(t=>!t.startsWith('account_'));
+for(const t of unchangedCore)assert.deepEqual(before.digests[t],after.digests[t]);
+const proof={at:new Date().toISOString(),approvalRef:'root-c7ad-cloudA-normal-cutover-warm-reports-1148',status:'original_dc7_close_false_single_save_client_verified_ready_for_normal_exit',settings:{before:14,after:15,onlyCloseToTrayChanged:true,syncEnabled:true,volume:70},generated:{actionId:j.action_id,baseRevision:j.base_revision,cloudRevision:31,checksum:j.checksum,status:j.status,verifiedAt:j.verified_at},originalEightCachedPetsRawExact:true,originalBothOwnerChoicesRawExact:true,originalOutboxRawRetained:true,nonAccountCoreTablesExact:unchangedCore,ordinaryNoMarker:true,publicSessionPersistence:'secure',independentCloudReceiptPending:true};
+const output=path.join(__dirname,'cloudA-close-false-single-save-client-verified-20261026.json');fs.writeFileSync(output,JSON.stringify(proof,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({output,...proof}));

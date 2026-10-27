@@ -1,0 +1,195 @@
+{
+  "at": "2026-10-26T11:36:59.794Z",
+  "status": "client_roundtrip_and_full_original_settings_restoration_verified_awaiting_independent_cloud",
+  "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+  "approvalRef": "root-c7ad-qa024-positive-restore-tail-1125",
+  "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+  "native": {
+    "positiveSaveCount": 1,
+    "restoreSaveCount": 1,
+    "restoreInput": "Focus verified as size1.06; one native Left produced1.05; one Save",
+    "syncRestoration": "One normal account switch true to false while volume71, before volume restoration",
+    "volumeRestoration": "Keyboard focus verified volume71; one Left to70; one normal Save",
+    "manualSyncCount": 0,
+    "manualRetryCount": 0,
+    "backupRestoreCount": 0,
+    "mergeCount": 0,
+    "backgroundDraftNotice": "Both dirty resource drafts received another-window-update notice during ordinary pump; each sole Save succeeded. Notice retained separately for code triage.",
+    "uiStoppedAfterFinalScreenshot": true
+  },
+  "generated": [
+    {
+      "actionId": "0879f2f8-a834-4080-ba2b-d3b284ef943a",
+      "localRevision": 2,
+      "baseRevision": 1,
+      "status": "verified",
+      "attempts": 0,
+      "verifiedAt": "2026-10-26T11:23:06.089Z",
+      "cloudPreferenceRevision": 2,
+      "authorityAction": "resource-pref:0879f2f8-a834-4080-ba2b-d3b284ef943a",
+      "authorityRevision": 22,
+      "authorityChecksum": "83068122a5ed1e0c026a705a249b3a3ee5045dfd656d1f0fdde5ec8637a216e2"
+    },
+    {
+      "actionId": "908592f4-3814-4cd4-b9e8-897b66f6984b",
+      "localRevision": 3,
+      "baseRevision": 2,
+      "status": "verified",
+      "attempts": 0,
+      "verifiedAt": "2026-10-26T11:31:34.199Z",
+      "cloudPreferenceRevision": 3,
+      "authorityAction": "resource-pref:908592f4-3814-4cd4-b9e8-897b66f6984b",
+      "authorityRevision": 23,
+      "authorityChecksum": "0601518424af2f8a176f9347347d4d8cf86f80791f7ff9c132505f80b3f826a3"
+    }
+  ],
+  "settings": {
+    "sequence": [
+      {
+        "at": "2026-10-26T10:44:30.029Z",
+        "revision": 3,
+        "volume": 70,
+        "sync": false
+      },
+      {
+        "at": "2026-10-26T10:58:50.015Z",
+        "revision": 4,
+        "volume": 71,
+        "sync": false
+      },
+      {
+        "at": "2026-10-26T11:00:59.595Z",
+        "revision": 5,
+        "volume": 71,
+        "sync": true
+      },
+      {
+        "at": "2026-10-26T11:33:20.681Z",
+        "revision": 6,
+        "volume": 71,
+        "sync": false
+      },
+      {
+        "at": "2026-10-26T11:35:25.491Z",
+        "revision": 7,
+        "volume": 70,
+        "sync": false
+      }
+    ],
+    "originalDocumentRawExact": true,
+    "finalRevision": 7,
+    "closeToTray": true
+  },
+  "retained": {
+    "all4PostloginPetsRawExactAcrossAll9Frames": true,
+    "companionAccountAndSelectionsRawExact": true,
+    "otherResourcePreferenceRawExact": true,
+    "targetEntireDocumentOriginalExact": true,
+    "originalConflictOnlyStatusChangedToSuperseded": true,
+    "originalConflictVerifiedAtStillNull": true,
+    "originalPositiveRowRawExact": true,
+    "accountSyncStateOutboxSourcesBaselinesCheckpointsRawExact": true
+  },
+  "tableAudit": {
+    "tables": 67,
+    "unchangedDigestOrSensitiveCountTables": 59,
+    "changedTables": [
+      "account_actions",
+      "account_settings",
+      "lingjing_resource_cloud_downloads",
+      "lingjing_resource_cloud_receipts",
+      "lingjing_resource_preference_cache",
+      "lingjing_resource_preference_outbox",
+      "lingjing_resource_preference_state",
+      "lingjing_resource_preferences"
+    ],
+    "changedCounts": [
+      {
+        "table": "account_actions",
+        "before": 9,
+        "after": 13
+      },
+      {
+        "table": "account_settings",
+        "before": 1,
+        "after": 1
+      },
+      {
+        "table": "lingjing_resource_cloud_downloads",
+        "before": 2,
+        "after": 2
+      },
+      {
+        "table": "lingjing_resource_cloud_receipts",
+        "before": 3,
+        "after": 3
+      },
+      {
+        "table": "lingjing_resource_preference_cache",
+        "before": 2,
+        "after": 4
+      },
+      {
+        "table": "lingjing_resource_preference_outbox",
+        "before": 1,
+        "after": 3
+      },
+      {
+        "table": "lingjing_resource_preference_state",
+        "before": 2,
+        "after": 2
+      },
+      {
+        "table": "lingjing_resource_preferences",
+        "before": 2,
+        "after": 2
+      }
+    ],
+    "sensitiveTablesCountOnly": true
+  },
+  "limits": {
+    "fullAccountSyncComplete": false,
+    "accountLocalHead": 8,
+    "independentCloudRestoreReceiptPending": true,
+    "ledgerNotChanged": true,
+    "postloginPetBaseline": "Original cache was legitimately hydrated at login from immutable cloud head21; independent Root provenance file already retained. This proof does not roll back earned XP/win."
+  },
+  "evidence": {
+    "login": {
+      "at": "2026-10-26T10:44:30.029Z",
+      "label": "first-normal-login-auto-pull"
+    },
+    "volume71": {
+      "at": "2026-10-26T10:58:50.015Z",
+      "label": "volume71-saved-before-sync-enable"
+    },
+    "syncOn": {
+      "at": "2026-10-26T11:00:59.595Z",
+      "label": "normal-sync-enabled-initial-cycle"
+    },
+    "beforePositive": {
+      "at": "2026-10-26T11:21:57.251Z",
+      "label": "draft106-persisted-base1-before-single-save"
+    },
+    "positive": {
+      "at": "2026-10-26T11:23:07.391Z",
+      "label": "single-scale106-save-auto-sync-first-record"
+    },
+    "restoreInitial": {
+      "at": "2026-10-26T11:31:20.297Z",
+      "label": "single-restore105-save-auto-sync-first-record"
+    },
+    "restored": {
+      "at": "2026-10-26T11:32:07.611Z",
+      "label": "single-restore105-save-normal-timer-record"
+    },
+    "syncOff": {
+      "at": "2026-10-26T11:33:20.681Z",
+      "label": "sync-restored-false-before-volume70-save"
+    },
+    "final": {
+      "at": "2026-10-26T11:35:25.491Z",
+      "label": "qa024-original-settings70-syncfalse-restoration-final"
+    }
+  }
+}

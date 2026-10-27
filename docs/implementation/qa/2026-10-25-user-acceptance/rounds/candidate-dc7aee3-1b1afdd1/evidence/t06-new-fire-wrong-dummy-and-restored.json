@@ -1,0 +1,70 @@
+{
+  "at": "2026-10-25T18:42:05.691Z",
+  "scope": "new fire8853 independent only",
+  "oldKeyValuesReadOrDecrypted": false,
+  "originalHelperRequestsUnchanged": true,
+  "persistedSlot": [
+    {
+      "scope": "pet",
+      "scope_id": "pet-8853a238-8730-4970-8e39-885a1f1da97d",
+      "provider": "openai_compatible",
+      "base_url": "http://127.0.0.1:53441/v1",
+      "model": "模拟验收-DC7-cc2cb825cff0",
+      "key_present": 1,
+      "revision": 3,
+      "updated_at": 1792953477275
+    }
+  ],
+  "newFireMessagesExact": true,
+  "latestAudit": [
+    {
+      "at": "2026-10-25T18:26:04.639Z",
+      "event": "response_end",
+      "requestId": "sim-11",
+      "mode": "empty",
+      "reason": "complete",
+      "status": 200,
+      "deltas": 0
+    },
+    {
+      "at": "2026-10-25T18:26:38.397Z",
+      "event": "request_accepted",
+      "requestId": "sim-12",
+      "mode": "json",
+      "bytes": 1056,
+      "messageCount": 6,
+      "contentChars": 308
+    },
+    {
+      "at": "2026-10-25T18:26:38.397Z",
+      "event": "response_end",
+      "requestId": "sim-12",
+      "mode": "json",
+      "status": 200
+    },
+    {
+      "at": "2026-10-25T18:37:43.448Z",
+      "event": "request_rejected",
+      "requestId": "sim-13",
+      "code": "DUMMY_AUTH_REJECTED",
+      "status": 401
+    },
+    {
+      "at": "2026-10-25T18:38:30.373Z",
+      "event": "request_accepted",
+      "requestId": "sim-14",
+      "mode": "json",
+      "bytes": 152,
+      "messageCount": 1,
+      "contentChars": 15
+    },
+    {
+      "at": "2026-10-25T18:38:30.374Z",
+      "event": "response_end",
+      "requestId": "sim-14",
+      "mode": "json",
+      "status": 200
+    }
+  ],
+  "externalModelSuccess": false
+}

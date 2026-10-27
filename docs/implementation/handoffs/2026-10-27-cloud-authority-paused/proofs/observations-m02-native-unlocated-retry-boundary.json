@@ -1,0 +1,50 @@
+{
+  "at": "2026-10-26T22:57:38.652Z",
+  "stage": "m02-native-unlocated-retry-boundary",
+  "caseUpdates": [
+    {
+      "id": "M02",
+      "status": "passed",
+      "executionState": "executed_current_candidate",
+      "actual": "原B2实际附近页明确显示应用内定位未开启、未定位地图占位及0伙伴；普通点击获取系统位置一次后出现可见位置隐私拒绝说明，仍无假定位或假附近伙伴。前后privacy.locationAllowed=false、settings13与8项宠物/经济/领地/历史摘要不变，未进入演示模式、未打开或修改OS隐私权限。",
+      "evidence": [
+        "native-M02-original-B2-app-location-disabled-before-retry.png",
+        "native-M02-original-B2-location-retry-rejected-without-permission-change.png",
+        "cloudB2-m02-before-location-retry.json",
+        "cloudB2-m02-after-location-retry-denied.json",
+        "native-G01-original-B2-territory-unlocated-initial-state.png",
+        "native-M02-unlocated-retry-and-privacy-boundary-seal.json"
+      ]
+    },
+    {
+      "id": "M01",
+      "status": "running",
+      "executionState": "partially_executed_current_candidate",
+      "actual": "本候选原B2实际附近页未定位/定位拒绝状态已原生验证，未伪造坐标；真实底图加载及缩放/平移仍待正常定位条件，当前不据占位图宣称通过。",
+      "evidence": [
+        "native-M02-original-B2-app-location-disabled-before-retry.png",
+        "native-M02-original-B2-location-retry-rejected-without-permission-change.png",
+        "cloudB2-m02-before-location-retry.json",
+        "cloudB2-m02-after-location-retry-denied.json",
+        "native-G01-original-B2-territory-unlocated-initial-state.png",
+        "native-M02-unlocated-retry-and-privacy-boundary-seal.json"
+      ]
+    },
+    {
+      "id": "G01",
+      "status": "running",
+      "executionState": "partially_executed_current_candidate",
+      "actual": "本候选原B2领地初始页实际显示未定位地图、等待查看附近领地及真实已有菜园入口；当前原profile位置允许false，无领地/驻守记录。真实地图缩放、边界和选领地尚未验证，未用演示结果替代。",
+      "evidence": [
+        "native-M02-original-B2-app-location-disabled-before-retry.png",
+        "native-M02-original-B2-location-retry-rejected-without-permission-change.png",
+        "cloudB2-m02-before-location-retry.json",
+        "cloudB2-m02-after-location-retry-denied.json",
+        "native-G01-original-B2-territory-unlocated-initial-state.png",
+        "native-M02-unlocated-retry-and-privacy-boundary-seal.json"
+      ]
+    }
+  ],
+  "newIssues": [],
+  "issueUpdates": []
+}

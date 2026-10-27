@@ -1,0 +1,114 @@
+{
+  "at": "2026-10-26T20:29:15.397Z",
+  "rootIndependent": true,
+  "readOnly": true,
+  "credentialStoresRead": false,
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09",
+  "restoreAction": {
+    "actionId": "50202382-b342-40c7-9497-304fec650ce2",
+    "kind": "restore-records",
+    "inputHash": "cf8a307645b5c15a76efdc4523cd066f9e9e687d711e2496791705eb144fb4dd",
+    "createdAt": "2026-10-26T20:27:49.475Z",
+    "restored": true,
+    "appliedModules": [
+      "conversation-preservation",
+      "conversations",
+      "settings",
+      "device-desktop",
+      "character-resources"
+    ]
+  },
+  "sourceFile": {
+    "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\native-ui-exports\\B2-original-records-preserved-4e6.lingjing.json",
+    "sha256": "41e00267c01b1a0e0a806bf146548ea9089a1797eb64c47f95b422cae57ba797"
+  },
+  "restoredArchives": [
+    {
+      "checksum": "9f6eb52880c4a8eefcb8388b15a797a633cff3d250af1de24ed2cf37be0800ef",
+      "originalRestored": true
+    }
+  ],
+  "restoredConflicts": [
+    {
+      "collection": "conversation_profiles",
+      "id": "[\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\"]",
+      "reason": "legacy-local-difference",
+      "localHash": "2733758bff3bf45da41ae164e011e47c44a7e1d642175f4a86150566ca263d86",
+      "originalRestored": true,
+      "resolvedAt": null
+    },
+    {
+      "collection": "conversation_preferences",
+      "id": "[\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\"]",
+      "reason": "legacy-local-difference",
+      "localHash": "3ffa77c5cf6f0bdc05cccab060ce3a2715bf50a4b92b3f554db0e39ea77e1364",
+      "originalRestored": true,
+      "resolvedAt": null
+    }
+  ],
+  "destinationOriginalArchivesRetained": true,
+  "cloudOwnedGameCacheUnchanged": true,
+  "readbacks": [
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "domain": "companions",
+      "cloud_revision": 28,
+      "envelope_checksum": "d96ec0d913405cbb927e9df33896a647cb04ab1c09e9eb5e3888f397ea31d40f",
+      "module_checksum": "9e968faa188c8ce4ffadda3593fef8204f6f3fcef102d968d732bf3605224a37",
+      "verified_at": "2026-10-26T20:28:59.552Z"
+    },
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "domain": "garden",
+      "cloud_revision": 28,
+      "envelope_checksum": "d96ec0d913405cbb927e9df33896a647cb04ab1c09e9eb5e3888f397ea31d40f",
+      "module_checksum": "289d66cad8635350a092c8b6ad4000d8473a493a249d9e0d51eb8f3adffa614b",
+      "verified_at": "2026-10-26T20:28:59.552Z"
+    }
+  ],
+  "settings": {
+    "revision": 7,
+    "document": {
+      "desktop": {
+        "alwaysOnTop": true,
+        "clickThrough": true,
+        "launchAtLogin": false,
+        "closeToTray": true,
+        "companionLimit": 3,
+        "interactionSounds": true,
+        "volume": 70,
+        "hideInFullscreen": true,
+        "animationsEnabled": true
+      },
+      "notifications": {
+        "enabled": true,
+        "companions": true,
+        "battles": true,
+        "garden": true,
+        "quietEnabled": true,
+        "quietStart": "22:00",
+        "quietEnd": "08:00"
+      },
+      "privacy": {
+        "locationAllowed": false,
+        "locationOnlyWhileExploring": true,
+        "emotionStatistics": false
+      },
+      "sync": {
+        "enabled": false
+      }
+    }
+  },
+  "fullOriginalDeviceSettingsRestored": true,
+  "automaticProtectionBackup": {
+    "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\accounts\\backups\\before-record-import-1793046469425-d72b048c-dc6c-41fe-91e2-5ca54a25606a.lingjing.json",
+    "sha256": "b00270192d6db78510953655eaa1d3f33a35b87e53d28d4d699d390a9252957b",
+    "headerChecksumVerified": true,
+    "beforeOriginalSettingsVerified": true,
+    "beforeMissingPreservationVerified": true
+  },
+  "personalOutbox": [],
+  "qualification": "Actual missing originals restored through normal UI. Resource physical files and original device settings cleanup still require their separate verification."
+}

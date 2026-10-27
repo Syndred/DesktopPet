@@ -1,0 +1,109 @@
+{
+  "at": "2026-10-25T18:09:20.879Z",
+  "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+  "petId": "pet-8853a238-8730-4970-8e39-885a1f1da97d",
+  "explicitPetOverride": 1,
+  "petConnections": 0,
+  "messages": [],
+  "ui": {
+    "labels": [
+      {
+        "aria": "隔离验收场景",
+        "title": null,
+        "disabled": false
+      },
+      {
+        "aria": "最小化",
+        "title": null,
+        "disabled": false
+      },
+      {
+        "aria": "最大化",
+        "title": null,
+        "disabled": false
+      },
+      {
+        "aria": "收起到托盘",
+        "title": null,
+        "disabled": false
+      },
+      {
+        "aria": "小狐，编号 待同步，水系",
+        "title": null,
+        "disabled": false
+      },
+      {
+        "aria": "小狐，编号 待同步，水系",
+        "title": null,
+        "disabled": false
+      },
+      {
+        "aria": "青芽，编号 待同步，木系",
+        "title": null,
+        "disabled": false
+      },
+      {
+        "aria": "青芽，编号 待同步，木系",
+        "title": null,
+        "disabled": false
+      },
+      {
+        "aria": "焰柴，编号 待同步，火系",
+        "title": null,
+        "disabled": false
+      },
+      {
+        "aria": "清空当前伙伴聊天记录",
+        "title": null,
+        "disabled": true
+      },
+      {
+        "aria": "回到最新消息",
+        "title": null,
+        "disabled": true
+      },
+      {
+        "aria": "选择表情",
+        "title": null,
+        "disabled": false
+      },
+      {
+        "aria": "发送",
+        "title": "发送",
+        "disabled": true
+      },
+      {
+        "aria": "发送快捷键",
+        "title": null,
+        "disabled": false
+      },
+      {
+        "aria": "记忆提示",
+        "title": null,
+        "disabled": false
+      },
+      {
+        "aria": "添加记忆",
+        "title": null,
+        "disabled": false
+      },
+      {
+        "aria": "暂停散步提示",
+        "title": null,
+        "disabled": false
+      },
+      {
+        "aria": "聊天时暂停散步",
+        "title": null,
+        "disabled": false
+      }
+    ],
+    "emptyState": true,
+    "notConfigured": true,
+    "draft": "【模拟验收DC7/d78e/T03】独立连接为空时应提示配置。"
+  },
+  "protectedOldFixtureRequests": 8,
+  "originalFixtureRequestsBefore": 8,
+  "newHelperAuditExists": false,
+  "result": "normal Enter was safely blocked before any network/message; no assistant response fabricated"
+}

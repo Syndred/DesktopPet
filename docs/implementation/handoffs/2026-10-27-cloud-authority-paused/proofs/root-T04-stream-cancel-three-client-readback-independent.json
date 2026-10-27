@@ -1,0 +1,248 @@
+{
+  "at": "2026-10-26T22:14:53.109Z",
+  "readOnly": true,
+  "credentialValuesRead": false,
+  "cloudEvidence": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\root-T04-first-stream-and-cancel-cloud-independent.json",
+  "simulatedUpstream": true,
+  "externalModelSuccess": false,
+  "unchangedGameHead": {
+    "actionId": "garden:ca9b0c8b80df3022410d17d7a73c9600a665c4d021be7477cfe06d46e019f949",
+    "checksum": "4efea6676a594b5f4aa56bc0812eb40bf006aa95388d404e2062850b6f82f5b4",
+    "revision": 33,
+    "gardenAccounts": [
+      {
+        "revision": 8,
+        "initialized_at": 1792964940381,
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "label": "B2-origin",
+      "profileDirectory": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native",
+      "rows": [
+        {
+          "id": "94f688fc-530e-4cd7-ac62-d117ee95e2ca",
+          "role": "user",
+          "model": null,
+          "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+          "status": "complete",
+          "attempt": 1,
+          "content": "模拟验收/4E6 T04 第一轮：请显示本机模拟流式回复。",
+          "provider": null,
+          "action_id": "0882799c-2985-4ac7-beb5-6091c7fbd8e3",
+          "created_at": 1793052535146,
+          "error_code": null,
+          "updated_at": 1793052535146,
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+        },
+        {
+          "id": "44e206ea-2536-45ad-89f3-17f07fdf0d2d",
+          "role": "assistant",
+          "model": "模拟验收-4E6-c5093dca6b4a",
+          "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+          "status": "complete",
+          "attempt": 1,
+          "content": "【模拟验收 / 4E6】这是本机协议夹具逐字回传，供应商为模拟；本次模式 stream。",
+          "provider": "openai_compatible",
+          "action_id": "0882799c-2985-4ac7-beb5-6091c7fbd8e3",
+          "created_at": 1793052535146,
+          "error_code": null,
+          "updated_at": 1793052545089,
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+        },
+        {
+          "id": "948527c3-47f5-49f4-bcc4-4532ac784497",
+          "role": "user",
+          "model": null,
+          "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+          "status": "complete",
+          "attempt": 1,
+          "content": "模拟验收/4E6 T04 取消轮：请保持生成，随后由我停止。",
+          "provider": null,
+          "action_id": "49180763-530f-4087-b5a4-4e15597a136e",
+          "created_at": 1793052629538,
+          "error_code": null,
+          "updated_at": 1793052629538,
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+        },
+        {
+          "id": "7843cb6c-7a50-49aa-9999-6ac62ebc3f5f",
+          "role": "assistant",
+          "model": "模拟验收-4E6-c5093dca6b4a",
+          "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+          "status": "cancelled",
+          "attempt": 1,
+          "content": "【模拟验收 / 4E6】这是",
+          "provider": "openai_compatible",
+          "action_id": "49180763-530f-4087-b5a4-4e15597a136e",
+          "created_at": 1793052629538,
+          "error_code": "CANCELLED",
+          "updated_at": 1793052664703,
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+        }
+      ],
+      "idOrder": [
+        "94f688fc-530e-4cd7-ac62-d117ee95e2ca",
+        "44e206ea-2536-45ad-89f3-17f07fdf0d2d",
+        "948527c3-47f5-49f4-bcc4-4532ac784497",
+        "7843cb6c-7a50-49aa-9999-6ac62ebc3f5f"
+      ],
+      "sameFourDocumentsAndOrderAsCloud": true,
+      "otherPetMessages": 0,
+      "qualification": "Read-only cached materialization. Native ordinary page read is a separate required evidence."
+    },
+    {
+      "label": "B1-independent",
+      "profileDirectory": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09",
+      "rows": [
+        {
+          "id": "94f688fc-530e-4cd7-ac62-d117ee95e2ca",
+          "role": "user",
+          "model": null,
+          "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+          "status": "complete",
+          "attempt": 1,
+          "content": "模拟验收/4E6 T04 第一轮：请显示本机模拟流式回复。",
+          "provider": null,
+          "action_id": "0882799c-2985-4ac7-beb5-6091c7fbd8e3",
+          "created_at": 1793052535146,
+          "error_code": null,
+          "updated_at": 1793052535146,
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+        },
+        {
+          "id": "44e206ea-2536-45ad-89f3-17f07fdf0d2d",
+          "role": "assistant",
+          "model": "模拟验收-4E6-c5093dca6b4a",
+          "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+          "status": "complete",
+          "attempt": 1,
+          "content": "【模拟验收 / 4E6】这是本机协议夹具逐字回传，供应商为模拟；本次模式 stream。",
+          "provider": "openai_compatible",
+          "action_id": "0882799c-2985-4ac7-beb5-6091c7fbd8e3",
+          "created_at": 1793052535146,
+          "error_code": null,
+          "updated_at": 1793052545089,
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+        },
+        {
+          "id": "948527c3-47f5-49f4-bcc4-4532ac784497",
+          "role": "user",
+          "model": null,
+          "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+          "status": "complete",
+          "attempt": 1,
+          "content": "模拟验收/4E6 T04 取消轮：请保持生成，随后由我停止。",
+          "provider": null,
+          "action_id": "49180763-530f-4087-b5a4-4e15597a136e",
+          "created_at": 1793052629538,
+          "error_code": null,
+          "updated_at": 1793052629538,
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+        },
+        {
+          "id": "7843cb6c-7a50-49aa-9999-6ac62ebc3f5f",
+          "role": "assistant",
+          "model": "模拟验收-4E6-c5093dca6b4a",
+          "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+          "status": "cancelled",
+          "attempt": 1,
+          "content": "【模拟验收 / 4E6】这是",
+          "provider": "openai_compatible",
+          "action_id": "49180763-530f-4087-b5a4-4e15597a136e",
+          "created_at": 1793052629538,
+          "error_code": "CANCELLED",
+          "updated_at": 1793052664703,
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+        }
+      ],
+      "idOrder": [
+        "94f688fc-530e-4cd7-ac62-d117ee95e2ca",
+        "44e206ea-2536-45ad-89f3-17f07fdf0d2d",
+        "948527c3-47f5-49f4-bcc4-4532ac784497",
+        "7843cb6c-7a50-49aa-9999-6ac62ebc3f5f"
+      ],
+      "sameFourDocumentsAndOrderAsCloud": true,
+      "otherPetMessages": 0,
+      "qualification": "Read-only cached materialization. Native ordinary page read is a separate required evidence."
+    },
+    {
+      "label": "FreshB-independent",
+      "profileDirectory": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\profiles\\cloud-b-resource-fresh-4e6",
+      "rows": [
+        {
+          "id": "94f688fc-530e-4cd7-ac62-d117ee95e2ca",
+          "role": "user",
+          "model": null,
+          "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+          "status": "complete",
+          "attempt": 1,
+          "content": "模拟验收/4E6 T04 第一轮：请显示本机模拟流式回复。",
+          "provider": null,
+          "action_id": "0882799c-2985-4ac7-beb5-6091c7fbd8e3",
+          "created_at": 1793052535146,
+          "error_code": null,
+          "updated_at": 1793052535146,
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+        },
+        {
+          "id": "44e206ea-2536-45ad-89f3-17f07fdf0d2d",
+          "role": "assistant",
+          "model": "模拟验收-4E6-c5093dca6b4a",
+          "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+          "status": "complete",
+          "attempt": 1,
+          "content": "【模拟验收 / 4E6】这是本机协议夹具逐字回传，供应商为模拟；本次模式 stream。",
+          "provider": "openai_compatible",
+          "action_id": "0882799c-2985-4ac7-beb5-6091c7fbd8e3",
+          "created_at": 1793052535146,
+          "error_code": null,
+          "updated_at": 1793052545089,
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+        },
+        {
+          "id": "948527c3-47f5-49f4-bcc4-4532ac784497",
+          "role": "user",
+          "model": null,
+          "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+          "status": "complete",
+          "attempt": 1,
+          "content": "模拟验收/4E6 T04 取消轮：请保持生成，随后由我停止。",
+          "provider": null,
+          "action_id": "49180763-530f-4087-b5a4-4e15597a136e",
+          "created_at": 1793052629538,
+          "error_code": null,
+          "updated_at": 1793052629538,
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+        },
+        {
+          "id": "7843cb6c-7a50-49aa-9999-6ac62ebc3f5f",
+          "role": "assistant",
+          "model": "模拟验收-4E6-c5093dca6b4a",
+          "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+          "status": "cancelled",
+          "attempt": 1,
+          "content": "【模拟验收 / 4E6】这是",
+          "provider": "openai_compatible",
+          "action_id": "49180763-530f-4087-b5a4-4e15597a136e",
+          "created_at": 1793052629538,
+          "error_code": "CANCELLED",
+          "updated_at": 1793052664703,
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+        }
+      ],
+      "idOrder": [
+        "94f688fc-530e-4cd7-ac62-d117ee95e2ca",
+        "44e206ea-2536-45ad-89f3-17f07fdf0d2d",
+        "948527c3-47f5-49f4-bcc4-4532ac784497",
+        "7843cb6c-7a50-49aa-9999-6ac62ebc3f5f"
+      ],
+      "sameFourDocumentsAndOrderAsCloud": true,
+      "otherPetMessages": 0,
+      "qualification": "Read-only cached materialization. Native ordinary page read is a separate required evidence."
+    }
+  ],
+  "allThreeClientsMatch": true
+}

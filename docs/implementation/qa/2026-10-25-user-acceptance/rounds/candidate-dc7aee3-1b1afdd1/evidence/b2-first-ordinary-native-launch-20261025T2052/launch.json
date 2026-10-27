@@ -1,0 +1,41 @@
+{
+  "sha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "markerAbsent": true,
+  "executable": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-dc7aee3\\Lingjing-0.1.8-portable-x64.exe",
+  "automaticRetry": false,
+  "environmentAtLaunch": [
+    {
+      "name": "ELECTRON_RUN_AS_NODE",
+      "present": false
+    },
+    {
+      "name": "NODE_OPTIONS",
+      "present": false
+    },
+    {
+      "name": "LINGJING_QA_SCENARIO",
+      "present": false
+    },
+    {
+      "name": "PET_RUNTIME_DATA_FILE",
+      "present": false
+    },
+    {
+      "name": "ELECTRON_RENDERER_URL",
+      "present": false
+    }
+  ],
+  "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native",
+  "arguments": [
+    "--remote-debugging-port=57220"
+  ],
+  "pid": 3788,
+  "environmentRestored": true,
+  "shell": {
+    "ps": "7.6.5",
+    "dotnet": "10.0.11"
+  },
+  "acceptancePassed": false,
+  "at": "2026-10-25T20:51:48.2248384Z",
+  "expectedSourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678"
+}

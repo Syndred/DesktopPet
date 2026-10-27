@@ -1,0 +1,56 @@
+{
+  "at": "2026-10-26T21:23:42.248Z",
+  "stage": "classify-numbering-expired-controlled-qa-grant",
+  "caseUpdates": [
+    {
+      "id": "C03",
+      "status": "blocked",
+      "executionState": "current_precondition_blocked",
+      "hardTechnicalBlock": true,
+      "blockerGroup": "CURRENT_GLOBAL_SERIAL_SCOPE",
+      "blockerKind": "controlled_qa_grant_expired",
+      "findingRefs": [
+        "4E6-005"
+      ],
+      "actual": "新普通原B登录的4宠编号待同步/当前GLOBAL_SERIAL_SCOPE_REVOKED实证保留。Root独立PG确认同owner原固定user-acceptance namespace的QA grant已于2026-10-25T13:37:34Z过期、4条原canonical assignment仍在；新device拒绝逃逸符合权限guard，因此归当前受控QA授权阻塞，不能判编号一致性通过，也不按产品错误绕过。未改grant/SQL/namespace，未换新账号消除该前置。",
+      "evidence": [
+        "root-numbering-current-scope-independent.json",
+        "cloudBResourceFresh-post-login-before-resources.json",
+        "native-R06-fresh-original-B-after-ordinary-login.png"
+      ]
+    },
+    {
+      "id": "C11",
+      "status": "blocked",
+      "executionState": "current_precondition_blocked",
+      "hardTechnicalBlock": true,
+      "blockerGroup": "CURRENT_GLOBAL_SERIAL_SCOPE",
+      "blockerKind": "controlled_qa_grant_expired",
+      "findingRefs": [
+        "4E6-005"
+      ],
+      "actual": "当前受控QA grant过期已由Root直接PG及SQL guard确认。原A/B同owner固定namespace，新增device不能逃逸授权边界；原canonical assignment保留，跨用户原编号分配/捕获/重试完整子项仍未执行。禁止换新账号、namespace、手改SQL授权或以缓存充当权威读回。",
+      "evidence": [
+        "root-numbering-current-scope-independent.json",
+        "cloudBResourceFresh-post-login-before-resources.json",
+        "native-R06-fresh-original-B-after-ordinary-login.png"
+      ]
+    }
+  ],
+  "newIssues": [],
+  "issueUpdates": [
+    {
+      "id": "4E6-005",
+      "status": "classified_qa_authorization_blocker",
+      "kind": "controlled_environment",
+      "title": "原受控QA编号授权过期导致新设备编号待同步",
+      "actual": "原始fresh观察保留；独立PG已确认原A/B固定user-acceptance namespace授权均在2026-10-25T13:37:34Z过期、4条各自canonical assignment仍在。fresh读取拒绝符合既定guard，当前不能判完整编号通过，不作为绕过授权的产品修复项。",
+      "expected": "保留同owner固定namespace和所有原assignment；授权无效时拒绝读取并显示待同步，不得借新device/新账号/UUID或本机编号绕过。",
+      "evidence": [
+        "root-numbering-current-scope-independent.json",
+        "cloudBResourceFresh-post-login-before-resources.json",
+        "native-R06-fresh-original-B-after-ordinary-login.png"
+      ]
+    }
+  ]
+}

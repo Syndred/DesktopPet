@@ -1,0 +1,123 @@
+{
+  "at": "2026-10-25T15:59:13.762Z",
+  "device": {
+    "version": 1,
+    "deviceId": "41de040e-a134-487f-b1d3-76b5254a8f97"
+  },
+  "runtime": {
+    "settings": {
+      "ok": true,
+      "data": {
+        "document": {
+          "desktop": {
+            "alwaysOnTop": true,
+            "clickThrough": true,
+            "launchAtLogin": false,
+            "closeToTray": true,
+            "companionLimit": 3,
+            "interactionSounds": true,
+            "volume": 70,
+            "hideInFullscreen": true,
+            "animationsEnabled": true
+          },
+          "notifications": {
+            "enabled": true,
+            "companions": true,
+            "battles": true,
+            "garden": true,
+            "quietEnabled": true,
+            "quietStart": "22:00",
+            "quietEnd": "08:00"
+          },
+          "privacy": {
+            "locationAllowed": false,
+            "locationOnlyWhileExploring": true,
+            "emotionStatistics": false
+          },
+          "sync": {
+            "enabled": true
+          }
+        },
+        "revision": 5,
+        "updatedAt": "2026-10-25T15:58:15.892Z",
+        "host": {
+          "startup": false,
+          "fullscreenMonitor": true,
+          "fullscreenMonitorReady": true,
+          "foregroundFullscreen": false,
+          "fullscreenSource": null,
+          "companionWindows": 0,
+          "clickThroughWindows": [],
+          "windows": [],
+          "locationAllowed": false,
+          "emotionStatistics": false,
+          "closeToTrayConnected": true,
+          "companionLimitConnected": true
+        }
+      }
+    },
+    "sync": {
+      "ok": true,
+      "data": {
+        "configured": true,
+        "cloudRevision": 8,
+        "lastVerifiedAt": "2026-10-25T15:58:51.567Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": 8,
+        "lastCloudCheckedAt": "2026-10-25T15:58:51.558Z",
+        "remoteChanged": false
+      }
+    },
+    "text": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n云端验收甲\n\n我的灵宠 / 全部伙伴\n\n今天，也有小家伙在等你。\n\n已拥有 1 只 · 桌面陪伴 0 只\n\n领养伙伴\n伙伴已保存，其他存档待核对。\n核对存档\n鱼丸\nLv.01\n编号 0001\n在灵境里休息\n\n安静温柔的鲸尾少女，喜欢陪你度过日常。\n\n摸摸\n喂食\n聊聊天\n鱼丸\n编号 0001\n\n水\n\n60\n60\n0\n行为模式\n安静陪伴\n外观大小\n100%\n在桌面显示\n设为出战伙伴\n查看伙伴详情\n我的伙伴\n全部 1\n桌面中 0\n鱼丸\n编号 0001\nLv.01\n水\n去附近探索\n寻找下一份特别的相遇\n和伙伴并肩出发\n前往对战中心"
+  },
+  "existingCompanionActions": [
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "action_id": "a39bdbba-ce65-4bb4-b51f-6da97f713ab7",
+      "operation": "adopt",
+      "request_hash": "25ee675a06591494a20b28c0ecc7020b8c98fa75ee9ac5c3fa957b50447c0de0",
+      "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-40899e45-d323-49c8-9136-743f14be6ce3\",\"templateId\":\"big-fish-gentle\",\"name\":\"鱼丸\",\"serial\":\"40899E45\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-yuwan-v2\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":80,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T10:15:21.267Z\",\"updatedAt\":\"2026-10-25T10:15:21.267Z\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":null,\"guardPetId\":null}},\"revision\":1,\"duplicate\":false}",
+      "created_at": "2026-10-25T10:15:21.267Z"
+    }
+  ],
+  "tableSchemas": [
+    {
+      "name": "battle_transport_journal",
+      "columns": [
+        "owner_account_id",
+        "action_id",
+        "session_id",
+        "command_json",
+        "result_json",
+        "legacy_row_json",
+        "projection_origin",
+        "authority_json"
+      ]
+    },
+    {
+      "name": "garden_cloud_requests",
+      "columns": [
+        "owner_account_id",
+        "action_id",
+        "endpoint",
+        "op",
+        "kind",
+        "logical_hash",
+        "input_json",
+        "wire_input_json",
+        "request_hash",
+        "status",
+        "response_json",
+        "error_code",
+        "created_at",
+        "updated_at"
+      ]
+    }
+  ]
+}

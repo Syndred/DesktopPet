@@ -1,0 +1,95 @@
+{
+  "at": "2026-10-25T23:41:25.337Z",
+  "desktop": {
+    "at": 1792971654998,
+    "scene": "桌面",
+    "sliders": [
+      {
+        "name": "大小",
+        "value": "1.05"
+      },
+      {
+        "name": "锚点 X",
+        "value": "0.5"
+      },
+      {
+        "name": "锚点 Y",
+        "value": "0.849609375"
+      },
+      {
+        "name": "垂直位置",
+        "value": "0"
+      },
+      {
+        "name": "旋转",
+        "value": "0"
+      },
+      {
+        "name": "播放帧率",
+        "value": "8"
+      }
+    ],
+    "switches": [
+      {
+        "name": "水平翻转",
+        "checked": "true"
+      }
+    ],
+    "mapping": [],
+    "stages": [
+      {
+        "class": "resource-stage ",
+        "data-resource-id": "866b735a-9351-414f-a797-6bab290144c2",
+        "data-pet-id": "resource-preview-a",
+        "data-action": "idle",
+        "data-clip": "idle",
+        "data-playback-key": "0",
+        "data-fallback": "false",
+        "data-status": "ready"
+      }
+    ]
+  },
+  "sleep": {
+    "at": 1792971685337,
+    "t": 10165677.400000006,
+    "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+    "stages": [
+      {
+        "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+        "petId": "resource-preview-a",
+        "action": "sleep",
+        "playbackKey": "0",
+        "clip": "sleep_seated",
+        "status": "ready",
+        "rect": {
+          "x": 663.0750122070312,
+          "y": 297.8000183105469,
+          "width": 616.125,
+          "height": 210,
+          "top": 297.8000183105469,
+          "right": 1279.2000122070312,
+          "bottom": 507.8000183105469,
+          "left": 663.0750122070312
+        },
+        "hosts": [
+          {
+            "frame": "0",
+            "frameTexture": "79",
+            "textureFrame": "701,983,195,208",
+            "textureSource": "16",
+            "contentBounds": "{\"x\":251.3954285714286,\"y\":52.11885714285711,\"width\":112.98857142857145,\"height\":120.52114285714288,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+            "canvas": [
+              {
+                "width": 769,
+                "height": 260,
+                "clientWidth": 615,
+                "clientHeight": 208
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selects": []
+  }
+}

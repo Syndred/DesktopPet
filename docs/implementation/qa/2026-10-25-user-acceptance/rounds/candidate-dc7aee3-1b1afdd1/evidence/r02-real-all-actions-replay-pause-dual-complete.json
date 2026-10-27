@@ -1,0 +1,2272 @@
+{
+  "at": "2026-10-25T23:15:06.943Z",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "input": "CUA native app only; no hidden business IPC, source injections, timer mutation or mock animation",
+  "coverage": [
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "name": "鱼丸",
+      "action": "idle",
+      "clip": "idle",
+      "expectedFrames": 17,
+      "readySamples": 182,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "textures": [
+        "59,61,221,251",
+        "369,58,219,255"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "name": "鱼丸",
+      "action": "blink",
+      "clip": "blink",
+      "expectedFrames": 2,
+      "readySamples": 470,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textures": [
+        "369,58,219,255",
+        "59,61,221,251"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "name": "鱼丸",
+      "action": "walk",
+      "clip": "walk",
+      "expectedFrames": 2,
+      "readySamples": 53,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textures": [
+        "672,59,221,254",
+        "983,60,223,253"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "name": "鱼丸",
+      "action": "wave",
+      "clip": "wave",
+      "expectedFrames": 4,
+      "readySamples": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textures": [
+        "50,350,240,264",
+        "360,354,244,262",
+        "59,61,221,251"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "name": "鱼丸",
+      "action": "eat",
+      "clip": "eat",
+      "expectedFrames": 5,
+      "readySamples": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textures": [
+        "679,363,235,253",
+        "991,366,231,250",
+        "59,61,221,251"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "name": "鱼丸",
+      "action": "attack_windup",
+      "clip": "attack_windup",
+      "expectedFrames": 1,
+      "readySamples": 54,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "41,654,264,243"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "name": "鱼丸",
+      "action": "attack_release",
+      "clip": "attack_release",
+      "expectedFrames": 1,
+      "readySamples": 55,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "356,642,280,257"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "name": "鱼丸",
+      "action": "attack",
+      "clip": "attack",
+      "expectedFrames": 4,
+      "readySamples": 55,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textures": [
+        "41,654,264,243",
+        "356,642,280,257",
+        "59,61,221,251"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "name": "鱼丸",
+      "action": "hit",
+      "clip": "hit",
+      "expectedFrames": 3,
+      "readySamples": 56,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textures": [
+        "664,654,261,246",
+        "59,61,221,251"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "name": "鱼丸",
+      "action": "skill",
+      "clip": "skill",
+      "expectedFrames": 5,
+      "readySamples": 56,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textures": [
+        "983,656,238,247",
+        "40,931,297,272",
+        "59,61,221,251"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "name": "鱼丸",
+      "action": "victory",
+      "clip": "victory",
+      "expectedFrames": 3,
+      "readySamples": 58,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textures": [
+        "395,951,240,250",
+        "59,61,221,251"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "name": "鱼丸",
+      "action": "sleep",
+      "clip": "sleep",
+      "expectedFrames": 1,
+      "readySamples": 499,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "967,1026,268,174"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "name": "小蓝",
+      "action": "idle",
+      "clip": "idle",
+      "expectedFrames": 17,
+      "readySamples": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "textures": [
+        "59,40,239,281",
+        "359,37,238,284"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "name": "小蓝",
+      "action": "blink",
+      "clip": "blink",
+      "expectedFrames": 2,
+      "readySamples": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textures": [
+        "359,37,238,284",
+        "59,40,239,281"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "name": "小蓝",
+      "action": "walk",
+      "clip": "walk",
+      "expectedFrames": 2,
+      "readySamples": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textures": [
+        "665,36,249,285",
+        "974,37,245,284"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "name": "小蓝",
+      "action": "wave",
+      "clip": "wave",
+      "expectedFrames": 4,
+      "readySamples": 54,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textures": [
+        "44,341,264,288",
+        "353,347,267,282",
+        "59,40,239,281"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "name": "小蓝",
+      "action": "eat",
+      "clip": "eat",
+      "expectedFrames": 5,
+      "readySamples": 55,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textures": [
+        "665,344,266,285",
+        "971,345,256,284",
+        "59,40,239,281"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "name": "小蓝",
+      "action": "attack_windup",
+      "clip": "attack_windup",
+      "expectedFrames": 1,
+      "readySamples": 54,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "42,659,265,259"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "name": "小蓝",
+      "action": "attack_release",
+      "clip": "attack_release",
+      "expectedFrames": 1,
+      "readySamples": 55,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "354,647,292,272"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "name": "小蓝",
+      "action": "attack",
+      "clip": "attack",
+      "expectedFrames": 4,
+      "readySamples": 55,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textures": [
+        "42,659,265,259",
+        "354,647,292,272",
+        "59,40,239,281"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "name": "小蓝",
+      "action": "hit",
+      "clip": "hit",
+      "expectedFrames": 3,
+      "readySamples": 56,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textures": [
+        "676,661,264,260",
+        "59,40,239,281"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "name": "小蓝",
+      "action": "skill",
+      "clip": "skill",
+      "expectedFrames": 5,
+      "readySamples": 56,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textures": [
+        "971,650,257,273",
+        "28,943,297,271",
+        "59,40,239,281"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "name": "小蓝",
+      "action": "victory",
+      "clip": "victory",
+      "expectedFrames": 3,
+      "readySamples": 58,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textures": [
+        "369,940,255,272",
+        "59,40,239,281"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "name": "小蓝",
+      "action": "sleep",
+      "clip": "sleep",
+      "expectedFrames": 1,
+      "readySamples": 437,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "959,966,273,246"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "name": "饭团",
+      "action": "idle",
+      "clip": "idle",
+      "expectedFrames": 17,
+      "readySamples": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "textures": [
+        "52,65,221,256",
+        "368,66,221,255"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "name": "饭团",
+      "action": "blink",
+      "clip": "blink",
+      "expectedFrames": 2,
+      "readySamples": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textures": [
+        "368,66,221,255",
+        "52,65,221,256"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "name": "饭团",
+      "action": "walk",
+      "clip": "walk",
+      "expectedFrames": 2,
+      "readySamples": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textures": [
+        "676,62,215,259",
+        "983,66,221,255"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "name": "饭团",
+      "action": "wave",
+      "clip": "wave",
+      "expectedFrames": 4,
+      "readySamples": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textures": [
+        "61,364,239,269",
+        "372,362,242,271",
+        "52,65,221,256"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "name": "饭团",
+      "action": "eat",
+      "clip": "eat",
+      "expectedFrames": 5,
+      "readySamples": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textures": [
+        "671,374,229,259",
+        "983,378,227,255",
+        "52,65,221,256"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "name": "饭团",
+      "action": "attack_windup",
+      "clip": "attack_windup",
+      "expectedFrames": 1,
+      "readySamples": 54,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "39,680,242,246"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "name": "饭团",
+      "action": "attack_release",
+      "clip": "attack_release",
+      "expectedFrames": 1,
+      "readySamples": 55,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "325,686,314,235"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "name": "饭团",
+      "action": "attack",
+      "clip": "attack",
+      "expectedFrames": 4,
+      "readySamples": 55,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textures": [
+        "39,680,242,246",
+        "325,686,314,235",
+        "52,65,221,256"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "name": "饭团",
+      "action": "hit",
+      "clip": "hit",
+      "expectedFrames": 3,
+      "readySamples": 56,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textures": [
+        "676,681,255,246",
+        "52,65,221,256"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "name": "饭团",
+      "action": "skill",
+      "clip": "skill",
+      "expectedFrames": 5,
+      "readySamples": 56,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textures": [
+        "974,681,260,247",
+        "37,961,294,260",
+        "52,65,221,256"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "name": "饭团",
+      "action": "victory",
+      "clip": "victory",
+      "expectedFrames": 3,
+      "readySamples": 57,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textures": [
+        "376,970,238,251",
+        "52,65,221,256"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "name": "饭团",
+      "action": "sleep",
+      "clip": "sleep",
+      "expectedFrames": 1,
+      "readySamples": 367,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "976,1014,253,186"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "name": "焰柴",
+      "action": "idle",
+      "clip": "idle",
+      "expectedFrames": 17,
+      "readySamples": 51,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "textures": [
+        "40,84,224,229",
+        "354,86,226,227"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "name": "焰柴",
+      "action": "blink",
+      "clip": "blink",
+      "expectedFrames": 2,
+      "readySamples": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textures": [
+        "354,86,226,227",
+        "40,84,224,229"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "name": "焰柴",
+      "action": "walk",
+      "clip": "walk",
+      "expectedFrames": 2,
+      "readySamples": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textures": [
+        "652,83,223,230",
+        "968,83,238,230"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "name": "焰柴",
+      "action": "wave",
+      "clip": "wave",
+      "expectedFrames": 4,
+      "readySamples": 52,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textures": [
+        "42,385,247,242",
+        "361,381,245,246",
+        "40,84,224,229"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "name": "焰柴",
+      "action": "eat",
+      "clip": "eat",
+      "expectedFrames": 5,
+      "readySamples": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textures": [
+        "647,398,228,229",
+        "973,393,223,234",
+        "40,84,224,229"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "name": "焰柴",
+      "action": "attack_windup",
+      "clip": "attack_windup",
+      "expectedFrames": 1,
+      "readySamples": 53,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "40,710,227,202"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "name": "焰柴",
+      "action": "attack_release",
+      "clip": "attack_release",
+      "expectedFrames": 1,
+      "readySamples": 55,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "345,697,286,215"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "name": "焰柴",
+      "action": "attack",
+      "clip": "attack",
+      "expectedFrames": 4,
+      "readySamples": 55,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textures": [
+        "40,710,227,202",
+        "345,697,286,215",
+        "40,84,224,229"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "name": "焰柴",
+      "action": "hit",
+      "clip": "hit",
+      "expectedFrames": 3,
+      "readySamples": 55,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textures": [
+        "677,706,237,215",
+        "40,84,224,229"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "name": "焰柴",
+      "action": "skill",
+      "clip": "skill",
+      "expectedFrames": 5,
+      "readySamples": 56,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textures": [
+        "982,688,246,234",
+        "32,970,302,236",
+        "40,84,224,229"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "name": "焰柴",
+      "action": "victory",
+      "clip": "victory",
+      "expectedFrames": 3,
+      "readySamples": 56,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textures": [
+        "379,978,212,225",
+        "40,84,224,229"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "name": "焰柴",
+      "action": "sleep",
+      "clip": "sleep",
+      "expectedFrames": 1,
+      "readySamples": 443,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "985,1023,229,178"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "name": "礼帽喵",
+      "action": "idle",
+      "clip": "idle",
+      "expectedFrames": 17,
+      "readySamples": 52,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "textures": [
+        "51,65,208,223",
+        "359,66,210,224"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "name": "礼帽喵",
+      "action": "blink",
+      "clip": "blink",
+      "expectedFrames": 2,
+      "readySamples": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textures": [
+        "359,66,210,224",
+        "51,65,208,223"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "name": "礼帽喵",
+      "action": "walk",
+      "clip": "walk",
+      "expectedFrames": 2,
+      "readySamples": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textures": [
+        "662,71,218,219",
+        "972,72,210,216"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "name": "礼帽喵",
+      "action": "wave",
+      "clip": "wave",
+      "expectedFrames": 4,
+      "readySamples": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textures": [
+        "47,365,220,233",
+        "362,366,220,232",
+        "51,65,208,223"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "name": "礼帽喵",
+      "action": "eat",
+      "clip": "eat",
+      "expectedFrames": 5,
+      "readySamples": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textures": [
+        "669,369,207,227",
+        "988,366,210,233",
+        "51,65,208,223"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "name": "礼帽喵",
+      "action": "attack_windup",
+      "clip": "attack_windup",
+      "expectedFrames": 1,
+      "readySamples": 54,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "48,687,231,208"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "name": "礼帽喵",
+      "action": "attack_release",
+      "clip": "attack_release",
+      "expectedFrames": 1,
+      "readySamples": 53,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "351,662,250,228"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "name": "礼帽喵",
+      "action": "attack",
+      "clip": "attack",
+      "expectedFrames": 4,
+      "readySamples": 57,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textures": [
+        "48,687,231,208",
+        "351,662,250,228",
+        "51,65,208,223"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "name": "礼帽喵",
+      "action": "hit",
+      "clip": "hit",
+      "expectedFrames": 3,
+      "readySamples": 55,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textures": [
+        "660,676,238,226",
+        "51,65,208,223"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "name": "礼帽喵",
+      "action": "skill",
+      "clip": "skill",
+      "expectedFrames": 5,
+      "readySamples": 56,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textures": [
+        "979,671,244,235",
+        "45,957,262,246",
+        "51,65,208,223"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "name": "礼帽喵",
+      "action": "victory",
+      "clip": "victory",
+      "expectedFrames": 3,
+      "readySamples": 56,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textures": [
+        "371,968,228,223",
+        "51,65,208,223"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "name": "礼帽喵",
+      "action": "sleep",
+      "clip": "sleep",
+      "expectedFrames": 1,
+      "readySamples": 834,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "972,1010,247,167"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "name": "小狐",
+      "action": "idle",
+      "clip": "idle",
+      "expectedFrames": 17,
+      "readySamples": 51,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "textures": [
+        "51,72,224,222",
+        "354,71,221,225"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "name": "小狐",
+      "action": "blink",
+      "clip": "blink",
+      "expectedFrames": 2,
+      "readySamples": 51,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textures": [
+        "354,71,221,225",
+        "51,72,224,222"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "name": "小狐",
+      "action": "walk",
+      "clip": "walk",
+      "expectedFrames": 2,
+      "readySamples": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textures": [
+        "665,81,229,218",
+        "970,77,243,218"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "name": "小狐",
+      "action": "wave",
+      "clip": "wave",
+      "expectedFrames": 4,
+      "readySamples": 55,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textures": [
+        "48,372,226,232",
+        "358,374,219,231",
+        "51,72,224,222"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "name": "小狐",
+      "action": "eat",
+      "clip": "eat",
+      "expectedFrames": 5,
+      "readySamples": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textures": [
+        "663,372,224,231",
+        "976,376,226,225",
+        "51,72,224,222"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "name": "小狐",
+      "action": "attack_windup",
+      "clip": "attack_windup",
+      "expectedFrames": 1,
+      "readySamples": 54,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "50,698,237,189"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "name": "小狐",
+      "action": "attack_release",
+      "clip": "attack_release",
+      "expectedFrames": 1,
+      "readySamples": 54,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "345,686,272,212"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "name": "小狐",
+      "action": "attack",
+      "clip": "attack",
+      "expectedFrames": 4,
+      "readySamples": 55,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textures": [
+        "50,698,237,189",
+        "345,686,272,212",
+        "51,72,224,222"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "name": "小狐",
+      "action": "hit",
+      "clip": "hit",
+      "expectedFrames": 3,
+      "readySamples": 55,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textures": [
+        "678,690,241,208",
+        "51,72,224,222"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "name": "小狐",
+      "action": "skill",
+      "clip": "skill",
+      "expectedFrames": 5,
+      "readySamples": 57,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textures": [
+        "974,671,250,229",
+        "45,956,292,236",
+        "51,72,224,222"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "name": "小狐",
+      "action": "victory",
+      "clip": "victory",
+      "expectedFrames": 3,
+      "readySamples": 58,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textures": [
+        "385,950,228,243",
+        "51,72,224,222"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "name": "小狐",
+      "action": "sleep",
+      "clip": "sleep",
+      "expectedFrames": 1,
+      "readySamples": 421,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "975,984,247,195"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "name": "青芽",
+      "action": "idle",
+      "clip": "idle",
+      "expectedFrames": 17,
+      "readySamples": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "textures": [
+        "76,63,184,261",
+        "390,64,182,260"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "name": "青芽",
+      "action": "blink",
+      "clip": "blink",
+      "expectedFrames": 2,
+      "readySamples": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textures": [
+        "390,64,182,260",
+        "76,63,184,261"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "name": "青芽",
+      "action": "walk",
+      "clip": "walk",
+      "expectedFrames": 2,
+      "readySamples": 54,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textures": [
+        "696,65,183,258",
+        "992,64,198,260"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "name": "青芽",
+      "action": "wave",
+      "clip": "wave",
+      "expectedFrames": 4,
+      "readySamples": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textures": [
+        "80,360,210,260",
+        "399,357,207,262",
+        "76,63,184,261"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "name": "青芽",
+      "action": "eat",
+      "clip": "eat",
+      "expectedFrames": 5,
+      "readySamples": 54,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textures": [
+        "708,360,204,254",
+        "1024,359,190,255",
+        "76,63,184,261"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "name": "青芽",
+      "action": "attack_windup",
+      "clip": "attack_windup",
+      "expectedFrames": 1,
+      "readySamples": 53,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "40,673,243,215"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "name": "青芽",
+      "action": "attack_release",
+      "clip": "attack_release",
+      "expectedFrames": 1,
+      "readySamples": 55,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "355,678,304,223"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "name": "青芽",
+      "action": "attack",
+      "clip": "attack",
+      "expectedFrames": 4,
+      "readySamples": 56,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textures": [
+        "40,673,243,215",
+        "355,678,304,223",
+        "76,63,184,261"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "name": "青芽",
+      "action": "hit",
+      "clip": "hit",
+      "expectedFrames": 3,
+      "readySamples": 56,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textures": [
+        "692,671,280,244",
+        "76,63,184,261"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "name": "青芽",
+      "action": "skill",
+      "clip": "skill",
+      "expectedFrames": 5,
+      "readySamples": 57,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textures": [
+        "1018,659,197,260",
+        "35,947,300,271",
+        "76,63,184,261"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "name": "青芽",
+      "action": "victory",
+      "clip": "victory",
+      "expectedFrames": 3,
+      "readySamples": 57,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textures": [
+        "387,940,262,280",
+        "76,63,184,261"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "name": "青芽",
+      "action": "sleep",
+      "clip": "sleep",
+      "expectedFrames": 1,
+      "readySamples": 420,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "977,1013,254,171"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "name": "岩团",
+      "action": "idle",
+      "clip": "idle",
+      "expectedFrames": 17,
+      "readySamples": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "textures": [
+        "34,26,248,271",
+        "338,26,256,271"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "name": "岩团",
+      "action": "blink",
+      "clip": "blink",
+      "expectedFrames": 2,
+      "readySamples": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textures": [
+        "338,26,256,271",
+        "34,26,248,271"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "name": "岩团",
+      "action": "walk",
+      "clip": "walk",
+      "expectedFrames": 2,
+      "readySamples": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textures": [
+        "655,47,279,249",
+        "962,47,264,248"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "name": "岩团",
+      "action": "wave",
+      "clip": "wave",
+      "expectedFrames": 4,
+      "readySamples": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textures": [
+        "29,324,284,276",
+        "340,339,272,262",
+        "34,26,248,271"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "name": "岩团",
+      "action": "eat",
+      "clip": "eat",
+      "expectedFrames": 5,
+      "readySamples": 54,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textures": [
+        "657,336,246,266",
+        "973,342,239,259",
+        "34,26,248,271"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "name": "岩团",
+      "action": "attack_windup",
+      "clip": "attack_windup",
+      "expectedFrames": 1,
+      "readySamples": 55,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "35,638,276,251"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "name": "岩团",
+      "action": "attack_release",
+      "clip": "attack_release",
+      "expectedFrames": 1,
+      "readySamples": 56,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "340,638,317,266"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "name": "岩团",
+      "action": "attack",
+      "clip": "attack",
+      "expectedFrames": 4,
+      "readySamples": 60,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textures": [
+        "35,638,276,251",
+        "340,638,317,266",
+        "34,26,248,271"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "name": "岩团",
+      "action": "hit",
+      "clip": "hit",
+      "expectedFrames": 3,
+      "readySamples": 57,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textures": [
+        "676,641,258,261",
+        "34,26,248,271"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "name": "岩团",
+      "action": "skill",
+      "clip": "skill",
+      "expectedFrames": 5,
+      "readySamples": 56,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textures": [
+        "969,631,267,274",
+        "17,910,339,304",
+        "34,26,248,271"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "name": "岩团",
+      "action": "victory",
+      "clip": "victory",
+      "expectedFrames": 3,
+      "readySamples": 59,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textures": [
+        "366,929,266,274",
+        "34,26,248,271"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "name": "岩团",
+      "action": "sleep",
+      "clip": "sleep",
+      "expectedFrames": 1,
+      "readySamples": 606,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "971,985,266,211"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "name": "自有导入青芽",
+      "action": "idle",
+      "clip": "idle",
+      "expectedFrames": 17,
+      "readySamples": 521,
+      "frames": [
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "textures": [
+        "76,63,184,261",
+        "390,64,182,260"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "name": "自有导入青芽",
+      "action": "blink",
+      "clip": "blink",
+      "expectedFrames": 2,
+      "readySamples": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textures": [
+        "390,64,182,260",
+        "76,63,184,261"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "name": "自有导入青芽",
+      "action": "walk",
+      "clip": "walk",
+      "expectedFrames": 2,
+      "readySamples": 842,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textures": [
+        "696,65,183,258",
+        "992,64,198,260"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "name": "自有导入青芽",
+      "action": "wave",
+      "clip": "wave",
+      "expectedFrames": 4,
+      "readySamples": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textures": [
+        "80,360,210,260",
+        "399,357,207,262",
+        "76,63,184,261"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "name": "自有导入青芽",
+      "action": "eat",
+      "clip": "eat",
+      "expectedFrames": 5,
+      "readySamples": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textures": [
+        "708,360,204,254",
+        "1024,359,190,255",
+        "76,63,184,261"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "name": "自有导入青芽",
+      "action": "attack_windup",
+      "clip": "attack_windup",
+      "expectedFrames": 1,
+      "readySamples": 55,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "40,673,243,215"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "name": "自有导入青芽",
+      "action": "attack_release",
+      "clip": "attack_release",
+      "expectedFrames": 1,
+      "readySamples": 55,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "355,678,304,223"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "name": "自有导入青芽",
+      "action": "attack",
+      "clip": "attack",
+      "expectedFrames": 4,
+      "readySamples": 55,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textures": [
+        "40,673,243,215",
+        "355,678,304,223",
+        "76,63,184,261"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "name": "自有导入青芽",
+      "action": "hit",
+      "clip": "hit",
+      "expectedFrames": 3,
+      "readySamples": 56,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textures": [
+        "692,671,280,244",
+        "76,63,184,261"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "name": "自有导入青芽",
+      "action": "skill",
+      "clip": "skill",
+      "expectedFrames": 5,
+      "readySamples": 1102,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textures": [
+        "1018,659,197,260",
+        "35,947,300,271",
+        "76,63,184,261"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "name": "自有导入青芽",
+      "action": "victory",
+      "clip": "victory",
+      "expectedFrames": 3,
+      "readySamples": 57,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textures": [
+        "387,940,262,280",
+        "76,63,184,261"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    },
+    {
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "name": "自有导入青芽",
+      "action": "sleep",
+      "clip": "sleep",
+      "expectedFrames": 1,
+      "readySamples": 265,
+      "frames": [
+        "0"
+      ],
+      "textures": [
+        "977,1013,254,171"
+      ],
+      "positiveCanvas": true,
+      "passed": true
+    }
+  ],
+  "observation": {
+    "started": "2026-10-25T23:02:04.409Z",
+    "rawSamples": 12526,
+    "errors": []
+  },
+  "replayGroups": [
+    {
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "petId": "resource-preview-a",
+      "action": "skill",
+      "playbackKey": "0",
+      "clip": "skill",
+      "n": 108,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textureFrames": [
+        "1018,659,197,260",
+        "35,947,300,271",
+        "76,63,184,261"
+      ],
+      "ready": 108,
+      "positiveCanvas": 108,
+      "first": 1792969951652,
+      "last": 1792970004254
+    },
+    {
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "petId": "resource-preview-a",
+      "action": "skill",
+      "playbackKey": "1",
+      "clip": "skill",
+      "n": 51,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textureFrames": [
+        "1018,659,197,260",
+        "35,947,300,271",
+        "76,63,184,261"
+      ],
+      "ready": 51,
+      "positiveCanvas": 51,
+      "first": 1792970004309,
+      "last": 1792970007411
+    },
+    {
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "petId": "resource-preview-a",
+      "action": "skill",
+      "playbackKey": "2",
+      "clip": "skill",
+      "n": 199,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textureFrames": [
+        "1018,659,197,260",
+        "35,947,300,271",
+        "76,63,184,261"
+      ],
+      "ready": 199,
+      "positiveCanvas": 199,
+      "first": 1792970007473,
+      "last": 1792970019783
+    }
+  ],
+  "checks": {
+    "all108PublicResourceActions": true,
+    "pausedActualFrameFixed": true,
+    "resumedActualFramesAdvance": true,
+    "sameSkillKeysZeroOneTwo": true,
+    "rightChangePreservesLeft": true,
+    "leftChangePreservesRight": true,
+    "resourceTablesUnchanged": true,
+    "managedBytesUnchanged": true,
+    "tenBusinessTablesUnchanged": true
+  },
+  "qualifications": [
+    "Single-frame windup/release/sleep match actual frozen ASAR definitions, not claimed to animate between distinct source frames.",
+    "Transient loading samples are excluded from ready frame checks; all nine real native poses were visibly inspected.",
+    "First forward-slash ASAR inspection failed due tool Windows path separator; corrected native separator reads every source file including old hidden v1. No product missing-file claim."
+  ]
+}

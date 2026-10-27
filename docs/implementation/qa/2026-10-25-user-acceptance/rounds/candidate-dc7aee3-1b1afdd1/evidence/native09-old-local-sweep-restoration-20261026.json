@@ -1,0 +1,169 @@
+{
+  "at": "2026-10-26T08:24:26.076Z",
+  "currentCandidate": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "localA": {
+    "settingsDocumentEqualToBeforeSweep": true,
+    "currentSettings": [
+      {
+        "revision": 22,
+        "document": {
+          "desktop": {
+            "alwaysOnTop": true,
+            "clickThrough": true,
+            "launchAtLogin": false,
+            "closeToTray": true,
+            "companionLimit": 3,
+            "interactionSounds": true,
+            "volume": 70,
+            "hideInFullscreen": true,
+            "animationsEnabled": true
+          },
+          "notifications": {
+            "enabled": true,
+            "companions": true,
+            "battles": true,
+            "garden": true,
+            "quietEnabled": true,
+            "quietStart": "22:00",
+            "quietEnd": "08:00"
+          },
+          "privacy": {
+            "locationAllowed": false,
+            "locationOnlyWhileExploring": true,
+            "emotionStatistics": false
+          },
+          "sync": {
+            "enabled": false
+          }
+        }
+      }
+    ],
+    "petDesktopStateEqualToBeforeSweep": [
+      {
+        "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+        "desktopEqual": false,
+        "userControlsAndXYEqual": true,
+        "displayIdBefore": "2568730015",
+        "displayIdAfter": "1448891685"
+      },
+      {
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "desktopEqual": true,
+        "userControlsAndXYEqual": true,
+        "displayIdBefore": null,
+        "displayIdAfter": null
+      },
+      {
+        "petId": "pet-8d67a86f-8053-46fe-93e2-df62ca116a45",
+        "desktopEqual": true,
+        "userControlsAndXYEqual": true,
+        "displayIdBefore": null,
+        "displayIdAfter": null
+      },
+      {
+        "petId": "pet-e9f2413c-f9c3-4e9e-a625-935b4da87ee4",
+        "desktopEqual": true,
+        "userControlsAndXYEqual": true,
+        "displayIdBefore": null,
+        "displayIdAfter": null
+      },
+      {
+        "petId": "pet-8853a238-8730-4970-8e39-885a1f1da97d",
+        "desktopEqual": true,
+        "userControlsAndXYEqual": true,
+        "displayIdBefore": null,
+        "displayIdAfter": null
+      },
+      {
+        "petId": "pet-f31270e4-7ea3-42f1-a093-ac035d846de2",
+        "desktopEqual": true,
+        "userControlsAndXYEqual": true,
+        "displayIdBefore": null,
+        "displayIdAfter": null
+      }
+    ],
+    "displayBindingDifference": {
+      "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+      "before": "2568730015",
+      "after": "1448891685",
+      "source": "companions/windows.cjs boundsFor selects matching/current display and persistLocalDesktopPosition stores actual display ID during normal show",
+      "classification": "runtime display binding metadata differs; user controls and x/y restored. No manual display/OS/DB change; current physical display ID not separately enumerated here. Root informed for independent readback."
+    },
+    "selections": [
+      {
+        "chatPetId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+        "battlePetId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "guardPetId": null
+      }
+    ],
+    "petCount": 6,
+    "captureCount": 1,
+    "untouchedConversationTables": [
+      {
+        "table": "conversation_profiles",
+        "unchanged": true
+      },
+      {
+        "table": "conversation_preferences",
+        "unchanged": true
+      },
+      {
+        "table": "conversation_messages",
+        "unchanged": true
+      },
+      {
+        "table": "conversation_memories",
+        "unchanged": true
+      }
+    ],
+    "keptRunning": true,
+    "mainPid": 17596,
+    "wrapperPid": 3612,
+    "closeToTray": true,
+    "reason": "Root授权维持原true等待切包；CUA无可目标化托盘surface。新候选冻结后在同一次正常UI切包中false退出旧main、立即启动同profile新包并恢复true。最终若托盘仍不可达，诚实保留恢复true的新实例交人工。",
+    "preserved": [
+      "all original five pets",
+      "new natural fish capture pet-f31270e4-7ea3-42f1-a093-ac035d846de2",
+      "legitimate wood battle growth",
+      "original wild and territory abandoned battle IDs",
+      "territory consumed attempt count1 and original unowned revision1",
+      "all existing chat/memory and reward history"
+    ]
+  },
+  "localB": {
+    "markerUnchanged": true,
+    "allSelectedDigestsEqual": true,
+    "originalOwner": [
+      {
+        "owner_account_id": "qa:4fe4b514-04d4-4832-98bc-c1128a1601f7:local-816a18c2-f98b-4c56-9a78-d07ac42d170f",
+        "username": "并行验收乙",
+        "provider": "local"
+      }
+    ],
+    "petCount": 0,
+    "settingsRevision": 1,
+    "closeToTray": false,
+    "normalExit": true,
+    "runtime": {
+      "at": "2026-10-26T08:17:45.4899923Z",
+      "mainPid": 12512,
+      "wrapperPid": 16824,
+      "exe": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsb626C.tmp\\app\\Lingjing.exe",
+      "asar": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsb626C.tmp\\app\\resources\\app.asar",
+      "asarSha256": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba",
+      "childPids": [
+        21020,
+        18452,
+        13416
+      ],
+      "childOriginalProfileMatched": true,
+      "fileVersion": "0.1.8"
+    },
+    "credentials": "original synthetic credentials RAM read once; variable cleared immediately; no remember/keep options changed; no registration/adoption"
+  },
+  "cloudProfiles": "CloudA untouched during local sweep and kept original restored state; B1/B2 remain closed. B10/S04 deferred until final-candidate fresh rebind.",
+  "collectorAudit": {
+    "initialStrictCheckFailedBeforeWritingLedger": true,
+    "reason": "Full desktop byte comparison included original/current displayId, which legitimately differed on normal desktop show. Exact difference explicitly retained; checks now distinguish user controls/x/y from runtime display binding, without changing product data."
+  }
+}

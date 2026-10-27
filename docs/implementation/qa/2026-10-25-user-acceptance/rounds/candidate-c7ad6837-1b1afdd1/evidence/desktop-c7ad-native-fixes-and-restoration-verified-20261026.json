@@ -1,0 +1,155 @@
+{
+  "at": "2026-10-26T10:03:49.892Z",
+  "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+  "exeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+  "asarSha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355",
+  "scenario": "Original local simulated QA profile, actual Windows native clicks/drags/keyboard",
+  "issues": [
+    "QA-015",
+    "QA-016"
+  ],
+  "geometry": [
+    {
+      "scale": 1,
+      "windowId": 4327366,
+      "win32": [
+        230,
+        280
+      ],
+      "inner": [
+        231,
+        280
+      ],
+      "canvas": [
+        266,
+        309
+      ],
+      "dpr": 1.25,
+      "positionBefore": [
+        1343,
+        478
+      ],
+      "positionAfter": [
+        1293,
+        508
+      ],
+      "outerBefore": [
+        231,
+        281
+      ],
+      "outerAfter": [
+        232,
+        280
+      ]
+    },
+    {
+      "scale": 2,
+      "windowId": 6686700,
+      "win32": [
+        460,
+        560
+      ],
+      "inner": [
+        460,
+        560
+      ],
+      "canvas": [
+        553,
+        659
+      ],
+      "dpr": 1.25,
+      "positionBefore": [
+        1343,
+        478
+      ],
+      "positionAfter": [
+        1293,
+        508
+      ],
+      "outerBefore": [
+        461,
+        561
+      ],
+      "outerAfter": [
+        461,
+        560
+      ]
+    }
+  ],
+  "geometryLimit": "Actual Win32/inner/canvas stable; renderer outer one-DIP variation retained. Electron Main bounds/contentBounds not obtained; no mixed-DPI/multiple-monitor claim.",
+  "counts": {
+    "four": {
+      "enabled": 5,
+      "windows": 5,
+      "visible": 4,
+      "waiting": 1
+    },
+    "one": {
+      "enabled": 5,
+      "windows": 5,
+      "visible": 1,
+      "waiting": 4
+    },
+    "actualReorderedPet": "second original fox visible; first re-opened at end waits",
+    "nativeDesktopFilterActualFourOnly": true,
+    "unsavedLimitNotApplied": true
+  },
+  "settings": {
+    "legalLimits": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "savedVolume": [
+      100,
+      0
+    ],
+    "restoredVolume": 70,
+    "restoredLimit": 3,
+    "fullDocumentExact": true,
+    "revisionBefore": 24,
+    "revisionAfter": 27,
+    "hearingNotClaimed": true
+  },
+  "restoration": {
+    "pets": 7,
+    "allDesktopFieldsExact": true,
+    "allNonRevisionPetContentExact": true,
+    "originalSelectionsExact": true,
+    "newCapturePetsUntouched": true,
+    "protectedTablesExact": [
+      "discovery_actions",
+      "discovery_captures",
+      "discovery_encounters",
+      "discovery_memory_tags",
+      "companion_capture_receipts",
+      "battle_sessions",
+      "battle_action_receipts",
+      "battle_reports_v2",
+      "battle_reward_receipts",
+      "garden_territory_attempts",
+      "garden_territory_challenges",
+      "garden_territory_logs",
+      "garden_territory_records",
+      "garden_garrisons",
+      "garden_accounts",
+      "garden_actions",
+      "garden_reward_receipts",
+      "garden_plots",
+      "garden_items",
+      "garden_ledger",
+      "conversation_profiles",
+      "conversation_preferences",
+      "conversation_messages",
+      "conversation_memories"
+    ],
+    "newActionsOnlyDesktop": 18,
+    "hostCompanionWindows": 0
+  },
+  "captureFilenameAudit": "qa015...scale100-restored-before-count-suite was an intended label on a still-200% frame because overlay intercepted main clicks; preserved. Used visible desktop 收回, then qa015...scale100-confirmed-after-native-retract proves100%. p03...before-final-save first frame volume68 corrected by two Right keys to70 before final save.",
+  "rootReviews": [
+    "artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/c7ad-qa015-evidence-independent-review.json",
+    "artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/c7ad-qa016-evidence-independent-review.json"
+  ]
+}

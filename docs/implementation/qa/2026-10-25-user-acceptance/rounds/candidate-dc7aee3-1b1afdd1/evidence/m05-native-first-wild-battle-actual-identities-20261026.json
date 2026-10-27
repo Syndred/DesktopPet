@@ -1,0 +1,145 @@
+{
+  "at": "2026-10-26T06:21:39.810Z",
+  "encounters": [
+    {
+      "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+      "encounter_id": "encounter-ec4de4ff-f66c-4f1c-a8a2-7c6bf8bdbb26",
+      "status": "challenging",
+      "revision": 1,
+      "data_json": "{\"encounterId\":\"encounter-ec4de4ff-f66c-4f1c-a8a2-7c6bf8bdbb26\",\"ownerAccountId\":\"qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f\",\"scenario\":\"qa\",\"spawn\":{\"templateId\":\"animal-earth-pangolin\",\"name\":\"岩团\",\"element\":\"earth\",\"description\":\"披着暖褐鳞甲的小穿山甲，稳稳守住每一步。\",\"resourceId\":\"builtin:lingjing-yantuan-v1\",\"stats\":{\"hp\":142,\"atk\":24,\"def\":34,\"spd\":11},\"id\":\"wild-2d-v2-f3621dbe19-498054-52050-202455\",\"wildSerial\":\"D54505D4893A3A2B8\",\"position\":{\"lat\":31.230299999999996,\"lng\":121.4733},\"coordinateSystem\":\"wgs84\",\"rarity\":\"common\",\"placeLabel\":\"附近探索点\",\"placeLabelSource\":\"game\",\"expiresAt\":1792998000000,\"distanceMeters\":0,\"source\":\"game-spawn\",\"demo\":false,\"inRange\":true,\"captureState\":\"available\"},\"petId\":\"pet-8d67a86f-8053-46fe-93e2-df62ca116a45\",\"battle\":{\"battleId\":\"battle-23030283-276b-4e98-86e6-9a7263bbd1df\",\"petId\":\"pet-8d67a86f-8053-46fe-93e2-df62ca116a45\",\"view\":{\"round\":0,\"player\":{\"id\":\"player\",\"element\":\"wood\",\"hp\":120,\"maxHp\":120,\"anger\":0,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"earth\",\"hp\":120,\"maxHp\":120,\"anger\":0,\"freeDodgeUsed\":false,\"statuses\":[]}},\"rounds\":[],\"winner\":null,\"finished\":false,\"adapter\":\"battle-feature\",\"externalStatus\":\"active\",\"rules\":{\"id\":\"five-elements-standard-v1\",\"label\":\"标准五行对战\",\"vitalPolicy\":\"normalized\",\"maxHp\":120,\"maxAnger\":100,\"companionStatsApplied\":false,\"baseDamage\":{\"normal_attack\":10,\"element_attack\":12,\"dodge\":0,\"ultimate\":20},\"ultimateAnger\":50,\"ultimateCost\":50,\"ultimateHeal\":20,\"dodgeMaxCost\":20,\"dodgeRefund\":30,\"advantage\":{\"metal\":\"wood\",\"wood\":\"earth\",\"earth\":\"water\",\"water\":\"fire\",\"fire\":\"metal\"},\"elementEffects\":{\"metal\":{\"label\":\"易伤\",\"description\":\"每层受伤×1.5，最多5层\"},\"wood\":{\"label\":\"寄生\",\"description\":\"每层回合末吸取2生命，最多5层\"},\"earth\":{\"label\":\"迟钝\",\"description\":\"每层伤害×0.5，最多5层\"},\"water\":{\"label\":\"降怒\",\"description\":\"命中后对方怒气向下取半，不增加受击怒气\"},\"fire\":{\"label\":\"燃烧\",\"description\":\"回合末按当前生命8%×层数伤害，最多5层\"}}}},\"status\":\"challenging\",\"revision\":1,\"createdAt\":1792995680068,\"updatedAt\":1792995680068,\"cloudPermit\":null}",
+      "updated_at": 1792995680068
+    }
+  ],
+  "actions": [
+    {
+      "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+      "action_id": "b82a8abe-ff0e-4d98-9842-19c609eaa31c",
+      "request_hash": "70d985bd11ec39307cc60aab43988d2a48db805f8a48810dd01bbdaf36104516",
+      "result_json": "{\"ok\":true,\"data\":{\"encounterId\":\"encounter-ec4de4ff-f66c-4f1c-a8a2-7c6bf8bdbb26\",\"ownerAccountId\":\"qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f\",\"scenario\":\"qa\",\"spawn\":{\"templateId\":\"animal-earth-pangolin\",\"name\":\"岩团\",\"element\":\"earth\",\"description\":\"披着暖褐鳞甲的小穿山甲，稳稳守住每一步。\",\"resourceId\":\"builtin:lingjing-yantuan-v1\",\"stats\":{\"hp\":142,\"atk\":24,\"def\":34,\"spd\":11},\"id\":\"wild-2d-v2-f3621dbe19-498054-52050-202455\",\"wildSerial\":\"D54505D4893A3A2B8\",\"position\":{\"lat\":31.230299999999996,\"lng\":121.4733},\"coordinateSystem\":\"wgs84\",\"rarity\":\"common\",\"placeLabel\":\"附近探索点\",\"placeLabelSource\":\"game\",\"expiresAt\":1792998000000,\"distanceMeters\":0,\"source\":\"game-spawn\",\"demo\":false,\"inRange\":true,\"captureState\":\"available\"},\"petId\":\"pet-8d67a86f-8053-46fe-93e2-df62ca116a45\",\"battle\":{\"battleId\":\"battle-23030283-276b-4e98-86e6-9a7263bbd1df\",\"petId\":\"pet-8d67a86f-8053-46fe-93e2-df62ca116a45\",\"view\":{\"round\":0,\"player\":{\"id\":\"player\",\"element\":\"wood\",\"hp\":120,\"maxHp\":120,\"anger\":0,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"earth\",\"hp\":120,\"maxHp\":120,\"anger\":0,\"freeDodgeUsed\":false,\"statuses\":[]}},\"rounds\":[],\"winner\":null,\"finished\":false,\"adapter\":\"battle-feature\",\"externalStatus\":\"active\",\"rules\":{\"id\":\"five-elements-standard-v1\",\"label\":\"标准五行对战\",\"vitalPolicy\":\"normalized\",\"maxHp\":120,\"maxAnger\":100,\"companionStatsApplied\":false,\"baseDamage\":{\"normal_attack\":10,\"element_attack\":12,\"dodge\":0,\"ultimate\":20},\"ultimateAnger\":50,\"ultimateCost\":50,\"ultimateHeal\":20,\"dodgeMaxCost\":20,\"dodgeRefund\":30,\"advantage\":{\"metal\":\"wood\",\"wood\":\"earth\",\"earth\":\"water\",\"water\":\"fire\",\"fire\":\"metal\"},\"elementEffects\":{\"metal\":{\"label\":\"易伤\",\"description\":\"每层受伤×1.5，最多5层\"},\"wood\":{\"label\":\"寄生\",\"description\":\"每层回合末吸取2生命，最多5层\"},\"earth\":{\"label\":\"迟钝\",\"description\":\"每层伤害×0.5，最多5层\"},\"water\":{\"label\":\"降怒\",\"description\":\"命中后对方怒气向下取半，不增加受击怒气\"},\"fire\":{\"label\":\"燃烧\",\"description\":\"回合末按当前生命8%×层数伤害，最多5层\"}}}},\"status\":\"challenging\",\"revision\":1,\"createdAt\":1792995680068,\"updatedAt\":1792995680068}}"
+    }
+  ],
+  "captures": [],
+  "battles": [
+    {
+      "id": "battle-23030283-276b-4e98-86e6-9a7263bbd1df",
+      "status": "active",
+      "data": {
+        "id": "battle-23030283-276b-4e98-86e6-9a7263bbd1df",
+        "mode": "wild",
+        "status": "active",
+        "startedAt": "2026-10-26T06:21:20.067Z",
+        "player": {
+          "petId": "pet-8d67a86f-8053-46fe-93e2-df62ca116a45",
+          "petName": "青芽",
+          "element": "wood",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-qingya-v1",
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-qingya-v1"
+        },
+        "enemy": {
+          "petId": "wild-2d-v2-f3621dbe19-498054-52050-202455",
+          "petName": "岩团",
+          "element": "earth",
+          "resourceRef": "builtin:lingjing-yantuan-v1",
+          "appearance2d": "builtin:lingjing-yantuan-v1"
+        },
+        "snapshot": {
+          "round": 0,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 120,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "earth",
+            "hp": 120,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "rounds": [],
+        "winner": null,
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "id": "wild-2d-v2-f3621dbe19-498054-52050-202455",
+          "spawnId": "wild-2d-v2-f3621dbe19-498054-52050-202455",
+          "expiresAt": 1792998000000,
+          "origin": "discovery",
+          "encounterId": "encounter-ec4de4ff-f66c-4f1c-a8a2-7c6bf8bdbb26",
+          "scenario": "qa",
+          "returnPath": "/discovery/encounter/encounter-ec4de4ff-f66c-4f1c-a8a2-7c6bf8bdbb26",
+          "authority": "simulated",
+          "scenarioId": "f3455e84-59a1-4edb-9b77-975ff32dc45c"
+        },
+        "updatedAt": "2026-10-26T06:21:20.068Z"
+      }
+    }
+  ],
+  "selections": [
+    {
+      "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+      "revision": 170,
+      "selections_json": "{\"chatPetId\":\"pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3\",\"battlePetId\":\"pet-8d67a86f-8053-46fe-93e2-df62ca116a45\",\"guardPetId\":null}"
+    }
+  ]
+}

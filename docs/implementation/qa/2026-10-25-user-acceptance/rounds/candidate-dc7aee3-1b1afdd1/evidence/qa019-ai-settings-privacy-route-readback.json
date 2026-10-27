@@ -1,0 +1,45 @@
+{
+  "at": "2026-10-25T20:07:09.789Z",
+  "source": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+  "before": {
+    "at": "2026-10-25T20:06:10.515Z",
+    "activeElement": {
+      "tag": "A",
+      "text": "通知与隐私",
+      "href": "#/settings"
+    },
+    "scrolling": [
+      {
+        "tag": "MAIN",
+        "class": "main-content",
+        "scrollTop": 53.599998474121094,
+        "scrollHeight": 971,
+        "clientHeight": 916
+      }
+    ],
+    "historyAttempt": {
+      "altLeftChangedRoute": false,
+      "current": "#/settings/ai"
+    }
+  },
+  "after": {
+    "at": "2026-10-25T20:07:09.789Z",
+    "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nss5693.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/settings",
+    "headings": [
+      "按你的节奏，安静陪伴。",
+      "桌面表现",
+      "桌面预览",
+      "位置与隐私"
+    ]
+  },
+  "nativeAction": "Return on actually focused 通知与隐私 link in AI settings",
+  "expectedHash": "#/settings/privacy",
+  "actualHash": "#/settings",
+  "rootCause": "AI SettingsNavigation duplicated privacy href /settings instead of /settings/privacy",
+  "nativeScreenshots": [
+    "p01-ai-keyboard-and-lower-memory-scroll-native.jpg",
+    "qa019-ai-privacy-link-opens-desktop-native.jpg"
+  ]
+}

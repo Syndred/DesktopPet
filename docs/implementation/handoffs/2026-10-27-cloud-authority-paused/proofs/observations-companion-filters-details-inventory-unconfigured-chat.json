@@ -1,0 +1,103 @@
+{
+  "at": "2026-10-26T21:41:15.396Z",
+  "stage": "companion-filters-details-inventory-unconfigured-chat",
+  "caseUpdates": [
+    {
+      "id": "C01",
+      "status": "passed",
+      "actual": "原B2普通领养页逐个切换全部及金木水火土：属性图标/标签准确，金礼帽喵、木青芽、水鱼丸小蓝饭团小狐、火焰柴、土岩团；未出现大肥鱼/动物伙伴旧类型标签。仅预览，未领养。",
+      "evidence": [
+        "native-C01-adoption-all-elements.png",
+        "native-C01-C04-adoption-metal-filter.png",
+        "native-C01-C04-adoption-wood-filter.png",
+        "native-C01-C04-adoption-water-filter.png",
+        "native-C01-C04-adoption-fire-filter.png",
+        "native-C01-C04-adoption-earth-filter.png",
+        "native-companion-filters-details-inventory-unconfigured-chat-seal.json"
+      ]
+    },
+    {
+      "id": "C04",
+      "status": "passed",
+      "actual": "逐五行筛选时右侧预览同步为结果内角色；金+已拥有产生真实空结果，清除已拥有恢复礼帽喵；全部+已拥有显示小狐2、青芽1、岩团1，合计原4只。未创建新伙伴。",
+      "evidence": [
+        "native-C01-adoption-all-elements.png",
+        "native-C01-C04-adoption-metal-filter.png",
+        "native-C01-C04-adoption-wood-filter.png",
+        "native-C01-C04-adoption-water-filter.png",
+        "native-C01-C04-adoption-fire-filter.png",
+        "native-C01-C04-adoption-earth-filter.png",
+        "native-C04-adoption-owned-metal-empty.png",
+        "native-C04-adoption-clear-owned-recovers-metal.png",
+        "native-C04-adoption-owned-all-three-species-four-pets.png",
+        "native-companion-filters-details-inventory-unconfigured-chat-seal.json"
+      ]
+    },
+    {
+      "id": "C06",
+      "status": "passed",
+      "actual": "原B2青芽pet-96de9234-462d-413b-ac72-81cfc1add244详情成长/技能/回忆/外观全部打开，显示原青芽0002、历史昵称并发验收木鹿乙及对应图像；普通返回保留原青芽上下文。无设置/互动提交。",
+      "evidence": [
+        "native-C06-original-B2-qingya-detail-loaded.png",
+        "native-C06-original-B2-qingya-skills-tab.png",
+        "native-C06-original-B2-qingya-memories-tab.png",
+        "native-C06-original-B2-qingya-appearance-loaded.png",
+        "native-C06-original-B2-detail-return-context.png",
+        "native-companion-filters-details-inventory-unconfigured-chat-seal.json"
+      ]
+    },
+    {
+      "id": "I01",
+      "status": "passed",
+      "actual": "原B2背包全部/食物/装扮/道具逐分类查看：食物含原库存及番茄/莓果0，装扮真实空态，道具含种子与稻米。选择番茄0显示食物库存不足且喂养不可用；选择胡萝卜种子显示拥有3份及去播种用途。未喂养/合成/消耗库存。",
+      "evidence": [
+        "native-N01-original-B2-backpack-actual-result.png",
+        "native-I01-original-B2-zero-stock-tomato.png",
+        "native-I01-original-B2-food-category.png",
+        "native-I01-original-B2-appearance-category-empty.png",
+        "native-I01-original-B2-tools-category-empty.png",
+        "native-I01-original-B2-seed-detail-and-usage.png",
+        "native-companion-filters-details-inventory-unconfigured-chat-seal.json"
+      ]
+    },
+    {
+      "id": "T03",
+      "status": "passed",
+      "actual": "未配置模型连接时输入明确合成验收消息，发送按钮disabled，点击不提交；页面公开显示未配置及设置连接恢复入口，无伪造回复。两次只读快照messages均0、credentials均0、连接未变。自有未发送草稿观察后已普通清空。",
+      "evidence": [
+        "native-T03-original-B2-unconfigured-message-prepared.png",
+        "native-T03-original-B2-unconfigured-send-result.png",
+        "cloudB2-before-t03-unconfigured-synthetic-message.json",
+        "cloudB2-after-t03-disabled-unconfigured-send.json",
+        "native-companion-filters-details-inventory-unconfigured-chat-seal.json"
+      ]
+    },
+    {
+      "id": "T01",
+      "status": "running",
+      "actual": "已在原B2小狐0003/青芽之间普通切换，名字头像及空会话归属一致；未配置消息未提交。原清空聊天/无宠账号空态子项仍待真正无宠QA身份，不用现有4宠账号冒充。",
+      "evidence": [
+        "native-N01-original-B2-chat-loaded.png",
+        "native-T01-original-B2-chat-qingya-loaded.png",
+        "native-companion-filters-details-inventory-unconfigured-chat-seal.json"
+      ]
+    },
+    {
+      "id": "N01",
+      "status": "running",
+      "actual": "已普通进入我的灵宠、附近探索、对战中心、领地、背包、聊天、角色资源，实际加载后标题与激活一致；详情普通返回保留上下文。设置页及完整返回链继续采集；Alt+Left在Electron无导航效果，不作为已验证历史后退。",
+      "evidence": [
+        "native-N01-original-B2-companions-navigation.png",
+        "native-N01-original-B2-explore-loaded.png",
+        "native-N01-original-B2-battle-loaded.png",
+        "native-N01-original-B2-garden-actual-result.png",
+        "native-N01-original-B2-backpack-actual-result.png",
+        "native-N01-original-B2-chat-loaded.png",
+        "native-R06-original-B2-auto-restored-new-fantuan-preview.png",
+        "native-companion-filters-details-inventory-unconfigured-chat-seal.json"
+      ]
+    }
+  ],
+  "newIssues": [],
+  "issueUpdates": []
+}

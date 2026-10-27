@@ -1,0 +1,53 @@
+{
+  "at": "2026-10-26T19:24:47.542Z",
+  "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "files": [
+    "cloudA-two-pet-personal-cross-client.json",
+    "cloudASecond-two-pet-personal-cross-client.json"
+  ],
+  "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+  "originalPetIds": [
+    "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+    "pet-97410828-fdf6-4253-8246-4c5f389d8fba"
+  ],
+  "allFourRawDocumentsEqualAcrossOriginalClients": true,
+  "bothClientsInitialized": true,
+  "cursor": 24,
+  "records": [
+    {
+      "collection": "conversation_memories",
+      "recordId": "[\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"466a65e0-80a2-4825-bc87-d7e2432eb870\"]",
+      "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+      "cloudRevision": 1,
+      "documentUtf8Sha256": "f73a4e1612d5f489c49a5d52c6b12e66d510c8665dc77a1ef90d0222438b0e77"
+    },
+    {
+      "collection": "conversation_memories",
+      "recordId": "[\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"6d8df6f1-43db-4e14-8371-8b8dd5d78580\"]",
+      "petId": "pet-97410828-fdf6-4253-8246-4c5f389d8fba",
+      "cloudRevision": 1,
+      "documentUtf8Sha256": "8390b1d665712d6a26cc66d0829ed0c959325016142f556ce5a3e9777a246b28"
+    },
+    {
+      "collection": "conversation_profiles",
+      "recordId": "[\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\"]",
+      "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+      "cloudRevision": 2,
+      "documentUtf8Sha256": "80bc080e9f5dce9974dd77dfb3145c932f75b2c8a9b4d8c755ac27c15b1f000c"
+    },
+    {
+      "collection": "conversation_profiles",
+      "recordId": "[\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\"]",
+      "petId": "pet-97410828-fdf6-4253-8246-4c5f389d8fba",
+      "cloudRevision": 1,
+      "documentUtf8Sha256": "55057d949d66cfa055d38bfbb1c5faa175cc23df27be4d31df0cc142858753f2"
+    }
+  ],
+  "limitations": [
+    "No model calls made",
+    "Not old nonempty message or memory migration",
+    "Memory update/delete and post-restart verification remain outstanding",
+    "Stale-write CAS not completed because unsaved draft was replaced before second save; see 4E6-001"
+  ]
+}

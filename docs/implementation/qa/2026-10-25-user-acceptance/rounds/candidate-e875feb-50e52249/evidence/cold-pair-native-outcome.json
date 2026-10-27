@@ -1,0 +1,170 @@
+{
+  "at": "2026-10-25T13:32:52.636Z",
+  "source": "e875febf3430be341191a639668d43e7f09826dc",
+  "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+  "launchers": [
+    {
+      "pid": 32284,
+      "issuedAt": "2026-10-25T13:30:59.9798548Z",
+      "startedAt": "2026-10-25T13:30:59.9902469Z",
+      "exitAt": null,
+      "number": 1,
+      "exitCaptured": false,
+      "exitCode": null
+    },
+    {
+      "pid": 14388,
+      "issuedAt": "2026-10-25T13:31:00.1081630Z",
+      "startedAt": "2026-10-25T13:31:00.1224552Z",
+      "exitAt": "2026-10-25T13:31:11.8453414Z",
+      "number": 2,
+      "exitCaptured": true,
+      "exitCode": 0
+    }
+  ],
+  "processEvents": [
+    {
+      "event": "wmi-process-start",
+      "pid": 32284,
+      "parent": 7512
+    },
+    {
+      "event": "wmi-process-start",
+      "pid": 14388,
+      "parent": 7512
+    },
+    {
+      "event": "wmi-process-start",
+      "pid": 12988,
+      "parent": 32284
+    },
+    {
+      "event": "wmi-process-start",
+      "pid": 16064,
+      "parent": 14388
+    },
+    {
+      "event": "wmi-process-start",
+      "pid": 16796,
+      "parent": 12988
+    },
+    {
+      "event": "wmi-process-start",
+      "pid": 14420,
+      "parent": 12988
+    },
+    {
+      "event": "wmi-process-start",
+      "pid": 16376,
+      "parent": 12988
+    },
+    {
+      "event": "wmi-process-stop",
+      "pid": 16064,
+      "parent": 0,
+      "exit": 0
+    }
+  ],
+  "payloadRoots": [
+    {
+      "observedMainPid": 12988,
+      "root": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nstBBF0.tmp\\app",
+      "firstFiles": [
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nstBBF0.tmp\\app\\Lingjing.exe",
+          "exists": true,
+          "bytes": 246846464,
+          "sha256": "12fee592f3bb57ae348fb0b5974e486f5a05c6b54e39b7fbb49f4be604643bd6"
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nstBBF0.tmp\\app\\resources\\app.asar",
+          "exists": true,
+          "bytes": 267484870,
+          "sha256": "993a2b91463223fd0c12e4c596459a6bde46d250baff9a2267c8fc2a66c8871d"
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nstBBF0.tmp\\app\\resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node",
+          "exists": true,
+          "bytes": 1989632,
+          "sha256": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a"
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nstBBF0.tmp\\app\\resources\\lingjing-cloud-public.json",
+          "exists": true,
+          "bytes": 194,
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda"
+        }
+      ],
+      "firstSeenAt": "2026-10-25T13:31:12.6812826Z",
+      "finalFiles": [
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nstBBF0.tmp\\app\\Lingjing.exe",
+          "exists": true,
+          "bytes": 246846464,
+          "sha256": "12fee592f3bb57ae348fb0b5974e486f5a05c6b54e39b7fbb49f4be604643bd6"
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nstBBF0.tmp\\app\\resources\\app.asar",
+          "exists": true,
+          "bytes": 267484870,
+          "sha256": "993a2b91463223fd0c12e4c596459a6bde46d250baff9a2267c8fc2a66c8871d"
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nstBBF0.tmp\\app\\resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node",
+          "exists": true,
+          "bytes": 1989632,
+          "sha256": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a"
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nstBBF0.tmp\\app\\resources\\lingjing-cloud-public.json",
+          "exists": true,
+          "bytes": 194,
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda"
+        }
+      ]
+    }
+  ],
+  "windowIds": [
+    15205408
+  ],
+  "storage": {
+    "at": "2026-10-25T13:31:53.453Z",
+    "firstRootHref": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsaAC1.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/settings",
+    "secondReadback": {
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nstBBF0.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/companions",
+      "origin": "file://",
+      "localStorage": {
+        "runId": "e71b9c11-e62a-46a6-aa4d-decdd34c4200",
+        "profilePath": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a",
+        "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "nonce": "cb66b54a-553e-4469-8ee8-1e6de1a86578",
+        "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+        "createdAt": "2026-10-25T13:22:21.262Z",
+        "kind": "Explicit isolated QA storage sentinel only; no gameplay mutation"
+      },
+      "indexedDBDatabaseExists": true,
+      "indexedDB": {
+        "runId": "e71b9c11-e62a-46a6-aa4d-decdd34c4200",
+        "profilePath": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a",
+        "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "nonce": "cb66b54a-553e-4469-8ee8-1e6de1a86578",
+        "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+        "createdAt": "2026-10-25T13:22:21.262Z",
+        "kind": "Explicit isolated QA storage sentinel only; no gameplay mutation"
+      }
+    },
+    "localStorageExact": true,
+    "indexedDBExact": true,
+    "profilePath": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a"
+  },
+  "changedTablesAfterNormalExitAndNativeRelogin": [
+    "account_login_sessions",
+    "lingjing_meta",
+    "lingjing_resource_files"
+  ],
+  "health": [
+    {
+      "quick_check": "ok"
+    }
+  ]
+}

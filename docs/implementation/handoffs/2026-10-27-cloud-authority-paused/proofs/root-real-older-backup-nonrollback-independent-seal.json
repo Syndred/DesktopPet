@@ -1,0 +1,35 @@
+{
+  "at": "2026-10-26T20:57:01.371Z",
+  "rootIndependent": true,
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "actualOlderSameOwnerBackupImported": true,
+  "oldGardenRevision": 2,
+  "currentGardenRevision": 7,
+  "currentCloudRevision": 28,
+  "actualInputEconomyDifferent": true,
+  "gameCacheUnchanged": true,
+  "fullCloudEnvelopeUnchanged": true,
+  "cloudPersonalRecordsUnchanged": true,
+  "currentCarrot": 3,
+  "currentRice": 1,
+  "currentCookedRice": 1,
+  "originalDeviceSettingsMatch": true,
+  "restoreActionId": "1b06cd6c-8fd9-4d82-b826-0cba10329f94",
+  "precondition": {
+    "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\root-real-older-backup-nonrollback-precondition.json",
+    "sha256": "83c155f6bb19b5a477c199fce718ac8665e8944a1126334c98c56a0925c91afb"
+  },
+  "local": {
+    "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\root-real-older-backup-nonrollback-local-independent.json",
+    "sha256": "c22828fffd4fd81fbfa140531f95c3714193a879102f1b890392e58d38e181a2"
+  },
+  "beforeCloud": {
+    "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\root-B-cloud-before-preservation-restore.json",
+    "sha256": "b6f425d7b7fce75b6c9a58d7ff91d3e11e4bd3ec0d3dc998121bbc5e6881f663"
+  },
+  "afterCloud": {
+    "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\root-real-older-backup-nonrollback-cloud-independent.json",
+    "sha256": "c24d91f0e461d8b377022c51a2f68c1db08eda701906c36a860e339e23cee938"
+  },
+  "qualification": "Proves the real UI old-backup path retains current cloud-owned game state despite different old inventory. P05 remains failed separately for repeated same-file memory restoration4E6-003."
+}

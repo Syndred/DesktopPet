@@ -1,0 +1,132 @@
+{
+  "at": "2026-10-26T20:09:02.143Z",
+  "rootIndependent": true,
+  "readOnly": true,
+  "credentialValuesRead": false,
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a",
+  "originalSettingsRevision": 23,
+  "currentSettingsRevision": 25,
+  "fullOriginalSettingsRestored": true,
+  "originalSettingsDocument": {
+    "desktop": {
+      "alwaysOnTop": true,
+      "clickThrough": true,
+      "launchAtLogin": false,
+      "closeToTray": true,
+      "companionLimit": 3,
+      "interactionSounds": true,
+      "volume": 70,
+      "hideInFullscreen": true,
+      "animationsEnabled": true
+    },
+    "notifications": {
+      "enabled": true,
+      "companions": true,
+      "battles": true,
+      "garden": true,
+      "quietEnabled": true,
+      "quietStart": "22:00",
+      "quietEnd": "08:00"
+    },
+    "privacy": {
+      "locationAllowed": false,
+      "locationOnlyWhileExploring": true,
+      "emotionStatistics": false
+    },
+    "sync": {
+      "enabled": true
+    }
+  },
+  "settingsDocument": {
+    "desktop": {
+      "alwaysOnTop": true,
+      "clickThrough": true,
+      "launchAtLogin": false,
+      "closeToTray": true,
+      "companionLimit": 3,
+      "interactionSounds": true,
+      "volume": 70,
+      "hideInFullscreen": true,
+      "animationsEnabled": true
+    },
+    "notifications": {
+      "enabled": true,
+      "companions": true,
+      "battles": true,
+      "garden": true,
+      "quietEnabled": true,
+      "quietStart": "22:00",
+      "quietEnd": "08:00"
+    },
+    "privacy": {
+      "locationAllowed": false,
+      "locationOnlyWhileExploring": true,
+      "emotionStatistics": false
+    },
+    "sync": {
+      "enabled": true
+    }
+  },
+  "requestStatus": "committed",
+  "immutableFieldsSha256": "442850c1b21605ef0ba99d5a8b25f6df7d37bdd3e455215c08735b8ab6df9be7",
+  "carrot": 4,
+  "readbacks": [
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "domain": "companions",
+      "cloud_revision": 40,
+      "envelope_checksum": "0848e379db612fd70ba5da2aeb7faab9186d747bc572b4990bfd1c3d165b0626",
+      "module_checksum": "e38a4212ade658cbf590743cfbf0e4ac77184820d37bed306e165cec846bee3a",
+      "verified_at": "2026-10-26T20:08:46.405Z"
+    },
+    {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "domain": "garden",
+      "cloud_revision": 40,
+      "envelope_checksum": "0848e379db612fd70ba5da2aeb7faab9186d747bc572b4990bfd1c3d165b0626",
+      "module_checksum": "f12961e801cae1f339dad0553ae2552b5dee89cf9e02487f393f4d5782df80a4",
+      "verified_at": "2026-10-26T20:08:46.405Z"
+    }
+  ],
+  "helper": {
+    "pid": 23224,
+    "port": 53521,
+    "status": "stopped",
+    "controlSequence": 3,
+    "rootIndependentProcessListenerState": {
+      "processes": [],
+      "listeners": []
+    }
+  },
+  "runtime": {
+    "mainPid": 25084,
+    "wrapperPid": 21924,
+    "mainExecutable": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsw430F.tmp\\app\\Lingjing.exe",
+    "wrapperExecutable": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-4e6c3de4\\Lingjing-0.1.8-portable-x64.exe",
+    "mainCreatedUtc": "2026-10-26T20:04:09.6963210Z",
+    "asarSha256": "3be5ce049efb9ad93a83f6090994a6f8ae26cf0f319b614c1d8e5ae6e8ab0568",
+    "publicSession": {
+      "dataMode": "live",
+      "persistence": "secure",
+      "secureStorageAvailable": true,
+      "startupIssue": null,
+      "user": {
+        "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "provider": "runtime",
+        "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe"
+      }
+    },
+    "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+    "scenario": null,
+    "environmentProvenance": "native normal launcher evidence; Main environment not read"
+  },
+  "nativeCapture": {
+    "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\cloudA-post-network-full-original-settings-restored.json",
+    "sha256": "f6e6e80945a7ce62a33a0d069aaab1d53e9ef6e4839c93be115fc2f4b75ac483"
+  },
+  "recoveryProof": {
+    "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\network-pending-restart-v1\\root-pending-restart-recovery-independent-seal.json",
+    "sha256": "1df2892052ca403c2db361bc32fa92b22514d2f2cfeb257e58ee3a5fdef967d5"
+  }
+}

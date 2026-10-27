@@ -1,0 +1,95 @@
+{
+  "at": "2026-10-25T22:43:42.143Z",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "windowId": 3475656,
+  "mainPid": 1292,
+  "checks": {
+    "actualSourceMinimumReached": true,
+    "maximumActualViewportObserved": true,
+    "minimumNoHorizontalOverflow": true,
+    "minSettingsNoHorizontalOverflow": true,
+    "minSaveButtonReachable": true,
+    "selectedCompanionFullTextPreservedAcrossSizes": true,
+    "unsavedDraftPreservedAcrossMaxRestore": true,
+    "nativeFileDialogOpenedAndCancelledWithoutImport": true,
+    "allResourceTablesStillExact": true,
+    "wholeOriginalSettingsDocumentExact": true,
+    "allTenBusinessTablesExactAfterQualifiedPosition": true,
+    "originalClientSizeExactlyRestored": true
+  },
+  "actualMin": {
+    "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nse19BD.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/companions",
+    "innerWidth": 960,
+    "innerHeight": 700,
+    "outerWidth": 975,
+    "outerHeight": 708,
+    "dpr": 1.25,
+    "text": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n云端验收甲\n\n我的灵宠 / 全部伙伴\n\n今天，也有小家伙在等你。\n\n已拥有 4 只 · 桌面陪伴 1 只\n\n领养伙伴\n小狐\nLv.01\n编号 0004\n在灵境里休息\n\n安静机灵的雪白小狐，像雪花一样轻盈。\n\n摸摸\n喂食\n聊聊天\n小狐\n编号 0004\n\n水\n\n60\n60\n0\n行为模式\n安静陪伴\n外观大小\n100%\n在桌面显示\n当前出战伙伴\n查看伙伴详情\n我的伙伴\n全部 4\n桌面中 1\n鱼丸\n编号 0001\nLv.01\n水\n小狐\n桌面中\n编号 0001\nLv.01\n水\n小狐\n编号 0004\nLv.01\n水\n礼帽喵\n编号 0001\nLv.01\n金\n去附近探索\n寻找下一份特别的相遇\n和伙伴并肩出发\n前往对战中心",
+    "rootScrollWidth": 960,
+    "rootClientWidth": 960,
+    "scrolls": [
+      {
+        "tag": "MAIN",
+        "className": "main-content",
+        "clientHeight": 646,
+        "scrollHeight": 956,
+        "scrollTop": 0
+      }
+    ]
+  },
+  "actualMax": {
+    "at": "2026-10-25T22:12:56.623Z",
+    "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nse19BD.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/settings",
+    "inner": {
+      "width": 2048,
+      "height": 1151
+    },
+    "outer": {
+      "width": 2048,
+      "height": 1152
+    },
+    "dpr": 1.25,
+    "document": {
+      "scrollWidth": 2048,
+      "clientWidth": 2048
+    },
+    "saveButton": [
+      {
+        "text": "保存设置",
+        "rect": {
+          "x": 1658,
+          "y": 710.8250122070312,
+          "width": 150,
+          "height": 36,
+          "top": 710.8250122070312,
+          "right": 1808,
+          "bottom": 746.8250122070312,
+          "left": 1658
+        }
+      }
+    ]
+  },
+  "restored": {
+    "at": "2026-10-25T22:43:42.144Z",
+    "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nse19BD.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+    "innerWidth": 1362,
+    "innerHeight": 978,
+    "outerWidth": 1376,
+    "outerHeight": 986,
+    "rootWidth": 1362,
+    "rootScrollWidth": 1362
+  },
+  "nativeInputs": "Only CUA native caption maximize/restore, caption right-click system Size menu + ordinary arrow keys/CTRL fine adjustments, actual scrolling/Tab/Enter/native file dialog cancel. No CDP/Win32 UI resize mutation.",
+  "longListEvidence": [
+    "n03-minimum-adoption-page-top-settled-native.jpg",
+    "n03-minimum-adoption-page-last-cards-and-controls-native.jpg",
+    "n02-minimum-resource-import-and-preview-controls-native.jpg"
+  ],
+  "dialogEvidence": [
+    "n02-minimum-file-dialog-screenshot-1.jpg",
+    "n02-minimum-file-dialog-cancelled-no-import-native.jpg"
+  ],
+  "qualification": "Feed action navigates to an actual inline inventory detail, and adoption action opens a full route, not modal. Initial misleadingly named dialog captures are retained but excluded from modal proof. Modal proof is the actual owned native file picker. One desktop-pet-overlap input caused a verified same-XY position/displayId receipt, independently qualified by Root; retain history and do not pretend all tables were unchanged across that input.",
+  "overlapEvidence": "n02-overlap-single-position-receipt-qualification.json"
+}

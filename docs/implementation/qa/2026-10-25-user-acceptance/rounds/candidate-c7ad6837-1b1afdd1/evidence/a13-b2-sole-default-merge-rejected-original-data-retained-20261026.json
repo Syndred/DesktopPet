@@ -1,0 +1,86 @@
+{
+  "at": "2026-10-26T13:20:56.091Z",
+  "status": "sole_normal_default_merge_rejected_no_persisted_sql_change",
+  "approvalRef": "root-c7ad-a13-b2-actual-preview-unique-default-merge",
+  "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+  "owner": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "native": {
+    "normalPreviewClicks": 1,
+    "normalDefaultMergeConfirmations": 1,
+    "privateStateRead": false,
+    "mode": "merge",
+    "errorText": "两端有不同的人设、记忆或连接，请保留备份后选择要恢复的版本。",
+    "errorCode": null,
+    "errorCodeQualification": "No public error code was displayed; do not infer one from source or the message.",
+    "dialogStillOpen": true,
+    "noRetryOrNewPreviewOrModeChange": true
+  },
+  "actualPersistedState": {
+    "all67SafeDigestsOrSensitiveCountsExact": true,
+    "accountActionCount": 13,
+    "noNewPersistedRestoreAction": true,
+    "newRestoreActionId": null,
+    "backupReceiptCount": 3,
+    "newBackupReceiptId": null,
+    "backupFiles": [
+      {
+        "name": "before-cloud-battle-readback-1793017984437-754260fb-4e7e-4610-ae09-60b3648cf28d.lingjing.json",
+        "bytes": 5791487,
+        "modifiedAt": "2026-10-26T12:33:04.457Z",
+        "createdAt": "2026-10-26T12:33:04.448Z",
+        "hasExistingReceipt": true
+      },
+      {
+        "name": "before-restore-1792961743811-fdc89544-8008-4039-a5d6-d5de54648431.lingjing.json",
+        "bytes": 20924,
+        "modifiedAt": "2026-10-25T20:55:43.813Z",
+        "createdAt": "2026-10-25T20:55:43.813Z",
+        "hasExistingReceipt": true
+      },
+      {
+        "name": "before-restore-1792971005015-635605ef-8189-4f7a-ac8b-b55fc9774f24.lingjing.json",
+        "bytes": 25109,
+        "modifiedAt": "2026-10-25T23:30:05.016Z",
+        "createdAt": "2026-10-25T23:30:05.016Z",
+        "hasExistingReceipt": false
+      },
+      {
+        "name": "before-restore-1792971585814-3561386c-a896-43db-9a0c-073a2566c311.lingjing.json",
+        "bytes": 25109,
+        "modifiedAt": "2026-10-25T23:39:45.815Z",
+        "createdAt": "2026-10-25T23:39:45.814Z",
+        "hasExistingReceipt": true
+      },
+      {
+        "name": "before-restore-1793020554523-83bae0c3-9fba-4637-9377-c3595a76b60f.lingjing.json",
+        "bytes": 5837370,
+        "modifiedAt": "2026-10-26T13:15:54.542Z",
+        "createdAt": "2026-10-26T13:15:54.531Z",
+        "hasExistingReceipt": false
+      }
+    ],
+    "confirmedCloudRevision": 8,
+    "confirmedChecksum": "61209be855452f124adb3991a24ba3870a821a057ddd2d3c1fde5507b2e88de9",
+    "settingsRevision": 7,
+    "syncEnabled": false,
+    "closeToTray": true,
+    "volume": 70,
+    "petsGrowthChoicesAndQa024HistoryExact": true
+  },
+  "qualification": {
+    "head23WasNotConfirmed": true,
+    "localDifferenceBranchNotReached": true,
+    "qa021FixVerified": false,
+    "rootCauseNotYetAttributed": true,
+    "accountAOnlyReadBeforeStateNoMaintenanceSaveOrExit": true,
+    "helpersStarted": 0,
+    "ledgerNotChanged": true
+  },
+  "evidence": {
+    "confirmationAt": "2026-10-26T13:15:54.263Z",
+    "publicUiAt": "2026-10-26T13:17:32.478Z",
+    "afterSnapshotAt": "2026-10-26T13:17:32.439Z",
+    "screenshot": "a13-b2-actual-preview-default-merge-single-confirm-first-result-20261026.png"
+  },
+  "next": "Retain failed dialog and original data; Root separately authorized one ordinary Cancel, then independent CloudA normal exit maintenance. No restore retry or replacement is authorized."
+}

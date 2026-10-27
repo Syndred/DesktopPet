@@ -1,0 +1,122 @@
+{
+  "at": "2026-10-25T23:45:57.938Z",
+  "checks": {
+    "resourceRowOriginalIdExact": true,
+    "importsExact": true,
+    "preferencesExact": true,
+    "newManagedPathsRealOriginalBytes": true,
+    "allFourPetRowsExactlySource": true,
+    "originalThreePetRowsExactlyPreserved": true,
+    "allTenGardenTablesExactlySource": true,
+    "allFiveBattleTablesExactlySource": true,
+    "allOriginalCompanionActionRowsPreserved": true,
+    "onlyOneNewNativeChatSelect": true,
+    "protectionEnvelopeValid": true,
+    "protectionBeforeDataExact": true,
+    "originalChatProfileEffectiveValuesRestored": true,
+    "originalChatConnectionRowsUnchanged": false,
+    "originalChatConversationSelectionRestored": true,
+    "noMessagesOrMemoriesAdded": true,
+    "noApiKeysPersisted": true,
+    "settingsEffectiveValuesOriginal": true,
+    "actualMappedSleepReady": true,
+    "desktopUiValuesIndependent": true,
+    "battleUiValuesIndependent": true,
+    "sourceExportOriginalHashUnchanged": true
+  },
+  "chat": {
+    "conversation_profiles": [
+      {
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "pet_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "persona": "",
+        "reply_style": "natural",
+        "memory_enabled": 1,
+        "pause_while_chatting": 1,
+        "use_override": 1,
+        "revision": 3,
+        "updated_at": 1792971903900
+      }
+    ],
+    "conversation_connections": [
+      {
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "scope": "account",
+        "scope_id": "",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "model": "模拟验收-DC7-c696c6c03ca2",
+        "encrypted_key": null,
+        "context_chars": 24000,
+        "max_output_tokens": 512,
+        "revision": 2,
+        "updated_at": 1792955398970
+      },
+      {
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "scope": "pet",
+        "scope_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "model": "模拟验收-DC7-c696c6c03ca2",
+        "encrypted_key": null,
+        "context_chars": 24000,
+        "max_output_tokens": 512,
+        "revision": 2,
+        "updated_at": 1792955419075
+      }
+    ],
+    "conversation_preferences": [
+      {
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "selected_pet_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75"
+      }
+    ],
+    "conversation_messages": [],
+    "conversation_memories": [],
+    "credentialCount": 0
+  },
+  "newChatSelectActions": [
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "action_id": "f0318410-35ce-4d07-8da6-4e779f5a3773",
+      "operation": "select",
+      "request_hash": "cd2a65cd6da60eb18f76f56aac7c373d5a515fdf6adc23705da55ee4db5b6f57",
+      "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"74C6A89C\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":560,\"y\":520,\"displayId\":\"2568730015\"}},\"revision\":3,\"createdAt\":\"2026-10-25T16:15:42.590Z\",\"updatedAt\":\"2026-10-25T19:44:59.637Z\"},\"selections\":{\"chatPetId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"battlePetId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"guardPetId\":null}},\"revision\":11,\"duplicate\":false}",
+      "created_at": "2026-10-25T23:42:41.499Z"
+    }
+  ],
+  "sourceBackup": {
+    "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-b-fresh09/uat-exports/r05-dc7-qingya-actions-20261026.lingjing.json",
+    "exists": true,
+    "bytes": 2507321,
+    "sha256": "f148d3858f2ef68464a331ab779b3b3ded8e80d0ca8b6252ffbe6602b16bd496"
+  },
+  "protection": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\accounts\\backups\\before-restore-1792971585814-3561386c-a896-43db-9a0c-073a2566c311.lingjing.json",
+    "exists": true,
+    "bytes": 25109,
+    "sha256": "bf5dd980f867827cecce3181e044a89eb5534228c47b6118f4117d017d460c30"
+  },
+  "restoreReceipt": {
+    "restored": true,
+    "mode": "replace",
+    "preservedBackup": {
+      "id": "3561386c-a896-43db-9a0c-073a2566c311",
+      "filePath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\accounts\\backups\\before-restore-1792971585814-3561386c-a896-43db-9a0c-073a2566c311.lingjing.json",
+      "checksum": "ff42cf882878fa8cf4e37e8d006cc6e63331f98556d5bca6bf8cf2997fd109b9",
+      "excluded": [
+        "conversation_credentials"
+      ]
+    },
+    "checksum": "2e16bd639f88837459a66accace549fe747aac23b9873dab6d35ac3bade52e89"
+  },
+  "settings": [
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "revision": 1,
+      "document": "{\"desktop\":{\"alwaysOnTop\":true,\"clickThrough\":true,\"launchAtLogin\":false,\"closeToTray\":true,\"companionLimit\":3,\"interactionSounds\":true,\"volume\":70,\"hideInFullscreen\":true,\"animationsEnabled\":true},\"notifications\":{\"enabled\":true,\"companions\":true,\"battles\":true,\"garden\":true,\"quietEnabled\":true,\"quietStart\":\"22:00\",\"quietEnd\":\"08:00\"},\"privacy\":{\"locationAllowed\":false,\"locationOnlyWhileExploring\":true,\"emotionStatistics\":false},\"sync\":{\"enabled\":false}}",
+      "updated_at": "2026-10-25T23:39:45.820Z"
+    }
+  ]
+}

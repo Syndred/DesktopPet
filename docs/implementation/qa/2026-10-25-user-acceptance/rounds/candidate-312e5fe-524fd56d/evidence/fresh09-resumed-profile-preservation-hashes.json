@@ -1,0 +1,90 @@
+{
+  "at": "2026-10-25T12:21:42.009Z",
+  "scope": "historical-312-reopened-profile-readonly-before-final",
+  "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+  "profile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a",
+  "readOnly": true,
+  "queryOnly": {
+    "query_only": 1
+  },
+  "quickCheck": [
+    {
+      "quick_check": "ok"
+    }
+  ],
+  "tables": {
+    "companion_pets": {
+      "count": 2,
+      "sha256": "6e12d4f524c1125a6a9d4c7fe2dfba7db873d19736d3b0d63c838140dc3085ee"
+    },
+    "companion_accounts": {
+      "count": 1,
+      "sha256": "99f9c5ca1a59e6a7156a05617d558dc0de6bd7ebf04cd1d10aeeb1671d8d99cf"
+    },
+    "companion_actions": {
+      "count": 12,
+      "sha256": "17260e1d8b44723b80563726598fae132c5889574a13c77a14e88cf654f30a7e"
+    },
+    "conversation_messages": {
+      "count": 8,
+      "sha256": "ed4b63b7d0d8fc49213b2231f5125ef63a27fd63e2bcffa091eff21c10ef58bb"
+    },
+    "conversation_memories": {
+      "count": 2,
+      "sha256": "4ae8f8b008bd926647dc43cee123cc03264b1f5eb5492652a546918121f4eaec"
+    },
+    "conversation_preferences": {
+      "count": 1,
+      "sha256": "810c8e630acd31ef991ab98c53a539cc133babf1be9900c0bfd0ee01b32b64c1"
+    },
+    "garden_items": {
+      "count": 7,
+      "sha256": "81ece363fc1fc14ec813028155da5e5350544844c9d81ac5ba12d641bd54ebf1"
+    },
+    "garden_actions": {
+      "count": 6,
+      "sha256": "a0a7c9420054f2cc6846baa23c506765f49f952c6a22ffd46d18f939c2b0aa6a"
+    },
+    "battle_sessions": {
+      "count": 1,
+      "sha256": "6fb1fb8201dfb1555f02ec3ebf0429aeda172e7f40847583fefdda74ad2ee2d3"
+    },
+    "conversation_profiles": {
+      "count": 2,
+      "sha256": "c6d4daffb5db19b9c06688cbff453a6629b79f0387d6fc5c90f0ce40105d09ed"
+    },
+    "garden_accounts": {
+      "count": 1,
+      "sha256": "835e4854a895551c7b507a45616a4f27c747c49c4ff489585603668ed32ba5c3"
+    },
+    "garden_plots": {
+      "count": 6,
+      "sha256": "776307efc0a652567bbbea5edf167e27a4264bf5899d06ac0e8e73bad4618b0c"
+    },
+    "garden_ledger": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "garden_cloud_requests": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "garden_outbox": {
+      "count": 6,
+      "sha256": "c7561dc884f277953a938967d505bad2549d9d4ce6d681fab23dff65b2a006f2"
+    },
+    "battle_action_receipts": {
+      "count": 2,
+      "sha256": "700b2bf2ee496f7b7c43154fb3789ef460e9a943c74cf41c77c21f517ad17221"
+    },
+    "battle_reports_v2": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "battle_reward_receipts": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "supplementedAt": "2026-10-25T12:21:52.329Z"
+}

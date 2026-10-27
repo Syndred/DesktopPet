@@ -1,0 +1,1075 @@
+{
+  "updatedAt": "2026-10-26T06:15:23.091Z",
+  "phase": "local-gap-sweep-M05-positive-QA025-recorded-next-territory",
+  "baselineCheckpoint": "rounds/baseline-a9acd7f-790f5b6d/round.json",
+  "candidateSourceExpected": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "candidateNotYetAuthorizedByCoordinator": false,
+  "profiles": [
+    {
+      "id": "local-a",
+      "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/local-a",
+      "scenario": "unified-battle",
+      "runId": "54f0fb7d-bc8a-45cd-8896-754333d59d31",
+      "launcherPid": 17140,
+      "mainPid": 23668,
+      "debugPort": 53176,
+      "mainWindowId": 787934,
+      "petWindowIds": [
+        6423784,
+        9242648
+      ],
+      "credentialFile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/local-a/uat-private-credentials.json",
+      "cuaBinding": "app",
+      "readonlyBrowserBinding": "qaBrowser/qaPage"
+    },
+    {
+      "id": "cloud-a",
+      "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a",
+      "scenario": null,
+      "mode": "actual cloud, synthetic identity",
+      "launcherPid": 23652,
+      "mainPid": 25144,
+      "debugPort": 51745,
+      "mainWindowId": 16975114,
+      "credentialFile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a/uat-private-credentials.json",
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "cuaBinding": "cloudApp",
+      "readonlyBrowserBinding": "qaCloudBrowser/qaCloudPage"
+    },
+    {
+      "id": "local-a-duplicate",
+      "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/local-a",
+      "launcherPid": 16196,
+      "mainPid": 18500,
+      "debugPort": 54995,
+      "windowClosed": true,
+      "processExitConfirmed": true,
+      "debuggerDetached": true,
+      "active": false,
+      "processExitObservedAt": "2026-10-25T15:30:22.403Z",
+      "processExitMethod": "external-exit-observed; 09 identity guard aborted before stopping",
+      "normalUiExitConfirmed": false,
+      "exitEvidence": "pre-final-preservation/20261025T151747Z/a9-stale-guard-aborted-observation.json"
+    },
+    {
+      "id": "candidate312-local-a",
+      "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a",
+      "scenario": "unified-battle",
+      "runId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+      "launcherPid": 29512,
+      "mainPid": 18764,
+      "debugPort": 57215,
+      "mainWindowId": 2166792,
+      "petWindowIds": [],
+      "credentialFile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a/uat-private-credentials.json",
+      "cuaBinding": "candidateApp/candidatePetApp",
+      "readonlyBrowserBinding": "qaNewBrowser/qaNewPage/qaNewPetPage",
+      "pets": [
+        "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+        "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca"
+      ],
+      "naturalTimers": [
+        {
+          "plotId": "plot-1",
+          "cropType": "carrot",
+          "maturesAt": 1792925795329
+        },
+        {
+          "plotId": "plot-4",
+          "cropType": "rice",
+          "maturesAt": 1792926712870
+        }
+      ],
+      "uiRoute": "#/garden/craft",
+      "note": "Human-authorized reopen, original owner and 9 data tables exact-hash retained on login; now native crafted rice2, fed second pet once; first pet unchanged. Await new candidate for final98.",
+      "previousLaunches": [
+        {
+          "mainPid": 27436,
+          "launcherPid": 23280,
+          "mainWindowId": 7866562,
+          "petWindowIds": [
+            14487906
+          ],
+          "ended": "Human-confirmed manual close; exact mode unspecified"
+        }
+      ]
+    },
+    {
+      "id": "candidate-e875-local-a",
+      "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a",
+      "scenario": "unified-battle",
+      "runId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+      "launcherPid": 32284,
+      "mainPid": 12988,
+      "debugPort": 57215,
+      "mainWindowId": 15205408,
+      "payloadRoot": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nstBBF0.tmp\\app",
+      "credentialFile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a/uat-private-credentials.json",
+      "previousLaunches": [
+        {
+          "mainPid": 26956,
+          "launcherPid": 26024,
+          "mainWindowId": 4853864,
+          "payloadRoot": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsaAC1.tmp\\app",
+          "normalUiExitConfirmed": true
+        }
+      ],
+      "active": false,
+      "normalUiExitConfirmed": true,
+      "normalUiExitAt": "2026-10-25T15:22:21.197Z",
+      "closeToTrayRestored": false,
+      "closeToTrayTemporaryForNormalExit": false
+    },
+    {
+      "id": "e875-local-b-concurrency",
+      "profilePath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\e71b9c11-e62a-46a6-aa4d-decdd34c4200\\local-b-concurrency",
+      "scenarioRunId": "4fe4b514-04d4-4832-98bc-c1128a1601f7",
+      "mode": "new independent isolated local QA profile",
+      "mainPid": 22288,
+      "launcherPid": 2256,
+      "mainWindowId": 7802996,
+      "normalUiExitConfirmed": true,
+      "active": false,
+      "owner": "qa:4fe4b514-04d4-4832-98bc-c1128a1601f7:local-816a18c2-f98b-4c56-9a78-d07ac42d170f"
+    },
+    {
+      "id": "candidate-e875-cloud-a",
+      "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a",
+      "scenario": null,
+      "mode": "live cloud synthetic identity",
+      "mainPid": 11672,
+      "launcherPid": 16100,
+      "mainWindowId": 8589428,
+      "debugPort": 57218,
+      "payloadRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nsxCEAA.tmp/app",
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "sessionId": "7deaf22a-df64-461a-92fc-9fe1b0e8b0dd",
+      "deviceId": "41de040e-a134-487f-b1d3-76b5254a8f97",
+      "onlineGardenRevision": 1,
+      "onlineCloudSaveRevision": 3,
+      "pendingEconomicAction": null,
+      "proxy": false,
+      "lastEconomicActionId": "e8156c9e-4b1d-421a-a326-9860f203d402",
+      "gardenRevision": 2,
+      "cloudSaveRevision": 6,
+      "closeToTrayRestored": false,
+      "uiRoute": "#/settings",
+      "previousLaunches": [
+        {
+          "mainPid": 32152,
+          "launcherPid": 17108,
+          "mainWindowId": 6492640,
+          "payloadRoot": "nsu191.tmp/app",
+          "normalUiExitConfirmed": true
+        },
+        {
+          "mainPid": 9444,
+          "launcherPid": 32968,
+          "mainWindowId": 1377734,
+          "payloadRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nsnDC3E.tmp/app",
+          "proxy": true,
+          "normalUiExitConfirmed": true
+        },
+        {
+          "mainPid": 1456,
+          "launcherPid": 15444,
+          "mainWindowId": 6554640,
+          "payloadRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nseD633.tmp/app",
+          "proxy": true,
+          "normalUiExitConfirmed": true
+        }
+      ],
+      "active": false,
+      "normalUiExitConfirmed": true,
+      "normalUiExitAt": "2026-10-25T15:22:21.198Z",
+      "closeToTrayTemporaryForNormalExit": false
+    },
+    {
+      "id": "final-dc7-local-a",
+      "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a",
+      "scenario": "unified-battle",
+      "scenarioRunId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+      "launcherPid": 23708,
+      "mainPid": 3364,
+      "mainWindowId": 8390562,
+      "debugPort": 57215,
+      "payloadRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nst1778.tmp/app",
+      "active": true,
+      "closeToTrayRestored": true,
+      "previousLaunches": [
+        {
+          "launcherPid": 17388,
+          "mainPid": 29248,
+          "mainWindowId": 13238446,
+          "payloadRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nsk43F9.tmp/app",
+          "normalUiExitConfirmed": true
+        },
+        {
+          "launcherPid": 24888,
+          "mainPid": 31392,
+          "mainWindowId": 8324112,
+          "payloadRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nst40C.tmp/app",
+          "normalUiExitConfirmed": true,
+          "evidence": "rounds/candidate-dc7aee3-1b1afdd1/evidence/d06-normal-exit-readback.json"
+        },
+        {
+          "launcherPid": 26232,
+          "mainPid": 32388,
+          "mainWindowId": 11797384,
+          "payloadRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nsdED32.tmp/app",
+          "normalUiExitConfirmed": true,
+          "evidence": "rounds/candidate-dc7aee3-1b1afdd1/evidence/t05-normal-exit-readback.json"
+        }
+      ],
+      "minimized": true,
+      "closeToTrayTemporaryForNormalExit": false,
+      "normalUiExitConfirmed": false,
+      "normalUiExitAt": "2026-10-25T18:41:33.358Z",
+      "petWindowIds": [],
+      "note": "T02/T05 planned normal restart; same profile owner/source; all chat/persona/memory/pet/battle/storage checks exact; restore closeToTray=true next"
+    },
+    {
+      "id": "final-dc7-old-three-pet",
+      "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/local-a",
+      "scenarioRunId": "54f0fb7d-bc8a-45cd-8896-754333d59d31",
+      "launcherPid": 21452,
+      "mainPid": 23744,
+      "mainWindowId": 16319800,
+      "payloadRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nsk4469.tmp/app",
+      "normalUiExitConfirmed": true,
+      "active": false,
+      "closeToTrayRestored": false,
+      "closeToTrayRequiredRestore": true
+    },
+    {
+      "id": "final-dc7-cloud-a",
+      "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a",
+      "scenario": null,
+      "mode": "live ordinary cloud synthetic QA identity",
+      "launcherPid": 12428,
+      "mainWindowId": 3475656,
+      "debugPort": 57218,
+      "payloadRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nse19BD.tmp/app",
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "deviceId": "41de040e-a134-487f-b1d3-76b5254a8f97",
+      "active": true,
+      "minimized": true,
+      "closeToTrayRestored": true,
+      "foxPetId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+      "foxGlobalSerial": "1",
+      "foxInputActionId": "18a25316-26ac-453e-a34a-ab44ed3f7055",
+      "mainPid": 1292,
+      "previousLaunches": [
+        {
+          "mainPid": 5292,
+          "launcherPid": 21204,
+          "mainWindowId": 5246858,
+          "payloadRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nsc4E9.tmp/app",
+          "normalUiExitConfirmed": true,
+          "evidence": "rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-plain-cloud-a-normal-exit.json"
+        },
+        {
+          "mainPid": 4364,
+          "launcherPid": 25052,
+          "mainWindowId": 16450872,
+          "payloadRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nsd7622.tmp/app",
+          "proxy": true,
+          "normalUiExitConfirmed": true,
+          "evidence": "rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-seed-normal-exit.json"
+        },
+        {
+          "mainPid": 3640,
+          "launcherPid": 13896,
+          "mainWindowId": 11407708,
+          "payloadRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nsx360E.tmp/app",
+          "proxy": true,
+          "normalUiExitConfirmed": true,
+          "evidence": "rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-resume-normal-exit.json"
+        },
+        {
+          "mainPid": 13892,
+          "launcherPid": 23112,
+          "mainWindowId": 3016904,
+          "payloadRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nsmD7AB.tmp/app",
+          "normalUiExitConfirmed": true,
+          "evidence": "rounds/candidate-dc7aee3-1b1afdd1/evidence/i04-normal-exit-readback.json"
+        },
+        {
+          "mainPid": 12112,
+          "launcherPid": 15848,
+          "mainWindowId": 10097098,
+          "payloadRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nss5693.tmp/app",
+          "normalUiExitConfirmed": true,
+          "evidence": "rounds/candidate-dc7aee3-1b1afdd1/evidence/b11-a-normal-native-exit-correct-product-filter.json"
+        }
+      ],
+      "normalUiExitConfirmed": false,
+      "closeToTrayTemporaryForNormalExit": false,
+      "proxy": false,
+      "proxyPid": null,
+      "proxyPort": null,
+      "s03Phase": "complete ordinary mode",
+      "petWindowIds": [
+        8258970
+      ],
+      "normalUiExitAt": "2026-10-25T21:56:00.3212444Z",
+      "closeToTrayRequiredRestore": false,
+      "note": "B11 normal ordinary restart after Root two-zero-send after verified; all10 business tables/LS/IDB exact, original settings restored, original12roundreport and numbers4/5 visible.",
+      "uiRoute": "#/battle/reports"
+    },
+    {
+      "id": "final-dc7-cloud-b",
+      "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-b-fresh09",
+      "scenario": null,
+      "mode": "live ordinary cloud synthetic QA identity",
+      "launcherPid": 27840,
+      "mainWindowId": 13109186,
+      "debugPort": 57219,
+      "payloadRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nsuB239.tmp/app",
+      "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "authUserId": "2028f0af-f501-47f5-9abb-de59487dad46",
+      "deviceId": "bb7df55b-638d-4ed4-a217-f31888a13dd0",
+      "active": true,
+      "foxPetId": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+      "foxGlobalSerial": "3",
+      "foxInputActionId": "f0f7e8f7-051a-40a2-8ff7-3d9d2dcb4cc8",
+      "keepLoginSelected": true,
+      "rememberAccountSelected": true,
+      "mainPid": 32748,
+      "minimized": false,
+      "previousLaunches": [
+        {
+          "mainPid": 12052,
+          "launcherPid": 17276,
+          "mainWindowId": 1638618,
+          "payloadRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nsbC12A.tmp/app",
+          "normalUiExitConfirmed": true,
+          "evidence": "rounds/candidate-dc7aee3-1b1afdd1/evidence/b11-b-normal-native-exit-process-proof.json"
+        }
+      ],
+      "closeToTrayRestored": true,
+      "normalUiExitConfirmed": false,
+      "actualHashesVerified": true,
+      "uiRoute": "#/settings",
+      "note": "B11 original profile ordinary restart, all10 battle/economic/companion tables exact; original settings restored. Remaining reopen original report after quiet C11 interval."
+    },
+    {
+      "id": "final-dc7-cloud-b-second-device",
+      "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-b-second-device-native",
+      "scenario": null,
+      "mode": "live ordinary cloud synthetic QA identity, independent second device",
+      "launcherPid": 3788,
+      "mainPid": 13108,
+      "mainWindowId": 9769008,
+      "processReportedMainWindowId": 24249962,
+      "debugPort": 57220,
+      "payloadRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app",
+      "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "authUserId": "2028f0af-f501-47f5-9abb-de59487dad46",
+      "deviceId": "351797b0-cad7-4b8f-9f93-8d0e806c49c3",
+      "active": true,
+      "minimized": true,
+      "keepLoginSelected": false,
+      "rememberAccountSelected": false,
+      "persistence": "memory",
+      "identityEvidence": "rounds/candidate-dc7aee3-1b1afdd1/evidence/b2-original-account-normal-login-identity.json"
+    }
+  ],
+  "protected": {
+    "launcherPid": 14476,
+    "mainPid": 10392,
+    "mainWindowId": 3475554,
+    "giantPetWindowId": 9703220,
+    "codexWindowId": 23528694,
+    "policy": "Do not input/close/kill/reset ordinary profile; same extracted EXE path is shared"
+  },
+  "nativeControl": {
+    "provider": "mcp__cua_repl",
+    "preferred": true,
+    "note": "Window app metadata all group under Codex; choose exact returned window IDs, never operate Codex UI. Sky often reports Chrome Legacy Window where giant ordinary pet overlays. Safe main click area is physical x<966 or y<526; use keyboard and scrolling elsewhere. Desktop drag first attempt may hit Explorer while click-through; fresh screenshot after hover then retry once. CUA captureNative closure retained old root despite assignment; redefined with literal candidate path. 32 candidate JPEG files copied by hash into round; frozen baseline unaffected. One occluded Codex screenshot moved to private ignored profile. To restore minimized own window pressKey(Escape) works; if foreground other app occludes, only click confirmed visible lower product region; never Codex UI.",
+    "captureFunction": "captureNative(target,label,windowId)",
+    "cuaEvidenceRoot": "C:/Users/Administrator/Desktop/project/DesktopPet/docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-e875feb-50e52249/evidence",
+    "lastInventory": {
+      "at": "2026-10-25T14:45:36.084Z",
+      "productWindowIds": [
+        15205408,
+        8589428,
+        7603610
+      ],
+      "ordinaryUserWindowsTouched": false
+    }
+  },
+  "naturalTimers": {
+    "carrotMaturesAt": 1792922909678,
+    "riceMaturesAt": 1792924430989,
+    "clockOverridden": false
+  },
+  "coordinationThread": "01a172b5-e59a-7c53-a67c-8fc53e6f61cd",
+  "next": "窗口N02/N03/P02与B11完成，49passed；A将保持普通后台无UI写入，Root metadata-only诊断另批。立即B1资源R01-R05/备份P04-P06，再不同岩团新hash R06云冷恢复/S02；禁止预填云资产通过。",
+  "activeRound": {
+    "id": "candidate-dc7aee3-1b1afdd1",
+    "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+    "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+    "sourceTree": "1b6b47b23a93bf505c92bb1ff9af5dead75d6273",
+    "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+    "executable": "C:/Users/Administrator/Desktop/project/DesktopPet/releases/user-acceptance-dc7aee3/Lingjing-0.1.8-portable-x64.exe",
+    "asarSha256": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba",
+    "startedAt": "2026-10-25T15:41:24.716Z",
+    "acceptanceScope": "All 98 cases on this exact final candidate; no intermediate passes inherited",
+    "profilePath": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a",
+    "scenarioRunId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+    "provenance": "local unified-battle explicitly simulated; ordinary cloud profiles live and no client QA marker",
+    "knownOutstandingIssues": [],
+    "rootAuthorizedLaunch": true,
+    "latestRemotePull": {
+      "confirmedBy": [
+        "Root"
+      ],
+      "confirmedAt": "2026-10-25T17:45:53Z",
+      "remoteMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+      "rootHead": "1c7ae4b5",
+      "result": "fetch+pull Already up to date; apps/packages/infra exact DC7 product source"
+    },
+    "economicAndFoxAllocationFrozen": false,
+    "numberChainStatus": "Root independently verified original A1/C2/B3 and original C fox2 capture; allocation and C identity freezes lifted"
+  },
+  "roundDir": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1",
+  "takeover": {
+    "threadId": "01a172b4-d7f0-7213-9a40-092418ee776b",
+    "inputLease": "sole-native-owner-confirmed-active-new-team",
+    "verifiedAt": "2026-10-25T11:11:25.769Z",
+    "evidenceInventory": {
+      "files": 312,
+      "bytes": 42271514,
+      "sha256": "bebe2ff70b1cd62d9a0f9287f7b5a74d4ef2eebc66b4e7511b2e4ba1dabc7c94",
+      "recoveryDrift": 0
+    },
+    "executableHashVerified": true,
+    "mainPid": 27436,
+    "wrapperPid": 23280,
+    "mainWindowId": 7866562,
+    "petWindowId": 14487906,
+    "debugPort": 57215,
+    "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+    "scenario": {
+      "id": "unified-battle",
+      "runId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+      "provenance": "simulated",
+      "isolated": true
+    },
+    "noNewRound": true,
+    "gitIndexUntouched": true
+  },
+  "externalProcessObservation": {
+    "at": "2026-10-25T11:41:11.279Z",
+    "missing": [
+      14476,
+      10392,
+      23668,
+      25144,
+      23280,
+      27436
+    ],
+    "alive": [
+      18500
+    ],
+    "cdp51745": false,
+    "cdp57215": false,
+    "byThisSessionClosed": false,
+    "cause": "Direct human confirmed accidentally closing the processes",
+    "nativeInputStopped": false,
+    "humanConfirmed": true,
+    "normalExitAcceptance": false
+  },
+  "cloudQAGrant": {
+    "authority": "coordinator independently verified SQL and inserted service-owned grant",
+    "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe",
+    "deviceId": "41de040e-a134-487f-b1d3-76b5254a8f97",
+    "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+    "sessionId": "7deaf22a-df64-461a-92fc-9fe1b0e8b0dd",
+    "scenarioId": "user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+    "expiresAt": "2026-10-25T23:00:00.000Z",
+    "cleanupOwner": "Root; only grants-renewal-active.json current restore/delete-from-2300 scripts"
+  },
+  "safeFixturePreparation": {
+    "firstPet": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+    "secondPet": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+    "messages": 8,
+    "personas": 2,
+    "memories": 2,
+    "inventory": {
+      "carrot": 3,
+      "rice": 0,
+      "cooked_rice": 1
+    },
+    "gardenActions": 6,
+    "localProtocolBaseUrl": "http://127.0.0.1:63040/v1",
+    "localProtocolPrivateConfig": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\6ff8e38f-9f2b-4872-8747-1fb00bd81655\\protocol-fixture\\connection-private.json",
+    "serverRunning": true,
+    "cloudBProfile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-b-fresh09",
+    "cloudBLaunched": false,
+    "cloudBRegistered": true,
+    "finalAcceptance": false,
+    "pendingSecondCloudIdentityReason": "No approved old live launch handle remains; guard stopped before spawning. Wait exact new candidate; empty ignored B profile is preserved.",
+    "cloudBRegistrationOwner": "08; no09 UI login before root go",
+    "cloudBAuthUserId": "2028f0af-f501-47f5-9abb-de59487dad46",
+    "cloudBDeviceId": "bb7df55b-638d-4ed4-a217-f31888a13dd0",
+    "cloudBSessionId": "f4d012ae-d944-426a-9bbc-4286c3c3e162"
+  },
+  "counts": {
+    "passed": 61,
+    "pending": 24,
+    "failed": 9,
+    "blocked": 2,
+    "running": 2
+  },
+  "uiRoute": "LocalA #/discovery/pokedex; new fish f312 single captured; CloudA settings unchanged",
+  "nativeInput": {
+    "ownerThreadId": "01a1759f-4253-7ef0-bf83-44a87c0a16e8",
+    "state": "resumed-existing-local-profile-login-gate",
+    "oldRoundOnly": false
+  },
+  "latestIssues": [
+    "QA-010",
+    "QA-011",
+    "QA-012",
+    "QA-013"
+  ],
+  "activeNativeTarget": {
+    "profileId": "final-dc7-cloud-a",
+    "mainPid": 11360,
+    "wrapperPid": 16580,
+    "mainWindowId": 655548,
+    "debugPort": 57218
+  },
+  "finalExecutionPlan": "final-execution-plan.json",
+  "preFinalPreservation": "pre-final-preservation/20261025T151747Z",
+  "a1": {
+    "status": "Root independent PG1 confirmed",
+    "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+    "actionId": "18a25316-26ac-453e-a34a-ab44ed3f7055",
+    "canonicalActionId": "companions:18a25316-26ac-453e-a34a-ab44ed3f7055",
+    "cloudSaveRevision": 9,
+    "rootReportedOriginalReceiptBytesEqual": true
+  },
+  "c2": {
+    "status": "Root independently verified original fox2 natural capture; backend-only explicitly simulated coordinates, not native M05",
+    "spawnId": "wild-2d-v2-f3621dbe19-498040-51998-202333",
+    "globalSerial": "2",
+    "petId": null,
+    "captured": true,
+    "originalCaptureEvidence": "docs/implementation/evidence/cloud/2026-10-25/global-serial-live-original-fox-capture.json"
+  },
+  "b3": {
+    "status": "Root independent PG3 confirmed exact original receipt",
+    "petId": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+    "inputActionId": "f0f7e8f7-051a-40a2-8ff7-3d9d2dcb4cc8",
+    "canonicalActionId": "companions:f0f7e8f7-051a-40a2-8ff7-3d9d2dcb4cc8",
+    "globalSerial": "3",
+    "manifest": "rounds/candidate-dc7aee3-1b1afdd1/evidence/b3-complete-09-manifest.json"
+  },
+  "naturalTimersFinal": {
+    "plants": [
+      {
+        "plotId": "plot-2",
+        "cropType": "carrot",
+        "plantedAt": 1792945476909,
+        "maturesAt": 1792946076909,
+        "yieldQuantity": 3,
+        "revision": 1,
+        "stage": "growing",
+        "actionId": "31ff0257-310d-46df-a334-22ea0014567e",
+        "requestHash": "150c7b08ad516b2bec8e9e58d154439d4e5399d9838de28c7fd494815dc1aa4c",
+        "plantedAtUtc": "2026-10-25T16:24:36.909Z",
+        "maturesAtUtc": "2026-10-25T16:34:36.909Z",
+        "durationMs": 600000,
+        "seedQuantity": 0
+      },
+      {
+        "plotId": "plot-3",
+        "cropType": "tomato",
+        "plantedAt": 1792945607587,
+        "maturesAt": 1792946507587,
+        "yieldQuantity": 3,
+        "revision": 1,
+        "stage": "growing",
+        "actionId": "7d0d8105-09bd-499a-baa0-0f55e27fb084",
+        "requestHash": "028613168581dec7fec8312fe153378636556ba1db17f2a4df9a5f820dba5ae9",
+        "plantedAtUtc": "2026-10-25T16:26:47.587Z",
+        "maturesAtUtc": "2026-10-25T16:41:47.587Z",
+        "durationMs": 900000,
+        "seedQuantity": 1
+      },
+      {
+        "plotId": "plot-4",
+        "cropType": "berry",
+        "plantedAt": 1792945689779,
+        "maturesAt": 1792946889779,
+        "yieldQuantity": 4,
+        "revision": 1,
+        "stage": "growing",
+        "actionId": "d139a362-d9b4-4cb8-8df8-56db2592ef17",
+        "requestHash": "e73777f6d28bd7a4610fdd055aa51764b0275fb3675e27ed45979d0dc97724c9",
+        "plantedAtUtc": "2026-10-25T16:28:09.779Z",
+        "maturesAtUtc": "2026-10-25T16:48:09.779Z",
+        "durationMs": 1200000,
+        "seedQuantity": 1
+      },
+      {
+        "plotId": "plot-5",
+        "cropType": "rice",
+        "plantedAt": 1792945771574,
+        "maturesAt": 1792947271574,
+        "yieldQuantity": 2,
+        "revision": 1,
+        "stage": "growing",
+        "actionId": "c661f63c-dc98-4566-93d1-a37f257012dc",
+        "requestHash": "650b9185a22c55b396d9edd371c469557aa715de50d6bfc04647aba5c9637756",
+        "plantedAtUtc": "2026-10-25T16:29:31.574Z",
+        "maturesAtUtc": "2026-10-25T16:54:31.574Z",
+        "durationMs": 1500000,
+        "seedQuantity": 1
+      }
+    ],
+    "clockOverridden": false,
+    "originalMaturePlot1NotHarvested": true
+  },
+  "requiredRestorations": [
+    {
+      "scope": "original 6ff local-a desktop preferences",
+      "field": "clickThrough",
+      "original": true,
+      "current": true,
+      "reason": "Native desktop interaction acceptance; normal UI preference temporarily disables transparent hit-through",
+      "restoreVia": "same Settings/Desktop UI after desktop batch",
+      "restored": true,
+      "restoredAt": "2026-10-25T17:38:43.426Z"
+    },
+    {
+      "scope": "original 6ff local-a first pet",
+      "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+      "field": "desktop.visible",
+      "original": true,
+      "current": true,
+      "reason": "Normal native single-pet recall for desktop acceptance; restore after batch",
+      "restored": true,
+      "restoredAt": "2026-10-25T17:02:34.998Z"
+    },
+    {
+      "scope": "original 6ff local-a desktop batch",
+      "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+      "field": "desktop.scale",
+      "original": 1,
+      "current": 1,
+      "restoreVia": "native size slider after D04/D06 persistence verification",
+      "restored": true,
+      "restoredAt": "2026-10-25T17:23:07.760Z"
+    },
+    {
+      "scope": "original 6ff local-a desktop batch",
+      "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+      "field": "desktop.visible",
+      "original": false,
+      "current": false,
+      "restoreVia": "native desktop toggle after two-pet comparison",
+      "restored": true,
+      "restoredAt": "2026-10-25T17:59:16.097Z"
+    },
+    {
+      "scope": "final-dc7-local-a",
+      "field": "closeToTray",
+      "original": true,
+      "current": true,
+      "restoreVia": "native Settings after planned D06 restart",
+      "restored": true,
+      "restoredAt": "2026-10-25T17:23:07.760Z"
+    },
+    {
+      "scope": "final-dc7-local-a desktop behavior batch",
+      "field": "quietHours.enabled",
+      "original": true,
+      "current": true,
+      "restoreVia": "native settings after D07; original22:00-08:00 unchanged",
+      "restored": true,
+      "restoredAt": "2026-10-25T17:38:43.426Z"
+    },
+    {
+      "scope": "final-dc7-local-a D01",
+      "field": "desktop.companionLimit",
+      "original": 3,
+      "current": 3,
+      "restoreVia": "native settings after display-limit acceptance",
+      "restored": true,
+      "restoredAt": "2026-10-25T17:59:16.097Z"
+    },
+    {
+      "scope": "ordinary cloudA S01 synthetic display name",
+      "field": "username",
+      "original": "云端验收甲",
+      "current": "云端验收甲",
+      "restoreVia": "normal account UI after Root independent profile readback",
+      "restored": true,
+      "restoredAt": "2026-10-25T20:14:03.453Z",
+      "localRevision": 2
+    },
+    {
+      "scope": "original 6ff LocalA new wild acceptance",
+      "field": "battlePetId",
+      "original": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+      "current": "pet-8d67a86f-8053-46fe-93e2-df62ca116a45",
+      "restored": false,
+      "restoreVia": "normal UI after current retained battle concludes"
+    },
+    {
+      "scope": "original CloudA A12",
+      "field": "closeToTray",
+      "original": true,
+      "current": true,
+      "restored": true,
+      "restoredAt": "2026-10-26T06:43:52.243Z",
+      "localRevision": 14,
+      "cloudRevision": 30,
+      "actionId": "auto:0c7f7645-ae9a-4feb-b95b-eebc33c28694"
+    },
+    {
+      "scope": "original CloudA normal logout follow-up",
+      "field": "keepSignedIn",
+      "original": true,
+      "current": true,
+      "restored": true,
+      "reason": "Normal logout clears persisted login; restore on next explicitly approved original A login",
+      "restoreVia": "normal native login form only",
+      "restoredAt": "2026-10-26T07:09:19.310Z",
+      "proof": "rounds/candidate-dc7aee3-1b1afdd1/evidence/a11-native-A-B-A-restored-complete-await-root-20261026.json"
+    }
+  ],
+  "petsPreparedFinal": {
+    "thirdWood": "pet-8d67a86f-8053-46fe-93e2-df62ca116a45",
+    "fourthWood": "pet-e9f2413c-f9c3-4e9e-a625-935b4da87ee4",
+    "fifthFire": "pet-8853a238-8730-4970-8e39-885a1f1da97d",
+    "allNewDesktopVisible": false
+  },
+  "chatSimulatedProvider": {
+    "runId": "d78e155f-2bbd-418f-b16f-d1a1613f2099",
+    "runDirectory": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/conversations/dc7-simulated-provider/run-d78e155f-2bbd-418f-b16f-d1a1613f2099",
+    "pid": 33708,
+    "port": 53441,
+    "bindingSha256": "f638797d323090a6b151404bdde4e078d113b7b236c4e2400e9f7c2bdbeb99ad",
+    "approvalRef": "root-dc7-chat-pet-8853-20261025T1802",
+    "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+    "petId": "pet-8853a238-8730-4970-8e39-885a1f1da97d",
+    "scope": "pet",
+    "simulatedUpstream": true,
+    "realLoopbackHttp": true,
+    "externalModelSuccess": false,
+    "startedAt": "2026-10-25T18:03:56.774Z",
+    "execSession": 23638,
+    "source": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+    "status": "stopped",
+    "stoppedAt": "2026-10-25T18:47:50.226Z",
+    "ownedHelperPidAbsent": true,
+    "portReleased": true,
+    "dummyClearedOnlyNewFire": true
+  },
+  "chatOriginalSelectionBeforeBatch": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+  "cloudBChatScope": {
+    "runId": "b272bb70-7b19-47e4-8d01-30ed0ce64e97",
+    "pid": 10628,
+    "port": 56751,
+    "approvalRef": "root-dc7-chat-cloud-b-20261025T1852",
+    "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "petId": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+    "keyState": "both new slots key0/vault0; new metadata retained",
+    "syncOriginalEnabled": false,
+    "firstConflictAction": "41777b34-8b8f-47a9-9631-8c87af62a8ae",
+    "autoAction": "auto:f229a446-b520-4316-b126-ecd2c4de1903",
+    "cloudRevision": 5,
+    "exportReceiptId": "6ea8919d-b9b7-4914-b07c-5f33e0f41d42",
+    "status": "stopped-and-new-keys-cleared",
+    "cleanupEvidence": "rounds/candidate-dc7aee3-1b1afdd1/evidence/t06-cloud-b-cleanup-and-preservation-final.json",
+    "syncRestoredFalse": true
+  },
+  "s03": {
+    "pendingActionId": "b913c10c-7b1d-45a5-9e8e-e2bd058f5550",
+    "logicalHash": "8b286f1d575a52b14b74b87cb3f90c9a45062b224daed3179ea0235e8fed201b",
+    "requestHash": "8b286f1d575a52b14b74b87cb3f90c9a45062b224daed3179ea0235e8fed201b",
+    "pendingRawSha256": "99c906f89b7f22b837f8283cf1463827d297d205aff6793608ea212fb709ca86",
+    "seedMainPid": 4364,
+    "resumeMainPid": 3640,
+    "proxyPid": 25336,
+    "proxyPort": 59084,
+    "mode": "stopped",
+    "controlSequence": 3,
+    "originalServerCountBeforeAllow": 0,
+    "pendingExactAcrossSfx": true,
+    "environmentProvenance": "explicit-child-launch-configuration-not-main-environment-readback",
+    "mainEnvironmentReadbackVerified": false,
+    "proxyListenerClosed": true,
+    "originalPendingCleared": true,
+    "journalStatus": "committed",
+    "gardenRevision": 7,
+    "status": "passed",
+    "phase": "complete-normal-network-settings-restored",
+    "cleanupComplete": true,
+    "finalMainPid": 13892
+  },
+  "c11": {
+    "stage": "Root two-zero-send after verified, technical helper diagnosis deferred to02; ordinary A restart complete, C11 remains running incl wild same serial capture",
+    "readyFile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1\\evidence\\c11-a-normal-exit-ready-for-root-20261025T2158-v2.json",
+    "readySha256": "a2fba684510e7090a4fad3971b92e377e30e872c8b851206c12f851fadfb9b0d",
+    "technicalRequestSent": false,
+    "productWritesPaused": false,
+    "firstAttempt": {
+      "pid": 26872,
+      "sends": 0,
+      "exitCode": 1,
+      "errorCode": "INDEPENDENT_BEFORE_STALE",
+      "protectedFilesExact": true,
+      "claimDirectoryCreated": false
+    }
+  },
+  "resourceBatch": {
+    "stage": "Owned Qingya native import verified; R04 native rejected-import checks next, then R01/R02 preferences/actions and same-owner native backup recovery",
+    "b1OwnedQingyaId": "866b735a-9351-414f-a797-6bab290144c2",
+    "contentHash": "1cd0626ea29767476b371519ec4dc00fc43c528bfcd92627166275b937db2060",
+    "sourceJson": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/resources/cloud-Yzee8N/original/character.json",
+    "sourcePng": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/resources/cloud-Yzee8N/original/sprites.png",
+    "b1SyncOriginalFalse": true,
+    "b2NoPrivateResourceBefore": true,
+    "r05": {
+      "status": "complete",
+      "at": "2026-10-25T23:47:21.427Z",
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "sourceExport": {
+        "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-b-fresh09/uat-exports/r05-dc7-qingya-actions-20261026.lingjing.json",
+        "exists": true,
+        "bytes": 2507321,
+        "sha256": "f148d3858f2ef68464a331ab779b3b3ded8e80d0ca8b6252ffbe6602b16bd496"
+      },
+      "restoreActionId": "bfa7ee7a-d2f1-4886-b743-f75160201336",
+      "b2Profile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-b-second-device-native",
+      "syncEnabled": false,
+      "proof": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/r05-p05-normal-account-restore-original-resource-and-preservation-complete.json"
+    },
+    "next": "R01 local-new-pet explicit apply; R06 separate yantuan cloud cold baseline before enabling B2"
+  },
+  "pause": {
+    "requestedBy": "human user via authorized Root coordination",
+    "reason": "new coordinator/necessary feature chats and handoff then pause",
+    "handoffPath": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/handoff-20261026-native09-paused.md",
+    "productOperationsAllowed": false,
+    "a12NewHelperStarted": false,
+    "a12NewHttpRequests": {
+      "login": 0,
+      "c11": 0,
+      "s05": 0,
+      "logout": 0
+    },
+    "aState": "normally closed; original secure old O preserved; current closeToTray=false, original true awaits authorized resume",
+    "otherThreeMains": "preserved; B1/B2 syncfalse; no UI writes",
+    "counts": {
+      "passed": 57,
+      "pending": 27,
+      "running": 4,
+      "failed": 8,
+      "blocked": 2
+    },
+    "requiredRestoration": "After explicit user resume and Root protocol, restore original A closeToTray=true and remember/keep=true by normal UI; do not reopen now."
+  },
+  "resumeHistory": [
+    {
+      "at": "2026-10-26T06:15:23.091Z",
+      "priorPhase": "paused-by-user-after-native09-handoff",
+      "priorNativeInput": {
+        "ownerThreadId": "01a172b4-d7f0-7213-9a40-092418ee776b",
+        "state": "final-candidate-native-verification-active",
+        "oldRoundOnly": false
+      },
+      "priorNativeTarget": {
+        "profileId": "final-dc7-cloud-b",
+        "mainPid": 32748,
+        "mainWindowId": 13109186,
+        "debugPort": 57219
+      },
+      "pauseSnapshot": {
+        "requestedBy": "human user via authorized Root coordination",
+        "reason": "new coordinator/necessary feature chats and handoff then pause",
+        "handoffPath": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/handoff-20261026-native09-paused.md",
+        "productOperationsAllowed": false,
+        "a12NewHelperStarted": false,
+        "a12NewHttpRequests": {
+          "login": 0,
+          "c11": 0,
+          "s05": 0,
+          "logout": 0
+        },
+        "aState": "normally closed; original secure old O preserved; current closeToTray=false, original true awaits authorized resume",
+        "otherThreeMains": "preserved; B1/B2 syncfalse; no UI writes",
+        "counts": {
+          "passed": 57,
+          "pending": 27,
+          "running": 4,
+          "failed": 8,
+          "blocked": 2
+        },
+        "requiredRestoration": "After explicit user resume and Root protocol, restore original A closeToTray=true and remember/keep=true by normal UI; do not reopen now."
+      }
+    }
+  ],
+  "resume": {
+    "at": "2026-10-26T06:15:23.091Z",
+    "coordinatorThreadId": "01a1759f-d666-75d1-81dc-e757e748d221",
+    "nativeThreadId": "01a1759f-4253-7ef0-bf83-44a87c0a16e8",
+    "fixedGapList": "rounds/candidate-dc7aee3-1b1afdd1/evidence/native09-fixed-remaining-gaps-20261026.json",
+    "gateReport": "rounds/candidate-dc7aee3-1b1afdd1/evidence/native09-resume-localA-login-gate-protected-readback-20261026.json",
+    "cloudAuthOrGrantApproved": false,
+    "existingCloudAStillClosed": true,
+    "originalFiveDesktopVisible": false,
+    "localLogin": {
+      "at": "2026-10-26T06:17:43.466Z",
+      "normalNativeOnce": true,
+      "existingSyntheticOnly": true,
+      "rememberUnchanged": true,
+      "keepUnchanged": true,
+      "passwordNotPrintedOrSaved": true,
+      "protectedChangedTables": [
+        "lingjing_resource_files"
+      ],
+      "proof": "rounds/candidate-dc7aee3-1b1afdd1/evidence/native09-resume-after-native-login-20261026.json"
+    },
+    "localCheckpoint": {
+      "at": "2026-10-26T06:23:11.600Z",
+      "source": "native UI route-return and continue + readonly database",
+      "uiFrozenForRootAuthV3": true,
+      "mainPid": 17596,
+      "route": "discovery",
+      "encounterId": "encounter-ec4de4ff-f66c-4f1c-a8a2-7c6bf8bdbb26",
+      "battleId": "battle-23030283-276b-4e98-86e6-9a7263bbd1df",
+      "petId": "pet-8d67a86f-8053-46fe-93e2-df62ca116a45",
+      "round": 0,
+      "playerHp": 120,
+      "enemyHp": 120,
+      "nativeInputsSentForMoves": 0,
+      "naturalOutcomeForced": false,
+      "encounterRetained": true,
+      "expectedCaptureCount": 0,
+      "originalFivePetsExact": true,
+      "expectedRestoration": {
+        "selection": "battlePetId",
+        "original": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "current": "pet-8d67a86f-8053-46fe-93e2-df62ca116a45",
+        "restoreVia": "normal UI after current retained battle concludes"
+      }
+    },
+    "authV3": {
+      "at": "2026-10-26T06:35:22.457Z",
+      "runId": "e577582a-3f81-4444-be20-4d3ab718ab21",
+      "state": "COMPLETE_AWAITING_NATIVE_A12",
+      "requests": {
+        "login": 1,
+        "c11": 1,
+        "s05": 1,
+        "logout": 1
+      },
+      "cleanupVerified": true,
+      "exitCode": 0,
+      "nativeA12Passed": false,
+      "proof": "rounds/candidate-dc7aee3-1b1afdd1/evidence/a12-v3-four-request-technical-complete-native-pending-20261026.json"
+    },
+    "cloudA": {
+      "at": "2026-10-26T06:43:52.243Z",
+      "nativeOldOInvalidated": true,
+      "nativeLoginOnce": true,
+      "remember": true,
+      "keep": true,
+      "closeToTray": true,
+      "proof": "rounds/candidate-dc7aee3-1b1afdd1/evidence/a12-native-revoked-O-login-R-restored-original-close-20261026.json",
+      "receipt": {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "action_id": "auto:0c7f7645-ae9a-4feb-b95b-eebc33c28694",
+        "base_revision": 29,
+        "status": "verified",
+        "attempts": 0,
+        "last_error": null,
+        "verified_at": "2026-10-26T06:42:06.004Z"
+      },
+      "finalRemember": true,
+      "finalKeep": true,
+      "finalCloseToTray": true
+    },
+    "cloudANormalLogout": {
+      "at": "2026-10-26T06:51:22.723Z",
+      "proof": "rounds/candidate-dc7aee3-1b1afdd1/evidence/a12-native-normal-R-logout-private-clear-safe-readback-20261026.json",
+      "sessionR": "301b9f8e-fe73-40df-9a89-013fd90f0726",
+      "nativeOnce": true,
+      "rootPhysicalAuthCleanupPending": false,
+      "rootProof": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/native-R-normal-logout-independent-auth.json"
+    },
+    "a12": {
+      "passed": true,
+      "proof": "rounds/candidate-dc7aee3-1b1afdd1/evidence/a12-complete-native-and-root-auth-20261026.json",
+      "restorationPending": "Original A keeptrue at final approved A login"
+    },
+    "cloudBInA": {
+      "at": "2026-10-26T06:57:24.225Z",
+      "proof": "rounds/candidate-dc7aee3-1b1afdd1/evidence/a11-B-on-A-physical-device-partial-safe-readback-20261026.json",
+      "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "normalNativeOnce": true,
+      "keep": false,
+      "remember": true,
+      "uiFrozen": true,
+      "loggedOutNormally": true,
+      "backgroundBHydrationObserved": true
+    },
+    "a08": {
+      "passed": true,
+      "proof": "rounds/candidate-dc7aee3-1b1afdd1/evidence/a08-native-remembered-account-and-public-hint-complete-20261026.json",
+      "scope": "Remembered public account hint and blank password only"
+    },
+    "a11": {
+      "at": "2026-10-26T07:09:19.310Z",
+      "proof": "rounds/candidate-dc7aee3-1b1afdd1/evidence/a11-native-A-B-A-restored-complete-await-root-20261026.json",
+      "nativeABAComplete": true,
+      "rootAfterPending": false,
+      "casePassed": true,
+      "rootProof": "rounds/candidate-dc7aee3-1b1afdd1/evidence/a11-root-independent-after-confirmed-20261026.json",
+      "newASession": "3f0734cf-b27d-471a-9e7c-ac4bbb5f1a11"
+    },
+    "localCapture": {
+      "at": "2026-10-26T07:29:34.342Z",
+      "proof": "rounds/candidate-dc7aee3-1b1afdd1/evidence/m05-positive-single-capture-with-QA025-modal-error-20261026.json",
+      "newPetId": "pet-f31270e4-7ea3-42f1-a093-ac035d846de2",
+      "encounterId": "encounter-9738bf1d-1acd-430d-9e0b-a0ca1c772840",
+      "battleId": "battle-e57d2412-da9b-42b2-a523-41af112189cb",
+      "source": "simulated local",
+      "newIssue": "QA-025",
+      "casePassed": false
+    }
+  },
+  "native09TerritoryCancelCheckpoint": {
+    "at": "2026-10-26T07:45:18.583Z",
+    "battleId": "battle-c6ef8b49-98c2-4cbe-86e3-338ad297a097",
+    "challengeSettled": false,
+    "remainingAttempts": 1,
+    "territoryOwned": false,
+    "battleSelectionRestored": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+    "issue": "QA-026",
+    "evidence": "rounds/candidate-dc7aee3-1b1afdd1/evidence/g04-territory-cancel-native-readback-20261026.json"
+  },
+  "native09LocalSweepClosed": {
+    "at": "2026-10-26T08:24:26.076Z",
+    "restorationEvidence": "rounds/candidate-dc7aee3-1b1afdd1/evidence/native09-old-local-sweep-restoration-20261026.json",
+    "localBExited": true,
+    "localAKeptRunningOriginalCloseToTray": true,
+    "localAMainPid": 17596,
+    "localAWrapperPid": 3612,
+    "waiting": "Root唯一新候选冻结及明确切包窗口",
+    "noNewBranches": true
+  },
+  "native09OriginalBattleSelectionRestored": {
+    "at": "2026-10-26T08:24:26.076Z",
+    "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+    "through": "normal territory challenge plus later normal battle select",
+    "evidence": "rounds/candidate-dc7aee3-1b1afdd1/evidence/native09-old-local-sweep-restoration-20261026.json"
+  }
+}

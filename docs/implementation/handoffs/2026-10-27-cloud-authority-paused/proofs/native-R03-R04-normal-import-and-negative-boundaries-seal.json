@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-26T21:15:11.040Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "readOnly": true,
+  "credentialValuesRead": false,
+  "newResource": {
+    "resource_id": "3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6",
+    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "content_hash": "c395254032588907ecbca1a0fc31497c3c184cee0e59231485a10860d60e240b",
+    "revision": 1,
+    "created_at": "2026-10-26T21:09:53.840Z"
+  },
+  "newImport": {
+    "import_id": "eda6dd5f-fb63-40f0-8bcd-7b86771e6842",
+    "resource_id": "3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6",
+    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "source_filename": "character.json",
+    "imported_at": "2026-10-26T21:09:53.840Z"
+  },
+  "actualManagedFiles": [
+    {
+      "resource_id": "3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6",
+      "asset_key": "character.json",
+      "file_path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\profiles\\cloud-b-resource-fresh-4e6\\character-resources\\3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6\\character.json",
+      "sha256": "d69de3c105f41da3c35abcdb3b2a04a17c29e810e6c1947b7565c9d95f2760ac"
+    },
+    {
+      "resource_id": "3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6",
+      "asset_key": "sprites.png",
+      "file_path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\profiles\\cloud-b-resource-fresh-4e6\\character-resources\\3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6\\sprites.png",
+      "sha256": "4b1eb6d06ba4c737a3cd2a10f567a2ff2af80bfec3be260e7df304af4bdb80f8"
+    }
+  ],
+  "sourceOriginalBytesMatched": true,
+  "negativeInputs": [
+    "invalid JSON",
+    "missing sprites.png",
+    "../ own QA sentinel PNG"
+  ],
+  "allExistingResourcesImportsFilesPreferencesAndPetsUnchangedAcrossNegativeInputs": true,
+  "sentinelHashUnchanged": true,
+  "nativeEvidence": [
+    "native-R03-positive-original-fantuan-import-result.png",
+    "native-R04-invalid-json-rejected.png",
+    "native-R04-missing-image-rejected.png",
+    "native-R04-path-traversal-rejected.png"
+  ],
+  "cloudPersistenceNotAssumed": true
+}

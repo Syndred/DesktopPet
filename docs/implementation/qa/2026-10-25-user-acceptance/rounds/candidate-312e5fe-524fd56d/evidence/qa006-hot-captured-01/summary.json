@@ -1,0 +1,38 @@
+{
+  "payloadAfter": [
+    {
+      "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\3LBNJFI1PaaqGf3idng2lTKWtDp\\Lingjing.exe",
+      "exists": true,
+      "sha256": "9ebd111b09859d0a2efd99a67d228f6f71917d1a3428e4e1f16e2843ea3fc35d",
+      "modifiedAt": "2026-10-25T10:17:06.0000000Z",
+      "bytes": 246846464
+    },
+    {
+      "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\3LBNJFI1PaaqGf3idng2lTKWtDp\\resources\\app.asar",
+      "exists": true,
+      "sha256": "de3e646fddfbc0a202e41f00dbcc26a3896d939d91a78b8228a2af3839a5cf0d",
+      "modifiedAt": "2026-10-25T10:17:06.0000000Z",
+      "bytes": 267467690
+    }
+  ],
+  "launchers": [
+    {
+      "pid": 17496,
+      "startedAt": "2026-10-25T10:49:39.0010215Z",
+      "exitAt": "2026-10-25T10:50:11.4801167Z",
+      "exitCode": 9,
+      "exitCaptured": true,
+      "issuedAt": "2026-10-25T10:49:38.9837937Z"
+    }
+  ],
+  "observedMainIds": [
+    27436
+  ],
+  "uiResult": "09 must record native window/app.info outcome; do not infer pass from exit0.",
+  "at": "2026-10-25T10:50:23.7122337Z",
+  "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\6ff8e38f-9f2b-4872-8747-1fb00bd81655\\local-a",
+  "mode": "HotSameProfile",
+  "noProcessesClosedOrKilled": true,
+  "sha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+  "status": "captured-no-automatic-verdict"
+}

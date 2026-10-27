@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-26T22:53:48.817Z",
+  "stage": "p02-native-save-cancel-and-normal-restart",
+  "caseUpdates": [
+    {
+      "id": "P02",
+      "status": "passed",
+      "executionState": "executed_current_candidate",
+      "actual": "原B2非安全偏好closeToTray：普通UI由true改为false但不保存，离开至伙伴再返回，恢复true；SQLite完整settings仍revision13，12项核心表摘要不变。保存/重启分支复用本候选同轮T05的实际操作：保存false revision12、正常AltF4退出/同profile重启，登录前只读回仍false/rev12；随后普通UI恢复完整原设置true/rev13。两分支顺序已在封印注明，没有追加重复重启或设置写入。",
+      "evidence": [
+        "native-P02-original-B2-unsaved-close-to-tray-false-draft.png",
+        "native-P02-original-B2-unsaved-setting-discarded-on-return.png",
+        "cloudB2-after-r05-qingya-normal-import-once.json",
+        "cloudB2-after-p02-unsaved-close-to-tray-discard.json",
+        "cloudB2-after-t05-temporary-normal-exit-setting-save.json",
+        "cloudB2-after-t05-normal-restart-login-required.json",
+        "native-T05-original-B2-normal-exit-setting-save-result.png",
+        "native-T05-old-runtime-normal-exit-readback.json",
+        "launch-cloudB2-t05-history-normal-restart.json",
+        "native-T05-original-B2-original-close-to-tray-setting-restored.png",
+        "root-T05-normal-restart-history-and-settings-independent.json",
+        "native-P02-save-cancel-and-normal-restart-seal.json"
+      ]
+    }
+  ],
+  "newIssues": [],
+  "issueUpdates": []
+}

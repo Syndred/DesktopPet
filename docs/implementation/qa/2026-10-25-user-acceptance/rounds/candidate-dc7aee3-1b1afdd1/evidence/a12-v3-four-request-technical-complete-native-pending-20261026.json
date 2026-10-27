@@ -1,0 +1,120 @@
+{
+  "at": "2026-10-26T06:35:22.457Z",
+  "source": "dedicated PTY55726 public events and frozen runner report",
+  "runId": "e577582a-3f81-4444-be20-4d3ab718ab21",
+  "state": "COMPLETE_AWAITING_NATIVE_A12",
+  "finalState": "COMPLETE_AWAITING_NATIVE_A12",
+  "requests": {
+    "login": 1,
+    "c11": 1,
+    "s05": 1,
+    "logout": 1
+  },
+  "stages": {
+    "login": {
+      "sendAt": "2026-10-26T06:27:57.364Z",
+      "receiveAt": "2026-10-26T06:28:03.693Z",
+      "httpStatus": 200,
+      "requestIds": {
+        "sb-request-id": "01a176e4-f83e-7036-babd-99e125d9296a",
+        "cf-ray": "a50765f9fd2ec8de-SJC"
+      },
+      "actor": {
+        "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe",
+        "deviceId": "41de040e-a134-487f-b1d3-76b5254a8f97",
+        "sessionId": "db3bb3a6-1b99-49fb-bd5d-992fc07a8efe"
+      }
+    },
+    "c11": {
+      "sendAt": "2026-10-26T06:31:24.338Z",
+      "receiveAt": "2026-10-26T06:31:28.480Z",
+      "httpStatus": 200,
+      "requestBodySha256": "a5d0681e01407c99e34dbea106311d071e0179b76e7aa1220f3a3eb50b84d7e4",
+      "requestIds": {
+        "sb-request-id": "01a176e8-206c-739a-9f90-75b8beeddc9d",
+        "cf-ray": "a5076b070c45df9a-SJC"
+      },
+      "bodyReceivedAt": "2026-10-26T06:31:28.483Z",
+      "responseBodySha256": "d51a2005b531c8dd063e613f8d31a3502092e051fec1058494d48dab93f902d9",
+      "responseBytes": 12659,
+      "outerDuplicate": true,
+      "innerDuplicate": false,
+      "innerResultUtf8Bytes": 753,
+      "innerResultSha256": "d98f16cbdd2fb492c7b7ce834f932307bf2090488b75575a476c0481ee0bdcdf",
+      "originalPetId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273"
+    },
+    "s05": {
+      "sendAt": "2026-10-26T06:32:39.765Z",
+      "receiveAt": "2026-10-26T06:32:43.345Z",
+      "httpStatus": 403,
+      "requestBodySha256": "6a79a2d417e803c478e06e5f6272b421eacc6161c752e3529dbb86df8ca916a2",
+      "requestIds": {
+        "sb-request-id": "01a176e9-4851-712d-9fa7-865997f05340",
+        "cf-ray": "a5076ce0796f7e0e-SJC"
+      },
+      "bodyReceivedAt": "2026-10-26T06:32:43.347Z",
+      "responseBodySha256": "d50d8eda1c1f0c7f0bdd124fec2964757b1ffa2919a4f29e05617a292f283e19",
+      "responseBytes": 73,
+      "errorCode": "OWNER_MISMATCH",
+      "errorOnly": true
+    },
+    "logout": {
+      "sendAt": "2026-10-26T06:33:22.711Z",
+      "receiveAt": "2026-10-26T06:33:26.621Z",
+      "httpStatus": 200,
+      "requestBodySha256": "70e77acef58031214b3e38932f5c3ee47cc57aaac5c5d27348b3f94d2ede6d91",
+      "requestIds": {
+        "sb-request-id": "01a176e9-ef59-7f1d-b23a-39ff358921bf",
+        "cf-ray": "a5076debbcacc6ec-SJC"
+      },
+      "bodyReceivedAt": "2026-10-26T06:33:26.622Z",
+      "responseBodySha256": "8386228fc73e14cedc5e94ef18c3e2b374c7cf126bfc79b166e1496552dfcfa0",
+      "responseBytes": 87
+    }
+  },
+  "stageAfters": {
+    "login": {
+      "reviewSha256": "e4b3b23be08c09b8e8af358a91b86733a78965420b75aae5ca764a957328d2a3",
+      "snapshotSha256": "229ddbe682cef55d53a1dfa3d6a8b5c6af362cce903b123a0b388221926aeba8",
+      "businessUnchanged": true
+    },
+    "c11": {
+      "reviewSha256": "d0f93c2272b0ddf0f368d3f29d97c6bdbe0fbd291aa19e9299425c6a20ff5c5e",
+      "snapshotSha256": "a857e80c70ed2a1822acd530652e487204f8a9865d6f5506a952a57e485bc20e",
+      "businessUnchanged": true
+    },
+    "s05": {
+      "reviewSha256": "d3bcce746f082b8f6edfb63db500ea0826bf7c425b9acbfe61b859e4089c84c4",
+      "snapshotSha256": "26878da2047a206098d885eb866c8285704858590c2ba23258e64343e8bf8e64",
+      "businessUnchanged": true
+    },
+    "logout": {
+      "reviewSha256": "4deb76b98152835ad38ba24bb3b9b4ad203ca4b79573ac028544f87fa0e5f792",
+      "snapshotSha256": "e2d09baed1d742886e5073e8e69537f292087a085c8513141ef35c368a77b7cc",
+      "businessUnchanged": true
+    }
+  },
+  "cleanupVerified": true,
+  "nativeA12Passed": false,
+  "centralQaPass": false,
+  "oldActor": {
+    "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+    "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe",
+    "deviceId": "41de040e-a134-487f-b1d3-76b5254a8f97",
+    "sessionId": "b904724b-ab0d-4a87-bd23-7a59fdeef5d6"
+  },
+  "newActor": {
+    "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+    "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe",
+    "deviceId": "41de040e-a134-487f-b1d3-76b5254a8f97",
+    "sessionId": "db3bb3a6-1b99-49fb-bd5d-992fc07a8efe"
+  },
+  "startedAt": "2026-10-26T06:26:50.222Z",
+  "stoppedAt": "2026-10-26T06:34:36.209Z",
+  "processExitCode": 0,
+  "publicStatePath": "C:/Users/Administrator/Desktop/project/DesktopPet-fresh-worktrees/08/artifacts/accounts/a12-normal-auth-four-phase-prepared-20261026-v3/execution-once/state.json",
+  "localAUiFrozen": true,
+  "cloudProductsStarted": false,
+  "technicalEvidenceOnly": true
+}

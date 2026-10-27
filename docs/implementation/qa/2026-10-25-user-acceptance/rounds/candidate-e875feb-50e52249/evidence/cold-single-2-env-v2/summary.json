@@ -1,0 +1,165 @@
+{
+  "launchers": [
+    {
+      "exitCaptured": false,
+      "pid": 26024,
+      "number": 1,
+      "exitAt": null,
+      "issuedAt": "2026-10-25T13:19:19.2746697Z",
+      "startedAt": "2026-10-25T13:19:19.2842376Z",
+      "exitCode": null
+    }
+  ],
+  "processTraceEvents": 5,
+  "payloadRoots": [
+    {
+      "finalFiles": [
+        {
+          "bytes": 246846464,
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsaAC1.tmp\\app\\Lingjing.exe",
+          "sha256": "12fee592f3bb57ae348fb0b5974e486f5a05c6b54e39b7fbb49f4be604643bd6",
+          "exists": true
+        },
+        {
+          "bytes": 267484870,
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsaAC1.tmp\\app\\resources\\app.asar",
+          "sha256": "993a2b91463223fd0c12e4c596459a6bde46d250baff9a2267c8fc2a66c8871d",
+          "exists": true
+        },
+        {
+          "bytes": 1989632,
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsaAC1.tmp\\app\\resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node",
+          "sha256": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a",
+          "exists": true
+        },
+        {
+          "bytes": 194,
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsaAC1.tmp\\app\\resources\\lingjing-cloud-public.json",
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+          "exists": true
+        }
+      ],
+      "observedMainPid": 26956,
+      "root": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsaAC1.tmp\\app",
+      "firstSeenAt": "2026-10-25T13:19:30.8513512Z",
+      "firstFiles": [
+        {
+          "bytes": 246846464,
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsaAC1.tmp\\app\\Lingjing.exe",
+          "sha256": "12fee592f3bb57ae348fb0b5974e486f5a05c6b54e39b7fbb49f4be604643bd6",
+          "exists": true
+        },
+        {
+          "bytes": 267484870,
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsaAC1.tmp\\app\\resources\\app.asar",
+          "sha256": "993a2b91463223fd0c12e4c596459a6bde46d250baff9a2267c8fc2a66c8871d",
+          "exists": true
+        },
+        {
+          "bytes": 1989632,
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsaAC1.tmp\\app\\resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node",
+          "sha256": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a",
+          "exists": true
+        },
+        {
+          "bytes": 194,
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsaAC1.tmp\\app\\resources\\lingjing-cloud-public.json",
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+          "exists": true
+        }
+      ]
+    }
+  ],
+  "launcherShellEnvironmentRestored": true,
+  "executable": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-e875feb\\Lingjing-0.1.8-portable-x64.exe",
+  "markerRunId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+  "limitations": [
+    "Polling can miss short-lived paths; WMI event delivery must itself be checked. Missing events do not prove no process ran.",
+    "WMI TIME_CREATED is provider event-generation time, not exact process lifetime; StopTrace parent may be zero. Correlate PID with StartTrace and retained handle times.",
+    "The cold precondition checks this exact SFX path, not arbitrary renamed/copied executables. 09 controls the run inventory.",
+    "Expected source/profile are operator-supplied until09 independent app.info readback.",
+    "ProcessTrace exit status does not identify the underlying NSIS/Electron failure cause."
+  ],
+  "noProfilesOrPayloadsDeleted": true,
+  "captureVersion": 2,
+  "criticalEnvironmentAtLaunch": [
+    {
+      "name": "ELECTRON_RUN_AS_NODE",
+      "valueIsEmpty": false,
+      "valueIsNull": true,
+      "present": false,
+      "valueLength": null
+    },
+    {
+      "name": "NODE_OPTIONS",
+      "valueIsEmpty": false,
+      "valueIsNull": true,
+      "present": false,
+      "valueLength": null
+    },
+    {
+      "name": "PET_RUNTIME_DATA_FILE",
+      "valueIsEmpty": false,
+      "valueIsNull": true,
+      "present": false,
+      "valueLength": null
+    },
+    {
+      "name": "ELECTRON_RENDERER_URL",
+      "valueIsEmpty": false,
+      "valueIsNull": true,
+      "present": false,
+      "valueLength": null
+    }
+  ],
+  "noProcessesClosedOrKilled": true,
+  "startedAt": "2026-10-25T13:19:19.2209367Z",
+  "expectedSourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+  "criticalEnvironmentBefore": [
+    {
+      "name": "ELECTRON_RUN_AS_NODE",
+      "valueIsEmpty": false,
+      "valueIsNull": true,
+      "present": false,
+      "valueLength": null
+    },
+    {
+      "name": "NODE_OPTIONS",
+      "valueIsEmpty": false,
+      "valueIsNull": true,
+      "present": false,
+      "valueLength": null
+    },
+    {
+      "name": "PET_RUNTIME_DATA_FILE",
+      "valueIsEmpty": false,
+      "valueIsNull": true,
+      "present": false,
+      "valueLength": null
+    },
+    {
+      "name": "ELECTRON_RENDERER_URL",
+      "valueIsEmpty": false,
+      "valueIsNull": true,
+      "present": false,
+      "valueLength": null
+    }
+  ],
+  "mode": "ColdSingle",
+  "shell": {
+    "executable": "C:\\Users\\Administrator\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+    "powershell": "7.6.5",
+    "dotnet": "10.0.11"
+  },
+  "status": "capture-only-no-acceptance-verdict",
+  "executableAfter": {
+    "bytes": 169213223,
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-e875feb\\Lingjing-0.1.8-portable-x64.exe",
+    "sha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9"
+  },
+  "at": "2026-10-25T13:20:00.4384053Z",
+  "captureError": null,
+  "sha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+  "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\6ff8e38f-9f2b-4872-8747-1fb00bd81655\\local-a",
+  "required09Evidence": "Native UI/window activation, app.info source/profile, first payload integrity, same-profile different actual payload roots, LS/IDB sentinel and ORIGINAL garden pending actionId/owner/command/payload + Node outbox independently read back."
+}

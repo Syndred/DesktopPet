@@ -1,0 +1,483 @@
+{
+  "at": "2026-10-25T17:47:28.245Z",
+  "source": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "mainPid": 32388,
+  "nativeInput": true,
+  "templates": [
+    {
+      "label": "hatcat",
+      "headings": [
+        "再认识一位新朋友。",
+        "礼帽喵金"
+      ],
+      "samples": 51,
+      "uniqueTextures": [
+        "51,65,208,223",
+        "359,66,210,224"
+      ],
+      "resourceKeys": [
+        "lingjing-resource://asset/builtin%3Alingjing-hatcat-v1/sprites.png:3b525dd5171acdf7e869c645616beda7f2965ad432fa77dbd9937d763e04c449"
+      ],
+      "last": {
+        "at": 1792950136383,
+        "action": "idle",
+        "resourceKey": "lingjing-resource://asset/builtin%3Alingjing-hatcat-v1/sprites.png:3b525dd5171acdf7e869c645616beda7f2965ad432fa77dbd9937d763e04c449",
+        "textureFrame": "359,66,210,224",
+        "frame": "15",
+        "canvas": {
+          "width": 505,
+          "height": 466,
+          "rect": {
+            "width": 404,
+            "height": 372.8000183105469
+          }
+        }
+      }
+    },
+    {
+      "label": "qingya",
+      "headings": [
+        "再认识一位新朋友。",
+        "青芽木"
+      ],
+      "samples": 75,
+      "uniqueTextures": [
+        "76,63,184,261",
+        "390,64,182,260"
+      ],
+      "resourceKeys": [
+        "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:1cd0626ea29767476b371519ec4dc00fc43c528bfcd92627166275b937db2060"
+      ],
+      "last": {
+        "at": 1792950170198,
+        "action": "idle",
+        "resourceKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:1cd0626ea29767476b371519ec4dc00fc43c528bfcd92627166275b937db2060",
+        "textureFrame": "390,64,182,260",
+        "frame": "15",
+        "canvas": {
+          "width": 505,
+          "height": 466,
+          "rect": {
+            "width": 404,
+            "height": 372.8000183105469
+          }
+        }
+      }
+    },
+    {
+      "label": "xiaohu",
+      "headings": [
+        "再认识一位新朋友。",
+        "小狐水"
+      ],
+      "samples": 132,
+      "uniqueTextures": [
+        "51,72,224,222",
+        "354,71,221,225"
+      ],
+      "resourceKeys": [
+        "lingjing-resource://asset/builtin%3Alingjing-xiaohu-v1/sprites.png:05ef8e37a7519f64d6e9ccdfeb73292269dedf10ea836e285d997d265cb9e4da"
+      ],
+      "last": {
+        "at": 1792950213904,
+        "action": "idle",
+        "resourceKey": "lingjing-resource://asset/builtin%3Alingjing-xiaohu-v1/sprites.png:05ef8e37a7519f64d6e9ccdfeb73292269dedf10ea836e285d997d265cb9e4da",
+        "textureFrame": "354,71,221,225",
+        "frame": "15",
+        "canvas": {
+          "width": 505,
+          "height": 466,
+          "rect": {
+            "width": 404,
+            "height": 372.8000183105469
+          }
+        }
+      }
+    },
+    {
+      "label": "yuwan",
+      "headings": [
+        "再认识一位新朋友。",
+        "鱼丸水"
+      ],
+      "samples": 20,
+      "uniqueTextures": [
+        "59,61,221,251",
+        "369,58,219,255"
+      ],
+      "resourceKeys": [
+        "lingjing-resource://asset/builtin%3Alingjing-yuwan-v2/sprites.png:cc82fe006209adb2be8f7f5ffbca460611956555f8ddbc7469ba8ac33796f5e7"
+      ],
+      "last": {
+        "at": 1792950245041,
+        "action": "idle",
+        "resourceKey": "lingjing-resource://asset/builtin%3Alingjing-yuwan-v2/sprites.png:cc82fe006209adb2be8f7f5ffbca460611956555f8ddbc7469ba8ac33796f5e7",
+        "textureFrame": "369,58,219,255",
+        "frame": "15",
+        "canvas": {
+          "width": 505,
+          "height": 466,
+          "rect": {
+            "width": 404,
+            "height": 372.8000183105469
+          }
+        }
+      }
+    },
+    {
+      "label": "xiaolan",
+      "headings": [
+        "再认识一位新朋友。",
+        "小蓝水"
+      ],
+      "samples": 82,
+      "uniqueTextures": [
+        "59,40,239,281",
+        "359,37,238,284"
+      ],
+      "resourceKeys": [
+        "lingjing-resource://asset/builtin%3Alingjing-xiaolan-v1/sprites.png:1176351843557387d70c6cdf33942cd4f39fde27323077bbe33795cc6a81d9b9"
+      ],
+      "last": {
+        "at": 1792950266082,
+        "action": "idle",
+        "resourceKey": "lingjing-resource://asset/builtin%3Alingjing-xiaolan-v1/sprites.png:1176351843557387d70c6cdf33942cd4f39fde27323077bbe33795cc6a81d9b9",
+        "textureFrame": "359,37,238,284",
+        "frame": "15",
+        "canvas": {
+          "width": 505,
+          "height": 466,
+          "rect": {
+            "width": 404,
+            "height": 372.8000183105469
+          }
+        }
+      }
+    },
+    {
+      "label": "fantuan",
+      "headings": [
+        "再认识一位新朋友。",
+        "饭团水"
+      ],
+      "samples": 134,
+      "uniqueTextures": [
+        "52,65,221,256",
+        "368,66,221,255"
+      ],
+      "resourceKeys": [
+        "lingjing-resource://asset/builtin%3Alingjing-fantuan-v1/sprites.png:c395254032588907ecbca1a0fc31497c3c184cee0e59231485a10860d60e240b"
+      ],
+      "last": {
+        "at": 1792950285766,
+        "action": "idle",
+        "resourceKey": "lingjing-resource://asset/builtin%3Alingjing-fantuan-v1/sprites.png:c395254032588907ecbca1a0fc31497c3c184cee0e59231485a10860d60e240b",
+        "textureFrame": "52,65,221,256",
+        "frame": "10",
+        "canvas": {
+          "width": 505,
+          "height": 466,
+          "rect": {
+            "width": 404,
+            "height": 372.8000183105469
+          }
+        }
+      },
+      "fullCycleSupplement": "c05-fantuan-full-idle-cycle-readback.json"
+    },
+    {
+      "label": "shiba",
+      "headings": [
+        "再认识一位新朋友。",
+        "焰柴火"
+      ],
+      "samples": 143,
+      "uniqueTextures": [
+        "40,84,224,229",
+        "354,86,226,227"
+      ],
+      "resourceKeys": [
+        "lingjing-resource://asset/builtin%3Alingjing-shiba-v2/sprites.png:fac73538d366cc2f10fd27a36af882e9c77ad8826429d080581f606b6064f4e2"
+      ]
+    },
+    {
+      "label": "yantuan",
+      "headings": [
+        "再认识一位新朋友。",
+        "岩团土"
+      ],
+      "samples": 71,
+      "uniqueTextures": [
+        "34,26,248,271",
+        "338,26,256,271"
+      ],
+      "resourceKeys": [
+        "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:09b4b0bd591c07daea0a588386f39cfbe19226fd0d39664bdb8342fc4912fa09"
+      ]
+    }
+  ],
+  "allEightDistinctResources": true,
+  "allHaveTwoActualTextureFrames": true,
+  "allRestoredUiHeadings": [],
+  "petsAfter": {
+    "ok": true,
+    "data": {
+      "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+      "pets": [
+        {
+          "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "serial": "EA1F0CF6",
+          "element": "water",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "source": "adoption",
+          "origin": {},
+          "growth": {
+            "level": 1,
+            "experience": 0,
+            "mood": 64,
+            "satiety": 60,
+            "affinity": 2,
+            "winsTotal": 0,
+            "stats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          "desktop": {
+            "visible": true,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 1343,
+              "y": 478,
+              "displayId": "2568730015"
+            }
+          },
+          "revision": 132,
+          "createdAt": "2026-10-25T10:31:12.593Z",
+          "updatedAt": "2026-10-25T17:32:57.191Z"
+        },
+        {
+          "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "serial": "0CB7DABE",
+          "element": "water",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "source": "adoption",
+          "origin": {},
+          "growth": {
+            "level": 1,
+            "experience": 20,
+            "mood": 63,
+            "satiety": 80,
+            "affinity": 4,
+            "winsTotal": 1,
+            "stats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          "desktop": {
+            "visible": true,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 320,
+              "y": 520,
+              "displayId": null
+            }
+          },
+          "revision": 4,
+          "createdAt": "2026-10-25T10:31:36.582Z",
+          "updatedAt": "2026-10-25T16:57:51.301Z"
+        }
+      ],
+      "selections": {
+        "chatPetId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+        "battlePetId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "guardPetId": null
+      },
+      "templates": [
+        {
+          "templateId": "big-fish-gentle",
+          "name": "鱼丸",
+          "category": "big-fish",
+          "element": "water",
+          "description": "安静温柔的鲸尾少女，喜欢陪你度过日常。",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "big-fish-cheerful",
+          "name": "小蓝",
+          "category": "big-fish",
+          "element": "water",
+          "description": "活泼的侧马尾伙伴，穿着宽松鲸鱼斗篷。",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaolan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "big-fish-foodie",
+          "name": "饭团",
+          "category": "big-fish",
+          "element": "water",
+          "description": "盘着双丸子头的美食家，认真珍惜每一顿饭。",
+          "resource": {
+            "resourceId": "builtin:lingjing-fantuan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "animal-shiba",
+          "name": "焰柴",
+          "category": "animal",
+          "element": "fire",
+          "description": "热情勇敢的柴犬，星星项圈总是闪闪发亮。",
+          "resource": {
+            "resourceId": "builtin:lingjing-shiba-v2",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 20,
+            "spd": 22
+          }
+        },
+        {
+          "templateId": "animal-hat-cat",
+          "name": "礼帽喵",
+          "category": "animal",
+          "element": "metal",
+          "description": "戴着礼帽的燕尾猫，擅长温柔的小魔术。",
+          "resource": {
+            "resourceId": "builtin:lingjing-hatcat-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 136,
+            "atk": 30,
+            "def": 30,
+            "spd": 13
+          }
+        },
+        {
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "category": "animal",
+          "element": "water",
+          "description": "安静机灵的雪白小狐，像雪花一样轻盈。",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "animal-wood-deer",
+          "name": "青芽",
+          "category": "animal",
+          "element": "wood",
+          "description": "戴着枝叶小角的林间幼鹿，喜欢收集新芽。",
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 18
+          }
+        },
+        {
+          "templateId": "animal-earth-pangolin",
+          "name": "岩团",
+          "category": "animal",
+          "element": "earth",
+          "description": "披着暖褐鳞甲的小穿山甲，稳稳守住每一步。",
+          "resource": {
+            "resourceId": "builtin:lingjing-yantuan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 142,
+            "atk": 24,
+            "def": 34,
+            "spd": 11
+          }
+        }
+      ],
+      "revision": 145
+    },
+    "revision": 145
+  },
+  "originalPetsUnchanged": true,
+  "allRestoredUiButtons": [
+    "",
+    "",
+    "",
+    "",
+    "我的灵宠",
+    "附近探索",
+    "对战中心",
+    "领地",
+    "背包",
+    "聊天",
+    "角色资源",
+    "设置",
+    "候选验收甲",
+    "我的灵宠",
+    "水鱼丸安静温柔的鲸尾少女，喜欢陪你度过日常。期待相遇",
+    "水小蓝活泼的侧马尾伙伴，穿着宽松鲸鱼斗篷。期待相遇",
+    "水饭团盘着双丸子头的美食家，认真珍惜每一顿饭。期待相遇",
+    "火焰柴热情勇敢的柴犬，星星项圈总是闪闪发亮。期待相遇",
+    "金礼帽喵戴着礼帽的燕尾猫，擅长温柔的小魔术。期待相遇",
+    "水小狐安静机灵的雪白小狐，像雪花一样轻盈。已拥有 2 只",
+    "木青芽戴着枝叶小角的林间幼鹿，喜欢收集新芽。期待相遇",
+    "土岩团披着暖褐鳞甲的小穿山甲，稳稳守住每一步。期待相遇",
+    "领养这位伙伴"
+  ]
+}

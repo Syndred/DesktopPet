@@ -1,0 +1,182 @@
+{
+  "at": "2026-10-25T22:08:48.794Z",
+  "roomId": "d79b783a-b5a5-4715-8e58-ba95483b2d67",
+  "sessionId": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+  "a": {
+    "mainPid": 1292,
+    "wrapperPid": 12428,
+    "mainWindowId": 3475656,
+    "payload": {
+      "root": "C:/Users/ADMINI~1/AppData/Local/Temp/nse19BD.tmp/app",
+      "files": [
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nse19BD.tmp\\app\\Lingjing.exe",
+          "exists": true,
+          "bytes": 246846464,
+          "sha256": "466204ae9c78143ad665b494cf6c104cd24ec7b08425bb6bb7544f2559d035e9",
+          "relative": "Lingjing.exe",
+          "expected": "466204ae9c78143ad665b494cf6c104cd24ec7b08425bb6bb7544f2559d035e9",
+          "matches": true
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nse19BD.tmp\\app\\resources\\app.asar",
+          "exists": true,
+          "bytes": 267512721,
+          "sha256": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba",
+          "relative": "resources\\app.asar",
+          "expected": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba",
+          "matches": true
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nse19BD.tmp\\app\\resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node",
+          "exists": true,
+          "bytes": 1989632,
+          "sha256": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a",
+          "relative": "resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node",
+          "expected": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a",
+          "matches": true
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nse19BD.tmp\\app\\resources\\lingjing-cloud-public.json",
+          "exists": true,
+          "bytes": 194,
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+          "relative": "resources\\lingjing-cloud-public.json",
+          "expected": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+          "matches": true
+        }
+      ]
+    },
+    "checks": {
+      "allTenBusinessTablesExact": true,
+      "originalWholeSettingsDocumentRestored": true,
+      "lsSentinelExact": true,
+      "idbSentinelExact": true,
+      "twelveRoundOriginalReportRewardVisible": true,
+      "bothOriginalNumbersVisible": true
+    }
+  },
+  "b": {
+    "mainPid": 32748,
+    "wrapperPid": 27840,
+    "mainWindowId": 13109186,
+    "payload": {
+      "at": "2026-10-25T21:58:30.755Z",
+      "root": "C:/Users/ADMINI~1/AppData/Local/Temp/nsuB239.tmp/app",
+      "mainPid": 32748,
+      "wrapperPid": 27840,
+      "mainWindow": 13109186,
+      "files": [
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsuB239.tmp\\app\\Lingjing.exe",
+          "exists": true,
+          "bytes": 246846464,
+          "sha256": "466204ae9c78143ad665b494cf6c104cd24ec7b08425bb6bb7544f2559d035e9",
+          "relative": "Lingjing.exe",
+          "expected": "466204ae9c78143ad665b494cf6c104cd24ec7b08425bb6bb7544f2559d035e9",
+          "matches": true
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsuB239.tmp\\app\\resources\\app.asar",
+          "exists": true,
+          "bytes": 267512721,
+          "sha256": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba",
+          "relative": "resources\\app.asar",
+          "expected": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba",
+          "matches": true
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsuB239.tmp\\app\\resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node",
+          "exists": true,
+          "bytes": 1989632,
+          "sha256": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a",
+          "relative": "resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node",
+          "expected": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a",
+          "matches": true
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsuB239.tmp\\app\\resources\\lingjing-cloud-public.json",
+          "exists": true,
+          "bytes": 194,
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+          "relative": "resources\\lingjing-cloud-public.json",
+          "expected": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+          "matches": true
+        }
+      ]
+    },
+    "checks": {
+      "allTenBusinessTablesStillExact": true,
+      "originalSettingsDocumentRestored": true,
+      "originalReportTwelveRoundRewardVisible": true
+    }
+  },
+  "rootNaturalTerminal": {
+    "file": {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\global-serial\\root-friend-natural-terminal-independent-audit-20261026.json",
+      "exists": true,
+      "bytes": 3014,
+      "sha256": "55691f18353e2b965f5b6ca8cb1e5926710a42be297c6ae2db430b029d2b733e"
+    },
+    "checks": {
+      "oneFinishedRoom": true,
+      "twelveContiguousUniqueRounds": true,
+      "twentyFourOriginalChoices": true,
+      "exactNativeChoiceSequence": true,
+      "twoUniqueOwnersAndOneWinner": true,
+      "bothHistoricalMembersReleased": true,
+      "foxCounterStillFive": true,
+      "BOneOwnerScopedAuthorityReceipt": true,
+      "BExactPetReward": true,
+      "BSingleReportSessionAndReward": true,
+      "BLocalPersistedReportEqualsImmutableCloudReport": true,
+      "BNoActiveNativeSession": true,
+      "BBothThreeOtherPetsRawUnchanged": true,
+      "BLocalPetsEqualCloudPets": true,
+      "BTargetPetOnlyExpectedGrowthAndVersion": true,
+      "BOtherModulesLegacyAndCompanionHistoryUnchanged": true,
+      "BSingleGrowthReceipt": true,
+      "BSingleSeedReceiptAndAction": true,
+      "BLocalInventoryEqualsImmutableCloudInventory": true,
+      "BOneBattleSeedEvent": true,
+      "BWasUninitializedAndHasOnlyCorrectStarterPlusReward": true,
+      "BSixEmptyInitialPlots": true,
+      "BAllTwelveReportRoundFieldsMatchOwnPerspective": true,
+      "AOneOwnerScopedAuthorityReceipt": true,
+      "AExactPetReward": true,
+      "ASingleReportSessionAndReward": true,
+      "ALocalPersistedReportEqualsImmutableCloudReport": true,
+      "ANoActiveNativeSession": true,
+      "ABothThreeOtherPetsRawUnchanged": true,
+      "ALocalPetsEqualCloudPets": true,
+      "ATargetPetOnlyExpectedGrowthAndVersion": true,
+      "AOtherModulesLegacyAndCompanionHistoryUnchanged": true,
+      "ASingleGrowthReceipt": true,
+      "ASingleSeedReceiptAndAction": true,
+      "ALocalInventoryEqualsImmutableCloudInventory": true,
+      "AOneBattleSeedEvent": true,
+      "AOnlyTomatoQuantityOneToThree": true,
+      "AExistingPlotsRawUnchanged": true,
+      "AAllOldEventsAndActionReceiptsPreserved": true,
+      "AAllTwelveReportRoundFieldsMatchOwnPerspective": true
+    }
+  },
+  "localNaturalChecks": {
+    "sameSessionId": true,
+    "twelveCanonicalRoundsEqual": true,
+    "aWinBDefeat": true,
+    "bothSameEndTime": true,
+    "bothNoActiveSession": true,
+    "aOtherThreePetRowsExact": true,
+    "bOtherThreePetRowsExact": true,
+    "aUniqueTwelveActionIds": true,
+    "bUniqueTwelveActionIds": true,
+    "bothSingleReportAndReward": true,
+    "bothSingleGardenBattleReward": true
+  },
+  "reportReturnChecks": {
+    "aAllTenLedgerTablesExact": true,
+    "bAllTenLedgerTablesExact": true
+  },
+  "remaining": "Root final independent after restart confirmation only; C11 separate technical original request not sent, and wild capture remains"
+}

@@ -1,0 +1,127 @@
+{
+  "at": "2026-10-25T19:46:42.664Z",
+  "source": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "ordinaryCloud": true,
+  "owner": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+  "domReadOnly": {
+    "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsmD7AB.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/inventory",
+    "search": "",
+    "category": [
+      "装扮"
+    ],
+    "empty": "没有找到这个物品，换个名字试试。",
+    "detail": "热乎乎的米饭\n饱食 +20\n给哪位伙伴？\n小狐\n编号 0001\nLv.01\n鱼丸\n编号 0001\nLv.01\n热乎乎的米饭 × 0\n饱食 +20 · 心情 +3 · 亲密 +4\n喂养数量\n1\n预计饱食变化\n请先选择伙伴\n选择一只伙伴",
+    "itemCards": []
+  },
+  "nativeScreenshot": "qa018-empty-appearance-stale-food-detail-native.jpg",
+  "labelCorrections": {
+    "i01-seed-category-native.jpg": "Actually 装扮 empty; not seed category",
+    "i01-tool-empty-category-native.jpg": "Actually 道具 populated with seeds and rice; not empty"
+  },
+  "categorySet": [
+    "全部",
+    "食物",
+    "装扮",
+    "道具"
+  ],
+  "inventoryBefore": [
+    {
+      "id": "seed:carrot",
+      "name": "胡萝卜种子",
+      "icon": "🥕",
+      "category": "seed",
+      "source": "探索与对战",
+      "effects": null,
+      "quantity": 0
+    },
+    {
+      "id": "seed:tomato",
+      "name": "番茄种子",
+      "icon": "🍅",
+      "category": "seed",
+      "source": "探索与对战",
+      "effects": null,
+      "quantity": 1
+    },
+    {
+      "id": "seed:berry",
+      "name": "莓果种子",
+      "icon": "🫐",
+      "category": "seed",
+      "source": "探索与对战",
+      "effects": null,
+      "quantity": 1
+    },
+    {
+      "id": "seed:rice",
+      "name": "稻米种子",
+      "icon": "🌾",
+      "category": "seed",
+      "source": "探索与对战",
+      "effects": null,
+      "quantity": 1
+    },
+    {
+      "id": "carrot",
+      "name": "胡萝卜",
+      "icon": "🥕",
+      "category": "food",
+      "source": "菜园收获",
+      "effects": {
+        "satiety": 12,
+        "mood": 2,
+        "intimacy": 2
+      },
+      "quantity": 3
+    },
+    {
+      "id": "tomato",
+      "name": "番茄",
+      "icon": "🍅",
+      "category": "food",
+      "source": "菜园收获",
+      "effects": {
+        "satiety": 10,
+        "mood": 3,
+        "intimacy": 2
+      },
+      "quantity": 0
+    },
+    {
+      "id": "berry",
+      "name": "莓果",
+      "icon": "🫐",
+      "category": "food",
+      "source": "菜园收获",
+      "effects": {
+        "satiety": 8,
+        "mood": 4,
+        "intimacy": 3
+      },
+      "quantity": 0
+    },
+    {
+      "id": "rice",
+      "name": "稻米",
+      "icon": "🌾",
+      "category": "ingredient",
+      "source": "菜园收获",
+      "effects": null,
+      "quantity": 0
+    },
+    {
+      "id": "cooked_rice",
+      "name": "热乎乎的米饭",
+      "icon": "🍚",
+      "category": "food",
+      "source": "稻米制作",
+      "effects": {
+        "satiety": 20,
+        "mood": 3,
+        "intimacy": 4
+      },
+      "quantity": 0
+    }
+  ]
+}

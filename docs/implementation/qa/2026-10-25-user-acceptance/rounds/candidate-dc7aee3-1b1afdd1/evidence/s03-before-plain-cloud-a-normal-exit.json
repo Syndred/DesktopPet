@@ -1,0 +1,948 @@
+{
+  "at": "2026-10-25T19:14:48.005Z",
+  "appInfo": {
+    "ok": true,
+    "data": {
+      "version": "0.1.8",
+      "platform": "win32",
+      "build": {
+        "schemaVersion": 2,
+        "builtAt": "2026-10-25T15:25:16.006Z",
+        "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+        "sourceTree": "1b6b47b23a93bf505c92bb1ff9af5dead75d6273",
+        "sourceDirtyFiles": [],
+        "codeFingerprint": "8d9ba43d4b0da45fd810cb9fd95dd3186948fcdbc925ee002b77b265d616c2f0",
+        "canonicalSourceFingerprint": "6c54036d2e725e972370e90f6f59156836364fc4a9e4b69bfc164bee9b36f174",
+        "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+        "compiledFingerprint": "680068ce6f201848b7d443b230debd650a2cdb66c8c6432ee3c772999c8a4b5c",
+        "codeFiles": 317,
+        "compiledFiles": 89,
+        "toolchain": {
+          "node": "24.21.0",
+          "electron": "44.9.3",
+          "sqlite": "13.0.3",
+          "vite": "7.3.7",
+          "typescript": "5.9.3",
+          "platform": "win32",
+          "arch": "x64"
+        },
+        "entrypoints": {
+          "main": "main/index.cjs",
+          "app": "ui/index.html",
+          "desktop": "ui/desktop.html",
+          "preload": "preload/index.cjs"
+        },
+        "publicCloud": {
+          "projectRef": "jbvrdmrkwpznbrvteive",
+          "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+          "resourcePath": "lingjing-cloud-public.json"
+        },
+        "packageName": "lingjing-desktop",
+        "runtimeClosure": {
+          "manifest": "runtime-closure.json",
+          "files": 118,
+          "edges": 203,
+          "sha256": "4f04d46f3443f8d45b6b1dfeffdeb5d6e46569546cdae4c5b33e43d04e5b0b6f"
+        }
+      },
+      "runtime": {
+        "electron": "44.9.3",
+        "node": "24.22.0",
+        "modules": "149",
+        "napi": "10",
+        "arch": "x64",
+        "tray": {
+          "active": true,
+          "bounds": {
+            "x": 1751,
+            "y": 1150,
+            "width": 33,
+            "height": 49
+          }
+        }
+      },
+      "features": [
+        {
+          "id": "accounts",
+          "commands": [
+            "session",
+            "login",
+            "register",
+            "logout",
+            "profileSave",
+            "passwordChange",
+            "settingsGet",
+            "settingsDefaults",
+            "settingsSave",
+            "backupList",
+            "backupExport",
+            "backupPreview",
+            "backupRestore",
+            "syncStatus",
+            "syncNow",
+            "syncRetry",
+            "cloudPreview",
+            "testNotification",
+            "pointer"
+          ]
+        },
+        {
+          "id": "resources",
+          "commands": [
+            "list",
+            "history",
+            "cloudStatus",
+            "cloudSync",
+            "cloudPull",
+            "resolve",
+            "save",
+            "import"
+          ]
+        },
+        {
+          "id": "companions",
+          "commands": [
+            "list",
+            "get",
+            "combatProfile",
+            "identity",
+            "desktopInput",
+            "adopt",
+            "rename",
+            "desktop",
+            "select",
+            "interact",
+            "perform",
+            "appearance"
+          ]
+        },
+        {
+          "id": "battle",
+          "commands": [
+            "overview",
+            "rules",
+            "context",
+            "settleContext",
+            "selectPet",
+            "startTraining",
+            "snapshot",
+            "act",
+            "retryAction",
+            "search",
+            "invitations",
+            "invite",
+            "respondInvite",
+            "cancelInvite",
+            "createRoom",
+            "joinRoom",
+            "sync",
+            "leave",
+            "listReports",
+            "getReport",
+            "retrySettlement"
+          ]
+        },
+        {
+          "id": "garden",
+          "commands": [
+            "plant",
+            "harvest",
+            "craft",
+            "feed",
+            "garrison",
+            "snapshot",
+            "territoryLocate",
+            "territoryChallenge",
+            "territorySettle"
+          ]
+        },
+        {
+          "id": "discovery",
+          "commands": [
+            "snapshot",
+            "setExploring",
+            "locate",
+            "watch",
+            "stopWatch",
+            "setDemo",
+            "setProvider",
+            "tile",
+            "observe",
+            "begin",
+            "act",
+            "cancel",
+            "confirm",
+            "pokedex",
+            "memories"
+          ]
+        },
+        {
+          "id": "conversations",
+          "commands": [
+            "snapshot",
+            "select",
+            "history",
+            "profile.save",
+            "connection.save",
+            "connection.test",
+            "connection.cancel",
+            "memory.save",
+            "memory.delete",
+            "send",
+            "retry",
+            "cancel",
+            "history.clear",
+            "legacy.preview",
+            "legacy.import"
+          ]
+        }
+      ],
+      "user": {
+        "id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "subjectId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "provider": "runtime",
+        "account": "uat_1025_a_9e486a",
+        "username": "云端验收甲",
+        "revision": 0,
+        "createdAt": "2026-10-25T10:05:01.804833+00:00",
+        "updatedAt": "2026-10-25T15:56:51.185Z",
+        "dataMode": "live",
+        "authKind": "supabase",
+        "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe"
+      }
+    }
+  },
+  "settings": {
+    "ok": true,
+    "data": {
+      "document": {
+        "desktop": {
+          "alwaysOnTop": true,
+          "clickThrough": true,
+          "launchAtLogin": false,
+          "closeToTray": true,
+          "companionLimit": 3,
+          "interactionSounds": true,
+          "volume": 70,
+          "hideInFullscreen": true,
+          "animationsEnabled": true
+        },
+        "notifications": {
+          "enabled": true,
+          "companions": true,
+          "battles": true,
+          "garden": true,
+          "quietEnabled": true,
+          "quietStart": "22:00",
+          "quietEnd": "08:00"
+        },
+        "privacy": {
+          "locationAllowed": false,
+          "locationOnlyWhileExploring": true,
+          "emotionStatistics": false
+        },
+        "sync": {
+          "enabled": true
+        }
+      },
+      "revision": 6,
+      "updatedAt": "2026-10-25T16:26:47.858Z",
+      "host": {
+        "startup": false,
+        "fullscreenMonitor": true,
+        "fullscreenMonitorReady": true,
+        "foregroundFullscreen": false,
+        "fullscreenSource": null,
+        "companionWindows": 1,
+        "clickThroughWindows": [
+          2
+        ],
+        "windows": [
+          {
+            "id": 2,
+            "alwaysOnTop": true,
+            "visible": true
+          }
+        ],
+        "locationAllowed": false,
+        "emotionStatistics": false,
+        "closeToTrayConnected": true,
+        "companionLimitConnected": true
+      }
+    }
+  },
+  "companions": {
+    "ok": true,
+    "data": {
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "pets": [
+        {
+          "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "petId": "pet-40899e45-d323-49c8-9136-743f14be6ce3",
+          "templateId": "big-fish-gentle",
+          "name": "鱼丸",
+          "serial": "40899E45",
+          "element": "water",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "source": "adoption",
+          "origin": {},
+          "growth": {
+            "level": 1,
+            "experience": 0,
+            "mood": 60,
+            "satiety": 60,
+            "affinity": 0,
+            "winsTotal": 0,
+            "stats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          "desktop": {
+            "visible": false,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 80,
+              "y": 520,
+              "displayId": null
+            }
+          },
+          "revision": 1,
+          "createdAt": "2026-10-25T10:15:21.267Z",
+          "updatedAt": "2026-10-25T10:15:21.267Z",
+          "globalSerial": "1"
+        },
+        {
+          "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "serial": "3B746D1A",
+          "element": "water",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "source": "adoption",
+          "origin": {},
+          "growth": {
+            "level": 1,
+            "experience": 0,
+            "mood": 60,
+            "satiety": 60,
+            "affinity": 0,
+            "winsTotal": 0,
+            "stats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          "desktop": {
+            "visible": true,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 320,
+              "y": 520,
+              "displayId": null
+            }
+          },
+          "revision": 1,
+          "createdAt": "2026-10-25T16:01:54.342Z",
+          "updatedAt": "2026-10-25T16:01:54.342Z",
+          "globalSerial": "1"
+        }
+      ],
+      "selections": {
+        "chatPetId": null,
+        "battlePetId": null,
+        "guardPetId": null
+      },
+      "templates": [
+        {
+          "templateId": "big-fish-gentle",
+          "name": "鱼丸",
+          "category": "big-fish",
+          "element": "water",
+          "description": "安静温柔的鲸尾少女，喜欢陪你度过日常。",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "big-fish-cheerful",
+          "name": "小蓝",
+          "category": "big-fish",
+          "element": "water",
+          "description": "活泼的侧马尾伙伴，穿着宽松鲸鱼斗篷。",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaolan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "big-fish-foodie",
+          "name": "饭团",
+          "category": "big-fish",
+          "element": "water",
+          "description": "盘着双丸子头的美食家，认真珍惜每一顿饭。",
+          "resource": {
+            "resourceId": "builtin:lingjing-fantuan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "animal-shiba",
+          "name": "焰柴",
+          "category": "animal",
+          "element": "fire",
+          "description": "热情勇敢的柴犬，星星项圈总是闪闪发亮。",
+          "resource": {
+            "resourceId": "builtin:lingjing-shiba-v2",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 20,
+            "spd": 22
+          }
+        },
+        {
+          "templateId": "animal-hat-cat",
+          "name": "礼帽喵",
+          "category": "animal",
+          "element": "metal",
+          "description": "戴着礼帽的燕尾猫，擅长温柔的小魔术。",
+          "resource": {
+            "resourceId": "builtin:lingjing-hatcat-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 136,
+            "atk": 30,
+            "def": 30,
+            "spd": 13
+          }
+        },
+        {
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "category": "animal",
+          "element": "water",
+          "description": "安静机灵的雪白小狐，像雪花一样轻盈。",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "animal-wood-deer",
+          "name": "青芽",
+          "category": "animal",
+          "element": "wood",
+          "description": "戴着枝叶小角的林间幼鹿，喜欢收集新芽。",
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 18
+          }
+        },
+        {
+          "templateId": "animal-earth-pangolin",
+          "name": "岩团",
+          "category": "animal",
+          "element": "earth",
+          "description": "披着暖褐鳞甲的小穿山甲，稳稳守住每一步。",
+          "resource": {
+            "resourceId": "builtin:lingjing-yantuan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 142,
+            "atk": 24,
+            "def": 34,
+            "spd": 11
+          }
+        }
+      ],
+      "revision": 2,
+      "sync": {
+        "mode": "cloud",
+        "status": "ready",
+        "pending": 0,
+        "cloudRevision": 13,
+        "sharedSavePending": false
+      }
+    },
+    "revision": 2
+  },
+  "garden": {
+    "ok": true,
+    "revision": 6,
+    "data": {
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "serverTime": 1792955696337,
+      "revision": 6,
+      "plots": [
+        {
+          "plotId": "plot-1",
+          "cropType": "carrot",
+          "plantedAt": 1792938859056,
+          "maturesAt": 1792939459056,
+          "yieldQuantity": 3,
+          "revision": 1,
+          "stage": "mature"
+        },
+        {
+          "plotId": "plot-2",
+          "cropType": "carrot",
+          "plantedAt": 1792945476909,
+          "maturesAt": 1792946076909,
+          "yieldQuantity": 3,
+          "revision": 1,
+          "stage": "mature"
+        },
+        {
+          "plotId": "plot-3",
+          "cropType": "tomato",
+          "plantedAt": 1792945607587,
+          "maturesAt": 1792946507587,
+          "yieldQuantity": 3,
+          "revision": 1,
+          "stage": "mature"
+        },
+        {
+          "plotId": "plot-4",
+          "cropType": "berry",
+          "plantedAt": 1792945689779,
+          "maturesAt": 1792946889779,
+          "yieldQuantity": 4,
+          "revision": 1,
+          "stage": "mature"
+        },
+        {
+          "plotId": "plot-5",
+          "cropType": "rice",
+          "plantedAt": 1792945771574,
+          "maturesAt": 1792947271574,
+          "yieldQuantity": 2,
+          "revision": 1,
+          "stage": "mature"
+        },
+        {
+          "plotId": "plot-6",
+          "cropType": null,
+          "plantedAt": null,
+          "maturesAt": null,
+          "yieldQuantity": 0,
+          "revision": 0,
+          "stage": "empty"
+        }
+      ],
+      "items": [
+        {
+          "id": "seed:carrot",
+          "name": "胡萝卜种子",
+          "icon": "🥕",
+          "category": "seed",
+          "source": "探索与对战",
+          "effects": null,
+          "quantity": 0
+        },
+        {
+          "id": "seed:tomato",
+          "name": "番茄种子",
+          "icon": "🍅",
+          "category": "seed",
+          "source": "探索与对战",
+          "effects": null,
+          "quantity": 1
+        },
+        {
+          "id": "seed:berry",
+          "name": "莓果种子",
+          "icon": "🫐",
+          "category": "seed",
+          "source": "探索与对战",
+          "effects": null,
+          "quantity": 1
+        },
+        {
+          "id": "seed:rice",
+          "name": "稻米种子",
+          "icon": "🌾",
+          "category": "seed",
+          "source": "探索与对战",
+          "effects": null,
+          "quantity": 1
+        },
+        {
+          "id": "carrot",
+          "name": "胡萝卜",
+          "icon": "🥕",
+          "category": "food",
+          "source": "菜园收获",
+          "effects": {
+            "satiety": 12,
+            "mood": 2,
+            "intimacy": 2
+          },
+          "quantity": 0
+        },
+        {
+          "id": "tomato",
+          "name": "番茄",
+          "icon": "🍅",
+          "category": "food",
+          "source": "菜园收获",
+          "effects": {
+            "satiety": 10,
+            "mood": 3,
+            "intimacy": 2
+          },
+          "quantity": 0
+        },
+        {
+          "id": "berry",
+          "name": "莓果",
+          "icon": "🫐",
+          "category": "food",
+          "source": "菜园收获",
+          "effects": {
+            "satiety": 8,
+            "mood": 4,
+            "intimacy": 3
+          },
+          "quantity": 0
+        },
+        {
+          "id": "rice",
+          "name": "稻米",
+          "icon": "🌾",
+          "category": "ingredient",
+          "source": "菜园收获",
+          "effects": null,
+          "quantity": 0
+        },
+        {
+          "id": "cooked_rice",
+          "name": "热乎乎的米饭",
+          "icon": "🍚",
+          "category": "food",
+          "source": "稻米制作",
+          "effects": {
+            "satiety": 20,
+            "mood": 3,
+            "intimacy": 4
+          },
+          "quantity": 0
+        }
+      ],
+      "crops": [
+        {
+          "id": "carrot",
+          "name": "胡萝卜",
+          "icon": "🥕",
+          "seedItemId": "seed:carrot",
+          "harvestItemId": "carrot",
+          "growMs": 600000,
+          "yield": 3,
+          "color": "#ed9448"
+        },
+        {
+          "id": "tomato",
+          "name": "番茄",
+          "icon": "🍅",
+          "seedItemId": "seed:tomato",
+          "harvestItemId": "tomato",
+          "growMs": 900000,
+          "yield": 3,
+          "color": "#ef7875"
+        },
+        {
+          "id": "berry",
+          "name": "莓果",
+          "icon": "🫐",
+          "seedItemId": "seed:berry",
+          "harvestItemId": "berry",
+          "growMs": 1200000,
+          "yield": 4,
+          "color": "#9e8fd4"
+        },
+        {
+          "id": "rice",
+          "name": "稻米",
+          "icon": "🌾",
+          "seedItemId": "seed:rice",
+          "harvestItemId": "rice",
+          "growMs": 1500000,
+          "yield": 2,
+          "color": "#d2ad54"
+        }
+      ],
+      "recipes": [
+        {
+          "id": "cooked_rice",
+          "name": "热乎乎的米饭",
+          "input": {
+            "itemId": "rice",
+            "quantity": 1
+          },
+          "output": {
+            "itemId": "cooked_rice",
+            "quantity": 1
+          }
+        }
+      ],
+      "pets": [
+        {
+          "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "serial": "3B746D1A",
+          "element": "water",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "source": "adoption",
+          "origin": {},
+          "growth": {
+            "level": 1,
+            "experience": 0,
+            "mood": 60,
+            "satiety": 60,
+            "affinity": 0,
+            "winsTotal": 0,
+            "stats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          "desktop": {
+            "visible": true,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 320,
+              "y": 520,
+              "displayId": null
+            }
+          },
+          "revision": 1,
+          "createdAt": "2026-10-25T16:01:54.342Z",
+          "updatedAt": "2026-10-25T16:01:54.342Z"
+        },
+        {
+          "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "petId": "pet-40899e45-d323-49c8-9136-743f14be6ce3",
+          "templateId": "big-fish-gentle",
+          "name": "鱼丸",
+          "serial": "40899E45",
+          "element": "water",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "source": "adoption",
+          "origin": {},
+          "growth": {
+            "level": 1,
+            "experience": 0,
+            "mood": 60,
+            "satiety": 60,
+            "affinity": 0,
+            "winsTotal": 0,
+            "stats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          "desktop": {
+            "visible": false,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 80,
+              "y": 520,
+              "displayId": null
+            }
+          },
+          "revision": 1,
+          "createdAt": "2026-10-25T10:15:21.267Z",
+          "updatedAt": "2026-10-25T10:15:21.267Z"
+        }
+      ],
+      "territories": [],
+      "ledger": [
+        {
+          "id": "da17846c-9aa5-4ed9-b725-59a9d2bb90a1",
+          "actionId": "c661f63c-dc98-4566-93d1-a37f257012dc",
+          "kind": "plant",
+          "itemId": "seed:rice",
+          "delta": -1,
+          "balance": 1,
+          "petId": null,
+          "createdAt": 1792945771574
+        },
+        {
+          "id": "5b618053-119c-4954-b4fd-0d25bdc43b4d",
+          "actionId": "d139a362-d9b4-4cb8-8df8-56db2592ef17",
+          "kind": "plant",
+          "itemId": "seed:berry",
+          "delta": -1,
+          "balance": 1,
+          "petId": null,
+          "createdAt": 1792945689779
+        },
+        {
+          "id": "e1c3bc95-4045-4374-be2e-5dbde5cad1d7",
+          "actionId": "7d0d8105-09bd-499a-baa0-0f55e27fb084",
+          "kind": "plant",
+          "itemId": "seed:tomato",
+          "delta": -1,
+          "balance": 1,
+          "petId": null,
+          "createdAt": 1792945607587
+        },
+        {
+          "id": "25ebba88-a937-486a-a937-432991f5e01d",
+          "actionId": "31ff0257-310d-46df-a334-22ea0014567e",
+          "kind": "plant",
+          "itemId": "seed:carrot",
+          "delta": -1,
+          "balance": 0,
+          "petId": null,
+          "createdAt": 1792945476909
+        },
+        {
+          "id": "d754feda-9201-4f0f-b6a8-695f878d98b5",
+          "actionId": "e8156c9e-4b1d-421a-a326-9860f203d402",
+          "kind": "plant",
+          "itemId": "seed:carrot",
+          "delta": -1,
+          "balance": 1,
+          "petId": null,
+          "createdAt": 1792938859056
+        },
+        {
+          "id": "2ed7e89c-779c-4a4b-aa2c-40723a310dab",
+          "actionId": "cloud-garden-initialize:v1",
+          "kind": "starter",
+          "itemId": "seed:rice",
+          "delta": 2,
+          "balance": 2,
+          "petId": null,
+          "createdAt": 1792935736822
+        },
+        {
+          "id": "8c83a868-11cf-45ab-bb68-a354c7fb6ba6",
+          "actionId": "cloud-garden-initialize:v1",
+          "kind": "starter",
+          "itemId": "seed:berry",
+          "delta": 2,
+          "balance": 2,
+          "petId": null,
+          "createdAt": 1792935736822
+        },
+        {
+          "id": "64276855-3bee-436c-877e-2cc7e2104f51",
+          "actionId": "cloud-garden-initialize:v1",
+          "kind": "starter",
+          "itemId": "seed:tomato",
+          "delta": 2,
+          "balance": 2,
+          "petId": null,
+          "createdAt": 1792935736822
+        },
+        {
+          "id": "aac383ff-e849-4711-ad86-820eea01d652",
+          "actionId": "cloud-garden-initialize:v1",
+          "kind": "starter",
+          "itemId": "seed:carrot",
+          "delta": 2,
+          "balance": 2,
+          "petId": null,
+          "createdAt": 1792935736822
+        }
+      ],
+      "sync": {
+        "mode": "cloud",
+        "pending": 0,
+        "conflicts": 0
+      },
+      "territoryChallenges": [],
+      "remainingInvasions": 2
+    }
+  },
+  "storage": {
+    "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsc4E9.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/garden/plots",
+    "origin": "file://",
+    "ls": {
+      "runId": "e71b9c11-e62a-46a6-aa4d-decdd34c4200",
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "profilePath": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a",
+      "nonce": "53375681-47cf-4092-a65c-5648fe472bdb",
+      "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+      "createdAt": "2026-10-25T14:24:31.463Z",
+      "kind": "Explicit isolated QA sentinel; independent of real garden pending"
+    },
+    "idb": {
+      "runId": "e71b9c11-e62a-46a6-aa4d-decdd34c4200",
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "profilePath": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a",
+      "nonce": "53375681-47cf-4092-a65c-5648fe472bdb",
+      "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+      "createdAt": "2026-10-25T14:24:31.463Z",
+      "kind": "Explicit isolated QA sentinel; independent of real garden pending"
+    },
+    "dbExists": true,
+    "realPendingRaw": null
+  }
+}

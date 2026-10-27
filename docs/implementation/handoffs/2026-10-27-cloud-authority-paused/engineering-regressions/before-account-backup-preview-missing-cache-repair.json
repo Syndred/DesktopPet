@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-26T23:16:34.566Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "classification": "Engineering-only second ordering of native4E6-006; not another native fault or issue",
+  "nativeAcceptance": false,
+  "liveProfileTouched": false,
+  "networkRequests": false,
+  "exitCode": 1,
+  "testFile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\unified-regressions-v2\\account-backup-preview-missing-cache.regression.test.cjs",
+  "testSha256": "af94fad55d4a51c1acdffe61d72f727aff0bc22b6b56d9bfaa4689cd01c0b28b",
+  "stdout": "TAP version 13\n# Subtest: a valid original backup can be previewed when its known local cache file was already missing, without importing business rows\nnot ok 1 - a valid original backup can be previewed when its known local cache file was already missing, without importing business rows\n  ---\n  duration_ms: 144.7396\n  type: 'test'\n  location: 'C:\\\\Users\\\\Administrator\\\\Desktop\\\\project\\\\DesktopPet\\\\artifacts\\\\qa\\\\cloud-authority-convergence\\\\20261026\\\\unified-regressions-v2\\\\account-backup-preview-missing-cache.regression.test.cjs:14:1'\n  failureType: 'testCodeFailure'\n  error: \"ENOENT: no such file or directory, open 'C:\\\\Users\\\\Administrator\\\\Desktop\\\\project\\\\DesktopPet\\\\artifacts\\\\qa\\\\cloud-authority-convergence\\\\20261026\\\\unified-regressions-v2\\\\backup-preview-missing-fixture-gPIqGC\\\\managed\\\\10df41d0-366d-4b40-8403-115f9ef447e7\\\\sprites.png'\"\n  code: 'ENOENT'\n  stack: |-\n    Object.openSync (node:fs:621:18)\n    Object.readFileSync (node:fs:487:35)\n    C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\apps\\pc-app\\runtime\\core\\resource-backup.cjs:18:24\n    Array.map (<anonymous>)\n    C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\apps\\pc-app\\runtime\\core\\resource-backup.cjs:17:192\n    Array.map (<anonymous>)\n    Object.exportData [as export] (C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\apps\\pc-app\\runtime\\core\\resource-backup.cjs:17:36)\n    C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\apps\\pc-app\\runtime\\features\\accounts\\backups.cjs:72:36\n    transaction (C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\apps\\pc-app\\runtime\\features\\accounts\\util.cjs:62:19)\n    BackupManager.snapshot (C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\apps\\pc-app\\runtime\\features\\accounts\\backups.cjs:69:12)\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 0\n# fail 1\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 230.1224\n",
+  "stderr": ""
+}

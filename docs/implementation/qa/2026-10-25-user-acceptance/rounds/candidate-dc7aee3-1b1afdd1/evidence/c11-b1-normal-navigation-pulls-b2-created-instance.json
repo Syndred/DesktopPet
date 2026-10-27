@@ -1,0 +1,424 @@
+{
+  "at": "2026-10-25T21:07:11.511Z",
+  "session": {
+    "ok": true,
+    "data": {
+      "currentUser": {
+        "id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "subjectId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "provider": "runtime",
+        "account": "uat_1025_b09_28e3d0",
+        "username": "云验收乙09",
+        "revision": 0,
+        "createdAt": "2026-10-25T11:49:46.226802+00:00",
+        "updatedAt": "2026-10-25T16:12:34.169Z",
+        "dataMode": "live",
+        "authKind": "supabase",
+        "authUserId": "2028f0af-f501-47f5-9abb-de59487dad46"
+      },
+      "defaultProvider": "runtime",
+      "dataMode": "live",
+      "scenario": null,
+      "secureStorageAvailable": true,
+      "persistence": "secure",
+      "migration": {
+        "status": "absent",
+        "imported": 0,
+        "unresolved": []
+      },
+      "startupIssue": null
+    }
+  },
+  "companions": {
+    "ok": true,
+    "data": {
+      "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "pets": [
+        {
+          "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+          "petId": "pet-96de9234-462d-413b-ac72-81cfc1add244",
+          "templateId": "animal-wood-deer",
+          "name": "并发验收木鹿乙",
+          "serial": "96DE9234",
+          "element": "wood",
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "source": "adoption",
+          "origin": {},
+          "growth": {
+            "level": 1,
+            "experience": 0,
+            "mood": 60,
+            "satiety": 60,
+            "affinity": 0,
+            "winsTotal": 0,
+            "stats": {
+              "hp": 130,
+              "atk": 26,
+              "def": 26,
+              "spd": 18
+            }
+          },
+          "desktop": {
+            "visible": false,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 80,
+              "y": 520,
+              "displayId": null
+            }
+          },
+          "revision": 1,
+          "createdAt": "2026-10-25T12:07:23.190Z",
+          "updatedAt": "2026-10-25T12:07:23.190Z",
+          "globalSerial": "2"
+        },
+        {
+          "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+          "petId": "pet-825f6af9-402b-4244-988a-481563b7a587",
+          "templateId": "animal-earth-pangolin",
+          "name": "并发验收木鹿乙",
+          "serial": "825F6AF9",
+          "element": "earth",
+          "resource": {
+            "resourceId": "builtin:lingjing-yantuan-v1",
+            "kind": "2d"
+          },
+          "source": "adoption",
+          "origin": {},
+          "growth": {
+            "level": 1,
+            "experience": 0,
+            "mood": 60,
+            "satiety": 60,
+            "affinity": 0,
+            "winsTotal": 0,
+            "stats": {
+              "hp": 142,
+              "atk": 24,
+              "def": 34,
+              "spd": 11
+            }
+          },
+          "desktop": {
+            "visible": false,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 320,
+              "y": 520,
+              "displayId": null
+            }
+          },
+          "revision": 1,
+          "createdAt": "2026-10-25T12:20:31.991Z",
+          "updatedAt": "2026-10-25T12:20:31.991Z",
+          "globalSerial": "2"
+        },
+        {
+          "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+          "petId": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "serial": "74C6A89C",
+          "element": "water",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "source": "adoption",
+          "origin": {},
+          "growth": {
+            "level": 1,
+            "experience": 0,
+            "mood": 60,
+            "satiety": 60,
+            "affinity": 0,
+            "winsTotal": 0,
+            "stats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          "desktop": {
+            "visible": true,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 560,
+              "y": 520,
+              "displayId": "2568730015"
+            }
+          },
+          "revision": 3,
+          "createdAt": "2026-10-25T16:15:42.590Z",
+          "updatedAt": "2026-10-25T19:44:59.637Z",
+          "globalSerial": "3"
+        },
+        {
+          "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+          "petId": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "serial": "2EC1523D",
+          "element": "water",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "source": "adoption",
+          "origin": {},
+          "growth": {
+            "level": 1,
+            "experience": 0,
+            "mood": 60,
+            "satiety": 60,
+            "affinity": 0,
+            "winsTotal": 0,
+            "stats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          "desktop": {
+            "visible": false,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 800,
+              "y": 520,
+              "displayId": null
+            }
+          },
+          "revision": 1,
+          "createdAt": "2026-10-25T21:01:31.876Z",
+          "updatedAt": "2026-10-25T21:01:31.876Z",
+          "globalSerial": "5"
+        }
+      ],
+      "selections": {
+        "chatPetId": "pet-96de9234-462d-413b-ac72-81cfc1add244",
+        "battlePetId": null,
+        "guardPetId": null
+      },
+      "templates": [
+        {
+          "templateId": "big-fish-gentle",
+          "name": "鱼丸",
+          "category": "big-fish",
+          "element": "water",
+          "description": "安静温柔的鲸尾少女，喜欢陪你度过日常。",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "big-fish-cheerful",
+          "name": "小蓝",
+          "category": "big-fish",
+          "element": "water",
+          "description": "活泼的侧马尾伙伴，穿着宽松鲸鱼斗篷。",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaolan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "big-fish-foodie",
+          "name": "饭团",
+          "category": "big-fish",
+          "element": "water",
+          "description": "盘着双丸子头的美食家，认真珍惜每一顿饭。",
+          "resource": {
+            "resourceId": "builtin:lingjing-fantuan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "animal-shiba",
+          "name": "焰柴",
+          "category": "animal",
+          "element": "fire",
+          "description": "热情勇敢的柴犬，星星项圈总是闪闪发亮。",
+          "resource": {
+            "resourceId": "builtin:lingjing-shiba-v2",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 20,
+            "spd": 22
+          }
+        },
+        {
+          "templateId": "animal-hat-cat",
+          "name": "礼帽喵",
+          "category": "animal",
+          "element": "metal",
+          "description": "戴着礼帽的燕尾猫，擅长温柔的小魔术。",
+          "resource": {
+            "resourceId": "builtin:lingjing-hatcat-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 136,
+            "atk": 30,
+            "def": 30,
+            "spd": 13
+          }
+        },
+        {
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "category": "animal",
+          "element": "water",
+          "description": "安静机灵的雪白小狐，像雪花一样轻盈。",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "animal-wood-deer",
+          "name": "青芽",
+          "category": "animal",
+          "element": "wood",
+          "description": "戴着枝叶小角的林间幼鹿，喜欢收集新芽。",
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 18
+          }
+        },
+        {
+          "templateId": "animal-earth-pangolin",
+          "name": "岩团",
+          "category": "animal",
+          "element": "earth",
+          "description": "披着暖褐鳞甲的小穿山甲，稳稳守住每一步。",
+          "resource": {
+            "resourceId": "builtin:lingjing-yantuan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 142,
+            "atk": 24,
+            "def": 34,
+            "spd": 11
+          }
+        }
+      ],
+      "revision": 8,
+      "sync": {
+        "mode": "cloud",
+        "status": "ready",
+        "pending": 0,
+        "cloudRevision": 9,
+        "sharedSavePending": true
+      }
+    },
+    "revision": 8
+  },
+  "settings": {
+    "ok": true,
+    "data": {
+      "document": {
+        "desktop": {
+          "alwaysOnTop": true,
+          "clickThrough": true,
+          "launchAtLogin": false,
+          "closeToTray": true,
+          "companionLimit": 3,
+          "interactionSounds": true,
+          "volume": 70,
+          "hideInFullscreen": true,
+          "animationsEnabled": true
+        },
+        "notifications": {
+          "enabled": true,
+          "companions": true,
+          "battles": true,
+          "garden": true,
+          "quietEnabled": true,
+          "quietStart": "22:00",
+          "quietEnd": "08:00"
+        },
+        "privacy": {
+          "locationAllowed": false,
+          "locationOnlyWhileExploring": true,
+          "emotionStatistics": false
+        },
+        "sync": {
+          "enabled": false
+        }
+      },
+      "revision": 2,
+      "updatedAt": "2026-10-25T19:09:38.618Z",
+      "host": {
+        "startup": false,
+        "fullscreenMonitor": true,
+        "fullscreenMonitorReady": true,
+        "foregroundFullscreen": false,
+        "fullscreenSource": null,
+        "companionWindows": 1,
+        "clickThroughWindows": [
+          2
+        ],
+        "windows": [
+          {
+            "id": 2,
+            "alwaysOnTop": true,
+            "visible": true
+          }
+        ],
+        "locationAllowed": false,
+        "emotionStatistics": false,
+        "closeToTrayConnected": true,
+        "companionLimitConnected": true
+      }
+    }
+  },
+  "dom": {
+    "route": "#/companions",
+    "body": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n云验收乙09\n\n我的灵宠 / 全部伙伴\n\n今天，也有小家伙在等你。\n\n已拥有 4 只 · 桌面陪伴 1 只\n\n领养伙伴\n伙伴已保存，其他存档待核对。\n核对存档\n青芽\nLv.01\n编号 0002\n在灵境里休息\n\n戴着枝叶小角的林间幼鹿，喜欢收集新芽。\n\n摸摸\n喂食\n聊聊天\n青芽\n编号 0002\n历史昵称：并发验收木鹿乙\n\n木\n\n60\n60\n0\n行为模式\n安静陪伴\n外观大小\n100%\n在桌面显示\n设为出战伙伴\n查看伙伴详情\n我的伙伴\n全部 4\n桌面中 1\n青芽\n编号 0002\nLv.01\n木\n岩团\n编号 0002\nLv.01\n土\n小狐\n桌面中\n编号 0003\nLv.01\n水\n小狐\n编号 0005\nLv.01\n水\n去附近探索\n寻找下一份特别的相遇\n和伙伴并肩出发\n前往对战中心"
+  }
+}

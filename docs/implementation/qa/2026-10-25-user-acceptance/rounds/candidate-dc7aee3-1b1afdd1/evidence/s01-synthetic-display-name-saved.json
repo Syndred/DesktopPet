@@ -1,0 +1,76 @@
+{
+  "at": "2026-10-25T20:10:10.492Z",
+  "source": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+  "before": {
+    "ok": true,
+    "data": {
+      "currentUser": {
+        "id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "subjectId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "provider": "runtime",
+        "account": "uat_1025_a_9e486a",
+        "username": "云端验收甲",
+        "revision": 0,
+        "createdAt": "2026-10-25T10:05:01.804833+00:00",
+        "updatedAt": "2026-10-25T19:54:10.092Z",
+        "dataMode": "live",
+        "authKind": "supabase",
+        "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe"
+      },
+      "defaultProvider": "runtime",
+      "dataMode": "live",
+      "scenario": null,
+      "secureStorageAvailable": true,
+      "persistence": "secure",
+      "migration": {
+        "status": "absent",
+        "imported": 0,
+        "unresolved": []
+      },
+      "startupIssue": null
+    }
+  },
+  "after": {
+    "ok": true,
+    "data": {
+      "currentUser": {
+        "id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "subjectId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "provider": "runtime",
+        "account": "uat_1025_a_9e486a",
+        "username": "云端验收甲·资料验收09",
+        "revision": 1,
+        "createdAt": "2026-10-25T10:05:01.804833+00:00",
+        "updatedAt": "2026-10-25T20:09:46.834Z",
+        "dataMode": "live",
+        "authKind": "supabase",
+        "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe"
+      },
+      "defaultProvider": "runtime",
+      "dataMode": "live",
+      "scenario": null,
+      "secureStorageAvailable": true,
+      "persistence": "secure",
+      "migration": {
+        "status": "absent",
+        "imported": 0,
+        "unresolved": []
+      },
+      "startupIssue": null
+    }
+  },
+  "expectedUsername": "云端验收甲·资料验收09",
+  "originalUsername": "云端验收甲",
+  "nativeScreenshot": "s01-synthetic-display-name-save-native.jpg",
+  "dom": {
+    "accountText": "设置 / 账号与同步\n\n把每一段陪伴，好好保存。\n桌面与行为\n通知与隐私\nAI 对话\n角色资源\n账号与同步\n账号资料\n云端验收甲·资料验收09\n\n@uat_1025_a_9e486a · 云端账号\n\n用户名\n保存资料\n修改密码\n当前密码\n新密码\n确认新密码\n保存密码\n伙伴与记录\n已同步\n开启存档同步\n立即同步\n导出本地备份\n恢复本地备份\n预览云端存档\n当前设备\nWindows PC\n\n已保持登录\n\n退出登录\n\n账号资料已保存。",
+    "status": [
+      "账号资料已保存。"
+    ]
+  },
+  "economyUnchanged": true,
+  "independentReadback": "pending Root; restore original only after independent readback"
+}

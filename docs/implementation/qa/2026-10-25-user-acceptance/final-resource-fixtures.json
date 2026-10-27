@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-25T15:07:06.685Z",
+  "sourceOwnedManifest": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/resources/cloud-Yzee8N/original/character.json",
+  "sourceManifestSha256": "e2e976b69f7ea9049527251e458517e048c05aa5ab4cd1e13ffa47c38821708e",
+  "sourceImage": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\resources\\cloud-Yzee8N\\original\\sprites.png",
+  "sourceImageSha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693",
+  "validContentHash": "1cd0626ea29767476b371519ec4dc00fc43c528bfcd92627166275b937db2060",
+  "invalidCatalog": "C:/Users/Administrator/Desktop/project/DesktopPet-fresh-worktrees/07/apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json",
+  "missingImageManifest": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\e71b9c11-e62a-46a6-aa4d-decdd34c4200\\resource-fixtures-final\\missing-image\\character.json",
+  "parentPathManifest": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\e71b9c11-e62a-46a6-aa4d-decdd34c4200\\resource-fixtures-final\\parent-path\\character.json",
+  "ownedBoundaryImage": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\e71b9c11-e62a-46a6-aa4d-decdd34c4200\\resource-fixtures-final\\outside-owned.png",
+  "ownedBoundaryImageSha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693",
+  "productUiExecuted": false,
+  "productSourceModified": false,
+  "expected": "Reject invalid package/missing image/parent-path without new managed resource or mutation of existing source. Exact runtime errors to be recorded from final native UI, not presumed.",
+  "scope": "All referenced files are project-owned inside a fresh ignored QA fixture directory; no user files/network paths targeted."
+}

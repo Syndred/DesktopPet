@@ -1,0 +1,34 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const read=f=>JSON.parse(fs.readFileSync(path.join(__dirname,f),'utf8').replace(/^\uFEFF/,''));
+const freeze=read('../candidate-freeze.json'),a0=read('cloudA-flow-b09-before-only-new-invite-20261026.json'),a1=read('cloudA-flow-b09-only-send-first-unknown-result-20261026.json'),a2=read('cloudA-flow-b09-natural-expiry-after-one-normal-refresh-final-20261026.json'),b0=read('cloudB2-flow-b09-before-only-new-invite-20261026.json'),b2=read('cloudB2-flow-b09-natural-expiry-after-one-normal-refresh-final-20261026.json');
+const au1=read('cloudA-battle-public-ui-b09-only-send-first-unknown-result-20261026.json'),au2=read('cloudA-battle-public-ui-b09-natural-expiry-after-one-normal-refresh-final-20261026.json'),bu2=read('cloudB2-battle-public-ui-b09-natural-expiry-after-one-normal-refresh-final-20261026.json');
+const added=a1.tables.battle_transport_journal.filter(r=>!a0.tables.battle_transport_journal.some(x=>x.action_id===r.action_id));assert.equal(added.length,2);
+const cloud=added.find(r=>JSON.parse(r.command_json).type==='cloud:invite'),bound=added.find(r=>JSON.parse(r.command_json).type==='invite');assert.ok(cloud&&bound);
+const command=JSON.parse(cloud.command_json),result=JSON.parse(cloud.result_json),request=result.request;
+assert.equal(result.ok,true);assert.equal(cloud.action_id,'fdaa963e-441e-4b9f-8cad-a50d218011f5');assert.equal(command.input.targetAccount,'uat_1025_b09_28e3d0');
+assert.equal(request.id,'61dedf29-011e-4816-81a1-e8e8df91f4c7');assert.equal(request.fromUserId,a0.owner);assert.equal(request.toUserId,b0.owner);assert.equal(request.status,'pending');
+assert.deepEqual([request.roomId,request.roomCode,request.roomStatus],[null,null,null]);
+assert.equal(Date.parse(request.expiresAt)-Date.parse(request.createdAt),300000);
+assert.equal(new Date(request.createdAt).toISOString(),'2026-10-26T12:28:21.751Z');assert.equal(new Date(request.expiresAt).toISOString(),'2026-10-26T12:33:21.751Z');
+assert.equal(bound.action_id,'invite:'+request.id);assert.equal(JSON.parse(bound.command_json).petId,'pet-97410828-fdf6-4253-8246-4c5f389d8fba');
+for(const row of a0.tables.battle_transport_journal)assert.ok(a2.tables.battle_transport_journal.some(r=>JSON.stringify(r)===JSON.stringify(row)),'Original journal row changed');
+for(const row of added)assert.ok(a2.tables.battle_transport_journal.some(r=>JSON.stringify(r)===JSON.stringify(row)),'Original new invite receipt changed');
+assert.equal(a2.tables.battle_transport_journal.length,a0.tables.battle_transport_journal.length+2);
+const business=['account_settings','companion_pets','companion_accounts','companion_actions','battle_sessions','battle_reports_v2','battle_reward_receipts','garden_items','garden_ledger','garden_reward_receipts','conversation_messages'];
+for(const t of business){assert.deepEqual(a0.digests[t],a2.digests[t]);assert.deepEqual(b0.digests[t],b2.digests[t]);}
+assert.deepEqual(a0.tables.account_settings,a2.tables.account_settings);assert.deepEqual(b0.tables.account_settings,b2.tables.account_settings);
+assert.deepEqual(a0.tables.companion_accounts,a2.tables.companion_accounts);assert.deepEqual(b0.tables.companion_accounts,b2.tables.companion_accounts);
+assert.ok(au1.result.visibleText.includes('等待回应')&&au1.result.visibleText.includes('有效至 10/26 20:33'));
+assert.ok(au2.result.visibleText.includes('已过期')&&au2.result.visibleText.includes('重新发起'));assert.ok(bu2.result.visibleText.includes('邀请已过期，请对方重新发起。'));
+for(const ui of [au2,bu2]){assert.equal(ui.result.route,'#/battle/friends');assert.ok(Date.parse(ui.at)>Date.parse(request.expiresAt));assert.equal(ui.result.buttons.filter(b=>/接受|同意/.test(b.text||'')).length,0);}
+assert.ok(au2.result.visibleText.includes('编号 0004')&&bu2.result.visibleText.includes('编号 0005'));
+const rootReceipt='C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/b09-original-invite-exact-cloud-receipt.json';assert.ok(fs.existsSync(rootReceipt));
+const screenshots=['b09-cloudA-sole-invite-send-first-native-result-20261026.png','b09-cloudB2-first-loaded-observation-after-real-deadline-20261026.png','b09-cloudB2-expired-after-one-normal-refresh-20261026.png','b09-cloudA-expired-after-one-normal-refresh-20261026.png'];
+const proof={at:new Date().toISOString(),status:'actual_natural_deadline_ui_expired_and_client_business_preserved_awaiting_root_final_review',approvalRef:'root-c7ad-b09-natural-expiry-1222',sourceCommit:freeze.sourceCommit,exeSha256:freeze.exe.sha256,actual:{actionId:cloud.action_id,inviteId:request.id,host:request.fromUserId,guest:request.toUserId,createdAt:request.createdAt,expiresAt:request.expiresAt,serverMicrosecondPrecisionRetained:true,durationMs:300000,roomId:null,resultOk:true,resentFlag:result.resent,boundPetId:JSON.parse(bound.command_json).petId},
+ nativeBudget:{sendClicks:1,manualOriginalRequestRetry:0,resend:0,newRoom:0,battleCommands:0,accept:0,cancel:0,normalRefreshAfterDeadline:{a:1,b:1},helper:0},
+ timeline:{initialImmediateUi:'发送结果待确认; original request preserved',initialErrorCode:'not captured; no timeout or HTTP status inferred',laterUiConvergedWithoutManualRecovery:{at:au1.at,text:'等待回应; 有效至10/26 20:33'},afterDeadline:{a:au2.at,b:bu2.at},filenameCaveat:'only-send-first-unknown-result UI/flow label refers to the initial stage; the actual saved12:29:31 public projection already shows pending and a successful original receipt.'},
+ naturalExpiry:{aUiExpired:true,bUiExpired:true,bAcceptControlAbsent:true,lateAcceptAttempted:false,http409Observed:false,bBeforeDeadlinePendingUiObserved:false,beforeDeadlineLimitation:'B first navigation captures were loading. First loaded B observation was after the real server deadline, so no pre-expiry B acceptance state is claimed.',noClockGpsRngOrRowsChanged:true},
+ retention:{businessDigestTablesExactBothProfiles:business,original21AJournalRowsRawExact:true,only2NewOriginalInviteTransportRows:true,originalInviteReceiptRawPendingRetained:true,oldRoomAndReportsNotRecreated:true,settingsAndBattleChoicesRawExact:true,aHead:a2.tables.account_sync_state[0].cloud_revision,bLocalHead:b2.tables.account_sync_state[0].cloud_revision,allProfileIdsRetained:true},
+ rootReceipt,rootSqlQualification:'Root confirms list_invites is a read-only expired DTO projection; raw pending and original dates may remain unchanged after the deadline. Do not alter raw status or infer a failure from that.',rootFinalPgLegacy12PreservationAndNoNewRoomPending:true,
+ screenshots:screenshots.map(f=>({file:f,savedAt:fs.statSync(path.join(__dirname,f)).mtime.toISOString()})),ledgerNotChanged:true};
+const output=path.join(__dirname,'b09-c7ad-single-invite-natural-expiry-client-verified-20261026.json');fs.writeFileSync(output,JSON.stringify(proof,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({output,...proof}));

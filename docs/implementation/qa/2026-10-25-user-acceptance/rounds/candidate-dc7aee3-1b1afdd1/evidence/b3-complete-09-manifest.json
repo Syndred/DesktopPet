@@ -1,0 +1,44 @@
+{
+  "at": "2026-10-25T16:16:27.649Z",
+  "status": "one-native-B3-success-await-Root-independent-PG3",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "asarSha256": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba",
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "authUserId": "2028f0af-f501-47f5-9abb-de59487dad46",
+  "deviceId": "bb7df55b-638d-4ed4-a217-f31888a13dd0",
+  "petId": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+  "inputActionId": "f0f7e8f7-051a-40a2-8ff7-3d9d2dcb4cc8",
+  "canonicalActionId": "companions:f0f7e8f7-051a-40a2-8ff7-3d9d2dcb4cc8",
+  "input": {
+    "actionId": "f0f7e8f7-051a-40a2-8ff7-3d9d2dcb4cc8",
+    "templateId": "animal-white-fox",
+    "name": "小狐",
+    "showOnDesktop": true
+  },
+  "requestHash": "70c17b2445feca9ddab3e6067d2508da14d8e348cad7199e206a793b868d2b7f",
+  "immutableLocalReceipt": "b3-original-local-immutable-adoption-receipt.json",
+  "receiptSha256": "444f68f87a6fdef8e6e8b0f57897133d13434881259c325c8f797f38e2aa82d0",
+  "trustedGlobalSerial": "3",
+  "nativeNumberProofPending": false,
+  "originalTwoPetsRawRowsUnchanged": true,
+  "newActionCount": 1,
+  "newFoxCount": 1,
+  "automaticRetries": 0,
+  "clickLog": "b3-single-native-click.json",
+  "nativeNumberFile": "b3-success-number-0003-native.jpg",
+  "nativeReadbackFile": "b3-trusted-list-number-and-original-pets.json",
+  "frozenOriginalPets": [
+    {
+      "petId": "pet-96de9234-462d-413b-ac72-81cfc1add244",
+      "templateId": "animal-wood-deer",
+      "revision": 1
+    },
+    {
+      "petId": "pet-825f6af9-402b-4244-988a-481563b7a587",
+      "templateId": "animal-earth-pangolin",
+      "revision": 1
+    }
+  ],
+  "note": "B preexisting two non-fox pets are preserved, not an empty account; only zero-fox precondition applies. Existing no-fox status was independently confirmed by Root PG2."
+}

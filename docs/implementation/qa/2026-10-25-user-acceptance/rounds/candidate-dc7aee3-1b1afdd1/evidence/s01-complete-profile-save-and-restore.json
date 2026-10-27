@@ -1,0 +1,139 @@
+{
+  "at": "2026-10-25T20:15:08.092Z",
+  "source": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "before": {
+    "ok": true,
+    "data": {
+      "currentUser": {
+        "id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "subjectId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "provider": "runtime",
+        "account": "uat_1025_a_9e486a",
+        "username": "云端验收甲",
+        "revision": 0,
+        "createdAt": "2026-10-25T10:05:01.804833+00:00",
+        "updatedAt": "2026-10-25T19:54:10.092Z",
+        "dataMode": "live",
+        "authKind": "supabase",
+        "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe"
+      },
+      "defaultProvider": "runtime",
+      "dataMode": "live",
+      "scenario": null,
+      "secureStorageAvailable": true,
+      "persistence": "secure",
+      "migration": {
+        "status": "absent",
+        "imported": 0,
+        "unresolved": []
+      },
+      "startupIssue": null
+    }
+  },
+  "changed": {
+    "ok": true,
+    "data": {
+      "currentUser": {
+        "id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "subjectId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "provider": "runtime",
+        "account": "uat_1025_a_9e486a",
+        "username": "云端验收甲·资料验收09",
+        "revision": 1,
+        "createdAt": "2026-10-25T10:05:01.804833+00:00",
+        "updatedAt": "2026-10-25T20:09:46.834Z",
+        "dataMode": "live",
+        "authKind": "supabase",
+        "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe"
+      },
+      "defaultProvider": "runtime",
+      "dataMode": "live",
+      "scenario": null,
+      "secureStorageAvailable": true,
+      "persistence": "secure",
+      "migration": {
+        "status": "absent",
+        "imported": 0,
+        "unresolved": []
+      },
+      "startupIssue": null
+    }
+  },
+  "restored": {
+    "ok": true,
+    "data": {
+      "currentUser": {
+        "id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "subjectId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "provider": "runtime",
+        "account": "uat_1025_a_9e486a",
+        "username": "云端验收甲",
+        "revision": 2,
+        "createdAt": "2026-10-25T10:05:01.804833+00:00",
+        "updatedAt": "2026-10-25T20:13:44.955Z",
+        "dataMode": "live",
+        "authKind": "supabase",
+        "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe"
+      },
+      "defaultProvider": "runtime",
+      "dataMode": "live",
+      "scenario": null,
+      "secureStorageAvailable": true,
+      "persistence": "secure",
+      "migration": {
+        "status": "absent",
+        "imported": 0,
+        "unresolved": []
+      },
+      "startupIssue": null
+    }
+  },
+  "localRestoreChecks": {
+    "at": "2026-10-25T20:14:03.453Z",
+    "source": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+    "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+    "session": {
+      "ok": true,
+      "data": {
+        "currentUser": {
+          "id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "subjectId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "provider": "runtime",
+          "account": "uat_1025_a_9e486a",
+          "username": "云端验收甲",
+          "revision": 2,
+          "createdAt": "2026-10-25T10:05:01.804833+00:00",
+          "updatedAt": "2026-10-25T20:13:44.955Z",
+          "dataMode": "live",
+          "authKind": "supabase",
+          "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe"
+        },
+        "defaultProvider": "runtime",
+        "dataMode": "live",
+        "scenario": null,
+        "secureStorageAvailable": true,
+        "persistence": "secure",
+        "migration": {
+          "status": "absent",
+          "imported": 0,
+          "unresolved": []
+        },
+        "startupIssue": null
+      }
+    },
+    "usernameRestored": true,
+    "accountUnchanged": true,
+    "authUidUnchanged": true,
+    "petRowsUnchanged": true,
+    "actionsUnchanged": true
+  },
+  "rootIndependentEvidence": [
+    "artifacts/qa/user-acceptance/global-serial/root-s01-synthetic-profile-renamed-20261026.json",
+    "artifacts/qa/user-acceptance/global-serial/root-s01-synthetic-profile-restored-20261026.json"
+  ],
+  "rootQualification": "local profile revision0->1->2; public profile renamed then restored, same owner/authuid/account; auth_directory and Auth metadata unaffected by design"
+}

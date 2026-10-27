@@ -1,0 +1,232 @@
+{
+  "at": "2026-10-25T14:03:09.366Z",
+  "source": "e875febf3430be341191a639668d43e7f09826dc",
+  "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+  "method": "Native quiet→wander, natural actual window movement and automatic position writes, native quiet switch. No API gameplay mutation or raw DB write.",
+  "first": {
+    "before": {
+      "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+      "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+      "templateId": "animal-white-fox",
+      "name": "小狐",
+      "serial": "EA1F0CF6",
+      "element": "water",
+      "resource": {
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "kind": "2d"
+      },
+      "source": "adoption",
+      "origin": {},
+      "growth": {
+        "level": 1,
+        "experience": 0,
+        "mood": 60,
+        "satiety": 60,
+        "affinity": 0,
+        "winsTotal": 0,
+        "stats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        }
+      },
+      "desktop": {
+        "visible": true,
+        "behavior": "quiet",
+        "scale": 1,
+        "position": {
+          "x": 442,
+          "y": 33,
+          "displayId": "2568730015"
+        }
+      },
+      "revision": 51,
+      "createdAt": "2026-10-25T10:31:12.593Z",
+      "updatedAt": "2026-10-25T10:57:57.312Z"
+    },
+    "after": {
+      "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+      "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+      "templateId": "animal-white-fox",
+      "name": "小狐",
+      "serial": "EA1F0CF6",
+      "element": "water",
+      "resource": {
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "kind": "2d"
+      },
+      "source": "adoption",
+      "origin": {},
+      "growth": {
+        "level": 1,
+        "experience": 0,
+        "mood": 60,
+        "satiety": 60,
+        "affinity": 0,
+        "winsTotal": 0,
+        "stats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        }
+      },
+      "desktop": {
+        "visible": true,
+        "behavior": "quiet",
+        "scale": 1,
+        "position": {
+          "x": 564,
+          "y": 33,
+          "displayId": "2568730015"
+        }
+      },
+      "revision": 55,
+      "createdAt": "2026-10-25T10:31:12.593Z",
+      "updatedAt": "2026-10-25T14:01:40.940Z"
+    },
+    "changedTopFields": [
+      "desktop",
+      "revision",
+      "updatedAt"
+    ]
+  },
+  "during": [
+    {
+      "at": "2026-10-25T14:00:30.746Z",
+      "pets": [
+        {
+          "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+          "revision": 54,
+          "desktop": {
+            "visible": true,
+            "behavior": "wander",
+            "scale": 1,
+            "position": {
+              "x": 564,
+              "y": 33,
+              "displayId": "2568730015"
+            }
+          }
+        },
+        {
+          "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+          "revision": 3,
+          "desktop": {
+            "visible": false,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 320,
+              "y": 520,
+              "displayId": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-25T14:00:31.762Z",
+      "pets": [
+        {
+          "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+          "revision": 54,
+          "desktop": {
+            "visible": true,
+            "behavior": "wander",
+            "scale": 1,
+            "position": {
+              "x": 564,
+              "y": 33,
+              "displayId": "2568730015"
+            }
+          }
+        },
+        {
+          "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+          "revision": 3,
+          "desktop": {
+            "visible": false,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 320,
+              "y": 520,
+              "displayId": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-25T14:00:32.776Z",
+      "pets": [
+        {
+          "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+          "revision": 54,
+          "desktop": {
+            "visible": true,
+            "behavior": "wander",
+            "scale": 1,
+            "position": {
+              "x": 564,
+              "y": 33,
+              "displayId": "2568730015"
+            }
+          }
+        },
+        {
+          "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+          "revision": 3,
+          "desktop": {
+            "visible": false,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 320,
+              "y": 520,
+              "displayId": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-25T14:00:33.792Z",
+      "pets": [
+        {
+          "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+          "revision": 54,
+          "desktop": {
+            "visible": true,
+            "behavior": "wander",
+            "scale": 1,
+            "position": {
+              "x": 564,
+              "y": 33,
+              "displayId": "2568730015"
+            }
+          }
+        },
+        {
+          "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+          "revision": 3,
+          "desktop": {
+            "visible": false,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 320,
+              "y": 520,
+              "displayId": null
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "secondExactlyUnchanged": true,
+  "alerts": [],
+  "revisionConflictVisible": false
+}

@@ -1,0 +1,84 @@
+{
+  "at": "2026-10-26T23:07:14.871Z",
+  "stage": "r05-native-valid-backup-missing-file-failure",
+  "caseUpdates": [
+    {
+      "id": "R05",
+      "status": "failed",
+      "severity": "P1",
+      "executionState": "executed_current_candidate",
+      "hardTechnicalBlock": false,
+      "findingRefs": [
+        "4E6-006"
+      ],
+      "actual": "原B2普通UI一次导入本轮自有青芽b773，正常导出同owner有效原备份(4资源/8文件，11,136,568bytes/a3e78b...)；B1普通打开并刷新同文件预览后，对唯一新增且未应用PNG执行一次保字节缺失故障。唯一实际确认恢复立即ENOENT打开当前sprites.png，备份未完成恢复。随后云下载verified_at变化并补齐原路径，严格记为云自动恢复而非backup成功。没有二次fault/导入/确认；原bytes已归档，8注册文件SHA恢复正确，70业务表/原3资源/宠物/设置/历史保持。",
+      "evidence": [
+        "native-R05-valid-backup-missing-file-recovery-failure-seal.json",
+        "root-R05-qingya-input-preparation.json",
+        "root-R05-new-qingya-normal-import-independent.json",
+        "root-R05-preview-backup-and-exact-new-asset-preflight.json",
+        "approval-R05-b773-single-file-fault.json",
+        "native-R05-original-B2-qingya-normal-import-success.png",
+        "native-R05-original-B2-backup-export-saved.png",
+        "native-ui-exports/B2-R05-qingya-backup-origin-4e6.lingjing.json",
+        "native-R05-original-B1-original-backup-preview-before-confirm.png",
+        "native-R05-original-B1-refreshed-same-backup-preview-before-fault.png",
+        "native-R05-fault-install-guard.json",
+        "native-R05-single-new-png-preserved-readback.json",
+        "native-R05-original-B1-one-confirm-after-preserved-file-fault.png",
+        "native-R05-after-one-ui-confirm-file-and-provenance-readback.json",
+        "cloudB1-r05-after-one-confirm-enoent-before-cleanup.json",
+        "native-R05-original-B1-confirm-failed-enoent-after-cloud-refill.png",
+        "native-R05-single-file-fault-cleanup-readback.json",
+        "native-R05-held-bytes-archived-evidence.json",
+        "native-preserved/R05-b773fb41-preserved-original-sprites.png",
+        "cloudB1-r05-after-failure-cloud-refill-and-cleanup.json"
+      ]
+    }
+  ],
+  "newIssues": [
+    {
+      "id": "4E6-006",
+      "severity": "P1",
+      "status": "open",
+      "title": "有效备份在当前资源文件缺失时被恢复前保护备份阻断",
+      "caseIds": [
+        "R05"
+      ],
+      "expected": "同owner有效备份已包含并校验完整资源文件时，当前受管缓存缺失应能通过正常恢复补齐；恢复前保护逻辑应保留可用状态并明确记录缺失，不能先因同一缺失文件阻断整个恢复。",
+      "actual": "本候选原B1对真实完整备份唯一确认恢复，报ENOENT打开本轮新QA青芽注册sprites.png。原路径缺失已即时实证，原PNG字节完整保留；后台云下载稍后补齐同路径，但该UI恢复已失败，不能记为备份来源恢复。",
+      "reproducibleSteps": [
+        "普通UI导入项目自有青芽，仅新增本轮资源b773；不应用给宠物",
+        "普通UI导出完整同owner备份并核对4资源8文件全部SHA/pack",
+        "原B1普通选择该原文件并保留刚刷新的恢复预览",
+        "仅将新QA资源的精确受管PNG保字节改名一次，确认原路径缺失",
+        "普通点击确认导入一次，观察ENOENT；读回下载provenance并保留后续cloud补齐来源",
+        "原字节归档留证；保持产品自动恢复的有效注册文件，不覆盖、不重试"
+      ],
+      "evidence": [
+        "native-R05-valid-backup-missing-file-recovery-failure-seal.json",
+        "root-R05-qingya-input-preparation.json",
+        "root-R05-new-qingya-normal-import-independent.json",
+        "root-R05-preview-backup-and-exact-new-asset-preflight.json",
+        "approval-R05-b773-single-file-fault.json",
+        "native-R05-original-B2-qingya-normal-import-success.png",
+        "native-R05-original-B2-backup-export-saved.png",
+        "native-ui-exports/B2-R05-qingya-backup-origin-4e6.lingjing.json",
+        "native-R05-original-B1-original-backup-preview-before-confirm.png",
+        "native-R05-original-B1-refreshed-same-backup-preview-before-fault.png",
+        "native-R05-fault-install-guard.json",
+        "native-R05-single-new-png-preserved-readback.json",
+        "native-R05-original-B1-one-confirm-after-preserved-file-fault.png",
+        "native-R05-after-one-ui-confirm-file-and-provenance-readback.json",
+        "cloudB1-r05-after-one-confirm-enoent-before-cleanup.json",
+        "native-R05-original-B1-confirm-failed-enoent-after-cloud-refill.png",
+        "native-R05-single-file-fault-cleanup-readback.json",
+        "native-R05-held-bytes-archived-evidence.json",
+        "native-preserved/R05-b773fb41-preserved-original-sprites.png",
+        "cloudB1-r05-after-failure-cloud-refill-and-cleanup.json"
+      ],
+      "qualification": "受控故障仅影响本轮新增、未应用宠物的QA资源；原3资源/所有原业务数据保全。8注册文件hash及70业务表摘要与故障前一致。后台下载补齐单独标记，未用人工回填或二次提交冒充产品恢复通过。Root已独立确认修复须同时覆盖恢复前保护备份及已有resourceId的缺文件合并。"
+    }
+  ],
+  "issueUpdates": []
+}

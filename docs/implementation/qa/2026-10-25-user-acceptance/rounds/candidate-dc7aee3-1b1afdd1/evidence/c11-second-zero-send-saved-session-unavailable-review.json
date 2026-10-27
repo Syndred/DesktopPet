@@ -1,0 +1,80 @@
+{
+  "at": "2026-10-25T22:03:34.722Z",
+  "responseFile": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\02\\artifacts\\companions\\user-qa\\c11-a1-replay-prepared-20261026-v2\\execution-once\\technical-response.json",
+    "exists": true,
+    "bytes": 1475,
+    "sha256": "39313634172e29c874567fda0ae27208e8cdd5dae4d46c0c07b9387b19220b14"
+  },
+  "response": {
+    "format": "lingjing.c11.a1.one-shot-technical-response/v1",
+    "c11Passed": false,
+    "nativeButtonRetryVerified": false,
+    "technicalReplayResponseVerified": false,
+    "independentAfterVerified": false,
+    "result": "stopped-await-root-review",
+    "sends": 0,
+    "browserWindowsCreated": 0,
+    "webContentsCreated": 0,
+    "localDatabaseOpened": false,
+    "localDatabaseWritten": false,
+    "originalProfileWritePerformed": false,
+    "credentialArtifactOrConsoleOutputPerformed": false,
+    "authRefreshOrLoginPerformed": false,
+    "startedAt": "2026-10-25T22:03:18.623Z",
+    "approvalSha256": "cd7be1eb844895e21bd4ecd2f1f994679baa0495c32f355b4260b5f6bc774d3c",
+    "beforeSnapshotSha256": "90f09056f7da5f669584b15b0948dbf4adbf70a5c689ded5b2e84e5eabe4fa25",
+    "runnerSha256": "f73a2e292f0da5e09cc94324d93741193461802bec1bdd9c344c64b8d4b60bab",
+    "parametersSha256": "774d7b35fa22b762bf4902337c100ea8cb556fa7106b0e6129f98961ca548ddc",
+    "endpoint": "https://jbvrdmrkwpznbrvteive.supabase.co/functions/v1/companions-sync",
+    "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+    "inputActionId": "18a25316-26ac-453e-a34a-ab44ed3f7055",
+    "canonicalActionId": "companions:18a25316-26ac-453e-a34a-ab44ed3f7055",
+    "requestHash": "ed0763689feb0d681fbf90d94d51d0803002f83f932a4becc1ea0e095ea54f3f",
+    "canonicalBodySha256": "5f706a45e34aa721b010b961b0a622a994492e44fc8223d6183d768431bacc3b",
+    "errorCode": "SAVED_SESSION_UNAVAILABLE",
+    "finishedAt": "2026-10-25T22:03:18.667Z"
+  },
+  "files": [
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\lingjing.sqlite",
+      "exists": true,
+      "bytes": 1675264,
+      "sha256": "5873a5c2eb11e7999ec795920eea4758147ac89e3cea51aaa9c910d4a119f636"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\lingjing.sqlite-wal",
+      "exists": true,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\lingjing.sqlite-shm",
+      "exists": true,
+      "bytes": 32768,
+      "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\accounts\\verified-session.bin",
+      "exists": true,
+      "bytes": 1497,
+      "sha256": "f765d4b0134aa446ea8c58621249f9cd8267d1e731e47fb07ef676288d0ec98f"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\.lingjing-qa-profile.json",
+      "exists": false
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\lingjing-qa-profile.json",
+      "exists": false
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\accounts\\device.json",
+      "exists": true,
+      "bytes": 63,
+      "sha256": "2fb39c18c95bbb37d1c472f565801684f9438dbc949f46942d8c56186b8689b1"
+    }
+  ],
+  "noAutomaticRetry": true,
+  "allOriginalProtectedFilesExact": true
+}

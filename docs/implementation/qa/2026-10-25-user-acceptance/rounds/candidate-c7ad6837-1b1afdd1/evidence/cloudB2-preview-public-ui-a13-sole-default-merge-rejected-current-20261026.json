@@ -1,0 +1,76 @@
+{
+  "at": "2026-10-26T13:17:32.478Z",
+  "method": "Readonly visible dialog text and standard ARIA/form mode controls only; no private Map/React state/business invocation/input/credential values",
+  "previewId": null,
+  "previewIdQualification": "Only a publicly visible ID may be recorded; this collector never reads private application state.",
+  "result": {
+    "route": "#/account",
+    "visibleText": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n云验收乙09\n\n设置 / 账号与同步\n\n把每一段陪伴，好好保存。\n桌面与行为\n通知与隐私\nAI 对话\n角色资源\n账号与同步\n账号资料\n云验收乙09\n\n@uat_1025_b09_28e3d0 · 云端账号\n\n用户名\n保存资料\n修改密码\n当前密码\n新密码\n确认新密码\n保存密码\n伙伴与记录\n云端有更新\n开启存档同步\n立即同步\n导出本地备份\n恢复本地备份\n预览云端存档\n当前设备\nWindows PC\n\n本次登录\n\n退出登录\n\n两端有不同的人设、记忆或连接，请保留备份后选择要恢复的版本。\n\n预览恢复内容\n恢复备份\n\n2026/10/26 19:31:31\n\n6 项内容\n恢复方式\n合并，保留本机现有记录\n\n恢复前会自动备份当前存档；账号资料和登录状态保持不变。\n\n取消\n确认恢复\n\n两端有不同的人设、记忆或连接，请保留备份后选择要恢复的版本。",
+    "dialogs": [
+      {
+        "role": "dialog",
+        "label": null,
+        "text": "预览恢复内容\n恢复备份\n\n2026/10/26 19:31:31\n\n6 项内容\n恢复方式\n合并，保留本机现有记录\n\n恢复前会自动备份当前存档；账号资料和登录状态保持不变。\n\n取消\n确认恢复\n\n两端有不同的人设、记忆或连接，请保留备份后选择要恢复的版本。",
+        "rect": {
+          "x": 395.6000061035156,
+          "y": 283.09375,
+          "width": 540,
+          "height": 345.8125
+        },
+        "choices": [
+          {
+            "role": "combobox",
+            "type": "button",
+            "label": "恢复方式",
+            "text": "合并，保留本机现有记录",
+            "checked": null,
+            "value": null,
+            "disabled": false
+          }
+        ],
+        "buttons": [
+          {
+            "text": "合并，保留本机现有记录",
+            "label": "恢复方式",
+            "disabled": false,
+            "rect": {
+              "x": 426.3999938964844,
+              "y": 447.65625,
+              "width": 478.3999938964844,
+              "height": 38
+            }
+          },
+          {
+            "text": "取消",
+            "label": null,
+            "disabled": false,
+            "rect": {
+              "x": 426.3999938964844,
+              "y": 526.3562622070312,
+              "width": 51.60000228881836,
+              "height": 39
+            }
+          },
+          {
+            "text": "确认恢复",
+            "label": null,
+            "disabled": false,
+            "rect": {
+              "x": 487,
+              "y": 526.3562622070312,
+              "width": 75.5999984741211,
+              "height": 39
+            }
+          }
+        ]
+      }
+    ],
+    "alerts": [
+      "两端有不同的人设、记忆或连接，请保留备份后选择要恢复的版本。",
+      "两端有不同的人设、记忆或连接，请保留备份后选择要恢复的版本。"
+    ],
+    "status": [
+      ""
+    ]
+  }
+}

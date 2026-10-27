@@ -1,0 +1,35 @@
+{
+  "at": "2026-10-26T10:44:30.3029531Z",
+  "readOnly": true,
+  "profile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-b-second-device-native",
+  "noQaMarker": true,
+  "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+  "exeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+  "asar": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsm65E5.tmp\\app\\resources\\app.asar",
+  "asarSha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355",
+  "processes": [
+    {
+      "ProcessId": 10512,
+      "ParentProcessId": 14992,
+      "CreationDate": "2026-10-26T18:37:15.567995+08:00",
+      "ExecutablePath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-c7ad6837\\Lingjing-0.1.8-portable-x64.exe",
+      "CommandLine": "\"C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-c7ad6837\\Lingjing-0.1.8-portable-x64.exe\" --remote-debugging-port=57221 --remote-debugging-address=127.0.0.1"
+    },
+    {
+      "ProcessId": 17232,
+      "ParentProcessId": 10512,
+      "CreationDate": "2026-10-26T18:37:24.903286+08:00",
+      "ExecutablePath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsm65E5.tmp\\app\\Lingjing.exe",
+      "CommandLine": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsm65E5.tmp\\app\\Lingjing.exe --remote-debugging-port=57221 --remote-debugging-address=127.0.0.1"
+    }
+  ],
+  "listener": [
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 57221,
+      "OwningProcess": 17232
+    }
+  ],
+  "nativeMainWindowId": 6883308,
+  "credentialValuesRead": false
+}

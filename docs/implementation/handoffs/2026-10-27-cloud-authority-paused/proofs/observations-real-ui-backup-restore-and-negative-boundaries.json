@@ -1,0 +1,55 @@
+{
+  "at": "2026-10-26T20:33:46.655Z",
+  "stage": "real-ui-backup-restore-and-negative-boundaries",
+  "caseUpdates": [
+    {
+      "id": "P04",
+      "status": "passed",
+      "executionState": "executed_current_candidate",
+      "actual": "冻结4e6正常UI导出原B2正式备份5,852,700字节，checksum/live provenance/原owner正确；完整9模块包含4记录原文归档、2未解决差异、资源原bytes及SHA。递归含内嵌JSON检查无禁止凭据字段，conversation_credentials明确排除。",
+      "evidence": [
+        "native-B2-ui-backup-preserved-originals-and-assets-seal.json",
+        "root-B2-ui-preservation-export-independent.json"
+      ]
+    },
+    {
+      "id": "P05",
+      "status": "passed",
+      "executionState": "executed_current_candidate",
+      "actual": "原B1正常UI导入原B2导出：原先缺失的9f6归档4原文和2差异逐字补回、仍未解决；B1原归档保留。产品自动生成before-record-import保护备份，checksum及原设置/归档正确；原宠物、桌面、库存、战报和设置全文均保持，云端独立回读head28和个人记录版本不变。原样本旧消息/记忆为空，恢复验证不夸大为旧非空聊天样本。",
+      "evidence": [
+        "native-B2-ui-backup-preserved-originals-and-assets-seal.json",
+        "root-B2-ui-preservation-export-independent.json",
+        "native-B1-real-preservation-restore-seal.json",
+        "native-B1-preservation-restore-finished.png",
+        "native-B1-restored-original-differences-visible.png"
+      ]
+    },
+    {
+      "id": "P06",
+      "status": "passed",
+      "executionState": "executed_current_candidate",
+      "actual": "正常UI选择明确标记的损坏副本，显示“备份完整性校验失败”；原A选择原B2完整备份，显示“此备份属于其他账号，请先登录对应账号”。两次均未出现可确认恢复，22项业务表hash、操作数量及会话归属保持；普通轮询回读时间可刷新，原备份41e002字节未变。",
+      "evidence": [
+        "native-P06-damaged-backup-visible-error.png",
+        "native-P06-cross-owner-backup-visible-rejection.png",
+        "native-P06-rejections-preserve-originals-seal.json"
+      ]
+    },
+    {
+      "id": "R05",
+      "status": "running",
+      "executionState": "partial",
+      "actual": "已正常UI导出并在原B1真实导入，4个实际managed文件原ID和SHA、2imports、校准动作与原文件一致。B1导入前已持有这2resourceId/文件，尚不能据此声称空缓存恢复；后续同owner新普通profile区分登录自动下载与备份写回。",
+      "evidence": [
+        "native-B2-ui-backup-preserved-originals-and-assets-seal.json",
+        "root-B2-ui-preservation-export-independent.json",
+        "native-B1-real-preservation-restore-seal.json",
+        "native-B1-preservation-restore-finished.png",
+        "native-B1-restored-original-differences-visible.png"
+      ]
+    }
+  ],
+  "newIssues": [],
+  "issueUpdates": []
+}

@@ -1,0 +1,108 @@
+{
+  "at": "2026-10-26T00:01:37.927Z",
+  "rawImportBusinessExact": false,
+  "changedTables": [
+    "companion_accounts",
+    "companion_pets",
+    "companion_actions"
+  ],
+  "petDifferences": [
+    {
+      "petId": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+      "revisionBefore": 3,
+      "revisionAfter": 4,
+      "before": {
+        "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "petId": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "templateId": "animal-white-fox",
+        "name": "小狐",
+        "serial": "74C6A89C",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": true,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 560,
+            "y": 520,
+            "displayId": "2568730015"
+          }
+        },
+        "revision": 3,
+        "createdAt": "2026-10-25T16:15:42.590Z",
+        "updatedAt": "2026-10-25T19:44:59.637Z"
+      },
+      "after": {
+        "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "petId": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "templateId": "animal-white-fox",
+        "name": "小狐",
+        "serial": "74C6A89C",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": true,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 560,
+            "y": 520,
+            "displayId": "2568730015"
+          }
+        },
+        "revision": 4,
+        "createdAt": "2026-10-25T16:15:42.590Z",
+        "updatedAt": "2026-10-25T23:49:45.918Z"
+      }
+    }
+  ],
+  "existingDesktopReceipt": {
+    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "action_id": "desktop-position-59ec527d-803e-4024-8bee-74dc27b5e399",
+    "operation": "desktop",
+    "request_hash": "523860e221a3aca98363f2086ee1c989ac9f08d5ecb48210c0357e0ce43f16af",
+    "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"74C6A89C\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":560,\"y\":520,\"displayId\":\"2568730015\"}},\"revision\":4,\"createdAt\":\"2026-10-25T16:15:42.590Z\",\"updatedAt\":\"2026-10-25T23:49:45.918Z\"},\"selections\":{\"chatPetId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"battlePetId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"guardPetId\":null}},\"revision\":12,\"duplicate\":false}",
+    "created_at": "2026-10-25T23:49:45.918Z"
+  },
+  "existingChatSelectionReceiptId": "f0318410-35ce-4d07-8da6-4e779f5a3773",
+  "qualification": "Both receipts precede new Yantuan import; current resource-page companions read pulled existing cloud state. Desktop timestamp23:49:45 overlaps prior intercepted native local-card coordinate; preserve original history and request Root independent actor/position verification, no rollback/repeat."
+}

@@ -1,0 +1,93 @@
+{
+  "at": "2026-10-25T22:27:05.386Z",
+  "ui": {
+    "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nse19BD.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/settings",
+    "innerWidth": 960,
+    "innerHeight": 700,
+    "rootWidth": 960,
+    "rootScrollWidth": 960,
+    "saveButtons": [
+      {
+        "rect": {
+          "x": 770.7999877929688,
+          "y": 648.4000244140625,
+          "width": 150,
+          "height": 36,
+          "top": 648.4000244140625,
+          "right": 920.7999877929688,
+          "bottom": 684.4000244140625,
+          "left": 770.7999877929688
+        },
+        "disabled": false
+      }
+    ],
+    "scrolls": [
+      {
+        "tag": "MAIN",
+        "className": "main-content",
+        "scrollTop": 151.1999969482422,
+        "clientHeight": 646,
+        "scrollHeight": 798
+      }
+    ]
+  },
+  "settings": {
+    "ok": true,
+    "data": {
+      "document": {
+        "desktop": {
+          "alwaysOnTop": true,
+          "clickThrough": true,
+          "launchAtLogin": false,
+          "closeToTray": true,
+          "companionLimit": 3,
+          "interactionSounds": true,
+          "volume": 70,
+          "hideInFullscreen": true,
+          "animationsEnabled": true
+        },
+        "notifications": {
+          "enabled": true,
+          "companions": true,
+          "battles": true,
+          "garden": true,
+          "quietEnabled": true,
+          "quietStart": "22:00",
+          "quietEnd": "08:00"
+        },
+        "privacy": {
+          "locationAllowed": false,
+          "locationOnlyWhileExploring": true,
+          "emotionStatistics": false
+        },
+        "sync": {
+          "enabled": true
+        }
+      },
+      "revision": 12,
+      "updatedAt": "2026-10-25T22:07:18.122Z",
+      "host": {
+        "startup": false,
+        "fullscreenMonitor": true,
+        "fullscreenMonitorReady": true,
+        "foregroundFullscreen": false,
+        "fullscreenSource": null,
+        "companionWindows": 1,
+        "clickThroughWindows": [
+          3
+        ],
+        "windows": [
+          {
+            "id": 3,
+            "alwaysOnTop": true,
+            "visible": true
+          }
+        ],
+        "locationAllowed": false,
+        "emotionStatistics": false,
+        "closeToTrayConnected": true,
+        "companionLimitConnected": true
+      }
+    }
+  }
+}

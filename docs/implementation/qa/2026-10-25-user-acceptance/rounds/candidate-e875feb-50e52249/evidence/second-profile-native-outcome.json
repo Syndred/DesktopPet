@@ -1,0 +1,215 @@
+{
+  "at": "2026-10-25T13:29:35.064Z",
+  "aProfile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a",
+  "bProfile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\e71b9c11-e62a-46a6-aa4d-decdd34c4200\\local-b-concurrency",
+  "originalMainPid": 26956,
+  "secondMainPid": 22288,
+  "originalWrapperPid": 26024,
+  "secondWrapperPid": 2256,
+  "originalWindowId": 4853864,
+  "secondWindowId": 7802996,
+  "secondAccount": {
+    "id": "qa:4fe4b514-04d4-4832-98bc-c1128a1601f7:local-816a18c2-f98b-4c56-9a78-d07ac42d170f",
+    "subjectId": "qa:4fe4b514-04d4-4832-98bc-c1128a1601f7:local-816a18c2-f98b-4c56-9a78-d07ac42d170f",
+    "ownerAccountId": "qa:4fe4b514-04d4-4832-98bc-c1128a1601f7:local-816a18c2-f98b-4c56-9a78-d07ac42d170f",
+    "provider": "local",
+    "account": "qa_concurrency_b_1025",
+    "username": "并行验收乙",
+    "revision": 0,
+    "createdAt": "2026-10-25T13:28:45.134Z",
+    "updatedAt": "2026-10-25T13:28:45.134Z",
+    "dataMode": "simulated"
+  },
+  "secondPets": {
+    "ok": true,
+    "data": {
+      "ownerAccountId": "qa:4fe4b514-04d4-4832-98bc-c1128a1601f7:local-816a18c2-f98b-4c56-9a78-d07ac42d170f",
+      "pets": [],
+      "selections": {
+        "chatPetId": null,
+        "battlePetId": null,
+        "guardPetId": null
+      },
+      "templates": [
+        {
+          "templateId": "big-fish-gentle",
+          "name": "鱼丸",
+          "category": "big-fish",
+          "element": "water",
+          "description": "安静温柔的鲸尾少女，喜欢陪你度过日常。",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "big-fish-cheerful",
+          "name": "小蓝",
+          "category": "big-fish",
+          "element": "water",
+          "description": "活泼的侧马尾伙伴，穿着宽松鲸鱼斗篷。",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaolan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "big-fish-foodie",
+          "name": "饭团",
+          "category": "big-fish",
+          "element": "water",
+          "description": "盘着双丸子头的美食家，认真珍惜每一顿饭。",
+          "resource": {
+            "resourceId": "builtin:lingjing-fantuan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "animal-shiba",
+          "name": "焰柴",
+          "category": "animal",
+          "element": "fire",
+          "description": "热情勇敢的柴犬，星星项圈总是闪闪发亮。",
+          "resource": {
+            "resourceId": "builtin:lingjing-shiba-v2",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 20,
+            "spd": 22
+          }
+        },
+        {
+          "templateId": "animal-hat-cat",
+          "name": "礼帽喵",
+          "category": "animal",
+          "element": "metal",
+          "description": "戴着礼帽的燕尾猫，擅长温柔的小魔术。",
+          "resource": {
+            "resourceId": "builtin:lingjing-hatcat-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 136,
+            "atk": 30,
+            "def": 30,
+            "spd": 13
+          }
+        },
+        {
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "category": "animal",
+          "element": "water",
+          "description": "安静机灵的雪白小狐，像雪花一样轻盈。",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "animal-wood-deer",
+          "name": "青芽",
+          "category": "animal",
+          "element": "wood",
+          "description": "戴着枝叶小角的林间幼鹿，喜欢收集新芽。",
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 18
+          }
+        },
+        {
+          "templateId": "animal-earth-pangolin",
+          "name": "岩团",
+          "category": "animal",
+          "element": "earth",
+          "description": "披着暖褐鳞甲的小穿山甲，稳稳守住每一步。",
+          "resource": {
+            "resourceId": "builtin:lingjing-yantuan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 142,
+            "atk": 24,
+            "def": 34,
+            "spd": 11
+          }
+        }
+      ],
+      "revision": 1
+    },
+    "revision": 1
+  },
+  "secondCloseToTray": false,
+  "originalTablesUnchangedAfterBRegistration": true,
+  "storageIsolation": {
+    "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nscF6FD.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/companions",
+    "localStorageSentinel": null,
+    "idbSentinelDatabasePresent": false,
+    "inputs": [
+      {
+        "type": "text",
+        "name": "",
+        "empty": true
+      },
+      {
+        "type": "password",
+        "name": "",
+        "empty": true
+      },
+      {
+        "type": "checkbox",
+        "name": "",
+        "empty": false
+      },
+      {
+        "type": "checkbox",
+        "name": "",
+        "empty": false
+      }
+    ],
+    "closeLabels": [
+      "隔离验收场景",
+      "最小化",
+      "最大化",
+      "收起到托盘",
+      "账号类型",
+      "显示密码",
+      "记住账号",
+      "保持登录"
+    ]
+  },
+  "nativeMethod": "New B local account registered with normal UI; B empty account while A original owner and 2 pets persist. Original A desktop pet overlays both windows; it is not a B-owned companion."
+}

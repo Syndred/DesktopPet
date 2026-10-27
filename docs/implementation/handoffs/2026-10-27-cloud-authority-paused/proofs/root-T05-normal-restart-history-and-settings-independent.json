@@ -1,0 +1,113 @@
+{
+  "at": "2026-10-26T22:44:35.345Z",
+  "readOnly": true,
+  "queryOnly": true,
+  "userCredentialValuesRead": false,
+  "profileDirectory": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native",
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "petId": "pet-825f6af9-402b-4244-988a-481563b7a587",
+  "sourceBackup": {
+    "path": "native-ui-exports/B2-v2-dummy-key-present-4e6.lingjing.json",
+    "createdAt": "2026-10-26T22:06:33.633Z"
+  },
+  "settings": {
+    "revision": 13,
+    "document": {
+      "desktop": {
+        "alwaysOnTop": true,
+        "clickThrough": true,
+        "launchAtLogin": false,
+        "closeToTray": true,
+        "companionLimit": 3,
+        "interactionSounds": true,
+        "volume": 70,
+        "hideInFullscreen": true,
+        "animationsEnabled": true
+      },
+      "notifications": {
+        "enabled": true,
+        "companions": true,
+        "battles": true,
+        "garden": true,
+        "quietEnabled": true,
+        "quietStart": "22:00",
+        "quietEnd": "08:00"
+      },
+      "privacy": {
+        "locationAllowed": false,
+        "locationOnlyWhileExploring": true,
+        "emotionStatistics": false
+      },
+      "sync": {
+        "enabled": false
+      }
+    },
+    "fullOriginalDocumentMatch": true
+  },
+  "messages": [
+    {
+      "id": "94f688fc-530e-4cd7-ac62-d117ee95e2ca",
+      "role": "user",
+      "model": null,
+      "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+      "status": "complete",
+      "attempt": 1,
+      "content": "模拟验收/4E6 T04 第一轮：请显示本机模拟流式回复。",
+      "provider": null,
+      "action_id": "0882799c-2985-4ac7-beb5-6091c7fbd8e3",
+      "created_at": 1793052535146,
+      "error_code": null,
+      "updated_at": 1793052535146,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "id": "44e206ea-2536-45ad-89f3-17f07fdf0d2d",
+      "role": "assistant",
+      "model": "模拟验收-4E6-c5093dca6b4a",
+      "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+      "status": "complete",
+      "attempt": 1,
+      "content": "【模拟验收 / 4E6】这是本机协议夹具逐字回传，供应商为模拟；本次模式 stream。",
+      "provider": "openai_compatible",
+      "action_id": "0882799c-2985-4ac7-beb5-6091c7fbd8e3",
+      "created_at": 1793052535146,
+      "error_code": null,
+      "updated_at": 1793052545089,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "id": "948527c3-47f5-49f4-bcc4-4532ac784497",
+      "role": "user",
+      "model": null,
+      "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+      "status": "complete",
+      "attempt": 1,
+      "content": "模拟验收/4E6 T04 取消轮：请保持生成，随后由我停止。",
+      "provider": null,
+      "action_id": "49180763-530f-4087-b5a4-4e15597a136e",
+      "created_at": 1793052629538,
+      "error_code": null,
+      "updated_at": 1793052629538,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    {
+      "id": "7843cb6c-7a50-49aa-9999-6ac62ebc3f5f",
+      "role": "assistant",
+      "model": "模拟验收-4E6-c5093dca6b4a",
+      "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+      "status": "complete",
+      "attempt": 5,
+      "content": "【模拟验收 / 4E6】这是本机协议夹具逐字回传，供应商为模拟；本次模式 stream。",
+      "provider": "openai_compatible",
+      "action_id": "49180763-530f-4087-b5a4-4e15597a136e",
+      "created_at": 1793052629538,
+      "error_code": null,
+      "updated_at": 1793053439045,
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    }
+  ],
+  "allFourOriginalDocumentsAndOrderMatchCloud": true,
+  "originalPublicConnectionsUnchanged": true,
+  "testCredentialRows": 0,
+  "qualification": "Readonly data readback after Native09 normal exit/restart/login. Native login screen, exact new Main/ASAR binding and later key cleanup are separate evidence."
+}

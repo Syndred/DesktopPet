@@ -1,0 +1,720 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-25T14:50:09.966Z",
+  "status": "executing-exact-final-candidate",
+  "caseCount": 98,
+  "uniquePrimaryCoverage": true,
+  "exactFinalSource": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exactFinalExeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "previousIntermediateRound": "candidate-e875feb-50e52249",
+  "doNotInheritIntermediatePasses": true,
+  "economicAndFoxAllocationFrozen": false,
+  "profiles": {
+    "localA": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a",
+    "localB": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\e71b9c11-e62a-46a6-aa4d-decdd34c4200\\local-b-concurrency",
+    "cloudA": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a",
+    "cloudB": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-b-fresh09",
+    "cloudC": "original approved actor; original fox2 capture complete, C identity/session freeze lifted; backend coordinates evidence explicitly simulated",
+    "cloudD": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-d-native (not created, not registered)",
+    "cloudBSecondDevice": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-b-second-device-native"
+  },
+  "groups": [
+    {
+      "phase": 1,
+      "name": "锁定最终包、启动与原档升级",
+      "ids": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A11",
+        "A12",
+        "A13",
+        "C12",
+        "N05"
+      ],
+      "notes": [
+        "精确EXE/source/ASAR与最新远端拉取证据齐全才beginRound；旧通过不继承。",
+        "先回读现有local-a进行中battle-1fc23b9e...完整快照与现有云A原ID回执。",
+        "原active局升级恢复快照先验；在野外/领地新战斗前必须正常结束，避免被当前对局保护挡住。"
+      ],
+      "cases": [
+        {
+          "id": "A01",
+          "title": "首次冷启动"
+        },
+        {
+          "id": "A02",
+          "title": "登录保持行对齐 QA-001"
+        },
+        {
+          "id": "A03",
+          "title": "空值与错误登录"
+        },
+        {
+          "id": "A04",
+          "title": "注册校验"
+        },
+        {
+          "id": "A05",
+          "title": "合成QA本地注册"
+        },
+        {
+          "id": "A07",
+          "title": "显隐密码与键盘顺序"
+        },
+        {
+          "id": "A08",
+          "title": "记住账号"
+        },
+        {
+          "id": "A09",
+          "title": "保持登录重启"
+        },
+        {
+          "id": "A10",
+          "title": "未保持登录重启"
+        },
+        {
+          "id": "A11",
+          "title": "账号切换隔离"
+        },
+        {
+          "id": "A12",
+          "title": "退出与失效会话"
+        },
+        {
+          "id": "A13",
+          "title": "存档待核对提示与正常确认"
+        },
+        {
+          "id": "C12",
+          "title": "旧档案升级保留身份与历史"
+        },
+        {
+          "id": "N05",
+          "title": "同一档案重复启动"
+        }
+      ]
+    },
+    {
+      "phase": 2,
+      "name": "尽早启动自然作物计时",
+      "ids": [
+        "G05"
+      ],
+      "notes": [
+        "仅正常UI种植，10/15/20/25分钟真实计时，不改时钟/DB/成熟阈值。",
+        "后续跨域操作期间自然生长，G06稍后验收。"
+      ],
+      "cases": [
+        {
+          "id": "G05",
+          "title": "种植与库存扣减"
+        }
+      ]
+    },
+    {
+      "phase": 3,
+      "name": "根协调序号闸门及账号注册登录",
+      "ids": [
+        "C02",
+        "C03",
+        "C11",
+        "C10"
+      ],
+      "notes": [
+        "必须先根放行A原生狐1→C真实API观察狐2→B原生狐3；C捕捉沿用2，不额外分号。",
+        "C只作既定后端身份，不UI登录/换会话；B用原批准profile。",
+        "连续领养/连点仅在前三序号完成后执行，不擅自创建A2。"
+      ],
+      "cases": [
+        {
+          "id": "C02",
+          "title": "同模板连续领养"
+        },
+        {
+          "id": "C03",
+          "title": "固定角色名和唯一编号 QA-003"
+        },
+        {
+          "id": "C11",
+          "title": "同类型跨用户连续数字编号"
+        },
+        {
+          "id": "C10",
+          "title": "领养快速连点与返回"
+        }
+      ]
+    },
+    {
+      "phase": 4,
+      "name": "灵宠、桌面窗口与设置",
+      "ids": [
+        "C01",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "D08",
+        "D09",
+        "N01",
+        "N02",
+        "N03",
+        "N04",
+        "P01",
+        "P02",
+        "P03",
+        "P07",
+        "P08",
+        "P09"
+      ],
+      "notes": [
+        "保留1–4显示限制；自然位置保存后行为切换、真实像素/帧、独立petId和持久化回查。",
+        "宽窄/DPI均用实际窗口，不用合成截图。"
+      ],
+      "cases": [
+        {
+          "id": "C01",
+          "title": "属性图标分类 QA-002"
+        },
+        {
+          "id": "C04",
+          "title": "五行筛选与拥有筛选"
+        },
+        {
+          "id": "C05",
+          "title": "八角色详情与动画"
+        },
+        {
+          "id": "C06",
+          "title": "详情页全部页签"
+        },
+        {
+          "id": "C07",
+          "title": "养成互动与冷却"
+        },
+        {
+          "id": "C08",
+          "title": "每宠独立选择"
+        },
+        {
+          "id": "C09",
+          "title": "无宠物空状态"
+        },
+        {
+          "id": "D01",
+          "title": "显示隐藏与上限"
+        },
+        {
+          "id": "D02",
+          "title": "重复拖动变大 QA-004"
+        },
+        {
+          "id": "D03",
+          "title": "边缘与越界恢复"
+        },
+        {
+          "id": "D04",
+          "title": "单宠大小偏好"
+        },
+        {
+          "id": "D05",
+          "title": "DPI与多显示器"
+        },
+        {
+          "id": "D06",
+          "title": "拖动持久化与重启"
+        },
+        {
+          "id": "D07",
+          "title": "行为与鼠标交互"
+        },
+        {
+          "id": "D08",
+          "title": "穿透与全屏隐藏"
+        },
+        {
+          "id": "D09",
+          "title": "托盘全部显示隐藏"
+        },
+        {
+          "id": "N01",
+          "title": "所有主导航入口"
+        },
+        {
+          "id": "N02",
+          "title": "最小尺寸与最大化"
+        },
+        {
+          "id": "N03",
+          "title": "窗口连续缩放与滚动"
+        },
+        {
+          "id": "N04",
+          "title": "关闭到托盘与恢复"
+        },
+        {
+          "id": "P01",
+          "title": "所有设置分组可达"
+        },
+        {
+          "id": "P02",
+          "title": "保存取消与重启"
+        },
+        {
+          "id": "P03",
+          "title": "桌面上限音量尺寸"
+        },
+        {
+          "id": "P07",
+          "title": "通知开机和隐私边界"
+        },
+        {
+          "id": "P08",
+          "title": "版本日志和更新入口"
+        },
+        {
+          "id": "P09",
+          "title": "便携版开机启动路径稳定"
+        }
+      ]
+    },
+    {
+      "phase": 5,
+      "name": "聊天、记忆、模型协议与资源",
+      "ids": [
+        "T01",
+        "T02",
+        "T03",
+        "T04",
+        "T05",
+        "T06",
+        "R01",
+        "R02",
+        "R03",
+        "R04"
+      ],
+      "notes": [
+        "两宠人设/记忆/历史独立；取消/错误/重试需要真实原生界面及HTTP行为。",
+        "现有loopback SSE协议夹具必须标模拟；不能冒充真实外部模型。",
+        "资源导入使用07给的合法自有资源文件，经原生文件选择器。"
+      ],
+      "cases": [
+        {
+          "id": "T01",
+          "title": "空状态和切宠"
+        },
+        {
+          "id": "T02",
+          "title": "人设与记忆独立"
+        },
+        {
+          "id": "T03",
+          "title": "无供应商配置错误"
+        },
+        {
+          "id": "T04",
+          "title": "发送流式与取消"
+        },
+        {
+          "id": "T05",
+          "title": "历史与再生成"
+        },
+        {
+          "id": "T06",
+          "title": "凭据边界与失联"
+        },
+        {
+          "id": "R01",
+          "title": "库筛选预览与偏好"
+        },
+        {
+          "id": "R02",
+          "title": "真实动作全套与重复播放"
+        },
+        {
+          "id": "R03",
+          "title": "本地资源导入"
+        },
+        {
+          "id": "R04",
+          "title": "无效导入与路径边界"
+        }
+      ]
+    },
+    {
+      "phase": 6,
+      "name": "训练及真实双云账号好友对战",
+      "ids": [
+        "B01",
+        "B02",
+        "B03",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09",
+        "B10",
+        "B11",
+        "B12"
+      ],
+      "notes": [
+        "先验证旧active对局完整恢复，再正常完成/新开最终包训练，全部招式与实际纹理帧留证。",
+        "A/B真实好友邀请、接受/拒绝/取消/过期、等待/进行中返回、同ID恢复和自然终局。",
+        "番号HUD/peer/report使用可信显示身份，禁止raw/client/备份伪号。"
+      ],
+      "cases": [
+        {
+          "id": "B01",
+          "title": "训练选择与开始"
+        },
+        {
+          "id": "B02",
+          "title": "全部招式与回合反馈"
+        },
+        {
+          "id": "B03",
+          "title": "自然胜负与奖励"
+        },
+        {
+          "id": "B04",
+          "title": "进行中返回恢复"
+        },
+        {
+          "id": "B05",
+          "title": "历史和回放"
+        },
+        {
+          "id": "B06",
+          "title": "好友邀请和接受"
+        },
+        {
+          "id": "B07",
+          "title": "好友拒绝"
+        },
+        {
+          "id": "B08",
+          "title": "好友取消"
+        },
+        {
+          "id": "B09",
+          "title": "邀请过期"
+        },
+        {
+          "id": "B10",
+          "title": "断网重连与重复操作"
+        },
+        {
+          "id": "B11",
+          "title": "好友自然终局和重启"
+        },
+        {
+          "id": "B12",
+          "title": "未知对手与空态"
+        }
+      ]
+    },
+    {
+      "phase": 7,
+      "name": "定位探索与领地完整流",
+      "ids": [
+        "M01",
+        "M02",
+        "M03",
+        "M04",
+        "M05",
+        "M06",
+        "M07",
+        "G01",
+        "G02",
+        "G03",
+        "G04"
+      ],
+      "notes": [
+        "真实定位及30秒/80米/100米条件保留；模拟定位必须明确标源。",
+        "成功捕捉后纳入备份恢复/历史同步覆盖，不能仅用空表导出当完整恢复。"
+      ],
+      "cases": [
+        {
+          "id": "M01",
+          "title": "地图初始与图层"
+        },
+        {
+          "id": "M02",
+          "title": "定位未授权与重试"
+        },
+        {
+          "id": "M03",
+          "title": "真实定位精度准入"
+        },
+        {
+          "id": "M04",
+          "title": "探索扫描与无结果"
+        },
+        {
+          "id": "M05",
+          "title": "野外相遇到捕捉"
+        },
+        {
+          "id": "M06",
+          "title": "失败逃跑与过期"
+        },
+        {
+          "id": "M07",
+          "title": "网络异常与重新定位"
+        },
+        {
+          "id": "G01",
+          "title": "领地初始地图与列表"
+        },
+        {
+          "id": "G02",
+          "title": "驻守选宠与更换"
+        },
+        {
+          "id": "G03",
+          "title": "竞争胜利占领"
+        },
+        {
+          "id": "G04",
+          "title": "竞争失败取消和占用"
+        }
+      ]
+    },
+    {
+      "phase": 8,
+      "name": "成熟收获、库存、多端同步和备份恢复",
+      "ids": [
+        "G06",
+        "G07",
+        "I01",
+        "I02",
+        "I03",
+        "I04",
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "P04",
+        "P05",
+        "P06",
+        "R05",
+        "R06"
+      ],
+      "notes": [
+        "作物自然成熟后收获/批量/合成/指定宠喂养，回执及库存只变一次。",
+        "最终包仍需真实主进程断网+原pending跨实际根恢复；已停旧proxy只能另开受控episode。",
+        "备份覆盖正/负、跨身份拒绝、自动保留原存档、资源重导入和非空探索/战报/记忆数据。"
+      ],
+      "cases": [
+        {
+          "id": "G06",
+          "title": "成熟等待与收获"
+        },
+        {
+          "id": "G07",
+          "title": "离线与云端冲突"
+        },
+        {
+          "id": "I01",
+          "title": "分类与空背包"
+        },
+        {
+          "id": "I02",
+          "title": "合成成功与不足"
+        },
+        {
+          "id": "I03",
+          "title": "指定实例喂养"
+        },
+        {
+          "id": "I04",
+          "title": "库存重启同步"
+        },
+        {
+          "id": "S01",
+          "title": "账户页资料与状态"
+        },
+        {
+          "id": "S02",
+          "title": "自动同步完整域"
+        },
+        {
+          "id": "S03",
+          "title": "离线写入恢复"
+        },
+        {
+          "id": "S04",
+          "title": "双端并发冲突"
+        },
+        {
+          "id": "S05",
+          "title": "权限与跨账号隔离"
+        },
+        {
+          "id": "S06",
+          "title": "同步错误与手动重试"
+        },
+        {
+          "id": "P04",
+          "title": "导出本地备份"
+        },
+        {
+          "id": "P05",
+          "title": "恢复备份与回滚"
+        },
+        {
+          "id": "P06",
+          "title": "无效跨身份备份"
+        },
+        {
+          "id": "R05",
+          "title": "资源随账户备份导出与恢复"
+        },
+        {
+          "id": "R06",
+          "title": "偏好与资源云端恢复"
+        }
+      ]
+    },
+    {
+      "phase": 9,
+      "name": "具体表单就绪后的云D注册与本地/云密码人工步骤",
+      "ids": [
+        "A06",
+        "A14",
+        "A15"
+      ],
+      "notes": [
+        "按根统一裁定，先完成其余可做项再一次准备具体表单，当前不向用户散问。",
+        "云D仅最终包原生注册，email lingjing.uat.d.20261025.01a172b5@example.com、显示名云端验收丁；未经另授权不领养/observe分号。",
+        "本地改密仅本验收合成账号；云改密用D，不改原A/B/C。新密码输入/确认/提交由人类直接完成，不能API绕开。"
+      ],
+      "cases": [
+        {
+          "id": "A06",
+          "title": "云端合成账号注册登录"
+        },
+        {
+          "id": "A14",
+          "title": "本机合成QA账号修改密码"
+        },
+        {
+          "id": "A15",
+          "title": "真实云端合成QA账号修改密码"
+        }
+      ]
+    }
+  ],
+  "knownConstraints": [
+    {
+      "caseIds": [
+        "A06"
+      ],
+      "detail": "根已批准专用空D资料并确认auth email count0；仅最终包准备原生注册，不预注册，不领养，最终表单按根统一人工确认安排。"
+    },
+    {
+      "caseIds": [
+        "M03",
+        "M05"
+      ],
+      "detail": "当前服务端QA grant只接受simulated定位，普通无marker云客户端只有OS real入口；不得用marker代替真实云、伪精度或放宽门槛。最终需实际记入口限制，或根提供原生可达授权路径。"
+    },
+    {
+      "caseIds": [
+        "D05"
+      ],
+      "detail": "当前已验DPR1.25；其它真实DPI/多屏需实际硬件可用性确认，不能合成通过。"
+    },
+    {
+      "caseIds": [
+        "T04",
+        "T05",
+        "T06"
+      ],
+      "detail": "既定T04步骤明确允许专用测试供应商或标明模拟，可用现有真实HTTP/SSE夹具验原生协议/UI；如无外部key，不额外引入未要求的供应商/开支，也不能扩称真实外部模型成功。"
+    },
+    {
+      "caseIds": [
+        "A14",
+        "A15"
+      ],
+      "detail": "新密码必须由人类直接完成输入/确认/提交；等其它可做项完成后才给具体接管。"
+    },
+    {
+      "caseIds": [
+        "S02",
+        "S04"
+      ],
+      "detail": "B2 fixture准备好：仅独立accounts/device.json且server已同namespace预授权；最终正常UI登录原B，Root独立核同owner/独立device session。尚未原生登录/并发验收，不先判通过。"
+    }
+  ],
+  "preFinalAuditNotes": [
+    {
+      "area": "discovery backup",
+      "status": "static-contract-confirmed-await-final-positive-native",
+      "rootClarification": "BackupManager把未认领且owner-bound无secret列的表放data.tables，四表discovery_encounters/actions/captures/memory_tags由通用出口和云fragment携带，modules7不代表遗漏。",
+      "needed": "最终非空capture/history下检查data.tables.discovery_* columns/rows及excluded/count、恢复前保护副本和原ID；不登记未经证明的数据丢失bug。"
+    }
+  ],
+  "updatedAt": "2026-10-25T19:46:42.672Z",
+  "cloudQAGrantExpiry": "2026-10-25T23:00:00.000Z (Root same namespace; grants-renewal-active.json sole cleanup entry)",
+  "resourceFixtures": "final-resource-fixtures.json",
+  "b2Fixture": {
+    "deviceId": "351797b0-cad7-4b8f-9f93-8d0e806c49c3",
+    "deviceFileSha256": "f2be61cdd0775831e78d4fe104bea8dc32a984f59c07a7a2338f09cf6bf57baf",
+    "onlyDeviceFile": true,
+    "rootServerGrant": "same B namespace grant until23:00UTC; no session/device binding yet, normal final native login still required",
+    "cleanup": "artifacts/qa/user-acceptance/global-serial/remove-added-b2-qa-grant-from-2300.sql",
+    "uiStarted": false
+  },
+  "frozenSourceExpected": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "frozenTreeExpected": "1b6b47b23a93bf505c92bb1ff9af5dead75d6273",
+  "latestRemotePulledEvidence": "pre-final-preservation/20261025T151747Z/root-final-source-freeze.json",
+  "startupProfileOrder": {
+    "primary": "original 6ff8 local-a with active battle",
+    "secondProfileForV2": "original 790f local-a with 3 old foxes and old nickname",
+    "secondProfileReason": "Combine exact final SecondProfile isolation with original 3-pet C12 migration after verified stale exit; preserve all original data",
+    "secondProfileNativeStillPending": true
+  },
+  "activeRoundId": "candidate-dc7aee3-1b1afdd1",
+  "metadataHistory": [
+    {
+      "at": "2026-10-25T17:48:08.821Z",
+      "old": {
+        "economicAndFoxAllocationFrozen": true,
+        "cloudC": "backend-only original approved actor; no UI/session rotation",
+        "cloudQAGrantExpiry": "2026-10-25T17:00:00.000Z (root-managed same namespace)",
+        "b2RootServerGrant": "preseeded same B namespace until17:00UTC, no session/device binding yet; normal final native login still required"
+      },
+      "authority": "Root current completed number/capture chain and four renewed grants"
+    },
+    {
+      "at": "2026-10-25T19:46:42.672Z",
+      "old": {
+        "cloudQAGrantExpiry": "2026-10-25T20:00:00.000Z (Root same namespace; grants-renewal-active.json sole cleanup entry)",
+        "b2RootServerGrant": "same B namespace grant until20:00UTC; no session/device binding yet, normal final native login still required",
+        "b2Cleanup": "Root remove-added-b2-qa-grant-after-acceptance.sql"
+      },
+      "authority": "grants-renewal-active.json renewal4"
+    }
+  ]
+}

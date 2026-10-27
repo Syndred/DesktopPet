@@ -1,0 +1,42 @@
+{
+  "at": "2026-10-26T09:45:39.124Z",
+  "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+  "exeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+  "asarSha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355",
+  "scenario": "Original local unified-battle profile; visible simulated QA location, not physical GPS or cloud identity",
+  "encounterId": "encounter-b59f63f6-be49-497f-8f56-6836c4fb8505",
+  "battleId": "battle-d8c66d8b-6ec2-4649-a262-367197af214d",
+  "newPetId": "pet-fe04dd7e-78f7-4648-8ce2-8e3b2901468a",
+  "rounds": 9,
+  "won": true,
+  "stalePositionRejected": {
+    "petCount": 6,
+    "captureCount": 1,
+    "visibleModalError": "位置已过期，请重新定位",
+    "returnExplorationButton": true,
+    "noAutomaticRetry": true
+  },
+  "normalRecovery": "Visible location refresh, same won battle, one explicit confirmation with default 饭团 name",
+  "final": {
+    "petCount": 7,
+    "captureCount": 2,
+    "uniqueNewPet": true,
+    "uniqueCaptureReceipt": true,
+    "uniqueBattleReward": true,
+    "templateId": "big-fish-foodie",
+    "resource": {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "kind": "2d"
+    },
+    "desktopEnabled": 0
+  },
+  "repeatedResultDetailMemoryAndPokedexAll28DigestsExact": true,
+  "originalFiveNonactingPetsRawExact": true,
+  "originalCaptureRawExact": true,
+  "rejectedToSuccessOriginalSixPetsRawExact": true,
+  "settingsExact": true,
+  "originalSelectionsRestored": true,
+  "selectionRestoreOnlyNewAction": "695c67b2-e25d-48da-a33f-b97e508d0fab",
+  "verificationAudit": "Strict checks stopped before proof/ledger writes while adapting ordinary select action receipt and companion_capture_receipts battle_id/pet_id join. Final checks use actual schema; one selection action and all prior rows verified.",
+  "rootIndependent": "artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/c7ad-qa025-capture-independent.json"
+}

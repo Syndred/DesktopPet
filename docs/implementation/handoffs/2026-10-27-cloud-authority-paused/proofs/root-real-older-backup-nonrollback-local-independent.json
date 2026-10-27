@@ -1,0 +1,165 @@
+{
+  "at": "2026-10-26T20:55:44.771Z",
+  "rootIndependent": true,
+  "readOnly": true,
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "sourceBackup": {
+    "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\native-ui-exports\\B2-older-economy-original-20261026.lingjing.json",
+    "sha256": "98d3dce94f93bbf08e05eda5b29c4cdfba72950e14299129f65e7b796ee8889d",
+    "oldGardenRevision": 2,
+    "oldItems": [
+      {
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "item_id": "seed:berry",
+        "quantity": 2
+      },
+      {
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "item_id": "seed:carrot",
+        "quantity": 4
+      },
+      {
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "item_id": "seed:rice",
+        "quantity": 2
+      },
+      {
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "item_id": "seed:tomato",
+        "quantity": 4
+      }
+    ]
+  },
+  "restoreAction": {
+    "id": "1b06cd6c-8fd9-4d82-b826-0cba10329f94",
+    "createdAt": "2026-10-26T20:49:56.545Z",
+    "restored": true,
+    "appliedModules": [
+      "conversations",
+      "settings",
+      "character-resources"
+    ],
+    "preservedBackup": {
+      "id": "6ca08f8f-d519-4196-9125-af68541203a3",
+      "filePath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\accounts\\backups\\before-record-import-1793047796511-6ca08f8f-d519-4196-9125-af68541203a3.lingjing.json",
+      "checksum": "027be7af88003a6127046ccf9cbfe1bca85edbec483a1b81b71266fdd9b2d5a5",
+      "excluded": [
+        "conversation_credentials"
+      ]
+    }
+  },
+  "gameCacheUnchanged": true,
+  "currentGardenRevision": 7,
+  "currentItems": [
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "item_id": "carrot",
+      "quantity": 3
+    },
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "item_id": "cooked_rice",
+      "quantity": 1
+    },
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "item_id": "rice",
+      "quantity": 1
+    },
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "item_id": "seed:berry",
+      "quantity": 2
+    },
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "item_id": "seed:carrot",
+      "quantity": 3
+    },
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "item_id": "seed:rice",
+      "quantity": 1
+    },
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "item_id": "seed:tomato",
+      "quantity": 4
+    }
+  ],
+  "currentPets": [
+    {
+      "pet_id": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+      "revision": 3,
+      "data_json": "{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"2EC1523D\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":25,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":1,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":800,\"y\":520,\"displayId\":null}},\"revision\":3,\"createdAt\":\"2026-10-25T21:01:31.876Z\",\"updatedAt\":\"2026-10-26T00:33:32.702Z\"}"
+    },
+    {
+      "pet_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+      "revision": 5,
+      "data_json": "{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"74C6A89C\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":74,\"y\":537,\"displayId\":\"2568730015\"}},\"revision\":5,\"createdAt\":\"2026-10-25T16:15:42.590Z\",\"updatedAt\":\"2026-10-26T00:30:03.948Z\"}"
+    },
+    {
+      "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+      "revision": 1,
+      "data_json": "{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-825f6af9-402b-4244-988a-481563b7a587\",\"templateId\":\"animal-earth-pangolin\",\"name\":\"并发验收木鹿乙\",\"serial\":\"825F6AF9\",\"element\":\"earth\",\"resource\":{\"resourceId\":\"builtin:lingjing-yantuan-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":142,\"atk\":24,\"def\":34,\"spd\":11}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":320,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T12:20:31.991Z\",\"updatedAt\":\"2026-10-25T12:20:31.991Z\"}"
+    },
+    {
+      "pet_id": "pet-96de9234-462d-413b-ac72-81cfc1add244",
+      "revision": 1,
+      "data_json": "{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-96de9234-462d-413b-ac72-81cfc1add244\",\"templateId\":\"animal-wood-deer\",\"name\":\"并发验收木鹿乙\",\"serial\":\"96DE9234\",\"element\":\"wood\",\"resource\":{\"resourceId\":\"builtin:lingjing-qingya-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":130,\"atk\":26,\"def\":26,\"spd\":18}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":80,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T12:07:23.190Z\",\"updatedAt\":\"2026-10-25T12:07:23.190Z\"}"
+    }
+  ],
+  "readbacks": [
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "domain": "companions",
+      "cloud_revision": 28,
+      "envelope_checksum": "d96ec0d913405cbb927e9df33896a647cb04ab1c09e9eb5e3888f397ea31d40f",
+      "module_checksum": "9e968faa188c8ce4ffadda3593fef8204f6f3fcef102d968d732bf3605224a37",
+      "verified_at": "2026-10-26T20:55:30.455Z"
+    },
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "domain": "garden",
+      "cloud_revision": 28,
+      "envelope_checksum": "d96ec0d913405cbb927e9df33896a647cb04ab1c09e9eb5e3888f397ea31d40f",
+      "module_checksum": "289d66cad8635350a092c8b6ad4000d8473a493a249d9e0d51eb8f3adffa614b",
+      "verified_at": "2026-10-26T20:55:30.455Z"
+    }
+  ],
+  "originalDeviceSettingsFullMatch": true,
+  "currentSettingsRevision": 8,
+  "cloudBusinessModulesExcludedFromImport": true,
+  "preservedDifferences": [
+    {
+      "collection": "conversation_preferences",
+      "record_id": "[\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\"]",
+      "reason": "backup-import:15730f92c85f098fa82c2f256cfc1ee23bccee64adc49046b578da70711d2e23",
+      "resolved_at": null,
+      "resolution": null
+    },
+    {
+      "collection": "conversation_preferences",
+      "record_id": "[\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\"]",
+      "reason": "legacy-local-difference",
+      "resolved_at": null,
+      "resolution": null
+    },
+    {
+      "collection": "conversation_profiles",
+      "record_id": "[\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\"]",
+      "reason": "backup-import:15730f92c85f098fa82c2f256cfc1ee23bccee64adc49046b578da70711d2e23",
+      "resolved_at": null,
+      "resolution": null
+    },
+    {
+      "collection": "conversation_profiles",
+      "record_id": "[\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\"]",
+      "reason": "legacy-local-difference",
+      "resolved_at": null,
+      "resolution": null
+    }
+  ],
+  "qualification": "Actual older same-owner file has different inventory. Native UI import has completed and direct local cache stays current; separate direct PG must establish cloud invariance."
+}

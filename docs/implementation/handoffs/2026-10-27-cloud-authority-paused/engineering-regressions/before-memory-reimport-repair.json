@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-26T20:52:54.389Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "scope": "Engineering SQLite and in-memory CAS protocol double only; independent native+Postgres reproduction exists separately",
+  "productChanged": false,
+  "nativePassed": false,
+  "testFile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\unified-regressions-v2\\memory-reimport.regression.test.cjs",
+  "testSha256": "0e5c31e82004a9eb9581dcd2639cf44ac163b55aa297ccb03d147afdc7726201",
+  "exitCode": 1,
+  "expectedFailures": [
+    {
+      "case": "restore, delete, fresh import of identical backup",
+      "actualReviewableOriginals": 0,
+      "expected": 1
+    },
+    {
+      "case": "choose cloud, retry same intent, then fresh import at same cloud revision",
+      "actualReviewableOriginals": 0,
+      "expected": 1
+    }
+  ]
+}

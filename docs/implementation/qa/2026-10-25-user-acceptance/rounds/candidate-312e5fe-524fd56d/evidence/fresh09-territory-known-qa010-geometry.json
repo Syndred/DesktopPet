@@ -1,0 +1,71 @@
+{
+  "at": "2026-10-25T12:47:32.991Z",
+  "route": "#/garden",
+  "viewport": {
+    "width": 2048,
+    "height": 1151,
+    "dpr": 1.25
+  },
+  "portraits": [
+    {
+      "rect": {
+        "x": 1369.0125732421875,
+        "y": 581.7999877929688,
+        "width": 195.8874969482422,
+        "height": 68
+      },
+      "cpRect": {
+        "width": 195.8874969482422,
+        "height": 195.8874969482422
+      },
+      "stage": {
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+        "action": "idle",
+        "clip": "idle",
+        "fallback": "false",
+        "status": "ready"
+      },
+      "host": {
+        "renderer": "pixi-spritesheet",
+        "frame": "13",
+        "frameTexture": "3",
+        "textureFrame": "51,72,224,222",
+        "contentBounds": "{\"x\":39.36109589041096,\"y\":46.449315068493135,\"width\":117.27780821917808,\"height\":116.23068493150684,\"canvasWidth\":196,\"canvasHeight\":196}",
+        "textureKey": "lingjing-resource://asset/builtin%3Alingjing-xiaohu-v1/sprites.png:05ef8e37a7519f64d6e9ccdfeb73292269dedf10ea836e285d997d265cb9e4da",
+        "textureSource": "2"
+      },
+      "visibleContentFraction": 0.18541304255589988
+    },
+    {
+      "rect": {
+        "x": 1583.5,
+        "y": 581.7999877929688,
+        "width": 195.8874969482422,
+        "height": 68
+      },
+      "cpRect": {
+        "width": 195.8874969482422,
+        "height": 195.8874969482422
+      },
+      "stage": {
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "action": "idle",
+        "clip": "idle",
+        "fallback": "false",
+        "status": "ready"
+      },
+      "host": {
+        "renderer": "pixi-spritesheet",
+        "frame": "0",
+        "frameTexture": "3",
+        "textureFrame": "51,72,224,222",
+        "contentBounds": "{\"x\":39.36109589041096,\"y\":46.449315068493135,\"width\":117.27780821917808,\"height\":116.23068493150684,\"canvasWidth\":196,\"canvasHeight\":196}",
+        "textureKey": "lingjing-resource://asset/builtin%3Alingjing-xiaohu-v1/sprites.png:05ef8e37a7519f64d6e9ccdfeb73292269dedf10ea836e285d997d265cb9e4da",
+        "textureSource": "2"
+      },
+      "visibleContentFraction": 0.18541304255589988
+    }
+  ]
+}

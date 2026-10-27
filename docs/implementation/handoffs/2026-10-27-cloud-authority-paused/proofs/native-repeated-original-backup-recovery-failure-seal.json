@@ -1,0 +1,108 @@
+{
+  "at": "2026-10-26T20:44:12.528Z",
+  "readOnly": true,
+  "credentialValuesRead": false,
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "originalFile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\native-ui-exports\\A-before-synthetic-memory-crud-4e6.lingjing.json",
+  "originalFileSha256": "5a0962fa19ed93d00e0eeb3cb1feb8e9bf1abdd6fcaf1be9ecc45664dbc9e20f",
+  "originalMemoryId": "466a65e0-80a2-4825-bc87-d7e2432eb870",
+  "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+  "states": {
+    "edited": {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "collection": "conversation_memories",
+      "record_id": "[\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"466a65e0-80a2-4825-bc87-d7e2432eb870\"]",
+      "revision": 2,
+      "position": 13,
+      "change_sequence": 30,
+      "document_json": "{\"id\":\"466a65e0-80a2-4825-bc87-d7e2432eb870\",\"pet_id\":\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"content\":\"4e6甲狐记忆编辑：蓝色积木移到中间。\",\"revision\":2,\"created_at\":1793041966804,\"updated_at\":1793046961910,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"}",
+      "deleted": 0
+    },
+    "adopted": {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "collection": "conversation_memories",
+      "record_id": "[\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"466a65e0-80a2-4825-bc87-d7e2432eb870\"]",
+      "revision": 3,
+      "position": 13,
+      "change_sequence": 33,
+      "document_json": "{\"id\":\"466a65e0-80a2-4825-bc87-d7e2432eb870\",\"pet_id\":\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"content\":\"4e6甲狐记忆：蓝色积木放在左边。\",\"revision\":3,\"created_at\":1793041966804,\"updated_at\":1793047109169,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"}",
+      "deleted": 0
+    },
+    "deleted": {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "collection": "conversation_memories",
+      "record_id": "[\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"466a65e0-80a2-4825-bc87-d7e2432eb870\"]",
+      "revision": 4,
+      "position": 13,
+      "change_sequence": 34,
+      "document_json": "{\"id\":\"466a65e0-80a2-4825-bc87-d7e2432eb870\",\"pet_id\":\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"content\":\"4e6甲狐记忆：蓝色积木放在左边。\",\"revision\":3,\"created_at\":1793041966804,\"updated_at\":1793047109169,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"}",
+      "deleted": 1
+    },
+    "afterRepeatedImport": {
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "collection": "conversation_memories",
+      "record_id": "[\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"466a65e0-80a2-4825-bc87-d7e2432eb870\"]",
+      "revision": 4,
+      "position": 13,
+      "change_sequence": 34,
+      "document_json": "{\"id\":\"466a65e0-80a2-4825-bc87-d7e2432eb870\",\"pet_id\":\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"content\":\"4e6甲狐记忆：蓝色积木放在左边。\",\"revision\":3,\"created_at\":1793041966804,\"updated_at\":1793047109169,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"}",
+      "deleted": 1
+    }
+  },
+  "resolvedConflictRemainedUnchanged": {
+    "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+    "collection": "conversation_memories",
+    "record_id": "[\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"466a65e0-80a2-4825-bc87-d7e2432eb870\"]",
+    "local_document": "{\"id\":\"466a65e0-80a2-4825-bc87-d7e2432eb870\",\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"pet_id\":\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"content\":\"4e6甲狐记忆：蓝色积木放在左边。\",\"revision\":1,\"created_at\":1793041966804,\"updated_at\":1793041966804}",
+    "cloud_document": "{\"id\":\"466a65e0-80a2-4825-bc87-d7e2432eb870\",\"pet_id\":\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"content\":\"4e6甲狐记忆编辑：蓝色积木移到中间。\",\"revision\":2,\"created_at\":1793041966804,\"updated_at\":1793046961910,\"owner_account_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"}",
+    "reason": "backup-import:fa1cb50697e1ac8032231d529411ea548dc6968d70f8f5e83023d9787141765d",
+    "created_at": 1793047049067,
+    "resolved_at": 1793047112272,
+    "resolution": "local"
+  },
+  "actions": [
+    {
+      "actionId": "a36b1f3a-0087-474d-a95f-70840dfba51c",
+      "restored": true,
+      "mode": "record-import",
+      "appliedModules": [
+        "conversation-preservation",
+        "conversations",
+        "settings",
+        "device-desktop",
+        "character-resources"
+      ],
+      "preservedBackup": {
+        "id": "ce0d5c29-ef26-4625-b3d5-9ac3bc166b1c",
+        "filePath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\accounts\\backups\\before-record-import-1793047345248-ce0d5c29-ef26-4625-b3d5-9ac3bc166b1c.lingjing.json",
+        "checksum": "dd2c25976bb8823c72f1d8c513cfa85da5520c22b53d8661b30302382059cbe7",
+        "excluded": [
+          "conversation_credentials"
+        ]
+      }
+    },
+    {
+      "actionId": "e140e647-1b31-4f5c-b88d-c8e7c6c883eb",
+      "restored": true,
+      "mode": "record-import",
+      "appliedModules": [
+        "conversation-preservation",
+        "conversations",
+        "settings",
+        "device-desktop",
+        "character-resources"
+      ],
+      "preservedBackup": {
+        "id": "07347fb7-faab-4a5e-acd1-db3a59c226d6",
+        "filePath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\accounts\\backups\\before-record-import-1793047046240-07347fb7-faab-4a5e-acd1-db3a59c226d6.lingjing.json",
+        "checksum": "0f94a50483c0784b38e418ffa727c2756f296aef163ad50955b21cf46a9a2002",
+        "excluded": [
+          "conversation_credentials"
+        ]
+      }
+    }
+  ],
+  "originalBackupPreserved": true,
+  "otherPetMemoryUnchanged": true,
+  "nextAction": "Leave original backup and same tombstoned QA record for unified repair; no new identity or modified envelope workaround."
+}

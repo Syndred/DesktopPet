@@ -1,0 +1,264 @@
+{
+  "at": "2026-10-25T21:16:22.167Z",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+  "actualProductMissing": true,
+  "independentRole04Confirmed": true,
+  "rootDecision": "New invitations in future candidate server-authoritative5minute expiry; old legacy rows preserved. No current production/schema/time mutation.",
+  "sources": [
+    {
+      "path": "infra/supabase/migrations/20261025034744_lingjing_battle_jwt_rooms.sql",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "sha256": "93f1908ac7f8878a0cc8beced8fb0dc4d05a3c835db90dac2bff59ba97e7a216",
+      "lineCount": 282,
+      "matched": [
+        {
+          "line": 1,
+          "text": "-- New JWT-bound battle storage. Existing legacy tables/data are deliberately untouched."
+        },
+        {
+          "line": 2,
+          "text": "-- Identity mapping is owned by accounts (08). Only its verified Edge actor may call write RPCs."
+        },
+        {
+          "line": 3,
+          "text": "CREATE TABLE public.lingjing_battle_invites ("
+        },
+        {
+          "line": 4,
+          "text": "  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),"
+        },
+        {
+          "line": 5,
+          "text": "  from_auth_uid uuid NOT NULL REFERENCES auth.users(id), to_auth_uid uuid NOT NULL REFERENCES auth.users(id),"
+        },
+        {
+          "line": 6,
+          "text": "  from_user_id text NOT NULL, to_user_id text NOT NULL,"
+        },
+        {
+          "line": 7,
+          "text": "  from_account text NOT NULL, to_account text NOT NULL,"
+        },
+        {
+          "line": 8,
+          "text": "  status text NOT NULL DEFAULT 'pending' CHECK(status IN ('pending','accepted','rejected','cancelled')),"
+        },
+        {
+          "line": 9,
+          "text": "  room_id uuid, created_at timestamptz NOT NULL DEFAULT now(), updated_at timestamptz NOT NULL DEFAULT now(),"
+        },
+        {
+          "line": 10,
+          "text": "  CHECK(from_auth_uid<>to_auth_uid AND from_user_id<>to_user_id)"
+        },
+        {
+          "line": 11,
+          "text": ");"
+        },
+        {
+          "line": 12,
+          "text": "CREATE UNIQUE INDEX lingjing_battle_pending_pair ON public.lingjing_battle_invites"
+        },
+        {
+          "line": 13,
+          "text": "  (least(from_auth_uid,to_auth_uid),greatest(from_auth_uid,to_auth_uid)) WHERE status='pending';"
+        },
+        {
+          "line": 14,
+          "text": "CREATE INDEX lingjing_battle_invites_inbox ON public.lingjing_battle_invites(to_auth_uid,created_at DESC);"
+        },
+        {
+          "line": 15,
+          "text": "CREATE INDEX lingjing_battle_invites_outbox ON public.lingjing_battle_invites(from_auth_uid,created_at DESC);"
+        },
+        {
+          "line": 149,
+          "text": "  IF p_op='invite' THEN"
+        },
+        {
+          "line": 150,
+          "text": "    target_auth:=(p_input->'target'->>'authUid')::uuid;"
+        },
+        {
+          "line": 151,
+          "text": "    IF target_auth IS NULL OR target_auth=p_actor OR p_input->'target'->>'ownerId'=p_owner THEN RAISE EXCEPTION 'SELF_DUEL_FORBIDDEN'; END IF;"
+        },
+        {
+          "line": 152,
+          "text": "    IF NOT EXISTS(SELECT 1 FROM public.lingjing_accounts WHERE auth_user_id=target_auth AND owner_id=p_input->'target'->>'ownerId' AND status='active') THEN RAISE EXCEPTION 'TARGET_OWNER_MISMATCH'; END IF;"
+        },
+        {
+          "line": 153,
+          "text": "    SELECT * INTO invitation FROM public.lingjing_battle_invites WHERE status='pending' AND least(from_auth_uid,to_auth_uid)=least(p_actor,target_auth) AND greatest(from_auth_uid,to_auth_uid)=greatest(p_actor,target_auth) FOR UPDATE;"
+        },
+        {
+          "line": 154,
+          "text": "    IF FOUND THEN"
+        },
+        {
+          "line": 155,
+          "text": "      IF invitation.from_auth_uid<>p_actor THEN RAISE EXCEPTION 'INVITE_ALREADY_RECEIVED'; END IF;"
+        },
+        {
+          "line": 156,
+          "text": "    ELSE"
+        },
+        {
+          "line": 157,
+          "text": "      INSERT INTO public.lingjing_battle_invites(from_auth_uid,to_auth_uid,from_user_id,to_user_id,from_account,to_account)"
+        },
+        {
+          "line": 158,
+          "text": "      VALUES(p_actor,target_auth,p_owner,p_input->'target'->>'ownerId',p_input->>'account',p_input->'target'->>'account') RETURNING * INTO invitation;"
+        },
+        {
+          "line": 159,
+          "text": "    END IF;"
+        },
+        {
+          "line": 160,
+          "text": "    result:=jsonb_build_object('request',to_jsonb(invitation));"
+        },
+        {
+          "line": 161,
+          "text": "  ELSIF p_op IN ('reject_invite','cancel_invite') THEN"
+        },
+        {
+          "line": 162,
+          "text": "    SELECT * INTO STRICT invitation FROM public.lingjing_battle_invites WHERE id=(p_input->>'requestId')::uuid FOR UPDATE;"
+        },
+        {
+          "line": 163,
+          "text": "    IF (p_op='reject_invite' AND (invitation.to_auth_uid<>p_actor OR invitation.to_user_id<>p_owner)) OR (p_op='cancel_invite' AND (invitation.from_auth_uid<>p_actor OR invitation.from_user_id<>p_owner)) THEN RAISE EXCEPTION 'INVITE_FORBIDDEN'; END IF;"
+        },
+        {
+          "line": 164,
+          "text": "    IF invitation.status NOT IN ('pending',CASE WHEN p_op='reject_invite' THEN 'rejected' ELSE 'cancelled' END) THEN RAISE EXCEPTION 'INVITE_CONFLICT'; END IF;"
+        },
+        {
+          "line": 165,
+          "text": "    UPDATE public.lingjing_battle_invites SET status=CASE WHEN p_op='reject_invite' THEN 'rejected' ELSE 'cancelled' END,updated_at=now() WHERE id=invitation.id RETURNING * INTO invitation;"
+        },
+        {
+          "line": 166,
+          "text": "    result:=jsonb_build_object('request',to_jsonb(invitation));"
+        },
+        {
+          "line": 167,
+          "text": "  ELSIF p_op IN ('create_room','accept_invite') THEN"
+        },
+        {
+          "line": 168,
+          "text": "    -- The trusted Edge resolver reads this pet from the owner's authoritative account save."
+        },
+        {
+          "line": 169,
+          "text": "    IF pet->>'ownerId' IS DISTINCT FROM p_owner OR length(coalesce(pet->>'petId','')) NOT BETWEEN 1 AND 160 OR length(coalesce(pet->>'resourceId','')) NOT BETWEEN 1 AND 250 THEN RAISE EXCEPTION 'PET_OWNER_MISMATCH'; END IF;"
+        },
+        {
+          "line": 170,
+          "text": "    IF p_op='accept_invite' THEN"
+        },
+        {
+          "line": 171,
+          "text": "      SELECT * INTO STRICT invitation FROM public.lingjing_battle_invites WHERE id=(p_input->>'requestId')::uuid FOR UPDATE;"
+        },
+        {
+          "line": 172,
+          "text": "      IF invitation.to_auth_uid<>p_actor OR invitation.to_user_id<>p_owner THEN RAISE EXCEPTION 'INVITE_FORBIDDEN'; END IF;"
+        },
+        {
+          "line": 173,
+          "text": "      IF invitation.status='accepted' AND invitation.room_id IS NOT NULL THEN"
+        },
+        {
+          "line": 174,
+          "text": "        SELECT * INTO STRICT room FROM public.lingjing_battle_rooms WHERE id=invitation.room_id;"
+        },
+        {
+          "line": 175,
+          "text": "      ELSIF invitation.status<>'pending' THEN RAISE EXCEPTION 'INVITE_CONFLICT'; END IF;"
+        },
+        {
+          "line": 176,
+          "text": "    ELSE"
+        },
+        {
+          "line": 177,
+          "text": "      -- A new device (or a new id after an unknown create response) resumes its existing"
+        }
+      ]
+    },
+    {
+      "path": "infra/supabase/functions/lingjing-battle/handler.ts",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "sha256": "904b589c6ab0716f85bdefb13778da2617d789e0cd4ebff1f645b47fd8da36c2",
+      "lineCount": 171,
+      "matched": [
+        {
+          "line": 33,
+          "text": "const inviteDto=(row:Row,room?:Row)=>({id:row.id,fromUserId:row.from_user_id,toUserId:row.to_user_id,fromAccount:row.from_account,toAccount:row.to_account,status:row.status,roomId:row.room_id,roomCode:room?.room_code||null,roomStatus:room?.status||null,createdAt:row.created_at,updatedAt:row.updated_at});"
+        },
+        {
+          "line": 109,
+          "text": "    const dto=(row:Row)=>{const room=rooms.find(room=>room.id===row.room_id&&(room.host_auth_uid===actor.authUserId||room.guest_auth_uid===actor.authUserId||room.invited_auth_uid===actor.authUserId));return inviteDto(row,room);};"
+        },
+        {
+          "line": 134,
+          "text": "    } else if(op==='send_duel_request') {"
+        },
+        {
+          "line": 139,
+          "text": "      data={request:inviteDto(result.request)};"
+        },
+        {
+          "line": 140,
+          "text": "    } else if(op==='cancel_duel_request'||op==='respond_duel_request'&&input.decision==='reject') {"
+        },
+        {
+          "line": 142,
+          "text": "      const result=await command(actor,operation,input.actionId,{requestId:id},async()=>({requestId:id}));data={request:inviteDto(result.request)};"
+        },
+        {
+          "line": 143,
+          "text": "    } else if(op==='create_room'||op==='respond_duel_request'&&input.decision==='accept') {"
+        },
+        {
+          "line": 147,
+          "text": "      if(requestId&&op==='respond_duel_request') {"
+        },
+        {
+          "line": 150,
+          "text": "        if(existing.status==='accepted'&&existing.room_id){const state=await snapshot(actor,{roomId:existing.room_id});return jsonResponse({ok:true,data:{request:inviteDto(existing,state.room),...state}});}"
+        },
+        {
+          "line": 154,
+          "text": "      const state=await snapshot(actor,{roomId:result.room.id});data={...state,...(result.request?{request:inviteDto(result.request,state.room)}:{})};"
+        }
+      ]
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/battle/FriendsPanel.tsx",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "sha256": "f2d2829cf1ed63c00e64bbc3872fa7b0e2446cf0adaef9d100ec3a7b665adf8b",
+      "lineCount": 67,
+      "matched": [
+        {
+          "line": 57,
+          "text": "  const pendingInbound = invitations.inbound.filter(invitation => invitation.status === 'pending');"
+        },
+        {
+          "line": 58,
+          "text": "  const outbound = invitations.outbound.filter(invitation => ['pending', 'accepted'].includes(invitation.status));"
+        },
+        {
+          "line": 62,
+          "text": "    <div className=\"battle-invitations\"><Card><div className=\"battle-section-heading\"><h3>待处理邀请 <span>{onlineError ? '—' : pendingInbound.length}</span></h3><button className=\"battle-text-button\" onClick={() => void refreshInvitations()}>刷新</button></div>{onlineError && <div className=\"battle-online-error\" role=\"status\"><p>{onlineError}</p>{/账号|登录/.test(onlineError) ? <Button variant=\"secondary\" onClick={() => navigate('/account')}>前往账号设置</Button> : null}</div>}{pendingInbound.length ? pendingInbound.map(invitation => <div key={invitation.id} className=\"battle-invitation\"><strong>{invitation.fromAccount}</strong><small>{dateLabel(invitation.createdAt)}</small><div className=\"battle-two-buttons\"><Button disabled={busy || !pet} onClick={() => void respond(invitation, 'accept')}><Check size={15}/>接受</Button><Button disabled={busy} variant=\"secondary\" onClick={() => void respond(invitation, 'reject')}><X size={15}/>婉拒</Button></div></div>) : <p className=\"muted\">{onlineError ? '联网后可查看待处理邀请。' : '暂时没有新的邀请。'}</p>}<h3 className=\"battle-own-title\">我发出的邀请</h3>{outbound.length ? outbound.map(invitation => <div key={invitation.id} className=\"battle-invitation\"><strong>{invitation.toAccount}</strong><span className=\"battle-invitation-state\">{invitation.status === 'accepted' ? '已接受' : '等待回应'}</span>{invitation.status === 'accepted' ? <p>#{invitation.roomCode || '—'}</p> : null}{invitation.status === 'accepted' && invitation.roomCode ? <Button disabled={busy || !pet} onClick={() => void run(async () => onSession(await request<BattleSession>('battle', 'joinRoom', { roomCode: invitation.roomCode, petId: pet?.petId, requestId: invitation.id })))}>进入房间</Button> : <Button variant=\"secondary\" disabled={busy} onClick={() => void run(async () => { await request('battle', 'cancelInvite', { requestId: invitation.id }); await refreshInvitations(); })}>取消邀请</Button>}</div>) : <p className=\"muted\">{onlineError ? '联网后可查看已发邀请。' : '还没有发出的邀请。'}</p>}</Card>"
+        }
+      ]
+    }
+  ],
+  "nativeEntry": "b12-b-real-friends-empty-state-native.jpg",
+  "qualification": "Missing feature recorded, not a fabricated elapsed-time failure; real native invite receipt will be appended."
+}

@@ -1,0 +1,33 @@
+{
+  "at": "2026-10-26T23:49:42.325Z",
+  "readOnly": true,
+  "credentialValuesRead": false,
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "actionId": "6b2885d2-dc8a-43bf-9caa-dc0be721380b",
+  "requestHash": "2dbb4f851527960a1bebe6ad306b589074ee22b9966051b6067e502c2c48d451",
+  "authority": {
+    "actionId": "garden:2dbb4f851527960a1bebe6ad306b589074ee22b9966051b6067e502c2c48d451",
+    "baseRevision": 38,
+    "revision": 39,
+    "checksum": "025284e8a652db93944fe50f533d7f8536fd934f92cccc87b7b439e551b6c110"
+  },
+  "gardenRevision": {
+    "before": 10,
+    "after": 11
+  },
+  "rice": {
+    "before": 1,
+    "after": 0
+  },
+  "cookedRice": {
+    "before": 1,
+    "after": 2
+  },
+  "exactOneOperationForOriginalAction": true,
+  "allOtherInventoryPlotsPetsAndModulesUnchanged": true,
+  "allOldGardenRowsPreserved": true,
+  "serverResultOk": true,
+  "replayed": false,
+  "scope": "Actual current-candidate normal UI craft. Insufficient-material and local/second-client checks remain separate."
+}

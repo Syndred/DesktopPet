@@ -1,0 +1,1060 @@
+{
+  "at": "2026-10-25T20:41:37.512Z",
+  "source": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "authority": "simulated isolated local; actual native package UI and actual Pixi textures, not live online combat",
+  "coverage": {
+    "normal": {
+      "evidence": [
+        "b02-original-r3-normal-real-textures.json",
+        "b02-original-r4-repeat-real-textures.json"
+      ],
+      "sessionId": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b",
+      "rounds": [
+        3,
+        4
+      ],
+      "sameActionReplay": true
+    },
+    "elementSuccess": {
+      "evidence": "b02-new-wood-r4-successful-element-real-textures.json",
+      "sessionId": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659",
+      "round": 4,
+      "actions": {
+        "player": "element_attack",
+        "enemy": "element_attack"
+      },
+      "directDamage": {
+        "player": 10,
+        "enemy": 14
+      },
+      "heal": {
+        "player": [
+          {
+            "type": "parasite",
+            "amount": 2
+          }
+        ],
+        "enemy": []
+      }
+    },
+    "dodgeSuccess": {
+      "evidence": "b02-new-wood-r5-successful-dodge-real-textures.json",
+      "sessionId": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659",
+      "round": 5,
+      "roundData": {
+        "round": 5,
+        "actions": {
+          "player": "dodge",
+          "enemy": "normal_attack"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 2
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 0
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": [
+            {
+              "type": "parasite",
+              "amount": 2
+            }
+          ]
+        },
+        "healEvents": {
+          "player": [
+            {
+              "type": "parasite",
+              "amount": 2
+            }
+          ],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 90,
+          "enemy": 102
+        },
+        "angerAfter": {
+          "player": 47,
+          "enemy": 7
+        },
+        "statusesAfter": {
+          "player": [
+            {
+              "type": "petrify",
+              "duration": 1,
+              "stacks": 1,
+              "stackable": true,
+              "sourceId": "enemy"
+            }
+          ],
+          "enemy": [
+            {
+              "type": "parasite",
+              "duration": 1,
+              "potency": 2,
+              "stacks": 1,
+              "stackable": true,
+              "sourceId": "player"
+            }
+          ]
+        },
+        "winner": null,
+        "notes": [
+          "player spends 20 anger on dodge",
+          "enemy action missed",
+          "player dodged normal attack and refunded 30 anger",
+          "player healed by parasite",
+          "enemy takes parasite damage"
+        ],
+        "state": {
+          "round": 5,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 90,
+            "maxHp": 120,
+            "anger": 47,
+            "freeDodgeUsed": true,
+            "statuses": [
+              {
+                "type": "petrify",
+                "duration": 1,
+                "stacks": 1,
+                "stackable": true,
+                "sourceId": "enemy"
+              }
+            ]
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "earth",
+            "hp": 102,
+            "maxHp": 120,
+            "anger": 7,
+            "freeDodgeUsed": false,
+            "statuses": [
+              {
+                "type": "parasite",
+                "duration": 1,
+                "potency": 2,
+                "stacks": 1,
+                "stackable": true,
+                "sourceId": "player"
+              }
+            ]
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "5:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "dodge"
+          },
+          {
+            "id": "5:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "dodge",
+            "element": "wood"
+          },
+          {
+            "id": "5:player:effects:heal:2",
+            "side": "player",
+            "phase": "effects",
+            "kind": "heal",
+            "amount": 2,
+            "status": "parasite"
+          },
+          {
+            "id": "5:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "5:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "earth"
+          },
+          {
+            "id": "5:player:impact:dodge:5",
+            "side": "player",
+            "phase": "impact",
+            "kind": "dodge"
+          },
+          {
+            "id": "5:enemy:effects:dot:6",
+            "side": "enemy",
+            "phase": "effects",
+            "kind": "dot",
+            "amount": 2,
+            "status": "parasite"
+          }
+        ]
+      }
+    },
+    "ultimateAndHeal": {
+      "evidence": [
+        "b02-original-r6-ultimate-heal-real-textures.json",
+        "b03-original-natural-victory-14-rounds.json"
+      ],
+      "sessionId": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b",
+      "rounds": [
+        6,
+        14
+      ],
+      "effectiveHealing": [
+        8,
+        20
+      ]
+    },
+    "insufficient": {
+      "evidence": "b02-zero-anger-disabled-no-action.json",
+      "allRowsExact": true
+    }
+  },
+  "frameSummaries": [
+    {
+      "label": "original-session-r3-normal",
+      "samples": 353,
+      "keys": [
+        "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:2",
+        "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:3"
+      ],
+      "phases": [
+        "rest",
+        "windup",
+        "release",
+        "impact",
+        "effects"
+      ],
+      "actors": [
+        {
+          "side": "player",
+          "actions": [
+            "idle",
+            "attack_windup",
+            "attack_release"
+          ],
+          "actualTextures": [
+            "3@51,72,224,222",
+            "4@354,71,221,225",
+            "11@50,698,237,189",
+            "12@345,686,272,212"
+          ],
+          "firstFramesByPhase": [
+            {
+              "phase": "rest",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:2:player:rest:idle",
+              "t": 5685917.899999976,
+              "frame": "8",
+              "texture": "51,72,224,222"
+            },
+            {
+              "phase": "windup",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:3:player:windup:attack_windup",
+              "t": 5694845.299999982,
+              "frame": "0",
+              "texture": "50,698,237,189"
+            },
+            {
+              "phase": "release",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:3:player:release:attack_release",
+              "t": 5695124,
+              "frame": "0",
+              "texture": "345,686,272,212"
+            },
+            {
+              "phase": "impact",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:3:player:impact:idle",
+              "t": 5695471,
+              "frame": "0",
+              "texture": "51,72,224,222"
+            },
+            {
+              "phase": "effects",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:3:player:effects:idle",
+              "t": 5695790.599999994,
+              "frame": "0",
+              "texture": "51,72,224,222"
+            },
+            {
+              "phase": "rest",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:3:player:rest:idle",
+              "t": 5696367.199999988,
+              "frame": "0",
+              "texture": "51,72,224,222"
+            }
+          ],
+          "allReady": true
+        },
+        {
+          "side": "enemy",
+          "actions": [
+            "idle",
+            "attack_windup",
+            "hit"
+          ],
+          "actualTextures": [
+            "21@40,84,224,229",
+            "22@354,86,226,227",
+            "29@40,710,227,202",
+            "31@677,706,237,215"
+          ],
+          "firstFramesByPhase": [
+            {
+              "phase": "rest",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:2:enemy:rest:idle",
+              "t": 5685917.899999976,
+              "frame": "8",
+              "texture": "40,84,224,229"
+            },
+            {
+              "phase": "windup",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:3:enemy:windup:attack_windup",
+              "t": 5694845.299999982,
+              "frame": "0",
+              "texture": "40,710,227,202"
+            },
+            {
+              "phase": "release",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:3:enemy:release:idle",
+              "t": 5695124,
+              "frame": "0",
+              "texture": "40,84,224,229"
+            },
+            {
+              "phase": "impact",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:3:enemy:impact:hit",
+              "t": 5695471,
+              "frame": "0",
+              "texture": "677,706,237,215"
+            },
+            {
+              "phase": "effects",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:3:enemy:effects:idle",
+              "t": 5695790.599999994,
+              "frame": "0",
+              "texture": "40,84,224,229"
+            },
+            {
+              "phase": "rest",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:3:enemy:rest:idle",
+              "t": 5696367.199999988,
+              "frame": "0",
+              "texture": "40,84,224,229"
+            }
+          ],
+          "allReady": true
+        }
+      ]
+    },
+    {
+      "label": "original-session-r4-normal-repeat",
+      "samples": 354,
+      "keys": [
+        "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:3",
+        "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:4"
+      ],
+      "phases": [
+        "rest",
+        "windup",
+        "release",
+        "impact",
+        "effects"
+      ],
+      "actors": [
+        {
+          "side": "player",
+          "actions": [
+            "idle",
+            "attack_windup",
+            "attack_release"
+          ],
+          "actualTextures": [
+            "3@51,72,224,222",
+            "4@354,71,221,225",
+            "11@50,698,237,189",
+            "12@345,686,272,212"
+          ],
+          "firstFramesByPhase": [
+            {
+              "phase": "rest",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:3:player:rest:idle",
+              "t": 5716270.699999988,
+              "frame": "6",
+              "texture": "51,72,224,222"
+            },
+            {
+              "phase": "windup",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:4:player:windup:attack_windup",
+              "t": 5726158.299999982,
+              "frame": "0",
+              "texture": "50,698,237,189"
+            },
+            {
+              "phase": "release",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:4:player:release:attack_release",
+              "t": 5726434.5,
+              "frame": "0",
+              "texture": "345,686,272,212"
+            },
+            {
+              "phase": "impact",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:4:player:impact:idle",
+              "t": 5726754.299999982,
+              "frame": "0",
+              "texture": "51,72,224,222"
+            },
+            {
+              "phase": "effects",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:4:player:effects:idle",
+              "t": 5727079.599999994,
+              "frame": "0",
+              "texture": "51,72,224,222"
+            }
+          ],
+          "allReady": true
+        },
+        {
+          "side": "enemy",
+          "actions": [
+            "idle",
+            "attack_windup",
+            "hit"
+          ],
+          "actualTextures": [
+            "21@40,84,224,229",
+            "22@354,86,226,227",
+            "29@40,710,227,202",
+            "31@677,706,237,215"
+          ],
+          "firstFramesByPhase": [
+            {
+              "phase": "rest",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:3:enemy:rest:idle",
+              "t": 5716270.699999988,
+              "frame": "6",
+              "texture": "40,84,224,229"
+            },
+            {
+              "phase": "windup",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:4:enemy:windup:attack_windup",
+              "t": 5726158.299999982,
+              "frame": "0",
+              "texture": "40,710,227,202"
+            },
+            {
+              "phase": "release",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:4:enemy:release:idle",
+              "t": 5726434.5,
+              "frame": "0",
+              "texture": "40,84,224,229"
+            },
+            {
+              "phase": "impact",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:4:enemy:impact:hit",
+              "t": 5726754.299999982,
+              "frame": "0",
+              "texture": "677,706,237,215"
+            },
+            {
+              "phase": "effects",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:4:enemy:effects:idle",
+              "t": 5727079.599999994,
+              "frame": "0",
+              "texture": "40,84,224,229"
+            }
+          ],
+          "allReady": true
+        }
+      ]
+    },
+    {
+      "label": "original-session-r6-ultimate-heal",
+      "samples": 423,
+      "keys": [
+        "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:5",
+        "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:6"
+      ],
+      "phases": [
+        "rest",
+        "windup",
+        "release",
+        "impact",
+        "effects"
+      ],
+      "actors": [
+        {
+          "side": "player",
+          "actions": [
+            "idle",
+            "attack_windup",
+            "skill",
+            "hit"
+          ],
+          "actualTextures": [
+            "3@51,72,224,222",
+            "4@354,71,221,225",
+            "11@50,698,237,189",
+            "14@974,671,250,229",
+            "15@45,956,292,236",
+            "13@678,690,241,208"
+          ],
+          "firstFramesByPhase": [
+            {
+              "phase": "rest",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:5:player:rest:idle",
+              "t": 5787396.599999994,
+              "frame": "14",
+              "texture": "51,72,224,222"
+            },
+            {
+              "phase": "windup",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:6:player:windup:attack_windup",
+              "t": 5798996.099999994,
+              "frame": "0",
+              "texture": "50,698,237,189"
+            },
+            {
+              "phase": "release",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:6:player:release:skill",
+              "t": 5799260.699999988,
+              "frame": "0",
+              "texture": "974,671,250,229"
+            },
+            {
+              "phase": "impact",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:6:player:impact:hit",
+              "t": 5799598.699999988,
+              "frame": "0",
+              "texture": "678,690,241,208"
+            },
+            {
+              "phase": "effects",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:6:player:effects:idle",
+              "t": 5799924.699999988,
+              "frame": "0",
+              "texture": "51,72,224,222"
+            },
+            {
+              "phase": "rest",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:6:player:rest:idle",
+              "t": 5800500.699999988,
+              "frame": "4",
+              "texture": "51,72,224,222"
+            }
+          ],
+          "allReady": true
+        },
+        {
+          "side": "enemy",
+          "actions": [
+            "idle",
+            "attack_windup",
+            "skill",
+            "hit"
+          ],
+          "actualTextures": [
+            "21@40,84,224,229",
+            "22@354,86,226,227",
+            "29@40,710,227,202",
+            "32@982,688,246,234",
+            "33@32,970,302,236",
+            "31@677,706,237,215"
+          ],
+          "firstFramesByPhase": [
+            {
+              "phase": "rest",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:5:enemy:rest:idle",
+              "t": 5787396.599999994,
+              "frame": "14",
+              "texture": "40,84,224,229"
+            },
+            {
+              "phase": "windup",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:6:enemy:windup:attack_windup",
+              "t": 5798996.099999994,
+              "frame": "0",
+              "texture": "40,710,227,202"
+            },
+            {
+              "phase": "release",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:6:enemy:release:skill",
+              "t": 5799260.699999988,
+              "frame": "0",
+              "texture": "982,688,246,234"
+            },
+            {
+              "phase": "impact",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:6:enemy:impact:hit",
+              "t": 5799598.699999988,
+              "frame": "0",
+              "texture": "677,706,237,215"
+            },
+            {
+              "phase": "effects",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:6:enemy:effects:idle",
+              "t": 5799924.699999988,
+              "frame": "0",
+              "texture": "40,84,224,229"
+            },
+            {
+              "phase": "rest",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:6:enemy:rest:idle",
+              "t": 5800500.699999988,
+              "frame": "4",
+              "texture": "40,84,224,229"
+            }
+          ],
+          "allReady": true
+        }
+      ]
+    },
+    {
+      "label": "original-session-r14-natural-finish",
+      "samples": 395,
+      "keys": [
+        "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:13",
+        "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:14"
+      ],
+      "phases": [
+        "rest",
+        "windup",
+        "release",
+        "impact",
+        "effects"
+      ],
+      "actors": [
+        {
+          "side": "player",
+          "actions": [
+            "idle",
+            "attack_windup",
+            "skill",
+            "victory"
+          ],
+          "actualTextures": [
+            "3@51,72,224,222",
+            "4@354,71,221,225",
+            "11@50,698,237,189",
+            "14@974,671,250,229",
+            "15@45,956,292,236",
+            "16@385,950,228,243"
+          ],
+          "firstFramesByPhase": [
+            {
+              "phase": "rest",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:13:player:rest:idle",
+              "t": 6030510.899999976,
+              "frame": "5",
+              "texture": "51,72,224,222"
+            },
+            {
+              "phase": "windup",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:14:player:windup:attack_windup",
+              "t": 6041267.299999982,
+              "frame": "0",
+              "texture": "50,698,237,189"
+            },
+            {
+              "phase": "release",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:14:player:release:skill",
+              "t": 6041540.099999994,
+              "frame": "0",
+              "texture": "974,671,250,229"
+            },
+            {
+              "phase": "impact",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:14:player:impact:idle",
+              "t": 6041875.699999988,
+              "frame": "2",
+              "texture": "45,956,292,236"
+            },
+            {
+              "phase": "effects",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:14:player:effects:idle",
+              "t": 6042199,
+              "frame": "2",
+              "texture": "51,72,224,222"
+            },
+            {
+              "phase": "rest",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:14:player:rest:victory",
+              "t": 6042796.099999994,
+              "frame": "0",
+              "texture": "385,950,228,243"
+            }
+          ],
+          "allReady": true
+        },
+        {
+          "side": "enemy",
+          "actions": [
+            "idle",
+            "walk",
+            "hit"
+          ],
+          "actualTextures": [
+            "21@40,84,224,229",
+            "22@354,86,226,227",
+            "23@652,83,223,230",
+            "24@968,83,238,230",
+            "31@677,706,237,215"
+          ],
+          "firstFramesByPhase": [
+            {
+              "phase": "rest",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:13:enemy:rest:idle",
+              "t": 6030510.899999976,
+              "frame": "5",
+              "texture": "40,84,224,229"
+            },
+            {
+              "phase": "windup",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:14:enemy:windup:walk",
+              "t": 6041267.299999982,
+              "frame": "0",
+              "texture": "652,83,223,230"
+            },
+            {
+              "phase": "release",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:14:enemy:release:walk",
+              "t": 6041540.099999994,
+              "frame": "0",
+              "texture": "652,83,223,230"
+            },
+            {
+              "phase": "impact",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:14:enemy:impact:hit",
+              "t": 6041875.699999988,
+              "frame": "0",
+              "texture": "652,83,223,230"
+            },
+            {
+              "phase": "effects",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:14:enemy:effects:walk",
+              "t": 6042199,
+              "frame": "2",
+              "texture": "40,84,224,229"
+            },
+            {
+              "phase": "rest",
+              "key": "battle-1fc23b9e-d2be-4eb4-b2d1-4ff4befb770b:14:enemy:rest:idle",
+              "t": 6042796.099999994,
+              "frame": "0",
+              "texture": "40,84,224,229"
+            }
+          ],
+          "allReady": true
+        }
+      ]
+    },
+    {
+      "label": "new-wood-earth-r4-element",
+      "samples": 688,
+      "keys": [
+        "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:3",
+        "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:4"
+      ],
+      "phases": [
+        "rest",
+        "windup",
+        "release",
+        "impact",
+        "effects"
+      ],
+      "actors": [
+        {
+          "side": "player",
+          "actions": [
+            "idle",
+            "attack_windup",
+            "skill",
+            "hit"
+          ],
+          "actualTextures": [
+            "47@76,63,184,261",
+            "48@390,64,182,260",
+            "55@40,673,243,215",
+            "58@1018,659,197,260",
+            "59@35,947,300,271",
+            "57@692,671,280,244"
+          ],
+          "firstFramesByPhase": [
+            {
+              "phase": "rest",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:3:player:rest:idle",
+              "t": 7040327.699999988,
+              "frame": "0",
+              "texture": "76,63,184,261"
+            },
+            {
+              "phase": "windup",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:4:player:windup:attack_windup",
+              "t": 7060229.899999976,
+              "frame": "0",
+              "texture": "40,673,243,215"
+            },
+            {
+              "phase": "release",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:4:player:release:skill",
+              "t": 7060493.599999994,
+              "frame": "0",
+              "texture": "1018,659,197,260"
+            },
+            {
+              "phase": "impact",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:4:player:impact:hit",
+              "t": 7060836.5,
+              "frame": "0",
+              "texture": "692,671,280,244"
+            },
+            {
+              "phase": "effects",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:4:player:effects:idle",
+              "t": 7061163.399999976,
+              "frame": "0",
+              "texture": "76,63,184,261"
+            },
+            {
+              "phase": "rest",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:4:player:rest:idle",
+              "t": 7061731.799999982,
+              "frame": "0",
+              "texture": "76,63,184,261"
+            }
+          ],
+          "allReady": true
+        },
+        {
+          "side": "enemy",
+          "actions": [
+            "idle",
+            "attack_windup",
+            "skill",
+            "hit"
+          ],
+          "actualTextures": [
+            "66@34,26,248,271",
+            "67@338,26,256,271",
+            "74@35,638,276,251",
+            "77@969,631,267,274",
+            "78@17,910,339,304",
+            "76@676,641,258,261"
+          ],
+          "firstFramesByPhase": [
+            {
+              "phase": "rest",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:3:enemy:rest:idle",
+              "t": 7040327.699999988,
+              "frame": "0",
+              "texture": "34,26,248,271"
+            },
+            {
+              "phase": "windup",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:4:enemy:windup:attack_windup",
+              "t": 7060229.899999976,
+              "frame": "0",
+              "texture": "35,638,276,251"
+            },
+            {
+              "phase": "release",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:4:enemy:release:skill",
+              "t": 7060493.599999994,
+              "frame": "0",
+              "texture": "969,631,267,274"
+            },
+            {
+              "phase": "impact",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:4:enemy:impact:hit",
+              "t": 7060836.5,
+              "frame": "0",
+              "texture": "676,641,258,261"
+            },
+            {
+              "phase": "effects",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:4:enemy:effects:idle",
+              "t": 7061163.399999976,
+              "frame": "0",
+              "texture": "34,26,248,271"
+            },
+            {
+              "phase": "rest",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:4:enemy:rest:idle",
+              "t": 7061731.799999982,
+              "frame": "0",
+              "texture": "34,26,248,271"
+            }
+          ],
+          "allReady": true
+        }
+      ]
+    },
+    {
+      "label": "new-wood-earth-r5-dodge",
+      "samples": 482,
+      "keys": [
+        "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:4",
+        "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:5"
+      ],
+      "phases": [
+        "rest",
+        "windup",
+        "release",
+        "impact",
+        "effects"
+      ],
+      "actors": [
+        {
+          "side": "player",
+          "actions": [
+            "idle",
+            "walk"
+          ],
+          "actualTextures": [
+            "47@76,63,184,261",
+            "48@390,64,182,260",
+            "49@696,65,183,258",
+            "50@992,64,198,260"
+          ],
+          "firstFramesByPhase": [
+            {
+              "phase": "rest",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:4:player:rest:idle",
+              "t": 7114502.099999994,
+              "frame": "14",
+              "texture": "76,63,184,261"
+            },
+            {
+              "phase": "windup",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:5:player:windup:walk",
+              "t": 7127940.899999976,
+              "frame": "0",
+              "texture": "696,65,183,258"
+            },
+            {
+              "phase": "release",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:5:player:release:walk",
+              "t": 7128216.599999994,
+              "frame": "0",
+              "texture": "696,65,183,258"
+            },
+            {
+              "phase": "impact",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:5:player:impact:walk",
+              "t": 7128554.099999994,
+              "frame": "0",
+              "texture": "696,65,183,258"
+            },
+            {
+              "phase": "effects",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:5:player:effects:walk",
+              "t": 7128859.799999982,
+              "frame": "0",
+              "texture": "696,65,183,258"
+            },
+            {
+              "phase": "rest",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:5:player:rest:idle",
+              "t": 7129442.599999994,
+              "frame": "0",
+              "texture": "76,63,184,261"
+            }
+          ],
+          "allReady": true
+        },
+        {
+          "side": "enemy",
+          "actions": [
+            "idle",
+            "attack_windup",
+            "attack_release"
+          ],
+          "actualTextures": [
+            "66@34,26,248,271",
+            "67@338,26,256,271",
+            "74@35,638,276,251",
+            "75@340,638,317,266"
+          ],
+          "firstFramesByPhase": [
+            {
+              "phase": "rest",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:4:enemy:rest:idle",
+              "t": 7114502.099999994,
+              "frame": "14",
+              "texture": "34,26,248,271"
+            },
+            {
+              "phase": "windup",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:5:enemy:windup:attack_windup",
+              "t": 7127940.899999976,
+              "frame": "0",
+              "texture": "35,638,276,251"
+            },
+            {
+              "phase": "release",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:5:enemy:release:attack_release",
+              "t": 7128216.599999994,
+              "frame": "0",
+              "texture": "340,638,317,266"
+            },
+            {
+              "phase": "impact",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:5:enemy:impact:idle",
+              "t": 7128554.099999994,
+              "frame": "0",
+              "texture": "34,26,248,271"
+            },
+            {
+              "phase": "effects",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:5:enemy:effects:idle",
+              "t": 7128859.799999982,
+              "frame": "0",
+              "texture": "34,26,248,271"
+            },
+            {
+              "phase": "rest",
+              "key": "battle-876a8305-6e0c-4328-9626-a4fc6fba3659:5:enemy:rest:idle",
+              "t": 7129442.599999994,
+              "frame": "0",
+              "texture": "34,26,248,271"
+            }
+          ],
+          "allReady": true
+        }
+      ]
+    }
+  ],
+  "missedSampling": {
+    "records": [
+      "b02-original-r5-element-interrupted-real-textures.json",
+      "b02-original-r7-dodge-real-textures.json",
+      "b02-original-r8-element-real-textures.json"
+    ],
+    "qualification": "Requests and rounds were actually executed; polls ended before native input and sampled only rest. Excluded from positive animation coverage; original rows retained."
+  },
+  "checks": {
+    "normalReady": true,
+    "normalFullPhases": true,
+    "normalRealAttackTextures": true,
+    "ultimateRealSkill": true,
+    "elementSuccessRealSkill": true,
+    "dodgeRealWalk": true,
+    "dodgeBlocksActualNormal": true,
+    "oneNewRoundPerCommand": true,
+    "insufficientNoCommand": true
+  }
+}

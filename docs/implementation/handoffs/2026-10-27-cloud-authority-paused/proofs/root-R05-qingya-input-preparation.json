@@ -1,0 +1,31 @@
+{
+  "at": "2026-10-26T22:39:21.720Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "phase": "prepared only; no UI import, resource ID, cloud write or live profile mutation",
+  "originalCase": "R05",
+  "directory": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\native-ui-imports\\R05-qingya-backup-origin-4e6",
+  "descriptor": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\native-ui-imports\\R05-qingya-backup-origin-4e6\\qingya-r05-4e6-1b1afdd1.json",
+  "resourceName": "青芽",
+  "kind": "spritesheet",
+  "originalPackHash": "1cd0626ea29767476b371519ec4dc00fc43c528bfcd92627166275b937db2060",
+  "preparedPackHash": "1aa494f867cbc95f683fe8233d6742fd1839dfb1ec5b6df55135328082a5dd5a",
+  "reason": "Original R05 requires a normal UI import of owned Qingya. Only the input descriptor filename differs, making this a separate explicit QA import while PNG and JSON bytes remain exactly original; all existing resource IDs remain untouched.",
+  "files": [
+    {
+      "originalName": "character.json",
+      "preparedName": "qingya-r05-4e6-1b1afdd1.json",
+      "bytes": 9406,
+      "sha256": "e2e976b69f7ea9049527251e458517e048c05aa5ab4cd1e13ffa47c38821708e",
+      "originalBytesUnchanged": true
+    },
+    {
+      "originalName": "sprites.png",
+      "preparedName": "sprites.png",
+      "bytes": 1802491,
+      "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693",
+      "originalBytesUnchanged": true
+    }
+  ],
+  "faultAuthorized": false,
+  "next": "Native09 finishes current model cleanup, then ordinary original B2 UI import/export and B1 preview. Root must first verify actual new resource ID, live owner, SHA and one exact B1 registered PNG path before a separate one-file reversible missing-cache check."
+}

@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-26T22:33:25.942Z",
+  "stage": "n05-secondary-launch-original-primary-preserved",
+  "caseUpdates": [
+    {
+      "id": "N05",
+      "status": "passed",
+      "actual": "原B2运行中以同冻结SFX/同原profile/同debugport再次普通启动一次；第二wrapper16012自然退出且子进程消失，唯一browser main仍21384(parent9532)/CDP57240、原窗口723278保留。两renderer携带debugflag已与main区分，无额外实例；19项核心身份/宠物/经济/历史/连接/资源表摘要完全未变，未创建新资料目录或重复业务记录。",
+      "evidence": [
+        "launch-cloudB2-n05-secondary-once.json",
+        "native-N05-process-readback.json",
+        "native-N05-lingjing-window-inventory.json",
+        "native-N05-original-B2-existing-primary-after-second-launch.png",
+        "cloudB2-before-n05-secondary-same-profile-launch.json",
+        "cloudB2-after-n05-secondary-same-profile-launch.json",
+        "native-N05-secondary-launch-original-primary-preserved-seal.json"
+      ]
+    }
+  ],
+  "newIssues": [],
+  "issueUpdates": []
+}

@@ -1,0 +1,7 @@
+{
+  "at": "2026-10-25T13:13:52.728Z",
+  "source": "Root independent same-host PS7.6.5/.NET10 environment presence probe; actual product child environment was not captured",
+  "finding": "SetEnvironmentVariable(name,null,Process) leaves key present with empty value; Remove-Item Env:name deletes key. First launch helper used null clearing. Suspected instrumentation fault, pending controlled same-EXE corrected-helper retest.",
+  "preserveOriginalFailure": true,
+  "noProductVerdictYet": true
+}

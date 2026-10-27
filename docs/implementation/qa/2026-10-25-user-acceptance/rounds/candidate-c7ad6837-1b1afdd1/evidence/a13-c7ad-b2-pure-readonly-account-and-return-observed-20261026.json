@@ -1,0 +1,63 @@
+{
+  "at": "2026-10-26T13:03:30.938Z",
+  "status": "pure_readonly_account_and_return_observed_unconfirmed_branch_correct_fix_branch_not_yet_exercised",
+  "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+  "owner": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "deviceId": "351797b0-cad7-4b8f-9f93-8d0e806c49c3",
+  "scenario": null,
+  "persistence": "memory",
+  "native": {
+    "initialRoute": "#/companions",
+    "actualNotice": "伙伴已保存，其他存档待核对。",
+    "actualCta": "核对存档",
+    "genericCtaNotClicked": true,
+    "navigation": "Normal Settings then Account; read existing state; normal My Companions return",
+    "accountRoute": "#/account",
+    "accountBadge": "云端有更新",
+    "syncNowDisabled": true,
+    "returnedRoute": "#/companions",
+    "returnedNoticeSame": true,
+    "previewClicks": 0,
+    "restoreOrMergeConfirmations": 0,
+    "syncClicks": 0,
+    "settingsSaves": 0,
+    "toggles": 0,
+    "helperStarts": 0
+  },
+  "current": {
+    "confirmedCloudRevision": 8,
+    "observedServerHead": 23,
+    "serverChecksum": "0601518424af2f8a176f9347347d4d8cf86f80791f7ff9c132505f80b3f826a3",
+    "settingsRevision": 7,
+    "syncEnabled": false,
+    "closeToTray": true,
+    "volume": 70,
+    "pendingAccountJobs": 0,
+    "accountSources": 0
+  },
+  "preservation": {
+    "allNonAccountTablesDigestOrSensitiveCountExact": true,
+    "settingsStateOutboxSourcesBaselinesCheckpointsBackupRowsRawExact": true,
+    "petsChoicesBattleGardenRawExactFromAlreadyQualifiedHead23CacheBaseline": true,
+    "changedTables": [
+      "account_actions"
+    ]
+  },
+  "qualification": {
+    "localDifferenceFixBranchExercised": false,
+    "qa021FixPassClaimed": false,
+    "newGenericNoticeRegressionClaimed": false,
+    "reason": "Root source audit confirms local-difference requires confirmed cloud revision/checksum to equal the incoming real head. Confirmed8 versus incoming23 is the legitimate unconfirmed branch; generic notice is expected here.",
+    "next": "Only a newly approved real head23 preview and normal confirmation may satisfy this gate. No direct gate or revision edits.",
+    "rootPreviewOnlyApproval": "root-c7ad-a13-b2-real-head23-preview-only"
+  },
+  "evidence": {
+    "initial": "2026-10-26T12:48:02.187Z",
+    "account": "2026-10-26T12:57:11.863Z",
+    "returned": "2026-10-26T13:02:08.726Z",
+    "finalFlow": "2026-10-26T12:59:06.024Z",
+    "finalAppInfo": "2026-10-26T12:59:06.076Z"
+  },
+  "ledgerNotChanged": true,
+  "uiStoppedAt": "#/companions"
+}

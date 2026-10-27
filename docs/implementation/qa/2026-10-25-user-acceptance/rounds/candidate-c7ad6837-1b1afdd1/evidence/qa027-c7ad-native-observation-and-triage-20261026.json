@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-26T11:51:31.540Z",
+  "issueId": "QA-027",
+  "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+  "exeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+  "status": "native_observed_and_readonly_source_triaged_open",
+  "observed": [
+    {
+      "at": "2026-10-26T11:20:38.098Z",
+      "file": "cloudB2-resource-public-ui-single-native-click-draft106-before-save-20261026.json",
+      "draftScale": "1.06",
+      "messages": [
+        "另一窗口已更新资源设置。请放弃修改并重新载入后再编辑。"
+      ]
+    },
+    {
+      "at": "2026-10-26T11:30:47.937Z",
+      "file": "cloudB2-resource-public-ui-single-restore-draft105-before-save-20261026.json",
+      "draftScale": "1.05",
+      "messages": [
+        "另一窗口已更新资源设置。请放弃修改并重新载入后再编辑。"
+      ]
+    }
+  ],
+  "triage": {
+    "path": "C:/Users/Administrator/Desktop/project/DesktopPet-fresh-worktrees/07/artifacts/qa/c7-resource-dirty-pull-notice-triage-20261026.md",
+    "retainedCopy": "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa027-07-readonly-triage-retained-20261026.md",
+    "sha256": "f81b18585daa9ea0773cd9d9c55104204023916444f1b45147ea55eb955719ed",
+    "owner": "07",
+    "readOnlySourceAnalysis": true
+  },
+  "noAdditionalNativeReproduction": true,
+  "noCodeChanged": true,
+  "noCandidateChanged": true,
+  "scope": "An unchanged ordinary background resource pull emits resources:changed; the dirty hook warns without checking selected saved baseline. Exact first event source was not captured. Drafts remained and each sole save succeeded; no proven automatic draft loss, data overwrite, or CAS bypass.",
+  "independentFromQa024": true,
+  "caseStatusesPreserved": true
+}

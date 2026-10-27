@@ -1,0 +1,69 @@
+{
+  "readOnly": true,
+  "noProductWrites": true,
+  "at": "2026-10-26T23:18:08.613192+00:00",
+  "objects": [
+    {
+      "name": "2028f0af-f501-47f5-9abb-de59487dad46/b773fb41-e95a-4935-af1e-c0ed2fb5e9a4/fbfad69f653c25ce4ab4c188813c60f6b043620ae76bcfe8a6847c2032a47f17/chunks/aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693/0-aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693.bin",
+      "size": 1802491,
+      "bucket": "lingjing-resources-v1",
+      "createdAt": "2026-10-26T22:47:38.936696+00:00"
+    },
+    {
+      "name": "2028f0af-f501-47f5-9abb-de59487dad46/b773fb41-e95a-4935-af1e-c0ed2fb5e9a4/fbfad69f653c25ce4ab4c188813c60f6b043620ae76bcfe8a6847c2032a47f17/chunks/e2e976b69f7ea9049527251e458517e048c05aa5ab4cd1e13ffa47c38821708e/0-e2e976b69f7ea9049527251e458517e048c05aa5ab4cd1e13ffa47c38821708e.bin",
+      "size": 9406,
+      "bucket": "lingjing-resources-v1",
+      "createdAt": "2026-10-26T22:47:34.184663+00:00"
+    },
+    {
+      "name": "2028f0af-f501-47f5-9abb-de59487dad46/b773fb41-e95a-4935-af1e-c0ed2fb5e9a4/fbfad69f653c25ce4ab4c188813c60f6b043620ae76bcfe8a6847c2032a47f17/manifest.json",
+      "size": 7422,
+      "bucket": "lingjing-resources-v1",
+      "createdAt": "2026-10-26T22:47:43.57297+00:00"
+    }
+  ],
+  "packages": [
+    {
+      "created_at": "2026-10-26T22:47:46.182692+00:00",
+      "resource_id": "b773fb41-e95a-4935-af1e-c0ed2fb5e9a4",
+      "total_bytes": 1811897,
+      "auth_user_id": "2028f0af-f501-47f5-9abb-de59487dad46",
+      "content_hash": "1aa494f867cbc95f683fe8233d6742fd1839dfb1ec5b6df55135328082a5dd5a",
+      "manifest_path": "2028f0af-f501-47f5-9abb-de59487dad46/b773fb41-e95a-4935-af1e-c0ed2fb5e9a4/fbfad69f653c25ce4ab4c188813c60f6b043620ae76bcfe8a6847c2032a47f17/manifest.json",
+      "resource_kind": "spritesheet",
+      "manifest_bytes": 7422,
+      "manifest_sha256": "fbfad69f653c25ce4ab4c188813c60f6b043620ae76bcfe8a6847c2032a47f17",
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    }
+  ],
+  "references": [
+    {
+      "created_at": "2026-10-26T22:47:50.421409+00:00",
+      "resource_id": "b773fb41-e95a-4935-af1e-c0ed2fb5e9a4",
+      "total_bytes": 1811897,
+      "auth_user_id": "2028f0af-f501-47f5-9abb-de59487dad46",
+      "content_hash": "1aa494f867cbc95f683fe8233d6742fd1839dfb1ec5b6df55135328082a5dd5a",
+      "manifest_path": "2028f0af-f501-47f5-9abb-de59487dad46/b773fb41-e95a-4935-af1e-c0ed2fb5e9a4/fbfad69f653c25ce4ab4c188813c60f6b043620ae76bcfe8a6847c2032a47f17/manifest.json",
+      "resource_kind": "spritesheet",
+      "manifest_bytes": 7422,
+      "manifest_sha256": "fbfad69f653c25ce4ab4c188813c60f6b043620ae76bcfe8a6847c2032a47f17",
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "authority_checksum": "d42162fbeb5a7b87342d49e75def18910d54ed139b3656597151ba0a36402750",
+      "authority_revision": 35,
+      "authority_action_id": "resources:b773fb41-e95a-4935-af1e-c0ed2fb5e9a4:fbfad69f653c25ce4ab4c188813c60f6b043620ae76bcfe8a6847c2032a47f17"
+    }
+  ],
+  "resourceId": "b773fb41-e95a-4935-af1e-c0ed2fb5e9a4",
+  "bucketPublic": false,
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "authorityActions": [
+    {
+      "kind": "authority",
+      "actionId": "resources:b773fb41-e95a-4935-af1e-c0ed2fb5e9a4:fbfad69f653c25ce4ab4c188813c60f6b043620ae76bcfe8a6847c2032a47f17",
+      "checksum": "d42162fbeb5a7b87342d49e75def18910d54ed139b3656597151ba0a36402750",
+      "revision": 35,
+      "createdAt": "2026-10-26T22:47:50.10075+00:00",
+      "baseRevision": 34
+    }
+  ]
+}

@@ -1,0 +1,177 @@
+{
+  "at": "2026-10-25T11:28:35.098Z",
+  "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+  "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+  "provenance": "actual native UI + SQLite; explicit simulated loopback protocol",
+  "snapshot": {
+    "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+    "messages": [
+      {
+        "id": "1bc77651-daf5-4502-8c5d-c83375178ec7",
+        "sequence": 5,
+        "actionId": "8e091688-34d4-43e9-a7cb-59669a30745a",
+        "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+        "role": "user",
+        "content": "第一只专属对话：请按我的冬雪人设回答。当前仅用本机协议夹具。",
+        "status": "complete",
+        "errorCode": null,
+        "provider": null,
+        "model": null,
+        "attempt": 1,
+        "createdAt": 1792927696799,
+        "updatedAt": 1792927696799
+      },
+      {
+        "id": "0d6ec270-85b3-48a2-a959-a9db38a5ca23",
+        "sequence": 6,
+        "actionId": "8e091688-34d4-43e9-a7cb-59669a30745a",
+        "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+        "role": "assistant",
+        "content": "【本机协议夹具】已收到当前小狐的测试消息。",
+        "status": "complete",
+        "errorCode": null,
+        "provider": "openai_compatible",
+        "model": "qa-protocol-model",
+        "attempt": 1,
+        "createdAt": 1792927696799,
+        "updatedAt": 1792927698330
+      }
+    ],
+    "profile": {
+      "persona": "候选第一只小狐：喜欢冬雪，只使用第一只自己的记忆；与喜欢春雨的第二只独立。",
+      "replyStyle": "natural",
+      "memoryEnabled": true,
+      "pauseWhileChatting": true,
+      "useOverride": false,
+      "revision": 1
+    },
+    "memories": [
+      {
+        "id": "d37466d2-b457-49ad-9d10-20d11b74b40d",
+        "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+        "content": "第一只小狐专属记忆：我喜欢冬雪；第二只喜欢春雨。此条保留用于新包迁移核对。",
+        "revision": 1,
+        "createdAt": 1792926921774,
+        "updatedAt": 1792926921774
+      }
+    ],
+    "focus": "给小狐，编号 pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3发消息"
+  },
+  "sqlite": {
+    "queryOnly": {
+      "query_only": 1
+    },
+    "messages": [
+      {
+        "sequence": 1,
+        "id": "4fb610ab-1e56-4cd7-87bb-6fad580c086a",
+        "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "action_id": "7851cf3e-fe53-4e9a-a11b-9f6ddfb5e147",
+        "role": "user",
+        "content": "协议成功验收：这是第二只小狐的第1条保留对话，仅用本机模拟供应商。",
+        "status": "complete",
+        "error_code": null,
+        "provider": null,
+        "model": null,
+        "attempt": 1,
+        "created_at": 1792927506088,
+        "updated_at": 1792927506088
+      },
+      {
+        "sequence": 2,
+        "id": "91a7d400-7fc0-4783-b08a-8604f58a231f",
+        "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "action_id": "7851cf3e-fe53-4e9a-a11b-9f6ddfb5e147",
+        "role": "assistant",
+        "content": "【本机协议夹具】已收到当前小狐的测试消息。",
+        "status": "complete",
+        "error_code": null,
+        "provider": "openai_compatible",
+        "model": "qa-protocol-model",
+        "attempt": 1,
+        "created_at": 1792927506088,
+        "updated_at": 1792927507604
+      },
+      {
+        "sequence": 3,
+        "id": "db94e0e1-452f-498c-b480-72dbdfc71c3f",
+        "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "action_id": "e4010d62-cf74-49ab-915f-037ef6f54a77",
+        "role": "user",
+        "content": "取消验收：这是第二只小狐的第2条测试消息；收到首段后由真实界面取消。",
+        "status": "complete",
+        "error_code": null,
+        "provider": null,
+        "model": null,
+        "attempt": 1,
+        "created_at": 1792927534440,
+        "updated_at": 1792927534440
+      },
+      {
+        "sequence": 4,
+        "id": "39f5a4e9-95fa-48bd-b1ca-3419bfa4b4fb",
+        "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "action_id": "e4010d62-cf74-49ab-915f-037ef6f54a77",
+        "role": "assistant",
+        "content": "【本机协议夹具】已收到当前小狐的测试消息。",
+        "status": "complete",
+        "error_code": null,
+        "provider": "openai_compatible",
+        "model": "qa-protocol-model",
+        "attempt": 2,
+        "created_at": 1792927534440,
+        "updated_at": 1792927589325
+      },
+      {
+        "sequence": 5,
+        "id": "1bc77651-daf5-4502-8c5d-c83375178ec7",
+        "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "pet_id": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+        "action_id": "8e091688-34d4-43e9-a7cb-59669a30745a",
+        "role": "user",
+        "content": "第一只专属对话：请按我的冬雪人设回答。当前仅用本机协议夹具。",
+        "status": "complete",
+        "error_code": null,
+        "provider": null,
+        "model": null,
+        "attempt": 1,
+        "created_at": 1792927696799,
+        "updated_at": 1792927696799
+      },
+      {
+        "sequence": 6,
+        "id": "0d6ec270-85b3-48a2-a959-a9db38a5ca23",
+        "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "pet_id": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+        "action_id": "8e091688-34d4-43e9-a7cb-59669a30745a",
+        "role": "assistant",
+        "content": "【本机协议夹具】已收到当前小狐的测试消息。",
+        "status": "complete",
+        "error_code": null,
+        "provider": "openai_compatible",
+        "model": "qa-protocol-model",
+        "attempt": 1,
+        "created_at": 1792927696799,
+        "updated_at": 1792927698330
+      }
+    ]
+  },
+  "promptScope": {
+    "requestId": 5,
+    "containsFirstPersona": true,
+    "containsFirstMemory": true,
+    "containsSecondMemory": false
+  },
+  "secondPromptScope": {
+    "requestId": 2,
+    "authorized": true,
+    "mode": "success",
+    "containsSecondPersona": true,
+    "containsSecondMemory": true,
+    "containsFirstMemory": false
+  }
+}

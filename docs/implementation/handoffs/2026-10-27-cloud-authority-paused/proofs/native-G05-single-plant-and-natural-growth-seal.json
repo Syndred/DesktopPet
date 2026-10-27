@@ -1,0 +1,31 @@
+{
+  "at": "2026-10-26T22:01:55.990Z",
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "actionId": "bd2f2452-00bd-479f-99ae-2e3f82d8fd02",
+  "requestHash": "ca9b0c8b80df3022410d17d7a73c9600a665c4d021be7477cfe06d46e019f949",
+  "nativeInput": "One ordinary native rapid double-click on plot-1 carrot sow button",
+  "newCloudRequests": 1,
+  "committed": true,
+  "replayed": false,
+  "seedBefore": 3,
+  "seedAfter": 2,
+  "gardenRevisionBefore": 7,
+  "gardenRevisionAfter": 8,
+  "accountRevisionAfter": 33,
+  "plotId": "plot-1",
+  "plantedAt": 1793051858472,
+  "maturesAt": 1793052458472,
+  "maturesAtUtc": "2026-10-26T22:07:38.472Z",
+  "yieldQuantity": 3,
+  "clockChanged": false,
+  "harvestIssued": false,
+  "evidence": [
+    "cloudB2-before-g05-single-plant.json",
+    "cloudB2-after-g05-rapid-double-plant-first-readback.json",
+    "root-G05-single-plant-cloud-independent.json",
+    "native-G05-original-B2-empty-plot-and-carrot-seeds.png",
+    "native-G05-original-B2-single-plot-rapid-double-plant-result.png",
+    "native-G05-G06-original-B2-carrot-growing-and-harvest-disabled.png",
+    "native-G05-original-B2-backpack-seed-two-after-plant.png"
+  ]
+}

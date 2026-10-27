@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-25T18:27:35.452Z",
+  "mode": "json",
+  "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+  "petId": "pet-8853a238-8730-4970-8e39-885a1f1da97d",
+  "assistant": {
+    "sequence": 14,
+    "id": "6e9fc9ca-f669-4113-9609-cb4f26fd3f22",
+    "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+    "pet_id": "pet-8853a238-8730-4970-8e39-885a1f1da97d",
+    "action_id": "24477032-2651-4990-abfc-91785d4997d0",
+    "role": "assistant",
+    "content": "【模拟验收 / DC7】这是本机协议夹具逐字回传，供应商为模拟；本次模式 json。",
+    "status": "complete",
+    "error_code": null,
+    "provider": "openai_compatible",
+    "model": "模拟验收-DC7-cc2cb825cff0",
+    "attempt": 7,
+    "created_at": 1792952519393,
+    "updated_at": 1792952798417
+  },
+  "originalActionPreserved": true,
+  "userCount": 1,
+  "assistantCount": 1,
+  "responding": false,
+  "generatedDummyVisibleInUi": false,
+  "generatedDummyInMessages": false,
+  "oldGlobalFixtureRequests": 8
+}

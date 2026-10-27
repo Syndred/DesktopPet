@@ -1,0 +1,283 @@
+{
+  "at": "2026-10-25T14:04:35.867Z",
+  "db": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a/lingjing.sqlite",
+  "tables": {
+    "account_actions": {
+      "count": 4,
+      "sha256": "6c5f34e14c4909c10701b0bbcde77ab6a187bb269639671a05479a77414b2d12"
+    },
+    "account_aliases": {
+      "count": 1,
+      "sha256": "ef219db333e9afe64559050a522df341f965d3bb81ce440a1b487e68295e3344"
+    },
+    "account_backup_receipts": {
+      "count": 1,
+      "sha256": "1068e880180f369df5ebdb4afd76f198fbd4afde58f8728e827793379131270e"
+    },
+    "account_cloud_links": {
+      "count": 1,
+      "sha256": "f43c66e05c0a9241cda62be0297e079bf64cdc35ff63434b78f2ab39c6c9a8b0"
+    },
+    "account_identities": {
+      "count": 1,
+      "sha256": "5fb9956bb1d2ec604e301432d7f2ded1d6be809de1d7e944485da3b4e1f2da83"
+    },
+    "account_legacy_data": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "account_login_sessions": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "account_migration_sources": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "account_qa_profile": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "account_session_control": {
+      "count": 1,
+      "sha256": "0ad2ef1577ddc06c162b972d83eae1f0a3106d147565b06f8399a3e4158ad663"
+    },
+    "account_settings": {
+      "count": 1,
+      "sha256": "4aa887ee88eef72e214c13d642168a08c3f0870f9adbb2b9b29751f738ff50ed"
+    },
+    "account_sync_baselines": {
+      "count": 1,
+      "sha256": "76f45e21be81b685589d586320efc3b6e791da030ce6265d1b50cb5e7a450640"
+    },
+    "account_sync_checkpoints": {
+      "count": 1,
+      "sha256": "1c509469bff53af31fedc31ce3a297ce66455ccc307c8db19827852effd9325f"
+    },
+    "account_sync_outbox": {
+      "count": 1,
+      "sha256": "220b2b076c4c31f8257d4c376d8dae1b2613c9db82db0c1d12aa57a4da9b38dd"
+    },
+    "account_sync_sources": {
+      "count": 1,
+      "sha256": "796ac50310261b379f4e3ef4210e877c4c6f87e028c285a34e3d2a627bd6133b"
+    },
+    "account_sync_state": {
+      "count": 1,
+      "sha256": "ee043ed51e0598da28fd2883585931008fdf62539493524f77a289d5b293f3de"
+    },
+    "battle_action_receipts": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "battle_reports_v2": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "battle_reward_receipts": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "battle_sessions": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "battle_transport_journal": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "companion_accounts": {
+      "count": 1,
+      "sha256": "b5e0f7acda5f7fb124f369bc8fa349b44d88fd7503952f5d5686bf5b14000bb2"
+    },
+    "companion_actions": {
+      "count": 1,
+      "sha256": "6211fbb269d2ea57346a9802411e47abaae79b4448f8d954bbfaca7f7b79d104"
+    },
+    "companion_capture_receipts": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "companion_identity_imports": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "companion_interactions": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "companion_legacy_archive": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "companion_pets": {
+      "count": 1,
+      "sha256": "e41bc232ad992aae8b805e459d7b1be5cf738d496a2c952f1c365f8cef7e52f0"
+    },
+    "conversation_connections": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "conversation_credentials": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "conversation_legacy_imports": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "conversation_memories": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "conversation_messages": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "conversation_preferences": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "conversation_profiles": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "discovery_actions": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "discovery_captures": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "discovery_encounters": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "discovery_memory_tags": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "garden_accounts": {
+      "count": 1,
+      "sha256": "c60f0c47a4ecc3cf32c8196491d923115c1d007b2766d0017fb57230fa843067"
+    },
+    "garden_actions": {
+      "count": 1,
+      "sha256": "41d4747a10abe12f208e9e6ecc32e2953f6fc7c8c2733a399b3f42dfb9e88f28"
+    },
+    "garden_cloud_requests": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "garden_cloud_state": {
+      "count": 1,
+      "sha256": "4772c492a7018a9fa08f2b44803765743d1131a69ea4784910a553eab150083d"
+    },
+    "garden_events": {
+      "count": 4,
+      "sha256": "834121732861d74a32dc51a126c2fc7efe88b0a8a913c98b879b72011445a39e"
+    },
+    "garden_garrisons": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "garden_identity_imports": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "garden_items": {
+      "count": 4,
+      "sha256": "4abe54f79c6c8ff4250961869d4c1121498bc26be7e7bdac8feb1dadbb3267f6"
+    },
+    "garden_ledger": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "garden_outbox": {
+      "count": 1,
+      "sha256": "c967a8b1be7e8e0c64b79c31b6ed2d85b3bbba709902558a5d62b5c70cd85af1"
+    },
+    "garden_plots": {
+      "count": 6,
+      "sha256": "86e5be8cc9e363f4fdaf16c57461499182658ead091e29d5bf51c3faf40cca5a"
+    },
+    "garden_reward_receipts": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "garden_territory_attempts": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "garden_territory_challenges": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "garden_territory_logs": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "garden_territory_records": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lingjing_meta": {
+      "count": 2,
+      "sha256": "52cc5e53f29303626ba26afcbae2e38500ba4282608dda8934b1f0e6201e822f"
+    },
+    "lingjing_migrations": {
+      "count": 28,
+      "sha256": "a20b47194bd97715b9b2e36dad2b0fdc2f6ea3593b12412cbb5a02ca1ad64205"
+    },
+    "lingjing_resource_cloud_downloads": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lingjing_resource_cloud_outbox": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lingjing_resource_cloud_receipts": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lingjing_resource_files": {
+      "count": 18,
+      "sha256": "c061f76244910604e65053d17efa8525f0538f314a8f71e1125fc3d161d86792"
+    },
+    "lingjing_resource_imports": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lingjing_resource_preference_cache": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lingjing_resource_preference_outbox": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lingjing_resource_preference_state": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lingjing_resource_preferences": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lingjing_resources": {
+      "count": 9,
+      "sha256": "7cfdf9497eef59c7561335ceb1426c3a56ce344c13964f77d35fc6f5ba0b39d4"
+    },
+    "sqlite_sequence": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "health": [
+    {
+      "quick_check": "ok"
+    }
+  ]
+}

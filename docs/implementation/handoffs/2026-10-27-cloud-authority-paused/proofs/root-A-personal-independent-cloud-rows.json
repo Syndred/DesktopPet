@@ -1,0 +1,95 @@
+{
+  "at": "2026-10-26T19:28:20.275Z",
+  "readOnly": true,
+  "rows": [
+    {
+      "owner_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "collection": "conversation_preferences",
+      "record_id": "[\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\"]",
+      "revision": 2,
+      "document": {
+        "selected_pet_id": "pet-97410828-fdf6-4253-8246-4c5f389d8fba",
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+      },
+      "deleted": false,
+      "position": 9,
+      "change_sequence": 20
+    },
+    {
+      "owner_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "collection": "conversation_profiles",
+      "record_id": "[\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\"]",
+      "revision": 2,
+      "document": {
+        "pet_id": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+        "persona": "4e6并发甲新稿：绿色积木。",
+        "revision": 2,
+        "updated_at": 1793042045303,
+        "reply_style": "natural",
+        "use_override": 0,
+        "memory_enabled": 1,
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "pause_while_chatting": 1
+      },
+      "deleted": false,
+      "position": 11,
+      "change_sequence": 17
+    },
+    {
+      "owner_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "collection": "conversation_memories",
+      "record_id": "[\"pet-3b746d1a-d968-42e1-9c13-73fd35a45273\",\"466a65e0-80a2-4825-bc87-d7e2432eb870\"]",
+      "revision": 1,
+      "document": {
+        "id": "466a65e0-80a2-4825-bc87-d7e2432eb870",
+        "pet_id": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+        "content": "4e6甲狐记忆：蓝色积木放在左边。",
+        "revision": 1,
+        "created_at": 1793041966804,
+        "updated_at": 1793041966804,
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+      },
+      "deleted": false,
+      "position": 13,
+      "change_sequence": 14
+    },
+    {
+      "owner_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "collection": "conversation_profiles",
+      "record_id": "[\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\"]",
+      "revision": 1,
+      "document": {
+        "pet_id": "pet-97410828-fdf6-4253-8246-4c5f389d8fba",
+        "persona": "4e6验收乙狐：喜欢橙色风筝。",
+        "revision": 1,
+        "updated_at": 1793042358574,
+        "reply_style": "natural",
+        "use_override": 0,
+        "memory_enabled": 1,
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "pause_while_chatting": 1
+      },
+      "deleted": false,
+      "position": 21,
+      "change_sequence": 22
+    },
+    {
+      "owner_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "collection": "conversation_memories",
+      "record_id": "[\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"6d8df6f1-43db-4e14-8371-8b8dd5d78580\"]",
+      "revision": 1,
+      "document": {
+        "id": "6d8df6f1-43db-4e14-8371-8b8dd5d78580",
+        "pet_id": "pet-97410828-fdf6-4253-8246-4c5f389d8fba",
+        "content": "4e6乙狐记忆：橙色风筝放在右边。",
+        "revision": 1,
+        "created_at": 1793042400922,
+        "updated_at": 1793042400922,
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+      },
+      "deleted": false,
+      "position": 23,
+      "change_sequence": 24
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "at": "2026-10-26T22:33:25.940Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "originalPrimaryPid": 21384,
+  "originalWrapperPid": 9532,
+  "originalWindowId": 723278,
+  "secondaryWrapperPid": 16012,
+  "secondaryExited": true,
+  "exactlyOriginalBrowserMain": true,
+  "mainProcesses": [
+    {
+      "ProcessId": 21384,
+      "ParentProcessId": 9532,
+      "ExecutablePath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsa811D.tmp\\app\\Lingjing.exe",
+      "CommandLine": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsa811D.tmp\\app\\Lingjing.exe --remote-debugging-port=57240 --remote-debugging-address=127.0.0.1"
+    }
+  ],
+  "debugPortOwner": 21384,
+  "protectedTablesUnchanged": [
+    "account_settings",
+    "account_identities",
+    "companion_pets",
+    "companion_device_desktop",
+    "companion_actions",
+    "garden_items",
+    "garden_plots",
+    "garden_actions",
+    "battle_sessions",
+    "battle_reports_v2",
+    "conversation_messages",
+    "conversation_connections",
+    "conversation_credentials",
+    "conversation_profiles",
+    "conversation_cloud_conflicts",
+    "lingjing_resource_imports",
+    "lingjing_resource_preferences"
+  ],
+  "readbackPredicateCorrection": "The first raw exactlyOriginalPrimary=false predicate counted two normal renderer children carrying the debugging flag. Filtering --type children leaves exactly the unchanged original browser main; raw evidence retained.",
+  "evidence": [
+    "launch-cloudB2-n05-secondary-once.json",
+    "native-N05-process-readback.json",
+    "native-N05-lingjing-window-inventory.json",
+    "native-N05-original-B2-existing-primary-after-second-launch.png",
+    "cloudB2-before-n05-secondary-same-profile-launch.json",
+    "cloudB2-after-n05-secondary-same-profile-launch.json"
+  ]
+}

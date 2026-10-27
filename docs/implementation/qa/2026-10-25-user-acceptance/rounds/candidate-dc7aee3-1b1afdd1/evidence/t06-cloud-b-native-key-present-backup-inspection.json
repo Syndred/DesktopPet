@@ -1,0 +1,86 @@
+{
+  "at": "2026-10-25T19:01:47.226Z",
+  "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/t06-b-key-audit-20261026/b-key-present-native-backup.lingjing.json",
+  "bytes": 18612,
+  "sha256": "f7260fdb7fcdf376841881d0f502e516e6ccccea4c2b64c378e23ba2e14aafd1",
+  "topKeys": [
+    "format",
+    "version",
+    "ownerAccountId",
+    "provenance",
+    "identity",
+    "createdAt",
+    "data",
+    "excluded",
+    "checksum"
+  ],
+  "dummyPlaintextMatches": 0,
+  "sensitiveFieldPaths": [
+    {
+      "path": "data.modules.conversations.data.tables.conversation_connections.0.max_output_tokens",
+      "presentValue": true,
+      "valueType": "number"
+    },
+    {
+      "path": "data.modules.conversations.data.tables.conversation_connections.1.max_output_tokens",
+      "presentValue": true,
+      "valueType": "number"
+    }
+  ],
+  "keyPresenceAtExport": {
+    "at": "2026-10-25T19:01:47.227Z",
+    "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "selected": {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "selected_pet_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75"
+    },
+    "connections": [
+      {
+        "scope": "account",
+        "scope_id": "",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "model": "模拟验收-DC7-c696c6c03ca2",
+        "key_present": 1,
+        "revision": 1,
+        "updated_at": 1792954441513
+      },
+      {
+        "scope": "pet",
+        "scope_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "model": "模拟验收-DC7-c696c6c03ca2",
+        "key_present": 1,
+        "revision": 1,
+        "updated_at": 1792954551379
+      }
+    ],
+    "credentials": [
+      {
+        "scope": "account",
+        "scope_id": "",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "key_present": 1
+      },
+      {
+        "scope": "pet",
+        "scope_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "key_present": 1
+      }
+    ],
+    "profiles": [
+      {
+        "pet_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "use_override": 1,
+        "revision": 1
+      }
+    ],
+    "messageCount": {
+      "count": 0
+    }
+  }
+}

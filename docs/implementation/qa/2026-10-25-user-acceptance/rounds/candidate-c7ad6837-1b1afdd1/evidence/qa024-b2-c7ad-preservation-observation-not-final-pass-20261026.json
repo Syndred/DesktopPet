@@ -1,0 +1,360 @@
+{
+  "at": "2026-10-26T11:06:34.232Z",
+  "status": "observation_not_final_pass",
+  "allUiStopped": true,
+  "businessOperationsPerformed": [
+    "one original login",
+    "one native desktop settings save volume71",
+    "one native account sync false→true toggle"
+  ],
+  "noCombatFeedRestoreMergeNewPreferenceSave": true,
+  "strictAudit": "native09-qa024-first-convergence strict pet equality failed before output or ledger mutation. An unconditional following coordinator message incorrectly said all assertions passed; immediately corrected with exact pet delta and no success artifact.",
+  "oldActionChanges": [
+    {
+      "field": "status",
+      "before": "conflict",
+      "after": "superseded"
+    }
+  ],
+  "originalPetsChanged": [
+    {
+      "petId": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+      "before": {
+        "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "petId": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+        "templateId": "animal-white-fox",
+        "name": "小狐",
+        "serial": "2EC1523D",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 5,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 800,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "revision": 2,
+        "createdAt": "2026-10-25T21:01:31.876Z",
+        "updatedAt": "2026-10-25T21:49:00.381Z"
+      },
+      "after": {
+        "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "petId": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+        "templateId": "animal-white-fox",
+        "name": "小狐",
+        "serial": "2EC1523D",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 25,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 1,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 800,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "revision": 3,
+        "createdAt": "2026-10-25T21:01:31.876Z",
+        "updatedAt": "2026-10-26T00:33:32.702Z"
+      }
+    }
+  ],
+  "originalSelectionsRawSame": false,
+  "localPreferencesRawSame": true,
+  "timeline": [
+    {
+      "label": "first-native-unauth-before-login",
+      "at": "2026-10-26T10:41:49.696Z",
+      "pets": [
+        {
+          "petId": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+          "revision": 2,
+          "experience": 5,
+          "winsTotal": 0,
+          "updatedAt": "2026-10-25T21:49:00.381Z"
+        },
+        {
+          "petId": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+          "revision": 5,
+          "experience": 0,
+          "winsTotal": 0,
+          "updatedAt": "2026-10-26T00:30:03.948Z"
+        },
+        {
+          "petId": "pet-825f6af9-402b-4244-988a-481563b7a587",
+          "revision": 1,
+          "experience": 0,
+          "winsTotal": 0,
+          "updatedAt": "2026-10-25T12:20:31.991Z"
+        },
+        {
+          "petId": "pet-96de9234-462d-413b-ac72-81cfc1add244",
+          "revision": 1,
+          "experience": 0,
+          "winsTotal": 0,
+          "updatedAt": "2026-10-25T12:07:23.190Z"
+        }
+      ],
+      "settingsRevision": 3,
+      "settings": 70,
+      "sync": false,
+      "conflictStatus": "conflict"
+    },
+    {
+      "label": "first-normal-login-auto-pull",
+      "at": "2026-10-26T10:44:30.029Z",
+      "pets": [
+        {
+          "petId": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+          "revision": 3,
+          "experience": 25,
+          "winsTotal": 1,
+          "updatedAt": "2026-10-26T00:33:32.702Z"
+        },
+        {
+          "petId": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+          "revision": 5,
+          "experience": 0,
+          "winsTotal": 0,
+          "updatedAt": "2026-10-26T00:30:03.948Z"
+        },
+        {
+          "petId": "pet-825f6af9-402b-4244-988a-481563b7a587",
+          "revision": 1,
+          "experience": 0,
+          "winsTotal": 0,
+          "updatedAt": "2026-10-25T12:20:31.991Z"
+        },
+        {
+          "petId": "pet-96de9234-462d-413b-ac72-81cfc1add244",
+          "revision": 1,
+          "experience": 0,
+          "winsTotal": 0,
+          "updatedAt": "2026-10-25T12:07:23.190Z"
+        }
+      ],
+      "settingsRevision": 3,
+      "settings": 70,
+      "sync": false,
+      "conflictStatus": "conflict"
+    },
+    {
+      "label": "first-resource-page-pull",
+      "at": "2026-10-26T10:45:32.519Z",
+      "pets": [
+        {
+          "petId": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+          "revision": 3,
+          "experience": 25,
+          "winsTotal": 1,
+          "updatedAt": "2026-10-26T00:33:32.702Z"
+        },
+        {
+          "petId": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+          "revision": 5,
+          "experience": 0,
+          "winsTotal": 0,
+          "updatedAt": "2026-10-26T00:30:03.948Z"
+        },
+        {
+          "petId": "pet-825f6af9-402b-4244-988a-481563b7a587",
+          "revision": 1,
+          "experience": 0,
+          "winsTotal": 0,
+          "updatedAt": "2026-10-25T12:20:31.991Z"
+        },
+        {
+          "petId": "pet-96de9234-462d-413b-ac72-81cfc1add244",
+          "revision": 1,
+          "experience": 0,
+          "winsTotal": 0,
+          "updatedAt": "2026-10-25T12:07:23.190Z"
+        }
+      ],
+      "settingsRevision": 3,
+      "settings": 70,
+      "sync": false,
+      "conflictStatus": "conflict"
+    },
+    {
+      "label": "volume71-saved-before-sync-enable",
+      "at": "2026-10-26T10:58:50.015Z",
+      "pets": [
+        {
+          "petId": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+          "revision": 3,
+          "experience": 25,
+          "winsTotal": 1,
+          "updatedAt": "2026-10-26T00:33:32.702Z"
+        },
+        {
+          "petId": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+          "revision": 5,
+          "experience": 0,
+          "winsTotal": 0,
+          "updatedAt": "2026-10-26T00:30:03.948Z"
+        },
+        {
+          "petId": "pet-825f6af9-402b-4244-988a-481563b7a587",
+          "revision": 1,
+          "experience": 0,
+          "winsTotal": 0,
+          "updatedAt": "2026-10-25T12:20:31.991Z"
+        },
+        {
+          "petId": "pet-96de9234-462d-413b-ac72-81cfc1add244",
+          "revision": 1,
+          "experience": 0,
+          "winsTotal": 0,
+          "updatedAt": "2026-10-25T12:07:23.190Z"
+        }
+      ],
+      "settingsRevision": 4,
+      "settings": 71,
+      "sync": false,
+      "conflictStatus": "conflict"
+    },
+    {
+      "label": "normal-sync-enabled-initial-cycle",
+      "at": "2026-10-26T11:00:59.595Z",
+      "pets": [
+        {
+          "petId": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+          "revision": 3,
+          "experience": 25,
+          "winsTotal": 1,
+          "updatedAt": "2026-10-26T00:33:32.702Z"
+        },
+        {
+          "petId": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+          "revision": 5,
+          "experience": 0,
+          "winsTotal": 0,
+          "updatedAt": "2026-10-26T00:30:03.948Z"
+        },
+        {
+          "petId": "pet-825f6af9-402b-4244-988a-481563b7a587",
+          "revision": 1,
+          "experience": 0,
+          "winsTotal": 0,
+          "updatedAt": "2026-10-25T12:20:31.991Z"
+        },
+        {
+          "petId": "pet-96de9234-462d-413b-ac72-81cfc1add244",
+          "revision": 1,
+          "experience": 0,
+          "winsTotal": 0,
+          "updatedAt": "2026-10-25T12:07:23.190Z"
+        }
+      ],
+      "settingsRevision": 5,
+      "settings": 71,
+      "sync": true,
+      "conflictStatus": "superseded"
+    },
+    {
+      "label": "normal-sync-first-pull-after-timer",
+      "at": "2026-10-26T11:02:55.062Z",
+      "pets": [
+        {
+          "petId": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+          "revision": 3,
+          "experience": 25,
+          "winsTotal": 1,
+          "updatedAt": "2026-10-26T00:33:32.702Z"
+        },
+        {
+          "petId": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+          "revision": 5,
+          "experience": 0,
+          "winsTotal": 0,
+          "updatedAt": "2026-10-26T00:30:03.948Z"
+        },
+        {
+          "petId": "pet-825f6af9-402b-4244-988a-481563b7a587",
+          "revision": 1,
+          "experience": 0,
+          "winsTotal": 0,
+          "updatedAt": "2026-10-25T12:20:31.991Z"
+        },
+        {
+          "petId": "pet-96de9234-462d-413b-ac72-81cfc1add244",
+          "revision": 1,
+          "experience": 0,
+          "winsTotal": 0,
+          "updatedAt": "2026-10-25T12:07:23.190Z"
+        }
+      ],
+      "settingsRevision": 5,
+      "settings": 71,
+      "sync": true,
+      "conflictStatus": "superseded"
+    }
+  ],
+  "changedTablesSincePrelogin": [
+    "account_actions",
+    "account_cloud_links",
+    "account_identities",
+    "account_settings",
+    "companion_accounts",
+    "companion_actions",
+    "companion_pets",
+    "lingjing_resource_cloud_downloads",
+    "lingjing_resource_cloud_receipts",
+    "lingjing_resource_preference_outbox",
+    "lingjing_resource_preference_state"
+  ],
+  "changedTablesSinceAfterLogin": [
+    "account_actions",
+    "account_settings",
+    "lingjing_resource_cloud_downloads",
+    "lingjing_resource_cloud_receipts",
+    "lingjing_resource_preference_outbox",
+    "lingjing_resource_preference_state"
+  ],
+  "pending": "Root independent source/cloud-reward attribution required; no resetting, recreating original rows, or additional UI action."
+}

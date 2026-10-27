@@ -1,0 +1,64 @@
+{
+  "at": "2026-10-26T22:49:44.741Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "readOnly": true,
+  "credentialValuesRead": false,
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "actualResourceId": "b773fb41-e95a-4935-af1e-c0ed2fb5e9a4",
+  "preparedPackHash": "1aa494f867cbc95f683fe8233d6742fd1839dfb1ec5b6df55135328082a5dd5a",
+  "sourceProfile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native",
+  "targetProfile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09",
+  "sourceResource": {
+    "id": "b773fb41-e95a-4935-af1e-c0ed2fb5e9a4",
+    "name": "青芽",
+    "revision": 1,
+    "imports": [
+      {
+        "import_id": "a0c9742e-8f22-461d-a740-9084ae992120",
+        "resource_id": "b773fb41-e95a-4935-af1e-c0ed2fb5e9a4",
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "source_filename": "qingya-r05-4e6-1b1afdd1.json",
+        "imported_at": "2026-10-26T22:47:08.168Z"
+      }
+    ],
+    "files": [
+      {
+        "assetKey": "qingya-r05-4e6-1b1afdd1.json",
+        "filePath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\character-resources\\b773fb41-e95a-4935-af1e-c0ed2fb5e9a4\\qingya-r05-4e6-1b1afdd1.json",
+        "bytes": 9406,
+        "sha256": "e2e976b69f7ea9049527251e458517e048c05aa5ab4cd1e13ffa47c38821708e",
+        "preparedSourceMatches": true
+      },
+      {
+        "assetKey": "sprites.png",
+        "filePath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\character-resources\\b773fb41-e95a-4935-af1e-c0ed2fb5e9a4\\sprites.png",
+        "bytes": 1802491,
+        "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693",
+        "preparedSourceMatches": true
+      }
+    ]
+  },
+  "targetAtInspection": {
+    "resourceRows": [
+      {
+        "resource_id": "b773fb41-e95a-4935-af1e-c0ed2fb5e9a4",
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "content_hash": "1aa494f867cbc95f683fe8233d6742fd1839dfb1ec5b6df55135328082a5dd5a",
+        "revision": 1
+      }
+    ],
+    "files": [
+      {
+        "asset_key": "qingya-r05-4e6-1b1afdd1.json",
+        "file_path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\restore-7dfb3fc0-a4fd-4dbf-ac05-483ad5e3e179\\qingya-r05-4e6-1b1afdd1.json"
+      },
+      {
+        "asset_key": "sprites.png",
+        "file_path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-fresh09\\character-resources\\restore-7dfb3fc0-a4fd-4dbf-ac05-483ad5e3e179\\sprites.png"
+      }
+    ]
+  },
+  "normalUiExportAndRestoreAuthorized": true,
+  "liveFileFaultAuthorized": false,
+  "qualification": "Unique actual normal UI import, matching original raw PNG/JSON bytes and package hash. Observe the target again just before normal restore; a naturally missing target needs no file fault. Automatic cloud hydration must not be counted as backup-origin writes."
+}

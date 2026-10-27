@@ -1,0 +1,98 @@
+{
+  "at": 1792972985616,
+  "scene": "桌面",
+  "sliders": [
+    {
+      "name": "大小",
+      "value": "1.06"
+    },
+    {
+      "name": "锚点 X",
+      "value": "0.5"
+    },
+    {
+      "name": "锚点 Y",
+      "value": "0.849609375"
+    },
+    {
+      "name": "垂直位置",
+      "value": "0"
+    },
+    {
+      "name": "旋转",
+      "value": "0"
+    },
+    {
+      "name": "播放帧率",
+      "value": "6"
+    }
+  ],
+  "switches": [
+    {
+      "name": "水平翻转",
+      "checked": "true"
+    }
+  ],
+  "mapping": [
+    {
+      "name": "待机映射",
+      "clip": "walk"
+    },
+    {
+      "name": "眨眼映射",
+      "clip": "blink"
+    },
+    {
+      "name": "行走映射",
+      "clip": "walk"
+    },
+    {
+      "name": "招手映射",
+      "clip": "wave"
+    },
+    {
+      "name": "吃东西映射",
+      "clip": "eat"
+    },
+    {
+      "name": "攻击起手映射",
+      "clip": "attack_windup"
+    },
+    {
+      "name": "攻击释放映射",
+      "clip": "attack_release"
+    },
+    {
+      "name": "普通攻击映射",
+      "clip": "attack"
+    },
+    {
+      "name": "受击映射",
+      "clip": "hit"
+    },
+    {
+      "name": "技能施放映射",
+      "clip": "skill"
+    },
+    {
+      "name": "胜利映射",
+      "clip": "victory"
+    },
+    {
+      "name": "睡眠映射",
+      "clip": "sleep"
+    }
+  ],
+  "stages": [
+    {
+      "class": "resource-stage ",
+      "data-resource-id": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+      "data-pet-id": "resource-preview-a",
+      "data-action": "idle",
+      "data-clip": "walk",
+      "data-playback-key": "0",
+      "data-fallback": "false",
+      "data-status": "ready"
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "at": "2026-10-25T23:46:46.314Z",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "owner": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "sourceBackup": {
+    "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-b-fresh09/uat-exports/r05-dc7-qingya-actions-20261026.lingjing.json",
+    "exists": true,
+    "bytes": 2507321,
+    "sha256": "f148d3858f2ef68464a331ab779b3b3ded8e80d0ca8b6252ffbe6602b16bd496"
+  },
+  "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+  "restoredFiles": [
+    {
+      "key": "character.json",
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\character-resources\\restore-5e62ce4c-6128-4d4e-8684-2c0458a8a6ee\\character.json",
+      "exists": true,
+      "bytes": 9406,
+      "sha256": "e2e976b69f7ea9049527251e458517e048c05aa5ab4cd1e13ffa47c38821708e"
+    },
+    {
+      "key": "sprites.png",
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\character-resources\\restore-5e62ce4c-6128-4d4e-8684-2c0458a8a6ee\\sprites.png",
+      "exists": true,
+      "bytes": 1802491,
+      "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693"
+    }
+  ],
+  "restoreActionId": "bfa7ee7a-d2f1-4886-b743-f75160201336",
+  "restoreReceipt": {
+    "restored": true,
+    "mode": "replace",
+    "preservedBackup": {
+      "id": "3561386c-a896-43db-9a0c-073a2566c311",
+      "filePath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\accounts\\backups\\before-restore-1792971585814-3561386c-a896-43db-9a0c-073a2566c311.lingjing.json",
+      "checksum": "ff42cf882878fa8cf4e37e8d006cc6e63331f98556d5bca6bf8cf2997fd109b9",
+      "excluded": [
+        "conversation_credentials"
+      ]
+    },
+    "checksum": "2e16bd639f88837459a66accace549fe747aac23b9873dab6d35ac3bade52e89"
+  },
+  "protection": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\accounts\\backups\\before-restore-1792971585814-3561386c-a896-43db-9a0c-073a2566c311.lingjing.json",
+    "exists": true,
+    "bytes": 25109,
+    "sha256": "bf5dd980f867827cecce3181e044a89eb5534228c47b6118f4117d017d460c30"
+  },
+  "checks": {
+    "resourceRowOriginalIdExact": true,
+    "importsExact": true,
+    "preferencesExact": true,
+    "newManagedPathsRealOriginalBytes": true,
+    "allFourPetRowsExactlySource": true,
+    "originalThreePetRowsExactlyPreserved": true,
+    "allTenGardenTablesExactlySource": true,
+    "allFiveBattleTablesExactlySource": true,
+    "allOriginalCompanionActionRowsPreserved": true,
+    "onlyOneNewNativeChatSelect": true,
+    "protectionEnvelopeValid": true,
+    "protectionBeforeDataExact": true,
+    "originalChatProfileEffectiveValuesRestored": true,
+    "originalChatConversationSelectionRestored": true,
+    "noMessagesOrMemoriesAdded": true,
+    "noApiKeysPersisted": true,
+    "settingsEffectiveValuesOriginal": true,
+    "actualMappedSleepReady": true,
+    "desktopUiValuesIndependent": true,
+    "battleUiValuesIndependent": true,
+    "sourceExportOriginalHashUnchanged": true,
+    "originalChatConnectionsEffectiveValuesPreserved": true,
+    "connectionRawDifferencesOnlyRevisionAndTime": true,
+    "originalOwnerAndMemorySessionPreserved": true,
+    "syncRemainsOff": true
+  },
+  "qualifications": [
+    "Initial preserving merge rejected real progress difference and rolled back every checked row; first protection file retained. Fresh normal UI preview explicitly chose restore-to-backup replace once after Root boundary review.",
+    "This is a normal live-origin v1 account file restore. It is not a resource cloud-authority or cold-download proof.",
+    "The new fox XP0 to XP5 is the existing friend battle settlement, not a new award. Original three pets and all existing action receipts preserved.",
+    "Original conversation selection and use_override restored through native UI. Profile revision now3; connection revision/time follow valid source file; effective original connection fields exact. Raw revision/time comparison false in earlier cleanup artifact is retained and qualified, never rewritten.",
+    "One new native chat-select f0318410-35ce-4d07-8da6-4e779f5a3773 legitimately creates account selection revision11 and server head12, no pet-row/reward changes.",
+    "A transient loading capture after chat selection was excluded from pass evidence; later UI ready and live original memory session were verified without relogin or repeating input."
+  ],
+  "references": [
+    "r05-p04-official-export-original-bytes-and-secrets-audit.json",
+    "r05-b2-preserving-merge-conflict-no-partial-write.json",
+    "r05-b2-fresh-full-preview-immediately-before-confirm.json",
+    "r05-b2-successful-full-restore-original-readback.json",
+    "r05-b2-restored-real-render-and-scenes-readback.json",
+    "r05-p05-complete-restore-checks-and-chat-cleanup.json",
+    "r05-b2-original-chat-profile-formally-restored-native.jpg"
+  ]
+}

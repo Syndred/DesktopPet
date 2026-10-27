@@ -1,0 +1,188 @@
+{
+  "at": "2026-10-25T22:09:42.456Z",
+  "settings": {
+    "ok": true,
+    "data": {
+      "document": {
+        "desktop": {
+          "alwaysOnTop": true,
+          "clickThrough": true,
+          "launchAtLogin": false,
+          "closeToTray": true,
+          "companionLimit": 3,
+          "interactionSounds": true,
+          "volume": 70,
+          "hideInFullscreen": true,
+          "animationsEnabled": true
+        },
+        "notifications": {
+          "enabled": true,
+          "companions": true,
+          "battles": true,
+          "garden": true,
+          "quietEnabled": true,
+          "quietStart": "22:00",
+          "quietEnd": "08:00"
+        },
+        "privacy": {
+          "locationAllowed": false,
+          "locationOnlyWhileExploring": true,
+          "emotionStatistics": false
+        },
+        "sync": {
+          "enabled": true
+        }
+      },
+      "revision": 12,
+      "updatedAt": "2026-10-25T22:07:18.122Z",
+      "host": {
+        "startup": false,
+        "fullscreenMonitor": true,
+        "fullscreenMonitorReady": true,
+        "foregroundFullscreen": false,
+        "fullscreenSource": null,
+        "companionWindows": 1,
+        "clickThroughWindows": [
+          3
+        ],
+        "windows": [
+          {
+            "id": 3,
+            "alwaysOnTop": true,
+            "visible": true
+          }
+        ],
+        "locationAllowed": false,
+        "emotionStatistics": false,
+        "closeToTrayConnected": true,
+        "companionLimitConnected": true
+      }
+    }
+  },
+  "ui": {
+    "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nse19BD.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/settings",
+    "switches": [
+      {
+        "role": "switch",
+        "checked": "true",
+        "text": "始终置顶"
+      },
+      {
+        "role": null,
+        "checked": null,
+        "inputChecked": true,
+        "text": "始终置顶"
+      },
+      {
+        "role": "switch",
+        "checked": "true",
+        "text": "透明区域鼠标穿透\n透明区域不拦截鼠标，伙伴本体仍可互动。"
+      },
+      {
+        "role": null,
+        "checked": null,
+        "inputChecked": true,
+        "text": "透明区域鼠标穿透\n透明区域不拦截鼠标，伙伴本体仍可互动。"
+      },
+      {
+        "role": "switch",
+        "checked": "false",
+        "text": "开机启动"
+      },
+      {
+        "role": null,
+        "checked": null,
+        "inputChecked": false,
+        "text": "开机启动"
+      },
+      {
+        "role": "switch",
+        "checked": "true",
+        "text": "关闭窗口后留在托盘\n关闭主界面时，伙伴仍会在桌面与系统托盘继续陪伴。"
+      },
+      {
+        "role": null,
+        "checked": null,
+        "inputChecked": true,
+        "text": "关闭窗口后留在托盘\n关闭主界面时，伙伴仍会在桌面与系统托盘继续陪伴。"
+      },
+      {
+        "role": "switch",
+        "checked": "false",
+        "text": "互动音效"
+      },
+      {
+        "role": null,
+        "checked": null,
+        "inputChecked": false,
+        "text": "互动音效"
+      },
+      {
+        "role": "switch",
+        "checked": "true",
+        "text": "全屏应用时暂时隐藏"
+      },
+      {
+        "role": null,
+        "checked": null,
+        "inputChecked": true,
+        "text": "全屏应用时暂时隐藏"
+      },
+      {
+        "role": "switch",
+        "checked": "true",
+        "text": "启用安静时段"
+      },
+      {
+        "role": null,
+        "checked": null,
+        "inputChecked": true,
+        "text": "启用安静时段"
+      },
+      {
+        "role": "switch",
+        "checked": "false",
+        "text": "允许附近探索使用位置\n用于附近探索，仍需系统授权。"
+      },
+      {
+        "role": null,
+        "checked": null,
+        "inputChecked": false,
+        "text": "允许附近探索使用位置\n用于附近探索，仍需系统授权。"
+      },
+      {
+        "role": "switch",
+        "checked": "true",
+        "text": "位置仅在探索时更新"
+      },
+      {
+        "role": null,
+        "checked": null,
+        "inputChecked": true,
+        "text": "位置仅在探索时更新"
+      },
+      {
+        "role": "switch",
+        "checked": "false",
+        "text": "情绪统计\n仅记录互动统计，不读取聊天内容。"
+      },
+      {
+        "role": null,
+        "checked": null,
+        "inputChecked": false,
+        "text": "情绪统计\n仅记录互动统计，不读取聊天内容。"
+      },
+      {
+        "role": "switch",
+        "checked": "true",
+        "text": "界面动效"
+      },
+      {
+        "role": null,
+        "checked": null,
+        "inputChecked": true,
+        "text": "界面动效"
+      }
+    ]
+  }
+}

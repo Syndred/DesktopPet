@@ -1,0 +1,823 @@
+{
+  "at": "2026-10-25T15:57:23.699Z",
+  "runtime": {
+    "at": "2026-10-25T15:57:20.030Z",
+    "info": {
+      "ok": true,
+      "data": {
+        "version": "0.1.8",
+        "platform": "win32",
+        "build": {
+          "schemaVersion": 2,
+          "builtAt": "2026-10-25T15:25:16.006Z",
+          "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+          "sourceTree": "1b6b47b23a93bf505c92bb1ff9af5dead75d6273",
+          "sourceDirtyFiles": [],
+          "codeFingerprint": "8d9ba43d4b0da45fd810cb9fd95dd3186948fcdbc925ee002b77b265d616c2f0",
+          "canonicalSourceFingerprint": "6c54036d2e725e972370e90f6f59156836364fc4a9e4b69bfc164bee9b36f174",
+          "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+          "compiledFingerprint": "680068ce6f201848b7d443b230debd650a2cdb66c8c6432ee3c772999c8a4b5c",
+          "codeFiles": 317,
+          "compiledFiles": 89,
+          "toolchain": {
+            "node": "24.21.0",
+            "electron": "44.9.3",
+            "sqlite": "13.0.3",
+            "vite": "7.3.7",
+            "typescript": "5.9.3",
+            "platform": "win32",
+            "arch": "x64"
+          },
+          "entrypoints": {
+            "main": "main/index.cjs",
+            "app": "ui/index.html",
+            "desktop": "ui/desktop.html",
+            "preload": "preload/index.cjs"
+          },
+          "publicCloud": {
+            "projectRef": "jbvrdmrkwpznbrvteive",
+            "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+            "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+            "resourcePath": "lingjing-cloud-public.json"
+          },
+          "packageName": "lingjing-desktop",
+          "runtimeClosure": {
+            "manifest": "runtime-closure.json",
+            "files": 118,
+            "edges": 203,
+            "sha256": "4f04d46f3443f8d45b6b1dfeffdeb5d6e46569546cdae4c5b33e43d04e5b0b6f"
+          }
+        },
+        "runtime": {
+          "electron": "44.9.3",
+          "node": "24.22.0",
+          "modules": "149",
+          "napi": "10",
+          "arch": "x64",
+          "tray": {
+            "active": true,
+            "bounds": {
+              "x": 1751,
+              "y": 1104,
+              "width": 33,
+              "height": 48
+            }
+          }
+        },
+        "features": [
+          {
+            "id": "accounts",
+            "commands": [
+              "session",
+              "login",
+              "register",
+              "logout",
+              "profileSave",
+              "passwordChange",
+              "settingsGet",
+              "settingsDefaults",
+              "settingsSave",
+              "backupList",
+              "backupExport",
+              "backupPreview",
+              "backupRestore",
+              "syncStatus",
+              "syncNow",
+              "syncRetry",
+              "cloudPreview",
+              "testNotification",
+              "pointer"
+            ]
+          },
+          {
+            "id": "resources",
+            "commands": [
+              "list",
+              "history",
+              "cloudStatus",
+              "cloudSync",
+              "cloudPull",
+              "resolve",
+              "save",
+              "import"
+            ]
+          },
+          {
+            "id": "companions",
+            "commands": [
+              "list",
+              "get",
+              "combatProfile",
+              "identity",
+              "desktopInput",
+              "adopt",
+              "rename",
+              "desktop",
+              "select",
+              "interact",
+              "perform",
+              "appearance"
+            ]
+          },
+          {
+            "id": "battle",
+            "commands": [
+              "overview",
+              "rules",
+              "context",
+              "settleContext",
+              "selectPet",
+              "startTraining",
+              "snapshot",
+              "act",
+              "retryAction",
+              "search",
+              "invitations",
+              "invite",
+              "respondInvite",
+              "cancelInvite",
+              "createRoom",
+              "joinRoom",
+              "sync",
+              "leave",
+              "listReports",
+              "getReport",
+              "retrySettlement"
+            ]
+          },
+          {
+            "id": "garden",
+            "commands": [
+              "plant",
+              "harvest",
+              "craft",
+              "feed",
+              "garrison",
+              "snapshot",
+              "territoryLocate",
+              "territoryChallenge",
+              "territorySettle"
+            ]
+          },
+          {
+            "id": "discovery",
+            "commands": [
+              "snapshot",
+              "setExploring",
+              "locate",
+              "watch",
+              "stopWatch",
+              "setDemo",
+              "setProvider",
+              "tile",
+              "observe",
+              "begin",
+              "act",
+              "cancel",
+              "confirm",
+              "pokedex",
+              "memories"
+            ]
+          },
+          {
+            "id": "conversations",
+            "commands": [
+              "snapshot",
+              "select",
+              "history",
+              "profile.save",
+              "connection.save",
+              "connection.test",
+              "connection.cancel",
+              "memory.save",
+              "memory.delete",
+              "send",
+              "retry",
+              "cancel",
+              "history.clear",
+              "legacy.preview",
+              "legacy.import"
+            ]
+          }
+        ],
+        "user": {
+          "id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "subjectId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "provider": "runtime",
+          "account": "uat_1025_a_9e486a",
+          "username": "云端验收甲",
+          "revision": 0,
+          "createdAt": "2026-10-25T10:05:01.804833+00:00",
+          "updatedAt": "2026-10-25T15:56:51.185Z",
+          "dataMode": "live",
+          "authKind": "supabase",
+          "authUserId": "524c5302-19a2-43ec-aa72-b8894bd48efe"
+        }
+      }
+    },
+    "companions": {
+      "ok": true,
+      "data": {
+        "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "pets": [
+          {
+            "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+            "petId": "pet-40899e45-d323-49c8-9136-743f14be6ce3",
+            "templateId": "big-fish-gentle",
+            "name": "鱼丸",
+            "serial": "40899E45",
+            "element": "water",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            },
+            "source": "adoption",
+            "origin": {},
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 124,
+                "atk": 28,
+                "def": 24,
+                "spd": 20
+              }
+            },
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 80,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "revision": 1,
+            "createdAt": "2026-10-25T10:15:21.267Z",
+            "updatedAt": "2026-10-25T10:15:21.267Z",
+            "globalSerial": "1"
+          }
+        ],
+        "selections": {
+          "chatPetId": null,
+          "battlePetId": null,
+          "guardPetId": null
+        },
+        "templates": [
+          {
+            "templateId": "big-fish-gentle",
+            "name": "鱼丸",
+            "category": "big-fish",
+            "element": "water",
+            "description": "安静温柔的鲸尾少女，喜欢陪你度过日常。",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          {
+            "templateId": "big-fish-cheerful",
+            "name": "小蓝",
+            "category": "big-fish",
+            "element": "water",
+            "description": "活泼的侧马尾伙伴，穿着宽松鲸鱼斗篷。",
+            "resource": {
+              "resourceId": "builtin:lingjing-xiaolan-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          {
+            "templateId": "big-fish-foodie",
+            "name": "饭团",
+            "category": "big-fish",
+            "element": "water",
+            "description": "盘着双丸子头的美食家，认真珍惜每一顿饭。",
+            "resource": {
+              "resourceId": "builtin:lingjing-fantuan-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          {
+            "templateId": "animal-shiba",
+            "name": "焰柴",
+            "category": "animal",
+            "element": "fire",
+            "description": "热情勇敢的柴犬，星星项圈总是闪闪发亮。",
+            "resource": {
+              "resourceId": "builtin:lingjing-shiba-v2",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 118,
+              "atk": 33,
+              "def": 20,
+              "spd": 22
+            }
+          },
+          {
+            "templateId": "animal-hat-cat",
+            "name": "礼帽喵",
+            "category": "animal",
+            "element": "metal",
+            "description": "戴着礼帽的燕尾猫，擅长温柔的小魔术。",
+            "resource": {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 136,
+              "atk": 30,
+              "def": 30,
+              "spd": 13
+            }
+          },
+          {
+            "templateId": "animal-white-fox",
+            "name": "小狐",
+            "category": "animal",
+            "element": "water",
+            "description": "安静机灵的雪白小狐，像雪花一样轻盈。",
+            "resource": {
+              "resourceId": "builtin:lingjing-xiaohu-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          {
+            "templateId": "animal-wood-deer",
+            "name": "青芽",
+            "category": "animal",
+            "element": "wood",
+            "description": "戴着枝叶小角的林间幼鹿，喜欢收集新芽。",
+            "resource": {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 130,
+              "atk": 26,
+              "def": 26,
+              "spd": 18
+            }
+          },
+          {
+            "templateId": "animal-earth-pangolin",
+            "name": "岩团",
+            "category": "animal",
+            "element": "earth",
+            "description": "披着暖褐鳞甲的小穿山甲，稳稳守住每一步。",
+            "resource": {
+              "resourceId": "builtin:lingjing-yantuan-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 142,
+              "atk": 24,
+              "def": 34,
+              "spd": 11
+            }
+          }
+        ],
+        "revision": 1,
+        "sync": {
+          "mode": "cloud",
+          "status": "ready",
+          "pending": 0,
+          "cloudRevision": 7,
+          "sharedSavePending": false
+        }
+      },
+      "revision": 1
+    },
+    "settings": {
+      "ok": true,
+      "data": {
+        "document": {
+          "desktop": {
+            "alwaysOnTop": true,
+            "clickThrough": true,
+            "launchAtLogin": false,
+            "closeToTray": false,
+            "companionLimit": 3,
+            "interactionSounds": true,
+            "volume": 70,
+            "hideInFullscreen": true,
+            "animationsEnabled": true
+          },
+          "notifications": {
+            "enabled": true,
+            "companions": true,
+            "battles": true,
+            "garden": true,
+            "quietEnabled": true,
+            "quietStart": "22:00",
+            "quietEnd": "08:00"
+          },
+          "privacy": {
+            "locationAllowed": false,
+            "locationOnlyWhileExploring": true,
+            "emotionStatistics": false
+          },
+          "sync": {
+            "enabled": true
+          }
+        },
+        "revision": 4,
+        "updatedAt": "2026-10-25T15:19:19.513Z",
+        "host": {
+          "startup": false,
+          "fullscreenMonitor": true,
+          "fullscreenMonitorReady": true,
+          "foregroundFullscreen": false,
+          "fullscreenSource": null,
+          "companionWindows": 0,
+          "clickThroughWindows": [],
+          "windows": [],
+          "locationAllowed": false,
+          "emotionStatistics": false,
+          "closeToTrayConnected": true,
+          "companionLimitConnected": true
+        }
+      }
+    },
+    "sync": {
+      "ok": true,
+      "data": {
+        "configured": true,
+        "cloudRevision": 7,
+        "lastVerifiedAt": "2026-10-25T15:57:23.100Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": 7,
+        "lastCloudCheckedAt": "2026-10-25T15:57:18.619Z",
+        "remoteChanged": false
+      }
+    }
+  },
+  "payloadRoot": "C:/Users/ADMINI~1/AppData/Local/Temp/nsc4E9.tmp/app",
+  "payload": [
+    {
+      "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsc4E9.tmp\\app\\Lingjing.exe",
+      "bytes": 246846464,
+      "sha256": "466204ae9c78143ad665b494cf6c104cd24ec7b08425bb6bb7544f2559d035e9"
+    },
+    {
+      "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsc4E9.tmp\\app\\resources\\app.asar",
+      "bytes": 267512721,
+      "sha256": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba"
+    },
+    {
+      "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsc4E9.tmp\\app\\resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node",
+      "bytes": 1989632,
+      "sha256": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a"
+    },
+    {
+      "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsc4E9.tmp\\app\\resources\\lingjing-cloud-public.json",
+      "bytes": 194,
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda"
+    }
+  ],
+  "storage": {
+    "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsc4E9.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/companions",
+    "origin": "file://",
+    "ls": {
+      "runId": "e71b9c11-e62a-46a6-aa4d-decdd34c4200",
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "profilePath": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a",
+      "nonce": "53375681-47cf-4092-a65c-5648fe472bdb",
+      "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+      "createdAt": "2026-10-25T14:24:31.463Z",
+      "kind": "Explicit isolated QA sentinel; independent of real garden pending"
+    },
+    "idb": {
+      "runId": "e71b9c11-e62a-46a6-aa4d-decdd34c4200",
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "profilePath": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a",
+      "nonce": "53375681-47cf-4092-a65c-5648fe472bdb",
+      "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+      "createdAt": "2026-10-25T14:24:31.463Z",
+      "kind": "Explicit isolated QA sentinel; independent of real garden pending"
+    },
+    "dbExists": true,
+    "realPendingRaw": null
+  },
+  "database": {
+    "at": "2026-10-25T15:57:23.709Z",
+    "db": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a/lingjing.sqlite",
+    "tables": {
+      "account_actions": {
+        "count": 7,
+        "sha256": "95ecf46b332ae3bbca462229db6ce4f96bc4361980a0df9d2d52112f608b871b"
+      },
+      "account_aliases": {
+        "count": 1,
+        "sha256": "ef219db333e9afe64559050a522df341f965d3bb81ce440a1b487e68295e3344"
+      },
+      "account_backup_receipts": {
+        "count": 1,
+        "sha256": "1068e880180f369df5ebdb4afd76f198fbd4afde58f8728e827793379131270e"
+      },
+      "account_cloud_links": {
+        "count": 1,
+        "sha256": "738f6a859236d66c8859016d0d8c1ae486db92232a188c8430f4f1ed34c46443"
+      },
+      "account_identities": {
+        "count": 1,
+        "sha256": "665c04f85123721e7f4e7dfe140bdc03061854ff70ed5adcb9129565fc26d769"
+      },
+      "account_legacy_data": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "account_login_sessions": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "account_migration_sources": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "account_qa_profile": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "account_session_control": {
+        "count": 1,
+        "sha256": "0ad2ef1577ddc06c162b972d83eae1f0a3106d147565b06f8399a3e4158ad663"
+      },
+      "account_settings": {
+        "count": 1,
+        "sha256": "44f836289de19567f444ea62b0d95061dcd40f51ef81aadb3e3de117487fe3e2"
+      },
+      "account_sync_baselines": {
+        "count": 1,
+        "sha256": "1947900d8331e9d400dde9bc23e85ed30998336cdc78ef720c4486bcce577b0e"
+      },
+      "account_sync_checkpoints": {
+        "count": 1,
+        "sha256": "63e90e1b47b4c5cf2f5a995eedeb2dc377d1472620e404a0be49eae531bb715f"
+      },
+      "account_sync_outbox": {
+        "count": 4,
+        "sha256": "1f7aed4d829ed35de5e57e6f064fdb82f29c98152d64a0ef97d51f5a3de258f7"
+      },
+      "account_sync_sources": {
+        "count": 4,
+        "sha256": "1f6b366d9d460982a5045377a0e1480cef7baf0e393607d537269e420f11ccf5"
+      },
+      "account_sync_state": {
+        "count": 1,
+        "sha256": "f2b05ba242b3445778aa81fc996605b3a23cd707044a0380124c333e78e3d0ab"
+      },
+      "battle_action_receipts": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "battle_reports_v2": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "battle_reward_receipts": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "battle_sessions": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "battle_transport_journal": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "companion_accounts": {
+        "count": 1,
+        "sha256": "b5e0f7acda5f7fb124f369bc8fa349b44d88fd7503952f5d5686bf5b14000bb2"
+      },
+      "companion_actions": {
+        "count": 1,
+        "sha256": "6211fbb269d2ea57346a9802411e47abaae79b4448f8d954bbfaca7f7b79d104"
+      },
+      "companion_capture_receipts": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "companion_identity_imports": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "companion_interactions": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "companion_legacy_archive": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "companion_pets": {
+        "count": 1,
+        "sha256": "e41bc232ad992aae8b805e459d7b1be5cf738d496a2c952f1c365f8cef7e52f0"
+      },
+      "conversation_connections": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "conversation_credentials": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "conversation_legacy_imports": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "conversation_memories": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "conversation_messages": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "conversation_preferences": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "conversation_profiles": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "discovery_actions": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "discovery_captures": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "discovery_encounters": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "discovery_memory_tags": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "garden_accounts": {
+        "count": 1,
+        "sha256": "4b490b46e92c95997cb1773afe966e50e89bcbea275c93d04d81d45e1f7af44a"
+      },
+      "garden_actions": {
+        "count": 2,
+        "sha256": "437f05106e3b9d3466d71bdf566287a43bea6f207f247d41ca4bcda69a7a3d1c"
+      },
+      "garden_cloud_requests": {
+        "count": 1,
+        "sha256": "e2c9900829440160984949d9a7410ea5c0ff27054faf31f5620f5362ee72a99a"
+      },
+      "garden_cloud_state": {
+        "count": 1,
+        "sha256": "9f9cbb9a3f043d91f240ba0cfdde9076c95e91760a16a0f0ee5c30cbc5adb8b1"
+      },
+      "garden_events": {
+        "count": 5,
+        "sha256": "1e32261c697e37bce90adeab241f115fc54c7ed4e8fc4a90856df00961f9a684"
+      },
+      "garden_garrisons": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "garden_identity_imports": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "garden_items": {
+        "count": 4,
+        "sha256": "840d61855ec4e5683c34f39abd79d003db88b417b3f84fdde3c4ee8570668b4d"
+      },
+      "garden_ledger": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "garden_outbox": {
+        "count": 2,
+        "sha256": "7d64a4228b9a7d19b524d1e898fea1636c80ea221c179a1fdad98591d11d8a2a"
+      },
+      "garden_plots": {
+        "count": 6,
+        "sha256": "ea194c108e798352d3013d7b03523dbc96cec501c15e48b8365d7d388ac97c7d"
+      },
+      "garden_reward_receipts": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "garden_territory_attempts": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "garden_territory_challenges": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "garden_territory_logs": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "garden_territory_records": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "lingjing_meta": {
+        "count": 2,
+        "sha256": "53114a1c474de9cbeaea97457f284ccbaaf0d7e71ec1d9d4cc9657c101b0fa02"
+      },
+      "lingjing_migrations": {
+        "count": 28,
+        "sha256": "a20b47194bd97715b9b2e36dad2b0fdc2f6ea3593b12412cbb5a02ca1ad64205"
+      },
+      "lingjing_resource_cloud_downloads": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "lingjing_resource_cloud_outbox": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "lingjing_resource_cloud_receipts": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "lingjing_resource_files": {
+        "count": 18,
+        "sha256": "ec3cf8db382de17b3f59aff60281ca8b6355b94594b360237f64d10f98666ff5"
+      },
+      "lingjing_resource_imports": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "lingjing_resource_preference_cache": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "lingjing_resource_preference_outbox": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "lingjing_resource_preference_state": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "lingjing_resource_preferences": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "lingjing_resources": {
+        "count": 9,
+        "sha256": "7cfdf9497eef59c7561335ceb1426c3a56ce344c13964f77d35fc6f5ba0b39d4"
+      },
+      "sqlite_sequence": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "health": [
+      {
+        "quick_check": "ok"
+      }
+    ]
+  },
+  "scenarioAbsent": true,
+  "cloudSentinelSame": true
+}

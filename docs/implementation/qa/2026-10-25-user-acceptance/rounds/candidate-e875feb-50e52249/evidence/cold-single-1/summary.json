@@ -1,0 +1,40 @@
+{
+  "noProcessesClosedOrKilled": true,
+  "at": "2026-10-25T13:09:04.6499512Z",
+  "noProfilesOrPayloadsDeleted": true,
+  "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\6ff8e38f-9f2b-4872-8747-1fb00bd81655\\local-a",
+  "captureError": null,
+  "processTraceEvents": 3,
+  "expectedSourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+  "executableAfter": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-e875feb\\Lingjing-0.1.8-portable-x64.exe",
+    "bytes": 169213223,
+    "sha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9"
+  },
+  "limitations": [
+    "Polling can miss short-lived paths; WMI event delivery must itself be checked. Missing events do not prove no process ran.",
+    "WMI TIME_CREATED is provider event-generation time, not exact process lifetime; StopTrace parent may be zero. Correlate PID with StartTrace and retained handle times.",
+    "The cold precondition checks this exact SFX path, not arbitrary renamed/copied executables. 09 controls the run inventory.",
+    "Expected source/profile are operator-supplied until09 independent app.info readback.",
+    "ProcessTrace exit status does not identify the underlying NSIS/Electron failure cause."
+  ],
+  "launchers": [
+    {
+      "number": 1,
+      "exitCode": 9,
+      "exitAt": "2026-10-25T13:08:35.0746254Z",
+      "issuedAt": "2026-10-25T13:08:24.1143209Z",
+      "exitCaptured": true,
+      "pid": 3512,
+      "startedAt": "2026-10-25T13:08:24.1274442Z"
+    }
+  ],
+  "startedAt": "2026-10-25T13:08:24.0533448Z",
+  "status": "capture-only-no-acceptance-verdict",
+  "payloadRoots": [],
+  "mode": "ColdSingle",
+  "markerRunId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+  "sha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+  "required09Evidence": "Native UI/window activation, app.info source/profile, first payload integrity, same-profile different actual payload roots, LS/IDB sentinel and ORIGINAL garden pending actionId/owner/command/payload + Node outbox independently read back.",
+  "executable": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-e875feb\\Lingjing-0.1.8-portable-x64.exe"
+}

@@ -1,0 +1,1102 @@
+{
+  "at": "2026-10-26T00:11:38.482Z",
+  "ui": {
+    "at": 1792973496190,
+    "scene": "桌面",
+    "sliders": [
+      {
+        "name": "大小",
+        "value": "1.06"
+      },
+      {
+        "name": "锚点 X",
+        "value": "0.5"
+      },
+      {
+        "name": "锚点 Y",
+        "value": "0.849609375"
+      },
+      {
+        "name": "垂直位置",
+        "value": "0"
+      },
+      {
+        "name": "旋转",
+        "value": "0"
+      },
+      {
+        "name": "播放帧率",
+        "value": "6"
+      }
+    ],
+    "switches": [
+      {
+        "name": "水平翻转",
+        "checked": "true"
+      }
+    ],
+    "mapping": [],
+    "stages": [
+      {
+        "class": "resource-stage ",
+        "data-resource-id": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+        "data-pet-id": "resource-preview-a",
+        "data-action": "idle",
+        "data-clip": "walk",
+        "data-playback-key": "0",
+        "data-fallback": "false",
+        "data-status": "ready"
+      }
+    ]
+  },
+  "files": [
+    {
+      "key": "character.json",
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\character-resources\\restore-4f51eade-3f61-43b0-a887-0b123aef2369\\character.json",
+      "exists": true,
+      "bytes": 9402,
+      "sha256": "cd3b4c9faefa8afc71bd108932bcc7878bc4929d28131d27005e37a5fa1bbfdd"
+    },
+    {
+      "key": "sprites.png",
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\character-resources\\restore-4f51eade-3f61-43b0-a887-0b123aef2369\\sprites.png",
+      "exists": true,
+      "bytes": 2441235,
+      "sha256": "f03bc1b8cd1c20c5ef6d466d20db9fb7f9584b7739f21414d22fc2c91c01d886"
+    }
+  ],
+  "frames": [
+    {
+      "at": 1792973496192,
+      "t": 11976532.699999988,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "0",
+              "frameTexture": "92",
+              "textureFrame": "655,47,279,249",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":233.41789473684213,\"y\":39.75263157894733,\"width\":148.89789473684212,\"height\":132.88736842105266,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973496288,
+      "t": 11976628.199999988,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "0",
+              "frameTexture": "92",
+              "textureFrame": "655,47,279,249",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":233.41789473684213,\"y\":39.75263157894733,\"width\":148.89789473684212,\"height\":132.88736842105266,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973496381,
+      "t": 11976721.099999994,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "1",
+              "frameTexture": "93",
+              "textureFrame": "962,47,264,248",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":237.1536842105263,\"y\":40.28631578947366,\"width\":140.8926315789474,\"height\":132.35368421052632,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973496475,
+      "t": 11976815.300000012,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "1",
+              "frameTexture": "93",
+              "textureFrame": "962,47,264,248",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":237.1536842105263,\"y\":40.28631578947366,\"width\":140.8926315789474,\"height\":132.35368421052632,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973496569,
+      "t": 11976909.5,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "0",
+              "frameTexture": "92",
+              "textureFrame": "655,47,279,249",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":233.41789473684213,\"y\":39.75263157894733,\"width\":148.89789473684212,\"height\":132.88736842105266,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973496666,
+      "t": 11977006.5,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "1",
+              "frameTexture": "93",
+              "textureFrame": "962,47,264,248",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":237.1536842105263,\"y\":40.28631578947366,\"width\":140.8926315789474,\"height\":132.35368421052632,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973496772,
+      "t": 11977112.5,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "1",
+              "frameTexture": "93",
+              "textureFrame": "962,47,264,248",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":237.1536842105263,\"y\":40.28631578947366,\"width\":140.8926315789474,\"height\":132.35368421052632,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973496866,
+      "t": 11977206.300000012,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "0",
+              "frameTexture": "92",
+              "textureFrame": "655,47,279,249",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":233.41789473684213,\"y\":39.75263157894733,\"width\":148.89789473684212,\"height\":132.88736842105266,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973496960,
+      "t": 11977300.400000006,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "0",
+              "frameTexture": "92",
+              "textureFrame": "655,47,279,249",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":233.41789473684213,\"y\":39.75263157894733,\"width\":148.89789473684212,\"height\":132.88736842105266,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973497054,
+      "t": 11977394.199999988,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "1",
+              "frameTexture": "93",
+              "textureFrame": "962,47,264,248",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":237.1536842105263,\"y\":40.28631578947366,\"width\":140.8926315789474,\"height\":132.35368421052632,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973497149,
+      "t": 11977489.900000006,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "0",
+              "frameTexture": "92",
+              "textureFrame": "655,47,279,249",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":233.41789473684213,\"y\":39.75263157894733,\"width\":148.89789473684212,\"height\":132.88736842105266,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973497256,
+      "t": 11977596.900000006,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "0",
+              "frameTexture": "92",
+              "textureFrame": "655,47,279,249",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":233.41789473684213,\"y\":39.75263157894733,\"width\":148.89789473684212,\"height\":132.88736842105266,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973497348,
+      "t": 11977689,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "1",
+              "frameTexture": "93",
+              "textureFrame": "962,47,264,248",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":237.1536842105263,\"y\":40.28631578947366,\"width\":140.8926315789474,\"height\":132.35368421052632,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973497441,
+      "t": 11977781.300000012,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "1",
+              "frameTexture": "93",
+              "textureFrame": "962,47,264,248",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":237.1536842105263,\"y\":40.28631578947366,\"width\":140.8926315789474,\"height\":132.35368421052632,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973497536,
+      "t": 11977876.900000006,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "0",
+              "frameTexture": "92",
+              "textureFrame": "655,47,279,249",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":233.41789473684213,\"y\":39.75263157894733,\"width\":148.89789473684212,\"height\":132.88736842105266,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973497634,
+      "t": 11977974.199999988,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "0",
+              "frameTexture": "92",
+              "textureFrame": "655,47,279,249",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":233.41789473684213,\"y\":39.75263157894733,\"width\":148.89789473684212,\"height\":132.88736842105266,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973497726,
+      "t": 11978066.400000006,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "1",
+              "frameTexture": "93",
+              "textureFrame": "962,47,264,248",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":237.1536842105263,\"y\":40.28631578947366,\"width\":140.8926315789474,\"height\":132.35368421052632,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973497821,
+      "t": 11978162,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "0",
+              "frameTexture": "92",
+              "textureFrame": "655,47,279,249",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":233.41789473684213,\"y\":39.75263157894733,\"width\":148.89789473684212,\"height\":132.88736842105266,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973497914,
+      "t": 11978254.800000012,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "0",
+              "frameTexture": "92",
+              "textureFrame": "655,47,279,249",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":233.41789473684213,\"y\":39.75263157894733,\"width\":148.89789473684212,\"height\":132.88736842105266,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973498011,
+      "t": 11978351.199999988,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "1",
+              "frameTexture": "93",
+              "textureFrame": "962,47,264,248",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":237.1536842105263,\"y\":40.28631578947366,\"width\":140.8926315789474,\"height\":132.35368421052632,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973498105,
+      "t": 11978445.699999988,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "1",
+              "frameTexture": "93",
+              "textureFrame": "962,47,264,248",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":237.1536842105263,\"y\":40.28631578947366,\"width\":140.8926315789474,\"height\":132.35368421052632,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973498202,
+      "t": 11978542.900000006,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "0",
+              "frameTexture": "92",
+              "textureFrame": "655,47,279,249",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":233.41789473684213,\"y\":39.75263157894733,\"width\":148.89789473684212,\"height\":132.88736842105266,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973498294,
+      "t": 11978634.5,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "0",
+              "frameTexture": "92",
+              "textureFrame": "655,47,279,249",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":233.41789473684213,\"y\":39.75263157894733,\"width\":148.89789473684212,\"height\":132.88736842105266,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    },
+    {
+      "at": 1792973498388,
+      "t": 11978728.199999988,
+      "href": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/nsd4D6A.tmp/app/resources/app.asar/apps/pc-app/dist/ui/index.html#/resources",
+      "stages": [
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "playbackKey": "0",
+          "clip": "walk",
+          "status": "ready",
+          "rect": {
+            "x": 663.0750122070312,
+            "y": 297.8000183105469,
+            "width": 616.125,
+            "height": 210,
+            "top": 297.8000183105469,
+            "right": 1279.2000122070312,
+            "bottom": 507.8000183105469,
+            "left": 663.0750122070312
+          },
+          "hosts": [
+            {
+              "frame": "1",
+              "frameTexture": "93",
+              "textureFrame": "962,47,264,248",
+              "textureSource": "19",
+              "contentBounds": "{\"x\":237.1536842105263,\"y\":40.28631578947366,\"width\":140.8926315789474,\"height\":132.35368421052632,\"canvasWidth\":615.2,\"canvasHeight\":208}",
+              "canvas": [
+                {
+                  "width": 769,
+                  "height": 260,
+                  "clientWidth": 615,
+                  "clientHeight": 208
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "selects": []
+    }
+  ]
+}

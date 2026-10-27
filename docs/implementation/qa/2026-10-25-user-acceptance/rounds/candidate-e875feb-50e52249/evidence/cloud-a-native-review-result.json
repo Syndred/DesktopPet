@@ -1,0 +1,41 @@
+{
+  "at": "2026-10-25T13:41:33.839Z",
+  "method": "Native default merge confirmation, UI恢复完成原存档已备份",
+  "preview": {
+    "previewId": "c2d04170-acdf-43fa-9ce9-addcdc0bd95f",
+    "cloudRevision": 1,
+    "checksum": "c6f2062b77181a79c63ca550153de182c7fe8945fc5ce9735580938727c461cf",
+    "createdAt": "2026-10-25T10:15:21.380Z",
+    "modules": [
+      "companions"
+    ],
+    "tables": []
+  },
+  "changedTables": [
+    "account_actions",
+    "account_backup_receipts",
+    "account_sync_baselines",
+    "account_sync_checkpoints",
+    "account_sync_outbox",
+    "account_sync_sources",
+    "account_sync_state"
+  ],
+  "status": {
+    "ok": true,
+    "data": {
+      "configured": true,
+      "cloudRevision": 2,
+      "lastVerifiedAt": "2026-10-25T13:41:23.677Z",
+      "lastError": null,
+      "pending": 0,
+      "conflicts": 0,
+      "localChanged": false,
+      "unverifiedLocal": 0,
+      "privacyRedactions": 0,
+      "running": false,
+      "observedCloudRevision": 2,
+      "lastCloudCheckedAt": "2026-10-25T13:41:23.669Z",
+      "remoteChanged": false
+    }
+  }
+}

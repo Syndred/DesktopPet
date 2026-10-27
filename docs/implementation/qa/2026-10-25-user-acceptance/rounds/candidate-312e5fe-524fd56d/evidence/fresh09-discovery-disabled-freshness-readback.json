@@ -1,0 +1,125 @@
+{
+  "at": "2026-10-25T12:51:33.909Z",
+  "scope": "historical-312-native-location-refresh-no-threshold-bypass",
+  "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+  "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+  "before": {
+    "scenario": "qa",
+    "location": {
+      "mode": "real",
+      "status": "stale",
+      "permission": "unknown",
+      "fix": {
+        "lat": 31.230299999999996,
+        "lng": 121.47389999999999,
+        "accuracyMeters": 5,
+        "timestampMs": 1792932349401,
+        "coordinateSystem": "wgs84",
+        "source": "simulated",
+        "scenarioId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+        "provider": "qa-discovery",
+        "positionSource": "Scenario"
+      },
+      "lastError": {
+        "code": "LOCATION_STALE",
+        "message": "位置已过期，请重新定位"
+      },
+      "watching": false
+    },
+    "captureRadiusMeters": 100,
+    "spawn": {
+      "templateId": "animal-wood-deer",
+      "name": "青芽",
+      "element": "wood",
+      "description": "戴着枝叶小角的林间幼鹿，喜欢收集新芽。",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "stats": {
+        "hp": 130,
+        "atk": 26,
+        "def": 26,
+        "spd": 18
+      },
+      "id": "wild-2d-v2-f3621dbe19-498036-52050-202455",
+      "wildSerial": "D0804772CCDB19D31",
+      "position": {
+        "lat": 31.230299999999996,
+        "lng": 121.4733
+      },
+      "coordinateSystem": "wgs84",
+      "rarity": "common",
+      "placeLabel": "附近探索点",
+      "placeLabelSource": "game",
+      "expiresAt": 1792933200000,
+      "distanceMeters": 57,
+      "source": "game-spawn",
+      "demo": false,
+      "inRange": false,
+      "captureState": "available",
+      "mapPosition": {
+        "lat": 31.230299999999996,
+        "lng": 121.4733
+      }
+    }
+  },
+  "nativeKeyboardTooltip": "进入互动范围后挑战",
+  "after": {
+    "scenario": "qa",
+    "location": {
+      "mode": "real",
+      "status": "ready",
+      "permission": "unknown",
+      "fix": {
+        "lat": 31.230299999999996,
+        "lng": 121.47389999999999,
+        "accuracyMeters": 5,
+        "timestampMs": 1792932665456,
+        "coordinateSystem": "wgs84",
+        "source": "simulated",
+        "scenarioId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+        "provider": "qa-discovery",
+        "positionSource": "Scenario"
+      },
+      "lastError": null,
+      "watching": false
+    },
+    "captureRadiusMeters": 100,
+    "spawn": {
+      "templateId": "animal-wood-deer",
+      "name": "青芽",
+      "element": "wood",
+      "description": "戴着枝叶小角的林间幼鹿，喜欢收集新芽。",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "stats": {
+        "hp": 130,
+        "atk": 26,
+        "def": 26,
+        "spd": 18
+      },
+      "id": "wild-2d-v2-f3621dbe19-498036-52050-202455",
+      "wildSerial": "D0804772CCDB19D31",
+      "position": {
+        "lat": 31.230299999999996,
+        "lng": 121.4733
+      },
+      "coordinateSystem": "wgs84",
+      "rarity": "common",
+      "placeLabel": "附近探索点",
+      "placeLabelSource": "game",
+      "expiresAt": 1792933200000,
+      "distanceMeters": 57,
+      "source": "game-spawn",
+      "demo": false,
+      "inRange": true,
+      "captureState": "available",
+      "mapPosition": {
+        "lat": 31.230299999999996,
+        "lng": 121.4733
+      }
+    },
+    "button": {
+      "disabled": false,
+      "text": "开始挑战"
+    }
+  },
+  "causeConfirmation": "仅正常点击更新场景位置，57m距离不变，stale→ready且开始挑战启用，未改时钟/精度/半径/门槛、未开始挑战。"
+}

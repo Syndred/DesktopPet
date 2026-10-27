@@ -1,0 +1,174 @@
+{
+  "payloadRoots": [
+    {
+      "observedMainPid": 12988,
+      "root": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nstBBF0.tmp\\app",
+      "firstFiles": [
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nstBBF0.tmp\\app\\Lingjing.exe",
+          "exists": true,
+          "bytes": 246846464,
+          "sha256": "12fee592f3bb57ae348fb0b5974e486f5a05c6b54e39b7fbb49f4be604643bd6"
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nstBBF0.tmp\\app\\resources\\app.asar",
+          "exists": true,
+          "bytes": 267484870,
+          "sha256": "993a2b91463223fd0c12e4c596459a6bde46d250baff9a2267c8fc2a66c8871d"
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nstBBF0.tmp\\app\\resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node",
+          "exists": true,
+          "bytes": 1989632,
+          "sha256": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a"
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nstBBF0.tmp\\app\\resources\\lingjing-cloud-public.json",
+          "exists": true,
+          "bytes": 194,
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda"
+        }
+      ],
+      "firstSeenAt": "2026-10-25T13:31:12.6812826Z",
+      "finalFiles": [
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nstBBF0.tmp\\app\\Lingjing.exe",
+          "exists": true,
+          "bytes": 246846464,
+          "sha256": "12fee592f3bb57ae348fb0b5974e486f5a05c6b54e39b7fbb49f4be604643bd6"
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nstBBF0.tmp\\app\\resources\\app.asar",
+          "exists": true,
+          "bytes": 267484870,
+          "sha256": "993a2b91463223fd0c12e4c596459a6bde46d250baff9a2267c8fc2a66c8871d"
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nstBBF0.tmp\\app\\resources\\app.asar.unpacked\\node_modules\\better-sqlite3\\prebuilds\\win32-x64.node",
+          "exists": true,
+          "bytes": 1989632,
+          "sha256": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a"
+        },
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nstBBF0.tmp\\app\\resources\\lingjing-cloud-public.json",
+          "exists": true,
+          "bytes": 194,
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda"
+        }
+      ]
+    }
+  ],
+  "required09Evidence": "Native UI/window activation, app.info source/profile, first payload integrity, same-profile different actual payload roots, LS/IDB sentinel and ORIGINAL garden pending actionId/owner/command/payload + Node outbox independently read back.",
+  "limitations": [
+    "Polling can miss short-lived paths; WMI event delivery must itself be checked. Missing events do not prove no process ran.",
+    "WMI TIME_CREATED is provider event-generation time, not exact process lifetime; StopTrace parent may be zero. Correlate PID with StartTrace and retained handle times.",
+    "The cold precondition checks this exact SFX path, not arbitrary renamed/copied executables. 09 controls the run inventory.",
+    "Expected source/profile are operator-supplied until09 independent app.info readback.",
+    "ProcessTrace exit status does not identify the underlying NSIS/Electron failure cause."
+  ],
+  "launcherShellEnvironmentRestored": true,
+  "processTraceEvents": 8,
+  "at": "2026-10-25T13:31:41.2602003Z",
+  "markerRunId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+  "executable": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-e875feb\\Lingjing-0.1.8-portable-x64.exe",
+  "captureError": null,
+  "noProfilesOrPayloadsDeleted": true,
+  "sha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+  "captureVersion": 2,
+  "expectedSourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+  "noProcessesClosedOrKilled": true,
+  "startedAt": "2026-10-25T13:30:59.9290378Z",
+  "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\6ff8e38f-9f2b-4872-8747-1fb00bd81655\\local-a",
+  "shell": {
+    "powershell": "7.6.5",
+    "dotnet": "10.0.11",
+    "executable": "C:\\Users\\Administrator\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe"
+  },
+  "launchers": [
+    {
+      "pid": 32284,
+      "issuedAt": "2026-10-25T13:30:59.9798548Z",
+      "startedAt": "2026-10-25T13:30:59.9902469Z",
+      "exitAt": null,
+      "number": 1,
+      "exitCaptured": false,
+      "exitCode": null
+    },
+    {
+      "pid": 14388,
+      "issuedAt": "2026-10-25T13:31:00.1081630Z",
+      "startedAt": "2026-10-25T13:31:00.1224552Z",
+      "exitAt": "2026-10-25T13:31:11.8453414Z",
+      "number": 2,
+      "exitCaptured": true,
+      "exitCode": 0
+    }
+  ],
+  "criticalEnvironmentBefore": [
+    {
+      "name": "ELECTRON_RUN_AS_NODE",
+      "valueIsNull": true,
+      "present": false,
+      "valueIsEmpty": false,
+      "valueLength": null
+    },
+    {
+      "name": "NODE_OPTIONS",
+      "valueIsNull": true,
+      "present": false,
+      "valueIsEmpty": false,
+      "valueLength": null
+    },
+    {
+      "name": "PET_RUNTIME_DATA_FILE",
+      "valueIsNull": true,
+      "present": false,
+      "valueIsEmpty": false,
+      "valueLength": null
+    },
+    {
+      "name": "ELECTRON_RENDERER_URL",
+      "valueIsNull": true,
+      "present": false,
+      "valueIsEmpty": false,
+      "valueLength": null
+    }
+  ],
+  "status": "capture-only-no-acceptance-verdict",
+  "criticalEnvironmentAtLaunch": [
+    {
+      "name": "ELECTRON_RUN_AS_NODE",
+      "valueIsNull": true,
+      "present": false,
+      "valueIsEmpty": false,
+      "valueLength": null
+    },
+    {
+      "name": "NODE_OPTIONS",
+      "valueIsNull": true,
+      "present": false,
+      "valueIsEmpty": false,
+      "valueLength": null
+    },
+    {
+      "name": "PET_RUNTIME_DATA_FILE",
+      "valueIsNull": true,
+      "present": false,
+      "valueIsEmpty": false,
+      "valueLength": null
+    },
+    {
+      "name": "ELECTRON_RENDERER_URL",
+      "valueIsNull": true,
+      "present": false,
+      "valueIsEmpty": false,
+      "valueLength": null
+    }
+  ],
+  "mode": "ColdPair",
+  "executableAfter": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-e875feb\\Lingjing-0.1.8-portable-x64.exe",
+    "bytes": 169213223,
+    "sha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9"
+  }
+}

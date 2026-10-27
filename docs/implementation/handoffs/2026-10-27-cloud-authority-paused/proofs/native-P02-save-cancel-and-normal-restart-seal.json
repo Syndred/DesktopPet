@@ -1,0 +1,51 @@
+{
+  "at": "2026-10-26T22:53:48.815Z",
+  "caseId": "P02",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "nativeUnsavedBranch": {
+    "field": "desktop.closeToTray",
+    "original": true,
+    "draft": false,
+    "leftWithoutSave": true,
+    "returnValue": true,
+    "persistedRevision": 13,
+    "unchangedTables": [
+      "account_settings",
+      "companion_pets",
+      "garden_items",
+      "garden_plots",
+      "conversation_messages",
+      "conversation_connections",
+      "conversation_credentials",
+      "conversation_profiles",
+      "conversation_memories",
+      "conversation_cloud_conflicts",
+      "lingjing_resource_imports",
+      "lingjing_resource_preferences"
+    ]
+  },
+  "nativeSavedAndRestartedBranch": {
+    "field": "desktop.closeToTray",
+    "saved": false,
+    "revision": 12,
+    "sameProfileNormalExitAndRestart": true,
+    "restartedValue": false,
+    "restoredOriginal": true,
+    "restoredRevision": 13
+  },
+  "qualification": "The saved/restarted branch reuses actual same-candidate T05 operations earlier in this continuous run; the unsaved leave/return branch was performed afterward. No redundant restart or extra saved mutation was introduced.",
+  "evidence": [
+    "native-P02-original-B2-unsaved-close-to-tray-false-draft.png",
+    "native-P02-original-B2-unsaved-setting-discarded-on-return.png",
+    "cloudB2-after-r05-qingya-normal-import-once.json",
+    "cloudB2-after-p02-unsaved-close-to-tray-discard.json",
+    "cloudB2-after-t05-temporary-normal-exit-setting-save.json",
+    "cloudB2-after-t05-normal-restart-login-required.json",
+    "native-T05-original-B2-normal-exit-setting-save-result.png",
+    "native-T05-old-runtime-normal-exit-readback.json",
+    "launch-cloudB2-t05-history-normal-restart.json",
+    "native-T05-original-B2-original-close-to-tray-setting-restored.png",
+    "root-T05-normal-restart-history-and-settings-independent.json"
+  ]
+}

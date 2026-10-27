@@ -1,0 +1,30 @@
+{
+  "at": "2026-10-25T23:33:24.081Z",
+  "validNativeExport": {
+    "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-b-fresh09/uat-exports/r05-dc7-qingya-actions-20261026.lingjing.json",
+    "exists": true,
+    "bytes": 2507321,
+    "sha256": "f148d3858f2ef68464a331ab779b3b3ded8e80d0ca8b6252ffbe6602b16bd496"
+  },
+  "invalidChecksumCopy": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1/evidence/p06-invalid-checksum-native-input.lingjing.json",
+    "exists": true,
+    "bytes": 2507321,
+    "sha256": "5cae234ae90a6dab731a98e2ae1f1ec61075af5cb2676b76a5d62fa4266d5dc8"
+  },
+  "corruptOnlyChecksum": true,
+  "sourceEnvelopeValid": true,
+  "invalidEnvelopeRejectedByChecksum": true,
+  "foreignActualA": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-a\\accounts\\backups\\before-cloud-battle-readback-1792964950918-d1165fc6-277a-4c2b-b6cf-c20f0f9a19bc.lingjing.json",
+    "exists": true,
+    "bytes": 77684,
+    "sha256": "57bcd207994d97f2d9642676a9753591fc2a061b1c39a7fce17889a6c3dade05"
+  },
+  "foreignEnvelopeValid": true,
+  "foreignOwner": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+  "targetOwner": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "foreignProvenance": {
+    "mode": "live"
+  }
+}

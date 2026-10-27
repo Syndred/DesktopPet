@@ -1,0 +1,292 @@
+{
+  "format": "lingjing.uat.r06-real-cold-resource-positive.v1",
+  "at": "2026-10-26T00:17:24.856Z",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+  "resourceActualName": "岩团",
+  "owner": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "manifestSha256": "dc87deb2e56b1fc7a95ff86e0140b22cb82a00269e010bf441853d8637ecbd92",
+  "checks": {
+    "rootExactColdBaseline": true,
+    "rootPublishedAuthorityAndRelease": true,
+    "tenTargetTablesInitiallyEmpty": true,
+    "manifestCanonicalShaMatches": true,
+    "sourceUploadStorageAndAuthority": true,
+    "targetLiveVerifiedDownload": true,
+    "sameDownloadAuthorityAndManifest": true,
+    "targetPrivateOwner": true,
+    "targetOriginalTwoFileHashes": true,
+    "sameEffectivePreferenceRow": true,
+    "sameVerifiedPreferenceAuthority": true,
+    "nativeDesktopScaleAndMirror": true,
+    "nativeBattleSeparateScaleAndMirror": true,
+    "nativeIdleMapsWalk": true,
+    "all36ActualStagesReadyAndExpectedTextures": true,
+    "bothDesktopAndBattleShowBothWalkTextures": true,
+    "bothUiNonFallback": true,
+    "sourceBusinessTenTablesExact": true,
+    "targetBusinessTenTablesExact": true,
+    "targetChatFiveTablesAndCredentialCountExact": true,
+    "sourceOriginalImportFilesRetained": true,
+    "targetOriginalManagedFilesRetained": true,
+    "oldQingyaFourCoreTablesExact": true,
+    "sourceWholeSettingsOriginal": true,
+    "targetWholeSettingsOriginal": true
+  },
+  "allPositiveChecksTrue": true,
+  "download": {
+    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "resource_id": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+    "auth_user_id": "2028f0af-f501-47f5-9abb-de59487dad46",
+    "manifest_sha256": "dc87deb2e56b1fc7a95ff86e0140b22cb82a00269e010bf441853d8637ecbd92",
+    "content_hash": "09b4b0bd591c07daea0a588386f39cfbe19226fd0d39664bdb8342fc4912fa09",
+    "direction": "download",
+    "verified_at": "2026-10-26T00:13:40.846Z",
+    "data_mode": "live",
+    "authority_action_id": "resources:ee33b6a6-2bd1-4d79-bbfe-166498a4950f:dc87deb2e56b1fc7a95ff86e0140b22cb82a00269e010bf441853d8637ecbd92",
+    "authority_revision": 15,
+    "authority_checksum": "31380bfff3e26bb9bf6f13c04f09fa24f89b2cf6c2051164872c035bc137da03"
+  },
+  "preferenceAuthority": {
+    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "resource_id": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+    "cloud_revision": 1,
+    "local_revision": 1,
+    "document_json": "{\"actions\":{\"attack\":\"attack\",\"attack_release\":\"attack_release\",\"attack_windup\":\"attack_windup\",\"blink\":\"blink\",\"eat\":\"eat\",\"hit\":\"hit\",\"idle\":\"walk\",\"skill\":\"skill\",\"sleep\":\"sleep\",\"victory\":\"victory\",\"walk\":\"walk\",\"wave\":\"wave\"},\"calibration\":{\"battle\":{\"anchorX\":0.5,\"anchorY\":0.849609375,\"fps\":0,\"mirrorX\":false,\"rotationDeg\":0,\"scale\":1,\"verticalOffset\":0},\"desktop\":{\"anchorX\":0.5,\"anchorY\":0.849609375,\"fps\":0,\"mirrorX\":true,\"rotationDeg\":0,\"scale\":1.06,\"verticalOffset\":0}}}",
+    "authority_action_id": "resource-pref:276365a4-167e-4057-a9fc-1755db10b727",
+    "authority_revision": 17,
+    "authority_checksum": "5543764e30788d0a216b3a8ec719d18e6c6a2c7e416ea9705ced51c781622c06",
+    "verified_at": "2026-10-26T00:13:47.131Z"
+  },
+  "files": [
+    {
+      "key": "character.json",
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\character-resources\\restore-4f51eade-3f61-43b0-a887-0b123aef2369\\character.json",
+      "exists": true,
+      "bytes": 9402,
+      "sha256": "cd3b4c9faefa8afc71bd108932bcc7878bc4929d28131d27005e37a5fa1bbfdd"
+    },
+    {
+      "key": "sprites.png",
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\character-resources\\restore-4f51eade-3f61-43b0-a887-0b123aef2369\\sprites.png",
+      "exists": true,
+      "bytes": 2441235,
+      "sha256": "f03bc1b8cd1c20c5ef6d466d20db9fb7f9584b7739f21414d22fc2c91c01d886"
+    }
+  ],
+  "desktopUi": {
+    "at": 1792973496190,
+    "scene": "桌面",
+    "sliders": [
+      {
+        "name": "大小",
+        "value": "1.06"
+      },
+      {
+        "name": "锚点 X",
+        "value": "0.5"
+      },
+      {
+        "name": "锚点 Y",
+        "value": "0.849609375"
+      },
+      {
+        "name": "垂直位置",
+        "value": "0"
+      },
+      {
+        "name": "旋转",
+        "value": "0"
+      },
+      {
+        "name": "播放帧率",
+        "value": "6"
+      }
+    ],
+    "switches": [
+      {
+        "name": "水平翻转",
+        "checked": "true"
+      }
+    ],
+    "mapping": [],
+    "stages": [
+      {
+        "class": "resource-stage ",
+        "data-resource-id": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+        "data-pet-id": "resource-preview-a",
+        "data-action": "idle",
+        "data-clip": "walk",
+        "data-playback-key": "0",
+        "data-fallback": "false",
+        "data-status": "ready"
+      }
+    ]
+  },
+  "battleUi": {
+    "at": 1792973535089,
+    "scene": "战斗",
+    "sliders": [
+      {
+        "name": "大小",
+        "value": "1"
+      },
+      {
+        "name": "锚点 X",
+        "value": "0.5"
+      },
+      {
+        "name": "锚点 Y",
+        "value": "0.849609375"
+      },
+      {
+        "name": "垂直位置",
+        "value": "0"
+      },
+      {
+        "name": "旋转",
+        "value": "0"
+      },
+      {
+        "name": "播放帧率",
+        "value": "6"
+      }
+    ],
+    "switches": [
+      {
+        "name": "水平翻转",
+        "checked": "false"
+      }
+    ],
+    "mapping": [],
+    "stages": [
+      {
+        "class": "resource-stage ",
+        "data-resource-id": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+        "data-pet-id": "resource-preview-a",
+        "data-action": "idle",
+        "data-clip": "walk",
+        "data-playback-key": "0",
+        "data-fallback": "false",
+        "data-status": "ready"
+      }
+    ]
+  },
+  "mappingUi": {
+    "at": 1792973572808,
+    "scene": "桌面",
+    "sliders": [
+      {
+        "name": "大小",
+        "value": "1.06"
+      },
+      {
+        "name": "锚点 X",
+        "value": "0.5"
+      },
+      {
+        "name": "锚点 Y",
+        "value": "0.849609375"
+      },
+      {
+        "name": "垂直位置",
+        "value": "0"
+      },
+      {
+        "name": "旋转",
+        "value": "0"
+      },
+      {
+        "name": "播放帧率",
+        "value": "6"
+      }
+    ],
+    "switches": [
+      {
+        "name": "水平翻转",
+        "checked": "true"
+      }
+    ],
+    "mapping": [
+      {
+        "name": "待机映射",
+        "clip": "walk"
+      },
+      {
+        "name": "眨眼映射",
+        "clip": "blink"
+      },
+      {
+        "name": "行走映射",
+        "clip": "walk"
+      },
+      {
+        "name": "招手映射",
+        "clip": "wave"
+      },
+      {
+        "name": "吃东西映射",
+        "clip": "eat"
+      },
+      {
+        "name": "攻击起手映射",
+        "clip": "attack_windup"
+      },
+      {
+        "name": "攻击释放映射",
+        "clip": "attack_release"
+      },
+      {
+        "name": "普通攻击映射",
+        "clip": "attack"
+      },
+      {
+        "name": "受击映射",
+        "clip": "hit"
+      },
+      {
+        "name": "技能施放映射",
+        "clip": "skill"
+      },
+      {
+        "name": "胜利映射",
+        "clip": "victory"
+      },
+      {
+        "name": "睡眠映射",
+        "clip": "sleep"
+      }
+    ],
+    "stages": [
+      {
+        "class": "resource-stage ",
+        "data-resource-id": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+        "data-pet-id": "resource-preview-a",
+        "data-action": "idle",
+        "data-clip": "walk",
+        "data-playback-key": "0",
+        "data-fallback": "false",
+        "data-status": "ready"
+      }
+    ]
+  },
+  "expectedWalkUvs": [
+    "655,47,279,249",
+    "962,47,264,248"
+  ],
+  "rootColdEvidence": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-r06-b2-exact-yantuan-manifest-cold-before-20261026.json",
+  "rootPublishedEvidence": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-r06-yantuan-publication-and-b2-release-20261026.json",
+  "rootIndependentAfterReviewPending": false,
+  "retainedConflictEvidence": "qa024-r06-old-qingya-stale-conflict-with-identical-pulled-state.json",
+  "qualification": [
+    "Positive cold hydration is proven; overall case is not marked complete while the retained old Qingya conflict is under review.",
+    "Original pre-import B1 stale-read comparison false values are preserved and qualified by the independent prior desktop-position review. Current source preservation uses actual post-import/pre-publish business rows.",
+    "Performance resource entries for the private UUID were empty and are not claimed as a network trace. Managed file bytes, exact download authority, native private UUID, actual canvas pixels and texture UVs provide the evidence.",
+    "The resource is named 岩团. Earlier commentary typo 炎团 did not change UUID, source file selection or hashes."
+  ],
+  "rootIndependentAfterEvidence": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-r06-real-cold-download-positive-independent-review-20261026.json",
+  "rootProtectedCloudNoSecondRewardEvidence": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-r06-cloud-protected-data-no-second-reward-20261026.json",
+  "overallCaseStatus": "failed",
+  "blockingIssue": "QA-024"
+}

@@ -1,0 +1,536 @@
+{
+  "format": "lingjing.qa.historical-checkpoint",
+  "version": 1,
+  "at": "2026-10-25T11:46:30.568Z",
+  "roundId": "candidate-312e5fe-524fd56d",
+  "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+  "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+  "fullAcceptance": false,
+  "normalRestartPassed": false,
+  "freezeReason": "Old runtimes unexpectedly disappeared; preserve actual progress before next candidate reset",
+  "files": [
+    {
+      "name": "cases.json",
+      "bytes": 82568,
+      "sha256": "80e0f58c8426de008277fa44985a260e0ee681fd05cb1ee72317981435a96b0a"
+    },
+    {
+      "name": "issues.json",
+      "bytes": 15366,
+      "sha256": "b2645a90a700b1175916027a587b6868812261c1ee419bb697d06aad2125abe0"
+    },
+    {
+      "name": "matrix.md",
+      "bytes": 32556,
+      "sha256": "1d9055f53d14b51be1e5fb08946aa53d8d419e212e900dcdeaa173df974202b9"
+    },
+    {
+      "name": "active-session.json",
+      "bytes": 8817,
+      "sha256": "6791fcb92f2bf01fc052052806f9afe9a87131f412db3fac930f04df6e7d2799"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "adopt-earth.jpg",
+      "bytes": 103869,
+      "sha256": "f9911579b96b3ac1d044951a9a28a5b4f0809f5a810b5b77df7dc14091f1b79d"
+    },
+    {
+      "path": "adopt-fire.jpg",
+      "bytes": 99548,
+      "sha256": "57acc5a34897da8dc5ed1f37f5920c552f0ef590541db91ef5352d1eb1dbf24a"
+    },
+    {
+      "path": "adopt-five-elements.jpg",
+      "bytes": 167783,
+      "sha256": "1259cf9069bc915e7ea227e087c807acb78135c817d23cbd7366b066e07519c3"
+    },
+    {
+      "path": "adopt-metal.jpg",
+      "bytes": 103210,
+      "sha256": "b3895b9e48763356c5a5ad55f6f0f05e48203af28763d30269536298baadec6b"
+    },
+    {
+      "path": "adopt-water.jpg",
+      "bytes": 140408,
+      "sha256": "25dcbf7a8c818f4949b351d49337247b3bbe9b881da9c3f8f1018496eaaf7b46"
+    },
+    {
+      "path": "adopt-wood.jpg",
+      "bytes": 103088,
+      "sha256": "2b7b2314934ff1dced725950d5ad2477e3fe858528a827d0547a5a732fb6aac7"
+    },
+    {
+      "path": "after-occlusion-companions.json",
+      "bytes": 6209,
+      "sha256": "3dccb97f5fc8637efd1adff11bccad0d920f36aa2c4979c528e0856d4d27abfd"
+    },
+    {
+      "path": "behavior-follow-confirmed.jpg",
+      "bytes": 144301,
+      "sha256": "67a8664d9cb51c06f6cf76cebce97914873e446efcc20720491035b3db239f0e"
+    },
+    {
+      "path": "behavior-follow-native.jpg",
+      "bytes": 15723,
+      "sha256": "db757f8ad0f555ccfe54bbcf12d8b1f74a8fb8e476d03beb98f04cda927e9653"
+    },
+    {
+      "path": "behavior-follow-selected.jpg",
+      "bytes": 143180,
+      "sha256": "67899f990a836cd7a5293ee391b8a13686a095f03a70f9ff6155a755667a8031"
+    },
+    {
+      "path": "behavior-wander-native.jpg",
+      "bytes": 13760,
+      "sha256": "1fc8cc54e344639290bc60bda02516774dd7b38fe1b6d8078b36b4ec8147b81b"
+    },
+    {
+      "path": "behavior-wander-selected.jpg",
+      "bytes": 143172,
+      "sha256": "b8a5601bafa955249c8740f76a526a4696e985fb83eb1eb94c8ea75671235c08"
+    },
+    {
+      "path": "candidate-login.jpg",
+      "bytes": 99995,
+      "sha256": "60418d1e7eb1aacbf0a60162e4590091e47790755934f3b44b987ee7b8f0104c"
+    },
+    {
+      "path": "chat-two-fox-identities.jpg",
+      "bytes": 85194,
+      "sha256": "043e7b4b154636bbad425e157da5469a8805378a6a162abe09a41424326f52b4"
+    },
+    {
+      "path": "cold-launch-log-metadata.json",
+      "bytes": 1638,
+      "sha256": "244715864fd351cfd5b0fce434a770f4ac9b1d1c40efcbb9480d6dc1aef15a07"
+    },
+    {
+      "path": "cold-launch-observation.json",
+      "bytes": 2063,
+      "sha256": "1ba06754f814e3c33f3d0f256c73878dfc94f526ef7b6b0c9ba928aa955ec58a"
+    },
+    {
+      "path": "first-fox-adopted.jpg",
+      "bytes": 140159,
+      "sha256": "bb02461c2204404d00b5c200aba2fe64ea1713525f39b58eb54e9ecfee01d562"
+    },
+    {
+      "path": "follow-pet-visible.jpg",
+      "bytes": 15246,
+      "sha256": "b1f030356dfc272e2069dd140de9f7c85343aa2c375a12a714f4b953c617689a"
+    },
+    {
+      "path": "follow-pointer-moved.jpg",
+      "bytes": 143878,
+      "sha256": "50a1bf1f6aea3b05a0769acd4ba96acfda6a7d6af0de23f329a424974617ea7b"
+    },
+    {
+      "path": "fresh09-chat-auth-redacted.jpg",
+      "bytes": 121337,
+      "sha256": "d881e9d6e6eee4c5448b773fd029c0570ec45811f0f897f93dd015615402030f"
+    },
+    {
+      "path": "fresh09-chat-cancelled.jpg",
+      "bytes": 118891,
+      "sha256": "b6c3d57cc0fe369b2b60a056d37fc3fb36ca7ea6cf0c0d6986b29f6a61338661"
+    },
+    {
+      "path": "fresh09-chat-error-recovery.json",
+      "bytes": 24306,
+      "sha256": "10dba23f22e5287b2428f6ddaa2b2c9a2f121aba17e5389447879b25881b1cfd"
+    },
+    {
+      "path": "fresh09-chat-first-owner-readback.json",
+      "bytes": 6740,
+      "sha256": "76df202d944597a95ef16ac0ee482d77328ec76a27377baa43bdf3a7be9d605d"
+    },
+    {
+      "path": "fresh09-chat-rate-error.jpg",
+      "bytes": 121461,
+      "sha256": "0244102fd36fc5d787dd6cfd05df990241c53e5b97a5ebf07cf34ded6a76e06e"
+    },
+    {
+      "path": "fresh09-chat-stream-cancel-retry.json",
+      "bytes": 16744,
+      "sha256": "08c3d94df25e508dffd2ad6a47fa4624f91469ce298824cc860017608d45b662"
+    },
+    {
+      "path": "fresh09-chat-streaming-before-cancel.jpg",
+      "bytes": 122830,
+      "sha256": "90505d4471548b165832604ef7c6521e371cee4a87198407e15d0af95c523729"
+    },
+    {
+      "path": "fresh09-chat-unconfigured-native.jpg",
+      "bytes": 103344,
+      "sha256": "f4b0182c6cb037155b89b38047f2c1f8f78e8f7b1066581aaf9203b629b7bbe0"
+    },
+    {
+      "path": "fresh09-chat-unconfigured-readback.json",
+      "bytes": 715,
+      "sha256": "fa099d3d63dafbc0886512b748af67c9dff16804c5e9f287631849e6231449e9"
+    },
+    {
+      "path": "fresh09-first-persona-native.jpg",
+      "bytes": 112812,
+      "sha256": "9f92962e72b40bb08a119f26ac6a33b945fb0b39f4423c97d3068c61f4b30995"
+    },
+    {
+      "path": "fresh09-first-persona-readback.json",
+      "bytes": 2334,
+      "sha256": "4d7848efb42dba76b84fb98c2eec4b248334ae5eaf9caa18b9a1de5703b19a8f"
+    },
+    {
+      "path": "fresh09-fixture-checkpoint-after-process-exit.json",
+      "bytes": 29767,
+      "sha256": "975c9d37d30dfb8927120c25957e55f6674b0ab0bc68bf5001418ef46cf87076"
+    },
+    {
+      "path": "fresh09-garden-harvest-after.jpg",
+      "bytes": 301156,
+      "sha256": "84e0877e33c6e725b4edb5dce1aef4a621d54afc9df367d83ac575c953211011"
+    },
+    {
+      "path": "fresh09-garden-harvest-readback.json",
+      "bytes": 36482,
+      "sha256": "03dd4060093d4fb36e91bf08282077faeaa72f01cfec22de0b5f7f3931f6834b"
+    },
+    {
+      "path": "fresh09-garden-natural-mature-before.jpg",
+      "bytes": 302668,
+      "sha256": "cc0c1418ea605523295c048b84f85c8f896e8d3591d21b5f9fe8673ece465cae"
+    },
+    {
+      "path": "fresh09-memory-delete-after.jpg",
+      "bytes": 118132,
+      "sha256": "07d2e2cca1eae02beeb51c684b836fb90530f207c06e31a2f10951367eed7470"
+    },
+    {
+      "path": "fresh09-memory-delete-confirm.jpg",
+      "bytes": 124543,
+      "sha256": "fbb6ebc781c4e9838aa944138912dbb4ba9f885903ef6300ecbdfb8e76357838"
+    },
+    {
+      "path": "fresh09-memory-delete-readback.json",
+      "bytes": 4447,
+      "sha256": "e32bebb352dd4bd198e8d6eba4b8fb701d9b35eb8d5c5610478d8b0bd4ca1855"
+    },
+    {
+      "path": "fresh09-memory-edited-before-save.jpg",
+      "bytes": 71484,
+      "sha256": "13dba61a666fe5036d3fe75aece7787a9291769e5323f76f52f248b3ee863232"
+    },
+    {
+      "path": "fresh09-memory-edited-readback.json",
+      "bytes": 2529,
+      "sha256": "47f63fe971077d7ad17292c04259aadf2c809f9d3fd03bbb9876a7985b8aaf44"
+    },
+    {
+      "path": "fresh09-upgrade-fixtures-before.json",
+      "bytes": 36226,
+      "sha256": "9ddf5655b33ac1b9f9ef3d8eb2c7eb411085f57cb4ef66a5ee8683646fbb80be"
+    },
+    {
+      "path": "garden-carrot-planted.jpg",
+      "bytes": 207657,
+      "sha256": "754b844404a3c68587b915aa629c4e8a2b562ec5627f81a25dc926d67f3dd4ed"
+    },
+    {
+      "path": "garden-rice-planted.jpg",
+      "bytes": 209652,
+      "sha256": "a5f5b88b3c2b70c6adf730e148357e0acafec62adfcc56045a0d4b184af72c20"
+    },
+    {
+      "path": "garden-sqlite-schema.json",
+      "bytes": 1363,
+      "sha256": "00cc212afec1c7e768cb21fd8e377f6aaa641ea75a32eb80a62532fbfd7ee66b"
+    },
+    {
+      "path": "garden-two-plants-readback.json",
+      "bytes": 9158,
+      "sha256": "215492055469639f75840a68655b5b1ecd18e92166a21c812245ff8118e76d88"
+    },
+    {
+      "path": "local-register-success.jpg",
+      "bytes": 50998,
+      "sha256": "db852245192ed0826b8104b847f5e1d87f368b94429a2edde16131e835642069"
+    },
+    {
+      "path": "login-lock-focused.jpg",
+      "bytes": 114350,
+      "sha256": "2240f270b8e6474ed3f0944548f31aa16f47ed932f157f2265a9c3fed591bf8a"
+    },
+    {
+      "path": "native-capture-relocation.json",
+      "bytes": 16901,
+      "sha256": "2a2dd0af77196e765207b4dc2192320e33c85fe21a648503b0366bb90176f82a"
+    },
+    {
+      "path": "native-observations.jsonl",
+      "bytes": 13970,
+      "sha256": "40df6bb0da660f1b2caa977387d66723f711720358a9fa28c46ef22f5565fe95"
+    },
+    {
+      "path": "occluded-capture-excluded.json",
+      "bytes": 531,
+      "sha256": "0de967159a27689fffc21bd3388d7ead6579b99c2049303e801b7bf58318ca1a"
+    },
+    {
+      "path": "pets-after-first-adopt.json",
+      "bytes": 5073,
+      "sha256": "bc92cf4bf178e1adeed65ddfbbb6b31d0f2d07a15ad7712dcbaf53ef45263040"
+    },
+    {
+      "path": "product-visible-follow.jpg",
+      "bytes": 147307,
+      "sha256": "0d012b64be0921720895d021079460a4a51046eefa4819d96b0ec4a31f10649d"
+    },
+    {
+      "path": "QA-001-aligned-register.json",
+      "bytes": 1402,
+      "sha256": "5123387149f8c72dae45589d3f9c1e61f745786317d0208e5f639632bd932b59"
+    },
+    {
+      "path": "QA-001-login-geometry.json",
+      "bytes": 4450,
+      "sha256": "a3ebe7414b9b6b8b7c16cdd9be04f01cb9d6b9a90408d1a4b5dc262b76e60ab5"
+    },
+    {
+      "path": "QA-004-drag-00.jpg",
+      "bytes": 15446,
+      "sha256": "f8b22b41473f1643c35d11c7d2e30cefb2d37d53fb3c0e0baab8d8d77f8c3c27"
+    },
+    {
+      "path": "QA-004-drag-01.jpg",
+      "bytes": 15633,
+      "sha256": "acfbb11f20724e2a9ad823b30a8363625de54c2d61a31ca333ed0f4b0fa9e63c"
+    },
+    {
+      "path": "QA-004-drag-02.jpg",
+      "bytes": 16252,
+      "sha256": "1abb0a3e27e6f8e40803b4e28781f7abddcd24b1c9cf42313b93dc13eb26487a"
+    },
+    {
+      "path": "QA-004-drag-03.jpg",
+      "bytes": 15670,
+      "sha256": "07cc8358697bf1781e188007b3a38733b71c42c4a953f397eb2d5672ff020f4c"
+    },
+    {
+      "path": "QA-004-drag-04.jpg",
+      "bytes": 16192,
+      "sha256": "a8a589faf6bf2fe92cf43508d247e8b2a9d812c2ae270f01cb1c7aa4cd74493c"
+    },
+    {
+      "path": "QA-004-drag-05.jpg",
+      "bytes": 15626,
+      "sha256": "eb7299919fca1a8121b9d98f78e59782aafc11b9aa8e14091bee7db185267521"
+    },
+    {
+      "path": "QA-004-drag-06.jpg",
+      "bytes": 16256,
+      "sha256": "92ae58b88460ec59d8f4786e15287a43316a1674b6f21c727d11edb10ae41ae0"
+    },
+    {
+      "path": "QA-004-drag-07.jpg",
+      "bytes": 15604,
+      "sha256": "3e11a75b10df3721e02d4625a7b960c2e3eb16dd6e41d7e9a4858d3730fb8a95"
+    },
+    {
+      "path": "QA-004-drag-08.jpg",
+      "bytes": 16272,
+      "sha256": "e8e35a8a910d97025ed28511374690bc90ead51d10efb7c8fe7c0d164369aa89"
+    },
+    {
+      "path": "QA-004-drag-09.jpg",
+      "bytes": 15658,
+      "sha256": "7beb93d036d7a42970226980767ae9581d9254a005fae50cb1a597bd326001e8"
+    },
+    {
+      "path": "QA-004-drag-10.jpg",
+      "bytes": 16247,
+      "sha256": "fede670d5c5e1815097df6bf3a4de2ea98addf045804dc66c2e0400a1a7a97c8"
+    },
+    {
+      "path": "QA-004-drag-series.json",
+      "bytes": 6639,
+      "sha256": "00e4ade543aafdd7306855f213329dae2189445516e81f9f6c8d700954e89e38"
+    },
+    {
+      "path": "QA-004-follow-moving-series.json",
+      "bytes": 32942,
+      "sha256": "3f5f28774b13ec4fd52cf35400fb38216a6439fcacaa73453abcfaa874d6dc84"
+    },
+    {
+      "path": "QA-004-follow-series.json",
+      "bytes": 18302,
+      "sha256": "a8bdcf4fe6dbbcbb8c49161e6c7fc223461929a807681aec32cd65887406c30a"
+    },
+    {
+      "path": "QA-004-native-events.json",
+      "bytes": 8378,
+      "sha256": "e39ef6452a756437cbec1dd26624fa682ec2299b9bea647ba97c2383b73bcdc3"
+    },
+    {
+      "path": "QA-004-wander-series.json",
+      "bytes": 81654,
+      "sha256": "35aaa8fb1b26bc3807c7008a05480f6f56495cf649e9cfe7827ae7bd6d49cd8d"
+    },
+    {
+      "path": "QA-008-behavior-revision-conflict.json",
+      "bytes": 8427,
+      "sha256": "61c617ac3ab818fd212adf724813c5d1cf9389a899b4bd1abc60ea961291ede1"
+    },
+    {
+      "path": "qa006-before-minimized-hot.json",
+      "bytes": 196,
+      "sha256": "00154393559f5845361bba5099a52bbd8bbac1ece351b51a0a83655db1133a9b"
+    },
+    {
+      "path": "qa006-hot-captured-01/launcher-1.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "qa006-hot-captured-01/launcher-1.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "qa006-hot-captured-01/summary.json",
+      "bytes": 1441,
+      "sha256": "b69832b7709c6ee176dbe5066577df6c9a203fc59d736095be5aed9a39cef32f"
+    },
+    {
+      "path": "qa006-hot-captured-01/timeline.jsonl",
+      "bytes": 45377,
+      "sha256": "28577c4eb34490c2f8d30eccc078dfb03d67ff2e54e596ef059ce78e27fa6537"
+    },
+    {
+      "path": "qa006-hot-native-outcome.json",
+      "bytes": 8040,
+      "sha256": "7cda6e403b517a1ded2f0e5a450bc8bdb55711f18dea974fd383fd1ae005d76a"
+    },
+    {
+      "path": "qa006-original-restored-after-failure.jpg",
+      "bytes": 97229,
+      "sha256": "e14467ad1d816f35e14fab6db5c92e87a840dffa63681c92e71a21ac76ac2623"
+    },
+    {
+      "path": "quiet-after-follow.jpg",
+      "bytes": 145395,
+      "sha256": "bcc2b78fcb4271ed6c67f59a856258c35274322448c342f82287a962249bd458"
+    },
+    {
+      "path": "register-empty-field-validation.jpg",
+      "bytes": 110099,
+      "sha256": "bf57ddae00f81d47b9912ecd5d98bb9ea6b65c42e5410d0f32fcfa724ae9f4c4"
+    },
+    {
+      "path": "register-empty-validation.jpg",
+      "bytes": 110486,
+      "sha256": "aafa52f4c2d5ddf56cf7fc283d605886ddfefc33766b3402c5ad1f6e68125ee8"
+    },
+    {
+      "path": "register-password-mismatch.jpg",
+      "bytes": 113480,
+      "sha256": "97cde4de434641f1a54a502f8389bc6beb916a21c592dcb498a12cec0675161e"
+    },
+    {
+      "path": "runtime-info-local-a.json",
+      "bytes": 5066,
+      "sha256": "d9a4f6195e933c078419de6cd8621d5d0ca99334fb0f4d66e8150147ffb34cb8"
+    },
+    {
+      "path": "second-fox-memory-created.jpg",
+      "bytes": 97962,
+      "sha256": "f78d9fd1aa808dd9bf61bc58f06d86376b9218be0d5f572153c6858d18aed58a"
+    },
+    {
+      "path": "second-fox-memory-panel.jpg",
+      "bytes": 97743,
+      "sha256": "9934109db4dff5b2f94106b68b2d5ec6f3b0c8ec57b47bacd6c19ad5607a761d"
+    },
+    {
+      "path": "second-fox-memory-readback.json",
+      "bytes": 1767,
+      "sha256": "07ab2796631158d7ec0dc3d4b2ff481b1f3294f9d1998a56099aa97e68918559"
+    },
+    {
+      "path": "second-fox-persona-readback.json",
+      "bytes": 1448,
+      "sha256": "ddf4003e68d165353a3436310d1439c34154b916bc21783632343e16baf7b011"
+    },
+    {
+      "path": "second-fox-persona-saved.jpg",
+      "bytes": 96614,
+      "sha256": "1a22277124bc2004e939ef1c5a1f409f8b03cbd61c60f8f5a6fb6681e7786aaf"
+    },
+    {
+      "path": "second-fox-rapid-submit.jpg",
+      "bytes": 139882,
+      "sha256": "1072e3446644f335e23d00201438cb9262323261d224f9b9b7355fff30af8896"
+    },
+    {
+      "path": "two-fox-identities.json",
+      "bytes": 6196,
+      "sha256": "29330f569a2061484fe0da0b869a0803d9529488f36615df8d47580bd957f2d8"
+    },
+    {
+      "path": "two-fox-list-identities.jpg",
+      "bytes": 143399,
+      "sha256": "5729306f2945eda24a3a57c9aec791a8a8d634275a1b249a9a4ddeeec2f0c11c"
+    }
+  ],
+  "health": {
+    "at": "2026-10-25T11:46:30.537Z",
+    "provenance": "read-only data health after unexpected process disappearance; not normal-exit/restart acceptance",
+    "profiles": {
+      "baselineLocal": {
+        "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/local-a",
+        "queryOnly": {
+          "query_only": 1
+        },
+        "quickCheck": [
+          {
+            "quick_check": "ok"
+          }
+        ],
+        "pets": 3,
+        "personas": 1,
+        "memories": 0,
+        "messages": 0
+      },
+      "baselineCloud": {
+        "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a",
+        "queryOnly": {
+          "query_only": 1
+        },
+        "quickCheck": [
+          {
+            "quick_check": "ok"
+          }
+        ],
+        "pets": 1,
+        "personas": 0,
+        "memories": 0,
+        "messages": 0
+      },
+      "candidate312": {
+        "path": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a",
+        "queryOnly": {
+          "query_only": 1
+        },
+        "quickCheck": [
+          {
+            "quick_check": "ok"
+          }
+        ],
+        "pets": 2,
+        "personas": 2,
+        "memories": 2,
+        "messages": 8
+      }
+    }
+  }
+}

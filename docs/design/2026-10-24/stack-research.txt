@@ -1,0 +1,110 @@
+灵境桌宠：UI 方向与技术选型研究
+日期：2026-10-24（Asia/Shanghai）
+范围：概念设计与技术研究。本轮没有修改应用业务代码，没有实施框架迁移。
+
+一、已核对的项目现状
+
+本轮执行 git fetch origin 与 git pull --ff-only origin main。
+当前 HEAD：4786f97，与 origin/main 一致。
+
+实际运行栈：Electron 36 系列 + CommonJS 主进程 + 原生 JS/CSS/HTML 渲染界面。
+README 描述了 React/R3F，但当前运行入口实际是 runtime/renderer/renderer.mjs 和 model-viewer。
+主界面 renderer.mjs 约 324 KB。业务逻辑已经存在，问题主要是界面与状态、渲染和服务调用耦合。
+已有能力包括透明置顶窗口、托盘、鼠标穿透、宠物背包、养成、账号、AI 请求、对战与联机服务。
+当前本地宠物数据主要为 JSON。原有 GLB 模型和模型目录必须保留。
+定位运行服务使用 SimulatedMapProvider；地图显示、系统定位和服务端捕捉距离校验是不同层，不能把换地图 SDK 当成接通真实定位。
+仓库还同时存在 runtime_accounts 文本账号 ID 与 player_profiles UUID 两种身份模型；新数据必须明确归属链路。
+
+二、建议的视觉与信息结构
+
+保留应用名：灵境。
+主色：奶白 #F8F9F5、雾蓝 #EAF2FF、深蓝文字 #182A48、蓝紫主操作 #5C7FE8。
+风格：清晰、轻盈的桌面软件；以蓝发鲸鱼娘插画与宠物表情增加陪伴感。
+界面保持中文优先。主体按钮平面化；主要阴影仅用于区分应用窗口与桌面。
+一级导航：我的灵宠、附近探索、对战中心、领地、背包、聊天、设置。
+角色模板与宠物实例分开：多只大肥鱼可以共用形象，但名字、性格、状态、位置、聊天与记忆各自独立。
+“桌面中”与“出战伙伴”分别管理。
+图中的宠物、地图、地点、等级与数值是概念设计示例，不代表应用已实现或真实定位结果。
+
+三、桌面框架比较（面向此现有项目的工程判断）
+
+1. Electron + React + TypeScript + Vite
+   适合：在保留现有桌面能力、账号、对战、联机和模型导入的前提下迭代。
+   已核实：支持透明窗口；BrowserWindow 提供 setIgnoreMouseEvents。
+   成本：现有 Node/CommonJS 服务可逐步模块化和类型化，前端重构能够分阶段交付。
+   取舍：需要承担随应用分发 Chromium/Node 的成本；应管理窗口数量、后台动画和纹理资源。
+   判断：此项目首选。重构的实质是新的界面与渲染架构、类型契约和数据层，而不是只换皮肤。
+   官方：https://www.electronjs.org/docs/latest/tutorial/custom-window-styles
+   官方：https://www.electronjs.org/docs/latest/api/browser-window/#winsetignoremouseeventsignore-options
+   官方：https://www.electronjs.org/docs/latest/tutorial/performance
+
+2. Tauri 2 + Rust + React + TypeScript + Vite
+   适合：把分发体积与原生集成作为主要目标、愿意承担桌面服务迁移的版本。
+   已核实：Windows 使用 WebView2；提供透明窗口和 setIgnoreCursorEvents 接口。
+   成本：需要替换 Electron IPC、Node fs/crypto、窗口与托盘管理等宿主依赖，或引入明确的过渡适配层。
+   纯 TypeScript 战斗与养成规则、React UI、PixiJS 和 WebGL 3D 展示可以保留在共享层。
+   取舍：安装包小不能推出同场景总内存或 GPU 使用更低。系统 WebView 与原生插件兼容需要验证。
+   判断：轻量化首要候选；先与 Electron 做同资源、同窗口策略的原型对照再决定切换。
+   官方：https://v2.tauri.app/reference/webview-versions/
+   官方：https://v2.tauri.app/reference/config/#windowconfig
+   官方：https://v2.tauri.app/reference/javascript/api/namespacewindow/#setignorecursorevents
+   官方：https://v2.tauri.app/concept/process-model/
+
+3. Qt 6 / Qt Quick + QML + C++（或 PySide6）
+   适合：原生桌面交互优先，长期由熟悉 Qt/QML 的团队维护。
+   已核实：Qt Quick 有声明式动画、场景图与输入处理；透明 Window 需配合合适的窗口 flags。
+   成本：当前 React/JS 管理 UI 与 Node 服务不能直接沿用，需要改写较多应用代码。
+   判断：可行，但相对此仓库的增量收益不足以支持直接整体迁移。
+   官方：https://doc.qt.io/qt-6/qtquick-index.html
+   官方：https://doc.qt.io/qt-6/qml-qtquick-window.html
+
+4. Godot
+   适合：未来重点变为复杂 2D/3D 游戏、场景编辑、动作演出和关卡。
+   已核实：支持透明、置顶的桌面覆盖窗口以及输入穿透相关设置。
+   取舍：官方文档列出 Windows 混合显卡透明显示的已知兼容问题；现有桌面软件表单与 Node 服务需重接。
+   判断：游戏演出方向可选；当前陪伴、地图、管理、聊天与轻量回合制混合产品不作为首选宿主。
+   官方：https://docs.godotengine.org/en/stable/tutorials/ui/creating_applications.html#displaying-the-application-as-an-overlay
+
+5. .NET / WPF
+   适合：明确长期仅做 Windows、以 Win32 集成为主要能力的产品。
+   已核实：AllowsTransparency 配合 WindowStyle=None 支持不规则透明窗口。
+   成本：需要将现有 JS 服务和玩法迁移或桥接到 C#，并另外设计 2D/3D 资产方案。
+   判断：Windows 专用可选；跨平台计划和既有代码复用使其当前优先级低于 Electron/Tauri。
+   官方：https://learn.microsoft.com/en-us/dotnet/api/system.windows.window.allowstransparency
+
+四、推荐组合与职责
+
+桌面宿主：Electron（先抽象 DesktopHost 接口，为 Tauri 原型保留替换点）。
+管理 UI：React + TypeScript + Vite；组件承载宠物、地图、对战、背包、聊天等正式页面。
+2D 渲染：PixiJS 8；共享精灵图集，统一 ticker；宠物逐帧动画不通过 React setState 驱动。
+行为：独立的每宠物状态机。普通养成与动作离线运行；自由聊天单独调用模型。
+3D：保留现有 model-viewer 适配器与 GLB 导入；确有统一 3D 战斗场景需求时再评估 Three.js。
+游戏规则：抽为共享 TypeScript 包；联机结算继续由服务端验证，渲染器不能决定胜负。
+存储：SQLite，统一写入与版本迁移；旧 JSON 先备份再幂等导入。
+云端：延续现有 Supabase 服务，明确当前账号会话如何映射 owner，统一逐宠物的数据归属。
+地图：MapAdapter 与 LocationAdapter 分离；显示底图、OS 定位、坐标系统转换、捕捉距离各自可验证。
+Windows 真实定位适配可评估系统 Geolocator；API 提供单次定位、位置更新与精度信息，接入时必须处理系统授权与定位不可用状态。
+https://learn.microsoft.com/en-us/uwp/api/windows.devices.geolocation.geolocator
+测试：现有规则回归 + 定向服务测试 + 真实 Windows 的交互、穿透、多显示器、DPI 与恢复验证。
+
+PixiJS 选型依据：官方建议使用 spritesheet 降低纹理数量，并支持精灵批量绘制；适合多只共享素材的宠物。
+https://pixijs.com/8.x/guides/concepts/performance-tips
+保留 model-viewer 的依据：当前已有集成，官方支持主流桌面/移动浏览器中的交互 3D 模型展示。
+https://modelviewer.dev/
+
+五、全面迁移之前的性能验证
+
+本轮没有构建 Electron/Tauri 的对照程序，也没有产生实测性能数据。
+不承诺未经测量的 MB、CPU 百分比或 FPS 优势。
+对照条件：相同设备、相同资源、相同 DPI、相同出场数量和相同窗口结构；统计完整进程树。
+场景：1/3/5/10 只宠物；纯待机/连续拖拽/打开地图/对战/休眠唤醒。
+指标：总私有内存、CPU、GPU、帧时间、启动时间、安装体积、资源释放、输入穿透正确性。
+架构候选：每显示器一个共享透明舞台 + 独立管理窗口；也应与少量独立宠物窗口对照。
+重点检查：透明窗口命中区域、空白穿透、任务栏、焦点、多屏负坐标、不同缩放比例。
+依据这些结果决定是否从 Electron 切换 Tauri；不改变完整功能范围。
+
+六、功能保留与交付边界
+
+本次设计保留并展示：多宠物、原有动物、对战、好友联机、属性克制、技能、养成、地图、定位、捕捉、领地、背包、聊天。
+正式实施时，先建立旧功能清单及对应迁移验收项；不能把通过静态源码检查当作功能已运行。
+先评审 UI 和技术方案；当前没有执行功能重写、数据库迁移、云端发布或依赖升级。

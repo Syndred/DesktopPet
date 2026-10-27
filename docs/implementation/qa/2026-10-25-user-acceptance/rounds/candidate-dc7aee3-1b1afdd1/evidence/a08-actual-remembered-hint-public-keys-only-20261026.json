@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-26T06:59:55.431Z",
+  "source": "read-only CDP metadata, no UI input or IPC/business request",
+  "targetPort": 57218,
+  "originalCloudAPhysicalProfile": true,
+  "passwordValuesInspected": false,
+  "passwordLengthMeasured": false,
+  "legacyHintValuesRead": false,
+  "storageModified": false,
+  "result": {
+    "route": "#/companions",
+    "hintKeys": [
+      "account",
+      "provider"
+    ],
+    "hintHasOnlyPublicAccountProvider": true,
+    "hintMatchesCurrentB": true,
+    "hintProviderRuntime": true,
+    "legacyHintKeyAbsent": true
+  }
+}

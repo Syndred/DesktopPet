@@ -1,0 +1,129 @@
+{
+  "at": "2026-10-26T21:54:33.099Z",
+  "stage": "navigation-settings-window-and-visible-version",
+  "caseUpdates": [
+    {
+      "id": "N01",
+      "status": "passed",
+      "actual": "全部8主导航实际打开并等待目标加载，标题/激活状态一致；设置5分组均达，详情页普通进入/返回链及最终回到我的灵宠保留原青芽上下文，无加载完成后的空白。Electron未提供独立历史前后退控件，Alt+Left无效果，已按实际页内进入/返回验证，不声称其历史快捷键有效。",
+      "evidence": [
+        "native-N01-original-B2-companions-navigation.png",
+        "native-N01-original-B2-explore-loaded.png",
+        "native-N01-original-B2-battle-loaded.png",
+        "native-N01-original-B2-garden-actual-result.png",
+        "native-N01-original-B2-backpack-actual-result.png",
+        "native-N01-original-B2-chat-loaded.png",
+        "native-R06-original-B2-auto-restored-new-fantuan-preview.png",
+        "native-companion-filters-details-inventory-unconfigured-chat-seal.json",
+        "native-N01-P01-original-B2-settings-desktop.png",
+        "native-P01-settings-keyboard-group-focus.png",
+        "native-P01-settings-notifications-keyboard-opened.png",
+        "native-P01-settings-ai-actual-opened.png",
+        "native-P01-settings-ai-bottom-scroll.png",
+        "native-P01-original-B2-account-settings-top.png",
+        "native-P01-P08-original-B2-account-bottom-visible-entries.png",
+        "native-R06-original-B2-auto-restored-new-fantuan-preview.png",
+        "native-N01-N02-original-B2-minimum-companions-return.png",
+        "native-navigation-settings-window-and-version-visibility-seal.json",
+        "cloudB2-after-settings-navigation-window-layout-checks.json"
+      ]
+    },
+    {
+      "id": "P01",
+      "status": "passed",
+      "actual": "桌面与行为、通知与隐私、AI对话、角色资源、账号与同步5分组均实际可达；Tab焦点及Enter打开通知分组正常；AI与账户底部通过滚动到达，所有控件标签/状态清晰，无布局遮挡。仅查看，未保存设置。",
+      "evidence": [
+        "native-N01-P01-original-B2-settings-desktop.png",
+        "native-P01-settings-keyboard-group-focus.png",
+        "native-P01-settings-notifications-keyboard-opened.png",
+        "native-P01-settings-ai-actual-opened.png",
+        "native-P01-settings-ai-bottom-scroll.png",
+        "native-P01-original-B2-account-settings-top.png",
+        "native-P01-P08-original-B2-account-bottom-visible-entries.png",
+        "native-R06-original-B2-auto-restored-new-fantuan-preview.png",
+        "native-navigation-settings-window-and-version-visibility-seal.json",
+        "cloudB2-after-settings-navigation-window-layout-checks.json"
+      ]
+    },
+    {
+      "id": "N02",
+      "status": "passed",
+      "actual": "以原生Windows系统大小操作达到962×701支持最小窗口，实际最大化2048×1152并Restore正常。最小尺寸账户表单/底部备份、完整原生file-open子窗口及Cancel、AI上下表单、聊天外层滚动至输入与记忆区、资源与伙伴页均可达，无遮挡。方法限定：CUA鼠标边界拖动未完成缩放，最小布局由系统Size命令验证，未伪称鼠标拖动成功。",
+      "evidence": [
+        "native-N02-original-B2-keyboard-resize-minimum-account.png",
+        "native-N02-original-B2-minimum-account-bottom-scroll.png",
+        "native-N02-original-B2-minimum-open-backup-dialog-full-child.png",
+        "native-N02-original-B2-maximized-account.png",
+        "native-N02-original-B2-restored-minimum-account.png",
+        "native-N02-original-B2-minimum-ai-top.png",
+        "native-N02-original-B2-minimum-ai-bottom-scroll.png",
+        "native-N02-original-B2-minimum-chat.png",
+        "native-N02-original-B2-minimum-chat-outer-scroll.png",
+        "native-N02-original-B2-minimum-resource-page.png",
+        "native-N01-N02-original-B2-minimum-companions-return.png",
+        "native-navigation-settings-window-and-version-visibility-seal.json",
+        "cloudB2-after-settings-navigation-window-layout-checks.json"
+      ]
+    },
+    {
+      "id": "P08",
+      "status": "failed",
+      "actual": "已实际遍历5设置分组及账户底部，未提供关于/可见应用版本/日志/更新入口；公开appInfo和manifest版本均正确0.1.8。源码5组导航及Menu.setApplicationMenu(null)支持缺失事实，关联4E6-004可见诊断入口缺失，非包版本不一致，不外传日志。",
+      "findingRefs": [
+        "4E6-004"
+      ],
+      "evidence": [
+        "native-N01-P01-original-B2-settings-desktop.png",
+        "native-P01-settings-keyboard-group-focus.png",
+        "native-P01-settings-notifications-keyboard-opened.png",
+        "native-P01-settings-ai-actual-opened.png",
+        "native-P01-settings-ai-bottom-scroll.png",
+        "native-P01-original-B2-account-settings-top.png",
+        "native-P01-P08-original-B2-account-bottom-visible-entries.png",
+        "native-R06-original-B2-auto-restored-new-fantuan-preview.png",
+        "native-navigation-settings-window-and-version-visibility-seal.json",
+        "cloudB2-after-settings-navigation-window-layout-checks.json"
+      ]
+    },
+    {
+      "id": "P09",
+      "status": "blocked",
+      "actual": "原开机启动开关关闭；仅定向只读HKCU Run中Lingjing/灵境/DesktopPet名称，匹配0条，无OS变更。冻结源码选择稳定便携外层SFX并拒绝TEMP，但未实际启用注册，不能将源码/关闭状态视作实际稳定注册验收；按既定不改OS启动项边界保留。",
+      "blockerGroup": "STARTUP_OFF",
+      "blockerKind": "external_state_not_exercised",
+      "evidence": [
+        "native-P09-targeted-startup-registry-readonly.json",
+        "native-N01-P01-original-B2-settings-desktop.png",
+        "native-navigation-settings-window-and-version-visibility-seal.json",
+        "cloudB2-after-settings-navigation-window-layout-checks.json"
+      ]
+    }
+  ],
+  "newIssues": [],
+  "issueUpdates": [
+    {
+      "id": "4E6-004",
+      "title": "登录与设置缺少可见版本及诊断入口",
+      "caseIds": [
+        "A01",
+        "P08"
+      ],
+      "actual": "空普通profile真实首次登录界面及正文无0.1.8版本标识，公开appInfo实际版本正确0.1.8，启动与登录入口正常。；已遍历5设置分组/账户底部，未提供关于/可见应用版本/日志/更新入口；公开版本0.1.8正确。",
+      "evidence": [
+        "native-A01-fresh-ordinary-profile-first-login-screen.png",
+        "cloudBResourceFresh-first-cold-start-unauthenticated.json",
+        "native-N01-P01-original-B2-settings-desktop.png",
+        "native-P01-settings-keyboard-group-focus.png",
+        "native-P01-settings-notifications-keyboard-opened.png",
+        "native-P01-settings-ai-actual-opened.png",
+        "native-P01-settings-ai-bottom-scroll.png",
+        "native-P01-original-B2-account-settings-top.png",
+        "native-P01-P08-original-B2-account-bottom-visible-entries.png",
+        "native-R06-original-B2-auto-restored-new-fantuan-preview.png",
+        "native-navigation-settings-window-and-version-visibility-seal.json",
+        "cloudB2-after-settings-navigation-window-layout-checks.json"
+      ],
+      "qualification": "UI版本和实际诊断/更新入口可见性缺失；非包指纹、白屏或登录故障。"
+    }
+  ]
+}

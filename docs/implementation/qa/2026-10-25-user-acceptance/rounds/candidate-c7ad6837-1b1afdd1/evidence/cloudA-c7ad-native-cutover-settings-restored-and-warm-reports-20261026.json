@@ -1,0 +1,218 @@
+{
+  "at": "2026-10-26T12:22:01.805Z",
+  "status": "native_original_cloudA_cutover_restoration_and_warm_report_observation_complete_awaiting_root_independent_review",
+  "approvalRef": "root-c7ad-cloudA-normal-cutover-warm-reports-1148",
+  "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+  "exeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+  "asarSha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355",
+  "runtime": {
+    "mainPid": 20308,
+    "wrapperPid": 12788,
+    "windowId": 6947910,
+    "actualExe": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\nsnF200.tmp\\app\\Lingjing.exe",
+    "cdp": 57218,
+    "oldMainAndWrapperNormallyExited": true,
+    "singleLaunch": true,
+    "ordinaryProfileNoMarker": true,
+    "noQaScenarioOrRun": true,
+    "noProxyOrHelper": true
+  },
+  "identity": {
+    "owner": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+    "uid": "524c5302-19a2-43ec-aa72-b8894bd48efe",
+    "device": "41de040e-a134-487f-b1d3-76b5254a8f97",
+    "scenario": null,
+    "dataMode": "live",
+    "persistence": "secure",
+    "originalSecureLoginReused": true,
+    "credentialValuesRead": false,
+    "rememberAndKeepControlsUntouched": true,
+    "secureSessionFileMetadataMayRefreshNormally": true
+  },
+  "settings": {
+    "originalRevision": 14,
+    "temporaryCloseFalseRevision": 15,
+    "finalRevision": 16,
+    "finalDocumentRawExact": true,
+    "closeToTray": true,
+    "syncEnabled": true,
+    "volume": 70,
+    "saves": 2
+  },
+  "generated": [
+    {
+      "actionId": "auto:0271accf-03fe-482f-a357-d71a42141c09",
+      "baseRevision": 30,
+      "cloudRevision": 31,
+      "checksum": "7d0d15d27b0be254a657c66b0a9391c666f234e5e0c44e46fa1d2acac28bf885",
+      "status": "verified",
+      "attempts": 0,
+      "verifiedAt": "2026-10-26T11:55:40.309Z"
+    },
+    {
+      "actionId": "auto:696bea29-9a54-44bd-b01f-aceabe614e97",
+      "baseRevision": 31,
+      "cloudRevision": 32,
+      "checksum": "1fddde277f380484e676d4f3717d6c4a952725204a5be38aeb29bcc5c7cbc483",
+      "status": "verified",
+      "attempts": 0,
+      "verifiedAt": "2026-10-26T12:08:54.896Z"
+    }
+  ],
+  "retention": {
+    "all8OriginalCachedPetsRawExactAcross8Frames": true,
+    "originalA4AndB4OwnerRowsRetained": true,
+    "bothOwnerSelectionsRawExact": true,
+    "otherOwnerSettingsRawExact": true,
+    "all13OriginalOutboxRowsRawExact": true,
+    "otherAccountSaveModulesExactBetweenTwoSettingsSaves": true,
+    "allOriginalBattleRowsRawExact": true,
+    "nonAccountCoreExact": [
+      "battle_action_receipts",
+      "battle_reports_v2",
+      "battle_reward_receipts",
+      "battle_sessions",
+      "battle_transport_journal",
+      "companion_accounts",
+      "companion_actions",
+      "companion_capture_receipts",
+      "companion_identity_imports",
+      "companion_interactions",
+      "companion_legacy_archive",
+      "companion_pets",
+      "conversation_connections",
+      "conversation_credentials",
+      "conversation_legacy_imports",
+      "conversation_memories",
+      "conversation_messages",
+      "conversation_preferences",
+      "conversation_profiles",
+      "discovery_actions",
+      "discovery_captures",
+      "discovery_encounters",
+      "discovery_memory_tags",
+      "garden_accounts",
+      "garden_actions",
+      "garden_cloud_requests",
+      "garden_cloud_state",
+      "garden_events",
+      "garden_garrisons",
+      "garden_identity_imports",
+      "garden_items",
+      "garden_ledger",
+      "garden_outbox",
+      "garden_plots",
+      "garden_reward_receipts",
+      "garden_territory_attempts",
+      "garden_territory_challenges",
+      "garden_territory_logs",
+      "garden_territory_records",
+      "lingjing_migrations",
+      "lingjing_resource_cloud_downloads",
+      "lingjing_resource_cloud_outbox",
+      "lingjing_resource_cloud_receipts",
+      "lingjing_resource_imports",
+      "lingjing_resource_preference_cache",
+      "lingjing_resource_preference_outbox",
+      "lingjing_resource_preference_state",
+      "lingjing_resource_preferences",
+      "lingjing_resources"
+    ]
+  },
+  "tableAudit": {
+    "count": 67,
+    "changedTables": [
+      "account_actions",
+      "account_cloud_links",
+      "account_identities",
+      "account_settings",
+      "account_sync_baselines",
+      "account_sync_checkpoints",
+      "account_sync_outbox",
+      "account_sync_sources",
+      "account_sync_state",
+      "lingjing_meta",
+      "lingjing_resource_files"
+    ],
+    "warmChangedTables": [
+      "account_actions",
+      "account_sync_checkpoints",
+      "account_sync_state"
+    ],
+    "noNewBattleSessions": true,
+    "noNewBattleReports": true,
+    "noNewRewards": true,
+    "battleCounts": {
+      "battle_action_receipts": 0,
+      "battle_reports_v2": 3,
+      "battle_reward_receipts": 3,
+      "battle_sessions": 3,
+      "battle_transport_journal": 21
+    },
+    "accountMetadataAndResourcePathRefreshNotClaimedRawExact": true
+  },
+  "warmReports": {
+    "sessionId": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+    "reportRows": [
+      {
+        "owner": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+        "sessionId": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+        "endedAt": "2026-10-25T21:49:00.381325+00:00"
+      },
+      {
+        "owner": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "id": "battle-dc8b3621-93ed-493f-aef9-3a99d15e7929",
+        "sessionId": "battle-dc8b3621-93ed-493f-aef9-3a99d15e7929",
+        "endedAt": "2026-10-26T00:33:32.702Z"
+      },
+      {
+        "owner": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+        "sessionId": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+        "endedAt": "2026-10-25T21:49:00.381325+00:00"
+      }
+    ],
+    "firstListDetail": true,
+    "firstRoundReplay": true,
+    "lastRoundReplay": true,
+    "leftForOriginalFox4DetailAndReentered": true,
+    "uiFrames": [
+      {
+        "label": "existing-friend-report-first-loaded",
+        "at": "2026-10-26T12:12:20.068Z"
+      },
+      {
+        "label": "existing-friend-report-last-round12-replay",
+        "at": "2026-10-26T12:14:25.577Z"
+      },
+      {
+        "label": "existing-friend-report-warm-reentry-loaded",
+        "at": "2026-10-26T12:18:51.006Z"
+      }
+    ],
+    "a": {
+      "petId": "pet-97410828-fdf6-4253-8246-4c5f389d8fba",
+      "name": "小狐",
+      "displayNumber": "0004"
+    },
+    "b": {
+      "petId": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+      "name": "小狐",
+      "displayNumber": "0005"
+    },
+    "namesAndNumbersPresentInListDetailAndRoundSidebar": true,
+    "oldOutcomeAndRewardDisplayPreserved": true
+  },
+  "limits": {
+    "ledgerNotChangedForQA023": true,
+    "noNewInvitation": true,
+    "noNewBattle": true,
+    "noAdoptionOrCapture": true,
+    "noHelperStarted": true,
+    "noManualSyncRetryMergeOrRestore": true,
+    "rootIndependentPgAndMetadataAttributionPending": true,
+    "all98CasesNotClaimedPassed": true
+  },
+  "uiStoppedAt": "#/battle/reports"
+}

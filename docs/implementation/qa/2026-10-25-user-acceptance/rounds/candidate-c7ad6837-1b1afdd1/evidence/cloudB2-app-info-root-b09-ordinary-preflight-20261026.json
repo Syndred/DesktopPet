@@ -1,0 +1,88 @@
+{
+  "at": "2026-10-26T12:21:36.316Z",
+  "method": "Readonly public app:info/accounts:session safe projection; no credential/proof values returned, input or business mutation",
+  "result": {
+    "ok": true,
+    "version": "0.1.8",
+    "build": {
+      "schemaVersion": 2,
+      "builtAt": "2026-10-26T08:18:48.729Z",
+      "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+      "sourceTree": "e021c60cf8bfe120ca5054986f09a0ab521037b3",
+      "sourceDirtyFiles": [],
+      "codeFingerprint": "44d17fd2c756910290b367f6738ba378f41437d11078b3effa72f9206e84da6d",
+      "canonicalSourceFingerprint": "2d1f29f466e7e7d16754e6bf9148744f1822f78d17da876d27d0c012224f431f",
+      "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+      "compiledFingerprint": "764f781fa59df5ebb6fcdc09181606c68f98fa037f5937f107979d65c02c4940",
+      "codeFiles": 320,
+      "compiledFiles": 90,
+      "toolchain": {
+        "node": "24.21.0",
+        "electron": "44.9.3",
+        "sqlite": "13.0.3",
+        "vite": "7.3.7",
+        "typescript": "5.9.3",
+        "platform": "win32",
+        "arch": "x64"
+      },
+      "entrypoints": {
+        "main": "main/index.cjs",
+        "app": "ui/index.html",
+        "desktop": "ui/desktop.html",
+        "preload": "preload/index.cjs"
+      },
+      "publicCloud": {
+        "projectRef": "jbvrdmrkwpznbrvteive",
+        "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+        "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+        "resourcePath": "lingjing-cloud-public.json"
+      },
+      "packageName": "lingjing-desktop",
+      "runtimeClosure": {
+        "manifest": "runtime-closure.json",
+        "files": 119,
+        "edges": 205,
+        "sha256": "c0cd8b3278c7ac175ee113d6a8ffbac7f557d9a2c7552f32beeb33831930ea10"
+      }
+    },
+    "runtime": {
+      "electron": "44.9.3",
+      "node": "24.22.0",
+      "modules": "149",
+      "napi": "10",
+      "arch": "x64",
+      "tray": {
+        "active": true,
+        "bounds": {
+          "x": 1751,
+          "y": 1150,
+          "width": 33,
+          "height": 49
+        }
+      }
+    },
+    "scenario": null,
+    "user": {
+      "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "provider": "runtime",
+      "authUserId": "2028f0af-f501-47f5-9abb-de59487dad46"
+    },
+    "publicSession": {
+      "dataMode": "live",
+      "persistence": "memory",
+      "user": {
+        "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "provider": "runtime",
+        "authUserId": "2028f0af-f501-47f5-9abb-de59487dad46"
+      }
+    },
+    "route": "#/settings",
+    "visibleAlerts": [
+      ""
+    ],
+    "visibleStatus": [
+      "当前显示 1 / 3",
+      "设置已保存。"
+    ]
+  }
+}

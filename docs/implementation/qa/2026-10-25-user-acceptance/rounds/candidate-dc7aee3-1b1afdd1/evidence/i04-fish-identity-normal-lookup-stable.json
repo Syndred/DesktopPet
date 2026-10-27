@@ -1,0 +1,53 @@
+{
+  "started": "2026-10-25T19:57:08.508Z",
+  "first": {
+    "at": "2026-10-25T19:57:08.510Z",
+    "preview": "喂养对象\n鱼丸\n编号 0001",
+    "selected": [
+      {
+        "petId": "pet-40899e45-d323-49c8-9136-743f14be6ce3",
+        "text": "鱼丸编号 0001Lv.01"
+      }
+    ]
+  },
+  "settled": {
+    "at": "2026-10-25T19:57:08.523Z",
+    "preview": "喂养对象\n鱼丸\n编号 0001",
+    "selected": [
+      {
+        "petId": "pet-40899e45-d323-49c8-9136-743f14be6ce3",
+        "text": "鱼丸编号 0001Lv.01"
+      }
+    ]
+  },
+  "normalNativeSelectionOnly": true,
+  "normalReadOnlyLookup": true,
+  "companions": [
+    {
+      "petId": "pet-40899e45-d323-49c8-9136-743f14be6ce3",
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "templateId": "big-fish-gentle",
+      "globalSerial": "1"
+    },
+    {
+      "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "templateId": "animal-white-fox",
+      "globalSerial": "1"
+    }
+  ],
+  "gardenPets": [
+    {
+      "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "templateId": "animal-white-fox",
+      "hasGlobalSerial": false
+    },
+    {
+      "petId": "pet-40899e45-d323-49c8-9136-743f14be6ce3",
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "templateId": "big-fish-gentle",
+      "hasGlobalSerial": false
+    }
+  ]
+}

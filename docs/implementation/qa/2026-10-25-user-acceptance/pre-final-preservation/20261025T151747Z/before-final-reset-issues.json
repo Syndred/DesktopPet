@@ -1,0 +1,543 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-25T09:24:08.156Z",
+  "authorization": {
+    "threadId": "01a1704b-e200-7090-9d17-958218c80f42",
+    "userMessageId": "01a1725b-4da0-7b13-86ec-0d4935596ccb",
+    "verified": true
+  },
+  "issues": [
+    {
+      "id": "QA-001",
+      "title": "登录页保持登录复选框文字与锁图标未对齐",
+      "reproducibleSteps": [
+        "运行原成品",
+        "观察保持登录行"
+      ],
+      "expected": "复选框文字锁图标垂直居中，焦点提示可用",
+      "actual": "125% DPI原EXE截图和DOM独立复现：label中心Y 572.194、checkbox 572.188、锁badge与SVG 566.188，锁图标上偏6 DIP",
+      "owner": "08",
+      "severity": "P1-release-blocker",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/baseline-login.png",
+        "evidence/QA-001-login-geometry.json"
+      ],
+      "status": "fixed_awaiting_retest",
+      "assignment": "总协调已发08；本验收不重复派发",
+      "reproduced": true,
+      "updatedAt": "2026-10-25T10:39:29.387Z",
+      "fixCommits": [
+        "c83d3b5746d692707aec51fdac3dbb24fae2bff8"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "A prior candidate passed; this exact candidate requires native retest.",
+      "verifiedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verifiedExeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+      "verificationEvidence": [
+        "rounds/candidate-312e5fe-524fd56d/evidence/QA-001-aligned-register.json",
+        "rounds/candidate-312e5fe-524fd56d/evidence/login-lock-focused.jpg"
+      ],
+      "verificationHistory": [
+        {
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "verification": "Exact candidate native retest passed: same-row centres aligned; keyboard tooltip visible.",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/QA-001-aligned-register.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/login-lock-focused.jpg"
+          ]
+        }
+      ],
+      "awaitingRoundId": "candidate-e875feb-50e52249"
+    },
+    {
+      "id": "QA-002",
+      "title": "领养分类仍为大肥鱼/动物伙伴，需改为属性图标",
+      "reproducibleSteps": [
+        "注册或登录",
+        "打开领养页",
+        "观察分类"
+      ],
+      "expected": "全部与金木水火土属性图标分类，不使用角色物种分类",
+      "actual": "原EXE正常注册后通过领养按钮进入；仍显示全部/大肥鱼/动物伙伴，另有全部五行下拉，用户要求未实现",
+      "owner": "02",
+      "severity": "P1-release-blocker",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/baseline-adoption.png"
+      ],
+      "status": "fixed_awaiting_retest",
+      "assignment": "总协调已发02",
+      "reproduced": true,
+      "updatedAt": "2026-10-25T10:39:29.389Z",
+      "fixCommits": [
+        "ad20468"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "A prior candidate passed; this exact candidate requires native retest.",
+      "verifiedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verifiedExeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+      "verificationEvidence": [
+        "rounds/candidate-312e5fe-524fd56d/evidence/adopt-metal.jpg",
+        "rounds/candidate-312e5fe-524fd56d/evidence/adopt-wood.jpg",
+        "rounds/candidate-312e5fe-524fd56d/evidence/adopt-water.jpg",
+        "rounds/candidate-312e5fe-524fd56d/evidence/adopt-fire.jpg",
+        "rounds/candidate-312e5fe-524fd56d/evidence/adopt-earth.jpg"
+      ],
+      "verificationHistory": [
+        {
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "verification": "Exact candidate native retest passed: all five element icon categories selected and correct displayed templates.",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/adopt-metal.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/adopt-wood.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/adopt-water.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/adopt-fire.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/adopt-earth.jpg"
+          ]
+        }
+      ],
+      "awaitingRoundId": "candidate-e875feb-50e52249"
+    },
+    {
+      "id": "QA-003",
+      "title": "固定角色名、同类型跨用户连续数字编号与桌面仅形象",
+      "reproducibleSteps": [
+        "同模板领养两只",
+        "查看列表/详情/桌面/聊天/对战",
+        "重启/同步"
+      ],
+      "expected": "固定角色标准名；公开界面同类型跨全部用户连续阿拉伯数字编号0001起，内部petId保持；桌面仅形象",
+      "actual": "三次真实UI同模板领养：前两只小狐在列表与桌面仅显示同名，无可见稳定编号；第三次在领养表单输入验收昵称后实例和列表显示该昵称替代标准名。后端已有petId与8位serial且三者不同，并非后端完全无编号。全局完整唯一编号、固定标准名和跨域可辨识仍需修复。",
+      "owner": "02",
+      "severity": "P1-release-blocker",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/QA-003-three-instances.json",
+        "evidence/QA-003-three-instances-renderer.png",
+        "evidence/QA-004-drag-00.png"
+      ],
+      "status": "assigned",
+      "assignment": "总协调已发02",
+      "reproduced": true,
+      "updatedAt": "2026-10-25T10:42:47.973Z",
+      "crossDomainInitialObservation": "聊天列表三只同模板仍只显示name；无可见编号。其aria-label有petId末8位，界面视觉仍不能区分。evidence/chat-unconfigured-renderer.png",
+      "fixCommits": [
+        "ad20468",
+        "4adcf1d",
+        "2c6f5b3",
+        "619e64d"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "Source integrated by coordinator; no candidate native verification yet. Baseline actual failures remain.",
+      "newRequirementAt": "2026-10-25T10:42:47.973Z",
+      "currentCandidateOutcome": "312旧候选仍公开完整petId/GUID且桌面带名号，符合旧修复方向但不满足新增数字编号及桌面无标签；等待新源候选，不得关闭QA003。"
+    },
+    {
+      "id": "QA-004",
+      "title": "桌面宠物连续拖动逐渐变大",
+      "reproducibleSteps": [
+        "领养后放桌面",
+        "重复拖动至少10次",
+        "记录每次窗口DIP/DPI/stage/精灵尺寸",
+        "重启回读"
+      ],
+      "expected": "拖动仅改坐标；尺寸和scale不累乘，重启稳定",
+      "actual": "125% DPI实际10次原生拖动：232×280→252×300 DIP，stage214×222.9→234×242.9，保存scale始终1；20个受信pointerdown/up。静止quiet模式排除自动行为。用户原超大透明桌宠另有01只读窗口元数据2145×2230物理像素，不能当作本次实拖数据。",
+      "owner": "02",
+      "severity": "P1-release-blocker",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/QA-004-drag-series.json",
+        "evidence/QA-004-drag-events.json",
+        "evidence/QA-004-drag-00.png",
+        "evidence/QA-004-drag-10.png"
+      ],
+      "status": "fixed_awaiting_retest",
+      "assignment": "总协调已发02",
+      "reproduced": true,
+      "updatedAt": "2026-10-25T10:42:47.970Z",
+      "fixCommits": [
+        "ad20468"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "A prior candidate passed; this exact candidate requires native retest.",
+      "verifiedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verifiedExeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+      "verificationEvidence": [
+        "rounds/candidate-312e5fe-524fd56d/evidence/QA-004-drag-series.json",
+        "rounds/candidate-312e5fe-524fd56d/evidence/QA-004-native-events.json",
+        "rounds/candidate-312e5fe-524fd56d/evidence/QA-004-wander-series.json",
+        "rounds/candidate-312e5fe-524fd56d/evidence/QA-004-follow-moving-series.json"
+      ],
+      "verificationHistory": [
+        {
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "verification": "10 actual native drags, 20 trusted events, actual wander and moving-pointer follow stable; savedScale remains1. Restart remains separately pending D06.",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/QA-004-drag-series.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/QA-004-native-events.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/QA-004-wander-series.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/QA-004-follow-moving-series.json"
+          ]
+        }
+      ],
+      "awaitingRoundId": "candidate-e875feb-50e52249"
+    },
+    {
+      "id": "QA-005",
+      "title": "主窗口最小尺寸固定960×700可能超过高缩放小屏工作区",
+      "reproducibleSteps": [
+        "使用工作区DIP小于960×700的显示环境",
+        "正常启动、恢复与缩放主窗口"
+      ],
+      "expected": "最小尺寸和初始/恢复尺寸均不超过当前可用工作区，核心操作可滚动到达",
+      "actual": "01发现源码先clamp到workArea、随后BrowserWindow固定minWidth=960/minHeight=700；当前本机125%大屏尚未实际复现小工作区超界。标记源码风险，不能当作真实窗口失败或已通过。",
+      "owner": "01",
+      "severity": "P2-source-risk",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "apps/pc-app/runtime/main/index.ts:createWindow",
+        "C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/artifacts/foundation/user-acceptance/window-metadata.json"
+      ],
+      "status": "fixed_awaiting_retest",
+      "reproduced": false,
+      "assignment": "总协调已授权01仅修公共主窗口DIP边界；实际最终包待验收",
+      "fixCommits": [
+        "da330a3214ffff83be749f20a75d4c06fa7976cf"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "Source integrated by coordinator; no candidate native verification yet. Baseline actual failures remain.",
+      "updatedAt": "2026-10-25T10:19:27.554Z"
+    },
+    {
+      "id": "QA-006",
+      "title": "同一档案重复启动会生成第二主进程与登录窗口",
+      "reproducibleSteps": [
+        "原EXE以独立local-a档案启动、注册并保留运行",
+        "确认两QA桌宠quiet静止",
+        "同一EXE再次传入完全相同PET_USER_DATA_DIR与QA标记启动",
+        "比较窗口与进程"
+      ],
+      "expected": "同档案只聚焦已有主窗口；不同档案可分别运行",
+      "actual": "实际出现launcher16196→main18500与第二窗口13832364登录页；原launcher17140→main23668/窗口787934仍运行；第二运行manifest同a9acd7f、QA runId和绝对profile完全相同。未继续同库双登录写入，不声称已损坏数据。",
+      "owner": "01",
+      "severity": "P1-release-blocker",
+      "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/QA-006-duplicate-profile.json",
+        "evidence/QA-006-duplicate-login-renderer.png",
+        "evidence/QA-006-duplicate-login-native.png",
+        "duplicate-launch.json"
+      ],
+      "status": "verified",
+      "reproduced": true,
+      "fixCommits": [
+        "8e5e2a61c23e6ecbcdbf115d76e414e0f7de63d1"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "Actual e875 valid-env ColdSingle, HotSameProfile native original-window restore and ColdPair leave exactly one resident main; independent second profile runs separate owner/storage and original67 tables unchanged.",
+      "updatedAt": "2026-10-25T14:39:04.375Z",
+      "verifiedSource": "e875febf3430be341191a639668d43e7f09826dc",
+      "verifiedExeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+      "verificationEvidence": [
+        "rounds/candidate-e875feb-50e52249/evidence/hot-same-profile-native-outcome.json",
+        "rounds/candidate-e875feb-50e52249/evidence/second-profile-native-outcome.json",
+        "rounds/candidate-e875feb-50e52249/evidence/cold-pair-native-outcome.json"
+      ]
+    },
+    {
+      "id": "QA-007",
+      "title": "便携版开机启动默认路径指向SFX临时解压exe",
+      "reproducibleSteps": [
+        "只读核对原EXE实际main进程路径",
+        "核对desktop-host.cjs setLoginItemSettings参数",
+        "对照Electron官方path缺省process.execPath行为"
+      ],
+      "expected": "开机启动显式使用持久便携入口及正确参数；保留已有启动项；QA不修改全局启动配置",
+      "actual": "原包运行main位于Temp/3LBAQALUKgWr1yvvvscHsCaqSpQ/Lingjing.exe；desktop-host只传openAtLogin/enabled，无path。Electron官方文档确认默认process.execPath。已确认源码风险，未实际写OS注册表/注销/重启，不能声称已做重启后的用户实测。",
+      "owner": "08",
+      "severity": "P2-source-risk",
+      "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/QA-006-duplicate-profile.json",
+        "apps/pc-app/runtime/features/accounts/desktop-host.cjs:123",
+        "https://www.electronjs.org/docs/latest/api/app/#appsetloginitemsettingssettings-macos-windows"
+      ],
+      "status": "fixed_awaiting_retest",
+      "reproduced": false,
+      "verificationLevel": "actual process-path + source + official API contract; OS startup write intentionally untested",
+      "fixCommits": [
+        "f0da7e1",
+        "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "Source integrated by coordinator; no candidate native verification yet. Baseline actual failures remain.",
+      "updatedAt": "2026-10-25T10:19:27.557Z"
+    },
+    {
+      "id": "QA-008",
+      "title": "自由散步保存位置后切换行为出现版本冲突",
+      "owner": "02",
+      "severity": "P2",
+      "status": "verified",
+      "reproduced": true,
+      "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+      "reproducibleSteps": [
+        "正常设为自由散步并等待自然位置保存",
+        "仍在伙伴页选择跟随鼠标",
+        "观察红色伙伴状态已更新请刷新后重试；行为仍自由散步",
+        "重新进入伙伴页后再选择可成功"
+      ],
+      "expected": "自动位置保存不应让正常行为选择产生无从恢复的陈旧状态；保留真正并发保护",
+      "actual": "实际出现一次可见revision冲突，重入恢复成功；底层pet revision随自然移动递增，另一只未变",
+      "evidence": [
+        "rounds/candidate-312e5fe-524fd56d/evidence/behavior-follow-confirmed.jpg",
+        "rounds/candidate-312e5fe-524fd56d/evidence/QA-008-behavior-revision-conflict.json",
+        "rounds/candidate-312e5fe-524fd56d/evidence/product-visible-follow.jpg"
+      ],
+      "assignment": "已直接发02定位；不是跟随完全不可用。",
+      "createdAt": "2026-10-25T10:41:33.563Z",
+      "fixCommits": [
+        "3ec7ecbf523c7ef3515c29fa9a20c92215223b46"
+      ],
+      "verification": "e875 actual native first pet quiet→wander naturally moved and saved position(revision51→54), then native quiet succeeded revision55 without revision-conflict. Only first desktop/revision/updatedAt changed, second pet full object unchanged; no gameplay/API mutation or raw DB write.",
+      "updatedAt": "2026-10-25T14:03:09.366Z",
+      "verifiedSource": "e875febf3430be341191a639668d43e7f09826dc",
+      "verifiedExeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+      "verificationEvidence": [
+        "rounds/candidate-e875feb-50e52249/evidence/qa008-natural-position-then-behavior-outcome.json",
+        "rounds/candidate-e875feb-50e52249/evidence/qa008-natural-walk-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa008-native-quiet-restored.jpg"
+      ]
+    },
+    {
+      "id": "QA-009",
+      "title": "便携SFX热重复退出9且不能唤醒原实例",
+      "owner": "01",
+      "severity": "P1-release-blocker",
+      "status": "verified",
+      "reproduced": true,
+      "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+      "reproducibleSteps": [
+        "启动312候选并注册自己的QA档案",
+        "将原主窗正常最小化",
+        "同SFX同profile再次启动并保留wrapper句柄",
+        "45秒记录进程/退出码/原窗口/解包文件"
+      ],
+      "expected": "第二次启动退出并唤醒原主窗；不同profile能并行；解包无相互覆盖",
+      "actual": "wrapper17496运行32.479s退出9；无第二主进程，原主窗仍最小化；ASAR/EXE前后完整hash一致；原实例本身可手动正常恢复",
+      "evidence": [
+        "rounds/candidate-312e5fe-524fd56d/evidence/qa006-hot-captured-01/summary.json",
+        "rounds/candidate-312e5fe-524fd56d/evidence/qa006-hot-native-outcome.json"
+      ],
+      "fixCommits": [
+        "a4ae503"
+      ],
+      "verification": "Actual valid-env e875 hot duplicate wrapper+child exit0 and restores minimized original native HWND; original payload remains complete with exact hashes. Real cloud-A cross actual SFX roots preserves LS/IDB and ORIGINAL pending action/body/hash, original native retry commits once independently confirmed server-side. V1 exit9 history remains harness-invalid.",
+      "createdAt": "2026-10-25T10:51:12.943Z",
+      "latestActualSource": "e875febf3430be341191a639668d43e7f09826dc",
+      "latestActualExeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+      "latestEvidence": [
+        "rounds/candidate-e875feb-50e52249/evidence/cold-single-1/summary.json",
+        "rounds/candidate-e875feb-50e52249/evidence/cold-single-1/timeline.jsonl",
+        "rounds/candidate-e875feb-50e52249/evidence/cold-single-1/native-windows-after.json"
+      ],
+      "updatedAt": "2026-10-25T14:39:04.377Z",
+      "latestAttemptEnvironmentInvalid": "suspected; actual child env not captured",
+      "verifiedSource": "e875febf3430be341191a639668d43e7f09826dc",
+      "verifiedExeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+      "verificationEvidence": [
+        "rounds/candidate-e875feb-50e52249/evidence/hot-same-profile-native-outcome.json",
+        "rounds/candidate-e875feb-50e52249/evidence/cloud-proxy-episode/original-action-recovery-complete.json"
+      ]
+    },
+    {
+      "id": "QA-010",
+      "title": "背包喂养选宠头像被68px预览框裁切，仅露耳尖",
+      "owner": "05",
+      "severity": "P2",
+      "status": "verified",
+      "reproduced": true,
+      "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+      "reproducibleSteps": [
+        "用原隔离账号正常打开312成品",
+        "最大化主窗（本机DPI125%）",
+        "打开背包与喂养，等待两只小狐canonical stage均ready",
+        "观察给哪位伙伴的两个预览"
+      ],
+      "expected": "选宠小预览清楚显示可辨识的伙伴形象；头像尺寸适配当前容器",
+      "actual": "两只小狐stage ready且canvas244.8×244.8 DIP，cp-portrait244.6平方，garden-pet-portrait仅68高并overflow hidden；内容高145.17，仅9.99高可见（6.879%），真实截图只见耳尖。",
+      "evidence": [
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-bag-portrait-clipping-native.jpg",
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-bag-portrait-clipping.json",
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-territory-known-portrait-clipping.jpg",
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-territory-known-qa010-geometry.json"
+      ],
+      "assignment": "新05已提交98e6c32并交root审核整合，等待同一新候选原生复验",
+      "createdAt": "2026-10-25T11:57:52.923Z",
+      "updatedAt": "2026-10-25T13:48:58.078Z",
+      "fixCommits": [
+        "98e6c32"
+      ],
+      "verification": "Actual e875 native UI backpack and territory pet pickers at2048x1151 and1340x920/DPR1.25 both show complete fox ears/body/feet. Actual canvases now match68px slot height; rect visibility>=99.8%, remaining subpixel rounding affects blank edge. No feed/garrison mutation performed.",
+      "additionalAffectedSurfaces": [
+        "领地总览选择出战伙伴（同garden-pet-portrait）"
+      ],
+      "verifiedSource": "e875febf3430be341191a639668d43e7f09826dc",
+      "verifiedExeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+      "verificationEvidence": [
+        "rounds/candidate-e875feb-50e52249/evidence/qa010-bag-wide-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa010-bag-normal-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa010-territory-normal-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa010-territory-wide-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa010-bag-wide-geometry.json",
+        "rounds/candidate-e875feb-50e52249/evidence/qa010-territory-wide-geometry.json"
+      ]
+    },
+    {
+      "id": "QA-011",
+      "severity": "P2",
+      "status": "verified",
+      "owner": "06",
+      "title": "宽屏聊天侧栏近景裁切过度，仅见额头眼睛，耳顶与下巴被截",
+      "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+      "reportedAt": "2026-10-25T12:30:24.582Z",
+      "reproducibleSteps": [
+        "隔离旧312档案已有小狐，2048×1151 DIP、DPI125%最大化",
+        "从对战或其他页面点击聊天",
+        "观察右侧角色近景；加载完成后仍只有额头和眼睛"
+      ],
+      "expected": "聊天近景在宽窄窗口内保留可辨识完整脸部，避免把耳顶/口鼻下缘过度截掉；保持现有近景用途和资源绑定。",
+      "actual": "原生截图稳定复现。cv-pet-scene407.4×225、overflow:hidden；ResourcePortrait SVG viewBox58.24 0 163.52 173.16，preserveAspectRatio=xMidYMid slice，宽高比变化将近景二次裁切。",
+      "evidence": [
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-chat-portrait-clipping-native.jpg",
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-chat-portrait-clipping.json"
+      ],
+      "fixCommits": [
+        "46e647367960f5f31f58855ed00d2bdadc689b30"
+      ],
+      "verification": "Actual e875 native chat and AI-settings portrait at2048x1151 and1340x920/DPR1.25 show full fox canonical portrait including ears/chin. Read-only DOM confirms SVG viewport212.46x225(chat) or179.41x190(AI) follows viewBox aspect ratio inside wide slot; global preserveAspectRatio slice unchanged, actual visible canonical content>=99.994%. No API-key/persona/memory mutation performed. Native check covers existing foxes, not all8 source gallery variants.",
+      "updatedAt": "2026-10-25T13:51:53.532Z",
+      "verifiedSource": "e875febf3430be341191a639668d43e7f09826dc",
+      "verifiedExeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+      "verificationEvidence": [
+        "rounds/candidate-e875feb-50e52249/evidence/qa011-chat-wide-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa011-chat-normal-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa011-ai-normal-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa011-ai-wide-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa011-chat-wide-geometry.json",
+        "rounds/candidate-e875feb-50e52249/evidence/qa011-ai-wide-geometry.json"
+      ]
+    },
+    {
+      "id": "QA-012",
+      "severity": "P2",
+      "status": "fixed_awaiting_retest",
+      "owner": "04",
+      "title": "进行中对局左上返回按钮立即回跳本场，表面没有响应",
+      "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+      "reportedAt": "2026-10-25T12:32:52.412Z",
+      "reproducibleSteps": [
+        "正常原生开始训练并完成1回合",
+        "点击左上aria-label返回按钮",
+        "仍停在同一session画面，无大厅或明确保留/离开反馈"
+      ],
+      "expected": "返回按钮应有可理解的导航结果，并保留可恢复的对局，或用明确的交互说明当前限制。",
+      "actual": "trusted native click于1792930596524；点击后仍为原battle-5f702c9e第2回合。侧栏切聊天可正常离页，返回对战自动恢复；不是按钮busy或对局数据损坏。源码active ResumeBattle自动导航与toolbar navigate(back)形成回跳。",
+      "evidence": [
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-active-battle-back-noop.json",
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-before-return.jpg",
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-all-actions-textures.json"
+      ],
+      "fixCommits": [
+        "d3a5f2f48433e326a6d3e6cc50acba7e94bd21ee"
+      ],
+      "verification": "Native training original reproduction fixed in e875: back stays lobby, reports accessible, report restart returns retained lobby, Continue restores exact full session. Friend waiting/active and same-final-package coverage pending.",
+      "updatedAt": "2026-10-25T13:56:50.559Z",
+      "trainingVerifiedSource": "e875febf3430be341191a639668d43e7f09826dc",
+      "trainingVerifiedExeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+      "verificationEvidence": [
+        "rounds/candidate-e875feb-50e52249/evidence/qa012-native-return-report-continue-outcome.json",
+        "rounds/candidate-e875feb-50e52249/evidence/qa012-lobby-retained-session-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa012-training-resumed-native.jpg"
+      ]
+    },
+    {
+      "id": "QA-013",
+      "severity": "P2",
+      "status": "fixed_awaiting_retest",
+      "owner": "03",
+      "title": "位置过期禁用野外挑战，却错误提示进入互动范围",
+      "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+      "reportedAt": "2026-10-25T12:51:33.909Z",
+      "reproducibleSteps": [
+        "本地隔离QA正常进入领地演练并打开附近57m青芽详情",
+        "位置自然超过30s变stale后，挑战禁用",
+        "真实键盘聚焦禁用控件外层，提示进入互动范围后挑战",
+        "正常点击更新场景位置，距离仍57m而挑战立即启用"
+      ],
+      "expected": "禁用说明应准确优先提示位置过期/重新定位，保持真实30s精度距离准入门槛，QA来源标记同时可见。",
+      "actual": "readonly snapshot为LOCATION_STALE/位置已过期请重新定位，半径100m、对象57m；UI副标题前往附近，键盘Tooltip却说进入互动范围后挑战。仅正常刷新后副标题可挑战且按钮enabled。",
+      "evidence": [
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-discovery-stale-wrong-disable-reason.jpg",
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-discovery-disabled-freshness-readback.json"
+      ],
+      "fixCommits": [],
+      "verification": "待03只修禁用原因优先级和明确重新定位反馈，不放宽地理安全准入；最终候选需原生复验。",
+      "fixCommit": "969ac35e1cd5349da09f0031d1e33576d27ca914",
+      "fixNote": "03 delivered location freshness priority and accurate reason. Not included in frozen e875feb candidate; retain outstanding final-package retest.",
+      "updatedAt": "2026-10-25T13:07:46.867Z"
+    },
+    {
+      "id": "QA-014",
+      "title": "对战双方HUD、好友与战报缺少可信编号展示",
+      "owner": "04 + 08",
+      "severity": "P2-release-blocker",
+      "status": "fixed_awaiting_retest",
+      "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+      "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+      "reproduced": true,
+      "actual": "Root协调04源码审计确认HUD/peer/战报缺少可信只读编号view；09当前e875原生训练HUD及旧战报截图均仅名称/等级/属性，无编号或待同步标记。好友peer出口只标source audit，尚未native验证。",
+      "expected": "所有相关出口使用可信只读display identity显示固定角色名及公开编号；未获可信编号显示待同步，不能从raw/client/备份字段伪造。",
+      "reproducibleSteps": [
+        "复用现有e875原生训练双方HUD截图",
+        "进入现有22回合战报页面查看双方名称区域",
+        "核对是否有编号或待同步标记"
+      ],
+      "evidence": [
+        "rounds/candidate-e875feb-50e52249/evidence/qa012-training-before-back-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa012-existing-report-during-active-native.jpg"
+      ],
+      "reportedBy": "Root source audit +09 existing native screenshots",
+      "createdAt": "2026-10-25T14:21:50.720Z",
+      "finalAcceptance": false,
+      "fixCommits": [
+        "09496a5"
+      ],
+      "fixDependencies": [
+        "08 trusted member-sidecar view",
+        "05 territory guard provider",
+        "Root integration/deploy and one exact final package"
+      ],
+      "verification": "04 delivered source and targeted boundary/DOM checks only. Existing native e875 missing-number evidence remains. Final native/live cloud HUD, peer, report and long-number layout checks required.",
+      "updatedAt": "2026-10-25T14:51:05.401Z"
+    }
+  ]
+}

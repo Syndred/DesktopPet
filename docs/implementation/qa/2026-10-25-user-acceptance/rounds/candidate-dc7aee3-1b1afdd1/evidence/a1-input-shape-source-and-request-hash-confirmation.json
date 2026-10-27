@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-25T16:07:09.551Z",
+  "input": {
+    "actionId": "18a25316-26ac-453e-a34a-ab44ed3f7055",
+    "templateId": "animal-white-fox",
+    "name": "小狐",
+    "showOnDesktop": true
+  },
+  "canonicalInput": "{\"actionId\":\"18a25316-26ac-453e-a34a-ab44ed3f7055\",\"name\":\"小狐\",\"showOnDesktop\":true,\"templateId\":\"animal-white-fox\"}",
+  "sha256": "ed0763689feb0d681fbf90d94d51d0803002f83f932a4becc1ea0e095ea54f3f",
+  "storedLocalRequestHash": "ed0763689feb0d681fbf90d94d51d0803002f83f932a4becc1ea0e095ea54f3f",
+  "matches": true,
+  "sourceContract": "apps/pc-app/ui/src/features/companions/AdoptionPage.tsx:42 onSubmit passes templateId, name:selected.name, showOnDesktop; controller supplies actual actionId",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "provenance": "Reconstructed from native selection and frozen source contract, verified against original immutable action row canonical request SHA; not an IPC wire trace",
+  "earlierDiagnostic": "a1-complete-09-manifest.json 3-field candidate intentionally preserved with false; it omitted fixed name field and is not a product failure"
+}

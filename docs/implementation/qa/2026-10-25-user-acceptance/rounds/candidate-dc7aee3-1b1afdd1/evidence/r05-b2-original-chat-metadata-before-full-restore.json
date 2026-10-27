@@ -1,0 +1,49 @@
+{
+  "conversation_profiles": [
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "pet_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+      "persona": "",
+      "reply_style": "natural",
+      "memory_enabled": 1,
+      "pause_while_chatting": 1,
+      "use_override": 1,
+      "revision": 1,
+      "updated_at": 1792954567984
+    }
+  ],
+  "conversation_connections": [
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "scope": "account",
+      "scope_id": "",
+      "provider": "openai_compatible",
+      "base_url": "http://127.0.0.1:56751/v1",
+      "model": "模拟验收-DC7-c696c6c03ca2",
+      "encrypted_key": null,
+      "context_chars": 24000,
+      "max_output_tokens": 512,
+      "revision": 1,
+      "updated_at": 1792954441513
+    },
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "scope": "pet",
+      "scope_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+      "provider": "openai_compatible",
+      "base_url": "http://127.0.0.1:56751/v1",
+      "model": "模拟验收-DC7-c696c6c03ca2",
+      "encrypted_key": null,
+      "context_chars": 24000,
+      "max_output_tokens": 512,
+      "revision": 1,
+      "updated_at": 1792954551379
+    }
+  ],
+  "conversation_preferences": [
+    {
+      "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "selected_pet_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75"
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "at": "2026-10-25T13:21:01.691Z",
+  "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+  "scenario": {
+    "id": "unified-battle",
+    "runId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+    "provenance": "simulated",
+    "isolated": true
+  },
+  "user": {
+    "id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+    "subjectId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+    "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+    "provider": "local",
+    "account": "qa_candidate_a_1025",
+    "username": "候选验收甲",
+    "revision": 0,
+    "createdAt": "2026-10-25T10:29:28.836Z",
+    "updatedAt": "2026-10-25T10:29:28.836Z",
+    "dataMode": "simulated"
+  },
+  "profilePath": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a",
+  "comparisonBasis": "67-table hashes after normal old312 exit vs e875 native original-account login; only listed tables changed",
+  "tableCount": 67,
+  "changes": [
+    {
+      "table": "account_login_sessions",
+      "before": {
+        "rows": 2,
+        "sha256": "ac4a11c99fa36ee92c71c1a17e90a2642ac19f76a2640047e44619005c85b433"
+      },
+      "after": {
+        "rows": 3,
+        "sha256": "8b3d720e89d97cac8e68528f256841b76234d443cea5f64ed79f9ff8b5b85024"
+      }
+    },
+    {
+      "table": "lingjing_meta",
+      "before": {
+        "rows": 2,
+        "sha256": "74af4a90028c594b3f8e433c7321489177c1c3a048b40327ce68aa884974a648"
+      },
+      "after": {
+        "rows": 2,
+        "sha256": "ce8cc4226949f8473013808dfe86fa0850cbbd6f49beedeb0eb5167511d98533"
+      }
+    },
+    {
+      "table": "lingjing_resource_files",
+      "before": {
+        "rows": 18,
+        "sha256": "12ef12861d3dc2b2c92902c1f41a1ccdcd124a4b90cc2043c62f0d73742f1c7e"
+      },
+      "after": {
+        "rows": 18,
+        "sha256": "34b28af0b956657a74127b0beba6ea8426eda4f188117ea7c8eb8fbf7ba86c18"
+      }
+    }
+  ],
+  "unchanged": [
+    "account_actions",
+    "account_aliases",
+    "account_backup_receipts",
+    "account_cloud_links",
+    "account_identities",
+    "account_legacy_data",
+    "account_migration_sources",
+    "account_qa_profile",
+    "account_session_control",
+    "account_settings",
+    "account_sync_baselines",
+    "account_sync_checkpoints",
+    "account_sync_outbox",
+    "account_sync_sources",
+    "account_sync_state",
+    "battle_action_receipts",
+    "battle_reports_v2",
+    "battle_reward_receipts",
+    "battle_sessions",
+    "battle_transport_journal",
+    "companion_accounts",
+    "companion_actions",
+    "companion_capture_receipts",
+    "companion_identity_imports",
+    "companion_interactions",
+    "companion_legacy_archive",
+    "companion_pets",
+    "conversation_connections",
+    "conversation_credentials",
+    "conversation_legacy_imports",
+    "conversation_memories",
+    "conversation_messages",
+    "conversation_preferences",
+    "conversation_profiles",
+    "discovery_actions",
+    "discovery_captures",
+    "discovery_encounters",
+    "discovery_memory_tags",
+    "garden_accounts",
+    "garden_actions",
+    "garden_cloud_requests",
+    "garden_cloud_state",
+    "garden_events",
+    "garden_garrisons",
+    "garden_identity_imports",
+    "garden_items",
+    "garden_ledger",
+    "garden_outbox",
+    "garden_plots",
+    "garden_reward_receipts",
+    "garden_territory_attempts",
+    "garden_territory_challenges",
+    "garden_territory_logs",
+    "garden_territory_records",
+    "lingjing_migrations",
+    "lingjing_resource_cloud_downloads",
+    "lingjing_resource_cloud_outbox",
+    "lingjing_resource_cloud_receipts",
+    "lingjing_resource_imports",
+    "lingjing_resource_preference_cache",
+    "lingjing_resource_preference_outbox",
+    "lingjing_resource_preference_state",
+    "lingjing_resource_preferences",
+    "lingjing_resources"
+  ],
+  "health": [
+    {
+      "quick_check": "ok"
+    }
+  ]
+}

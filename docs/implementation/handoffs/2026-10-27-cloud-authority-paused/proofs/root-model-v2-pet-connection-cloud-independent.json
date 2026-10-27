@@ -1,0 +1,50 @@
+{
+  "at": "2026-10-26T22:05:29.040302+00:00",
+  "petId": "pet-825f6af9-402b-4244-988a-481563b7a587",
+  "records": [
+    {
+      "id": "[\"pet\",\"pet-825f6af9-402b-4244-988a-481563b7a587\"]",
+      "deleted": false,
+      "document": {
+        "model": "模拟验收-4E6-c5093dca6b4a",
+        "scope": "pet",
+        "base_url": "http://127.0.0.1:55217/v1",
+        "provider": "openai_compatible",
+        "revision": 1,
+        "scope_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+        "updated_at": 1793052074942,
+        "context_chars": 24000,
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "max_output_tokens": 512
+      },
+      "revision": 1,
+      "collection": "conversation_connections",
+      "changeSequence": 45,
+      "containsDummyCredential": false,
+      "forbiddenCredentialField": false
+    },
+    {
+      "id": "[\"pet-825f6af9-402b-4244-988a-481563b7a587\"]",
+      "deleted": false,
+      "document": {
+        "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+        "persona": "",
+        "revision": 1,
+        "updated_at": 1793052159483,
+        "reply_style": "natural",
+        "use_override": 1,
+        "memory_enabled": 1,
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "pause_while_chatting": 1
+      },
+      "revision": 1,
+      "collection": "conversation_profiles",
+      "changeSequence": 47,
+      "containsDummyCredential": false,
+      "forbiddenCredentialField": false
+    }
+  ],
+  "readOnly": true,
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "cloudMessageCount": 0
+}

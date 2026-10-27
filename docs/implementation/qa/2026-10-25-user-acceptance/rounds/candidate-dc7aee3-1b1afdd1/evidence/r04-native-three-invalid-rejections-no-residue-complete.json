@@ -1,0 +1,52 @@
+{
+  "at": "2026-10-25T23:01:20.417Z",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "owner": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "profile": "cloud-b-fresh09",
+  "originalOwnedId": "866b735a-9351-414f-a797-6bab290144c2",
+  "inputs": {
+    "at": "2026-10-25T22:50:04.883Z",
+    "formatOnly": {
+      "path": "C:/Users/Administrator/Desktop/project/DesktopPet-fresh-worktrees/07/apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json",
+      "exists": true,
+      "bytes": 4333,
+      "sha256": "8d40e857fbad95130051085b0dcff64feb099d0375260a0ab6259ea217d2da08"
+    },
+    "missingPng": {
+      "path": "C:/Users/Administrator/Desktop/project/DesktopPet-fresh-worktrees/07/artifacts/qa/resources-invalid-import-20261026/role07-Oo9m4P/missing-png/character.json",
+      "exists": true,
+      "bytes": 9406,
+      "sha256": "e2e976b69f7ea9049527251e458517e048c05aa5ab4cd1e13ffa47c38821708e"
+    },
+    "missingPngFileActuallyAbsent": true,
+    "pathTraversal": {
+      "path": "C:/Users/Administrator/Desktop/project/DesktopPet-fresh-worktrees/07/artifacts/qa/resources-invalid-import-20261026/role07-Oo9m4P/path-traversal/character.json",
+      "exists": true,
+      "bytes": 8911,
+      "sha256": "6a776cf3999185d469418a0fbce57847943fb2ec34e8bf021adc32ce4164869e"
+    },
+    "qualification": "Existing Root-approved fixtures read only; no file creation, source mutation, filesystem walk outside package, import or UI pass performed yet."
+  },
+  "checks": {
+    "formatRejected": true,
+    "missingPngRejected": true,
+    "pathTraversalRejected": true,
+    "formatResourceRowsUnchanged": true,
+    "missingResourceRowsUnchanged": true,
+    "traversalResourceRowsUnchanged": true,
+    "allManagedDirsAndBytesUnchanged": true,
+    "allTenBusinessTablesUnchanged": true
+  },
+  "nativeInput": "one Open per fixture via owned Windows native file dialog; no retry, no hidden import IPC; file bytes prechecked",
+  "evidence": [
+    "r04-three-invalid-before-original-qingya-protected.json",
+    "r04-existing-approved-fixture-byte-precheck.json",
+    "r04-b1-catalog-format-rejected-native.jpg",
+    "r04-b1-missing-png-rejected-native.jpg",
+    "r04-b1-path-traversal-rejected-native.jpg",
+    "r04-format-after-readback.json",
+    "r04-missing-png-after-readback.json",
+    "r04-path-traversal-after-readback.json"
+  ]
+}

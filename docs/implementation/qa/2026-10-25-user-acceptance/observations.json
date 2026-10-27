@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "observations": [
+    {
+      "id": "OBS-DC7-001",
+      "at": "2026-10-25T16:58:53.087Z",
+      "roundId": "candidate-dc7aee3-1b1afdd1",
+      "title": "Desktop initial window geometry differs from first move geometry",
+      "status": "non-blocking-observation-await-root-triage",
+      "owner": "01/02",
+      "details": "Native10drag cumulative growth fix passes; prefirst canvas268x314 vs postfirst/all10 266x309. Natural D01 recreate init234x284 inner/canvas270x314. Creation normalization cause not fully established. Do not call all initial sizes equal or treat as cumulative enlargement.",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/desktop-batch-before-state.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d02-ten-native-drags-complete.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d01-normal-recreated-window-initial-geometry.json"
+      ]
+    }
+  ]
+}

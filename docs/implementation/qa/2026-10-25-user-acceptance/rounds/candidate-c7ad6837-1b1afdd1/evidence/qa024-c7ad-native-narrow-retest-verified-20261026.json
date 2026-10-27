@@ -1,0 +1,108 @@
+{
+  "at": "2026-10-26T11:45:57.844Z",
+  "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+  "exeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+  "asarSha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355",
+  "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+  "roundId": "candidate-c7ad6837-1b1afdd1",
+  "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+  "verificationScope": "QA024 only: original B2 same-document conflict safely superseded after ordinary authoritative pull, followed by one base1/local2 scale1.06 save and one base2/local3 original1.05 restoration save, each client verified plus independently confirmed immutable cloud receipts. Original settings and post-login pets/selections preserved. Full cold-download bytes/texture/cloud restore matrix retained under DC7 source, not rerun on c7ad.",
+  "fullR06Pass": false,
+  "qa024NativeVerified": true,
+  "generated": [
+    {
+      "actionId": "0879f2f8-a834-4080-ba2b-d3b284ef943a",
+      "localRevision": 2,
+      "baseRevision": 1,
+      "status": "verified",
+      "attempts": 0,
+      "verifiedAt": "2026-10-26T11:23:06.089Z",
+      "cloudPreferenceRevision": 2,
+      "authorityAction": "resource-pref:0879f2f8-a834-4080-ba2b-d3b284ef943a",
+      "authorityRevision": 22,
+      "authorityChecksum": "83068122a5ed1e0c026a705a249b3a3ee5045dfd656d1f0fdde5ec8637a216e2"
+    },
+    {
+      "actionId": "908592f4-3814-4cd4-b9e8-897b66f6984b",
+      "localRevision": 3,
+      "baseRevision": 2,
+      "status": "verified",
+      "attempts": 0,
+      "verifiedAt": "2026-10-26T11:31:34.199Z",
+      "cloudPreferenceRevision": 3,
+      "authorityAction": "resource-pref:908592f4-3814-4cd4-b9e8-897b66f6984b",
+      "authorityRevision": 23,
+      "authorityChecksum": "0601518424af2f8a176f9347347d4d8cf86f80791f7ff9c132505f80b3f826a3"
+    }
+  ],
+  "settings": {
+    "sequence": [
+      {
+        "at": "2026-10-26T10:44:30.029Z",
+        "revision": 3,
+        "volume": 70,
+        "sync": false
+      },
+      {
+        "at": "2026-10-26T10:58:50.015Z",
+        "revision": 4,
+        "volume": 71,
+        "sync": false
+      },
+      {
+        "at": "2026-10-26T11:00:59.595Z",
+        "revision": 5,
+        "volume": 71,
+        "sync": true
+      },
+      {
+        "at": "2026-10-26T11:33:20.681Z",
+        "revision": 6,
+        "volume": 71,
+        "sync": false
+      },
+      {
+        "at": "2026-10-26T11:35:25.491Z",
+        "revision": 7,
+        "volume": 70,
+        "sync": false
+      }
+    ],
+    "originalDocumentRawExact": true,
+    "finalRevision": 7,
+    "closeToTray": true
+  },
+  "retained": {
+    "all4PostloginPetsRawExactAcrossAll9Frames": true,
+    "companionAccountAndSelectionsRawExact": true,
+    "otherResourcePreferenceRawExact": true,
+    "targetEntireDocumentOriginalExact": true,
+    "originalConflictOnlyStatusChangedToSuperseded": true,
+    "originalConflictVerifiedAtStillNull": true,
+    "originalPositiveRowRawExact": true,
+    "accountSyncStateOutboxSourcesBaselinesCheckpointsRawExact": true
+  },
+  "rootIndependentReview": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\global-serial\\root-resume-20261026\\bb650b83-9ced-41f1-9a3b-be13d5b7d8e0\\qa024-roundtrip-and-original-settings-independent.json",
+  "rootIndependentChecks": {
+    "oldRejectedActionOnlySuperseded": true,
+    "onlyTwoNewPreferenceJobs": true,
+    "bothJobsVerifiedOnce": true,
+    "onlyApprovedDocumentChanges": true,
+    "localPreferenceRestoredAt3": true,
+    "stateMatchesFinalCloudAuthority": true,
+    "twoUniquePgActions": true,
+    "twoSequentialAuthorityReceipts": true,
+    "immutableStoredDocumentsMatch": true,
+    "currentCloudPreferenceAndHeadMatch": true,
+    "oldRejectedActionHasNoFakeCloudReceipt": true,
+    "otherResourcePreferenceRawExact": true,
+    "settingsOriginalDocumentRawExact": true,
+    "postLoginFourPetsRawExact": true,
+    "postLoginChoicesAndAccountRawExact": true,
+    "originalAssetUploadMetadataExact": true,
+    "accountFullSaveStillUnconfirmed": true
+  },
+  "fullAccountSyncComplete": false,
+  "originalConflictStatus": "superseded",
+  "originalConflictVerifiedAt": null
+}

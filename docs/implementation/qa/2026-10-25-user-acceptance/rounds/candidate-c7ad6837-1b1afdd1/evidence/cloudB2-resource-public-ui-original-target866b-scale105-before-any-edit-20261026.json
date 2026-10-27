@@ -1,0 +1,153 @@
+{
+  "at": "2026-10-26T11:19:24.964Z",
+  "method": "Readonly public resource DOM/ARIA and visible calibration only; no business API/input/mutation/credential values",
+  "result": {
+    "route": "#/resources",
+    "selected": [
+      {
+        "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+        "text": "木\n青芽\n16 帧 · 本地导入",
+        "rect": {
+          "x": 432.5375061035156,
+          "y": 351.3999938964844,
+          "width": 184.75,
+          "height": 214.6750030517578
+        }
+      }
+    ],
+    "visibleCards": [
+      {
+        "resourceId": "builtin:lingjing-qingya-v1",
+        "text": "木\n青芽\n16 帧 · 项目角色",
+        "rect": {
+          "x": 238.8000030517578,
+          "y": 351.3999938964844,
+          "width": 184.7375030517578,
+          "height": 214.6750030517578
+        }
+      },
+      {
+        "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+        "text": "木\n青芽\n16 帧 · 本地导入",
+        "rect": {
+          "x": 432.5375061035156,
+          "y": 351.3999938964844,
+          "width": 184.75,
+          "height": 214.6750030517578
+        }
+      }
+    ],
+    "active": {
+      "tag": "BUTTON",
+      "role": null,
+      "label": null,
+      "value": null,
+      "rect": {
+        "x": 432.5375061035156,
+        "y": 351.3999938964844,
+        "width": 184.75,
+        "height": 214.6750030517578
+      }
+    },
+    "sliders": [
+      {
+        "label": "大小",
+        "value": "1.05",
+        "min": "0.25",
+        "max": "3",
+        "rect": {
+          "x": 772.7000122070312,
+          "y": 594.8875122070312,
+          "width": 11,
+          "height": 11
+        }
+      },
+      {
+        "label": "锚点 X",
+        "value": "0.5",
+        "min": "0",
+        "max": "1",
+        "rect": {
+          "x": 806.3624877929688,
+          "y": 628.2000122070312,
+          "width": 11,
+          "height": 11
+        }
+      },
+      {
+        "label": "锚点 Y",
+        "value": "0.849609375",
+        "min": "0",
+        "max": "1",
+        "rect": {
+          "x": 862.625,
+          "y": 661.5125122070312,
+          "width": 11,
+          "height": 11
+        }
+      },
+      {
+        "label": "垂直位置",
+        "value": "0",
+        "min": "-0.5",
+        "max": "0.5",
+        "rect": {
+          "x": 806.3624877929688,
+          "y": 694.8250122070312,
+          "width": 11,
+          "height": 11
+        }
+      },
+      {
+        "label": "旋转",
+        "value": "0",
+        "min": "-180",
+        "max": "180",
+        "rect": {
+          "x": 806.3624877929688,
+          "y": 728.1375122070312,
+          "width": 11,
+          "height": 11
+        }
+      },
+      {
+        "label": "播放帧率",
+        "value": "8",
+        "min": "1",
+        "max": "60",
+        "rect": {
+          "x": 1064.3125,
+          "y": 634.8875122070312,
+          "width": 11,
+          "height": 11
+        }
+      }
+    ],
+    "calibration": [
+      "大小\n1.05",
+      "锚点 X\n0.50",
+      "锚点 Y\n0.85",
+      "垂直位置\n0.00",
+      "旋转\n0°",
+      "播放帧率\n8fps"
+    ],
+    "context": [
+      {
+        "label": "显示场景",
+        "text": "桌面"
+      },
+      {
+        "label": "预览动作",
+        "text": "待机"
+      }
+    ],
+    "errors": [],
+    "messages": [],
+    "buttons": [
+      {
+        "text": "保存动作与显示设置",
+        "disabled": true
+      }
+    ]
+  }
+}

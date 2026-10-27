@@ -1,0 +1,378 @@
+{
+  "ok": true,
+  "revision": 2,
+  "data": {
+    "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+    "serverTime": 1792925247108,
+    "plots": [
+      {
+        "plotId": "plot-1",
+        "cropType": "carrot",
+        "plantedAt": 1792925195329,
+        "maturesAt": 1792925795329,
+        "yieldQuantity": 3,
+        "revision": 1,
+        "stage": "growing"
+      },
+      {
+        "plotId": "plot-2",
+        "cropType": null,
+        "plantedAt": null,
+        "maturesAt": null,
+        "yieldQuantity": 0,
+        "revision": 0,
+        "stage": "empty"
+      },
+      {
+        "plotId": "plot-3",
+        "cropType": null,
+        "plantedAt": null,
+        "maturesAt": null,
+        "yieldQuantity": 0,
+        "revision": 0,
+        "stage": "empty"
+      },
+      {
+        "plotId": "plot-4",
+        "cropType": "rice",
+        "plantedAt": 1792925212870,
+        "maturesAt": 1792926712870,
+        "yieldQuantity": 2,
+        "revision": 1,
+        "stage": "growing"
+      },
+      {
+        "plotId": "plot-5",
+        "cropType": null,
+        "plantedAt": null,
+        "maturesAt": null,
+        "yieldQuantity": 0,
+        "revision": 0,
+        "stage": "empty"
+      },
+      {
+        "plotId": "plot-6",
+        "cropType": null,
+        "plantedAt": null,
+        "maturesAt": null,
+        "yieldQuantity": 0,
+        "revision": 0,
+        "stage": "empty"
+      }
+    ],
+    "items": [
+      {
+        "id": "seed:carrot",
+        "name": "胡萝卜种子",
+        "icon": "🥕",
+        "category": "seed",
+        "source": "探索与对战",
+        "effects": null,
+        "quantity": 1
+      },
+      {
+        "id": "seed:tomato",
+        "name": "番茄种子",
+        "icon": "🍅",
+        "category": "seed",
+        "source": "探索与对战",
+        "effects": null,
+        "quantity": 2
+      },
+      {
+        "id": "seed:berry",
+        "name": "莓果种子",
+        "icon": "🫐",
+        "category": "seed",
+        "source": "探索与对战",
+        "effects": null,
+        "quantity": 2
+      },
+      {
+        "id": "seed:rice",
+        "name": "稻米种子",
+        "icon": "🌾",
+        "category": "seed",
+        "source": "探索与对战",
+        "effects": null,
+        "quantity": 1
+      },
+      {
+        "id": "carrot",
+        "name": "胡萝卜",
+        "icon": "🥕",
+        "category": "food",
+        "source": "菜园收获",
+        "effects": {
+          "satiety": 12,
+          "mood": 2,
+          "intimacy": 2
+        },
+        "quantity": 0
+      },
+      {
+        "id": "tomato",
+        "name": "番茄",
+        "icon": "🍅",
+        "category": "food",
+        "source": "菜园收获",
+        "effects": {
+          "satiety": 10,
+          "mood": 3,
+          "intimacy": 2
+        },
+        "quantity": 0
+      },
+      {
+        "id": "berry",
+        "name": "莓果",
+        "icon": "🫐",
+        "category": "food",
+        "source": "菜园收获",
+        "effects": {
+          "satiety": 8,
+          "mood": 4,
+          "intimacy": 3
+        },
+        "quantity": 0
+      },
+      {
+        "id": "rice",
+        "name": "稻米",
+        "icon": "🌾",
+        "category": "ingredient",
+        "source": "菜园收获",
+        "effects": null,
+        "quantity": 0
+      },
+      {
+        "id": "cooked_rice",
+        "name": "热乎乎的米饭",
+        "icon": "🍚",
+        "category": "food",
+        "source": "稻米制作",
+        "effects": {
+          "satiety": 20,
+          "mood": 3,
+          "intimacy": 4
+        },
+        "quantity": 0
+      }
+    ],
+    "crops": [
+      {
+        "id": "carrot",
+        "name": "胡萝卜",
+        "icon": "🥕",
+        "seedItemId": "seed:carrot",
+        "harvestItemId": "carrot",
+        "growMs": 600000,
+        "yield": 3,
+        "color": "#ed9448"
+      },
+      {
+        "id": "tomato",
+        "name": "番茄",
+        "icon": "🍅",
+        "seedItemId": "seed:tomato",
+        "harvestItemId": "tomato",
+        "growMs": 900000,
+        "yield": 3,
+        "color": "#ef7875"
+      },
+      {
+        "id": "berry",
+        "name": "莓果",
+        "icon": "🫐",
+        "seedItemId": "seed:berry",
+        "harvestItemId": "berry",
+        "growMs": 1200000,
+        "yield": 4,
+        "color": "#9e8fd4"
+      },
+      {
+        "id": "rice",
+        "name": "稻米",
+        "icon": "🌾",
+        "seedItemId": "seed:rice",
+        "harvestItemId": "rice",
+        "growMs": 1500000,
+        "yield": 2,
+        "color": "#d2ad54"
+      }
+    ],
+    "recipes": [
+      {
+        "id": "cooked_rice",
+        "name": "热乎乎的米饭",
+        "input": {
+          "itemId": "rice",
+          "quantity": 1
+        },
+        "output": {
+          "itemId": "cooked_rice",
+          "quantity": 1
+        }
+      }
+    ],
+    "pets": [
+      {
+        "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+        "templateId": "animal-white-fox",
+        "name": "小狐",
+        "serial": "EA1F0CF6",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": true,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 685,
+            "y": 132,
+            "displayId": "2568730015"
+          }
+        },
+        "revision": 50,
+        "createdAt": "2026-10-25T10:31:12.593Z",
+        "updatedAt": "2026-10-25T10:44:45.766Z"
+      },
+      {
+        "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "templateId": "animal-white-fox",
+        "name": "小狐",
+        "serial": "0CB7DABE",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 320,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "revision": 1,
+        "createdAt": "2026-10-25T10:31:36.582Z",
+        "updatedAt": "2026-10-25T10:31:36.582Z"
+      }
+    ],
+    "territories": [],
+    "ledger": [
+      {
+        "id": "8c7bf053-deac-48db-84af-993ae80233a8",
+        "actionId": "a005c52a-889d-4f88-a9c4-d5b759e30225",
+        "kind": "plant",
+        "itemId": "seed:rice",
+        "delta": -1,
+        "balance": 1,
+        "petId": null,
+        "createdAt": 1792925212870
+      },
+      {
+        "id": "611f6773-0628-49ea-ad8d-e003bac5abfc",
+        "actionId": "4fe2e1d9-aca2-4bc9-be34-c96f07adda2a",
+        "kind": "plant",
+        "itemId": "seed:carrot",
+        "delta": -1,
+        "balance": 1,
+        "petId": null,
+        "createdAt": 1792925195329
+      },
+      {
+        "id": "f5167b7b-5cbf-4964-a7db-8e8f007ce997",
+        "actionId": "starter:v1",
+        "kind": "starter",
+        "itemId": "seed:rice",
+        "delta": 2,
+        "balance": 2,
+        "petId": null,
+        "createdAt": 1792925160747
+      },
+      {
+        "id": "f4c76bc0-ddfe-4ec7-b2dc-980bc578077c",
+        "actionId": "starter:v1",
+        "kind": "starter",
+        "itemId": "seed:carrot",
+        "delta": 2,
+        "balance": 2,
+        "petId": null,
+        "createdAt": 1792925160747
+      },
+      {
+        "id": "e045bf7b-7f98-4f9d-a244-3d9f598cc992",
+        "actionId": "starter:v1",
+        "kind": "starter",
+        "itemId": "seed:berry",
+        "delta": 2,
+        "balance": 2,
+        "petId": null,
+        "createdAt": 1792925160747
+      },
+      {
+        "id": "53a235ca-bda1-4fae-9f3b-8fa93f6793b5",
+        "actionId": "starter:v1",
+        "kind": "starter",
+        "itemId": "seed:tomato",
+        "delta": 2,
+        "balance": 2,
+        "petId": null,
+        "createdAt": 1792925160747
+      }
+    ],
+    "sync": {
+      "mode": "local",
+      "pending": 2,
+      "conflicts": 0
+    },
+    "remainingInvasions": 2,
+    "scenario": {
+      "mode": "simulated",
+      "id": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+      "label": "领地演练 · 模拟定位"
+    },
+    "territoryChallenges": []
+  }
+}

@@ -1,0 +1,300 @@
+{
+  "at": "2026-10-25T13:30:37.363Z",
+  "tableHashes": {
+    "at": "2026-10-25T13:30:37.357Z",
+    "db": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a/lingjing.sqlite",
+    "tables": {
+      "account_actions": {
+        "rows": 3,
+        "sha256": "0743f3fa75342dc582ffd33c40b1aeea2063e00d433b5d7e270f49649d044c19"
+      },
+      "account_aliases": {
+        "rows": 1,
+        "sha256": "f184870ed45d6c0a78caadf15c64727384b70d8b2e13d91f2c09ce45ec6033dd"
+      },
+      "account_backup_receipts": {
+        "rows": 1,
+        "sha256": "34a9135c1574323ec1b8e83f6b9f104bcf6d452d5e582a9fbc791fb9f2cffc4a"
+      },
+      "account_cloud_links": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "account_identities": {
+        "rows": 1,
+        "sha256": "6465762fdd3a8d14b726a7787b3eb58940e5de23f3a83315e78d7530486b0a23"
+      },
+      "account_legacy_data": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "account_login_sessions": {
+        "rows": 3,
+        "sha256": "8b3d720e89d97cac8e68528f256841b76234d443cea5f64ed79f9ff8b5b85024"
+      },
+      "account_migration_sources": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "account_qa_profile": {
+        "rows": 1,
+        "sha256": "efc11024f91b328081063a9aee996cf0ad84f842083a96b9b2c16420e8bb471b"
+      },
+      "account_session_control": {
+        "rows": 1,
+        "sha256": "b0cc37cb03b3c4af5da1da279f11313e5cb24f8ab98234ade37942233a209aa1"
+      },
+      "account_settings": {
+        "rows": 1,
+        "sha256": "7f8aee89318610dca9583b47ff0d21bb14a5a25822d200dbf4ca56813d0a3b51"
+      },
+      "account_sync_baselines": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "account_sync_checkpoints": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "account_sync_outbox": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "account_sync_sources": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "account_sync_state": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "battle_action_receipts": {
+        "rows": 23,
+        "sha256": "2c3bb72a8c3f3fcc37c9ece912715c4d7e858af0c54474bcb9dc8232573b431e"
+      },
+      "battle_reports_v2": {
+        "rows": 1,
+        "sha256": "0f2749d2876fe5c698fb681b5d06212d199adb80acd2fc25f1d080d1fd02b7ea"
+      },
+      "battle_reward_receipts": {
+        "rows": 1,
+        "sha256": "5ce5df7edd9c3504a0fa87f86ef1cbe062d829a9c61132f57587292a0ce7ced8"
+      },
+      "battle_sessions": {
+        "rows": 1,
+        "sha256": "a7a3d612bb85c38be9ba96dde28298e761844d87892cea697dcf91e66ec2acc1"
+      },
+      "battle_transport_journal": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "companion_accounts": {
+        "rows": 1,
+        "sha256": "57e2737b2895f5853a7080961dab09422bcb459401e24a67acdc50fda1eda02b"
+      },
+      "companion_actions": {
+        "rows": 13,
+        "sha256": "fef2c1336aa06476008c76b1d951a1cc3dfde236130e3bc316261458ce563849"
+      },
+      "companion_capture_receipts": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "companion_identity_imports": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "companion_interactions": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "companion_legacy_archive": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "companion_pets": {
+        "rows": 2,
+        "sha256": "f3de8592b3cadffad3550f2c3418a7909b4e9bc9a40a9711c6e3cc16022a7e62"
+      },
+      "conversation_connections": {
+        "rows": 1,
+        "sha256": "934b12c68312dc0d19c73a4d572ded4a9c4bad6b72b142ad912a0ddecacbb986"
+      },
+      "conversation_credentials": {
+        "rows": 1,
+        "sha256": "0bff64b0817a2115a135be2b244282ca2526d9420440d6785ebf30cf24cb0282"
+      },
+      "conversation_legacy_imports": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conversation_memories": {
+        "rows": 2,
+        "sha256": "4ae8f8b008bd926647dc43cee123cc03264b1f5eb5492652a546918121f4eaec"
+      },
+      "conversation_messages": {
+        "rows": 8,
+        "sha256": "ed4b63b7d0d8fc49213b2231f5125ef63a27fd63e2bcffa091eff21c10ef58bb"
+      },
+      "conversation_preferences": {
+        "rows": 1,
+        "sha256": "810c8e630acd31ef991ab98c53a539cc133babf1be9900c0bfd0ee01b32b64c1"
+      },
+      "conversation_profiles": {
+        "rows": 2,
+        "sha256": "c6d4daffb5db19b9c06688cbff453a6629b79f0387d6fc5c90f0ce40105d09ed"
+      },
+      "discovery_actions": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "discovery_captures": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "discovery_encounters": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "discovery_memory_tags": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "garden_accounts": {
+        "rows": 1,
+        "sha256": "7aaa495d969a2aa84fc6177987bb8c3cd8050930cd44e50f7ca276d1af563a8d"
+      },
+      "garden_actions": {
+        "rows": 8,
+        "sha256": "28b400ded213ae0f14f73724f539ce1c0e8ce8c9641bf2aaacb65926438fb9ce"
+      },
+      "garden_cloud_requests": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "garden_cloud_state": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "garden_events": {
+        "rows": 12,
+        "sha256": "923e8cf2a7d0567502d7f4449dafb8838dd9395fa464eb553b7d14ce296b81b3"
+      },
+      "garden_garrisons": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "garden_identity_imports": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "garden_items": {
+        "rows": 7,
+        "sha256": "9614b3010a73dea501ba54ab1ded091bac45908a503c73682980b7ff17084214"
+      },
+      "garden_ledger": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "garden_outbox": {
+        "rows": 8,
+        "sha256": "4ee5e438590951c1c95aeeddd436c990a0cad618d21a32ce554a71d45cb408f3"
+      },
+      "garden_plots": {
+        "rows": 6,
+        "sha256": "776307efc0a652567bbbea5edf167e27a4264bf5899d06ac0e8e73bad4618b0c"
+      },
+      "garden_reward_receipts": {
+        "rows": 1,
+        "sha256": "4c85345ee9b4716783ad8cf6fdf2dc3f3c3073da29f08675c436f84c3ebaecab"
+      },
+      "garden_territory_attempts": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "garden_territory_challenges": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "garden_territory_logs": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "garden_territory_records": {
+        "rows": 1,
+        "sha256": "8e7d236106e56c2133172c715740b8bb485aca5720e4416674ac8804d695983c"
+      },
+      "lingjing_meta": {
+        "rows": 2,
+        "sha256": "ce8cc4226949f8473013808dfe86fa0850cbbd6f49beedeb0eb5167511d98533"
+      },
+      "lingjing_migrations": {
+        "rows": 28,
+        "sha256": "a8909ba2f6a35b6e5bcf39f172138dbcef8ffaecc82af80030a75188f7c978b6"
+      },
+      "lingjing_resource_cloud_downloads": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "lingjing_resource_cloud_outbox": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "lingjing_resource_cloud_receipts": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "lingjing_resource_files": {
+        "rows": 18,
+        "sha256": "34b28af0b956657a74127b0beba6ea8426eda4f188117ea7c8eb8fbf7ba86c18"
+      },
+      "lingjing_resource_imports": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "lingjing_resource_preference_cache": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "lingjing_resource_preference_outbox": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "lingjing_resource_preference_state": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "lingjing_resource_preferences": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "lingjing_resources": {
+        "rows": 9,
+        "sha256": "7ba051a9c25561dfde960e251f34482ca779dd7149b3618c9093f29bd9ee1756"
+      }
+    },
+    "health": [
+      {
+        "quick_check": "ok"
+      }
+    ]
+  },
+  "profile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a",
+  "mainPid": 26956,
+  "wrapperPid": 26024,
+  "tempCloseToTray": false,
+  "originalCloseToTray": true,
+  "sentinel": {
+    "key": "lingjing.uat.renderer-continuity.e71b9c11-e62a-46a6-aa4d-decdd34c4200",
+    "dbName": "lingjing-uat-continuity-50e52249",
+    "value": {
+      "runId": "e71b9c11-e62a-46a6-aa4d-decdd34c4200",
+      "profilePath": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a",
+      "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+      "nonce": "cb66b54a-553e-4469-8ee8-1e6de1a86578",
+      "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+      "createdAt": "2026-10-25T13:22:21.262Z",
+      "kind": "Explicit isolated QA storage sentinel only; no gameplay mutation"
+    }
+  }
+}

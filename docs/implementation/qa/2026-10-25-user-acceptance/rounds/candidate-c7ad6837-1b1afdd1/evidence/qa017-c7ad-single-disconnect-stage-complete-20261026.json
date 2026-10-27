@@ -1,0 +1,103 @@
+{
+  "at": "2026-10-26T10:18:24.4815996Z",
+  "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+  "runId": "9b0d1667-db6f-4ccc-b0dc-3d369a68d327",
+  "simulation": "simulated upstream, real HTTP/SSE socket disconnect, actual frozen native UI/SQLite",
+  "singleNormalConnectionTest": {
+    "nativeResult": "可用 · 6.6 秒",
+    "requestId": "sim-1",
+    "auditAccepted": 1,
+    "auditComplete": 1,
+    "status": 200,
+    "deltas": 45,
+    "chatMessagesAdded": 0
+  },
+  "singleDisconnect": {
+    "requestId": "sim-2",
+    "actionId": "bd8ed802-4b20-49e8-bc51-478992af96f8",
+    "userId": "cfbf9d63-d083-4be2-9fed-589a853d2657",
+    "assistantId": "503fd6c5-cbff-4b33-a52e-1dbc55d5dfc8",
+    "attempt": 1,
+    "status": "failed",
+    "errorCode": "INVALID_RESPONSE",
+    "partialLength": 14,
+    "deltas": 14,
+    "nativeError": "模型连接中断",
+    "partialRetained": true,
+    "retryVisible": true,
+    "busyEnded": true,
+    "retryNotAttempted": true
+  },
+  "audit": [
+    {
+      "at": "2026-10-26T10:14:37.542Z",
+      "event": "request_accepted",
+      "requestId": "sim-1",
+      "mode": "stream",
+      "bytes": 153,
+      "messageCount": 1,
+      "contentChars": 15
+    },
+    {
+      "at": "2026-10-26T10:14:44.042Z",
+      "event": "response_end",
+      "requestId": "sim-1",
+      "mode": "stream",
+      "reason": "complete",
+      "status": 200,
+      "deltas": 45
+    },
+    {
+      "at": "2026-10-26T10:16:52.308Z",
+      "event": "request_accepted",
+      "requestId": "sim-2",
+      "mode": "disconnect",
+      "bytes": 618,
+      "messageCount": 2,
+      "contentChars": 167
+    },
+    {
+      "at": "2026-10-26T10:16:54.343Z",
+      "event": "response_closed",
+      "requestId": "sim-2",
+      "mode": "disconnect",
+      "reason": "simulated_disconnect",
+      "deltas": 14
+    }
+  ],
+  "fishMessageMetadata": [
+    {
+      "id": "503fd6c5-cbff-4b33-a52e-1dbc55d5dfc8",
+      "action_id": "bd8ed802-4b20-49e8-bc51-478992af96f8",
+      "role": "assistant",
+      "status": "failed",
+      "error_code": "INVALID_RESPONSE",
+      "attempt": 1,
+      "content_length": 14,
+      "provider": "openai_compatible",
+      "model": "模拟验收-C7AD-210fc2da0da4",
+      "created_at": 1793009812293,
+      "updated_at": 1793009814354
+    },
+    {
+      "id": "cfbf9d63-d083-4be2-9fed-589a853d2657",
+      "action_id": "bd8ed802-4b20-49e8-bc51-478992af96f8",
+      "role": "user",
+      "status": "complete",
+      "error_code": null,
+      "attempt": 1,
+      "content_length": 40,
+      "provider": null,
+      "model": null,
+      "created_at": 1793009812293,
+      "updated_at": 1793009812293
+    }
+  ],
+  "globalMetadataUnchanged": true,
+  "externalModelSuccess": false,
+  "scope": "No extra test/send/retry; await separately bound ordinary recovery and cleanup",
+  "screenshots": [
+    "qa017-c7ad-native-single-fish-connection-test-completed-20261026.png",
+    "qa017-c7ad-native-disconnect-invalid-response-partial-retained-20261026.png"
+  ]
+}

@@ -1,0 +1,1260 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-25T09:24:08.156Z",
+  "authorization": {
+    "threadId": "01a1704b-e200-7090-9d17-958218c80f42",
+    "userMessageId": "01a1725b-4da0-7b13-86ec-0d4935596ccb",
+    "verified": true
+  },
+  "issues": [
+    {
+      "id": "QA-001",
+      "title": "登录页保持登录复选框文字与锁图标未对齐",
+      "reproducibleSteps": [
+        "运行原成品",
+        "观察保持登录行"
+      ],
+      "expected": "复选框文字锁图标垂直居中，焦点提示可用",
+      "actual": "125% DPI原EXE截图和DOM独立复现：label中心Y 572.194、checkbox 572.188、锁badge与SVG 566.188，锁图标上偏6 DIP",
+      "owner": "08",
+      "severity": "P1-release-blocker",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/baseline-login.png",
+        "evidence/QA-001-login-geometry.json"
+      ],
+      "status": "verified",
+      "assignment": "总协调已发08；本验收不重复派发",
+      "reproduced": true,
+      "updatedAt": "2026-10-25T15:46:00.860Z",
+      "fixCommits": [
+        "c83d3b5746d692707aec51fdac3dbb24fae2bff8"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "Same final dc7 native login alignment + keyboard tooltip verified; all center lines exact.",
+      "verifiedSource": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "verifiedExeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "verificationEvidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/login-lock-focus-layout.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/login-lock-focused-native.jpg"
+      ],
+      "verificationHistory": [
+        {
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "verification": "Exact candidate native retest passed: same-row centres aligned; keyboard tooltip visible.",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/QA-001-aligned-register.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/login-lock-focused.jpg"
+          ]
+        }
+      ],
+      "awaitingRoundId": "candidate-e875feb-50e52249"
+    },
+    {
+      "id": "QA-002",
+      "title": "领养分类仍为大肥鱼/动物伙伴，需改为属性图标",
+      "reproducibleSteps": [
+        "注册或登录",
+        "打开领养页",
+        "观察分类"
+      ],
+      "expected": "全部与金木水火土属性图标分类，不使用角色物种分类",
+      "actual": "原EXE正常注册后通过领养按钮进入；仍显示全部/大肥鱼/动物伙伴，另有全部五行下拉，用户要求未实现",
+      "owner": "02",
+      "severity": "P1-release-blocker",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/baseline-adoption.png"
+      ],
+      "status": "fixed_awaiting_retest",
+      "assignment": "总协调已发02",
+      "reproduced": true,
+      "updatedAt": "2026-10-25T10:39:29.389Z",
+      "fixCommits": [
+        "ad20468"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "A prior candidate passed; this exact candidate requires native retest.",
+      "verifiedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verifiedExeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+      "verificationEvidence": [
+        "rounds/candidate-312e5fe-524fd56d/evidence/adopt-metal.jpg",
+        "rounds/candidate-312e5fe-524fd56d/evidence/adopt-wood.jpg",
+        "rounds/candidate-312e5fe-524fd56d/evidence/adopt-water.jpg",
+        "rounds/candidate-312e5fe-524fd56d/evidence/adopt-fire.jpg",
+        "rounds/candidate-312e5fe-524fd56d/evidence/adopt-earth.jpg"
+      ],
+      "verificationHistory": [
+        {
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "verification": "Exact candidate native retest passed: all five element icon categories selected and correct displayed templates.",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/adopt-metal.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/adopt-wood.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/adopt-water.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/adopt-fire.jpg",
+            "rounds/candidate-312e5fe-524fd56d/evidence/adopt-earth.jpg"
+          ]
+        }
+      ],
+      "awaitingRoundId": "candidate-e875feb-50e52249"
+    },
+    {
+      "id": "QA-003",
+      "title": "固定角色名、同类型跨用户连续数字编号与桌面仅形象",
+      "reproducibleSteps": [
+        "同模板领养两只",
+        "查看列表/详情/桌面/聊天/对战",
+        "重启/同步"
+      ],
+      "expected": "固定角色标准名；公开界面同类型跨全部用户连续阿拉伯数字编号0001起，内部petId保持；桌面仅形象",
+      "actual": "三次真实UI同模板领养：前两只小狐在列表与桌面仅显示同名，无可见稳定编号；第三次在领养表单输入验收昵称后实例和列表显示该昵称替代标准名。后端已有petId与8位serial且三者不同，并非后端完全无编号。全局完整唯一编号、固定标准名和跨域可辨识仍需修复。",
+      "owner": "02",
+      "severity": "P1-release-blocker",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/QA-003-three-instances.json",
+        "evidence/QA-003-three-instances-renderer.png",
+        "evidence/QA-004-drag-00.png"
+      ],
+      "status": "assigned",
+      "assignment": "总协调已发02",
+      "reproduced": true,
+      "updatedAt": "2026-10-25T10:42:47.973Z",
+      "crossDomainInitialObservation": "聊天列表三只同模板仍只显示name；无可见编号。其aria-label有petId末8位，界面视觉仍不能区分。evidence/chat-unconfigured-renderer.png",
+      "fixCommits": [
+        "ad20468",
+        "4adcf1d",
+        "2c6f5b3",
+        "619e64d"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "Source integrated by coordinator; no candidate native verification yet. Baseline actual failures remain.",
+      "newRequirementAt": "2026-10-25T10:42:47.973Z",
+      "currentCandidateOutcome": "312旧候选仍公开完整petId/GUID且桌面带名号，符合旧修复方向但不满足新增数字编号及桌面无标签；等待新源候选，不得关闭QA003。"
+    },
+    {
+      "id": "QA-004",
+      "title": "桌面宠物连续拖动逐渐变大",
+      "reproducibleSteps": [
+        "领养后放桌面",
+        "重复拖动至少10次",
+        "记录每次窗口DIP/DPI/stage/精灵尺寸",
+        "重启回读"
+      ],
+      "expected": "拖动仅改坐标；尺寸和scale不累乘，重启稳定",
+      "actual": "125% DPI实际10次原生拖动：232×280→252×300 DIP，stage214×222.9→234×242.9，保存scale始终1；20个受信pointerdown/up。静止quiet模式排除自动行为。用户原超大透明桌宠另有01只读窗口元数据2145×2230物理像素，不能当作本次实拖数据。",
+      "owner": "02",
+      "severity": "P1-release-blocker",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/QA-004-drag-series.json",
+        "evidence/QA-004-drag-events.json",
+        "evidence/QA-004-drag-00.png",
+        "evidence/QA-004-drag-10.png"
+      ],
+      "status": "verified",
+      "assignment": "总协调已发02",
+      "reproduced": true,
+      "updatedAt": "2026-10-25T16:58:53.091Z",
+      "fixCommits": [
+        "ad20468"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "Actual final same-pet10native drags: all post-drag canvases266x309/dpr1.25/scale1, no cumulative enlargement, other pet raw unchanged; initial creation-size difference tracked separately OBS-DC7-001, not claimed closed.",
+      "verifiedSource": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "verifiedExeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "verificationEvidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d02-ten-drags-metrics-and-d01-recall.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d02-after-ten-drags-native.jpg"
+      ],
+      "verificationHistory": [
+        {
+          "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+          "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+          "verification": "10 actual native drags, 20 trusted events, actual wander and moving-pointer follow stable; savedScale remains1. Restart remains separately pending D06.",
+          "evidence": [
+            "rounds/candidate-312e5fe-524fd56d/evidence/QA-004-drag-series.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/QA-004-native-events.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/QA-004-wander-series.json",
+            "rounds/candidate-312e5fe-524fd56d/evidence/QA-004-follow-moving-series.json"
+          ]
+        }
+      ],
+      "awaitingRoundId": "candidate-e875feb-50e52249"
+    },
+    {
+      "id": "QA-005",
+      "title": "主窗口最小尺寸固定960×700可能超过高缩放小屏工作区",
+      "reproducibleSteps": [
+        "使用工作区DIP小于960×700的显示环境",
+        "正常启动、恢复与缩放主窗口"
+      ],
+      "expected": "最小尺寸和初始/恢复尺寸均不超过当前可用工作区，核心操作可滚动到达",
+      "actual": "01发现源码先clamp到workArea、随后BrowserWindow固定minWidth=960/minHeight=700；当前本机125%大屏尚未实际复现小工作区超界。标记源码风险，不能当作真实窗口失败或已通过。",
+      "owner": "01",
+      "severity": "P2-source-risk",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "apps/pc-app/runtime/main/index.ts:createWindow",
+        "C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/artifacts/foundation/user-acceptance/window-metadata.json"
+      ],
+      "status": "fixed_awaiting_retest",
+      "reproduced": false,
+      "assignment": "总协调已授权01仅修公共主窗口DIP边界；实际最终包待验收",
+      "fixCommits": [
+        "da330a3214ffff83be749f20a75d4c06fa7976cf"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "Source integrated by coordinator; no candidate native verification yet. Baseline actual failures remain.",
+      "updatedAt": "2026-10-25T10:19:27.554Z"
+    },
+    {
+      "id": "QA-006",
+      "title": "同一档案重复启动会生成第二主进程与登录窗口",
+      "reproducibleSteps": [
+        "原EXE以独立local-a档案启动、注册并保留运行",
+        "确认两QA桌宠quiet静止",
+        "同一EXE再次传入完全相同PET_USER_DATA_DIR与QA标记启动",
+        "比较窗口与进程"
+      ],
+      "expected": "同档案只聚焦已有主窗口；不同档案可分别运行",
+      "actual": "实际出现launcher16196→main18500与第二窗口13832364登录页；原launcher17140→main23668/窗口787934仍运行；第二运行manifest同a9acd7f、QA runId和绝对profile完全相同。未继续同库双登录写入，不声称已损坏数据。",
+      "owner": "01",
+      "severity": "P1-release-blocker",
+      "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/QA-006-duplicate-profile.json",
+        "evidence/QA-006-duplicate-login-renderer.png",
+        "evidence/QA-006-duplicate-login-native.png",
+        "duplicate-launch.json"
+      ],
+      "status": "verified",
+      "reproduced": true,
+      "fixCommits": [
+        "8e5e2a61c23e6ecbcdbf115d76e414e0f7de63d1"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "Final dc7 actual ColdSingle/HotSameProfile/SecondProfile/ColdPair and cross-real-root LS/IDB + active battle preservation passed; harness v2 exact environment diagnostics retained.",
+      "updatedAt": "2026-10-25T15:55:46.281Z",
+      "verifiedSource": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "verifiedExeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "verificationEvidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/startup",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/coldpair-final-outcome.json"
+      ],
+      "verificationHistory": [
+        {
+          "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+          "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+          "verification": "Actual e875 valid-env ColdSingle, HotSameProfile native original-window restore and ColdPair leave exactly one resident main; independent second profile runs separate owner/storage and original67 tables unchanged.",
+          "evidence": [
+            "rounds/candidate-e875feb-50e52249/evidence/hot-same-profile-native-outcome.json",
+            "rounds/candidate-e875feb-50e52249/evidence/second-profile-native-outcome.json",
+            "rounds/candidate-e875feb-50e52249/evidence/cold-pair-native-outcome.json"
+          ]
+        }
+      ],
+      "awaitingRoundId": "candidate-dc7aee3-1b1afdd1"
+    },
+    {
+      "id": "QA-007",
+      "title": "便携版开机启动默认路径指向SFX临时解压exe",
+      "reproducibleSteps": [
+        "只读核对原EXE实际main进程路径",
+        "核对desktop-host.cjs setLoginItemSettings参数",
+        "对照Electron官方path缺省process.execPath行为"
+      ],
+      "expected": "开机启动显式使用持久便携入口及正确参数；保留已有启动项；QA不修改全局启动配置",
+      "actual": "原包运行main位于Temp/3LBAQALUKgWr1yvvvscHsCaqSpQ/Lingjing.exe；desktop-host只传openAtLogin/enabled，无path。Electron官方文档确认默认process.execPath。已确认源码风险，未实际写OS注册表/注销/重启，不能声称已做重启后的用户实测。",
+      "owner": "08",
+      "severity": "P2-source-risk",
+      "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/QA-006-duplicate-profile.json",
+        "apps/pc-app/runtime/features/accounts/desktop-host.cjs:123",
+        "https://www.electronjs.org/docs/latest/api/app/#appsetloginitemsettingssettings-macos-windows"
+      ],
+      "status": "fixed_awaiting_retest",
+      "reproduced": false,
+      "verificationLevel": "actual process-path + source + official API contract; OS startup write intentionally untested",
+      "fixCommits": [
+        "f0da7e1",
+        "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "Source integrated by coordinator; no candidate native verification yet. Baseline actual failures remain.",
+      "updatedAt": "2026-10-25T10:19:27.557Z"
+    },
+    {
+      "id": "QA-008",
+      "title": "自由散步保存位置后切换行为出现版本冲突",
+      "owner": "02",
+      "severity": "P2",
+      "status": "fixed_awaiting_retest",
+      "reproduced": true,
+      "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+      "reproducibleSteps": [
+        "正常设为自由散步并等待自然位置保存",
+        "仍在伙伴页选择跟随鼠标",
+        "观察红色伙伴状态已更新请刷新后重试；行为仍自由散步",
+        "重新进入伙伴页后再选择可成功"
+      ],
+      "expected": "自动位置保存不应让正常行为选择产生无从恢复的陈旧状态；保留真正并发保护",
+      "actual": "实际出现一次可见revision冲突，重入恢复成功；底层pet revision随自然移动递增，另一只未变",
+      "evidence": [
+        "rounds/candidate-312e5fe-524fd56d/evidence/behavior-follow-confirmed.jpg",
+        "rounds/candidate-312e5fe-524fd56d/evidence/QA-008-behavior-revision-conflict.json",
+        "rounds/candidate-312e5fe-524fd56d/evidence/product-visible-follow.jpg"
+      ],
+      "assignment": "已直接发02定位；不是跟随完全不可用。",
+      "createdAt": "2026-10-25T10:41:33.563Z",
+      "fixCommits": [
+        "3ec7ecbf523c7ef3515c29fa9a20c92215223b46"
+      ],
+      "verification": "A prior candidate passed; this exact candidate requires native retest.",
+      "updatedAt": "2026-10-25T14:03:09.366Z",
+      "verifiedSource": "e875febf3430be341191a639668d43e7f09826dc",
+      "verifiedExeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+      "verificationEvidence": [
+        "rounds/candidate-e875feb-50e52249/evidence/qa008-natural-position-then-behavior-outcome.json",
+        "rounds/candidate-e875feb-50e52249/evidence/qa008-natural-walk-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa008-native-quiet-restored.jpg"
+      ],
+      "verificationHistory": [
+        {
+          "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+          "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+          "verification": "e875 actual native first pet quiet→wander naturally moved and saved position(revision51→54), then native quiet succeeded revision55 without revision-conflict. Only first desktop/revision/updatedAt changed, second pet full object unchanged; no gameplay/API mutation or raw DB write.",
+          "evidence": [
+            "rounds/candidate-e875feb-50e52249/evidence/qa008-natural-position-then-behavior-outcome.json",
+            "rounds/candidate-e875feb-50e52249/evidence/qa008-natural-walk-native.jpg",
+            "rounds/candidate-e875feb-50e52249/evidence/qa008-native-quiet-restored.jpg"
+          ]
+        }
+      ],
+      "awaitingRoundId": "candidate-dc7aee3-1b1afdd1"
+    },
+    {
+      "id": "QA-009",
+      "title": "便携SFX热重复退出9且不能唤醒原实例",
+      "owner": "01",
+      "severity": "P1-release-blocker",
+      "status": "verified",
+      "reproduced": true,
+      "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+      "reproducibleSteps": [
+        "启动312候选并注册自己的QA档案",
+        "将原主窗正常最小化",
+        "同SFX同profile再次启动并保留wrapper句柄",
+        "45秒记录进程/退出码/原窗口/解包文件"
+      ],
+      "expected": "第二次启动退出并唤醒原主窗；不同profile能并行；解包无相互覆盖",
+      "actual": "wrapper17496运行32.479s退出9；无第二主进程，原主窗仍最小化；ASAR/EXE前后完整hash一致；原实例本身可手动正常恢复",
+      "evidence": [
+        "rounds/candidate-312e5fe-524fd56d/evidence/qa006-hot-captured-01/summary.json",
+        "rounds/candidate-312e5fe-524fd56d/evidence/qa006-hot-native-outcome.json"
+      ],
+      "fixCommits": [
+        "a4ae503"
+      ],
+      "verification": "Final dc7 actual ColdSingle/HotSameProfile/SecondProfile/ColdPair and cross-real-root LS/IDB + active battle preservation passed; harness v2 exact environment diagnostics retained.",
+      "createdAt": "2026-10-25T10:51:12.943Z",
+      "latestActualSource": "e875febf3430be341191a639668d43e7f09826dc",
+      "latestActualExeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+      "latestEvidence": [
+        "rounds/candidate-e875feb-50e52249/evidence/cold-single-1/summary.json",
+        "rounds/candidate-e875feb-50e52249/evidence/cold-single-1/timeline.jsonl",
+        "rounds/candidate-e875feb-50e52249/evidence/cold-single-1/native-windows-after.json"
+      ],
+      "updatedAt": "2026-10-25T15:55:46.283Z",
+      "latestAttemptEnvironmentInvalid": "suspected; actual child env not captured",
+      "verifiedSource": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "verifiedExeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "verificationEvidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/startup",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/coldpair-final-outcome.json"
+      ],
+      "verificationHistory": [
+        {
+          "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+          "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+          "verification": "Actual valid-env e875 hot duplicate wrapper+child exit0 and restores minimized original native HWND; original payload remains complete with exact hashes. Real cloud-A cross actual SFX roots preserves LS/IDB and ORIGINAL pending action/body/hash, original native retry commits once independently confirmed server-side. V1 exit9 history remains harness-invalid.",
+          "evidence": [
+            "rounds/candidate-e875feb-50e52249/evidence/hot-same-profile-native-outcome.json",
+            "rounds/candidate-e875feb-50e52249/evidence/cloud-proxy-episode/original-action-recovery-complete.json"
+          ]
+        }
+      ],
+      "awaitingRoundId": "candidate-dc7aee3-1b1afdd1"
+    },
+    {
+      "id": "QA-010",
+      "title": "背包喂养选宠头像被68px预览框裁切，仅露耳尖",
+      "owner": "05",
+      "severity": "P2",
+      "status": "fixed_awaiting_retest",
+      "reproduced": true,
+      "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+      "reproducibleSteps": [
+        "用原隔离账号正常打开312成品",
+        "最大化主窗（本机DPI125%）",
+        "打开背包与喂养，等待两只小狐canonical stage均ready",
+        "观察给哪位伙伴的两个预览"
+      ],
+      "expected": "选宠小预览清楚显示可辨识的伙伴形象；头像尺寸适配当前容器",
+      "actual": "两只小狐stage ready且canvas244.8×244.8 DIP，cp-portrait244.6平方，garden-pet-portrait仅68高并overflow hidden；内容高145.17，仅9.99高可见（6.879%），真实截图只见耳尖。",
+      "evidence": [
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-bag-portrait-clipping-native.jpg",
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-bag-portrait-clipping.json",
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-territory-known-portrait-clipping.jpg",
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-territory-known-qa010-geometry.json"
+      ],
+      "assignment": "新05已提交98e6c32并交root审核整合，等待同一新候选原生复验",
+      "createdAt": "2026-10-25T11:57:52.923Z",
+      "updatedAt": "2026-10-25T13:48:58.078Z",
+      "fixCommits": [
+        "98e6c32"
+      ],
+      "verification": "A prior candidate passed; this exact candidate requires native retest.",
+      "additionalAffectedSurfaces": [
+        "领地总览选择出战伙伴（同garden-pet-portrait）"
+      ],
+      "verifiedSource": "e875febf3430be341191a639668d43e7f09826dc",
+      "verifiedExeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+      "verificationEvidence": [
+        "rounds/candidate-e875feb-50e52249/evidence/qa010-bag-wide-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa010-bag-normal-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa010-territory-normal-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa010-territory-wide-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa010-bag-wide-geometry.json",
+        "rounds/candidate-e875feb-50e52249/evidence/qa010-territory-wide-geometry.json"
+      ],
+      "verificationHistory": [
+        {
+          "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+          "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+          "verification": "Actual e875 native UI backpack and territory pet pickers at2048x1151 and1340x920/DPR1.25 both show complete fox ears/body/feet. Actual canvases now match68px slot height; rect visibility>=99.8%, remaining subpixel rounding affects blank edge. No feed/garrison mutation performed.",
+          "evidence": [
+            "rounds/candidate-e875feb-50e52249/evidence/qa010-bag-wide-native.jpg",
+            "rounds/candidate-e875feb-50e52249/evidence/qa010-bag-normal-native.jpg",
+            "rounds/candidate-e875feb-50e52249/evidence/qa010-territory-normal-native.jpg",
+            "rounds/candidate-e875feb-50e52249/evidence/qa010-territory-wide-native.jpg",
+            "rounds/candidate-e875feb-50e52249/evidence/qa010-bag-wide-geometry.json",
+            "rounds/candidate-e875feb-50e52249/evidence/qa010-territory-wide-geometry.json"
+          ]
+        }
+      ],
+      "awaitingRoundId": "candidate-dc7aee3-1b1afdd1"
+    },
+    {
+      "id": "QA-011",
+      "severity": "P2",
+      "status": "fixed_awaiting_retest",
+      "owner": "06",
+      "title": "宽屏聊天侧栏近景裁切过度，仅见额头眼睛，耳顶与下巴被截",
+      "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+      "reportedAt": "2026-10-25T12:30:24.582Z",
+      "reproducibleSteps": [
+        "隔离旧312档案已有小狐，2048×1151 DIP、DPI125%最大化",
+        "从对战或其他页面点击聊天",
+        "观察右侧角色近景；加载完成后仍只有额头和眼睛"
+      ],
+      "expected": "聊天近景在宽窄窗口内保留可辨识完整脸部，避免把耳顶/口鼻下缘过度截掉；保持现有近景用途和资源绑定。",
+      "actual": "原生截图稳定复现。cv-pet-scene407.4×225、overflow:hidden；ResourcePortrait SVG viewBox58.24 0 163.52 173.16，preserveAspectRatio=xMidYMid slice，宽高比变化将近景二次裁切。",
+      "evidence": [
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-chat-portrait-clipping-native.jpg",
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-chat-portrait-clipping.json"
+      ],
+      "fixCommits": [
+        "46e647367960f5f31f58855ed00d2bdadc689b30"
+      ],
+      "verification": "A prior candidate passed; this exact candidate requires native retest.",
+      "updatedAt": "2026-10-25T13:51:53.532Z",
+      "verifiedSource": "e875febf3430be341191a639668d43e7f09826dc",
+      "verifiedExeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+      "verificationEvidence": [
+        "rounds/candidate-e875feb-50e52249/evidence/qa011-chat-wide-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa011-chat-normal-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa011-ai-normal-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa011-ai-wide-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa011-chat-wide-geometry.json",
+        "rounds/candidate-e875feb-50e52249/evidence/qa011-ai-wide-geometry.json"
+      ],
+      "verificationHistory": [
+        {
+          "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+          "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+          "verification": "Actual e875 native chat and AI-settings portrait at2048x1151 and1340x920/DPR1.25 show full fox canonical portrait including ears/chin. Read-only DOM confirms SVG viewport212.46x225(chat) or179.41x190(AI) follows viewBox aspect ratio inside wide slot; global preserveAspectRatio slice unchanged, actual visible canonical content>=99.994%. No API-key/persona/memory mutation performed. Native check covers existing foxes, not all8 source gallery variants.",
+          "evidence": [
+            "rounds/candidate-e875feb-50e52249/evidence/qa011-chat-wide-native.jpg",
+            "rounds/candidate-e875feb-50e52249/evidence/qa011-chat-normal-native.jpg",
+            "rounds/candidate-e875feb-50e52249/evidence/qa011-ai-normal-native.jpg",
+            "rounds/candidate-e875feb-50e52249/evidence/qa011-ai-wide-native.jpg",
+            "rounds/candidate-e875feb-50e52249/evidence/qa011-chat-wide-geometry.json",
+            "rounds/candidate-e875feb-50e52249/evidence/qa011-ai-wide-geometry.json"
+          ]
+        }
+      ],
+      "awaitingRoundId": "candidate-dc7aee3-1b1afdd1"
+    },
+    {
+      "id": "QA-012",
+      "severity": "P2",
+      "status": "fixed_awaiting_retest",
+      "owner": "04",
+      "title": "进行中对局左上返回按钮立即回跳本场，表面没有响应",
+      "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+      "reportedAt": "2026-10-25T12:32:52.412Z",
+      "reproducibleSteps": [
+        "正常原生开始训练并完成1回合",
+        "点击左上aria-label返回按钮",
+        "仍停在同一session画面，无大厅或明确保留/离开反馈"
+      ],
+      "expected": "返回按钮应有可理解的导航结果，并保留可恢复的对局，或用明确的交互说明当前限制。",
+      "actual": "trusted native click于1792930596524；点击后仍为原battle-5f702c9e第2回合。侧栏切聊天可正常离页，返回对战自动恢复；不是按钮busy或对局数据损坏。源码active ResumeBattle自动导航与toolbar navigate(back)形成回跳。",
+      "evidence": [
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-active-battle-back-noop.json",
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-before-return.jpg",
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-training-all-actions-textures.json"
+      ],
+      "fixCommits": [
+        "d3a5f2f48433e326a6d3e6cc50acba7e94bd21ee"
+      ],
+      "verification": "Native training original reproduction fixed in e875: back stays lobby, reports accessible, report restart returns retained lobby, Continue restores exact full session. Friend waiting/active and same-final-package coverage pending.",
+      "updatedAt": "2026-10-25T13:56:50.559Z",
+      "trainingVerifiedSource": "e875febf3430be341191a639668d43e7f09826dc",
+      "trainingVerifiedExeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+      "verificationEvidence": [
+        "rounds/candidate-e875feb-50e52249/evidence/qa012-native-return-report-continue-outcome.json",
+        "rounds/candidate-e875feb-50e52249/evidence/qa012-lobby-retained-session-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa012-training-resumed-native.jpg"
+      ]
+    },
+    {
+      "id": "QA-013",
+      "severity": "P2",
+      "status": "fixed_awaiting_retest",
+      "owner": "03",
+      "title": "位置过期禁用野外挑战，却错误提示进入互动范围",
+      "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+      "reportedAt": "2026-10-25T12:51:33.909Z",
+      "reproducibleSteps": [
+        "本地隔离QA正常进入领地演练并打开附近57m青芽详情",
+        "位置自然超过30s变stale后，挑战禁用",
+        "真实键盘聚焦禁用控件外层，提示进入互动范围后挑战",
+        "正常点击更新场景位置，距离仍57m而挑战立即启用"
+      ],
+      "expected": "禁用说明应准确优先提示位置过期/重新定位，保持真实30s精度距离准入门槛，QA来源标记同时可见。",
+      "actual": "readonly snapshot为LOCATION_STALE/位置已过期请重新定位，半径100m、对象57m；UI副标题前往附近，键盘Tooltip却说进入互动范围后挑战。仅正常刷新后副标题可挑战且按钮enabled。",
+      "evidence": [
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-discovery-stale-wrong-disable-reason.jpg",
+        "rounds/candidate-312e5fe-524fd56d/evidence/fresh09-discovery-disabled-freshness-readback.json"
+      ],
+      "fixCommits": [],
+      "verification": "待03只修禁用原因优先级和明确重新定位反馈，不放宽地理安全准入；最终候选需原生复验。",
+      "fixCommit": "969ac35e1cd5349da09f0031d1e33576d27ca914",
+      "fixNote": "03 delivered location freshness priority and accurate reason. Not included in frozen e875feb candidate; retain outstanding final-package retest.",
+      "updatedAt": "2026-10-25T13:07:46.867Z"
+    },
+    {
+      "id": "QA-014",
+      "title": "对战双方HUD、好友与战报缺少可信编号展示",
+      "owner": "04 + 08",
+      "severity": "P2-release-blocker",
+      "status": "fixed_awaiting_retest",
+      "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+      "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+      "reproduced": true,
+      "actual": "Root协调04源码审计确认HUD/peer/战报缺少可信只读编号view；09当前e875原生训练HUD及旧战报截图均仅名称/等级/属性，无编号或待同步标记。好友peer出口只标source audit，尚未native验证。",
+      "expected": "所有相关出口使用可信只读display identity显示固定角色名及公开编号；未获可信编号显示待同步，不能从raw/client/备份字段伪造。",
+      "reproducibleSteps": [
+        "复用现有e875原生训练双方HUD截图",
+        "进入现有22回合战报页面查看双方名称区域",
+        "核对是否有编号或待同步标记"
+      ],
+      "evidence": [
+        "rounds/candidate-e875feb-50e52249/evidence/qa012-training-before-back-native.jpg",
+        "rounds/candidate-e875feb-50e52249/evidence/qa012-existing-report-during-active-native.jpg"
+      ],
+      "reportedBy": "Root source audit +09 existing native screenshots",
+      "createdAt": "2026-10-25T14:21:50.720Z",
+      "finalAcceptance": false,
+      "fixCommits": [
+        "09496a5"
+      ],
+      "fixDependencies": [
+        "08 trusted member-sidecar view",
+        "05 territory guard provider",
+        "Root integration/deploy and one exact final package"
+      ],
+      "verification": "04 delivered source and targeted boundary/DOM checks only. Existing native e875 missing-number evidence remains. Final native/live cloud HUD, peer, report and long-number layout checks required.",
+      "updatedAt": "2026-10-25T14:51:05.401Z"
+    },
+    {
+      "id": "QA-015",
+      "title": "桌宠首拖前初始化尺寸一致性待核",
+      "owner": "01/02",
+      "severity": "P2",
+      "blocking": false,
+      "status": "verified",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "reproducibleSteps": [
+        "正常最终包创建桌宠，renderer-ready且首拖前读实际几何",
+        "正常首拖后再读同组几何；沿用已计划D06自然重启补现有可读字段"
+      ],
+      "expected": "初建与后续位置更新路径的窗口/内容尺寸保持一致或差异有明确可验证说明",
+      "actual": "D02首拖前canvas268x314，首拖后及全部10次266x309；另D01自然再显示inner234x284/canvas270x314。累计放大专项已通过。初始化归因尚未闭环，不冒称1DIP舍入。 原计划D06再次配对：scale2首次稳定inner463x560/canvas556x659/Win32 462x560，首次正常拖动后inner460x560/canvas553x659/Win32460x560；DPR1.25/zoom1。",
+      "rootCause": "unknown; observed initialization-versus-move geometry difference",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/desktop-batch-before-state.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d02-ten-native-drags-complete.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d01-normal-recreated-window-initial-geometry.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d06-preservation-and-qa015-first-drag.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d06-first-init-native-window-bounds-before-any-drag.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d06-native-window-bounds-after-first-drag.json"
+      ],
+      "updatedAt": "2026-10-26T10:03:49.911Z",
+      "rootDecision": "Root reviewed minimal canonical placement; collected batch not integrated, DC7 unchanged. Actual OS first-frame result unverified; no extra action for this issue.",
+      "candidateCommit": "b808a1406d2ed194377ee2861dfe0b28dcf1e997",
+      "nativeFixVerified": true,
+      "verifiedSource": "c7ad6837e1569dafd942528f375062debf714c2b",
+      "verifiedExeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+      "verifiedAsarSha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355",
+      "verification": "同实际c7ad原生首拖，scale1和2各自Win32/inner/canvas保持稳定，实际位移-50/+30；正常恢复原scale1及1343,478。renderer outer1DIP读值差异和不可得Main几何如实保留，Root独立复核通过。",
+      "verificationEvidence": [
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa015-c7ad-actual-desktop-fox-before-first-drag-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa015-c7ad-actual-desktop-fox-after-first-drag-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa015-c7ad-actual-scale200-before-first-drag-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa015-c7ad-actual-scale200-after-first-drag-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/desktop-readonly-qa015-before-first-drag-scale1-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/native-window-bounds-qa015-before-first-drag-scale1-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/desktop-readonly-qa015-after-first-drag-scale1-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/native-window-bounds-qa015-after-first-drag-scale1-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/desktop-readonly-qa015-before-first-drag-scale2-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/native-window-bounds-qa015-before-first-drag-scale2-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/desktop-readonly-qa015-after-first-drag-scale2-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/native-window-bounds-qa015-after-first-drag-scale2-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa015-c7ad-scale100-confirmed-after-native-retract-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/p03-c7ad-native-only-legal-limits-one-to-four-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/p03-c7ad-native-limit4-volume100-saved-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/desktop-readonly-p03-limit4-volume100-zero-visible-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/p03-c7ad-native-original-limit3-volume70-exact-restored-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/desktop-readonly-d01-p03-all-original-controls-restored-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/local-flow-d01-p03-all-original-controls-restored-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/desktop-c7ad-native-fixes-and-restoration-verified-20261026.json"
+      ]
+    },
+    {
+      "id": "QA-016",
+      "title": "桌面出场数量与策略后的实际可见实例不符",
+      "owner": "08/02",
+      "severity": "P2",
+      "blocking": false,
+      "status": "verified",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "reproducibleSteps": [
+        "正常保存上限4，原生领养使5个实例请求桌面显示",
+        "查看我的灵宠/设置：显示桌面中5、已出场5/4，但host实际可见4",
+        "正常保存上限1：显示已出场5/1，但host实际可见1"
+      ],
+      "expected": "显示实际出场数量；被上限隐藏的实例不标为正在桌面陪伴，或明确区分请求出场和实际出场",
+      "actual": "同一owner保存limit1后host.windows实际visible仅1、总窗口5；设置原生画面已出场5/1，我的灵宠桌面中5且第五隐藏焰柴仍标桌面中。上限策略实际有效，错误在UI状态/数量语义。",
+      "rootCause": "not closed; UI visibly counts requested/created instances rather than effective visibility",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d01-five-preferences-four-effective-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d01-limit1-saved-effective-count-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/d01-limit1-policy-vs-ui-count.json"
+      ],
+      "updatedAt": "2026-10-26T10:03:49.916Z",
+      "fixCandidateCommit": "d5609423e51c2473f2bb79be1c4ca42bc0fffd32",
+      "fixEvidence": "Root已独立审核及完整patch虚拟index check/apply；02工程Node/受控IPC DOM检查通过。未集成产品、未重打冻结包、未进行修复后原生复验；D01仍failed。",
+      "nativeFixVerified": true,
+      "verifiedSource": "c7ad6837e1569dafd942528f375062debf714c2b",
+      "verifiedExeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+      "verifiedAsarSha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355",
+      "verification": "原生5开启4实际/5开启1实际、逐宠等待、桌面筛选、未保存设置与重开首狐队尾均正确跟随真实host；原设置与7宠desktop全恢复，Root12项独立复核通过。",
+      "verificationEvidence": [
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/d01-c7ad-native-seven-owned-zero-enabled-baseline-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/d01-c7ad-native-two-enabled-two-visible-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/d01-c7ad-native-three-enabled-three-visible-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/d01-c7ad-native-four-enabled-four-visible-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa016-c7ad-native-five-enabled-four-visible-fire-waiting-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa016-c7ad-native-desktop-filter-excludes-waiting-fire-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa016-c7ad-native-settings-actual-four-of-four-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa016-c7ad-native-unsaved-limit1-keeps-applied-four-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa016-p03-c7ad-native-saved-limit1-volume0-actual-one-of-one-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa016-c7ad-native-five-enabled-one-visible-four-waiting-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa016-c7ad-native-reshown-first-waits-actual-second-displays-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/desktop-readonly-qa016-five-enabled-four-visible-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/desktop-readonly-qa016-p03-five-enabled-limit1-volume0-saved-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/desktop-readonly-qa016-reshown-first-waits-second-visible-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/p03-c7ad-native-only-legal-limits-one-to-four-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/p03-c7ad-native-limit4-volume100-saved-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/desktop-readonly-p03-limit4-volume100-zero-visible-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/p03-c7ad-native-original-limit3-volume70-exact-restored-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/desktop-readonly-d01-p03-all-original-controls-restored-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/local-flow-d01-p03-all-original-controls-restored-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/desktop-c7ad-native-fixes-and-restoration-verified-20261026.json"
+      ]
+    },
+    {
+      "id": "QA-017",
+      "title": "模型响应socket断开被误报为供应商拒绝",
+      "owner": "06",
+      "severity": "P2",
+      "blocking": false,
+      "status": "verified",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "reproducibleSteps": [
+        "Root批准的本机模拟供应商mode=disconnect，返回真实HTTP200/SSE14字后断开socket",
+        "正常UI对原失败轮次点击重试，观察公开错误和只读SQLite"
+      ],
+      "expected": "保留部分回复且失败，公开错误应描述连接中断/网络错误，不能把无拒绝响应的socket中断归为供应商拒绝",
+      "actual": "真实原生attempt5保留14字符/status failed，但error_code=PROVIDER_REJECTED、UI显示模型拒绝请求；helper仅response断流，无HTTP拒绝。truncate路径正确failed/INVALID_RESPONSE，其他401/429/503映射正常，之后原轮JSON恢复attempt7成功且仍一user一assistant。",
+      "rootCause": "not yet closed; transport exception normalization to review",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t06-disconnect-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t06-disconnect-original-round-readback.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/t06-real-http-errors-and-original-json-recovery.json"
+      ],
+      "updatedAt": "2026-10-26T10:33:28.747Z",
+      "preparedFixCommit": "35702d3b70aac1c7f6961b6195166c94b6847917",
+      "rootReviewEvidence": "artifacts/qa/user-acceptance/global-serial/root-qa015-017-virtual-batch-20261025T1845/root-review.json",
+      "nativeFixVerified": true,
+      "productCandidateUnchanged": false,
+      "verifiedSource": "c7ad6837e1569dafd942528f375062debf714c2b",
+      "verifiedExeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+      "verifiedAsarSha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355",
+      "verification": "实际同c7ad原鱼丸本机模拟服务，唯一连接测试正常；单SSE14字后真实socket断流保留部分回复、failed/INVALID_RESPONSE，UI模型连接中断且解除busy。只对原action/user/assistant普通重试一次至attempt2 complete45字，仍两消息无重复。新dummy/override/chat正常恢复、原记录保护和ownedhelper正常stop闭合，Root独立核对通过。",
+      "verificationEvidence": [
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/t06-ready-original-runtime-identity-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/app-info-t06-fish-empty-slot-ready-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/fish-connection-metadata-t06-empty-slot-ready-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa017-c7ad-actual-helper-owned-start-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa017-c7ad-native-single-fish-connection-test-completed-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa017-c7ad-single-disconnect-stage-complete-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa017-c7ad-native-disconnect-invalid-response-partial-retained-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/fish-connection-metadata-single-disconnect-finished-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa017-c7ad-native-same-assistant-single-retry-final-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/fish-connection-metadata-same-action-retry-completed-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa017-c7ad-native-fish-only-dummy-key-cleared-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa017-c7ad-native-fish-override-false-restored-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa017-c7ad-native-original-chat-first-fox-restored-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/fish-connection-metadata-normal-ui-cleanup-restored-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/local-flow-qa017-normal-ui-cleanup-restored-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa017-c7ad-owned-helper-normal-stop-confirmed-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa017-c7ad-native-narrow-retest-verified-20261026.json"
+      ]
+    },
+    {
+      "id": "QA-018",
+      "title": "空分类仍显示食物详情且误用搜索无结果文案",
+      "owner": "05",
+      "severity": "P2",
+      "blocking": false,
+      "status": "verified",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "reproducibleSteps": [
+        "背包搜索为空，默认选米饭，切装扮",
+        "再切道具，观察详情未与分类同步"
+      ],
+      "expected": "空装扮分类准确说明暂无装扮；当前分类无可选物品时清空详情或明确保留选择的语义",
+      "actual": "搜索为空仍提示没有找到这个物品换个名字试试；空分类仍显示米饭0和喂养区；道具也残留食物详情。分类列表数量与只读库存本身一致。",
+      "rootCause": "InventoryPage selected 从全部data查找，未随分类过滤；空态固定搜索无结果文案",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/qa018-empty-category-readback.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/qa018-empty-appearance-stale-food-detail-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/i01-tools-seeds-and-rice-native.jpg"
+      ],
+      "updatedAt": "2026-10-26T09:15:55.299Z",
+      "preparedFixCommit": "d545f53101c15ab2ecd693979861c3169df73c63",
+      "rootReviewEvidence": "artifacts/qa/user-acceptance/global-serial/root-qa015-018-virtual-batch-20261026/root-review.json",
+      "nativeFixVerified": true,
+      "productCandidateUnchanged": true,
+      "verifiedSource": "c7ad6837e1569dafd942528f375062debf714c2b",
+      "verifiedExeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+      "verifiedAsarSha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355",
+      "verification": "c7ad同一实际SFX原生复现原触发链，空分类正确且详情清空；搜索与分类空态区分正确，28安全表无业务写入。",
+      "verificationEvidence": [
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa018-c7ad-native-inventory-entry-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa018-c7ad-native-decoration-empty-clears-food-detail-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa018-c7ad-native-tools-empty-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa018-c7ad-native-seed-usable-purpose-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa018-c7ad-native-food-clears-nonfood-selection-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa018-c7ad-native-query-specific-no-results-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa018-c7ad-native-search-cleared-all-inventory-restored-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/first-four-c7ad-native-fixes-verified-20261026.json"
+      ]
+    },
+    {
+      "id": "QA-019",
+      "title": "AI设置侧栏通知与隐私误跳到桌面行为",
+      "owner": "06",
+      "severity": "P2",
+      "blocking": false,
+      "status": "verified",
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "reproducibleSteps": [
+        "正常进入AI对话设置",
+        "键盘Tab聚焦通知与隐私并Return（鼠标同a链接）"
+      ],
+      "expected": "进入#/settings/privacy通知与安静时段页",
+      "actual": "实际进入#/settings桌面行为，标题按你的节奏安静陪伴，通知页未打开；普通设置侧栏对应链接正常",
+      "rootCause": "apps/pc-app/ui/src/features/conversations/settings-page.tsx104第二项href误写/settings",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/qa019-ai-settings-privacy-route-readback.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/qa019-ai-privacy-link-opens-desktop-native.jpg"
+      ],
+      "updatedAt": "2026-10-26T09:15:55.302Z",
+      "preparedFixCommit": "7554e04a0dd6e7fe07df00754b1c11d0ddf2fbb4",
+      "rootReviewThread": "01a172b5-e59a-7c53-a67c-8fc53e6f61cd",
+      "rootReviewSummary": "Root reviewed minimal href-only fix; frozen DC7 unchanged",
+      "nativeFixVerified": true,
+      "productCandidateUnchanged": true,
+      "verifiedSource": "c7ad6837e1569dafd942528f375062debf714c2b",
+      "verifiedExeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+      "verifiedAsarSha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355",
+      "verification": "c7ad实际键盘聚焦/Return进入正确通知与隐私页面，五分组可达且原配置不变。",
+      "verificationEvidence": [
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa019-c7ad-native-ai-settings-entry-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa019-c7ad-native-notifications-keyboard-focus-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa019-c7ad-native-keyboard-opens-correct-notifications-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/p01-c7ad-native-settings-resources-group-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/p01-c7ad-native-settings-account-group-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cutover-c7ad-localA-original-closetrue-restored-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/first-four-c7ad-native-fixes-verified-20261026.json"
+      ]
+    },
+    {
+      "id": "QA-020",
+      "title": "战报种子奖励未显示具体作物名称",
+      "owner": "04",
+      "severity": "P3",
+      "blocking": false,
+      "status": "verified",
+      "associatedCases": [
+        "B03",
+        "B05"
+      ],
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "reproducibleSteps": [
+        "打开原1fc自然胜利战报",
+        "查看种子奖励摘要；对照同owner旧5f702战报"
+      ],
+      "expected": "已知奖励itemId时显示胡萝卜种子/稻米种子等具体名称和数量，legacy未知保留泛称",
+      "actual": "两战报界面均仅种子+2；实际1fc reward.seeds.itemId=seed:carrot，旧5f702为seed:rice，用户不能分辨奖励作物；实际唯一结算正确",
+      "rootCause": "ReportsPanel.tsx奖励summary只渲染quantity，未映射seeds.itemId名称",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b05-original-14-round-report-open-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b05-native-play-then-immediate-pause.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b03-original-natural-victory-14-rounds.json"
+      ],
+      "functionalAcceptanceUnchanged": true,
+      "updatedAt": "2026-10-26T09:15:55.305Z",
+      "preparedFixCommit": "cda80ddd16dec60254b94921badb89cb91bbe48c",
+      "rootReviewThread": "01a172b5-e59a-7c53-a67c-8fc53e6f61cd",
+      "rootReviewSummary": "Root reviewed static catalog label projection, no settlement changes; 04 component checks only, not native acceptance",
+      "nativeFixVerified": true,
+      "productCandidateUnchanged": true,
+      "verifiedSource": "c7ad6837e1569dafd942528f375062debf714c2b",
+      "verifiedExeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+      "verifiedAsarSha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355",
+      "verification": "同真实17回合领地败局原生战报及DOM精确显示经验+5/莓果种子+2，与唯一真实ledger奖励一致；不是固定胡萝卜名称，未另开对战。",
+      "verificationEvidence": [
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa020-c7ad-native-actual-report-list-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/visible-public-ui-qa020-real-loss-berry2-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/first-four-c7ad-native-fixes-verified-20261026.json"
+      ]
+    },
+    {
+      "id": "QA-021",
+      "title": "保留合并成功后仍统一提示待核对且重复导向恢复",
+      "owner": "08",
+      "severity": "P2",
+      "blocking": false,
+      "status": "fix_prepared_awaiting_integration",
+      "associatedCases": [
+        "A13"
+      ],
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "reproducibleSteps": [
+        "B2新普通设备正常登录原B",
+        "核对存档→预览云端rev8→默认合并并确认",
+        "正常返回我的灵宠并刷新"
+      ],
+      "expected": "保留合并成功后说明仍待处理的真实个人设置差异，并指向现有同步处理步骤，不重复导向同一恢复造成循环",
+      "actual": "自动原备份成功、3宠/7actions完整；云sync=true、本机merge保留false，完整checksum仍不同。baseline/checkpoint已8但统一其他存档待核对，核对按钮又指向恢复流程。",
+      "rootCause": "merge有意保本机settings；acceptAuthoritativeReadback完整dataChecksum门禁正确拦截，但UI仅sharedSavePending布尔值无法表达已确认的个人分支与下一步",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a13-b2-normal-pending-save-review-merge.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a13-b2-post-confirmation-still-pending-review.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/a13-b2-returned-library-after-review-native.jpg"
+      ],
+      "rootDecision": "仅准备状态原因/既有账号同步指引；完整fingerprint和gate保持，不能强开同步/自动上传/改变合并策略",
+      "nativeFixVerified": false,
+      "productCandidateUnchanged": true,
+      "updatedAt": "2026-10-25T21:20:12.705Z",
+      "preparedFixCommit": "bca4df4024f9b8a59a47b6a3567f04d6a14cf541",
+      "preparedFixSummary": "08仅准备准确差异原因/查看同步详情指引，完整fingerprint与merge/自动上传保持原规则；隔离逻辑/组件检查，不是native通过"
+    },
+    {
+      "id": "QA-022",
+      "title": "好友邀请缺少产品到期时间和服务端到期拒绝路径",
+      "owner": "04",
+      "severity": "P2",
+      "blocking": false,
+      "status": "verified",
+      "associatedCases": [
+        "B09"
+      ],
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "reproducibleSteps": [
+        "正常打开真实好友邀请页面",
+        "发起真实邀请并查看生命周期",
+        "按B09预期等待产品到期再接受"
+      ],
+      "expected": "存在产品定义的到期规则，双方状态一致且过期不能启动",
+      "actual": "DC7 schema仅pending/accepted/rejected/cancelled，无expires_at；发送/接受均无时间判断，实际页面无到期元数据或可触发过期入口。04独立确认missing，未任意等待或改Map/DB/时钟冒充。真实原生A→B邀请5983a129-fb48-42c4-a0fa-4fe2421b3247 / 2026-10-25T21:21:37.731505+00:00双方pending一致，DTO也无expiry字段；随后正常婉拒，不伪造到期。",
+      "rootCause": "邀请端到端未实现expiry，现有12000ms为回合轮询超时而非邀请TTL",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/qa022-missing-invitation-expiry-readonly-source-review.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b12-b-real-friends-empty-state-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/qa022-first-real-native-invitation-no-expiry.json"
+      ],
+      "rootDecision": "只准备增量方案：升级后新邀请服务器5分钟有效；已有无expires字段邀请按旧规则保留，可正常取消重发。冻结DC7不改，未来新候选实际等待5分钟验收。",
+      "nativeFixVerified": true,
+      "productCandidateUnchanged": false,
+      "updatedAt": "2026-10-26T12:55:51.026Z",
+      "verifiedSource": "c7ad6837e1569dafd942528f375062debf714c2b",
+      "verifiedExeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+      "verifiedAsarSha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355",
+      "verification": "实际同c7ad原A狐4→原B账号仅发一次邀请61dedf29.../actionfdaa963e...；真实server五分钟created12:28:21.751706Z→expires12:33:21.751706Z，等待自然到期、双方普通刷新均expired，乙无Accept。0重试/重发/接受/room/新结算，原12legacy完整行和nullable expires保留，PG唯一原command不变。初始发送结果待确认随后后台自动显示原pending，未手动恢复。Root21+13独立检查及截图复审通过；乙本地补入既有training dc8及园圃数据按原head23归因，原friend行/4宠/选择/settings/journal保留。到期接受被UI隐藏，HTTP409未实测，B到期前仅loading不冒称pending可见。",
+      "verificationEvidence": [
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/b09-c7ad-single-invite-natural-expiry-client-verified-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/b09-cloudA-sole-invite-send-first-native-result-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/b09-cloudB2-first-loaded-observation-after-real-deadline-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/b09-cloudB2-expired-after-one-normal-refresh-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/b09-cloudA-expired-after-one-normal-refresh-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudA-battle-public-ui-b09-only-send-first-unknown-result-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudA-battle-public-ui-b09-natural-expiry-after-one-normal-refresh-final-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudB2-battle-public-ui-b09-natural-expiry-after-one-normal-refresh-final-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudA-flow-b09-natural-expiry-after-one-normal-refresh-final-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudB2-flow-b09-natural-expiry-after-one-normal-refresh-final-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/b09-b2-exact-backup-baseline-observation-and-correction-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/native09-b09-natural-expiry-client-proof-original-failed-before-b2-cache-attribution-20261026.cjs",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa022-b09-c7ad-native-natural-expiry-verified-20261026.json",
+        "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/b09-original-invite-exact-cloud-receipt.json",
+        "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/b09-b2-authority-cache-and-old-backup-reconciliation-independent.json",
+        "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/b09-natural-expiry-and-legacy-preservation-independent.json"
+      ]
+    },
+    {
+      "id": "QA-023",
+      "title": "真实好友战报丢失对手已确认的全局数字编号",
+      "owner": "04",
+      "collaborator": "02",
+      "severity": "P2-release-blocker",
+      "blocking": true,
+      "status": "verified",
+      "associatedCases": [
+        "C03"
+      ],
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "reproducibleSteps": [
+        "DC7 A新狐0004与B新狐0005通过真实邀请进入同一房间",
+        "原生逐轮完成十二回合自然终局",
+        "双方点击战报，等待载入完成，查看对手卡片/列表/回合回顾"
+      ],
+      "expected": "双方已知对手全局数字编号持续显示0004或0005，与实际战斗一致",
+      "actual": "实际战斗双方正确显示0004/0005；终局战报我方仍正确，对手在列表/卡片/回顾全部显示编号待同步。双方数据库原报告敌方对象不含displayIdentity。奖励/rounds/原其他伙伴不受影响。 正常冷启动后A/B原报告的对手分别恢复0005/0004，原rawreport及10业务表未变；这是实际冷启动对照，不能视作DC7已修复warm更新缺口。",
+      "rootCause": "待04协02核实战报对手全局编号投影丢失，冻结候选尚未修复",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/c03-friend-reports-opponent-global-number-pending.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b11-real-friend-a-terminal-report-settled-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b11-real-friend-b-terminal-report-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/b06-b-auto-shared-room-active-without-manual-sync-native.jpg"
+      ],
+      "rootDecision": "Root明确P2-release-blocker，主04协02，仅准备最小修复后统一集成；C03新失败保留，B11经济验收独立继续。",
+      "nativeFixVerified": true,
+      "productCandidateUnchanged": false,
+      "updatedAt": "2026-10-26T12:25:25.154Z",
+      "coldRestartObservation": {
+        "bothCorrect": true,
+        "bReportReadback": "rounds/candidate-dc7aee3-1b1afdd1/evidence/qa023-b-normal-cold-restart-report-identity.json",
+        "bNative": "rounds/candidate-dc7aee3-1b1afdd1/evidence/qa023-b-normal-cold-restart-correct-opponent-number-native.jpg",
+        "aReadback": "rounds/candidate-dc7aee3-1b1afdd1/evidence/b11-a-normal-reopened-original-report-no-second-award.json",
+        "aNative": "rounds/candidate-dc7aee3-1b1afdd1/evidence/b11-a-normal-reopened-original-report-native.jpg"
+      },
+      "verifiedSource": "c7ad6837e1569dafd942528f375062debf714c2b",
+      "verifiedExeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+      "verifiedAsarSha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355",
+      "verification": "原CloudA同档c7ad实际既有好友战报online-d79b...：list我方0004/对方0005、详情双小狐0004/0005、首回合和末12回合Replay侧栏数字号正确；离开至原A狐4详情再warm重入仍正确。data-pet-id严格A974/B2ec；原3report/session/reward与21journal完整行不变，8cached宠及双owner选择原样。Root独立数据核对与截图人工复审通过；本范围未新建终局对局，不替代C03全域矩阵。",
+      "verificationEvidence": [
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudA-c7ad-native-cutover-settings-restored-and-warm-reports-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudA-c7ad-existing-report-list-normal-load-observation-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudA-c7ad-existing-friend-round1-replay-first-frame-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudA-c7ad-existing-friend-last-round12-detail-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudA-c7ad-existing-friend-round12-replay-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudA-c7ad-original-fox4-detail-loaded-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudA-c7ad-existing-report-warm-reentry-loaded-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudA-battle-public-ui-existing-friend-report-first-loaded-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudA-battle-public-ui-existing-friend-report-last-round12-replay-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudA-battle-public-ui-existing-friend-report-warm-reentry-loaded-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudA-battle-public-ui-original-fox4-detail-loaded-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudA-flow-c7ad-warm-report-reentry-complete-final-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa023-c7ad-native-warm-report-retest-verified-20261026.json",
+        "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/root-resume-20261026/bb650b83-9ced-41f1-9a3b-be13d5b7d8e0/clouda-c7ad-cutover-settings-and-business-preservation-independent.json"
+      ],
+      "verificationScope": "QA023 warm existing report regression only: original live A fox4/B fox5 report on c7ad; list/detail/round1 and round12 replay plus roster/detail visit and warm reentry retain standard names and numeric identities. No new battle/invite in this completed stage. Whole C03 adoption/chat/desktop/cross-user naming matrix not replayed."
+    },
+    {
+      "id": "QA-024",
+      "title": "同文档偏好已拉取确认后旧冲突队列仍永久阻塞资源同步",
+      "owner": "07",
+      "verifier": "09",
+      "severity": "P2-release-blocker",
+      "blocking": true,
+      "status": "verified",
+      "associatedCases": [
+        "R06"
+      ],
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "reproducibleSteps": [
+        "B1正常导入青芽、保存偏好并正常云发布",
+        "B2通过正常账号备份恢复同一青芽及local revision1偏好",
+        "B2正常开启同步，base0的旧上传遇到云revision1冲突，随后正常pull已获得同一有效document及authority确认",
+        "查看队列与原生账号页，不重试、不删历史"
+      ],
+      "expected": "已被同一actor和有效authority确认的同文档旧任务可被安全supersede，不持续阻塞后续同资源偏好；界面给出可理解反馈。",
+      "actual": "B2 action ad163d25-f061-4546-863b-057c680516a7 仍status conflict/attempts1/base0/local1，而当前local、outbox、已拉取cloud1/local1的有效document canonical完全一致。原生账号页仅显示同步未完成，不显示具体资源或冲突数量。新岩团冷恢复全部正向证据成立，不能视作整个资源同步无遗留。",
+      "rootCause": "07已确认旧conflict job未随同actor同localRev同document的已验证authority pull而安全supersede，冻结候选仍保留该阻塞。",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/qa024-r06-old-qingya-stale-conflict-with-identical-pulled-state.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/r06-b2-sync-off-outstanding-resource-conflict-native.jpg",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/r06-real-cold-private-resource-positive-and-retained-conflict.json"
+      ],
+      "rootDecision": "Root明确P2 release blocker，主07验09，关联R06整体暂failed。最小修复须有authority+actor+localRev/doc约束，不能假verified、重试/删历史；新候选定向复验。",
+      "nativeFixVerified": true,
+      "productCandidateUnchanged": false,
+      "updatedAt": "2026-10-26T11:45:57.846Z",
+      "verifiedSource": "c7ad6837e1569dafd942528f375062debf714c2b",
+      "verifiedExeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+      "verifiedAsarSha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355",
+      "verification": "原B2普通登录与正常自动pull后，原ad冲突唯一status变为superseded，旧attempt/error/document/verifiedNULL完整保留。仅两次正常偏好Save产生0879 base1/local2与9085 base2/local3，客户端verified与独立云端唯一authority22/23匹配。恢复原1.05、先syncfalse后volume70，settings7原doc、四宠及选择rawexact；无手动重试/立即同步/备份恢复/merge。",
+      "verificationEvidence": [
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudB2-c7ad-original-normal-launch-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudB2-c7ad-actual-runtime-identity-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudB2-flow-first-normal-login-auto-pull-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudB2-flow-normal-sync-first-pull-after-timer-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa024-b2-c7ad-single-positive-save-client-verified-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa024-b2-c7ad-single-authorized-scale106-save-first-result-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudB2-resource-public-ui-single-restore-draft105-before-save-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa024-b2-c7ad-single-restore105-save-first-result-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudB2-flow-single-restore105-save-normal-timer-record-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudB2-flow-sync-restored-false-before-volume70-save-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa024-b2-c7ad-original-settings-restored-single-save-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudB2-flow-qa024-original-settings70-syncfalse-restoration-final-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa024-b2-c7ad-client-roundtrip-original-settings-restored-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudB2-app-info-qa024-final-original-settings-restored-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa024-c7ad-native-narrow-retest-verified-20261026.json",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\global-serial\\root-resume-20261026\\bb650b83-9ced-41f1-9a3b-be13d5b7d8e0\\qa024-roundtrip-and-original-settings-independent.json"
+      ]
+    },
+    {
+      "id": "QA-025",
+      "title": "野外收服校验失败的错误被模态框背景模糊遮住",
+      "owner": "Root (01a1759f-d666-75d1-81dc-e757e748d221)",
+      "supportOwner": "03",
+      "verifier": "09",
+      "severity": "P2-release-blocker",
+      "blocking": true,
+      "status": "verified",
+      "associatedCases": [
+        "M05"
+      ],
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "reproducibleSteps": [
+        "原LocalA通过可见QA位置正常相遇并自然11回合胜利",
+        "位置自然超过30秒后点击收服打开原生modal，保留默认鱼丸",
+        "点击确认一次触发合法过期位置拒绝",
+        "观察modal内没有错误，ErrorNotice在modal后方被backdrop blur；取消后才可读位置已过期，请重新定位"
+      ],
+      "expected": "失败原因在当前收服对话框清晰可读；用户有正常重新定位与重试路径；保持有效位置/同session/同action约束，不自动重发。",
+      "actual": "readonly DOM实取error-notice位置已过期，请重新定位，rect x210/y104；native截图modal背景红条被blur，modal内部仅昵称与取消/确认。取消→探索可见QA更新→继续原胜利→正常确认成功，证明数据与位置guard正确，问题在反馈层。",
+      "rootCause": "BattleScreen.tsx render把ErrorNotice放在BattleArena前，捕捉AppDialog独立在其后，settle失败不关闭dialog也不在dialog内呈现controller.error。",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m05-native-capture-confirm-first-visible-result-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m05-native-capture-cancel-exposes-real-location-error-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/local-ui-errors-capture-validation-behind-modal-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/local-flow-fish-capture-stale-position-rejected-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/m05-positive-single-capture-with-QA025-modal-error-20261026.json"
+      ],
+      "rootDecision": "Root实际复核原生截图和readonly DOM，确认P2 release blocker；只修错误反馈与恢复入口，不放宽定位guard、不自动定位或重发。",
+      "nativeFixVerified": true,
+      "productCandidateUnchanged": false,
+      "updatedAt": "2026-10-26T09:45:39.134Z",
+      "originalDomainOwner": "04",
+      "preparedFixCommit": "9a17abda3b718c6277a2dc83fe08b9549317a348",
+      "preparedFixScope": "Root反馈单文件BattleScreen.tsx将capturing错误置于modal内部并提供返回探索入口；定向ESLint和diffcheck通过；仍未打新包。",
+      "verifiedSource": "c7ad6837e1569dafd942528f375062debf714c2b",
+      "verifiedExeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+      "verifiedAsarSha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355",
+      "verification": "实际c7ad原生收服modal内错误清楚可读，返回探索可用，无自动定位/重试；正常重新定位后同场唯一捕捉成功，详情/记忆/图鉴及原始历史与设置回查闭环。Root独立readOnly SQLite和实际截图核对通过。",
+      "verificationEvidence": [
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa025-c7ad-native-stale-error-visible-inside-dialog-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/visible-public-ui-qa025-alert-inside-capture-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/local-flow-qa025-natural-win-stale-capture-rejected-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa025-c7ad-native-return-exploration-button-outcome-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa025-c7ad-native-recovery-location-refreshed-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa025-c7ad-native-reentered-same-won-battle-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa025-c7ad-native-normal-single-capture-outcome-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa025-c7ad-native-new-riceball-owned-detail-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa025-c7ad-native-riceball-first-meeting-memory-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa025-c7ad-native-same-captured-result-reentered-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa025-c7ad-native-pokedex-both-original-and-new-captures-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/local-flow-qa025-after-pokedex-reentry-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/local-flow-qa025-final-original-selection-restored-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa025-c7ad-native-capture-verified-20261026.json"
+      ]
+    },
+    {
+      "id": "QA-026",
+      "title": "领地战确认离开后仍挂未结算挑战，原生入口无法恢复",
+      "owner": "Root (01a1759f-d666-75d1-81dc-e757e748d221)",
+      "verifier": "09",
+      "severity": "P1-release-blocker",
+      "blocking": true,
+      "status": "verified",
+      "associatedCases": [
+        "G04",
+        "G03",
+        "G02",
+        "C08"
+      ],
+      "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+      "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "reproducibleSteps": [
+        "visible simulated location refresh",
+        "original owned second fox challenge",
+        "round0 leave then confirm",
+        "return to territory",
+        "continue once into same abandoned session"
+      ],
+      "expected": "离开后可通过正常界面确认非胜利结果并恢复可用入口；不占领、不发胜利奖励、不重复扣次。",
+      "actual": "round0正常离开得到abandoned，但garden_territory_challenges settled=0；领地页仅继续挑战，再入同一已结束局且无确认结果按钮。领地仍owner=null/rev1，剩余1次无法开始；驻守正向被阻断。",
+      "rootCause": "源码线索：BattleScreen settlement限定finished；TerritoryPanel把abandoned显示继续；snapshot列出所有settled=0。仅为当前代码线索，最终修复由Root审查。",
+      "evidence": [
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g04-territory-cancel-native-readback-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/local-flow-territory-cancel-reentry-stuck-20261026.json",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g04-native-territory-leave-confirm-dialog-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g04-native-territory-abandoned-confirmed-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g04-native-territory-return-after-abandon-20261026.png",
+        "rounds/candidate-dc7aee3-1b1afdd1/evidence/g04-native-continue-abandoned-territory-stays-ended-20261026.png"
+      ],
+      "rootDecision": "Root确认P1；保留原battle/challenge/attempt/history，仅从actionable projection排除abandoned，剩余合法次数可用。首次位置过期泛化错误作为同项恢复反馈附项；禁止放宽guard、重置或造新数据。",
+      "nativeFixVerified": true,
+      "productCandidateUnchanged": true,
+      "updatedAt": "2026-10-26T09:15:55.308Z",
+      "originalDomainOwners": [
+        "05",
+        "04"
+      ],
+      "preparedFixCommit": "a9191d8cd080e881b83b5cbf5a2894fa72a08ff7",
+      "preparedFixScope": "Root反馈8/8定向domain SQLite/QA-location验证通过；明确LOCATION_STALE可读提示，未知异常继续泛化。未native回验。",
+      "verifiedSource": "c7ad6837e1569dafd942528f375062debf714c2b",
+      "verifiedExeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+      "verifiedAsarSha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355",
+      "verification": "c7ad实际旧abandoned不挡剩余1次；自然位置过期提示清楚且不扣次；普通最后1次自然17回合败局可确认，无错误占领。Root独立11项SQLite/原规则奖励核对通过，旧raw与历史保留，quota=2。",
+      "verificationEvidence": [
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa026-c7ad-old-abandoned-no-longer-blocks-entry-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa026-c7ad-natural-stale-location-rejected-clearly-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/local-flow-qa026-native-stale-rejection-before-last-attempt-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa026-c7ad-last-legitimate-territory-battle-started-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/g03-c7ad-natural-territory-round17-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/g04-c7ad-native-natural-loss-confirmed-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa026-c7ad-zero-quota-disabled-with-owned-pet-selected-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/g04-c7ad-native-territory-log-entries-visible-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/local-flow-territory-natural-loss-confirmed-zero-quota-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/first-four-c7ad-native-fixes-verified-20261026.json"
+      ]
+    },
+    {
+      "id": "QA-027",
+      "title": "资源编辑草稿期间无变化后台拉取误报另一窗口已更新",
+      "owner": "07",
+      "verifier": "09",
+      "severity": "P2",
+      "blocking": false,
+      "status": "open",
+      "associatedCases": [
+        "R01",
+        "R06"
+      ],
+      "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+      "exeSha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d",
+      "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+      "reproducibleSteps": [
+        "原B2普通c7ad资源页选中导入青芽866b、显示场景桌面，正常同步已开",
+        "只编辑缩放草稿，保持未保存并经过正常后台pull周期",
+        "资源保存基线未变时，原生公共DOM两次出现另一窗口已更新/应放弃修改提示",
+        "原草稿仍在、保存按钮可用；各自一次正常Save均成功且新云端唯一authority已核对"
+      ],
+      "expected": "相同保存基线或无关资源的后台失效通知不提示外部编辑冲突、不清草稿；只有当前选中资源已保存基线确实改变才保留草稿并准确提示，后端expectedRevision保护继续生效。",
+      "actual": "11:20:38Z草稿1.06和11:30:47Z恢复草稿1.05均实际显示“另一窗口已更新资源设置。请放弃修改并重新载入后再编辑。”，但对应持久化基线仍原版本，唯一Save均正常verified。07只读确认unchanged download和同文档偏好pull均无条件发通知，dirty hook忽略payload且不比较保存基线即报冲突。事件原因未采集，不能断言某次首先来自哪个分支；未证明自动丢草稿、覆盖数据或CAS失效。",
+      "rootCause": "07源码只读triage：resources useResources hook将resources:changed直接解释为外部选中资源变更，未核验owner/selectedId/saved baseline；简单dirty时reload又可能因新对象引用重置草稿。最小修复需保留草稿并读最新保存基线比较及异步代际保护。",
+      "evidence": [
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudB2-resource-public-ui-single-native-click-draft106-before-save-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/cloudB2-resource-public-ui-single-restore-draft105-before-save-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa024-b2-c7ad-restore-draft105-save-ready-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa024-b2-c7ad-single-restore105-save-first-result-20261026.png",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa024-b2-c7ad-client-roundtrip-original-settings-restored-20261026.json",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa027-07-readonly-triage-retained-20261026.md",
+        "C:/Users/Administrator/Desktop/project/DesktopPet-fresh-worktrees/07/artifacts/qa/c7-resource-dirty-pull-notice-triage-20261026.md",
+        "rounds/candidate-c7ad6837-1b1afdd1/evidence/qa027-c7ad-native-observation-and-triage-20261026.json"
+      ],
+      "rootDecision": "Root要求与已通过QA024分开登记P2，保留现有两次DOM/截图和07报告；07仅artifact patch/test方案，当前冻结包和原生现场不改，待Root复审。",
+      "nativeFixVerified": false,
+      "productCandidateUnchanged": true,
+      "updatedAt": "2026-10-26T11:51:31.540Z"
+    }
+  ]
+}

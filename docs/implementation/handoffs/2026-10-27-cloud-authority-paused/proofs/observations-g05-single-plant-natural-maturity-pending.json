@@ -1,0 +1,32 @@
+{
+  "at": "2026-10-26T22:01:55.992Z",
+  "stage": "g05-single-plant-natural-maturity-pending",
+  "caseUpdates": [
+    {
+      "id": "G05",
+      "status": "passed",
+      "actual": "原B2指定plot-1选择胡萝卜并快速双击播种，仅生成原action bd2f2452-00bd-479f-99ae-2e3f82d8fd02一次成功提交；seed:carrot3→2，garden7→8/head33，地块与普通背包种子2一致。独立PG唯一回执及除该地块/种子外全部经济与原宠未变已验证。",
+      "evidence": [
+        "cloudB2-before-g05-single-plant.json",
+        "cloudB2-after-g05-rapid-double-plant-first-readback.json",
+        "root-G05-single-plant-cloud-independent.json",
+        "native-G05-original-B2-empty-plot-and-carrot-seeds.png",
+        "native-G05-original-B2-single-plot-rapid-double-plant-result.png",
+        "native-G05-G06-original-B2-carrot-growing-and-harvest-disabled.png",
+        "native-G05-original-B2-backpack-seed-two-after-plant.png",
+        "native-G05-single-plant-and-natural-growth-seal.json"
+      ]
+    },
+    {
+      "id": "G06",
+      "status": "running",
+      "actual": "原plot-1胡萝卜真实播种于2026-10-26T21:57:38.472Z，实际成熟点22:07:38.472Z，预计3份。已观察未成熟倒计时/收获disabled；不改时钟或模拟成熟，待真实成熟后收获与重复边界验证。",
+      "evidence": [
+        "native-G05-G06-original-B2-carrot-growing-and-harvest-disabled.png",
+        "native-G05-single-plant-and-natural-growth-seal.json"
+      ]
+    }
+  ],
+  "newIssues": [],
+  "issueUpdates": []
+}

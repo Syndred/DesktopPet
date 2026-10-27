@@ -1,0 +1,236 @@
+{
+  "at": "2026-10-26T21:29:35.554Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "readOnly": true,
+  "credentialValuesRead": false,
+  "sourceBackup": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\native-ui-exports\\B2-original-records-preserved-4e6.lingjing.json",
+    "sha256": "41e00267c01b1a0e0a806bf146548ea9089a1797eb64c47f95b422cae57ba797"
+  },
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "newResourceId": "3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6",
+  "clients": [
+    {
+      "label": "fresh-original-B",
+      "directory": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\profiles\\cloud-b-resource-fresh-4e6",
+      "resources": [
+        {
+          "resource_id": "3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6",
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+          "content_hash": "c395254032588907ecbca1a0fc31497c3c184cee0e59231485a10860d60e240b",
+          "revision": 1
+        },
+        {
+          "resource_id": "866b735a-9351-414f-a797-6bab290144c2",
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+          "content_hash": "1cd0626ea29767476b371519ec4dc00fc43c528bfcd92627166275b937db2060",
+          "revision": 1
+        },
+        {
+          "resource_id": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+          "content_hash": "09b4b0bd591c07daea0a588386f39cfbe19226fd0d39664bdb8342fc4912fa09",
+          "revision": 1
+        }
+      ],
+      "preferences": [
+        {
+          "resource_id": "866b735a-9351-414f-a797-6bab290144c2",
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+          "calibration_json": "{\"desktop\":{\"scale\":1.05,\"rotationDeg\":0,\"verticalOffset\":0,\"mirrorX\":true,\"anchorX\":0.5,\"anchorY\":0.849609375,\"fps\":0},\"battle\":{\"scale\":1,\"rotationDeg\":2,\"verticalOffset\":0,\"mirrorX\":false,\"anchorX\":0.5,\"anchorY\":0.849609375,\"fps\":0}}",
+          "actions_json": "{\"idle\":\"idle\",\"blink\":\"blink\",\"walk\":\"walk\",\"wave\":\"wave\",\"eat\":\"eat\",\"attack_windup\":\"attack_windup\",\"attack_release\":\"attack_release\",\"attack\":\"attack\",\"hit\":\"hit\",\"skill\":\"skill\",\"victory\":\"victory\",\"sleep\":\"sleep_seated\"}",
+          "revision": 1
+        },
+        {
+          "resource_id": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+          "calibration_json": "{\"desktop\":{\"scale\":1.06,\"rotationDeg\":0,\"verticalOffset\":0,\"mirrorX\":true,\"anchorX\":0.5,\"anchorY\":0.849609375,\"fps\":0},\"battle\":{\"scale\":1,\"rotationDeg\":0,\"verticalOffset\":0,\"mirrorX\":false,\"anchorX\":0.5,\"anchorY\":0.849609375,\"fps\":0}}",
+          "actions_json": "{\"idle\":\"walk\",\"blink\":\"blink\",\"walk\":\"walk\",\"wave\":\"wave\",\"eat\":\"eat\",\"attack_windup\":\"attack_windup\",\"attack_release\":\"attack_release\",\"attack\":\"attack\",\"hit\":\"hit\",\"skill\":\"skill\",\"victory\":\"victory\",\"sleep\":\"sleep\"}",
+          "revision": 1
+        }
+      ],
+      "files": [
+        {
+          "resourceId": "3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6",
+          "assetKey": "character.json",
+          "registeredPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\profiles\\cloud-b-resource-fresh-4e6\\character-resources\\3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6\\character.json",
+          "exists": true,
+          "expectedSha256": "d69de3c105f41da3c35abcdb3b2a04a17c29e810e6c1947b7565c9d95f2760ac",
+          "relativePath": "character-resources\\3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6\\character.json",
+          "bytes": 9453,
+          "sha256": "d69de3c105f41da3c35abcdb3b2a04a17c29e810e6c1947b7565c9d95f2760ac",
+          "expectedMatches": true
+        },
+        {
+          "resourceId": "3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6",
+          "assetKey": "sprites.png",
+          "registeredPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\profiles\\cloud-b-resource-fresh-4e6\\character-resources\\3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6\\sprites.png",
+          "exists": true,
+          "expectedSha256": "4b1eb6d06ba4c737a3cd2a10f567a2ff2af80bfec3be260e7df304af4bdb80f8",
+          "relativePath": "character-resources\\3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6\\sprites.png",
+          "bytes": 2119970,
+          "sha256": "4b1eb6d06ba4c737a3cd2a10f567a2ff2af80bfec3be260e7df304af4bdb80f8",
+          "expectedMatches": true
+        },
+        {
+          "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+          "assetKey": "character.json",
+          "registeredPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\profiles\\cloud-b-resource-fresh-4e6\\character-resources\\restore-dea3b913-c419-41ff-84bb-8dcfd92df0db\\character.json",
+          "exists": true,
+          "expectedSha256": "e2e976b69f7ea9049527251e458517e048c05aa5ab4cd1e13ffa47c38821708e",
+          "relativePath": "character-resources\\restore-dea3b913-c419-41ff-84bb-8dcfd92df0db\\character.json",
+          "bytes": 9406,
+          "sha256": "e2e976b69f7ea9049527251e458517e048c05aa5ab4cd1e13ffa47c38821708e",
+          "expectedMatches": true
+        },
+        {
+          "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+          "assetKey": "sprites.png",
+          "registeredPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\profiles\\cloud-b-resource-fresh-4e6\\character-resources\\restore-dea3b913-c419-41ff-84bb-8dcfd92df0db\\sprites.png",
+          "exists": true,
+          "expectedSha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693",
+          "relativePath": "character-resources\\restore-dea3b913-c419-41ff-84bb-8dcfd92df0db\\sprites.png",
+          "bytes": 1802491,
+          "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693",
+          "expectedMatches": true
+        },
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "assetKey": "character.json",
+          "registeredPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\profiles\\cloud-b-resource-fresh-4e6\\character-resources\\restore-1514bc13-d4bd-400a-a468-b54d60671382\\character.json",
+          "exists": true,
+          "expectedSha256": "cd3b4c9faefa8afc71bd108932bcc7878bc4929d28131d27005e37a5fa1bbfdd",
+          "relativePath": "character-resources\\restore-1514bc13-d4bd-400a-a468-b54d60671382\\character.json",
+          "bytes": 9402,
+          "sha256": "cd3b4c9faefa8afc71bd108932bcc7878bc4929d28131d27005e37a5fa1bbfdd",
+          "expectedMatches": true
+        },
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "assetKey": "sprites.png",
+          "registeredPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\profiles\\cloud-b-resource-fresh-4e6\\character-resources\\restore-1514bc13-d4bd-400a-a468-b54d60671382\\sprites.png",
+          "exists": true,
+          "expectedSha256": "f03bc1b8cd1c20c5ef6d466d20db9fb7f9584b7739f21414d22fc2c91c01d886",
+          "relativePath": "character-resources\\restore-1514bc13-d4bd-400a-a468-b54d60671382\\sprites.png",
+          "bytes": 2441235,
+          "sha256": "f03bc1b8cd1c20c5ef6d466d20db9fb7f9584b7739f21414d22fc2c91c01d886",
+          "expectedMatches": true
+        }
+      ],
+      "everyRegisteredFileMatches": true,
+      "newResourcePresent": true
+    },
+    {
+      "label": "independent-original-B2",
+      "directory": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native",
+      "resources": [
+        {
+          "resource_id": "3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6",
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+          "content_hash": "c395254032588907ecbca1a0fc31497c3c184cee0e59231485a10860d60e240b",
+          "revision": 1
+        },
+        {
+          "resource_id": "866b735a-9351-414f-a797-6bab290144c2",
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+          "content_hash": "1cd0626ea29767476b371519ec4dc00fc43c528bfcd92627166275b937db2060",
+          "revision": 1
+        },
+        {
+          "resource_id": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+          "content_hash": "09b4b0bd591c07daea0a588386f39cfbe19226fd0d39664bdb8342fc4912fa09",
+          "revision": 1
+        }
+      ],
+      "preferences": [
+        {
+          "resource_id": "866b735a-9351-414f-a797-6bab290144c2",
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+          "calibration_json": "{\"desktop\":{\"scale\":1.05,\"rotationDeg\":0,\"verticalOffset\":0,\"mirrorX\":true,\"anchorX\":0.5,\"anchorY\":0.849609375,\"fps\":0},\"battle\":{\"scale\":1,\"rotationDeg\":2,\"verticalOffset\":0,\"mirrorX\":false,\"anchorX\":0.5,\"anchorY\":0.849609375,\"fps\":0}}",
+          "actions_json": "{\"idle\":\"idle\",\"blink\":\"blink\",\"walk\":\"walk\",\"wave\":\"wave\",\"eat\":\"eat\",\"attack_windup\":\"attack_windup\",\"attack_release\":\"attack_release\",\"attack\":\"attack\",\"hit\":\"hit\",\"skill\":\"skill\",\"victory\":\"victory\",\"sleep\":\"sleep_seated\"}",
+          "revision": 3
+        },
+        {
+          "resource_id": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+          "calibration_json": "{\"desktop\":{\"scale\":1.06,\"rotationDeg\":0,\"verticalOffset\":0,\"mirrorX\":true,\"anchorX\":0.5,\"anchorY\":0.849609375,\"fps\":0},\"battle\":{\"scale\":1,\"rotationDeg\":0,\"verticalOffset\":0,\"mirrorX\":false,\"anchorX\":0.5,\"anchorY\":0.849609375,\"fps\":0}}",
+          "actions_json": "{\"idle\":\"walk\",\"blink\":\"blink\",\"walk\":\"walk\",\"wave\":\"wave\",\"eat\":\"eat\",\"attack_windup\":\"attack_windup\",\"attack_release\":\"attack_release\",\"attack\":\"attack\",\"hit\":\"hit\",\"skill\":\"skill\",\"victory\":\"victory\",\"sleep\":\"sleep\"}",
+          "revision": 1
+        }
+      ],
+      "files": [
+        {
+          "resourceId": "3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6",
+          "assetKey": "character.json",
+          "registeredPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\character-resources\\restore-04f01663-a1de-43b6-b887-949a59227eaf\\character.json",
+          "exists": true,
+          "expectedSha256": "d69de3c105f41da3c35abcdb3b2a04a17c29e810e6c1947b7565c9d95f2760ac",
+          "relativePath": "character-resources\\restore-04f01663-a1de-43b6-b887-949a59227eaf\\character.json",
+          "bytes": 9453,
+          "sha256": "d69de3c105f41da3c35abcdb3b2a04a17c29e810e6c1947b7565c9d95f2760ac",
+          "expectedMatches": true
+        },
+        {
+          "resourceId": "3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6",
+          "assetKey": "sprites.png",
+          "registeredPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\character-resources\\restore-04f01663-a1de-43b6-b887-949a59227eaf\\sprites.png",
+          "exists": true,
+          "expectedSha256": "4b1eb6d06ba4c737a3cd2a10f567a2ff2af80bfec3be260e7df304af4bdb80f8",
+          "relativePath": "character-resources\\restore-04f01663-a1de-43b6-b887-949a59227eaf\\sprites.png",
+          "bytes": 2119970,
+          "sha256": "4b1eb6d06ba4c737a3cd2a10f567a2ff2af80bfec3be260e7df304af4bdb80f8",
+          "expectedMatches": true
+        },
+        {
+          "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+          "assetKey": "character.json",
+          "registeredPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\character-resources\\restore-5e62ce4c-6128-4d4e-8684-2c0458a8a6ee\\character.json",
+          "exists": true,
+          "expectedSha256": "e2e976b69f7ea9049527251e458517e048c05aa5ab4cd1e13ffa47c38821708e",
+          "relativePath": "character-resources\\restore-5e62ce4c-6128-4d4e-8684-2c0458a8a6ee\\character.json",
+          "bytes": 9406,
+          "sha256": "e2e976b69f7ea9049527251e458517e048c05aa5ab4cd1e13ffa47c38821708e",
+          "expectedMatches": true
+        },
+        {
+          "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+          "assetKey": "sprites.png",
+          "registeredPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\character-resources\\restore-5e62ce4c-6128-4d4e-8684-2c0458a8a6ee\\sprites.png",
+          "exists": true,
+          "expectedSha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693",
+          "relativePath": "character-resources\\restore-5e62ce4c-6128-4d4e-8684-2c0458a8a6ee\\sprites.png",
+          "bytes": 1802491,
+          "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693",
+          "expectedMatches": true
+        },
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "assetKey": "character.json",
+          "registeredPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\character-resources\\restore-4f51eade-3f61-43b0-a887-0b123aef2369\\character.json",
+          "exists": true,
+          "expectedSha256": "cd3b4c9faefa8afc71bd108932bcc7878bc4929d28131d27005e37a5fa1bbfdd",
+          "relativePath": "character-resources\\restore-4f51eade-3f61-43b0-a887-0b123aef2369\\character.json",
+          "bytes": 9402,
+          "sha256": "cd3b4c9faefa8afc71bd108932bcc7878bc4929d28131d27005e37a5fa1bbfdd",
+          "expectedMatches": true
+        },
+        {
+          "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+          "assetKey": "sprites.png",
+          "registeredPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native\\character-resources\\restore-4f51eade-3f61-43b0-a887-0b123aef2369\\sprites.png",
+          "exists": true,
+          "expectedSha256": "f03bc1b8cd1c20c5ef6d466d20db9fb7f9584b7739f21414d22fc2c91c01d886",
+          "relativePath": "character-resources\\restore-4f51eade-3f61-43b0-a887-0b123aef2369\\sprites.png",
+          "bytes": 2441235,
+          "sha256": "f03bc1b8cd1c20c5ef6d466d20db9fb7f9584b7739f21414d22fc2c91c01d886",
+          "expectedMatches": true
+        }
+      ],
+      "everyRegisteredFileMatches": true,
+      "newResourcePresent": true
+    }
+  ],
+  "newResourceInBothClients": true,
+  "qualification": "Read-only physical registered-file hashes. Normal UI login and second-client page read require the separate native evidence. Cloud hydration before backup import is not counted as backup-origin repair."
+}

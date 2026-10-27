@@ -1,0 +1,152 @@
+{
+  "at": "2026-10-25T20:00:05.091Z",
+  "source": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+  "snapshot": {
+    "ok": true,
+    "data": {
+      "scenario": "live",
+      "location": {
+        "mode": "real",
+        "status": "privacy_disabled",
+        "permission": "unknown",
+        "fix": null,
+        "lastError": {
+          "code": "APP_LOCATION_DISABLED",
+          "message": "应用内定位尚未开启，或当前不在可定位的探索页面。请检查设置中的位置隐私选项。"
+        },
+        "watching": false
+      },
+      "map": {
+        "id": "osm",
+        "name": "OpenStreetMap",
+        "coordinateSystem": "wgs84",
+        "attribution": "© OpenStreetMap contributors",
+        "attributionUrl": "https://www.openstreetmap.org/copyright",
+        "tileUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        "maxZoom": 19,
+        "available": true,
+        "providers": [
+          {
+            "id": "osm",
+            "name": "OpenStreetMap",
+            "available": true
+          },
+          {
+            "id": "tencent",
+            "name": "腾讯地图",
+            "available": false
+          },
+          {
+            "id": "google",
+            "name": "Google Maps",
+            "available": false
+          }
+        ]
+      },
+      "spawns": [],
+      "territories": [],
+      "captureRadiusMeters": 100,
+      "mapLocation": null,
+      "territoriesAvailable": false,
+      "pets": [
+        {
+          "petId": "pet-40899e45-d323-49c8-9136-743f14be6ce3",
+          "templateId": "big-fish-gentle",
+          "name": "鱼丸",
+          "element": "water",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "level": 1,
+          "globalSerial": "1"
+        },
+        {
+          "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "element": "water",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "level": 1,
+          "globalSerial": "1"
+        }
+      ],
+      "encounters": [],
+      "captures": [],
+      "signedIn": true,
+      "storage": "cloud",
+      "cloudConfigured": true,
+      "cloudStatus": "ready"
+    }
+  },
+  "settings": {
+    "ok": true,
+    "data": {
+      "document": {
+        "desktop": {
+          "alwaysOnTop": true,
+          "clickThrough": true,
+          "launchAtLogin": false,
+          "closeToTray": true,
+          "companionLimit": 3,
+          "interactionSounds": true,
+          "volume": 70,
+          "hideInFullscreen": true,
+          "animationsEnabled": true
+        },
+        "notifications": {
+          "enabled": true,
+          "companions": true,
+          "battles": true,
+          "garden": true,
+          "quietEnabled": true,
+          "quietStart": "22:00",
+          "quietEnd": "08:00"
+        },
+        "privacy": {
+          "locationAllowed": false,
+          "locationOnlyWhileExploring": true,
+          "emotionStatistics": false
+        },
+        "sync": {
+          "enabled": true
+        }
+      },
+      "revision": 10,
+      "updatedAt": "2026-10-25T19:55:38.592Z",
+      "host": {
+        "startup": false,
+        "fullscreenMonitor": true,
+        "fullscreenMonitorReady": true,
+        "foregroundFullscreen": false,
+        "fullscreenSource": null,
+        "companionWindows": 1,
+        "clickThroughWindows": [
+          3
+        ],
+        "windows": [
+          {
+            "id": 3,
+            "alwaysOnTop": true,
+            "visible": true
+          }
+        ],
+        "locationAllowed": false,
+        "emotionStatistics": false,
+        "closeToTrayConnected": true,
+        "companionLimitConnected": true
+      }
+    }
+  },
+  "dom": {
+    "alert": [
+      "应用内定位尚未开启，或当前不在可定位的探索页面。请检查设置中的位置隐私选项。"
+    ],
+    "main": "下楼走走，遇见新伙伴。\n\n附近伙伴 · 捕捉 · 领地\n\n应用内定位未开启\n打开隐私设置\n应用内定位尚未开启，或当前不在可定位的探索页面。请检查设置中的位置隐私选项。\n让相遇，从这里开始。\n获取系统位置，或明确进入演示模式。\n可相遇伙伴\n领地\n附近的相遇，正在等你\n\n先获取位置，再看看身边的游戏伙伴。\n\n查看相遇图鉴\n附近发现\n0 位伙伴"
+  },
+  "nativeClick": "normal 获取系统位置 once; blocked by existing app privacy setting; no OS prompt or private setting toggled"
+}

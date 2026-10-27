@@ -1,0 +1,1904 @@
+{
+  "at": "2026-10-25T23:10:35.023Z",
+  "observations": 8161,
+  "errors": [],
+  "groups": [
+    {
+      "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+      "petId": "resource-preview-a",
+      "action": "idle",
+      "playbackKey": "0",
+      "clip": "idle",
+      "n": 186,
+      "frames": [
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "textureFrames": [
+        "76,63,184,261",
+        "390,64,182,260"
+      ],
+      "ready": 186,
+      "positiveCanvas": 186,
+      "first": 1792969324472,
+      "last": 1792969336013
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "petId": "resource-preview-a",
+      "action": "idle",
+      "playbackKey": "0",
+      "clip": "idle",
+      "n": 183,
+      "frames": [
+        "15",
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "16"
+      ],
+      "textureFrames": [
+        "390,64,182,260",
+        "59,61,221,251",
+        "369,58,219,255"
+      ],
+      "ready": 182,
+      "positiveCanvas": 182,
+      "first": 1792969336082,
+      "last": 1792969347431
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "petId": "resource-preview-a",
+      "action": "blink",
+      "playbackKey": "0",
+      "clip": "blink",
+      "n": 470,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textureFrames": [
+        "369,58,219,255",
+        "59,61,221,251"
+      ],
+      "ready": 470,
+      "positiveCanvas": 470,
+      "first": 1792969347495,
+      "last": 1792969376688
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "petId": "resource-preview-a",
+      "action": "walk",
+      "playbackKey": "0",
+      "clip": "walk",
+      "n": 53,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textureFrames": [
+        "672,59,221,254",
+        "983,60,223,253"
+      ],
+      "ready": 53,
+      "positiveCanvas": 53,
+      "first": 1792969376748,
+      "last": 1792969379973
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "petId": "resource-preview-a",
+      "action": "wave",
+      "playbackKey": "0",
+      "clip": "wave",
+      "n": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textureFrames": [
+        "50,350,240,264",
+        "360,354,244,262",
+        "59,61,221,251"
+      ],
+      "ready": 53,
+      "positiveCanvas": 53,
+      "first": 1792969380034,
+      "last": 1792969383268
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "petId": "resource-preview-a",
+      "action": "eat",
+      "playbackKey": "0",
+      "clip": "eat",
+      "n": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textureFrames": [
+        "679,363,235,253",
+        "991,366,231,250",
+        "59,61,221,251"
+      ],
+      "ready": 53,
+      "positiveCanvas": 53,
+      "first": 1792969383331,
+      "last": 1792969386584
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "petId": "resource-preview-a",
+      "action": "attack_windup",
+      "playbackKey": "0",
+      "clip": "attack_windup",
+      "n": 54,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "41,654,264,243"
+      ],
+      "ready": 54,
+      "positiveCanvas": 54,
+      "first": 1792969386647,
+      "last": 1792969389934
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "petId": "resource-preview-a",
+      "action": "attack_release",
+      "playbackKey": "0",
+      "clip": "attack_release",
+      "n": 55,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "356,642,280,257"
+      ],
+      "ready": 55,
+      "positiveCanvas": 55,
+      "first": 1792969390002,
+      "last": 1792969393335
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "petId": "resource-preview-a",
+      "action": "attack",
+      "playbackKey": "0",
+      "clip": "attack",
+      "n": 55,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textureFrames": [
+        "41,654,264,243",
+        "356,642,280,257",
+        "59,61,221,251"
+      ],
+      "ready": 55,
+      "positiveCanvas": 55,
+      "first": 1792969393399,
+      "last": 1792969396748
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "petId": "resource-preview-a",
+      "action": "hit",
+      "playbackKey": "0",
+      "clip": "hit",
+      "n": 56,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textureFrames": [
+        "664,654,261,246",
+        "59,61,221,251"
+      ],
+      "ready": 56,
+      "positiveCanvas": 56,
+      "first": 1792969396816,
+      "last": 1792969400235
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "petId": "resource-preview-a",
+      "action": "skill",
+      "playbackKey": "0",
+      "clip": "skill",
+      "n": 56,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textureFrames": [
+        "983,656,238,247",
+        "40,931,297,272",
+        "59,61,221,251"
+      ],
+      "ready": 56,
+      "positiveCanvas": 56,
+      "first": 1792969400299,
+      "last": 1792969403702
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "petId": "resource-preview-a",
+      "action": "victory",
+      "playbackKey": "0",
+      "clip": "victory",
+      "n": 58,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textureFrames": [
+        "395,951,240,250",
+        "59,61,221,251"
+      ],
+      "ready": 58,
+      "positiveCanvas": 58,
+      "first": 1792969403766,
+      "last": 1792969407302
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "petId": "resource-preview-a",
+      "action": "sleep",
+      "playbackKey": "0",
+      "clip": "sleep",
+      "n": 499,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "967,1026,268,174"
+      ],
+      "ready": 499,
+      "positiveCanvas": 499,
+      "first": 1792969407364,
+      "last": 1792969438418
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "petId": "resource-preview-a",
+      "action": "idle",
+      "playbackKey": "0",
+      "clip": "idle",
+      "n": 54,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "textureFrames": [
+        "967,1026,268,174",
+        "59,40,239,281",
+        "359,37,238,284"
+      ],
+      "ready": 53,
+      "positiveCanvas": 53,
+      "first": 1792969438480,
+      "last": 1792969441761
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "petId": "resource-preview-a",
+      "action": "blink",
+      "playbackKey": "0",
+      "clip": "blink",
+      "n": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textureFrames": [
+        "359,37,238,284",
+        "59,40,239,281"
+      ],
+      "ready": 52,
+      "positiveCanvas": 52,
+      "first": 1792969441824,
+      "last": 1792969445065
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "petId": "resource-preview-a",
+      "action": "walk",
+      "playbackKey": "0",
+      "clip": "walk",
+      "n": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textureFrames": [
+        "665,36,249,285",
+        "974,37,245,284"
+      ],
+      "ready": 52,
+      "positiveCanvas": 52,
+      "first": 1792969445128,
+      "last": 1792969448319
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "petId": "resource-preview-a",
+      "action": "wave",
+      "playbackKey": "0",
+      "clip": "wave",
+      "n": 54,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textureFrames": [
+        "44,341,264,288",
+        "353,347,267,282",
+        "59,40,239,281"
+      ],
+      "ready": 54,
+      "positiveCanvas": 54,
+      "first": 1792969448382,
+      "last": 1792969451681
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "petId": "resource-preview-a",
+      "action": "eat",
+      "playbackKey": "0",
+      "clip": "eat",
+      "n": 55,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textureFrames": [
+        "665,344,266,285",
+        "971,345,256,284",
+        "59,40,239,281"
+      ],
+      "ready": 55,
+      "positiveCanvas": 55,
+      "first": 1792969451756,
+      "last": 1792969455087
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "petId": "resource-preview-a",
+      "action": "attack_windup",
+      "playbackKey": "0",
+      "clip": "attack_windup",
+      "n": 54,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "42,659,265,259"
+      ],
+      "ready": 54,
+      "positiveCanvas": 54,
+      "first": 1792969455149,
+      "last": 1792969458438
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "petId": "resource-preview-a",
+      "action": "attack_release",
+      "playbackKey": "0",
+      "clip": "attack_release",
+      "n": 55,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "354,647,292,272"
+      ],
+      "ready": 55,
+      "positiveCanvas": 55,
+      "first": 1792969458501,
+      "last": 1792969461840
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "petId": "resource-preview-a",
+      "action": "attack",
+      "playbackKey": "0",
+      "clip": "attack",
+      "n": 55,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textureFrames": [
+        "42,659,265,259",
+        "354,647,292,272",
+        "59,40,239,281"
+      ],
+      "ready": 55,
+      "positiveCanvas": 55,
+      "first": 1792969461903,
+      "last": 1792969465252
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "petId": "resource-preview-a",
+      "action": "hit",
+      "playbackKey": "0",
+      "clip": "hit",
+      "n": 56,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textureFrames": [
+        "676,661,264,260",
+        "59,40,239,281"
+      ],
+      "ready": 56,
+      "positiveCanvas": 56,
+      "first": 1792969465316,
+      "last": 1792969468741
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "petId": "resource-preview-a",
+      "action": "skill",
+      "playbackKey": "0",
+      "clip": "skill",
+      "n": 56,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textureFrames": [
+        "971,650,257,273",
+        "28,943,297,271",
+        "59,40,239,281"
+      ],
+      "ready": 56,
+      "positiveCanvas": 56,
+      "first": 1792969468804,
+      "last": 1792969472212
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "petId": "resource-preview-a",
+      "action": "victory",
+      "playbackKey": "0",
+      "clip": "victory",
+      "n": 58,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textureFrames": [
+        "369,940,255,272",
+        "59,40,239,281"
+      ],
+      "ready": 58,
+      "positiveCanvas": 58,
+      "first": 1792969472284,
+      "last": 1792969475822
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "petId": "resource-preview-a",
+      "action": "sleep",
+      "playbackKey": "0",
+      "clip": "sleep",
+      "n": 437,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "959,966,273,246"
+      ],
+      "ready": 437,
+      "positiveCanvas": 437,
+      "first": 1792969475885,
+      "last": 1792969502987
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "petId": "resource-preview-a",
+      "action": "idle",
+      "playbackKey": "0",
+      "clip": "idle",
+      "n": 54,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "textureFrames": [
+        "959,966,273,246",
+        "52,65,221,256",
+        "368,66,221,255"
+      ],
+      "ready": 53,
+      "positiveCanvas": 53,
+      "first": 1792969503060,
+      "last": 1792969506357
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "petId": "resource-preview-a",
+      "action": "blink",
+      "playbackKey": "0",
+      "clip": "blink",
+      "n": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textureFrames": [
+        "368,66,221,255",
+        "52,65,221,256"
+      ],
+      "ready": 52,
+      "positiveCanvas": 52,
+      "first": 1792969506418,
+      "last": 1792969509589
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "petId": "resource-preview-a",
+      "action": "walk",
+      "playbackKey": "0",
+      "clip": "walk",
+      "n": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textureFrames": [
+        "676,62,215,259",
+        "983,66,221,255"
+      ],
+      "ready": 52,
+      "positiveCanvas": 52,
+      "first": 1792969509652,
+      "last": 1792969512832
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "petId": "resource-preview-a",
+      "action": "wave",
+      "playbackKey": "0",
+      "clip": "wave",
+      "n": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textureFrames": [
+        "61,364,239,269",
+        "372,362,242,271",
+        "52,65,221,256"
+      ],
+      "ready": 53,
+      "positiveCanvas": 53,
+      "first": 1792969512896,
+      "last": 1792969516148
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "petId": "resource-preview-a",
+      "action": "eat",
+      "playbackKey": "0",
+      "clip": "eat",
+      "n": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textureFrames": [
+        "671,374,229,259",
+        "983,378,227,255",
+        "52,65,221,256"
+      ],
+      "ready": 53,
+      "positiveCanvas": 53,
+      "first": 1792969516209,
+      "last": 1792969519460
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "petId": "resource-preview-a",
+      "action": "attack_windup",
+      "playbackKey": "0",
+      "clip": "attack_windup",
+      "n": 54,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "39,680,242,246"
+      ],
+      "ready": 54,
+      "positiveCanvas": 54,
+      "first": 1792969519521,
+      "last": 1792969522801
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "petId": "resource-preview-a",
+      "action": "attack_release",
+      "playbackKey": "0",
+      "clip": "attack_release",
+      "n": 55,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "325,686,314,235"
+      ],
+      "ready": 55,
+      "positiveCanvas": 55,
+      "first": 1792969522863,
+      "last": 1792969526213
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "petId": "resource-preview-a",
+      "action": "attack",
+      "playbackKey": "0",
+      "clip": "attack",
+      "n": 55,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textureFrames": [
+        "39,680,242,246",
+        "325,686,314,235",
+        "52,65,221,256"
+      ],
+      "ready": 55,
+      "positiveCanvas": 55,
+      "first": 1792969526275,
+      "last": 1792969529629
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "petId": "resource-preview-a",
+      "action": "hit",
+      "playbackKey": "0",
+      "clip": "hit",
+      "n": 56,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textureFrames": [
+        "676,681,255,246",
+        "52,65,221,256"
+      ],
+      "ready": 56,
+      "positiveCanvas": 56,
+      "first": 1792969529698,
+      "last": 1792969533111
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "petId": "resource-preview-a",
+      "action": "skill",
+      "playbackKey": "0",
+      "clip": "skill",
+      "n": 56,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textureFrames": [
+        "974,681,260,247",
+        "37,961,294,260",
+        "52,65,221,256"
+      ],
+      "ready": 56,
+      "positiveCanvas": 56,
+      "first": 1792969533172,
+      "last": 1792969536595
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "petId": "resource-preview-a",
+      "action": "victory",
+      "playbackKey": "0",
+      "clip": "victory",
+      "n": 57,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textureFrames": [
+        "376,970,238,251",
+        "52,65,221,256"
+      ],
+      "ready": 57,
+      "positiveCanvas": 57,
+      "first": 1792969536659,
+      "last": 1792969540138
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "petId": "resource-preview-a",
+      "action": "sleep",
+      "playbackKey": "0",
+      "clip": "sleep",
+      "n": 367,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "976,1014,253,186"
+      ],
+      "ready": 367,
+      "positiveCanvas": 367,
+      "first": 1792969540201,
+      "last": 1792969562962
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "petId": "resource-preview-a",
+      "action": "idle",
+      "playbackKey": "0",
+      "clip": "idle",
+      "n": 52,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "textureFrames": [
+        "976,1014,253,186",
+        "40,84,224,229",
+        "354,86,226,227"
+      ],
+      "ready": 51,
+      "positiveCanvas": 51,
+      "first": 1792969563026,
+      "last": 1792969566278
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "petId": "resource-preview-a",
+      "action": "blink",
+      "playbackKey": "0",
+      "clip": "blink",
+      "n": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textureFrames": [
+        "354,86,226,227",
+        "40,84,224,229"
+      ],
+      "ready": 52,
+      "positiveCanvas": 52,
+      "first": 1792969566345,
+      "last": 1792969569505
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "petId": "resource-preview-a",
+      "action": "walk",
+      "playbackKey": "0",
+      "clip": "walk",
+      "n": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textureFrames": [
+        "652,83,223,230",
+        "968,83,238,230"
+      ],
+      "ready": 52,
+      "positiveCanvas": 52,
+      "first": 1792969569578,
+      "last": 1792969572786
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "petId": "resource-preview-a",
+      "action": "wave",
+      "playbackKey": "0",
+      "clip": "wave",
+      "n": 52,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textureFrames": [
+        "42,385,247,242",
+        "361,381,245,246",
+        "40,84,224,229"
+      ],
+      "ready": 52,
+      "positiveCanvas": 52,
+      "first": 1792969572854,
+      "last": 1792969576067
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "petId": "resource-preview-a",
+      "action": "eat",
+      "playbackKey": "0",
+      "clip": "eat",
+      "n": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textureFrames": [
+        "647,398,228,229",
+        "973,393,223,234",
+        "40,84,224,229"
+      ],
+      "ready": 53,
+      "positiveCanvas": 53,
+      "first": 1792969576134,
+      "last": 1792969579406
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "petId": "resource-preview-a",
+      "action": "attack_windup",
+      "playbackKey": "0",
+      "clip": "attack_windup",
+      "n": 53,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "40,710,227,202"
+      ],
+      "ready": 53,
+      "positiveCanvas": 53,
+      "first": 1792969579474,
+      "last": 1792969582757
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "petId": "resource-preview-a",
+      "action": "attack_release",
+      "playbackKey": "0",
+      "clip": "attack_release",
+      "n": 55,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "345,697,286,215"
+      ],
+      "ready": 55,
+      "positiveCanvas": 55,
+      "first": 1792969582836,
+      "last": 1792969586232
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "petId": "resource-preview-a",
+      "action": "attack",
+      "playbackKey": "0",
+      "clip": "attack",
+      "n": 55,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textureFrames": [
+        "40,710,227,202",
+        "345,697,286,215",
+        "40,84,224,229"
+      ],
+      "ready": 55,
+      "positiveCanvas": 55,
+      "first": 1792969586300,
+      "last": 1792969589703
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "petId": "resource-preview-a",
+      "action": "hit",
+      "playbackKey": "0",
+      "clip": "hit",
+      "n": 55,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textureFrames": [
+        "677,706,237,215",
+        "40,84,224,229"
+      ],
+      "ready": 55,
+      "positiveCanvas": 55,
+      "first": 1792969589767,
+      "last": 1792969593175
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "petId": "resource-preview-a",
+      "action": "skill",
+      "playbackKey": "0",
+      "clip": "skill",
+      "n": 56,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textureFrames": [
+        "982,688,246,234",
+        "32,970,302,236",
+        "40,84,224,229"
+      ],
+      "ready": 56,
+      "positiveCanvas": 56,
+      "first": 1792969593239,
+      "last": 1792969596707
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "petId": "resource-preview-a",
+      "action": "victory",
+      "playbackKey": "0",
+      "clip": "victory",
+      "n": 56,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textureFrames": [
+        "379,978,212,225",
+        "40,84,224,229"
+      ],
+      "ready": 56,
+      "positiveCanvas": 56,
+      "first": 1792969596771,
+      "last": 1792969600237
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "petId": "resource-preview-a",
+      "action": "sleep",
+      "playbackKey": "0",
+      "clip": "sleep",
+      "n": 443,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "985,1023,229,178"
+      ],
+      "ready": 443,
+      "positiveCanvas": 443,
+      "first": 1792969600304,
+      "last": 1792969628231
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "petId": "resource-preview-a",
+      "action": "idle",
+      "playbackKey": "0",
+      "clip": "idle",
+      "n": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "textureFrames": [
+        "985,1023,229,178",
+        "51,65,208,223",
+        "359,66,210,224"
+      ],
+      "ready": 52,
+      "positiveCanvas": 52,
+      "first": 1792969628301,
+      "last": 1792969631580
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "petId": "resource-preview-a",
+      "action": "blink",
+      "playbackKey": "0",
+      "clip": "blink",
+      "n": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textureFrames": [
+        "359,66,210,224",
+        "51,65,208,223"
+      ],
+      "ready": 52,
+      "positiveCanvas": 52,
+      "first": 1792969631653,
+      "last": 1792969634871
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "petId": "resource-preview-a",
+      "action": "walk",
+      "playbackKey": "0",
+      "clip": "walk",
+      "n": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textureFrames": [
+        "662,71,218,219",
+        "972,72,210,216"
+      ],
+      "ready": 52,
+      "positiveCanvas": 52,
+      "first": 1792969634938,
+      "last": 1792969638153
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "petId": "resource-preview-a",
+      "action": "wave",
+      "playbackKey": "0",
+      "clip": "wave",
+      "n": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textureFrames": [
+        "47,365,220,233",
+        "362,366,220,232",
+        "51,65,208,223"
+      ],
+      "ready": 53,
+      "positiveCanvas": 53,
+      "first": 1792969638223,
+      "last": 1792969641498
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "petId": "resource-preview-a",
+      "action": "eat",
+      "playbackKey": "0",
+      "clip": "eat",
+      "n": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textureFrames": [
+        "669,369,207,227",
+        "988,366,210,233",
+        "51,65,208,223"
+      ],
+      "ready": 53,
+      "positiveCanvas": 53,
+      "first": 1792969641562,
+      "last": 1792969644842
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "petId": "resource-preview-a",
+      "action": "attack_windup",
+      "playbackKey": "0",
+      "clip": "attack_windup",
+      "n": 54,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "48,687,231,208"
+      ],
+      "ready": 54,
+      "positiveCanvas": 54,
+      "first": 1792969644916,
+      "last": 1792969648255
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "petId": "resource-preview-a",
+      "action": "attack_release",
+      "playbackKey": "0",
+      "clip": "attack_release",
+      "n": 53,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "351,662,250,228"
+      ],
+      "ready": 53,
+      "positiveCanvas": 53,
+      "first": 1792969648317,
+      "last": 1792969651613
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "petId": "resource-preview-a",
+      "action": "attack",
+      "playbackKey": "0",
+      "clip": "attack",
+      "n": 57,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textureFrames": [
+        "48,687,231,208",
+        "351,662,250,228",
+        "51,65,208,223"
+      ],
+      "ready": 57,
+      "positiveCanvas": 57,
+      "first": 1792969651686,
+      "last": 1792969655207
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "petId": "resource-preview-a",
+      "action": "hit",
+      "playbackKey": "0",
+      "clip": "hit",
+      "n": 55,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textureFrames": [
+        "660,676,238,226",
+        "51,65,208,223"
+      ],
+      "ready": 55,
+      "positiveCanvas": 55,
+      "first": 1792969655277,
+      "last": 1792969658674
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "petId": "resource-preview-a",
+      "action": "skill",
+      "playbackKey": "0",
+      "clip": "skill",
+      "n": 56,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textureFrames": [
+        "979,671,244,235",
+        "45,957,262,246",
+        "51,65,208,223"
+      ],
+      "ready": 56,
+      "positiveCanvas": 56,
+      "first": 1792969658743,
+      "last": 1792969662197
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "petId": "resource-preview-a",
+      "action": "victory",
+      "playbackKey": "0",
+      "clip": "victory",
+      "n": 56,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textureFrames": [
+        "371,968,228,223",
+        "51,65,208,223"
+      ],
+      "ready": 56,
+      "positiveCanvas": 56,
+      "first": 1792969662260,
+      "last": 1792969665722
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "petId": "resource-preview-a",
+      "action": "sleep",
+      "playbackKey": "0",
+      "clip": "sleep",
+      "n": 834,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "972,1010,247,167"
+      ],
+      "ready": 834,
+      "positiveCanvas": 834,
+      "first": 1792969665786,
+      "last": 1792969718482
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "petId": "resource-preview-a",
+      "action": "idle",
+      "playbackKey": "0",
+      "clip": "idle",
+      "n": 52,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "textureFrames": [
+        "972,1010,247,167",
+        "51,72,224,222",
+        "354,71,221,225"
+      ],
+      "ready": 51,
+      "positiveCanvas": 51,
+      "first": 1792969718546,
+      "last": 1792969721816
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "petId": "resource-preview-a",
+      "action": "blink",
+      "playbackKey": "0",
+      "clip": "blink",
+      "n": 51,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textureFrames": [
+        "354,71,221,225",
+        "51,72,224,222"
+      ],
+      "ready": 51,
+      "positiveCanvas": 51,
+      "first": 1792969721881,
+      "last": 1792969725034
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "petId": "resource-preview-a",
+      "action": "walk",
+      "playbackKey": "0",
+      "clip": "walk",
+      "n": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textureFrames": [
+        "665,81,229,218",
+        "970,77,243,218"
+      ],
+      "ready": 52,
+      "positiveCanvas": 52,
+      "first": 1792969725099,
+      "last": 1792969728312
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "petId": "resource-preview-a",
+      "action": "wave",
+      "playbackKey": "0",
+      "clip": "wave",
+      "n": 55,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textureFrames": [
+        "48,372,226,232",
+        "358,374,219,231",
+        "51,72,224,222"
+      ],
+      "ready": 55,
+      "positiveCanvas": 55,
+      "first": 1792969728374,
+      "last": 1792969731794
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "petId": "resource-preview-a",
+      "action": "eat",
+      "playbackKey": "0",
+      "clip": "eat",
+      "n": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textureFrames": [
+        "663,372,224,231",
+        "976,376,226,225",
+        "51,72,224,222"
+      ],
+      "ready": 53,
+      "positiveCanvas": 53,
+      "first": 1792969731857,
+      "last": 1792969735135
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "petId": "resource-preview-a",
+      "action": "attack_windup",
+      "playbackKey": "0",
+      "clip": "attack_windup",
+      "n": 54,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "50,698,237,189"
+      ],
+      "ready": 54,
+      "positiveCanvas": 54,
+      "first": 1792969735199,
+      "last": 1792969738554
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "petId": "resource-preview-a",
+      "action": "attack_release",
+      "playbackKey": "0",
+      "clip": "attack_release",
+      "n": 54,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "345,686,272,212"
+      ],
+      "ready": 54,
+      "positiveCanvas": 54,
+      "first": 1792969738621,
+      "last": 1792969741954
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "petId": "resource-preview-a",
+      "action": "attack",
+      "playbackKey": "0",
+      "clip": "attack",
+      "n": 55,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textureFrames": [
+        "50,698,237,189",
+        "345,686,272,212",
+        "51,72,224,222"
+      ],
+      "ready": 55,
+      "positiveCanvas": 55,
+      "first": 1792969742023,
+      "last": 1792969745427
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "petId": "resource-preview-a",
+      "action": "hit",
+      "playbackKey": "0",
+      "clip": "hit",
+      "n": 55,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textureFrames": [
+        "678,690,241,208",
+        "51,72,224,222"
+      ],
+      "ready": 55,
+      "positiveCanvas": 55,
+      "first": 1792969745492,
+      "last": 1792969748885
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "petId": "resource-preview-a",
+      "action": "skill",
+      "playbackKey": "0",
+      "clip": "skill",
+      "n": 57,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textureFrames": [
+        "974,671,250,229",
+        "45,956,292,236",
+        "51,72,224,222"
+      ],
+      "ready": 57,
+      "positiveCanvas": 57,
+      "first": 1792969748955,
+      "last": 1792969752432
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "petId": "resource-preview-a",
+      "action": "victory",
+      "playbackKey": "0",
+      "clip": "victory",
+      "n": 58,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textureFrames": [
+        "385,950,228,243",
+        "51,72,224,222"
+      ],
+      "ready": 58,
+      "positiveCanvas": 58,
+      "first": 1792969752496,
+      "last": 1792969756017
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "petId": "resource-preview-a",
+      "action": "sleep",
+      "playbackKey": "0",
+      "clip": "sleep",
+      "n": 421,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "975,984,247,195"
+      ],
+      "ready": 421,
+      "positiveCanvas": 421,
+      "first": 1792969756087,
+      "last": 1792969782180
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "petId": "resource-preview-a",
+      "action": "idle",
+      "playbackKey": "0",
+      "clip": "idle",
+      "n": 54,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "textureFrames": [
+        "975,984,247,195",
+        "76,63,184,261",
+        "390,64,182,260"
+      ],
+      "ready": 53,
+      "positiveCanvas": 53,
+      "first": 1792969782253,
+      "last": 1792969785543
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "petId": "resource-preview-a",
+      "action": "blink",
+      "playbackKey": "0",
+      "clip": "blink",
+      "n": 52,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textureFrames": [
+        "390,64,182,260",
+        "76,63,184,261"
+      ],
+      "ready": 52,
+      "positiveCanvas": 52,
+      "first": 1792969785608,
+      "last": 1792969788847
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "petId": "resource-preview-a",
+      "action": "walk",
+      "playbackKey": "0",
+      "clip": "walk",
+      "n": 54,
+      "frames": [
+        "0",
+        "1"
+      ],
+      "textureFrames": [
+        "696,65,183,258",
+        "992,64,198,260"
+      ],
+      "ready": 54,
+      "positiveCanvas": 54,
+      "first": 1792969788927,
+      "last": 1792969792202
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "petId": "resource-preview-a",
+      "action": "wave",
+      "playbackKey": "0",
+      "clip": "wave",
+      "n": 53,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textureFrames": [
+        "80,360,210,260",
+        "399,357,207,262",
+        "76,63,184,261"
+      ],
+      "ready": 53,
+      "positiveCanvas": 53,
+      "first": 1792969792264,
+      "last": 1792969795477
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "petId": "resource-preview-a",
+      "action": "eat",
+      "playbackKey": "0",
+      "clip": "eat",
+      "n": 54,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textureFrames": [
+        "708,360,204,254",
+        "1024,359,190,255",
+        "76,63,184,261"
+      ],
+      "ready": 54,
+      "positiveCanvas": 54,
+      "first": 1792969795538,
+      "last": 1792969798851
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "petId": "resource-preview-a",
+      "action": "attack_windup",
+      "playbackKey": "0",
+      "clip": "attack_windup",
+      "n": 53,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "40,673,243,215"
+      ],
+      "ready": 53,
+      "positiveCanvas": 53,
+      "first": 1792969798914,
+      "last": 1792969802155
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "petId": "resource-preview-a",
+      "action": "attack_release",
+      "playbackKey": "0",
+      "clip": "attack_release",
+      "n": 55,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "355,678,304,223"
+      ],
+      "ready": 55,
+      "positiveCanvas": 55,
+      "first": 1792969802224,
+      "last": 1792969805582
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "petId": "resource-preview-a",
+      "action": "attack",
+      "playbackKey": "0",
+      "clip": "attack",
+      "n": 56,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "textureFrames": [
+        "40,673,243,215",
+        "355,678,304,223",
+        "76,63,184,261"
+      ],
+      "ready": 56,
+      "positiveCanvas": 56,
+      "first": 1792969805646,
+      "last": 1792969809053
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "petId": "resource-preview-a",
+      "action": "hit",
+      "playbackKey": "0",
+      "clip": "hit",
+      "n": 56,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textureFrames": [
+        "692,671,280,244",
+        "76,63,184,261"
+      ],
+      "ready": 56,
+      "positiveCanvas": 56,
+      "first": 1792969809115,
+      "last": 1792969812514
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "petId": "resource-preview-a",
+      "action": "skill",
+      "playbackKey": "0",
+      "clip": "skill",
+      "n": 57,
+      "frames": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "textureFrames": [
+        "1018,659,197,260",
+        "35,947,300,271",
+        "76,63,184,261"
+      ],
+      "ready": 57,
+      "positiveCanvas": 57,
+      "first": 1792969812577,
+      "last": 1792969816047
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "petId": "resource-preview-a",
+      "action": "victory",
+      "playbackKey": "0",
+      "clip": "victory",
+      "n": 57,
+      "frames": [
+        "0",
+        "1",
+        "2"
+      ],
+      "textureFrames": [
+        "387,940,262,280",
+        "76,63,184,261"
+      ],
+      "ready": 57,
+      "positiveCanvas": 57,
+      "first": 1792969816109,
+      "last": 1792969819580
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "petId": "resource-preview-a",
+      "action": "sleep",
+      "playbackKey": "0",
+      "clip": "sleep",
+      "n": 248,
+      "frames": [
+        "0"
+      ],
+      "textureFrames": [
+        "977,1013,254,171"
+      ],
+      "ready": 248,
+      "positiveCanvas": 248,
+      "first": 1792969819641,
+      "last": 1792969834958
+    }
+  ]
+}

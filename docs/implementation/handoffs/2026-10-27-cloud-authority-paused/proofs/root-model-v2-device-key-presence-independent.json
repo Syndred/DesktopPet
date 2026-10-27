@@ -1,0 +1,68 @@
+{
+  "at": "2026-10-26T22:05:51.005Z",
+  "readOnly": true,
+  "queryOnly": true,
+  "userCredentialValuesReturned": false,
+  "onlyCredentialPresenceCounted": true,
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "petId": "pet-825f6af9-402b-4244-988a-481563b7a587",
+  "clients": [
+    {
+      "label": "B2-original-key-device",
+      "profile": {
+        "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+        "use_override": 1,
+        "revision": 1
+      },
+      "targetConnection": {
+        "scope": "pet",
+        "scope_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:55217/v1",
+        "model": "模拟验收-4E6-c5093dca6b4a",
+        "revision": 1,
+        "has_key": 1
+      },
+      "targetCredentialCount": 1,
+      "totalCredentialCount": 1
+    },
+    {
+      "label": "B1-original-independent",
+      "profile": {
+        "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+        "use_override": 1,
+        "revision": 1
+      },
+      "targetConnection": {
+        "scope": "pet",
+        "scope_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:55217/v1",
+        "model": "模拟验收-4E6-c5093dca6b4a",
+        "revision": 1,
+        "has_key": 0
+      },
+      "targetCredentialCount": 0,
+      "totalCredentialCount": 0
+    },
+    {
+      "label": "FreshB-original-independent",
+      "profile": {
+        "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+        "use_override": 1,
+        "revision": 1
+      },
+      "targetConnection": {
+        "scope": "pet",
+        "scope_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:55217/v1",
+        "model": "模拟验收-4E6-c5093dca6b4a",
+        "revision": 1,
+        "has_key": 0
+      },
+      "targetCredentialCount": 0,
+      "totalCredentialCount": 0
+    }
+  ]
+}

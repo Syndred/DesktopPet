@@ -1,0 +1,50 @@
+{
+  "at": "2026-10-26T21:15:11.045Z",
+  "stage": "resource-positive-and-negative-native-imports",
+  "caseUpdates": [
+    {
+      "id": "R03",
+      "status": "passed",
+      "executionState": "executed_current_candidate",
+      "actual": "正常原生文件对话框单次导入冻结项目原饭团自有QA包，新增原B owner的resourceId3eb64cf9-b481-45f6-a0f8-74ece7b3e4c6及导入历史，UI成功且真实渲染。managed JSON/PNG与输入原字节SHA完全相同，原2资源保留；没有应用到错误宠物。此项为本机导入验证，未把它当云端同步成功。",
+      "evidence": [
+        "native-resource-ui-inputs-prepared.json",
+        "native-R03-positive-original-fantuan-import-result.png",
+        "native-R03-R04-normal-import-and-negative-boundaries-seal.json"
+      ]
+    },
+    {
+      "id": "R04",
+      "status": "passed",
+      "executionState": "executed_current_candidate",
+      "actual": "通过3次正常文件选择分别导入无效JSON、缺图片和../路径穿越样本，均明确拒绝（描述非有效JSON/缺少图集sprites.png/资源路径不能越过包目录）。前后3资源/3imports/6实际managed文件与偏好、宠物、库存、战报hash一致，QA哨兵PNG未变。",
+      "evidence": [
+        "native-R04-invalid-json-rejected.png",
+        "native-R04-missing-image-rejected.png",
+        "native-R04-path-traversal-rejected.png",
+        "native-R03-R04-normal-import-and-negative-boundaries-seal.json"
+      ]
+    },
+    {
+      "id": "R01",
+      "status": "running",
+      "executionState": "partial",
+      "actual": "资源库搜索和同名项目/导入资源区分、两原导入资源校准/场景预览已实测，正连续覆盖全角色与动作；尚不计全部通过。",
+      "evidence": [
+        "native-R06-cloud-restored-Qingya-calibration-visible.png",
+        "native-R06-cloud-restored-Yantuan-calibration-visible.png"
+      ]
+    },
+    {
+      "id": "R02",
+      "status": "running",
+      "executionState": "partial",
+      "actual": "已观察资源真实预览和可用动作菜单，正继续各角色动作全套及相同动作重播的原生帧采集。",
+      "evidence": [
+        "native-R03-positive-original-fantuan-import-result.png"
+      ]
+    }
+  ],
+  "newIssues": [],
+  "issueUpdates": []
+}

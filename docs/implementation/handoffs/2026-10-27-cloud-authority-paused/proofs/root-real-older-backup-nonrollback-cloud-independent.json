@@ -1,0 +1,926 @@
+{
+  "at": "2026-10-26T20:55:48.033375+00:00",
+  "head": {
+    "actionId": "garden:b20033690d03a984ca2e18d211672d81fa7c51d0b35cf2da59fdb00292920309",
+    "checksum": "d96ec0d913405cbb927e9df33896a647cb04ab1c09e9eb5e3888f397ea31d40f",
+    "envelope": {
+      "data": {
+        "tables": {},
+        "modules": {
+          "battle": {
+            "data": {
+              "actions": [],
+              "reports": [
+                {
+                  "id": "battle-dc8b3621-93ed-493f-aef9-3a99d15e7929",
+                  "ended_at": "2026-10-26T00:33:32.702Z",
+                  "data_json": "{\"id\":\"battle-dc8b3621-93ed-493f-aef9-3a99d15e7929\",\"mode\":\"training\",\"status\":\"finished\",\"winner\":\"player\",\"player\":{\"level\":1,\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"element\":\"water\",\"petName\":\"小狐\",\"resource\":{\"kind\":\"2d\",\"resourceId\":\"builtin:lingjing-xiaohu-v1\"},\"resourceRef\":\"builtin:lingjing-xiaohu-v1\",\"appearance2d\":\"builtin:lingjing-xiaohu-v1\"},\"enemy\":{\"level\":1,\"petId\":\"training-fire\",\"element\":\"fire\",\"petName\":\"焰柴\",\"resource\":{\"kind\":\"2d\",\"resourceId\":\"builtin:lingjing-shiba-v2\"},\"resourceRef\":\"builtin:lingjing-shiba-v2\",\"appearance2d\":\"builtin:lingjing-shiba-v2\"},\"startedAt\":\"2026-10-26T00:30:45.987Z\",\"endedAt\":\"2026-10-26T00:33:32.702Z\",\"rounds\":[{\"notes\":[\"enemy uses first free dodge\",\"player action missed\",\"enemy dodged normal attack and refunded 30 anger\"],\"round\":1,\"state\":{\"enemy\":{\"hp\":120,\"id\":\"enemy\",\"anger\":30,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":1,\"player\":{\"hp\":120,\"id\":\"player\",\"anger\":0,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":false}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"normal_attack\"},\"hpAfter\":{\"enemy\":120,\"player\":120},\"angerAfter\":{\"enemy\":30,\"player\":0},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":0},\"directDamage\":{\"enemy\":0,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"player action missed\"],\"round\":2,\"state\":{\"enemy\":{\"hp\":120,\"id\":\"enemy\",\"anger\":30,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":2,\"player\":{\"hp\":112,\"id\":\"player\",\"anger\":4,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":false}},\"winner\":null,\"actions\":{\"enemy\":\"normal_attack\",\"player\":\"element_attack\"},\"hpAfter\":{\"enemy\":120,\"player\":112},\"angerAfter\":{\"enemy\":30,\"player\":4},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":8},\"directDamage\":{\"enemy\":0,\"player\":8},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy spends 20 anger on dodge\",\"player action missed\",\"enemy dodged normal attack and refunded 30 anger\"],\"round\":3,\"state\":{\"enemy\":{\"hp\":120,\"id\":\"enemy\",\"anger\":40,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":3,\"player\":{\"hp\":112,\"id\":\"player\",\"anger\":4,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":false}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"normal_attack\"},\"hpAfter\":{\"enemy\":120,\"player\":112},\"angerAfter\":{\"enemy\":40,\"player\":4},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":0},\"directDamage\":{\"enemy\":0,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy spends 20 anger on dodge\",\"player action missed\",\"enemy dodged normal attack and refunded 30 anger\"],\"round\":4,\"state\":{\"enemy\":{\"hp\":120,\"id\":\"enemy\",\"anger\":50,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":4,\"player\":{\"hp\":112,\"id\":\"player\",\"anger\":4,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":false}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"normal_attack\"},\"hpAfter\":{\"enemy\":120,\"player\":112},\"angerAfter\":{\"enemy\":50,\"player\":4},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":0},\"directDamage\":{\"enemy\":0,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"player action missed\"],\"round\":5,\"state\":{\"enemy\":{\"hp\":120,\"id\":\"enemy\",\"anger\":50,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":5,\"player\":{\"hp\":104,\"id\":\"player\",\"anger\":8,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":false}},\"winner\":null,\"actions\":{\"enemy\":\"normal_attack\",\"player\":\"element_attack\"},\"hpAfter\":{\"enemy\":120,\"player\":104},\"angerAfter\":{\"enemy\":50,\"player\":8},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":8},\"directDamage\":{\"enemy\":0,\"player\":8},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"player spends 20 anger on dodge\",\"enemy action missed\",\"player dodged normal attack and refunded 30 anger\"],\"round\":6,\"state\":{\"enemy\":{\"hp\":120,\"id\":\"enemy\",\"anger\":50,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":6,\"player\":{\"hp\":104,\"id\":\"player\",\"anger\":30,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"normal_attack\",\"player\":\"dodge\"},\"hpAfter\":{\"enemy\":120,\"player\":104},\"angerAfter\":{\"enemy\":50,\"player\":30},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":0},\"directDamage\":{\"enemy\":0,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy spends 20 anger on dodge\",\"player action missed\",\"enemy dodged normal attack and refunded 30 anger\"],\"round\":7,\"state\":{\"enemy\":{\"hp\":120,\"id\":\"enemy\",\"anger\":60,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":7,\"player\":{\"hp\":104,\"id\":\"player\",\"anger\":30,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"normal_attack\"},\"hpAfter\":{\"enemy\":120,\"player\":104},\"angerAfter\":{\"enemy\":60,\"player\":30},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":0},\"directDamage\":{\"enemy\":0,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy spends 20 anger on dodge\",\"player action missed\",\"enemy dodged normal attack and refunded 30 anger\"],\"round\":8,\"state\":{\"enemy\":{\"hp\":120,\"id\":\"enemy\",\"anger\":70,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":8,\"player\":{\"hp\":104,\"id\":\"player\",\"anger\":30,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"normal_attack\"},\"hpAfter\":{\"enemy\":120,\"player\":104},\"angerAfter\":{\"enemy\":70,\"player\":30},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":0},\"directDamage\":{\"enemy\":0,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy spends 20 anger on dodge\",\"enemy anger halved by freeze (50->25)\"],\"round\":9,\"state\":{\"enemy\":{\"hp\":106,\"id\":\"enemy\",\"anger\":25,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":9,\"player\":{\"hp\":104,\"id\":\"player\",\"anger\":50,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"element_attack\"},\"hpAfter\":{\"enemy\":106,\"player\":104},\"angerAfter\":{\"enemy\":25,\"player\":50},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":14,\"player\":0},\"directDamage\":{\"enemy\":14,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"player spends 20 anger on dodge\",\"enemy action missed\",\"player dodged normal attack and refunded 30 anger\"],\"round\":10,\"state\":{\"enemy\":{\"hp\":106,\"id\":\"enemy\",\"anger\":25,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":10,\"player\":{\"hp\":104,\"id\":\"player\",\"anger\":60,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"normal_attack\",\"player\":\"dodge\"},\"hpAfter\":{\"enemy\":106,\"player\":104},\"angerAfter\":{\"enemy\":25,\"player\":60},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":0},\"directDamage\":{\"enemy\":0,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy spends 20 anger on dodge\",\"enemy anger halved by freeze (5->2)\",\"player healed by ultimate\"],\"round\":11,\"state\":{\"enemy\":{\"hp\":82,\"id\":\"enemy\",\"anger\":2,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":11,\"player\":{\"hp\":120,\"id\":\"player\",\"anger\":10,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"ultimate\"},\"hpAfter\":{\"enemy\":82,\"player\":120},\"angerAfter\":{\"enemy\":2,\"player\":10},\"healEvents\":{\"enemy\":[],\"player\":[{\"type\":\"ultimate\",\"amount\":16}]},\"damageTaken\":{\"enemy\":24,\"player\":0},\"directDamage\":{\"enemy\":24,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy spends 20 anger on dodge\",\"player action missed\",\"enemy dodged normal attack and refunded 30 anger\"],\"round\":12,\"state\":{\"enemy\":{\"hp\":82,\"id\":\"enemy\",\"anger\":30,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":12,\"player\":{\"hp\":120,\"id\":\"player\",\"anger\":10,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"normal_attack\"},\"hpAfter\":{\"enemy\":82,\"player\":120},\"angerAfter\":{\"enemy\":30,\"player\":10},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":0},\"directDamage\":{\"enemy\":0,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"player action missed\"],\"round\":13,\"state\":{\"enemy\":{\"hp\":82,\"id\":\"enemy\",\"anger\":30,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":13,\"player\":{\"hp\":112,\"id\":\"player\",\"anger\":14,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"normal_attack\",\"player\":\"element_attack\"},\"hpAfter\":{\"enemy\":82,\"player\":112},\"angerAfter\":{\"enemy\":30,\"player\":14},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":8},\"directDamage\":{\"enemy\":0,\"player\":8},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy spends 20 anger on dodge\",\"enemy anger halved by freeze (10->5)\"],\"round\":14,\"state\":{\"enemy\":{\"hp\":68,\"id\":\"enemy\",\"anger\":5,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":14,\"player\":{\"hp\":112,\"id\":\"player\",\"anger\":34,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"element_attack\"},\"hpAfter\":{\"enemy\":68,\"player\":112},\"angerAfter\":{\"enemy\":5,\"player\":34},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":14,\"player\":0},\"directDamage\":{\"enemy\":14,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"player action missed\"],\"round\":15,\"state\":{\"enemy\":{\"hp\":68,\"id\":\"enemy\",\"anger\":5,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":15,\"player\":{\"hp\":104,\"id\":\"player\",\"anger\":38,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"normal_attack\",\"player\":\"element_attack\"},\"hpAfter\":{\"enemy\":68,\"player\":104},\"angerAfter\":{\"enemy\":5,\"player\":38},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":8},\"directDamage\":{\"enemy\":0,\"player\":8},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"player action missed\"],\"round\":16,\"state\":{\"enemy\":{\"hp\":68,\"id\":\"enemy\",\"anger\":5,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":16,\"player\":{\"hp\":96,\"id\":\"player\",\"anger\":42,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"normal_attack\",\"player\":\"element_attack\"},\"hpAfter\":{\"enemy\":68,\"player\":96},\"angerAfter\":{\"enemy\":5,\"player\":42},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":8},\"directDamage\":{\"enemy\":0,\"player\":8},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"player spends 20 anger on dodge\",\"enemy action missed\",\"player dodged normal attack and refunded 30 anger\"],\"round\":17,\"state\":{\"enemy\":{\"hp\":68,\"id\":\"enemy\",\"anger\":5,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":17,\"player\":{\"hp\":96,\"id\":\"player\",\"anger\":52,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"normal_attack\",\"player\":\"dodge\"},\"hpAfter\":{\"enemy\":68,\"player\":96},\"angerAfter\":{\"enemy\":5,\"player\":52},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":0},\"directDamage\":{\"enemy\":0,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy spends 20 anger on dodge\",\"enemy anger halved by freeze (0->0)\",\"player healed by ultimate\"],\"round\":18,\"state\":{\"enemy\":{\"hp\":44,\"id\":\"enemy\",\"anger\":0,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":18,\"player\":{\"hp\":116,\"id\":\"player\",\"anger\":2,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"ultimate\"},\"hpAfter\":{\"enemy\":44,\"player\":116},\"angerAfter\":{\"enemy\":0,\"player\":2},\"healEvents\":{\"enemy\":[],\"player\":[{\"type\":\"ultimate\",\"amount\":20}]},\"damageTaken\":{\"enemy\":24,\"player\":0},\"directDamage\":{\"enemy\":24,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"player action missed\"],\"round\":19,\"state\":{\"enemy\":{\"hp\":44,\"id\":\"enemy\",\"anger\":0,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":19,\"player\":{\"hp\":108,\"id\":\"player\",\"anger\":6,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"normal_attack\",\"player\":\"element_attack\"},\"hpAfter\":{\"enemy\":44,\"player\":108},\"angerAfter\":{\"enemy\":0,\"player\":6},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":8},\"directDamage\":{\"enemy\":0,\"player\":8},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy action missed\"],\"round\":20,\"state\":{\"enemy\":{\"hp\":32,\"id\":\"enemy\",\"anger\":6,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":20,\"player\":{\"hp\":108,\"id\":\"player\",\"anger\":26,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"element_attack\",\"player\":\"normal_attack\"},\"hpAfter\":{\"enemy\":32,\"player\":108},\"angerAfter\":{\"enemy\":6,\"player\":26},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":12,\"player\":0},\"directDamage\":{\"enemy\":12,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy spends 20 anger on dodge\",\"enemy anger halved by freeze (0->0)\"],\"round\":21,\"state\":{\"enemy\":{\"hp\":18,\"id\":\"enemy\",\"anger\":0,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":21,\"player\":{\"hp\":108,\"id\":\"player\",\"anger\":46,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"element_attack\"},\"hpAfter\":{\"enemy\":18,\"player\":108},\"angerAfter\":{\"enemy\":0,\"player\":46},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":14,\"player\":0},\"directDamage\":{\"enemy\":14,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"player action missed\"],\"round\":22,\"state\":{\"enemy\":{\"hp\":18,\"id\":\"enemy\",\"anger\":0,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":22,\"player\":{\"hp\":100,\"id\":\"player\",\"anger\":50,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"normal_attack\",\"player\":\"element_attack\"},\"hpAfter\":{\"enemy\":18,\"player\":100},\"angerAfter\":{\"enemy\":0,\"player\":50},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":8},\"directDamage\":{\"enemy\":0,\"player\":8},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy anger halved by freeze (0->0)\",\"player healed by ultimate\",\"enemy burned x1\",\"player takes burn damage\"],\"round\":23,\"state\":{\"enemy\":{\"hp\":0,\"id\":\"enemy\",\"anger\":0,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":23,\"player\":{\"hp\":101,\"id\":\"player\",\"anger\":5,\"maxHp\":120,\"element\":\"water\",\"statuses\":[{\"type\":\"burn\",\"stacks\":1,\"duration\":2,\"sourceId\":\"enemy\",\"stackable\":true}],\"freeDodgeUsed\":true}},\"winner\":\"player\",\"actions\":{\"enemy\":\"element_attack\",\"player\":\"ultimate\"},\"hpAfter\":{\"enemy\":0,\"player\":101},\"angerAfter\":{\"enemy\":0,\"player\":5},\"healEvents\":{\"enemy\":[],\"player\":[{\"type\":\"ultimate\",\"amount\":20}]},\"damageTaken\":{\"enemy\":24,\"player\":19},\"directDamage\":{\"enemy\":24,\"player\":10},\"statusesAfter\":{\"enemy\":[],\"player\":[{\"type\":\"burn\",\"stacks\":1,\"duration\":2,\"sourceId\":\"enemy\",\"stackable\":true}]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[{\"type\":\"burn\",\"amount\":9}]}}],\"reward\":{\"actionId\":\"battle:battle-dc8b3621-93ed-493f-aef9-3a99d15e7929:account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"sessionId\":\"battle-dc8b3621-93ed-493f-aef9-3a99d15e7929\",\"mode\":\"training\",\"won\":true,\"experience\":20,\"applied\":true,\"duplicate\":false,\"previousExperience\":5,\"previousLevel\":1,\"currentExperience\":25,\"currentLevel\":1,\"seeds\":{\"source\":\"battle\",\"receiptId\":\"battle-dc8b3621-93ed-493f-aef9-3a99d15e7929\",\"itemId\":\"seed:carrot\",\"quantity\":2}},\"historyComplete\":true,\"context\":{\"authority\":\"supabase\",\"cloudUserId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"coreVersion\":\"five-elements-standard-v1/2026-10-25\"},\"rules\":{\"id\":\"five-elements-standard-v1\",\"label\":\"标准五行对战\",\"maxHp\":120,\"maxAnger\":100,\"advantage\":{\"fire\":\"metal\",\"wood\":\"earth\",\"earth\":\"water\",\"metal\":\"wood\",\"water\":\"fire\"},\"baseDamage\":{\"dodge\":0,\"ultimate\":20,\"normal_attack\":10,\"element_attack\":12},\"dodgeRefund\":30,\"vitalPolicy\":\"normalized\",\"dodgeMaxCost\":20,\"ultimateCost\":50,\"ultimateHeal\":20,\"ultimateAnger\":50,\"elementEffects\":{\"fire\":{\"label\":\"燃烧\",\"description\":\"回合末按当前生命8%×层数伤害，最多5层\"},\"wood\":{\"label\":\"寄生\",\"description\":\"每层回合末吸取2生命，最多5层\"},\"earth\":{\"label\":\"迟钝\",\"description\":\"每层伤害×0.5，最多5层\"},\"metal\":{\"label\":\"易伤\",\"description\":\"每层受伤×1.5，最多5层\"},\"water\":{\"label\":\"降怒\",\"description\":\"命中后对方怒气向下取半，不增加受击怒气\"}},\"companionStatsApplied\":false},\"sessionId\":\"battle-dc8b3621-93ed-493f-aef9-3a99d15e7929\"}",
+                  "session_id": "battle-dc8b3621-93ed-493f-aef9-3a99d15e7929"
+                },
+                {
+                  "id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+                  "ended_at": "2026-10-25T21:49:00.381325+00:00",
+                  "data_json": "{\"id\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"mode\":\"friend\",\"status\":\"finished\",\"winner\":\"enemy\",\"player\":{\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"petName\":\"小狐\",\"element\":\"water\",\"level\":1,\"appearance2d\":\"builtin:lingjing-xiaohu-v1\",\"resourceRef\":\"builtin:lingjing-xiaohu-v1\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"}},\"enemy\":{\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"petName\":\"小狐\",\"element\":\"water\",\"level\":1,\"appearance2d\":\"builtin:lingjing-xiaohu-v1\",\"resourceRef\":\"builtin:lingjing-xiaohu-v1\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"}},\"startedAt\":\"2026-10-25T21:31:03.589952+00:00\",\"endedAt\":\"2026-10-25T21:49:00.381325+00:00\",\"rounds\":[{\"round\":1,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":10},\"directDamage\":{\"player\":10,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":110},\"angerAfter\":{\"player\":5,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[],\"state\":{\"round\":1,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":2,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":100,\"enemy\":110},\"angerAfter\":{\"player\":10,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":2,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":100,\"maxHp\":120,\"anger\":10,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":3,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":90,\"enemy\":110},\"angerAfter\":{\"player\":15,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":3,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":90,\"maxHp\":120,\"anger\":15,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":4,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":80,\"enemy\":110},\"angerAfter\":{\"player\":20,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":4,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":80,\"maxHp\":120,\"anger\":20,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":5,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":70,\"enemy\":110},\"angerAfter\":{\"player\":25,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":5,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":70,\"maxHp\":120,\"anger\":25,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":6,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":60,\"enemy\":110},\"angerAfter\":{\"player\":30,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":6,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":60,\"maxHp\":120,\"anger\":30,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":7,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":50,\"enemy\":110},\"angerAfter\":{\"player\":35,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":7,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":50,\"maxHp\":120,\"anger\":35,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":8,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":40,\"enemy\":110},\"angerAfter\":{\"player\":40,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":8,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":40,\"maxHp\":120,\"anger\":40,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":9,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":30,\"enemy\":110},\"angerAfter\":{\"player\":45,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":9,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":30,\"maxHp\":120,\"anger\":45,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":10,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":20,\"enemy\":110},\"angerAfter\":{\"player\":50,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":10,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":20,\"maxHp\":120,\"anger\":50,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":11,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":10,\"enemy\":110},\"angerAfter\":{\"player\":55,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":11,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":10,\"maxHp\":120,\"anger\":55,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":12,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":0,\"enemy\":110},\"angerAfter\":{\"player\":60,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":\"enemy\",\"notes\":[\"host action missed\"],\"state\":{\"round\":12,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":0,\"maxHp\":120,\"anger\":60,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}}],\"reward\":{\"actionId\":\"battle:d79b783a-b5a5-4715-8e58-ba95483b2d67:account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"sessionId\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"mode\":\"friend\",\"won\":false,\"experience\":5,\"applied\":true,\"duplicate\":false,\"previousExperience\":0,\"previousLevel\":1,\"currentExperience\":5,\"currentLevel\":1,\"seeds\":{\"source\":\"battle\",\"receiptId\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"itemId\":\"seed:tomato\",\"quantity\":2}},\"historyComplete\":true,\"context\":{\"authority\":\"supabase\",\"cloudUserId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"coreVersion\":\"five-elements-standard-v1/2026-10-25\"},\"rules\":{\"id\":\"five-elements-standard-v1\",\"label\":\"标准五行对战\",\"vitalPolicy\":\"normalized\",\"maxHp\":120,\"maxAnger\":100,\"companionStatsApplied\":false,\"baseDamage\":{\"normal_attack\":10,\"element_attack\":12,\"dodge\":0,\"ultimate\":20},\"ultimateAnger\":50,\"ultimateCost\":50,\"ultimateHeal\":20,\"dodgeMaxCost\":20,\"dodgeRefund\":30,\"advantage\":{\"metal\":\"wood\",\"wood\":\"earth\",\"earth\":\"water\",\"water\":\"fire\",\"fire\":\"metal\"},\"elementEffects\":{\"metal\":{\"label\":\"易伤\",\"description\":\"每层受伤×1.5，最多5层\"},\"wood\":{\"label\":\"寄生\",\"description\":\"每层回合末吸取2生命，最多5层\"},\"earth\":{\"label\":\"迟钝\",\"description\":\"每层伤害×0.5，最多5层\"},\"water\":{\"label\":\"降怒\",\"description\":\"命中后对方怒气向下取半，不增加受击怒气\"},\"fire\":{\"label\":\"燃烧\",\"description\":\"回合末按当前生命8%×层数伤害，最多5层\"}}},\"sessionId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\"}",
+                  "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67"
+                }
+              ],
+              "rewards": [
+                {
+                  "pet_id": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+                  "action_id": "battle:battle-dc8b3621-93ed-493f-aef9-3a99d15e7929:account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+                  "data_json": "{\"actionId\":\"battle:battle-dc8b3621-93ed-493f-aef9-3a99d15e7929:account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"sessionId\":\"battle-dc8b3621-93ed-493f-aef9-3a99d15e7929\",\"mode\":\"training\",\"won\":true,\"experience\":20,\"applied\":true,\"duplicate\":false,\"previousExperience\":5,\"previousLevel\":1,\"currentExperience\":25,\"currentLevel\":1,\"seeds\":{\"source\":\"battle\",\"receiptId\":\"battle-dc8b3621-93ed-493f-aef9-3a99d15e7929\",\"itemId\":\"seed:carrot\",\"quantity\":2}}",
+                  "session_id": "battle-dc8b3621-93ed-493f-aef9-3a99d15e7929"
+                },
+                {
+                  "pet_id": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+                  "action_id": "battle:d79b783a-b5a5-4715-8e58-ba95483b2d67:account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+                  "data_json": "{\"actionId\":\"battle:d79b783a-b5a5-4715-8e58-ba95483b2d67:account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"sessionId\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"mode\":\"friend\",\"won\":false,\"experience\":5,\"applied\":true,\"duplicate\":false,\"previousExperience\":0,\"previousLevel\":1,\"currentExperience\":5,\"currentLevel\":1,\"seeds\":{\"source\":\"battle\",\"receiptId\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"itemId\":\"seed:tomato\",\"quantity\":2}}",
+                  "session_id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67"
+                }
+              ],
+              "sessions": [
+                {
+                  "id": "battle-dc8b3621-93ed-493f-aef9-3a99d15e7929",
+                  "status": "finished",
+                  "room_id": null,
+                  "revision": 24,
+                  "data_json": "{\"id\":\"battle-dc8b3621-93ed-493f-aef9-3a99d15e7929\",\"mode\":\"training\",\"enemy\":{\"level\":1,\"petId\":\"training-fire\",\"element\":\"fire\",\"petName\":\"焰柴\",\"resource\":{\"kind\":\"2d\",\"resourceId\":\"builtin:lingjing-shiba-v2\"},\"resourceRef\":\"builtin:lingjing-shiba-v2\",\"appearance2d\":\"builtin:lingjing-shiba-v2\"},\"rules\":{\"id\":\"five-elements-standard-v1\",\"label\":\"标准五行对战\",\"maxHp\":120,\"maxAnger\":100,\"advantage\":{\"fire\":\"metal\",\"wood\":\"earth\",\"earth\":\"water\",\"metal\":\"wood\",\"water\":\"fire\"},\"baseDamage\":{\"dodge\":0,\"ultimate\":20,\"normal_attack\":10,\"element_attack\":12},\"dodgeRefund\":30,\"vitalPolicy\":\"normalized\",\"dodgeMaxCost\":20,\"ultimateCost\":50,\"ultimateHeal\":20,\"ultimateAnger\":50,\"elementEffects\":{\"fire\":{\"label\":\"燃烧\",\"description\":\"回合末按当前生命8%×层数伤害，最多5层\"},\"wood\":{\"label\":\"寄生\",\"description\":\"每层回合末吸取2生命，最多5层\"},\"earth\":{\"label\":\"迟钝\",\"description\":\"每层伤害×0.5，最多5层\"},\"metal\":{\"label\":\"易伤\",\"description\":\"每层受伤×1.5，最多5层\"},\"water\":{\"label\":\"降怒\",\"description\":\"命中后对方怒气向下取半，不增加受击怒气\"}},\"companionStatsApplied\":false},\"player\":{\"level\":1,\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"element\":\"water\",\"petName\":\"小狐\",\"resource\":{\"kind\":\"2d\",\"resourceId\":\"builtin:lingjing-xiaohu-v1\"},\"resourceRef\":\"builtin:lingjing-xiaohu-v1\",\"appearance2d\":\"builtin:lingjing-xiaohu-v1\"},\"rounds\":[{\"notes\":[\"enemy uses first free dodge\",\"player action missed\",\"enemy dodged normal attack and refunded 30 anger\"],\"round\":1,\"state\":{\"enemy\":{\"hp\":120,\"id\":\"enemy\",\"anger\":30,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":1,\"player\":{\"hp\":120,\"id\":\"player\",\"anger\":0,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":false}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"normal_attack\"},\"hpAfter\":{\"enemy\":120,\"player\":120},\"angerAfter\":{\"enemy\":30,\"player\":0},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":0},\"directDamage\":{\"enemy\":0,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"player action missed\"],\"round\":2,\"state\":{\"enemy\":{\"hp\":120,\"id\":\"enemy\",\"anger\":30,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":2,\"player\":{\"hp\":112,\"id\":\"player\",\"anger\":4,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":false}},\"winner\":null,\"actions\":{\"enemy\":\"normal_attack\",\"player\":\"element_attack\"},\"hpAfter\":{\"enemy\":120,\"player\":112},\"angerAfter\":{\"enemy\":30,\"player\":4},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":8},\"directDamage\":{\"enemy\":0,\"player\":8},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy spends 20 anger on dodge\",\"player action missed\",\"enemy dodged normal attack and refunded 30 anger\"],\"round\":3,\"state\":{\"enemy\":{\"hp\":120,\"id\":\"enemy\",\"anger\":40,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":3,\"player\":{\"hp\":112,\"id\":\"player\",\"anger\":4,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":false}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"normal_attack\"},\"hpAfter\":{\"enemy\":120,\"player\":112},\"angerAfter\":{\"enemy\":40,\"player\":4},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":0},\"directDamage\":{\"enemy\":0,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy spends 20 anger on dodge\",\"player action missed\",\"enemy dodged normal attack and refunded 30 anger\"],\"round\":4,\"state\":{\"enemy\":{\"hp\":120,\"id\":\"enemy\",\"anger\":50,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":4,\"player\":{\"hp\":112,\"id\":\"player\",\"anger\":4,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":false}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"normal_attack\"},\"hpAfter\":{\"enemy\":120,\"player\":112},\"angerAfter\":{\"enemy\":50,\"player\":4},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":0},\"directDamage\":{\"enemy\":0,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"player action missed\"],\"round\":5,\"state\":{\"enemy\":{\"hp\":120,\"id\":\"enemy\",\"anger\":50,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":5,\"player\":{\"hp\":104,\"id\":\"player\",\"anger\":8,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":false}},\"winner\":null,\"actions\":{\"enemy\":\"normal_attack\",\"player\":\"element_attack\"},\"hpAfter\":{\"enemy\":120,\"player\":104},\"angerAfter\":{\"enemy\":50,\"player\":8},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":8},\"directDamage\":{\"enemy\":0,\"player\":8},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"player spends 20 anger on dodge\",\"enemy action missed\",\"player dodged normal attack and refunded 30 anger\"],\"round\":6,\"state\":{\"enemy\":{\"hp\":120,\"id\":\"enemy\",\"anger\":50,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":6,\"player\":{\"hp\":104,\"id\":\"player\",\"anger\":30,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"normal_attack\",\"player\":\"dodge\"},\"hpAfter\":{\"enemy\":120,\"player\":104},\"angerAfter\":{\"enemy\":50,\"player\":30},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":0},\"directDamage\":{\"enemy\":0,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy spends 20 anger on dodge\",\"player action missed\",\"enemy dodged normal attack and refunded 30 anger\"],\"round\":7,\"state\":{\"enemy\":{\"hp\":120,\"id\":\"enemy\",\"anger\":60,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":7,\"player\":{\"hp\":104,\"id\":\"player\",\"anger\":30,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"normal_attack\"},\"hpAfter\":{\"enemy\":120,\"player\":104},\"angerAfter\":{\"enemy\":60,\"player\":30},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":0},\"directDamage\":{\"enemy\":0,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy spends 20 anger on dodge\",\"player action missed\",\"enemy dodged normal attack and refunded 30 anger\"],\"round\":8,\"state\":{\"enemy\":{\"hp\":120,\"id\":\"enemy\",\"anger\":70,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":8,\"player\":{\"hp\":104,\"id\":\"player\",\"anger\":30,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"normal_attack\"},\"hpAfter\":{\"enemy\":120,\"player\":104},\"angerAfter\":{\"enemy\":70,\"player\":30},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":0},\"directDamage\":{\"enemy\":0,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy spends 20 anger on dodge\",\"enemy anger halved by freeze (50->25)\"],\"round\":9,\"state\":{\"enemy\":{\"hp\":106,\"id\":\"enemy\",\"anger\":25,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":9,\"player\":{\"hp\":104,\"id\":\"player\",\"anger\":50,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"element_attack\"},\"hpAfter\":{\"enemy\":106,\"player\":104},\"angerAfter\":{\"enemy\":25,\"player\":50},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":14,\"player\":0},\"directDamage\":{\"enemy\":14,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"player spends 20 anger on dodge\",\"enemy action missed\",\"player dodged normal attack and refunded 30 anger\"],\"round\":10,\"state\":{\"enemy\":{\"hp\":106,\"id\":\"enemy\",\"anger\":25,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":10,\"player\":{\"hp\":104,\"id\":\"player\",\"anger\":60,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"normal_attack\",\"player\":\"dodge\"},\"hpAfter\":{\"enemy\":106,\"player\":104},\"angerAfter\":{\"enemy\":25,\"player\":60},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":0},\"directDamage\":{\"enemy\":0,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy spends 20 anger on dodge\",\"enemy anger halved by freeze (5->2)\",\"player healed by ultimate\"],\"round\":11,\"state\":{\"enemy\":{\"hp\":82,\"id\":\"enemy\",\"anger\":2,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":11,\"player\":{\"hp\":120,\"id\":\"player\",\"anger\":10,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"ultimate\"},\"hpAfter\":{\"enemy\":82,\"player\":120},\"angerAfter\":{\"enemy\":2,\"player\":10},\"healEvents\":{\"enemy\":[],\"player\":[{\"type\":\"ultimate\",\"amount\":16}]},\"damageTaken\":{\"enemy\":24,\"player\":0},\"directDamage\":{\"enemy\":24,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy spends 20 anger on dodge\",\"player action missed\",\"enemy dodged normal attack and refunded 30 anger\"],\"round\":12,\"state\":{\"enemy\":{\"hp\":82,\"id\":\"enemy\",\"anger\":30,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":12,\"player\":{\"hp\":120,\"id\":\"player\",\"anger\":10,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"normal_attack\"},\"hpAfter\":{\"enemy\":82,\"player\":120},\"angerAfter\":{\"enemy\":30,\"player\":10},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":0},\"directDamage\":{\"enemy\":0,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"player action missed\"],\"round\":13,\"state\":{\"enemy\":{\"hp\":82,\"id\":\"enemy\",\"anger\":30,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":13,\"player\":{\"hp\":112,\"id\":\"player\",\"anger\":14,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"normal_attack\",\"player\":\"element_attack\"},\"hpAfter\":{\"enemy\":82,\"player\":112},\"angerAfter\":{\"enemy\":30,\"player\":14},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":8},\"directDamage\":{\"enemy\":0,\"player\":8},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy spends 20 anger on dodge\",\"enemy anger halved by freeze (10->5)\"],\"round\":14,\"state\":{\"enemy\":{\"hp\":68,\"id\":\"enemy\",\"anger\":5,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":14,\"player\":{\"hp\":112,\"id\":\"player\",\"anger\":34,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"element_attack\"},\"hpAfter\":{\"enemy\":68,\"player\":112},\"angerAfter\":{\"enemy\":5,\"player\":34},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":14,\"player\":0},\"directDamage\":{\"enemy\":14,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"player action missed\"],\"round\":15,\"state\":{\"enemy\":{\"hp\":68,\"id\":\"enemy\",\"anger\":5,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":15,\"player\":{\"hp\":104,\"id\":\"player\",\"anger\":38,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"normal_attack\",\"player\":\"element_attack\"},\"hpAfter\":{\"enemy\":68,\"player\":104},\"angerAfter\":{\"enemy\":5,\"player\":38},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":8},\"directDamage\":{\"enemy\":0,\"player\":8},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"player action missed\"],\"round\":16,\"state\":{\"enemy\":{\"hp\":68,\"id\":\"enemy\",\"anger\":5,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":16,\"player\":{\"hp\":96,\"id\":\"player\",\"anger\":42,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"normal_attack\",\"player\":\"element_attack\"},\"hpAfter\":{\"enemy\":68,\"player\":96},\"angerAfter\":{\"enemy\":5,\"player\":42},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":8},\"directDamage\":{\"enemy\":0,\"player\":8},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"player spends 20 anger on dodge\",\"enemy action missed\",\"player dodged normal attack and refunded 30 anger\"],\"round\":17,\"state\":{\"enemy\":{\"hp\":68,\"id\":\"enemy\",\"anger\":5,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":17,\"player\":{\"hp\":96,\"id\":\"player\",\"anger\":52,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"normal_attack\",\"player\":\"dodge\"},\"hpAfter\":{\"enemy\":68,\"player\":96},\"angerAfter\":{\"enemy\":5,\"player\":52},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":0},\"directDamage\":{\"enemy\":0,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy spends 20 anger on dodge\",\"enemy anger halved by freeze (0->0)\",\"player healed by ultimate\"],\"round\":18,\"state\":{\"enemy\":{\"hp\":44,\"id\":\"enemy\",\"anger\":0,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":18,\"player\":{\"hp\":116,\"id\":\"player\",\"anger\":2,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"ultimate\"},\"hpAfter\":{\"enemy\":44,\"player\":116},\"angerAfter\":{\"enemy\":0,\"player\":2},\"healEvents\":{\"enemy\":[],\"player\":[{\"type\":\"ultimate\",\"amount\":20}]},\"damageTaken\":{\"enemy\":24,\"player\":0},\"directDamage\":{\"enemy\":24,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"player action missed\"],\"round\":19,\"state\":{\"enemy\":{\"hp\":44,\"id\":\"enemy\",\"anger\":0,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":19,\"player\":{\"hp\":108,\"id\":\"player\",\"anger\":6,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"normal_attack\",\"player\":\"element_attack\"},\"hpAfter\":{\"enemy\":44,\"player\":108},\"angerAfter\":{\"enemy\":0,\"player\":6},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":8},\"directDamage\":{\"enemy\":0,\"player\":8},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy action missed\"],\"round\":20,\"state\":{\"enemy\":{\"hp\":32,\"id\":\"enemy\",\"anger\":6,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":20,\"player\":{\"hp\":108,\"id\":\"player\",\"anger\":26,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"element_attack\",\"player\":\"normal_attack\"},\"hpAfter\":{\"enemy\":32,\"player\":108},\"angerAfter\":{\"enemy\":6,\"player\":26},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":12,\"player\":0},\"directDamage\":{\"enemy\":12,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy spends 20 anger on dodge\",\"enemy anger halved by freeze (0->0)\"],\"round\":21,\"state\":{\"enemy\":{\"hp\":18,\"id\":\"enemy\",\"anger\":0,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":21,\"player\":{\"hp\":108,\"id\":\"player\",\"anger\":46,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"dodge\",\"player\":\"element_attack\"},\"hpAfter\":{\"enemy\":18,\"player\":108},\"angerAfter\":{\"enemy\":0,\"player\":46},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":14,\"player\":0},\"directDamage\":{\"enemy\":14,\"player\":0},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"player action missed\"],\"round\":22,\"state\":{\"enemy\":{\"hp\":18,\"id\":\"enemy\",\"anger\":0,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":22,\"player\":{\"hp\":100,\"id\":\"player\",\"anger\":50,\"maxHp\":120,\"element\":\"water\",\"statuses\":[],\"freeDodgeUsed\":true}},\"winner\":null,\"actions\":{\"enemy\":\"normal_attack\",\"player\":\"element_attack\"},\"hpAfter\":{\"enemy\":18,\"player\":100},\"angerAfter\":{\"enemy\":0,\"player\":50},\"healEvents\":{\"enemy\":[],\"player\":[]},\"damageTaken\":{\"enemy\":0,\"player\":8},\"directDamage\":{\"enemy\":0,\"player\":8},\"statusesAfter\":{\"enemy\":[],\"player\":[]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[]}},{\"notes\":[\"enemy anger halved by freeze (0->0)\",\"player healed by ultimate\",\"enemy burned x1\",\"player takes burn damage\"],\"round\":23,\"state\":{\"enemy\":{\"hp\":0,\"id\":\"enemy\",\"anger\":0,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":23,\"player\":{\"hp\":101,\"id\":\"player\",\"anger\":5,\"maxHp\":120,\"element\":\"water\",\"statuses\":[{\"type\":\"burn\",\"stacks\":1,\"duration\":2,\"sourceId\":\"enemy\",\"stackable\":true}],\"freeDodgeUsed\":true}},\"winner\":\"player\",\"actions\":{\"enemy\":\"element_attack\",\"player\":\"ultimate\"},\"hpAfter\":{\"enemy\":0,\"player\":101},\"angerAfter\":{\"enemy\":0,\"player\":5},\"healEvents\":{\"enemy\":[],\"player\":[{\"type\":\"ultimate\",\"amount\":20}]},\"damageTaken\":{\"enemy\":24,\"player\":19},\"directDamage\":{\"enemy\":24,\"player\":10},\"statusesAfter\":{\"enemy\":[],\"player\":[{\"type\":\"burn\",\"stacks\":1,\"duration\":2,\"sourceId\":\"enemy\",\"stackable\":true}]},\"dotDamageEvents\":{\"enemy\":[],\"player\":[{\"type\":\"burn\",\"amount\":9}]}}],\"status\":\"finished\",\"winner\":\"player\",\"context\":{\"authority\":\"supabase\",\"cloudUserId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"coreVersion\":\"five-elements-standard-v1/2026-10-25\"},\"endedAt\":\"2026-10-26T00:33:32.702Z\",\"reportId\":\"battle-dc8b3621-93ed-493f-aef9-3a99d15e7929\",\"snapshot\":{\"enemy\":{\"hp\":0,\"id\":\"enemy\",\"anger\":0,\"maxHp\":120,\"element\":\"fire\",\"statuses\":[],\"freeDodgeUsed\":true},\"round\":23,\"player\":{\"hp\":101,\"id\":\"player\",\"anger\":5,\"maxHp\":120,\"element\":\"water\",\"statuses\":[{\"type\":\"burn\",\"stacks\":1,\"duration\":2,\"sourceId\":\"enemy\",\"stackable\":true}],\"freeDodgeUsed\":true}},\"startedAt\":\"2026-10-26T00:30:45.987Z\",\"updatedAt\":\"2026-10-26T00:33:32.702Z\",\"pendingAction\":null,\"historyComplete\":true,\"revision\":24,\"reward\":{\"actionId\":\"battle:battle-dc8b3621-93ed-493f-aef9-3a99d15e7929:account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"sessionId\":\"battle-dc8b3621-93ed-493f-aef9-3a99d15e7929\",\"mode\":\"training\",\"won\":true,\"experience\":20,\"applied\":true,\"duplicate\":false,\"previousExperience\":5,\"previousLevel\":1,\"currentExperience\":25,\"currentLevel\":1,\"seeds\":{\"source\":\"battle\",\"receiptId\":\"battle-dc8b3621-93ed-493f-aef9-3a99d15e7929\",\"itemId\":\"seed:carrot\",\"quantity\":2}}}",
+                  "updated_at": "2026-10-26T00:33:32.702Z"
+                },
+                {
+                  "id": "online-d79b783a-b5a5-4715-8e58-ba95483b2d67",
+                  "status": "finished",
+                  "room_id": "d79b783a-b5a5-4715-8e58-ba95483b2d67",
+                  "revision": 1,
+                  "data_json": "{\"id\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"mode\":\"friend\",\"status\":\"finished\",\"startedAt\":\"2026-10-25T21:31:03.589952+00:00\",\"endedAt\":\"2026-10-25T21:49:00.381325+00:00\",\"updatedAt\":\"2026-10-25T21:49:00.381325+00:00\",\"player\":{\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"petName\":\"小狐\",\"element\":\"water\",\"level\":1,\"appearance2d\":\"builtin:lingjing-xiaohu-v1\",\"resourceRef\":\"builtin:lingjing-xiaohu-v1\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"}},\"enemy\":{\"petId\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"petName\":\"小狐\",\"element\":\"water\",\"level\":1,\"appearance2d\":\"builtin:lingjing-xiaohu-v1\",\"resourceRef\":\"builtin:lingjing-xiaohu-v1\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"}},\"side\":\"host\",\"room\":{\"id\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"room_code\":\"1968AE7891\",\"host_user_id\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"guest_user_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"host_account\":\"uat_1025_b09_28e3d0\",\"guest_account\":\"uat_1025_a_9e486a\",\"host_pet_id\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"guest_pet_id\":\"pet-97410828-fdf6-4253-8246-4c5f389d8fba\",\"host_pet_name\":\"小狐\",\"guest_pet_name\":\"小狐\",\"host_resource_id\":\"builtin:lingjing-xiaohu-v1\",\"guest_resource_id\":\"builtin:lingjing-xiaohu-v1\",\"host_pet_level\":1,\"guest_pet_level\":1,\"host_element\":\"water\",\"guest_element\":\"water\",\"host_hp\":0,\"guest_hp\":110,\"host_anger\":60,\"guest_anger\":5,\"host_statuses\":[],\"guest_statuses\":[],\"host_free_dodge_used\":false,\"guest_free_dodge_used\":false,\"status\":\"finished\",\"current_round\":13,\"last_resolved_round\":12,\"revision\":14,\"winner_side\":\"guest\",\"rules_version\":\"five-elements-standard-v1\",\"core_version\":\"five-elements-standard-v1/2026-10-25\",\"invitation_id\":\"d9946730-4bf1-441c-b8f3-4a6d504b1b55\",\"invited_user_id\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"created_at\":\"2026-10-25T21:31:03.589952+00:00\",\"updated_at\":\"2026-10-25T21:49:00.381325+00:00\",\"authority\":\"live\",\"protocolVersion\":2},\"snapshot\":{\"round\":12,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":0,\"maxHp\":120,\"anger\":60,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}},\"rounds\":[{\"round\":1,\"actions\":{\"player\":\"normal_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":10},\"directDamage\":{\"player\":10,\"enemy\":10},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":110,\"enemy\":110},\"angerAfter\":{\"player\":5,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[],\"state\":{\"round\":1,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":2,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":100,\"enemy\":110},\"angerAfter\":{\"player\":10,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":2,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":100,\"maxHp\":120,\"anger\":10,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":3,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":90,\"enemy\":110},\"angerAfter\":{\"player\":15,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":3,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":90,\"maxHp\":120,\"anger\":15,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":4,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":80,\"enemy\":110},\"angerAfter\":{\"player\":20,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":4,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":80,\"maxHp\":120,\"anger\":20,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":5,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":70,\"enemy\":110},\"angerAfter\":{\"player\":25,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":5,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":70,\"maxHp\":120,\"anger\":25,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":6,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":60,\"enemy\":110},\"angerAfter\":{\"player\":30,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":6,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":60,\"maxHp\":120,\"anger\":30,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":7,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":50,\"enemy\":110},\"angerAfter\":{\"player\":35,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":7,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":50,\"maxHp\":120,\"anger\":35,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":8,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":40,\"enemy\":110},\"angerAfter\":{\"player\":40,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":8,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":40,\"maxHp\":120,\"anger\":40,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":9,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":30,\"enemy\":110},\"angerAfter\":{\"player\":45,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":9,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":30,\"maxHp\":120,\"anger\":45,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":10,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":20,\"enemy\":110},\"angerAfter\":{\"player\":50,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":10,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":20,\"maxHp\":120,\"anger\":50,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":11,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":10,\"enemy\":110},\"angerAfter\":{\"player\":55,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":null,\"notes\":[\"host action missed\"],\"state\":{\"round\":11,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":10,\"maxHp\":120,\"anger\":55,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}},{\"round\":12,\"actions\":{\"player\":\"element_attack\",\"enemy\":\"normal_attack\"},\"damageTaken\":{\"player\":10,\"enemy\":0},\"directDamage\":{\"player\":10,\"enemy\":0},\"dotDamageEvents\":{\"player\":[],\"enemy\":[]},\"healEvents\":{\"player\":[],\"enemy\":[]},\"hpAfter\":{\"player\":0,\"enemy\":110},\"angerAfter\":{\"player\":60,\"enemy\":5},\"statusesAfter\":{\"player\":[],\"enemy\":[]},\"winner\":\"enemy\",\"notes\":[\"host action missed\"],\"state\":{\"round\":12,\"player\":{\"id\":\"player\",\"element\":\"water\",\"hp\":0,\"maxHp\":120,\"anger\":60,\"freeDodgeUsed\":false,\"statuses\":[]},\"enemy\":{\"id\":\"enemy\",\"element\":\"water\",\"hp\":110,\"maxHp\":120,\"anger\":5,\"freeDodgeUsed\":false,\"statuses\":[]}}}],\"winner\":\"enemy\",\"pendingAction\":null,\"historyComplete\":true,\"rules\":{\"id\":\"five-elements-standard-v1\",\"label\":\"标准五行对战\",\"vitalPolicy\":\"normalized\",\"maxHp\":120,\"maxAnger\":100,\"companionStatsApplied\":false,\"baseDamage\":{\"normal_attack\":10,\"element_attack\":12,\"dodge\":0,\"ultimate\":20},\"ultimateAnger\":50,\"ultimateCost\":50,\"ultimateHeal\":20,\"dodgeMaxCost\":20,\"dodgeRefund\":30,\"advantage\":{\"metal\":\"wood\",\"wood\":\"earth\",\"earth\":\"water\",\"water\":\"fire\",\"fire\":\"metal\"},\"elementEffects\":{\"metal\":{\"label\":\"易伤\",\"description\":\"每层受伤×1.5，最多5层\"},\"wood\":{\"label\":\"寄生\",\"description\":\"每层回合末吸取2生命，最多5层\"},\"earth\":{\"label\":\"迟钝\",\"description\":\"每层伤害×0.5，最多5层\"},\"water\":{\"label\":\"降怒\",\"description\":\"命中后对方怒气向下取半，不增加受击怒气\"},\"fire\":{\"label\":\"燃烧\",\"description\":\"回合末按当前生命8%×层数伤害，最多5层\"}}},\"context\":{\"authority\":\"supabase\",\"cloudUserId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"coreVersion\":\"five-elements-standard-v1/2026-10-25\"},\"reward\":{\"actionId\":\"battle:d79b783a-b5a5-4715-8e58-ba95483b2d67:account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"sessionId\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"mode\":\"friend\",\"won\":false,\"experience\":5,\"applied\":true,\"duplicate\":false,\"previousExperience\":0,\"previousLevel\":1,\"currentExperience\":5,\"currentLevel\":1,\"seeds\":{\"source\":\"battle\",\"receiptId\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"itemId\":\"seed:tomato\",\"quantity\":2}},\"reportId\":\"online-d79b783a-b5a5-4715-8e58-ba95483b2d67\"}",
+                  "updated_at": "2026-10-25T21:49:00.381325+00:00"
+                }
+              ]
+            },
+            "version": 1
+          },
+          "garden": {
+            "data": {
+              "tables": {
+                "garden_items": [
+                  {
+                    "item_id": "seed:carrot",
+                    "quantity": 3,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "item_id": "seed:tomato",
+                    "quantity": 4,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "item_id": "seed:berry",
+                    "quantity": 2,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "item_id": "seed:rice",
+                    "quantity": 1,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "item_id": "carrot",
+                    "quantity": 3,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "item_id": "rice",
+                    "quantity": 1,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "item_id": "cooked_rice",
+                    "quantity": 1,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  }
+                ],
+                "garden_plots": [
+                  {
+                    "plot_id": "plot-1",
+                    "revision": 2,
+                    "crop_type": null,
+                    "matures_at": null,
+                    "planted_at": null,
+                    "yield_quantity": 0,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "plot_id": "plot-2",
+                    "revision": 2,
+                    "crop_type": null,
+                    "matures_at": null,
+                    "planted_at": null,
+                    "yield_quantity": 0,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "plot_id": "plot-3",
+                    "revision": 0,
+                    "crop_type": null,
+                    "matures_at": null,
+                    "planted_at": null,
+                    "yield_quantity": 0,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "plot_id": "plot-4",
+                    "revision": 0,
+                    "crop_type": null,
+                    "matures_at": null,
+                    "planted_at": null,
+                    "yield_quantity": 0,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "plot_id": "plot-5",
+                    "revision": 0,
+                    "crop_type": null,
+                    "matures_at": null,
+                    "planted_at": null,
+                    "yield_quantity": 0,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "plot_id": "plot-6",
+                    "revision": 0,
+                    "crop_type": null,
+                    "matures_at": null,
+                    "planted_at": null,
+                    "yield_quantity": 0,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  }
+                ],
+                "garden_events": [
+                  {
+                    "kind": "starter",
+                    "delta": 2,
+                    "pet_id": null,
+                    "balance": 2,
+                    "item_id": "seed:carrot",
+                    "event_id": "96ea349f-2300-4e23-a1ff-97b32d11aa8c",
+                    "action_id": "battle-seeds:friend:d79b783a-b5a5-4715-8e58-ba95483b2d67",
+                    "created_at": 1792964940381,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "kind": "starter",
+                    "delta": 2,
+                    "pet_id": null,
+                    "balance": 2,
+                    "item_id": "seed:tomato",
+                    "event_id": "5db8b0c8-5ed8-402e-97ba-0a653d2cc1d8",
+                    "action_id": "battle-seeds:friend:d79b783a-b5a5-4715-8e58-ba95483b2d67",
+                    "created_at": 1792964940381,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "kind": "starter",
+                    "delta": 2,
+                    "pet_id": null,
+                    "balance": 2,
+                    "item_id": "seed:berry",
+                    "event_id": "dab7b464-b98f-4cf6-bd81-9425f42c5e24",
+                    "action_id": "battle-seeds:friend:d79b783a-b5a5-4715-8e58-ba95483b2d67",
+                    "created_at": 1792964940381,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "kind": "starter",
+                    "delta": 2,
+                    "pet_id": null,
+                    "balance": 2,
+                    "item_id": "seed:rice",
+                    "event_id": "06f553f1-93cf-4820-84c8-9c11d254aa4d",
+                    "action_id": "battle-seeds:friend:d79b783a-b5a5-4715-8e58-ba95483b2d67",
+                    "created_at": 1792964940381,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "kind": "reward",
+                    "delta": 2,
+                    "pet_id": null,
+                    "balance": 4,
+                    "item_id": "seed:tomato",
+                    "event_id": "2e6a88e9-5668-4828-87aa-f2e4ae713487",
+                    "action_id": "battle-seeds:friend:d79b783a-b5a5-4715-8e58-ba95483b2d67",
+                    "created_at": 1792964940381,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "kind": "reward",
+                    "delta": 2,
+                    "pet_id": null,
+                    "balance": 4,
+                    "item_id": "seed:carrot",
+                    "event_id": "c176326a-f187-4f1b-93dd-31db80ec6e9a",
+                    "action_id": "battle-seeds:training:battle-dc8b3621-93ed-493f-aef9-3a99d15e7929",
+                    "created_at": 1792974812702,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "kind": "plant",
+                    "delta": -1,
+                    "pet_id": null,
+                    "balance": 1,
+                    "item_id": "seed:rice",
+                    "event_id": "4afeaaa3-f642-44a0-a484-8ea3bb8c63f6",
+                    "action_id": "623bbc0b-934c-4cee-900d-baa42484954c",
+                    "created_at": 1793031807676,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "kind": "plant",
+                    "delta": -1,
+                    "pet_id": null,
+                    "balance": 3,
+                    "item_id": "seed:carrot",
+                    "event_id": "58772959-d057-488f-9d63-4ae2d1397bf6",
+                    "action_id": "ea8e7e8d-1750-436a-9891-625c8dbf18bc",
+                    "created_at": 1793031935871,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "kind": "harvest",
+                    "delta": 3,
+                    "pet_id": null,
+                    "balance": 3,
+                    "item_id": "carrot",
+                    "event_id": "fafcade6-3f6a-4efd-aa5e-027c67c8d7a1",
+                    "action_id": "0f5c5d1c-6c3b-48ec-ae58-67c46e84ce37",
+                    "created_at": 1793033028913,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "kind": "harvest",
+                    "delta": 2,
+                    "pet_id": null,
+                    "balance": 2,
+                    "item_id": "rice",
+                    "event_id": "12926b5e-c1c5-4ab6-ad4c-c6009db9ab5b",
+                    "action_id": "9f5b55c2-2de5-48af-a989-a11043074772",
+                    "created_at": 1793033754548,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "kind": "craft",
+                    "delta": -1,
+                    "pet_id": null,
+                    "balance": 1,
+                    "item_id": "rice",
+                    "event_id": "a4159d13-ed1a-4e5c-911d-4188ffe1a122",
+                    "action_id": "78fb8ef5-c7a4-4a89-be2f-a70fb13540cc",
+                    "created_at": 1793034169339,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "kind": "craft",
+                    "delta": 1,
+                    "pet_id": null,
+                    "balance": 1,
+                    "item_id": "cooked_rice",
+                    "event_id": "80ecc3d3-f7b4-4040-8781-a8ccac4b1b5c",
+                    "action_id": "78fb8ef5-c7a4-4a89-be2f-a70fb13540cc",
+                    "created_at": 1793034169339,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  }
+                ],
+                "garden_outbox": [
+                  {
+                    "status": "synced",
+                    "attempts": 0,
+                    "action_id": "battle-seeds:friend:d79b783a-b5a5-4715-8e58-ba95483b2d67",
+                    "created_at": 1792964940381,
+                    "last_error": null,
+                    "payload_json": "{\"kind\":\"reward\",\"input\":{\"actionId\":\"battle-seeds:friend:d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"source\":\"battle\",\"receiptId\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\"},\"result\":{\"ok\":true,\"data\":{\"source\":\"battle\",\"receiptId\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"itemId\":\"seed:tomato\",\"quantity\":2},\"revision\":1,\"replayed\":false}}",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "status": "synced",
+                    "attempts": 0,
+                    "action_id": "battle-seeds:training:battle-dc8b3621-93ed-493f-aef9-3a99d15e7929",
+                    "created_at": 1792974812702,
+                    "last_error": null,
+                    "payload_json": "{\"kind\":\"reward\",\"input\":{\"actionId\":\"battle-seeds:training:battle-dc8b3621-93ed-493f-aef9-3a99d15e7929\",\"source\":\"battle\",\"receiptId\":\"battle-dc8b3621-93ed-493f-aef9-3a99d15e7929\"},\"result\":{\"ok\":true,\"data\":{\"source\":\"battle\",\"receiptId\":\"battle-dc8b3621-93ed-493f-aef9-3a99d15e7929\",\"itemId\":\"seed:carrot\",\"quantity\":2},\"revision\":2,\"replayed\":false}}",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "status": "synced",
+                    "attempts": 0,
+                    "action_id": "623bbc0b-934c-4cee-900d-baa42484954c",
+                    "created_at": 1793031807676,
+                    "last_error": null,
+                    "payload_json": "{\"kind\":\"plant\",\"input\":{\"plotId\":\"plot-1\",\"cropType\":\"rice\",\"sessionOwnerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"actionId\":\"623bbc0b-934c-4cee-900d-baa42484954c\",\"expectedRevision\":2},\"result\":{\"ok\":true,\"data\":{\"plotId\":\"plot-1\",\"cropType\":\"rice\",\"plantedAt\":1793031807676,\"maturesAt\":1793033307676,\"yieldQuantity\":2},\"revision\":3,\"replayed\":false}}",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "status": "synced",
+                    "attempts": 0,
+                    "action_id": "ea8e7e8d-1750-436a-9891-625c8dbf18bc",
+                    "created_at": 1793031935871,
+                    "last_error": null,
+                    "payload_json": "{\"kind\":\"plant\",\"input\":{\"plotId\":\"plot-2\",\"cropType\":\"carrot\",\"sessionOwnerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"actionId\":\"ea8e7e8d-1750-436a-9891-625c8dbf18bc\",\"expectedRevision\":3},\"result\":{\"ok\":true,\"data\":{\"plotId\":\"plot-2\",\"cropType\":\"carrot\",\"plantedAt\":1793031935871,\"maturesAt\":1793032535871,\"yieldQuantity\":3},\"revision\":4,\"replayed\":false}}",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "status": "synced",
+                    "attempts": 0,
+                    "action_id": "0f5c5d1c-6c3b-48ec-ae58-67c46e84ce37",
+                    "created_at": 1793033028913,
+                    "last_error": null,
+                    "payload_json": "{\"kind\":\"harvest\",\"input\":{\"plotIds\":[\"plot-2\"],\"sessionOwnerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"actionId\":\"0f5c5d1c-6c3b-48ec-ae58-67c46e84ce37\",\"expectedRevision\":4},\"result\":{\"ok\":true,\"data\":{\"harvested\":[{\"plotId\":\"plot-2\",\"itemId\":\"carrot\",\"quantity\":3}]},\"revision\":5,\"replayed\":false}}",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "status": "synced",
+                    "attempts": 0,
+                    "action_id": "9f5b55c2-2de5-48af-a989-a11043074772",
+                    "created_at": 1793033754548,
+                    "last_error": null,
+                    "payload_json": "{\"kind\":\"harvest\",\"input\":{\"plotIds\":[\"plot-1\"],\"sessionOwnerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"actionId\":\"9f5b55c2-2de5-48af-a989-a11043074772\",\"expectedRevision\":5},\"result\":{\"ok\":true,\"data\":{\"harvested\":[{\"plotId\":\"plot-1\",\"itemId\":\"rice\",\"quantity\":2}]},\"revision\":6,\"replayed\":false}}",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "status": "synced",
+                    "attempts": 0,
+                    "action_id": "78fb8ef5-c7a4-4a89-be2f-a70fb13540cc",
+                    "created_at": 1793034169339,
+                    "last_error": null,
+                    "payload_json": "{\"kind\":\"craft\",\"input\":{\"recipeId\":\"cooked_rice\",\"quantity\":1,\"sessionOwnerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"actionId\":\"78fb8ef5-c7a4-4a89-be2f-a70fb13540cc\",\"expectedRevision\":6},\"result\":{\"ok\":true,\"data\":{\"recipeId\":\"cooked_rice\",\"itemId\":\"cooked_rice\",\"quantity\":1},\"revision\":7,\"replayed\":false}}",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  }
+                ],
+                "garden_actions": [
+                  {
+                    "kind": "reward",
+                    "action_id": "battle-seeds:friend:d79b783a-b5a5-4715-8e58-ba95483b2d67",
+                    "created_at": 1792964940381,
+                    "result_json": "{\"ok\":true,\"data\":{\"source\":\"battle\",\"receiptId\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"itemId\":\"seed:tomato\",\"quantity\":2},\"revision\":1,\"replayed\":false}",
+                    "request_hash": "4bb1c7c09e8e63a21386ddd06fe6b5993fe9144eb292b6ef7269ee379b5cf66d",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "kind": "reward",
+                    "action_id": "battle-seeds:training:battle-dc8b3621-93ed-493f-aef9-3a99d15e7929",
+                    "created_at": 1792974812702,
+                    "result_json": "{\"ok\":true,\"data\":{\"source\":\"battle\",\"receiptId\":\"battle-dc8b3621-93ed-493f-aef9-3a99d15e7929\",\"itemId\":\"seed:carrot\",\"quantity\":2},\"revision\":2,\"replayed\":false}",
+                    "request_hash": "b7b39b5c4fde29b577b4c2ec1fac4198ee285beb6d68be291f928253fb5f5a98",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "kind": "plant",
+                    "action_id": "623bbc0b-934c-4cee-900d-baa42484954c",
+                    "created_at": 1793031807676,
+                    "result_json": "{\"ok\":true,\"data\":{\"plotId\":\"plot-1\",\"cropType\":\"rice\",\"plantedAt\":1793031807676,\"maturesAt\":1793033307676,\"yieldQuantity\":2},\"revision\":3,\"replayed\":false}",
+                    "request_hash": "0c35b867aef1084ad9329a616c7739748374cc06e25d194ce9eb5f8578798d15",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "kind": "plant",
+                    "action_id": "ea8e7e8d-1750-436a-9891-625c8dbf18bc",
+                    "created_at": 1793031935871,
+                    "result_json": "{\"ok\":true,\"data\":{\"plotId\":\"plot-2\",\"cropType\":\"carrot\",\"plantedAt\":1793031935871,\"maturesAt\":1793032535871,\"yieldQuantity\":3},\"revision\":4,\"replayed\":false}",
+                    "request_hash": "4ff05ed146b8e91b9fe6cde5a53e7a82b456f4e7cd1811c35701871915603531",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "kind": "harvest",
+                    "action_id": "0f5c5d1c-6c3b-48ec-ae58-67c46e84ce37",
+                    "created_at": 1793033028913,
+                    "result_json": "{\"ok\":true,\"data\":{\"harvested\":[{\"plotId\":\"plot-2\",\"itemId\":\"carrot\",\"quantity\":3}]},\"revision\":5,\"replayed\":false}",
+                    "request_hash": "6738391befe69fe7fac08a5052bdbb06e75fb74eaaa7f3c49d0078d2329035ba",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "kind": "harvest",
+                    "action_id": "9f5b55c2-2de5-48af-a989-a11043074772",
+                    "created_at": 1793033754548,
+                    "result_json": "{\"ok\":true,\"data\":{\"harvested\":[{\"plotId\":\"plot-1\",\"itemId\":\"rice\",\"quantity\":2}]},\"revision\":6,\"replayed\":false}",
+                    "request_hash": "cc4af8a3e7cc41e92bd64deffd8014d9ab005d2822a6c62ea0feb1760c3bf259",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "kind": "craft",
+                    "action_id": "78fb8ef5-c7a4-4a89-be2f-a70fb13540cc",
+                    "created_at": 1793034169339,
+                    "result_json": "{\"ok\":true,\"data\":{\"recipeId\":\"cooked_rice\",\"itemId\":\"cooked_rice\",\"quantity\":1},\"revision\":7,\"replayed\":false}",
+                    "request_hash": "b20033690d03a984ca2e18d211672d81fa7c51d0b35cf2da59fdb00292920309",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  }
+                ],
+                "garden_accounts": [
+                  {
+                    "revision": 7,
+                    "initialized_at": 1792964940381,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  }
+                ],
+                "garden_garrisons": [],
+                "garden_reward_receipts": [
+                  {
+                    "source": "battle",
+                    "action_id": "battle-seeds:friend:d79b783a-b5a5-4715-8e58-ba95483b2d67",
+                    "receipt_id": "d79b783a-b5a5-4715-8e58-ba95483b2d67",
+                    "result_json": "{\"source\":\"battle\",\"receiptId\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"itemId\":\"seed:tomato\",\"quantity\":2}",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "source": "battle",
+                    "action_id": "battle-seeds:training:battle-dc8b3621-93ed-493f-aef9-3a99d15e7929",
+                    "receipt_id": "battle-dc8b3621-93ed-493f-aef9-3a99d15e7929",
+                    "result_json": "{\"source\":\"battle\",\"receiptId\":\"battle-dc8b3621-93ed-493f-aef9-3a99d15e7929\",\"itemId\":\"seed:carrot\",\"quantity\":2}",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  }
+                ],
+                "garden_territory_attempts": [],
+                "garden_territory_challenges": []
+              },
+              "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+              "territoryArchive": {
+                "logs": [],
+                "territories": []
+              }
+            },
+            "version": 1
+          },
+          "settings": {
+            "data": {
+              "sync": {
+                "enabled": true
+              },
+              "desktop": {
+                "volume": 70,
+                "alwaysOnTop": true,
+                "closeToTray": true,
+                "clickThrough": true,
+                "launchAtLogin": false,
+                "companionLimit": 3,
+                "hideInFullscreen": true,
+                "animationsEnabled": true,
+                "interactionSounds": true
+              },
+              "privacy": {
+                "locationAllowed": false,
+                "emotionStatistics": false,
+                "locationOnlyWhileExploring": true
+              },
+              "notifications": {
+                "garden": true,
+                "battles": true,
+                "enabled": true,
+                "quietEnd": "08:00",
+                "companions": true,
+                "quietStart": "22:00",
+                "quietEnabled": true
+              }
+            },
+            "version": 1
+          },
+          "companions": {
+            "data": {
+              "tables": {
+                "companion_pets": [
+                  {
+                    "pet_id": "pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a",
+                    "revision": 3,
+                    "data_json": "{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"2EC1523D\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":25,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":1,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":800,\"y\":520,\"displayId\":null}},\"revision\":3,\"createdAt\":\"2026-10-25T21:01:31.876Z\",\"updatedAt\":\"2026-10-26T00:33:32.702Z\"}",
+                    "created_at": "2026-10-25T21:01:31.876Z",
+                    "updated_at": "2026-10-26T00:33:32.702Z",
+                    "template_id": "animal-white-fox",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "pet_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+                    "revision": 5,
+                    "data_json": "{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"74C6A89C\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":74,\"y\":537,\"displayId\":\"2568730015\"}},\"revision\":5,\"createdAt\":\"2026-10-25T16:15:42.590Z\",\"updatedAt\":\"2026-10-26T00:30:03.948Z\"}",
+                    "created_at": "2026-10-25T16:15:42.590Z",
+                    "updated_at": "2026-10-26T00:30:03.948Z",
+                    "template_id": "animal-white-fox",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "pet_id": "pet-825f6af9-402b-4244-988a-481563b7a587",
+                    "revision": 1,
+                    "data_json": "{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-825f6af9-402b-4244-988a-481563b7a587\",\"templateId\":\"animal-earth-pangolin\",\"name\":\"并发验收木鹿乙\",\"serial\":\"825F6AF9\",\"element\":\"earth\",\"resource\":{\"resourceId\":\"builtin:lingjing-yantuan-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":142,\"atk\":24,\"def\":34,\"spd\":11}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":320,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T12:20:31.991Z\",\"updatedAt\":\"2026-10-25T12:20:31.991Z\"}",
+                    "created_at": "2026-10-25T12:20:31.991Z",
+                    "updated_at": "2026-10-25T12:20:31.991Z",
+                    "template_id": "animal-earth-pangolin",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "pet_id": "pet-96de9234-462d-413b-ac72-81cfc1add244",
+                    "revision": 1,
+                    "data_json": "{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-96de9234-462d-413b-ac72-81cfc1add244\",\"templateId\":\"animal-wood-deer\",\"name\":\"并发验收木鹿乙\",\"serial\":\"96DE9234\",\"element\":\"wood\",\"resource\":{\"resourceId\":\"builtin:lingjing-qingya-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":130,\"atk\":26,\"def\":26,\"spd\":18}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":80,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T12:07:23.190Z\",\"updatedAt\":\"2026-10-25T12:07:23.190Z\"}",
+                    "created_at": "2026-10-25T12:07:23.190Z",
+                    "updated_at": "2026-10-25T12:07:23.190Z",
+                    "template_id": "animal-wood-deer",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  }
+                ],
+                "companion_actions": [
+                  {
+                    "action_id": "1eec55c0-8531-4f14-a3de-1c4bb7f5131f",
+                    "operation": "select",
+                    "created_at": "2026-10-25T18:49:18.629Z",
+                    "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"74C6A89C\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":560,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T16:15:42.590Z\",\"updatedAt\":\"2026-10-25T16:15:42.590Z\"},\"selections\":{\"chatPetId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"battlePetId\":null,\"guardPetId\":null}},\"revision\":4,\"duplicate\":false}",
+                    "request_hash": "ff75154cd61c34599a2712cb704c308b18e7e1da4e4aefb5489ea0b593cdaf0c",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "action_id": "86110570-73a9-40db-9a45-75c56c06e3d5",
+                    "operation": "select",
+                    "created_at": "2026-10-25T21:10:41.265Z",
+                    "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"2EC1523D\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":800,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T21:01:31.876Z\",\"updatedAt\":\"2026-10-25T21:01:31.876Z\"},\"selections\":{\"chatPetId\":\"pet-96de9234-462d-413b-ac72-81cfc1add244\",\"battlePetId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"guardPetId\":null}},\"revision\":9,\"duplicate\":false}",
+                    "request_hash": "06f7388acff30010109da722c39081d8e24981e2209fbf670381af3d66d9820a",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "action_id": "8f36842e-6dfd-422c-9e61-6e6d2a9c8c27",
+                    "operation": "select",
+                    "created_at": "2026-10-25T19:10:53.344Z",
+                    "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-96de9234-462d-413b-ac72-81cfc1add244\",\"templateId\":\"animal-wood-deer\",\"name\":\"并发验收木鹿乙\",\"serial\":\"96DE9234\",\"element\":\"wood\",\"resource\":{\"resourceId\":\"builtin:lingjing-qingya-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":130,\"atk\":26,\"def\":26,\"spd\":18}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":80,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T12:07:23.190Z\",\"updatedAt\":\"2026-10-25T12:07:23.190Z\"},\"selections\":{\"chatPetId\":\"pet-96de9234-462d-413b-ac72-81cfc1add244\",\"battlePetId\":null,\"guardPetId\":null}},\"revision\":5,\"duplicate\":false}",
+                    "request_hash": "89ef00098395529fc73857b9df53581ac0d52a82694c99f78b49aa0cec9dd8e0",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "action_id": "9b87c36b-e8aa-401d-b80f-81c878761a2e",
+                    "operation": "adopt",
+                    "created_at": "2026-10-25T21:01:31.876Z",
+                    "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"2EC1523D\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":800,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T21:01:31.876Z\",\"updatedAt\":\"2026-10-25T21:01:31.876Z\"},\"selections\":{\"chatPetId\":\"pet-96de9234-462d-413b-ac72-81cfc1add244\",\"battlePetId\":null,\"guardPetId\":null}},\"revision\":8,\"duplicate\":false}",
+                    "request_hash": "0208fff314609d812bfb92250fc0b78676872aafc19a81b6305d699c44973611",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "action_id": "battle:battle-dc8b3621-93ed-493f-aef9-3a99d15e7929:account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+                    "operation": "growth",
+                    "created_at": "2026-10-26T00:33:32.702Z",
+                    "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"2EC1523D\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":25,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":1,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":800,\"y\":520,\"displayId\":null}},\"revision\":3,\"createdAt\":\"2026-10-25T21:01:31.876Z\",\"updatedAt\":\"2026-10-26T00:33:32.702Z\"},\"selections\":{\"chatPetId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"battlePetId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"guardPetId\":null},\"battleReward\":{\"actionId\":\"battle:battle-dc8b3621-93ed-493f-aef9-3a99d15e7929:account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"sessionId\":\"battle-dc8b3621-93ed-493f-aef9-3a99d15e7929\",\"mode\":\"training\",\"won\":true,\"experience\":20,\"applied\":true,\"duplicate\":false,\"previousExperience\":5,\"previousLevel\":1,\"currentExperience\":25,\"currentLevel\":1}},\"revision\":15,\"duplicate\":false}",
+                    "request_hash": "35aae6afa6c8298e092f05f4c4d737d6e93989871496fc51e41aee1cc47de422",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "action_id": "battle:d79b783a-b5a5-4715-8e58-ba95483b2d67:account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+                    "operation": "growth",
+                    "created_at": "2026-10-25T21:49:00.381Z",
+                    "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"2EC1523D\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":5,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":800,\"y\":520,\"displayId\":null}},\"revision\":2,\"createdAt\":\"2026-10-25T21:01:31.876Z\",\"updatedAt\":\"2026-10-25T21:49:00.381Z\"},\"selections\":{\"chatPetId\":\"pet-96de9234-462d-413b-ac72-81cfc1add244\",\"battlePetId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"guardPetId\":null},\"battleReward\":{\"actionId\":\"battle:d79b783a-b5a5-4715-8e58-ba95483b2d67:account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"sessionId\":\"d79b783a-b5a5-4715-8e58-ba95483b2d67\",\"mode\":\"friend\",\"won\":false,\"experience\":5,\"applied\":true,\"duplicate\":false,\"previousExperience\":0,\"previousLevel\":1,\"currentExperience\":5,\"currentLevel\":1}},\"revision\":10,\"duplicate\":false}",
+                    "request_hash": "fdbee4dbecd068248ac081f37d7efb183f37de5b9df6b79af058d0751a3f0135",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "action_id": "dc5a9f41-06fb-4678-afd1-f1993fad80c2:selection",
+                    "operation": "select",
+                    "created_at": "2026-10-26T00:30:37.504Z",
+                    "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"2EC1523D\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":5,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":800,\"y\":520,\"displayId\":null}},\"revision\":2,\"createdAt\":\"2026-10-25T21:01:31.876Z\",\"updatedAt\":\"2026-10-25T21:49:00.381Z\"},\"selections\":{\"chatPetId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"battlePetId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"guardPetId\":null}},\"revision\":14,\"duplicate\":false}",
+                    "request_hash": "1e6ae658f58e7215110128a46246a5aa521b19abf21c7d8bb9911f6a1436a6f4",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "action_id": "desktop-position-19078d84-8d69-4b69-8930-b61b0f466d2c",
+                    "operation": "desktop",
+                    "created_at": "2026-10-25T19:44:28.465Z",
+                    "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"74C6A89C\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":560,\"y\":520,\"displayId\":\"2568730015\"}},\"revision\":2,\"createdAt\":\"2026-10-25T16:15:42.590Z\",\"updatedAt\":\"2026-10-25T19:44:28.465Z\"},\"selections\":{\"chatPetId\":\"pet-96de9234-462d-413b-ac72-81cfc1add244\",\"battlePetId\":null,\"guardPetId\":null}},\"revision\":6,\"duplicate\":false}",
+                    "request_hash": "55158bb234c9f74b337db72747f64e47c95f2388b14ffe522c8337ba728e78ed",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "action_id": "desktop-position-2b04c9d9-5e19-4874-ba8f-9600ff008c0a",
+                    "operation": "desktop",
+                    "created_at": "2026-10-26T00:30:03.948Z",
+                    "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"74C6A89C\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":74,\"y\":537,\"displayId\":\"2568730015\"}},\"revision\":5,\"createdAt\":\"2026-10-25T16:15:42.590Z\",\"updatedAt\":\"2026-10-26T00:30:03.948Z\"},\"selections\":{\"chatPetId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"battlePetId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"guardPetId\":null}},\"revision\":13,\"duplicate\":false}",
+                    "request_hash": "1d27062c2b622b8cacb19e76b0d1d2a7fd15194128f9f1959f95c50e6dc1f006",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "action_id": "desktop-position-59ec527d-803e-4024-8bee-74dc27b5e399",
+                    "operation": "desktop",
+                    "created_at": "2026-10-25T23:49:45.918Z",
+                    "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"74C6A89C\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":560,\"y\":520,\"displayId\":\"2568730015\"}},\"revision\":4,\"createdAt\":\"2026-10-25T16:15:42.590Z\",\"updatedAt\":\"2026-10-25T23:49:45.918Z\"},\"selections\":{\"chatPetId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"battlePetId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"guardPetId\":null}},\"revision\":12,\"duplicate\":false}",
+                    "request_hash": "523860e221a3aca98363f2086ee1c989ac9f08d5ecb48210c0357e0ce43f16af",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "action_id": "desktop-position-f13a530c-8bd0-4763-b97e-aadc73c6558b",
+                    "operation": "desktop",
+                    "created_at": "2026-10-25T19:44:59.637Z",
+                    "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"74C6A89C\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":560,\"y\":520,\"displayId\":\"2568730015\"}},\"revision\":3,\"createdAt\":\"2026-10-25T16:15:42.590Z\",\"updatedAt\":\"2026-10-25T19:44:59.637Z\"},\"selections\":{\"chatPetId\":\"pet-96de9234-462d-413b-ac72-81cfc1add244\",\"battlePetId\":null,\"guardPetId\":null}},\"revision\":7,\"duplicate\":false}",
+                    "request_hash": "d125796c893099d49e241982997802714253dedb7737e0af86b1954b6cc6c92a",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "action_id": "f0318410-35ce-4d07-8da6-4e779f5a3773",
+                    "operation": "select",
+                    "created_at": "2026-10-25T23:42:41.499Z",
+                    "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"74C6A89C\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":560,\"y\":520,\"displayId\":\"2568730015\"}},\"revision\":3,\"createdAt\":\"2026-10-25T16:15:42.590Z\",\"updatedAt\":\"2026-10-25T19:44:59.637Z\"},\"selections\":{\"chatPetId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"battlePetId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"guardPetId\":null}},\"revision\":11,\"duplicate\":false}",
+                    "request_hash": "cd2a65cd6da60eb18f76f56aac7c373d5a515fdf6adc23705da55ee4db5b6f57",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "action_id": "f0f7e8f7-051a-40a2-8ff7-3d9d2dcb4cc8",
+                    "operation": "adopt",
+                    "created_at": "2026-10-25T16:15:42.590Z",
+                    "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"templateId\":\"animal-white-fox\",\"name\":\"小狐\",\"serial\":\"74C6A89C\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-xiaohu-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":true,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":560,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T16:15:42.590Z\",\"updatedAt\":\"2026-10-25T16:15:42.590Z\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":null,\"guardPetId\":null}},\"revision\":3,\"duplicate\":false}",
+                    "request_hash": "70c17b2445feca9ddab3e6067d2508da14d8e348cad7199e206a793b868d2b7f",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "action_id": "qa-counter:bc-3c9f36e0-8254-4f88-aede-5363428a52cc:B",
+                    "operation": "adopt",
+                    "created_at": "2026-10-25T12:07:23.190Z",
+                    "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-96de9234-462d-413b-ac72-81cfc1add244\",\"templateId\":\"animal-wood-deer\",\"name\":\"并发验收木鹿乙\",\"serial\":\"96DE9234\",\"element\":\"wood\",\"resource\":{\"resourceId\":\"builtin:lingjing-qingya-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":130,\"atk\":26,\"def\":26,\"spd\":18}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":80,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T12:07:23.190Z\",\"updatedAt\":\"2026-10-25T12:07:23.190Z\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":null,\"guardPetId\":null}},\"revision\":1,\"duplicate\":false}",
+                    "request_hash": "321d896e62c4a23e451323a8079f95bb7a64f8bd2627eda2bc8adef0670d06e7",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  },
+                  {
+                    "action_id": "qa-counter:bc-lock-a9230b98-2be4-42e4-8f58-3a00aa6bc338:B",
+                    "operation": "adopt",
+                    "created_at": "2026-10-25T12:20:31.991Z",
+                    "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\",\"petId\":\"pet-825f6af9-402b-4244-988a-481563b7a587\",\"templateId\":\"animal-earth-pangolin\",\"name\":\"并发验收木鹿乙\",\"serial\":\"825F6AF9\",\"element\":\"earth\",\"resource\":{\"resourceId\":\"builtin:lingjing-yantuan-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":142,\"atk\":24,\"def\":34,\"spd\":11}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":320,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T12:20:31.991Z\",\"updatedAt\":\"2026-10-25T12:20:31.991Z\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":null,\"guardPetId\":null}},\"revision\":2,\"duplicate\":false}",
+                    "request_hash": "75f568eecf49f509e58010fd240e888845441bf2e69f250feaa98c86932e6838",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  }
+                ],
+                "companion_accounts": [
+                  {
+                    "revision": 15,
+                    "selections_json": "{\"chatPetId\":\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\",\"battlePetId\":\"pet-2ec1523d-1a84-43f5-bfdb-c6f50689fc0a\",\"guardPetId\":null}",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+                    "legacy_imported_at": "2026-10-25T12:07:23.190Z"
+                  }
+                ],
+                "companion_interactions": [],
+                "companion_legacy_archive": [],
+                "companion_capture_receipts": []
+              },
+              "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+              "identityImports": []
+            },
+            "version": 1
+          },
+          "conversations": {
+            "data": {
+              "schema": {
+                "conversation_memories": "id|owner_account_id|pet_id|content|revision|created_at|updated_at",
+                "conversation_messages": "id|owner_account_id|pet_id|action_id|role|content|status|error_code|provider|model|attempt|created_at|updated_at",
+                "conversation_profiles": "owner_account_id|pet_id|persona|reply_style|memory_enabled|pause_while_chatting|use_override|revision|updated_at",
+                "conversation_connections": "owner_account_id|scope|scope_id|provider|base_url|model|context_chars|max_output_tokens|revision|updated_at",
+                "conversation_preferences": "owner_account_id|selected_pet_id"
+              },
+              "tables": {
+                "conversation_memories": [],
+                "conversation_messages": [],
+                "conversation_profiles": [
+                  {
+                    "pet_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+                    "persona": "",
+                    "revision": 2,
+                    "updated_at": 1792955425382,
+                    "reply_style": "natural",
+                    "use_override": 0,
+                    "memory_enabled": 1,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+                    "pause_while_chatting": 1
+                  }
+                ],
+                "conversation_connections": [
+                  {
+                    "model": "模拟验收-DC7-c696c6c03ca2",
+                    "scope": "account",
+                    "base_url": "http://127.0.0.1:56751/v1",
+                    "provider": "openai_compatible",
+                    "revision": 2,
+                    "scope_id": "",
+                    "updated_at": 1792955398970,
+                    "context_chars": 24000,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+                    "max_output_tokens": 512
+                  },
+                  {
+                    "model": "模拟验收-DC7-c696c6c03ca2",
+                    "scope": "pet",
+                    "base_url": "http://127.0.0.1:56751/v1",
+                    "provider": "openai_compatible",
+                    "revision": 2,
+                    "scope_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+                    "updated_at": 1792955419075,
+                    "context_chars": 24000,
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+                    "max_output_tokens": 512
+                  }
+                ],
+                "conversation_preferences": [
+                  {
+                    "selected_pet_id": "pet-96de9234-462d-413b-ac72-81cfc1add244",
+                    "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+                  }
+                ]
+              },
+              "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+            },
+            "version": 1
+          },
+          "character-resources": {
+            "data": {
+              "format": "lingjing-resource-references",
+              "references": [
+                {
+                  "kind": "spritesheet",
+                  "authUserId": "2028f0af-f501-47f5-9abb-de59487dad46",
+                  "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+                  "totalBytes": 1811897,
+                  "contentHash": "1cd0626ea29767476b371519ec4dc00fc43c528bfcd92627166275b937db2060",
+                  "manifestPath": "2028f0af-f501-47f5-9abb-de59487dad46/866b735a-9351-414f-a797-6bab290144c2/c20cd76054654e7af9f67c477b17a7a1d38ad5a9552dd7678cda6661fc4a031f/manifest.json",
+                  "manifestBytes": 7392,
+                  "manifestSha256": "c20cd76054654e7af9f67c477b17a7a1d38ad5a9552dd7678cda6661fc4a031f"
+                },
+                {
+                  "kind": "spritesheet",
+                  "authUserId": "2028f0af-f501-47f5-9abb-de59487dad46",
+                  "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+                  "totalBytes": 2450637,
+                  "contentHash": "09b4b0bd591c07daea0a588386f39cfbe19226fd0d39664bdb8342fc4912fa09",
+                  "manifestPath": "2028f0af-f501-47f5-9abb-de59487dad46/ee33b6a6-2bd1-4d79-bbfe-166498a4950f/dc87deb2e56b1fc7a95ff86e0140b22cb82a00269e010bf441853d8637ecbd92/manifest.json",
+                  "manifestBytes": 7388,
+                  "manifestSha256": "dc87deb2e56b1fc7a95ff86e0140b22cb82a00269e010bf441853d8637ecbd92"
+                }
+              ],
+              "preferences": [
+                {
+                  "actions": {
+                    "eat": "eat",
+                    "hit": "hit",
+                    "idle": "idle",
+                    "walk": "walk",
+                    "wave": "wave",
+                    "blink": "blink",
+                    "skill": "skill",
+                    "sleep": "sleep_seated",
+                    "attack": "attack",
+                    "victory": "victory",
+                    "attack_windup": "attack_windup",
+                    "attack_release": "attack_release"
+                  },
+                  "revision": 3,
+                  "resourceId": "866b735a-9351-414f-a797-6bab290144c2",
+                  "calibration": {
+                    "battle": {
+                      "fps": 0,
+                      "scale": 1,
+                      "anchorX": 0.5,
+                      "anchorY": 0.849609375,
+                      "mirrorX": false,
+                      "rotationDeg": 2,
+                      "verticalOffset": 0
+                    },
+                    "desktop": {
+                      "fps": 0,
+                      "scale": 1.05,
+                      "anchorX": 0.5,
+                      "anchorY": 0.849609375,
+                      "mirrorX": true,
+                      "rotationDeg": 0,
+                      "verticalOffset": 0
+                    }
+                  }
+                },
+                {
+                  "actions": {
+                    "eat": "eat",
+                    "hit": "hit",
+                    "idle": "walk",
+                    "walk": "walk",
+                    "wave": "wave",
+                    "blink": "blink",
+                    "skill": "skill",
+                    "sleep": "sleep",
+                    "attack": "attack",
+                    "victory": "victory",
+                    "attack_windup": "attack_windup",
+                    "attack_release": "attack_release"
+                  },
+                  "revision": 1,
+                  "resourceId": "ee33b6a6-2bd1-4d79-bbfe-166498a4950f",
+                  "calibration": {
+                    "battle": {
+                      "fps": 0,
+                      "scale": 1,
+                      "anchorX": 0.5,
+                      "anchorY": 0.849609375,
+                      "mirrorX": false,
+                      "rotationDeg": 0,
+                      "verticalOffset": 0
+                    },
+                    "desktop": {
+                      "fps": 0,
+                      "scale": 1.06,
+                      "anchorX": 0.5,
+                      "anchorY": 0.849609375,
+                      "mirrorX": true,
+                      "rotationDeg": 0,
+                      "verticalOffset": 0
+                    }
+                  }
+                }
+              ],
+              "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+            },
+            "version": 2
+          }
+        }
+      },
+      "format": "lingjing-account-save",
+      "version": 1,
+      "checksum": "d96ec0d913405cbb927e9df33896a647cb04ab1c09e9eb5e3888f397ea31d40f",
+      "excluded": [
+        "conversation_credentials"
+      ],
+      "identity": {
+        "provider": "runtime",
+        "subjectId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+      },
+      "createdAt": "2026-10-26T17:02:49.686Z",
+      "provenance": {
+        "mode": "live"
+      },
+      "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+    },
+    "revision": 28
+  },
+  "personal": [
+    {
+      "id": "[\"account\",\"\"]",
+      "deleted": false,
+      "document": {
+        "model": "模拟验收-DC7-c696c6c03ca2",
+        "scope": "account",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "provider": "openai_compatible",
+        "revision": 2,
+        "scope_id": "",
+        "updated_at": 1792955398970,
+        "context_chars": 24000,
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "max_output_tokens": 512
+      },
+      "position": 3,
+      "revision": 1,
+      "collection": "conversation_connections",
+      "changeSequence": 4
+    },
+    {
+      "id": "[\"pet\",\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\"]",
+      "deleted": false,
+      "document": {
+        "model": "模拟验收-DC7-c696c6c03ca2",
+        "scope": "pet",
+        "base_url": "http://127.0.0.1:56751/v1",
+        "provider": "openai_compatible",
+        "revision": 2,
+        "scope_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "updated_at": 1792955419075,
+        "context_chars": 24000,
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "max_output_tokens": 512
+      },
+      "position": 5,
+      "revision": 1,
+      "collection": "conversation_connections",
+      "changeSequence": 6
+    },
+    {
+      "id": "[\"account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6\"]",
+      "deleted": false,
+      "document": {
+        "selected_pet_id": "pet-96de9234-462d-413b-ac72-81cfc1add244",
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+      },
+      "position": 7,
+      "revision": 1,
+      "collection": "conversation_preferences",
+      "changeSequence": 8
+    },
+    {
+      "id": "[\"pet-74c6a89c-63e6-461a-8583-e591cf440e75\"]",
+      "deleted": false,
+      "document": {
+        "pet_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "persona": "",
+        "revision": 2,
+        "updated_at": 1792955425382,
+        "reply_style": "natural",
+        "use_override": 0,
+        "memory_enabled": 1,
+        "owner_account_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+        "pause_while_chatting": 1
+      },
+      "position": 1,
+      "revision": 1,
+      "collection": "conversation_profiles",
+      "changeSequence": 2
+    }
+  ],
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+}

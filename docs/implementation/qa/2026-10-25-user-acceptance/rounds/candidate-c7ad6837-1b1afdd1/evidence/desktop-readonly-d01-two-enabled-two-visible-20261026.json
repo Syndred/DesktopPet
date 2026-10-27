@@ -1,0 +1,355 @@
+{
+  "at": "2026-10-26T09:55:01.011Z",
+  "method": "Readonly public accounts:settingsGet/companions:list/app:info plus public DOM/canvas geometry; exact original localhost LocalA; no input or mutation",
+  "state": {
+    "route": "#/companions",
+    "build": "c7ad6837e1569dafd942528f375062debf714c2b",
+    "scenario": {
+      "id": "unified-battle",
+      "runId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+      "provenance": "simulated",
+      "isolated": true
+    },
+    "user": {
+      "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+      "provider": "local"
+    },
+    "settings": {
+      "ok": true,
+      "data": {
+        "document": {
+          "desktop": {
+            "alwaysOnTop": true,
+            "clickThrough": true,
+            "launchAtLogin": false,
+            "closeToTray": true,
+            "companionLimit": 4,
+            "interactionSounds": true,
+            "volume": 100,
+            "hideInFullscreen": true,
+            "animationsEnabled": true
+          },
+          "notifications": {
+            "enabled": true,
+            "companions": true,
+            "battles": true,
+            "garden": true,
+            "quietEnabled": true,
+            "quietStart": "22:00",
+            "quietEnd": "08:00"
+          },
+          "privacy": {
+            "locationAllowed": false,
+            "locationOnlyWhileExploring": true,
+            "emotionStatistics": false
+          },
+          "sync": {
+            "enabled": false
+          }
+        },
+        "revision": 25,
+        "updatedAt": "2026-10-26T09:53:12.576Z",
+        "host": {
+          "startup": false,
+          "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+          "fullscreenMonitor": true,
+          "fullscreenMonitorReady": true,
+          "foregroundFullscreen": false,
+          "fullscreenSource": null,
+          "companionWindows": 2,
+          "companionLimit": 4,
+          "clickThroughWindows": [
+            2,
+            4,
+            5
+          ],
+          "windows": [
+            {
+              "id": 4,
+              "alwaysOnTop": true,
+              "visible": true,
+              "slotAllocated": true,
+              "hiddenReason": null
+            },
+            {
+              "id": 5,
+              "alwaysOnTop": true,
+              "visible": true,
+              "slotAllocated": true,
+              "hiddenReason": null
+            }
+          ],
+          "locationAllowed": false,
+          "emotionStatistics": false,
+          "closeToTrayConnected": true,
+          "companionLimitConnected": true
+        }
+      }
+    },
+    "companions": {
+      "ok": true,
+      "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+      "desktopDisplay": {
+        "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "available": true,
+        "limit": 4,
+        "pets": [
+          {
+            "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+            "state": "visible",
+            "reason": null
+          },
+          {
+            "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+            "state": "visible",
+            "reason": null
+          },
+          {
+            "petId": "pet-8d67a86f-8053-46fe-93e2-df62ca116a45",
+            "state": "off",
+            "reason": null
+          },
+          {
+            "petId": "pet-e9f2413c-f9c3-4e9e-a625-935b4da87ee4",
+            "state": "off",
+            "reason": null
+          },
+          {
+            "petId": "pet-8853a238-8730-4970-8e39-885a1f1da97d",
+            "state": "off",
+            "reason": null
+          },
+          {
+            "petId": "pet-f31270e4-7ea3-42f1-a093-ac035d846de2",
+            "state": "off",
+            "reason": null
+          },
+          {
+            "petId": "pet-fe04dd7e-78f7-4648-8ce2-8e3b2901468a",
+            "state": "off",
+            "reason": null
+          }
+        ]
+      },
+      "selections": {
+        "chatPetId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+        "battlePetId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "guardPetId": null
+      },
+      "pets": [
+        {
+          "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "desktop": {
+            "visible": true,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 1343,
+              "y": 478,
+              "displayId": "1448891685"
+            }
+          }
+        },
+        {
+          "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "desktop": {
+            "visible": true,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 320,
+              "y": 520,
+              "displayId": null
+            }
+          }
+        },
+        {
+          "petId": "pet-8d67a86f-8053-46fe-93e2-df62ca116a45",
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "desktop": {
+            "visible": false,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 560,
+              "y": 520,
+              "displayId": null
+            }
+          }
+        },
+        {
+          "petId": "pet-e9f2413c-f9c3-4e9e-a625-935b4da87ee4",
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "desktop": {
+            "visible": false,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 800,
+              "y": 520,
+              "displayId": null
+            }
+          }
+        },
+        {
+          "petId": "pet-8853a238-8730-4970-8e39-885a1f1da97d",
+          "resource": {
+            "resourceId": "builtin:lingjing-shiba-v2",
+            "kind": "2d"
+          },
+          "desktop": {
+            "visible": false,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 1040,
+              "y": 520,
+              "displayId": null
+            }
+          }
+        },
+        {
+          "petId": "pet-f31270e4-7ea3-42f1-a093-ac035d846de2",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "desktop": {
+            "visible": false,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 80,
+              "y": 470,
+              "displayId": null
+            }
+          }
+        },
+        {
+          "petId": "pet-fe04dd7e-78f7-4648-8ce2-8e3b2901468a",
+          "resource": {
+            "resourceId": "builtin:lingjing-fantuan-v1",
+            "kind": "2d"
+          },
+          "desktop": {
+            "visible": false,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 320,
+              "y": 470,
+              "displayId": null
+            }
+          }
+        }
+      ]
+    },
+    "visibleCounterLines": [
+      "已拥有 7 只 · 已开启陪伴 2 只 · 桌面显示 2 只",
+      "正在桌面陪你",
+      "桌面陪伴已开启，当前正在显示。",
+      "桌面中 2",
+      "当前最多同时显示 4 只。超出上限的伙伴等待空位，临时隐藏不会关闭陪伴偏好。",
+      "桌面中",
+      "桌面中"
+    ]
+  },
+  "geometry": [
+    {
+      "at": 1793008501009,
+      "route": "#/desktop/pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+      "ready": "complete",
+      "visibility": "visible",
+      "screen": [
+        320,
+        520
+      ],
+      "inner": [
+        231,
+        280
+      ],
+      "outer": [
+        231,
+        280
+      ],
+      "dpr": 1.25,
+      "visualViewportScale": 1,
+      "cssZoom": "1",
+      "canvas": [
+        {
+          "width": 266,
+          "height": 309,
+          "rect": {
+            "x": 9,
+            "y": 25,
+            "width": 212.8000030517578,
+            "height": 247.1999969482422
+          },
+          "hostAttributes": {
+            "class": "resource-sprite-host",
+            "data-renderer": "pixi-spritesheet",
+            "data-frame": "0",
+            "data-frame-texture": "3",
+            "data-texture-frame": "51,72,224,222",
+            "data-content-bounds": "{\"x\":42.73490410958905,\"y\":78.98268493150684,\"width\":127.3301917808219,\"height\":126.19331506849315,\"canvasWidth\":212.8,\"canvasHeight\":247.2}"
+          }
+        }
+      ]
+    },
+    {
+      "at": 1793008501012,
+      "route": "#/desktop/pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+      "ready": "complete",
+      "visibility": "visible",
+      "screen": [
+        1343,
+        478
+      ],
+      "inner": [
+        231,
+        280
+      ],
+      "outer": [
+        231,
+        281
+      ],
+      "dpr": 1.25,
+      "visualViewportScale": 1,
+      "cssZoom": "1",
+      "canvas": [
+        {
+          "width": 266,
+          "height": 309,
+          "rect": {
+            "x": 9,
+            "y": 25,
+            "width": 212.8000030517578,
+            "height": 247.1999969482422
+          },
+          "hostAttributes": {
+            "class": "resource-sprite-host",
+            "data-renderer": "pixi-spritesheet",
+            "data-frame": "0",
+            "data-frame-texture": "3",
+            "data-texture-frame": "51,72,224,222",
+            "data-content-bounds": "{\"x\":42.73490410958905,\"y\":78.98268493150684,\"width\":127.3301917808219,\"height\":126.19331506849315,\"canvasWidth\":212.8,\"canvasHeight\":247.2}"
+          }
+        }
+      ]
+    }
+  ]
+}

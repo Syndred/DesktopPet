@@ -1,0 +1,51 @@
+{
+  "at": "2026-10-26T20:33:46.647Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "actualNativeUi": true,
+  "results": [
+    {
+      "kind": "damaged",
+      "before": "cloudB1-post-preservation-ui-restore.json",
+      "after": "cloudB1-after-p06-damaged-rejection.json",
+      "error": "备份完整性校验失败。",
+      "businessTableDigestsUnchanged": 22,
+      "accountActionCountAndCompanionMeaningUnchanged": true,
+      "qualification": "Readback verification timestamps and download/receipt bookkeeping may refresh during normal polling.",
+      "credentialValuesRead": false
+    },
+    {
+      "kind": "cross-owner",
+      "before": "cloudA-before-p06-cross-owner-rejection.json",
+      "after": "cloudA-after-p06-cross-owner-rejection.json",
+      "error": "此备份属于其他账号，请先登录对应账号。",
+      "businessTableDigestsUnchanged": 22,
+      "accountActionCountAndCompanionMeaningUnchanged": true,
+      "qualification": "Readback verification timestamps and download/receipt bookkeeping may refresh during normal polling.",
+      "credentialValuesRead": false
+    }
+  ],
+  "tablesCompared": [
+    "account_actions",
+    "account_backup_receipts",
+    "account_settings",
+    "companion_pets",
+    "companion_device_desktop",
+    "garden_items",
+    "garden_accounts",
+    "battle_reports_v2",
+    "battle_reward_receipts",
+    "conversation_cloud_archives",
+    "conversation_cloud_conflicts",
+    "conversation_cloud_records",
+    "conversation_profiles",
+    "conversation_connections",
+    "conversation_memories",
+    "conversation_messages",
+    "conversation_preferences",
+    "lingjing_resources",
+    "lingjing_resource_files",
+    "lingjing_resource_imports",
+    "lingjing_resource_preferences"
+  ],
+  "originalB2ExportSha256": "41e00267c01b1a0e0a806bf146548ea9089a1797eb64c47f95b422cae57ba797"
+}

@@ -1,0 +1,61 @@
+{
+  "at": "2026-10-25T11:11:25.764Z",
+  "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+  "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+  "method": "actual native keyboard UI; independent SQLite readOnly/query_only",
+  "provenance": "isolated local simulated identity, not live-cloud",
+  "snapshot": {
+    "ok": true,
+    "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+    "profile": {
+      "persona": "候选第一只小狐：喜欢冬雪，只使用第一只自己的记忆；与喜欢春雨的第二只独立。",
+      "replyStyle": "natural",
+      "memoryEnabled": true,
+      "pauseWhileChatting": true,
+      "useOverride": false,
+      "revision": 1
+    },
+    "memories": [],
+    "focus": null
+  },
+  "sqlite": {
+    "queryOnly": {
+      "query_only": 1
+    },
+    "profiles": [
+      {
+        "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "persona": "候选第二只小狐：喜欢春雨，只使用自己的独立记忆。",
+        "reply_style": "natural",
+        "memory_enabled": 1,
+        "pause_while_chatting": 1,
+        "use_override": 0,
+        "revision": 1,
+        "updated_at": 1792925308447
+      },
+      {
+        "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "pet_id": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+        "persona": "候选第一只小狐：喜欢冬雪，只使用第一只自己的记忆；与喜欢春雨的第二只独立。",
+        "reply_style": "natural",
+        "memory_enabled": 1,
+        "pause_while_chatting": 1,
+        "use_override": 0,
+        "revision": 1,
+        "updated_at": 1792926664075
+      }
+    ],
+    "memories": [
+      {
+        "id": "12d3b792-ad2d-4648-8f52-28f98d4c6e6a",
+        "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "content": "第二只小狐记忆：2026年10月25日，新会话接手后修改；只属于第二只，喜欢春雨。",
+        "revision": 2,
+        "created_at": 1792925542630,
+        "updated_at": 1792926485579
+      }
+    ]
+  }
+}

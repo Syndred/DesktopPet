@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-26T06:20:12.871Z",
+  "source": "real-native-CUA",
+  "candidate": "dc7aee3",
+  "profile": "original-6ff8-localA",
+  "locationProvenance": "simulated QA scenario; not physical GPS",
+  "passedScope": [
+    "initial unlocated empty state visibly distinct",
+    "visible QA location control",
+    "actual OpenStreetMap tiles and 15 candidate markers/list",
+    "native zoom and pan visibly change map",
+    "provider options state configured/unconfigured accurately",
+    "demo remained off",
+    "expired position blocks challenge with explicit update instruction"
+  ],
+  "physicalGpsProven": false,
+  "noResultScenarioProven": false,
+  "networkFailureProven": false,
+  "cloudActions": 0,
+  "hiddenInput": false,
+  "settingsChanged": false,
+  "screenshots": [
+    "m01-native-qa-location-first-20261026.png",
+    "m01-native-map-zoom-in-20261026.png",
+    "m01-native-map-pan-20261026.png",
+    "m01-native-map-provider-options-20261026.png",
+    "m01-native-map-ready-before-encounter-20261026.png"
+  ]
+}

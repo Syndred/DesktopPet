@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-26T20:30:12.894Z",
+  "rootIndependent": true,
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+  "realMissingPreservationRestored": true,
+  "cloudGameHeadUnchanged": true,
+  "cloudGameRevision": 28,
+  "cloudGameChecksum": "d96ec0d913405cbb927e9df33896a647cb04ab1c09e9eb5e3888f397ea31d40f",
+  "allCloudPersonalRecordsUnchanged": true,
+  "cloudPersonalRecords": 4,
+  "originalDeviceSettingsMatch": true,
+  "originalDeviceSettingsRevision": 6,
+  "currentDeviceSettingsRevision": 7,
+  "sourceBackup": {
+    "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\native-ui-exports\\B2-original-records-preserved-4e6.lingjing.json",
+    "sha256": "41e00267c01b1a0e0a806bf146548ea9089a1797eb64c47f95b422cae57ba797"
+  },
+  "beforeLocal": {
+    "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\root-B1-preservation-restore-before-independent.json",
+    "sha256": "8e8fc0958a604195f77872f1a969e3af944d00724d90ffbe43a6cbcc9b8d8a11"
+  },
+  "afterLocal": {
+    "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\root-B1-preservation-restore-after-independent.json",
+    "sha256": "05aeaee641fce2ba49a78a2cf6b0672e097270d9a6ff40849706d3286c7ac365"
+  },
+  "beforeCloud": {
+    "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\root-B-cloud-before-preservation-restore.json",
+    "sha256": "b6f425d7b7fce75b6c9a58d7ff91d3e11e4bd3ec0d3dc998121bbc5e6881f663"
+  },
+  "afterCloud": {
+    "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\root-B-cloud-after-preservation-restore.json",
+    "sha256": "b816e1bf8db20650625e49347ab72f0e6057f1f9dc7f89425d92b0a1a0d0bb55"
+  },
+  "actualExportAudit": {
+    "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\cloud-authority-convergence\\20261026\\candidate-4e6c3de4-1b1afdd1\\root-B2-ui-preservation-export-independent.json",
+    "sha256": "f9976bf3e6a7fa1e703b178b05d32c8b113de3d8c53a30a61ecf708bd37a3dfd"
+  },
+  "qualification": "Proves actual normal-UI restoration of missing original archive/conflict records, original destination archive retention, automatic pre-import protection and current cloud data retention. Native resource physical files and remaining P05 details are collected separately."
+}

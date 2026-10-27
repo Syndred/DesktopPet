@@ -1,0 +1,278 @@
+{
+  "at": "2026-10-25T10:51:12.933Z",
+  "beforeMinimizeNativeAction": "Clicked candidate own titlebar minimize",
+  "documentVisibilityUnreliable": true,
+  "afterDuplicateNativeError": "window is minimized; call activate_window, refresh with get_window, then retry get_window_state",
+  "restoreAction": "candidateApp.pressKey(Escape) then native product screenshot, no Codex UI operated",
+  "runtime": {
+    "ok": true,
+    "data": {
+      "version": "0.1.8",
+      "platform": "win32",
+      "build": {
+        "schemaVersion": 2,
+        "builtAt": "2026-10-25T10:13:32.215Z",
+        "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+        "sourceTree": "9e1768b2d76f72c8758435f2d975026d3cde7e3b",
+        "sourceDirtyFiles": [],
+        "codeFingerprint": "c78e26491fdb411e3bf98b813c3d032c6b699f3413076f6dadf51c167a46baad",
+        "canonicalSourceFingerprint": "19a2cdb76618616b9b08bddd971ed6a5616f72bc90dee55abd539fd988f47334",
+        "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+        "compiledFingerprint": "72d74cb4b8b6b095563ccda6936f7f2f1320d0cb0d52babd5e9d363f0bd5dfff",
+        "codeFiles": 310,
+        "compiledFiles": 89,
+        "toolchain": {
+          "node": "24.21.0",
+          "electron": "44.9.3",
+          "sqlite": "13.0.3",
+          "vite": "7.3.7",
+          "typescript": "5.9.3",
+          "platform": "win32",
+          "arch": "x64"
+        },
+        "entrypoints": {
+          "main": "main/index.cjs",
+          "app": "ui/index.html",
+          "desktop": "ui/desktop.html",
+          "preload": "preload/index.cjs"
+        },
+        "publicCloud": {
+          "projectRef": "jbvrdmrkwpznbrvteive",
+          "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+          "resourcePath": "lingjing-cloud-public.json"
+        },
+        "packageName": "lingjing-desktop",
+        "runtimeClosure": {
+          "manifest": "runtime-closure.json",
+          "files": 114,
+          "edges": 196,
+          "sha256": "6d64dbe605f706e4404c56ca608b8febcbc8e229603f31528e287208fa8eabcf"
+        }
+      },
+      "runtime": {
+        "electron": "44.9.3",
+        "node": "24.22.0",
+        "modules": "149",
+        "napi": "10",
+        "arch": "x64",
+        "tray": {
+          "active": true,
+          "bounds": {
+            "x": 1751,
+            "y": 1150,
+            "width": 33,
+            "height": 49
+          }
+        }
+      },
+      "features": [
+        {
+          "id": "accounts",
+          "commands": [
+            "session",
+            "login",
+            "register",
+            "logout",
+            "profileSave",
+            "passwordChange",
+            "settingsGet",
+            "settingsDefaults",
+            "settingsSave",
+            "backupList",
+            "backupExport",
+            "backupPreview",
+            "backupRestore",
+            "syncStatus",
+            "syncNow",
+            "syncRetry",
+            "cloudPreview",
+            "testNotification",
+            "pointer"
+          ]
+        },
+        {
+          "id": "resources",
+          "commands": [
+            "list",
+            "history",
+            "cloudStatus",
+            "cloudSync",
+            "cloudPull",
+            "resolve",
+            "save",
+            "import"
+          ]
+        },
+        {
+          "id": "companions",
+          "commands": [
+            "list",
+            "get",
+            "combatProfile",
+            "identity",
+            "desktopInput",
+            "adopt",
+            "rename",
+            "desktop",
+            "select",
+            "interact",
+            "perform",
+            "appearance"
+          ]
+        },
+        {
+          "id": "battle",
+          "commands": [
+            "overview",
+            "rules",
+            "context",
+            "settleContext",
+            "selectPet",
+            "startTraining",
+            "snapshot",
+            "act",
+            "retryAction",
+            "search",
+            "invitations",
+            "invite",
+            "respondInvite",
+            "cancelInvite",
+            "createRoom",
+            "joinRoom",
+            "sync",
+            "leave",
+            "listReports",
+            "getReport",
+            "retrySettlement",
+            "qaPreset"
+          ]
+        },
+        {
+          "id": "garden",
+          "commands": [
+            "plant",
+            "harvest",
+            "craft",
+            "feed",
+            "garrison",
+            "snapshot",
+            "territoryLocate",
+            "territoryChallenge",
+            "territorySettle"
+          ]
+        },
+        {
+          "id": "discovery",
+          "commands": [
+            "snapshot",
+            "setExploring",
+            "locate",
+            "watch",
+            "stopWatch",
+            "setDemo",
+            "setProvider",
+            "tile",
+            "qaTarget",
+            "begin",
+            "act",
+            "cancel",
+            "confirm",
+            "pokedex",
+            "memories"
+          ]
+        },
+        {
+          "id": "conversations",
+          "commands": [
+            "snapshot",
+            "select",
+            "history",
+            "profile.save",
+            "connection.save",
+            "connection.test",
+            "connection.cancel",
+            "memory.save",
+            "memory.delete",
+            "send",
+            "retry",
+            "cancel",
+            "history.clear",
+            "legacy.preview",
+            "legacy.import"
+          ]
+        }
+      ],
+      "user": {
+        "id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "subjectId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "ownerAccountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+        "provider": "local",
+        "account": "qa_candidate_a_1025",
+        "username": "候选验收甲",
+        "revision": 0,
+        "createdAt": "2026-10-25T10:29:28.836Z",
+        "updatedAt": "2026-10-25T10:29:28.836Z",
+        "dataMode": "simulated"
+      },
+      "scenario": {
+        "id": "unified-battle",
+        "runId": "f3455e84-59a1-4edb-9b77-975ff32dc45c",
+        "provenance": "simulated",
+        "isolated": true
+      }
+    }
+  },
+  "conversation": {
+    "ok": true,
+    "data": {
+      "accountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+      "sessionRevision": 2,
+      "pets": [
+        {
+          "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+          "name": "小狐",
+          "templateId": "animal-white-fox",
+          "avatarUrl": null,
+          "level": 1,
+          "element": "water",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          }
+        },
+        {
+          "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+          "name": "小狐",
+          "templateId": "animal-white-fox",
+          "avatarUrl": null,
+          "level": 1,
+          "element": "water",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          }
+        }
+      ],
+      "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+      "summaries": {
+        "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3": null,
+        "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca": null
+      },
+      "globalConnection": null,
+      "secureStorageAvailable": true,
+      "profile": {
+        "persona": "候选第二只小狐：喜欢春雨，只使用自己的独立记忆。",
+        "replyStyle": "natural",
+        "memoryEnabled": true,
+        "pauseWhileChatting": true,
+        "useOverride": false,
+        "revision": 1
+      },
+      "connection": null,
+      "memories": [],
+      "messages": [],
+      "nextCursor": null
+    }
+  }
+}

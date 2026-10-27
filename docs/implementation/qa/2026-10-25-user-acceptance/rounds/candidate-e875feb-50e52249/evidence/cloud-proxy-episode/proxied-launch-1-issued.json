@@ -1,0 +1,92 @@
+{
+  "at": "2026-10-25T14:21:50.719Z",
+  "oldNormalExit": {
+    "mainPid": 32152,
+    "wrapperPid": 17108,
+    "confirmedAbsent": true,
+    "debugPortReleased": true
+  },
+  "newWrapperPid": 32968,
+  "profile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-a",
+  "proxy": {
+    "pid": 22236,
+    "url": "http://127.0.0.1:53815",
+    "maxBlockedMs": 300000
+  },
+  "state": {
+    "host": "jbvrdmrkwpznbrvteive.supabase.co",
+    "mode": "allow",
+    "accepted": 7,
+    "rejected": 0,
+    "upBytes": 35559,
+    "downBytes": 63111,
+    "closedByControl": 0,
+    "active": 0,
+    "maxBlockedMs": 300000,
+    "blockedUntil": null,
+    "statusWriteFailures": 0,
+    "events": [
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "mode:allow"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "connect-accepted"
+      },
+      {
+        "host": "jbvrdmrkwpznbrvteive.supabase.co",
+        "status": "transparent-tcp-tunnel"
+      }
+    ]
+  },
+  "rootApprovalFile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/global-serial/cloud-a-live-proxy-1792936915037/root-cloud-a-proxy-launch.json"
+}

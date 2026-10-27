@@ -1,0 +1,427 @@
+{
+  "at": "2026-10-25T12:24:44.001Z",
+  "scope": "historical-312-native-route-away-and-return",
+  "before": {
+    "id": "battle-5f702c9e-6ccb-4086-b09a-72061424139f",
+    "mode": "training",
+    "status": "active",
+    "startedAt": "2026-10-25T12:08:37.189Z",
+    "player": {
+      "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+      "petName": "小狐",
+      "element": "water",
+      "level": 1,
+      "resourceRef": "builtin:lingjing-xiaohu-v1",
+      "resource": {
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "kind": "2d"
+      },
+      "appearance2d": "builtin:lingjing-xiaohu-v1"
+    },
+    "enemy": {
+      "petId": "training-fire",
+      "petName": "焰柴",
+      "element": "fire",
+      "level": 1,
+      "resourceRef": "builtin:lingjing-shiba-v2",
+      "appearance2d": "builtin:lingjing-shiba-v2",
+      "resource": {
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "kind": "2d"
+      }
+    },
+    "snapshot": {
+      "round": 1,
+      "player": {
+        "id": "player",
+        "element": "water",
+        "hp": 120,
+        "maxHp": 120,
+        "anger": 0,
+        "freeDodgeUsed": false,
+        "statuses": []
+      },
+      "enemy": {
+        "id": "enemy",
+        "element": "fire",
+        "hp": 120,
+        "maxHp": 120,
+        "anger": 30,
+        "freeDodgeUsed": true,
+        "statuses": []
+      }
+    },
+    "rounds": [
+      {
+        "round": 1,
+        "actions": {
+          "player": "normal_attack",
+          "enemy": "dodge"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 0
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 0
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 120,
+          "enemy": 120
+        },
+        "angerAfter": {
+          "player": 0,
+          "enemy": 30
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy uses first free dodge",
+          "player action missed",
+          "enemy dodged normal attack and refunded 30 anger"
+        ],
+        "state": {
+          "round": 1,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 120,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "fire",
+            "hp": 120,
+            "maxHp": 120,
+            "anger": 30,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "1:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "1:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "1:enemy:impact:dodge:2",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "dodge"
+          },
+          {
+            "id": "1:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "dodge"
+          },
+          {
+            "id": "1:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "dodge",
+            "element": "fire"
+          }
+        ]
+      }
+    ],
+    "winner": null,
+    "pendingAction": null,
+    "historyComplete": true,
+    "rules": {
+      "id": "five-elements-standard-v1",
+      "label": "标准五行对战",
+      "vitalPolicy": "normalized",
+      "maxHp": 120,
+      "maxAnger": 100,
+      "companionStatsApplied": false,
+      "baseDamage": {
+        "normal_attack": 10,
+        "element_attack": 12,
+        "dodge": 0,
+        "ultimate": 20
+      },
+      "ultimateAnger": 50,
+      "ultimateCost": 50,
+      "ultimateHeal": 20,
+      "dodgeMaxCost": 20,
+      "dodgeRefund": 30,
+      "advantage": {
+        "metal": "wood",
+        "wood": "earth",
+        "earth": "water",
+        "water": "fire",
+        "fire": "metal"
+      },
+      "elementEffects": {
+        "metal": {
+          "label": "易伤",
+          "description": "每层受伤×1.5，最多5层"
+        },
+        "wood": {
+          "label": "寄生",
+          "description": "每层回合末吸取2生命，最多5层"
+        },
+        "earth": {
+          "label": "迟钝",
+          "description": "每层伤害×0.5，最多5层"
+        },
+        "water": {
+          "label": "降怒",
+          "description": "命中后对方怒气向下取半，不增加受击怒气"
+        },
+        "fire": {
+          "label": "燃烧",
+          "description": "回合末按当前生命8%×层数伤害，最多5层"
+        }
+      }
+    },
+    "context": {
+      "id": "training:fire",
+      "authority": "simulated",
+      "scenarioId": "f3455e84-59a1-4edb-9b77-975ff32dc45c"
+    },
+    "updatedAt": "2026-10-25T12:11:07.392Z",
+    "revision": 2
+  },
+  "after": {
+    "id": "battle-5f702c9e-6ccb-4086-b09a-72061424139f",
+    "mode": "training",
+    "status": "active",
+    "startedAt": "2026-10-25T12:08:37.189Z",
+    "player": {
+      "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+      "petName": "小狐",
+      "element": "water",
+      "level": 1,
+      "resourceRef": "builtin:lingjing-xiaohu-v1",
+      "resource": {
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "kind": "2d"
+      },
+      "appearance2d": "builtin:lingjing-xiaohu-v1"
+    },
+    "enemy": {
+      "petId": "training-fire",
+      "petName": "焰柴",
+      "element": "fire",
+      "level": 1,
+      "resourceRef": "builtin:lingjing-shiba-v2",
+      "appearance2d": "builtin:lingjing-shiba-v2",
+      "resource": {
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "kind": "2d"
+      }
+    },
+    "snapshot": {
+      "round": 1,
+      "player": {
+        "id": "player",
+        "element": "water",
+        "hp": 120,
+        "maxHp": 120,
+        "anger": 0,
+        "freeDodgeUsed": false,
+        "statuses": []
+      },
+      "enemy": {
+        "id": "enemy",
+        "element": "fire",
+        "hp": 120,
+        "maxHp": 120,
+        "anger": 30,
+        "freeDodgeUsed": true,
+        "statuses": []
+      }
+    },
+    "rounds": [
+      {
+        "round": 1,
+        "actions": {
+          "player": "normal_attack",
+          "enemy": "dodge"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 0
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 0
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 120,
+          "enemy": 120
+        },
+        "angerAfter": {
+          "player": 0,
+          "enemy": 30
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy uses first free dodge",
+          "player action missed",
+          "enemy dodged normal attack and refunded 30 anger"
+        ],
+        "state": {
+          "round": 1,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 120,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "fire",
+            "hp": 120,
+            "maxHp": 120,
+            "anger": 30,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "1:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "1:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "1:enemy:impact:dodge:2",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "dodge"
+          },
+          {
+            "id": "1:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "dodge"
+          },
+          {
+            "id": "1:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "dodge",
+            "element": "fire"
+          }
+        ]
+      }
+    ],
+    "winner": null,
+    "pendingAction": null,
+    "historyComplete": true,
+    "rules": {
+      "id": "five-elements-standard-v1",
+      "label": "标准五行对战",
+      "vitalPolicy": "normalized",
+      "maxHp": 120,
+      "maxAnger": 100,
+      "companionStatsApplied": false,
+      "baseDamage": {
+        "normal_attack": 10,
+        "element_attack": 12,
+        "dodge": 0,
+        "ultimate": 20
+      },
+      "ultimateAnger": 50,
+      "ultimateCost": 50,
+      "ultimateHeal": 20,
+      "dodgeMaxCost": 20,
+      "dodgeRefund": 30,
+      "advantage": {
+        "metal": "wood",
+        "wood": "earth",
+        "earth": "water",
+        "water": "fire",
+        "fire": "metal"
+      },
+      "elementEffects": {
+        "metal": {
+          "label": "易伤",
+          "description": "每层受伤×1.5，最多5层"
+        },
+        "wood": {
+          "label": "寄生",
+          "description": "每层回合末吸取2生命，最多5层"
+        },
+        "earth": {
+          "label": "迟钝",
+          "description": "每层伤害×0.5，最多5层"
+        },
+        "water": {
+          "label": "降怒",
+          "description": "命中后对方怒气向下取半，不增加受击怒气"
+        },
+        "fire": {
+          "label": "燃烧",
+          "description": "回合末按当前生命8%×层数伤害，最多5层"
+        }
+      }
+    },
+    "context": {
+      "id": "training:fire",
+      "authority": "simulated",
+      "scenarioId": "f3455e84-59a1-4edb-9b77-975ff32dc45c"
+    },
+    "updatedAt": "2026-10-25T12:11:07.392Z",
+    "revision": 2
+  },
+  "sameSessionSnapshot": true
+}

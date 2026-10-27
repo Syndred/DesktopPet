@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "data": {
+    "accountId": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+    "sessionRevision": 2,
+    "pets": [
+      {
+        "petId": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+        "name": "小狐",
+        "templateId": "animal-white-fox",
+        "avatarUrl": null,
+        "level": 1,
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "kind": "2d"
+        }
+      },
+      {
+        "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "name": "小狐",
+        "templateId": "animal-white-fox",
+        "avatarUrl": null,
+        "level": 1,
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "kind": "2d"
+        }
+      }
+    ],
+    "petId": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+    "summaries": {
+      "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3": null,
+      "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca": null
+    },
+    "globalConnection": null,
+    "secureStorageAvailable": true,
+    "profile": {
+      "persona": "候选第二只小狐：喜欢春雨，只使用自己的独立记忆。",
+      "replyStyle": "natural",
+      "memoryEnabled": true,
+      "pauseWhileChatting": true,
+      "useOverride": false,
+      "revision": 1
+    },
+    "connection": null,
+    "memories": [],
+    "messages": [],
+    "nextCursor": null
+  }
+}

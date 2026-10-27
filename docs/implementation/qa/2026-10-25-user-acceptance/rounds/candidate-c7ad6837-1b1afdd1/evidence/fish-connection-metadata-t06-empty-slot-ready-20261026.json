@@ -1,0 +1,48 @@
+{
+  "at": "2026-10-26T10:07:49.348Z",
+  "profile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a",
+  "owner": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+  "fish": "pet-f31270e4-7ea3-42f1-a093-ac035d846de2",
+  "readOnly": true,
+  "queryOnly": true,
+  "credentialValuesRead": false,
+  "method": "Necessary non-secret metadata only; ciphertext/credential vault values never selected; has_key boolean computed inside SQLite",
+  "data": {
+    "selections": {
+      "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+      "revision": 214,
+      "selections_json": "{\"chatPetId\":\"pet-f31270e4-7ea3-42f1-a093-ac035d846de2\",\"battlePetId\":\"pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca\",\"guardPetId\":null}"
+    },
+    "fish": {
+      "owner_account_id": "qa:f3455e84-59a1-4edb-9b77-975ff32dc45c:local-02a70478-bf19-41d6-8937-ea7c261b579f",
+      "pet_id": "pet-f31270e4-7ea3-42f1-a093-ac035d846de2",
+      "template_id": "big-fish-gentle",
+      "revision": 1
+    },
+    "fishConnection": null,
+    "fishProfile": null,
+    "messagesByPet": [
+      {
+        "pet_id": "pet-0cb7dabe-58d2-450e-ab0c-4e39bcffbaca",
+        "count": 4
+      },
+      {
+        "pet_id": "pet-ea1f0cf6-53c8-4f15-bd01-a8cef01adde3",
+        "count": 4
+      }
+    ],
+    "fishMessages": [],
+    "fishMemoryCount": 0,
+    "globalConnection": {
+      "scope": "account",
+      "scope_id": "",
+      "provider": "openai_compatible",
+      "base_url": "http://127.0.0.1:63040/v1",
+      "model": "qa-protocol-model",
+      "context_chars": 24000,
+      "max_output_tokens": 512,
+      "revision": 1,
+      "has_key": 1
+    }
+  }
+}

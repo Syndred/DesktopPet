@@ -1,0 +1,428 @@
+{
+  "at": "2026-10-25T13:44:43.191Z",
+  "owner": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+  "snapshot": {
+    "ok": true,
+    "revision": 1,
+    "data": {
+      "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+      "serverTime": 1792935882340,
+      "revision": 1,
+      "plots": [
+        {
+          "plotId": "plot-1",
+          "cropType": null,
+          "plantedAt": null,
+          "maturesAt": null,
+          "yieldQuantity": 0,
+          "revision": 0,
+          "stage": "empty"
+        },
+        {
+          "plotId": "plot-2",
+          "cropType": null,
+          "plantedAt": null,
+          "maturesAt": null,
+          "yieldQuantity": 0,
+          "revision": 0,
+          "stage": "empty"
+        },
+        {
+          "plotId": "plot-3",
+          "cropType": null,
+          "plantedAt": null,
+          "maturesAt": null,
+          "yieldQuantity": 0,
+          "revision": 0,
+          "stage": "empty"
+        },
+        {
+          "plotId": "plot-4",
+          "cropType": null,
+          "plantedAt": null,
+          "maturesAt": null,
+          "yieldQuantity": 0,
+          "revision": 0,
+          "stage": "empty"
+        },
+        {
+          "plotId": "plot-5",
+          "cropType": null,
+          "plantedAt": null,
+          "maturesAt": null,
+          "yieldQuantity": 0,
+          "revision": 0,
+          "stage": "empty"
+        },
+        {
+          "plotId": "plot-6",
+          "cropType": null,
+          "plantedAt": null,
+          "maturesAt": null,
+          "yieldQuantity": 0,
+          "revision": 0,
+          "stage": "empty"
+        }
+      ],
+      "items": [
+        {
+          "id": "seed:carrot",
+          "name": "胡萝卜种子",
+          "icon": "🥕",
+          "category": "seed",
+          "source": "探索与对战",
+          "effects": null,
+          "quantity": 2
+        },
+        {
+          "id": "seed:tomato",
+          "name": "番茄种子",
+          "icon": "🍅",
+          "category": "seed",
+          "source": "探索与对战",
+          "effects": null,
+          "quantity": 2
+        },
+        {
+          "id": "seed:berry",
+          "name": "莓果种子",
+          "icon": "🫐",
+          "category": "seed",
+          "source": "探索与对战",
+          "effects": null,
+          "quantity": 2
+        },
+        {
+          "id": "seed:rice",
+          "name": "稻米种子",
+          "icon": "🌾",
+          "category": "seed",
+          "source": "探索与对战",
+          "effects": null,
+          "quantity": 2
+        },
+        {
+          "id": "carrot",
+          "name": "胡萝卜",
+          "icon": "🥕",
+          "category": "food",
+          "source": "菜园收获",
+          "effects": {
+            "satiety": 12,
+            "mood": 2,
+            "intimacy": 2
+          },
+          "quantity": 0
+        },
+        {
+          "id": "tomato",
+          "name": "番茄",
+          "icon": "🍅",
+          "category": "food",
+          "source": "菜园收获",
+          "effects": {
+            "satiety": 10,
+            "mood": 3,
+            "intimacy": 2
+          },
+          "quantity": 0
+        },
+        {
+          "id": "berry",
+          "name": "莓果",
+          "icon": "🫐",
+          "category": "food",
+          "source": "菜园收获",
+          "effects": {
+            "satiety": 8,
+            "mood": 4,
+            "intimacy": 3
+          },
+          "quantity": 0
+        },
+        {
+          "id": "rice",
+          "name": "稻米",
+          "icon": "🌾",
+          "category": "ingredient",
+          "source": "菜园收获",
+          "effects": null,
+          "quantity": 0
+        },
+        {
+          "id": "cooked_rice",
+          "name": "热乎乎的米饭",
+          "icon": "🍚",
+          "category": "food",
+          "source": "稻米制作",
+          "effects": {
+            "satiety": 20,
+            "mood": 3,
+            "intimacy": 4
+          },
+          "quantity": 0
+        }
+      ],
+      "crops": [
+        {
+          "id": "carrot",
+          "name": "胡萝卜",
+          "icon": "🥕",
+          "seedItemId": "seed:carrot",
+          "harvestItemId": "carrot",
+          "growMs": 600000,
+          "yield": 3,
+          "color": "#ed9448"
+        },
+        {
+          "id": "tomato",
+          "name": "番茄",
+          "icon": "🍅",
+          "seedItemId": "seed:tomato",
+          "harvestItemId": "tomato",
+          "growMs": 900000,
+          "yield": 3,
+          "color": "#ef7875"
+        },
+        {
+          "id": "berry",
+          "name": "莓果",
+          "icon": "🫐",
+          "seedItemId": "seed:berry",
+          "harvestItemId": "berry",
+          "growMs": 1200000,
+          "yield": 4,
+          "color": "#9e8fd4"
+        },
+        {
+          "id": "rice",
+          "name": "稻米",
+          "icon": "🌾",
+          "seedItemId": "seed:rice",
+          "harvestItemId": "rice",
+          "growMs": 1500000,
+          "yield": 2,
+          "color": "#d2ad54"
+        }
+      ],
+      "recipes": [
+        {
+          "id": "cooked_rice",
+          "name": "热乎乎的米饭",
+          "input": {
+            "itemId": "rice",
+            "quantity": 1
+          },
+          "output": {
+            "itemId": "cooked_rice",
+            "quantity": 1
+          }
+        }
+      ],
+      "pets": [
+        {
+          "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "petId": "pet-40899e45-d323-49c8-9136-743f14be6ce3",
+          "templateId": "big-fish-gentle",
+          "name": "鱼丸",
+          "serial": "40899E45",
+          "element": "water",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "source": "adoption",
+          "origin": {},
+          "growth": {
+            "level": 1,
+            "experience": 0,
+            "mood": 60,
+            "satiety": 60,
+            "affinity": 0,
+            "winsTotal": 0,
+            "stats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          "desktop": {
+            "visible": false,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 80,
+              "y": 520,
+              "displayId": null
+            }
+          },
+          "revision": 1,
+          "createdAt": "2026-10-25T10:15:21.267Z",
+          "updatedAt": "2026-10-25T10:15:21.267Z"
+        }
+      ],
+      "territories": [],
+      "ledger": [
+        {
+          "id": "2ed7e89c-779c-4a4b-aa2c-40723a310dab",
+          "actionId": "cloud-garden-initialize:v1",
+          "kind": "starter",
+          "itemId": "seed:rice",
+          "delta": 2,
+          "balance": 2,
+          "petId": null,
+          "createdAt": 1792935736822
+        },
+        {
+          "id": "8c83a868-11cf-45ab-bb68-a354c7fb6ba6",
+          "actionId": "cloud-garden-initialize:v1",
+          "kind": "starter",
+          "itemId": "seed:berry",
+          "delta": 2,
+          "balance": 2,
+          "petId": null,
+          "createdAt": 1792935736822
+        },
+        {
+          "id": "64276855-3bee-436c-877e-2cc7e2104f51",
+          "actionId": "cloud-garden-initialize:v1",
+          "kind": "starter",
+          "itemId": "seed:tomato",
+          "delta": 2,
+          "balance": 2,
+          "petId": null,
+          "createdAt": 1792935736822
+        },
+        {
+          "id": "aac383ff-e849-4711-ad86-820eea01d652",
+          "actionId": "cloud-garden-initialize:v1",
+          "kind": "starter",
+          "itemId": "seed:carrot",
+          "delta": 2,
+          "balance": 2,
+          "petId": null,
+          "createdAt": 1792935736822
+        }
+      ],
+      "sync": {
+        "mode": "cloud",
+        "pending": 0,
+        "conflicts": 0
+      },
+      "territoryChallenges": [],
+      "remainingInvasions": 2
+    }
+  },
+  "sqlite": {
+    "accounts": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "revision": 1,
+        "initialized_at": 1792935736822
+      }
+    ],
+    "items": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "item_id": "seed:berry",
+        "quantity": 2
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "item_id": "seed:carrot",
+        "quantity": 2
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "item_id": "seed:rice",
+        "quantity": 2
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "item_id": "seed:tomato",
+        "quantity": 2
+      }
+    ],
+    "plots": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "plot_id": "plot-1",
+        "crop_type": null,
+        "planted_at": null,
+        "matures_at": null,
+        "yield_quantity": 0,
+        "revision": 0
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "plot_id": "plot-2",
+        "crop_type": null,
+        "planted_at": null,
+        "matures_at": null,
+        "yield_quantity": 0,
+        "revision": 0
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "plot_id": "plot-3",
+        "crop_type": null,
+        "planted_at": null,
+        "matures_at": null,
+        "yield_quantity": 0,
+        "revision": 0
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "plot_id": "plot-4",
+        "crop_type": null,
+        "planted_at": null,
+        "matures_at": null,
+        "yield_quantity": 0,
+        "revision": 0
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "plot_id": "plot-5",
+        "crop_type": null,
+        "planted_at": null,
+        "matures_at": null,
+        "yield_quantity": 0,
+        "revision": 0
+      },
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "plot_id": "plot-6",
+        "crop_type": null,
+        "planted_at": null,
+        "matures_at": null,
+        "yield_quantity": 0,
+        "revision": 0
+      }
+    ],
+    "cloudState": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "account_revision": 3,
+        "checksum": "b698428716280c8fc76b40ace9c11ae4c70190a3f87b5791f6056a68809b6fa4",
+        "server_time": 1792935882340
+      }
+    ],
+    "requests": [],
+    "outbox": [
+      {
+        "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+        "action_id": "cloud-garden-initialize:v1",
+        "payload_json": "{\"kind\":\"initialize\",\"input\":{\"actionId\":\"cloud-garden-initialize:v1\",\"expectedRevision\":0},\"result\":{\"ok\":true,\"data\":{\"initialized\":true,\"plots\":6},\"revision\":1,\"replayed\":false}}",
+        "status": "synced",
+        "attempts": 0,
+        "last_error": null,
+        "created_at": 1792935736822
+      }
+    ]
+  },
+  "indexedDB": {
+    "names": [],
+    "garden": []
+  }
+}

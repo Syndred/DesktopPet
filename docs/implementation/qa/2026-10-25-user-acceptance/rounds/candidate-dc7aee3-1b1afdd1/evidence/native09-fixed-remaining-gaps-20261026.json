@@ -1,0 +1,307 @@
+{
+  "format": "lingjing.native09.fixed-remaining-gaps.v1",
+  "at": "2026-10-26T06:11:23.292Z",
+  "coordinatorThreadId": "01a1759f-d666-75d1-81dc-e757e748d221",
+  "nativeThreadId": "01a1759f-4253-7ef0-bf83-44a87c0a16e8",
+  "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+  "counts": {
+    "passed": 57,
+    "pending": 27,
+    "running": 4,
+    "failed": 8,
+    "blocked": 2
+  },
+  "groups": [
+    {
+      "key": "local-existing-ui",
+      "ids": [
+        "C08",
+        "T01",
+        "M01",
+        "M04",
+        "M05",
+        "M06",
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "P03",
+        "P08"
+      ],
+      "boundary": "Original LocalA only; real UI with explicitly simulated location; guard/occupation require natural availability; partial coverage stays pending.",
+      "cases": [
+        {
+          "id": "C08",
+          "title": "每宠独立选择",
+          "status": "pending"
+        },
+        {
+          "id": "T01",
+          "title": "空状态和切宠",
+          "status": "pending"
+        },
+        {
+          "id": "M01",
+          "title": "地图初始与图层",
+          "status": "pending"
+        },
+        {
+          "id": "M04",
+          "title": "探索扫描与无结果",
+          "status": "pending"
+        },
+        {
+          "id": "M05",
+          "title": "野外相遇到捕捉",
+          "status": "pending"
+        },
+        {
+          "id": "M06",
+          "title": "失败逃跑与过期",
+          "status": "pending"
+        },
+        {
+          "id": "G01",
+          "title": "领地初始地图与列表",
+          "status": "pending"
+        },
+        {
+          "id": "G02",
+          "title": "驻守选宠与更换",
+          "status": "pending"
+        },
+        {
+          "id": "G03",
+          "title": "竞争胜利占领",
+          "status": "pending"
+        },
+        {
+          "id": "G04",
+          "title": "竞争失败取消和占用",
+          "status": "pending"
+        },
+        {
+          "id": "P03",
+          "title": "桌面上限音量尺寸",
+          "status": "pending"
+        },
+        {
+          "id": "P08",
+          "title": "版本日志和更新入口",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "key": "cloud-auth-or-grant",
+      "ids": [
+        "A08",
+        "A11",
+        "A12",
+        "C11",
+        "C12",
+        "B10",
+        "S02",
+        "S04",
+        "S05",
+        "M07"
+      ],
+      "boundary": "Fresh Root/08 identity-bound protocol and/or renewed exact grant before dependent actions; no old v2/claims.",
+      "cases": [
+        {
+          "id": "A08",
+          "title": "记住账号",
+          "status": "running"
+        },
+        {
+          "id": "A11",
+          "title": "账号切换隔离",
+          "status": "pending"
+        },
+        {
+          "id": "A12",
+          "title": "退出与失效会话",
+          "status": "running"
+        },
+        {
+          "id": "C11",
+          "title": "同类型跨用户连续数字编号",
+          "status": "running"
+        },
+        {
+          "id": "C12",
+          "title": "旧档案升级保留身份与历史",
+          "status": "running"
+        },
+        {
+          "id": "B10",
+          "title": "断网重连与重复操作",
+          "status": "pending"
+        },
+        {
+          "id": "S02",
+          "title": "自动同步完整域",
+          "status": "pending"
+        },
+        {
+          "id": "S04",
+          "title": "双端并发冲突",
+          "status": "pending"
+        },
+        {
+          "id": "S05",
+          "title": "权限与跨账号隔离",
+          "status": "pending"
+        },
+        {
+          "id": "M07",
+          "title": "网络异常与重新定位",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "key": "human-or-environment",
+      "ids": [
+        "A04",
+        "A05",
+        "A06",
+        "A14",
+        "A15",
+        "M03",
+        "D05",
+        "D09",
+        "N04",
+        "P09",
+        "C09"
+      ],
+      "boundary": "No new identity/profile to replace existing data. Password/terms/GPS/multiple displays/tray/startup constraints recorded separately; no boundary bypass.",
+      "cases": [
+        {
+          "id": "A04",
+          "title": "注册校验",
+          "status": "pending"
+        },
+        {
+          "id": "A05",
+          "title": "合成QA本地注册",
+          "status": "pending"
+        },
+        {
+          "id": "A06",
+          "title": "云端合成账号注册登录",
+          "status": "pending"
+        },
+        {
+          "id": "A14",
+          "title": "本机合成QA账号修改密码",
+          "status": "pending"
+        },
+        {
+          "id": "A15",
+          "title": "真实云端合成QA账号修改密码",
+          "status": "pending"
+        },
+        {
+          "id": "M03",
+          "title": "真实定位精度准入",
+          "status": "pending"
+        },
+        {
+          "id": "D05",
+          "title": "DPI与多显示器",
+          "status": "blocked"
+        },
+        {
+          "id": "D09",
+          "title": "托盘全部显示隐藏",
+          "status": "blocked"
+        },
+        {
+          "id": "N04",
+          "title": "关闭到托盘与恢复",
+          "status": "pending"
+        },
+        {
+          "id": "P09",
+          "title": "便携版开机启动路径稳定",
+          "status": "pending"
+        },
+        {
+          "id": "C09",
+          "title": "无宠物空状态",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "key": "prepared-fix-native-retest",
+      "ids": [
+        "D01",
+        "T06",
+        "I01",
+        "P01",
+        "A13",
+        "B09",
+        "C03",
+        "R06"
+      ],
+      "boundary": "Original failures retained; prepared patches require integrated exact new candidate and targeted real UI retest.",
+      "cases": [
+        {
+          "id": "D01",
+          "title": "显示隐藏与上限",
+          "status": "failed"
+        },
+        {
+          "id": "T06",
+          "title": "凭据边界与失联",
+          "status": "failed"
+        },
+        {
+          "id": "I01",
+          "title": "分类与空背包",
+          "status": "failed"
+        },
+        {
+          "id": "P01",
+          "title": "所有设置分组可达",
+          "status": "failed"
+        },
+        {
+          "id": "A13",
+          "title": "存档待核对提示与正常确认",
+          "status": "failed"
+        },
+        {
+          "id": "B09",
+          "title": "邀请过期",
+          "status": "failed"
+        },
+        {
+          "id": "C03",
+          "title": "固定角色名和唯一编号 QA-003",
+          "status": "failed"
+        },
+        {
+          "id": "R06",
+          "title": "偏好与资源云端恢复",
+          "status": "failed"
+        }
+      ]
+    }
+  ],
+  "restartPlan": {
+    "instances": 1,
+    "profile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/6ff8e38f-9f2b-4872-8747-1fb00bd81655/local-a",
+    "candidate": "C:/Users/Administrator/Desktop/project/DesktopPet/releases/user-acceptance-dc7aee3/Lingjing-0.1.8-portable-x64.exe",
+    "scenario": "unified-battle",
+    "debugPort": 57215,
+    "newProfile": false,
+    "cloudAOpened": false,
+    "credentialsRead": false,
+    "grantActions": false,
+    "baseline": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1\\evidence\\native09-resume-before-restart-20261026.json",
+    "firstAction": "Bind actual new Main/window from fresh inventory; confirm preserved original account/pets/battles before route navigation."
+  }
+}

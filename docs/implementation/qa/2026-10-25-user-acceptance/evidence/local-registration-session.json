@@ -1,0 +1,33 @@
+{
+  "ok": true,
+  "data": {
+    "currentUser": {
+      "id": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+      "subjectId": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+      "ownerAccountId": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+      "provider": "local",
+      "account": "qa_uat_a_1025",
+      "username": "验收甲",
+      "revision": 0,
+      "createdAt": "2026-10-25T09:28:11.530Z",
+      "updatedAt": "2026-10-25T09:28:11.530Z",
+      "dataMode": "simulated"
+    },
+    "defaultProvider": "local",
+    "dataMode": "simulated",
+    "scenario": {
+      "id": "unified-battle",
+      "runId": "54f0fb7d-bc8a-45cd-8896-754333d59d31",
+      "provenance": "simulated",
+      "isolated": true
+    },
+    "secureStorageAvailable": false,
+    "persistence": "memory",
+    "migration": {
+      "status": "absent",
+      "imported": 0,
+      "unresolved": []
+    },
+    "startupIssue": null
+  }
+}

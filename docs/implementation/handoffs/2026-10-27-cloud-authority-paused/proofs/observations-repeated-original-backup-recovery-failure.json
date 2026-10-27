@@ -1,0 +1,76 @@
+{
+  "at": "2026-10-26T20:44:12.532Z",
+  "stage": "repeated-original-backup-recovery-failure",
+  "caseUpdates": [
+    {
+      "id": "P05",
+      "status": "failed",
+      "executionState": "executed_current_candidate",
+      "severity": "P1",
+      "findingRefs": [
+        "4E6-003"
+      ],
+      "actual": "原B1缺失归档及2差异真实恢复通过；但扩展到A合成记忆发现失败：首次同一原备份采用原文为rev3，普通UI删除为rev4后，再导入同一原备份提示成功但仍deleted1/rev4；原已解决差异未重新可选，无法通过本次产品恢复补回同ID。原文备份及保护文件均保留，未改ID或伪造文件绕过。",
+      "evidence": [
+        "native-P05-repeated-original-backup-silent-no-recovery.png",
+        "native-T02-selected-fox-memory-deleted.png",
+        "cloudA-synthetic-memory-after-edit.json",
+        "cloudA-synthetic-memory-original-adopted.json",
+        "cloudA-synthetic-memory-after-delete.json",
+        "cloudA-synthetic-memory-deleted-import-result.json",
+        "native-repeated-original-backup-recovery-failure-seal.json"
+      ]
+    },
+    {
+      "id": "T02",
+      "status": "running",
+      "executionState": "partial",
+      "findingRefs": [
+        "4E6-001",
+        "4E6-003"
+      ],
+      "actual": "两只原同模板小狐的人设/记忆独立；合成甲记忆编辑rev2、备份版本采用rev3、删除rev4已在双原客户端及独立PG核对，另一只记忆rev1原文未变。需最终普通重启回查；额外恢复缺陷见P05/4E6-003，原文备份完整保留，草稿覆盖4E6-001仍open。",
+      "evidence": [
+        "native-P05-repeated-original-backup-silent-no-recovery.png",
+        "native-T02-selected-fox-memory-deleted.png",
+        "cloudA-synthetic-memory-after-edit.json",
+        "cloudA-synthetic-memory-original-adopted.json",
+        "cloudA-synthetic-memory-after-delete.json",
+        "cloudA-synthetic-memory-deleted-import-result.json",
+        "native-repeated-original-backup-recovery-failure-seal.json"
+      ]
+    }
+  ],
+  "newIssues": [
+    {
+      "id": "4E6-003",
+      "severity": "P1",
+      "status": "open",
+      "title": "同一原备份的已解决记忆差异阻止之后的删除恢复",
+      "caseIds": [
+        "P05",
+        "T02"
+      ],
+      "expected": "记录后来被编辑或删除后，重新导入原备份应保留当前与备份版本并允许再次明确选择恢复同一ID；成功提示不能掩盖未恢复。",
+      "actual": "A正常UI导出原备份5a0962，首次采用原记忆rev3后删除为rev4 tombstone，第二次同一文件正常UI导入显示完成但仍rev4/deleted1；原backup-import差异仍resolved local、保留旧cloud rev2且无待处理记录。",
+      "reproducibleSteps": [
+        "正常UI导出本轮新建合成记忆",
+        "编辑后导入原备份，采用备份原记录",
+        "正常UI删除同一记忆",
+        "再次正常UI导入同一原文件",
+        "观察成功提示但无待选择版本，同ID仍删除"
+      ],
+      "evidence": [
+        "native-P05-repeated-original-backup-silent-no-recovery.png",
+        "native-T02-selected-fox-memory-deleted.png",
+        "cloudA-synthetic-memory-after-edit.json",
+        "cloudA-synthetic-memory-original-adopted.json",
+        "cloudA-synthetic-memory-after-delete.json",
+        "cloudA-synthetic-memory-deleted-import-result.json",
+        "native-repeated-original-backup-recovery-failure-seal.json"
+      ],
+      "qualification": "仅本轮新建合成记忆参与删除；原有用户记录未删除。原备份和全部保护文件保留，未更改owner/petId/memoryId或备份字节。"
+    }
+  ],
+  "issueUpdates": []
+}

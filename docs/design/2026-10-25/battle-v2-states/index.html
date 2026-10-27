@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>灵境 · 1v1 对战状态设计</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#edf3fb;color:#152b52;font:14px/1.5 "Microsoft YaHei","PingFang SC",sans-serif}
+header{padding:20px 24px 16px;background:#fff;border-bottom:1px solid #dbe4f1;position:sticky;top:0;z-index:1}
+.top{display:flex;justify-content:space-between;gap:20px;align-items:baseline;max-width:1600px;margin:auto}h1{margin:0;font-size:22px;font-weight:700}.note{color:#6b7f9d;font-size:12px}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:16px auto 0;max-width:1600px}
+button{font:inherit;padding:9px 18px;border:1px solid #cfdded;border-radius:10px;color:#3c5679;background:#fff;cursor:pointer}
+button[aria-selected="true"]{background:#2b78ee;border-color:#2b78ee;color:#fff}button:hover{border-color:#2b78ee}button:focus-visible,a:focus-visible{outline:3px solid #8bbbff;outline-offset:3px}
+main{max-width:1648px;margin:auto;padding:20px 24px 32px}.caption{display:flex;justify-content:space-between;gap:20px;margin-bottom:12px;color:#536c8f}a{color:#2465bf;text-decoration:none}a:hover{text-decoration:underline}
+img{display:block;width:100%;height:auto;background:#fff;border:1px solid #d5e0ef;border-radius:14px}footer{font-size:12px;color:#6b7f9d;margin-top:14px}
+@media(max-width:700px){header{padding:14px}.top{display:block}h1{font-size:18px}.note{margin-top:6px}.tabs{gap:6px}button{padding:7px 10px}main{padding:14px}.caption{font-size:12px}}
+</style></head>
+<body><header><div class="top"><h1>灵境 · 1v1 对战状态设计</h1><span class="note">2026-10-25 · 设计稿预览 · 画面数值与倒计时为示意</span></div><div id="tabs" class="tabs" role="tablist" aria-label="选择设计状态"></div></header>
+<main><div class="caption"><span id="caption"></span><a id="original" href="01-charging.png" target="_blank" rel="noopener">查看高清原图 ↗</a></div><img id="preview" src="01-charging.png" alt="蓄力中：三个基础技能，36%蓄力，大招隐藏"><footer>镜像卡片 · 等级位于头像下方 · 属性图标跟随名字 · 右侧血条反向填充 · 三个等大圆形技能 · 蓄满后出现较大的金色大招</footer></main>
+<script>
+const states=[{"id":"charging","name":"蓄力中","file":"01-charging.png","tooltip":null,"charge":36},{"id":"attack","name":"悬停攻击","file":"02-hover-attack.png","tooltip":"打断属性","charge":36},{"id":"element","name":"悬停属性","file":"03-hover-element.png","tooltip":"无法闪避","charge":36},{"id":"dodge","name":"悬停闪避","file":"04-hover-dodge.png","tooltip":"闪避攻击","charge":36},{"id":"ultimate","name":"大招就绪","file":"05-ultimate-ready.png","tooltip":null,"charge":100}];
+const tabs=document.getElementById('tabs'),preview=document.getElementById('preview'),caption=document.getElementById('caption'),original=document.getElementById('original');
+function select(id){const state=states.find(s=>s.id===id)||states[0];preview.src=state.file;preview.alt=state.name+(state.tooltip?'，悬停说明：'+state.tooltip:'');caption.textContent=state.name+' · 蓄力 '+state.charge+'%'+(state.tooltip?' · 悬停说明：'+state.tooltip:state.charge===100?' · 左侧金色大招已出现':' · 未蓄满，大招隐藏');original.href=state.file;tabs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.id===state.id)));history.replaceState(null,'','#'+state.id);}
+states.forEach(state=>{const button=document.createElement('button');button.type='button';button.textContent=state.name;button.dataset.id=state.id;button.setAttribute('role','tab');button.setAttribute('aria-selected','false');button.onclick=()=>select(state.id);tabs.appendChild(button);});
+select(location.hash.slice(1)||'charging');
+</script></body></html>

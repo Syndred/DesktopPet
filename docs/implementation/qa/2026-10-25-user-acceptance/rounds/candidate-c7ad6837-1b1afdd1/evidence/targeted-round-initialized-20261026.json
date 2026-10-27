@@ -1,0 +1,101 @@
+{
+  "at": "2026-10-26T08:29:40.565Z",
+  "freeze": {
+    "format": "lingjing.user-acceptance.candidate-freeze.v1",
+    "frozenAt": "2026-10-26T08:21:45.547Z",
+    "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+    "sourceTree": "e021c60cf8bfe120ca5054986f09a0ab521037b3",
+    "buildWorktree": "C:/Users/Administrator/.codex/worktrees/acceptance-final/DesktopPet",
+    "exe": {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-c7ad6837\\Lingjing-0.1.8-portable-x64.exe",
+      "bytes": 169227844,
+      "sha256": "c6fdf69e7be15176bf0f0416f691cb99b7f394c44f8a12e2d9031c767d93980d"
+    },
+    "asar": {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\acceptance-final\\DesktopPet\\artifacts\\pc-cloud-upgrade\\win-unpacked\\resources\\app.asar",
+      "sha256": "a7e3f466f76c76f347dd25c351edc08512da28d07b66549e412b46a055962355"
+    },
+    "buildManifest": {
+      "schemaVersion": 2,
+      "builtAt": "2026-10-26T08:18:48.729Z",
+      "sourceCommit": "c7ad6837e1569dafd942528f375062debf714c2b",
+      "sourceTree": "e021c60cf8bfe120ca5054986f09a0ab521037b3",
+      "sourceDirtyFiles": [],
+      "codeFingerprint": "44d17fd2c756910290b367f6738ba378f41437d11078b3effa72f9206e84da6d",
+      "canonicalSourceFingerprint": "2d1f29f466e7e7d16754e6bf9148744f1822f78d17da876d27d0c012224f431f",
+      "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+      "compiledFingerprint": "764f781fa59df5ebb6fcdc09181606c68f98fa037f5937f107979d65c02c4940",
+      "codeFiles": 320,
+      "compiledFiles": 90,
+      "toolchain": {
+        "node": "24.21.0",
+        "electron": "44.9.3",
+        "sqlite": "13.0.3",
+        "vite": "7.3.7",
+        "typescript": "5.9.3",
+        "platform": "win32",
+        "arch": "x64"
+      },
+      "entrypoints": {
+        "main": "main/index.cjs",
+        "app": "ui/index.html",
+        "desktop": "ui/desktop.html",
+        "preload": "preload/index.cjs"
+      },
+      "publicCloud": {
+        "projectRef": "jbvrdmrkwpznbrvteive",
+        "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+        "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+        "resourcePath": "lingjing-cloud-public.json"
+      },
+      "packageName": "lingjing-desktop",
+      "runtimeClosure": {
+        "manifest": "runtime-closure.json",
+        "files": 119,
+        "edges": 205,
+        "sha256": "c0cd8b3278c7ac175ee113d6a8ffbac7f557d9a2c7552f32beeb33831930ea10"
+      }
+    },
+    "runtimeClosure": {
+      "files": 119,
+      "edges": 205,
+      "sha256": "c0cd8b3278c7ac175ee113d6a8ffbac7f557d9a2c7552f32beeb33831930ea10",
+      "jsAndMjs": [
+        "apps/pc-app/runtime/features/companions/cloud-domain.mjs",
+        "apps/pc-app/runtime/features/companions/display-identity.mjs",
+        "apps/pc-app/runtime/features/companions/growth.mjs",
+        "apps/pc-app/runtime/features/companions/instance.mjs",
+        "apps/pc-app/runtime/features/resources/preferences.mjs"
+      ]
+    },
+    "publicCloud": {
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\acceptance-final\\DesktopPet\\artifacts\\pc-cloud-upgrade\\win-unpacked\\resources\\lingjing-cloud-public.json"
+    },
+    "native": {
+      "packageVersion": "13.0.3",
+      "sha256": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a"
+    },
+    "packageAudit": "C:\\Users\\Administrator\\.codex\\worktrees\\acceptance-final\\DesktopPet\\artifacts\\qa\\final-candidate-build-c7ad6837-20261026\\package-audit.json",
+    "sourceGates": "C:\\Users\\Administrator\\.codex\\worktrees\\acceptance-final\\DesktopPet\\artifacts\\qa\\final-source-gates\\17da615f-fce1-4d48-b45d-e252aa7e8e1d\\verification.json",
+    "ledgerGate": "C:\\Users\\Administrator\\.codex\\worktrees\\acceptance-final\\DesktopPet\\artifacts\\qa\\final-ledger-gate-c7ad6837-20261026\\verification.json",
+    "fixes": "QA015 through QA026; 14 source-fix commits plus deployed-ledger alignment",
+    "cloud": {
+      "project": "jbvrdmrkwpznbrvteive",
+      "migrationVersion": "20261026080525",
+      "battleFunctionVersion": 4,
+      "liveSourceAndLegacyPreservationVerified": true
+    },
+    "originalProfilesAndRunIdentitiesRetained": true,
+    "nativeCandidateVerified": false,
+    "published": false
+  },
+  "exeIdentityVerified": true,
+  "originalMarkerVerified": true,
+  "oldCaseCount": 98,
+  "oldRowsChanged": 0,
+  "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+  "sourceCloudSync": "Root已执行fetch/pull，origin/main4786f976为当前c7ad HEAD祖先；09于08:25Z只读git merge-base exit0。",
+  "next": "Only approved ordinary UI cutover; no product DB/marker writes"
+}

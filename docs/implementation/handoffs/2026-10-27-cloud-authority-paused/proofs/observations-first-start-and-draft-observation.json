@@ -1,0 +1,99 @@
+{
+  "at": "2026-10-26T19:18:12.579Z",
+  "stage": "first-start-and-draft-observation",
+  "caseUpdates": [
+    {
+      "id": "N03",
+      "status": "failed",
+      "severity": "P2",
+      "executionState": "partial_failed",
+      "actual": "在A2原profile同模板小狐0001的人设框输入未提交的乙草稿后，A正常提交较新版本；返回A2时未点击保存，草稿被无提示替换成云端甲新稿。最小窗口设置滚动可达；其余缩放/长列表验证继续。",
+      "evidence": [
+        "native-A2-persona-unsaved-same-version.png",
+        "native-A-persona-concurrent-first-save.png",
+        "native-A2-stale-draft-after-A-save.png",
+        "cloudASecond-same-version-concurrent-before.json",
+        "cloudA-persona-v2-before-second-save.json",
+        "cloudASecond-unsaved-draft-replaced-after-cross-client-update.json"
+      ],
+      "findingRefs": [
+        "4E6-001"
+      ],
+      "hardTechnicalBlock": false,
+      "blockerGroup": null,
+      "blockerKind": null
+    },
+    {
+      "id": "T02",
+      "status": "running",
+      "executionState": "partial",
+      "actual": "A原小狐0001通过正常UI新增合成人设和记忆，A2同owner独立原profile自动读到同petId原文。正继续另一只同模板小狐、记忆编辑删除及重启。发现未保存人设草稿被跨端刷新替换，见4E6-001。",
+      "evidence": [
+        "native-A2-ai-settings-initial.png",
+        "native-A-fox-one-memory-visible.png",
+        "cloudA-same-version-concurrent-before.json",
+        "cloudASecond-same-version-concurrent-before.json"
+      ],
+      "findingRefs": [
+        "4E6-001"
+      ],
+      "hardTechnicalBlock": false,
+      "blockerGroup": null,
+      "blockerKind": null
+    },
+    {
+      "id": "S01",
+      "status": "running",
+      "executionState": "partial",
+      "actual": "A账号页分列伙伴部分可用、菜园与库存已读取、聊天与记忆已读取；正常UI保存合成用户名成功，待恢复原名与最终读回。原桌面请求按原云33回执退休为device-local，输入、base32、原历史保持。",
+      "evidence": [
+        "native-A-account-domains-first.png",
+        "native-A-synthetic-username-saved.png",
+        "cloudA-original-receipt-migration-verified.json",
+        "root-A-initialization-and-original-receipt-independent.json"
+      ],
+      "hardTechnicalBlock": false,
+      "blockerGroup": null,
+      "blockerKind": null
+    },
+    {
+      "id": "C12",
+      "status": "running",
+      "executionState": "partial",
+      "actual": "四原profile以冻结新4e包正常启动，原宠物petId/经济/战报保持；四原设置全文正常UI恢复并assert，A23/A2 2/B2 11/Local33。B2真实非空旧配置和选择差异的完整原文保存于archive及2条冲突；升级前云profile没有非空旧消息/记忆样本，不能伪称覆盖该迁移。继续编号与重启检查。",
+      "evidence": [
+        "native-four-first-start-restoration-seal.json",
+        "native-B2-initial-personal-migration-observation.json",
+        "root-B2-first-migration-originals-independent.json"
+      ],
+      "hardTechnicalBlock": false,
+      "blockerGroup": null,
+      "blockerKind": null
+    }
+  ],
+  "newIssues": [
+    {
+      "id": "4E6-001",
+      "severity": "P2",
+      "status": "open",
+      "title": "跨端个人记录刷新无提示替换尚未保存的人设草稿",
+      "cases": [
+        "N03",
+        "T02",
+        "S04"
+      ],
+      "actual": "A2在已读取persona cloud revision1的原小狐pet-3b746d1a-d968-42e1-9c13-73fd35a45273人设框输入乙草稿，未点Save；A正常Save另一甲新稿到cloud revision2。返回A2时文本框自动变为甲新稿，乙草稿消失，无提示或保全入口。A2该期间未提交本轮persona action。",
+      "expected": "未提交编辑应保留或明确提示远端版本变化，供用户选择、合并或取消；不能静默丢弃草稿。",
+      "evidence": [
+        "native-A2-persona-unsaved-same-version.png",
+        "native-A-persona-concurrent-first-save.png",
+        "native-A2-stale-draft-after-A-save.png",
+        "cloudASecond-same-version-concurrent-before.json",
+        "cloudA-persona-v2-before-second-save.json",
+        "cloudASecond-unsaved-draft-replaced-after-cross-client-update.json"
+      ],
+      "rootCauseQualification": "Actual normal native UI sequence on original A/A2 profiles. No business IPC, SQL write, time injection, helper, network interruption or model call. This observation does not prove or disprove server stale-write CAS because A2 did not submit its stale draft.",
+      "blocksWholeRound": false
+    }
+  ]
+}

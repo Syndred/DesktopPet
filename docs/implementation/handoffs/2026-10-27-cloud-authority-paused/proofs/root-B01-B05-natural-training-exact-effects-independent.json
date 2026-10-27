@@ -1,0 +1,121 @@
+{
+  "at": "2026-10-26T23:28:02.893Z",
+  "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "readOnly": true,
+  "credentialValuesRead": false,
+  "nativeUpstream": "Actual Supabase training and native UI; no simulated game settlement, clock or reward injection",
+  "sessionId": "battle-4b454308-b59f-4d52-9e98-96abdf075fae",
+  "petId": "pet-96de9234-462d-413b-ac72-81cfc1add244",
+  "cloudTrainingUuid": "4b454308-b59f-4d52-9e98-96abdf075fae",
+  "commands": {
+    "starts": 1,
+    "rounds": 14,
+    "total": 15,
+    "uniqueActionIds": 15,
+    "serverRevisions": "1..15",
+    "allFourActionsObserved": true
+  },
+  "originalFourRoundsRetainedAcrossNormalRestart": true,
+  "winner": "player",
+  "finalSnapshot": {
+    "enemy": {
+      "hp": 0,
+      "id": "enemy",
+      "anger": 44,
+      "maxHp": 120,
+      "element": "earth",
+      "statuses": [],
+      "freeDodgeUsed": true
+    },
+    "round": 14,
+    "player": {
+      "hp": 94,
+      "id": "player",
+      "anger": 42,
+      "maxHp": 120,
+      "element": "wood",
+      "statuses": [],
+      "freeDodgeUsed": true
+    }
+  },
+  "authority": {
+    "actionId": "battle-authority:training:4b454308-b59f-4d52-9e98-96abdf075fae",
+    "baseRevision": 37,
+    "revision": 38,
+    "checksum": "84e39238fa1cda93c0c2a279887ac17b51e745b7351e3c2460c5346672521635",
+    "exactlyOneSettlement": true
+  },
+  "reward": {
+    "won": true,
+    "mode": "training",
+    "petId": "pet-96de9234-462d-413b-ac72-81cfc1add244",
+    "seeds": {
+      "itemId": "seed:berry",
+      "source": "battle",
+      "quantity": 2,
+      "receiptId": "battle-4b454308-b59f-4d52-9e98-96abdf075fae"
+    },
+    "applied": true,
+    "actionId": "battle:battle-4b454308-b59f-4d52-9e98-96abdf075fae:account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "duplicate": false,
+    "sessionId": "battle-4b454308-b59f-4d52-9e98-96abdf075fae",
+    "experience": 20,
+    "currentLevel": 1,
+    "previousLevel": 1,
+    "currentExperience": 20,
+    "previousExperience": 0
+  },
+  "growth": {
+    "before": {
+      "level": 1,
+      "experience": 0,
+      "mood": 60,
+      "satiety": 60,
+      "affinity": 0,
+      "winsTotal": 0,
+      "stats": {
+        "hp": 130,
+        "atk": 26,
+        "def": 26,
+        "spd": 18
+      }
+    },
+    "after": {
+      "level": 1,
+      "experience": 20,
+      "mood": 60,
+      "satiety": 60,
+      "affinity": 0,
+      "winsTotal": 1,
+      "stats": {
+        "hp": 130,
+        "atk": 26,
+        "def": 26,
+        "spd": 18
+      }
+    }
+  },
+  "berrySeeds": {
+    "before": 2,
+    "after": 4
+  },
+  "otherThreePetsUnchanged": true,
+  "otherInventoryAndAllPlotsUnchanged": true,
+  "allOriginalActionsReportsAndRewardsRetained": true,
+  "otherModulesUnchanged": [
+    "settings",
+    "conversations",
+    "character-resources"
+  ],
+  "local": {
+    "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\790f5b6d-a900-4c6f-bb3f-e32237136ed1\\cloud-b-second-device-native",
+    "exactSessionReportRewardProjection": true,
+    "allFourPetsAndEntireInventoryMatchAuthority": true,
+    "originalArchivesAndDifferencesRetained": true,
+    "credentials": 0,
+    "settingsRevision": 15,
+    "fullSettingsRestored": true,
+    "onlyNewSession": "battle-4b454308-b59f-4d52-9e98-96abdf075fae"
+  },
+  "replayScope": "Normal native replay and post-replay no-duplicate check are separately collected by Native09; this proof does not claim dynamic frames under reduced motion."
+}

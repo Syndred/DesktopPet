@@ -1,0 +1,76 @@
+{
+  "at": "2026-10-26T10:32:16.5069364Z",
+  "runId": "9b0d1667-db6f-4ccc-b0dc-3d369a68d327",
+  "pid": 19332,
+  "port": 49905,
+  "status": "stopped",
+  "startedAt": "2026-10-26T10:11:02.125Z",
+  "stoppedAt": "2026-10-26T10:31:18.675Z",
+  "stopReason": "owned_stop_command",
+  "stopApprovalRef": "root-c7ad-qa017-stop-9b0d1667-1026",
+  "ownedExecSession": 83427,
+  "normalExecExitCode": 0,
+  "pidGone": true,
+  "listenerGone": true,
+  "requestCount": 3,
+  "audit": [
+    {
+      "at": "2026-10-26T10:14:37.542Z",
+      "event": "request_accepted",
+      "requestId": "sim-1",
+      "mode": "stream",
+      "bytes": 153,
+      "messageCount": 1,
+      "contentChars": 15
+    },
+    {
+      "at": "2026-10-26T10:14:44.042Z",
+      "event": "response_end",
+      "requestId": "sim-1",
+      "mode": "stream",
+      "reason": "complete",
+      "status": 200,
+      "deltas": 45
+    },
+    {
+      "at": "2026-10-26T10:16:52.308Z",
+      "event": "request_accepted",
+      "requestId": "sim-2",
+      "mode": "disconnect",
+      "bytes": 618,
+      "messageCount": 2,
+      "contentChars": 167
+    },
+    {
+      "at": "2026-10-26T10:16:54.343Z",
+      "event": "response_closed",
+      "requestId": "sim-2",
+      "mode": "disconnect",
+      "reason": "simulated_disconnect",
+      "deltas": 14
+    },
+    {
+      "at": "2026-10-26T10:21:18.208Z",
+      "event": "request_accepted",
+      "requestId": "sim-3",
+      "mode": "stream",
+      "bytes": 618,
+      "messageCount": 2,
+      "contentChars": 167
+    },
+    {
+      "at": "2026-10-26T10:21:24.734Z",
+      "event": "response_end",
+      "requestId": "sim-3",
+      "mode": "stream",
+      "reason": "complete",
+      "status": 200,
+      "deltas": 45
+    }
+  ],
+  "statePreserved": true,
+  "auditPreserved": true,
+  "productProcessUntouched": true,
+  "credentialValuesRead": false,
+  "externalModelSuccess": false
+}
