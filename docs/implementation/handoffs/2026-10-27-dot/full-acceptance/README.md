@@ -2,15 +2,17 @@
 
 ## 当前批次 b5dbcfe（2026-10-27）
 
-[逐项最新矩阵](coverage-b5dbcfe.json)：**30 当前完整原生通过 + 21 经代码影响核对复用 + 12 部分覆盖 + 0 原生输入受阻 + 35 尚未完整执行 = 98**。不是 98 全通过。复用保留原源版本、EXE 和证据 hash，不冒称新包重跑；不受影响项不随纯测试脚本提交清零。详见 [独立复用审查](reuse-original-evidence-review.json)。
+[逐项最新矩阵](coverage-b5dbcfe.json)：**31 当前完整原生通过 + 21 经代码影响核对复用 + 12 部分覆盖 + 0 原生输入受阻 + 34 尚未完整执行 = 98**。不是 98 全通过。复用保留原源版本、EXE 和证据 hash，不冒称新包重跑；不受影响项不随纯测试脚本提交清零。详见 [独立复用审查](reuse-original-evidence-review.json)。
 
 追加逐函数影响核对与已发布证据 hash 复用：A03/A04/A09/A10/T04/T05/G05/G06 共 8 项，保留旧源 `4e6c3de`、旧 EXE SHA 和准确原证明/截图路径；不是新原生重跑。T04/T05 的上游是**明确模拟的 loopback**，产品与云端读回为真实，不能称外部模型验证。G06 保留原自然成熟与跨客户端唯一收获证明；不重开旧账号/旧 grant。详见 [第二部分完整复用审查](reuse-original-evidence-review-part2.json)。A15 和密码重置未因此计为通过。
 
 670 新增 **D01/P03 原步骤完整通过**：真实审计 b5 便携 SFX，在一次性云端 Windows 离线 QA 显示 1/2/3/4/4 只、隐藏后补位/重显、设置上限 1–4 并逐窗核对原 petId、角色资源和无可见姓名编号。音量 0/100/37 保存后，四个实际桌面 renderer 均收到正确 owner 与音量政策，其他设置不变。这里是**应用音量政策生效，不是声压/系统音量实测**；未使用用户电脑或生产云。见 [原回执及独立核验](native-670-receipts/independent-summary.json)，原 JSON 与包复用证据完整随附。P01 新脚本尚未执行，不因此升级。
 
-T06 采用**当前原生 + 不受影响旧云证据组合**关闭：670 真实 SFX 的连接保存/取消、同原消息错误重试、备份无 key 和 UI 清 key 三项通过；旧 `4e6c3de` 实际云公开 connection 无 key 读回经源文件影响核对复用。上游明确为模拟 loopback，不是外部模型成功，也不是 670 新云上传。connection-selections 总回执仍因独立 C08-garrison 失败而 `passed=false`，**C08 未升级**。见 [完整证据组合与边界](native-670-receipts/T06-independent-summary.json)。
+T06 采用**当前原生 + 不受影响旧云证据组合**关闭：670 真实 SFX 的连接保存/取消、同原消息错误重试、备份无 key 和 UI 清 key 三项通过；旧 `4e6c3de` 实际云公开 connection 无 key 读回经源文件影响核对复用。上游明确为模拟 loopback，不是外部模型成功，也不是 670 新云上传。connection-selections 总回执仍因独立 C08-garrison 失败而 `passed=false`，**该批 C08 未升级，后续 63ae 窄复验结果另列如下**。见 [完整证据组合与边界](native-670-receipts/T06-independent-summary.json)。
 
 c8b 新增 **P01 完整通过**：同审计 b5 SFX 在 960×700 下，六分类真实 Tab/Enter 进入，19 个关键目标滚动到达；18 个启用控件均通过视口/容器/中心命中及可见焦点检查，一个空模型的保存连接按钮正常禁用，仅核几何。六张截图已查看，设置文档与版本不变。N02 以**混合证据完整关闭**：新增真实 HWND/PID 约束下鼠标边框从 1000×708 缩到 960×700，结合 0fd 实际最大化/恢复、新 P01 受影响表单，以及经零差异影响核对的旧 `4e6c3de` 原生文件选择器完整控件/取消和聊天底部布局截图。不把旧图称本轮重跑，不把未变选择器几何复用称当前 picker 业务自动化成功；内联保留记录面板也未冒充弹窗。见 [c8b 独立核验与完整回执](native-c8b-receipts/independent-summary.json)。
+
+63ae 新增 **C08 原步骤完整通过**：真实 b5 SFX 正常 UI 分别设置甲桌面、乙聊天、丙训练、丁驻守；最后总览选回甲，实际产品读回四角色仍各自归属。驻守前置是隔离本地 QA 的正常 IPC 自然 17 回合胜利，查看结果/占领/确认驻守为真实 UI；不冒称生产云、GPS 或每回合鼠标操作，不外溢 G03。该轮明确不重跑 T06。原回执 `territoryAttempts.settled=false` 是胜利结算前 checkpoint，后续所有权/驻守读取已成功；保留原证据不改。见 [C08 独立映射与回执](native-63ae-receipts/independent-summary.json)。
 
 当前实包仍是 b5dbcfe，EXE SHA-256 `ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb`。0fd 测试批次仅修改验收脚本，逐项校验原产品路径、ASAR 审计及包 hash 后复用。
 

@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "caseId": "C08",
+  "recommendation": "passed_current_native",
+  "runId": 40489949856,
+  "jobId": 122141930150,
+  "harnessCommit": "63ae62c4d689074623f7ed88fd2a7b7a4c452292",
+  "productCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "exeSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb",
+  "artifactId": 12728536689,
+  "artifactUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40489949856/artifacts/12728536689",
+  "zipSha256": "f7a34a1550d6800ef4dcf4f3bacdc5090f295d492670dcc2dc65b4a5c3f320a6",
+  "receipt": {
+    "path": "C08-evidence.json",
+    "sha256": "0f9fa048dca3418e1d4aa0af4bc1633a120b95e5cc4a4d5825e1e518f8de443c",
+    "bytes": 3432
+  },
+  "packageReuse": {
+    "path": "package-reuse.json",
+    "sha256": "2471d48ddcdac89d4a1cc1d40ea3d12f21306428d3a90e4cf04bf551d6b8e943"
+  },
+  "originalSteps": [
+    "A desktop",
+    "B chat",
+    "C training",
+    "D garrison"
+  ],
+  "originalExpected": "Each function selects its own pet, unaffected by global overview selection.",
+  "observed": {
+    "distinctPetIds": [
+      "pet-a118e788-a8f9-444c-a09a-7157653b42ec",
+      "pet-98623837-c18b-4c55-8d50-5f914e904758",
+      "pet-b0e9eb27-ae89-4b98-a39f-4a5c846de22d",
+      "pet-1e3fe92e-044e-4617-87bc-e74bc4fb2870"
+    ],
+    "firstThreeRoles": {
+      "desktop": "pet-a118e788-a8f9-444c-a09a-7157653b42ec",
+      "chat": "pet-98623837-c18b-4c55-8d50-5f914e904758",
+      "training": "pet-b0e9eb27-ae89-4b98-a39f-4a5c846de22d",
+      "overview": "pet-1e3fe92e-044e-4617-87bc-e74bc4fb2870"
+    },
+    "garrisonPetId": "pet-1e3fe92e-044e-4617-87bc-e74bc4fb2870",
+    "finalOverviewChange": "Actual UI selects A after confirming D garrison; product readbacks assert desktop A only, chat B, training C, garrison D unchanged.",
+    "naturalFixture": "Actual normal product IPC 17 battle rounds produce player victory; real UI opens existing result, occupies territory and confirms D garrison. Fixture rounds are not claimed mouse/UI battle turns.",
+    "receiptStatuses": "Three scoped rows passed; original C08 full scope is determined by this independent mapping, not by the generic fullCasePassed=false per-row template."
+  },
+  "screenshots": [
+    {
+      "artifactPath": "foundation/cloud-engineering/connectionSelections/run-1793097647436/C08-four-independent-roles.png",
+      "sha256": "9aa77ed272efbcaf77d525b328b309a8ae89dd1bc0eaed74c9550803f66841ce",
+      "visuallyReviewed": true
+    },
+    {
+      "artifactPath": "foundation/cloud-engineering/connectionSelections/run-1793097647436/C08-independent-first-three.png",
+      "sha256": "f389a49352db0629f11939a86a2a60ecb4b5e8f036a082dfcaebaf3f5ad47aef",
+      "visuallyReviewed": true
+    }
+  ],
+  "qualifications": [
+    "Audited b5 Windows SFX on disposable cloud runner; official fresh simulated-local QA.",
+    "No production cloud/GPS/real model response claim; original C08 does not require those.",
+    "T06 was explicitly skipped, existing T06 proof retained; no G03/GPS status upgrade.",
+    "territoryAttempts[0].settled=false is a checkpoint written before the winning result UI was settled, not final failure. Later successful owner and D-garrison product reads are asserted; raw receipt preserved unchanged.",
+    "Screenshots show overview selection/display state, not all four roles simultaneously; final role isolation additionally rests on original executed product-readback assertions."
+  ],
+  "cleanup": {
+    "ownedPidsExited": true,
+    "temporaryProfileRemoved": true
+  }
+}

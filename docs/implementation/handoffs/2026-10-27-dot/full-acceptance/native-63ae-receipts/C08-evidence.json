@@ -1,0 +1,93 @@
+{
+  "selectedCases": "c08",
+  "scope": "C08 only: actual audited Windows SFX and fresh local QA. UI A desktop/B chat/C battle/D garrison; natural local territory fixture. T06 not rerun and not claimed. No real cloud/GPS.",
+  "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "compiledFingerprint": "b951a6aa7a5d04a04178645f92c0840168e3656ae5cf6f8f0e4839c0328ab48f",
+  "exeSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb",
+  "cases": [
+    {
+      "id": "fixture-local",
+      "coverage": "Normal local QA UI registration and four normal same-template UI adoptions",
+      "status": "passed-native-scoped",
+      "fullCasePassed": false,
+      "startedAt": "2026-10-27T10:41:05.918Z",
+      "owner": "qa:14064d2e-7c8a-44a7-9d90-f9d248344b93:local-97a66636-3187-412a-8d7a-80d5280a8f2f",
+      "petIds": [
+        "pet-a118e788-a8f9-444c-a09a-7157653b42ec",
+        "pet-98623837-c18b-4c55-8d50-5f914e904758",
+        "pet-b0e9eb27-ae89-4b98-a39f-4a5c846de22d",
+        "pet-1e3fe92e-044e-4617-87bc-e74bc4fb2870"
+      ],
+      "mode": "simulated-local",
+      "completedAt": "2026-10-27T10:41:08.901Z"
+    },
+    {
+      "id": "C08-desktop-chat-training",
+      "coverage": "Actual UI assigns A desktop, B chat, C training independently; unrelated overview selection cannot replace those roles",
+      "status": "passed-native-scoped",
+      "fullCasePassed": false,
+      "startedAt": "2026-10-27T10:41:08.902Z",
+      "desktop": "pet-a118e788-a8f9-444c-a09a-7157653b42ec",
+      "chat": "pet-98623837-c18b-4c55-8d50-5f914e904758",
+      "training": "pet-b0e9eb27-ae89-4b98-a39f-4a5c846de22d",
+      "overview": "pet-1e3fe92e-044e-4617-87bc-e74bc4fb2870",
+      "completedAt": "2026-10-27T10:41:13.026Z"
+    },
+    {
+      "id": "C08-garrison",
+      "coverage": "Official local simulated territory, natural challenge fixture then real UI D confirmed garrison; four roles stay independent",
+      "status": "passed-native-scoped",
+      "fullCasePassed": false,
+      "startedAt": "2026-10-27T10:41:13.027Z",
+      "territoryId": "qa:14064d2e-7c8a-44a7-9d90-f9d248344b93:territory:5205:20245",
+      "garrisonPetId": "pet-1e3fe92e-044e-4617-87bc-e74bc4fb2870",
+      "naturalFixtureRounds": 17,
+      "fixtureRoundInput": "normal product IPC; UI starts/capture/garrison",
+      "source": "simulated-local",
+      "notRealCloud": true,
+      "completedAt": "2026-10-27T10:41:18.960Z"
+    }
+  ],
+  "passed": true,
+  "startedAt": "2026-10-27T10:40:47.709Z",
+  "territoryAttempts": [
+    {
+      "sessionId": "battle-41b9238b-ba8b-4921-8ad3-95dbad81bc0b",
+      "status": "finished",
+      "winner": "player",
+      "round": 17,
+      "playerPetId": "pet-b0e9eb27-ae89-4b98-a39f-4a5c846de22d",
+      "strategy": "normal element_attack and affordable ultimate",
+      "settled": false
+    }
+  ],
+  "territoryFixture": {
+    "sessionId": "battle-41b9238b-ba8b-4921-8ad3-95dbad81bc0b",
+    "status": "finished",
+    "winner": "player",
+    "round": 17,
+    "playerPetId": "pet-b0e9eb27-ae89-4b98-a39f-4a5c846de22d"
+  },
+  "loopbackClosed": true,
+  "offlineBlocked": [
+    {
+      "node": 0,
+      "fetch": 0,
+      "websocket": 0,
+      "chromium": 53
+    }
+  ],
+  "pidChecks": [
+    {
+      "pid": 2008,
+      "alive": false
+    },
+    {
+      "pid": 4024,
+      "alive": false
+    }
+  ],
+  "ownedProcessStopped": true,
+  "temporaryProfileRemoved": true,
+  "completedAt": "2026-10-27T10:41:19.558Z"
+}
