@@ -95,17 +95,30 @@ function CaptureOwnedMenu([string]$path,[IntPtr]$menu){
 
 $report=@{passed=$false;explorerPid=$explorer;action=$p.action;input=@();openedOverflow=$false}
 try{
- $roots=@($taskbar)
+ $roots=@($taskbar);$pointDiscoveredRoot=[IntPtr]::Zero
  foreach($cls in @('NotifyIconOverflowWindow','TopLevelWindowForOverflowXamlIsland')){$w=[QATray]::FindWindow($cls,$null);if($w -ne [IntPtr]::Zero -and [QATray]::IsWindowVisible($w) -and (Owner $w) -eq $explorer){$roots+= $w}}
+ # Discover the current overflow from the application's refreshed Tray.getBounds,
+ # not guessed shell class names. This is read-only; icon name/bounds/root guards
+ # below still must all succeed before any input.
+ if($p.trayBounds.width -gt 0 -and $p.trayBounds.height -gt 0){
+  $center=@{x=[int]($p.trayBounds.x+$p.trayBounds.width/2);y=[int]($p.trayBounds.y+$p.trayBounds.height/2)}
+  $at=RootAt $center
+  if($at -ne [IntPtr]::Zero -and (Owner $at) -eq $explorer -and [QATray]::IsWindowVisible($at)){
+   $cls=[System.Text.StringBuilder]::new(256);[QATray]::GetClassName($at,$cls,$cls.Capacity)|Out-Null
+   $nativeRect=New-Object QATray+RECT;if(-not [QATray]::GetWindowRect($at,[ref]$nativeRect)){throw 'TRAY_POINT_ROOT_BOUNDS_UNAVAILABLE'}
+   $report.trayPointRoot=@{hwnd=$at.ToInt64().ToString();className=$cls.ToString();pid=$explorer;bounds=@{x=$nativeRect.Left;y=$nativeRect.Top;width=($nativeRect.Right-$nativeRect.Left);height=($nativeRect.Bottom-$nativeRect.Top)};point=$center;source='Own Tray.getBounds center, read-only WindowFromPoint'}
+   if($roots -notcontains $at){$roots+=$at;$pointDiscoveredRoot=$at}
+  }
+ }
  # Read-only bounded provider diagnostics, restricted to verified Explorer roots.
  $report.discovery=@{trayBounds=$p.trayBounds;roots=@()}
  foreach($root in $roots){
   $all=Nodes $root;$rows=@();$count=0;$skipped=0
-  foreach($element in $all){$count++;$current=$element.Current;if($current.ProcessId -ne $explorer){$skipped++;continue};if($rows.Count -lt 120){$rows+=@{name=(Short $current.Name);automationId=(Short $current.AutomationId);className=(Short $current.ClassName);controlType=$current.ControlType.ProgrammaticName;pid=$current.ProcessId;offscreen=$current.IsOffscreen;bounds=(Rect $element)}}}
-  $report.discovery.roots+=@{hwnd=$root.ToInt64().ToString();count=$count;skippedForeignProvider=$skipped;truncated=($count -gt 120);elements=$rows;nativeChildren=@([QATray]::Children($root,$explorer))}
+  foreach($element in $all){$count++;$current=$element.Current;if($current.ProcessId -ne $explorer){$skipped++;continue};if($root -eq $pointDiscoveredRoot){$r=$current.BoundingRectangle;$b=$p.trayBounds;if($r.Right -le $b.x -or $r.Bottom -le $b.y -or $r.X -ge ($b.x+$b.width) -or $r.Y -ge ($b.y+$b.height)){continue}};if($rows.Count -lt 120){$rows+=@{name=(Short $current.Name);automationId=(Short $current.AutomationId);className=(Short $current.ClassName);controlType=$current.ControlType.ProgrammaticName;pid=$current.ProcessId;offscreen=$current.IsOffscreen;bounds=(Rect $element)}}}
+  $report.discovery.roots+=@{hwnd=$root.ToInt64().ToString();count=$count;skippedForeignProvider=$skipped;truncated=($count -gt 120);elements=$rows;nativeChildren=@([QATray]::Children($root,$explorer)|Where-Object {$root -ne $pointDiscoveredRoot -or ($_.x+$_.width -gt $p.trayBounds.x -and $_.y+$_.height -gt $p.trayBounds.y -and $_.x -lt ($p.trayBounds.x+$p.trayBounds.width) -and $_.y -lt ($p.trayBounds.y+$p.trayBounds.height))})}
  }
  $icons=@()
- foreach($root in $roots){foreach($e in (Nodes $root)){if($e.Current.ProcessId -eq $explorer -and $e.Current.Name -ceq '灵境 · 桌面伙伴' -and -not $e.Current.IsOffscreen){$icons+=@{element=$e;root=$root}}}}
+ foreach($root in $roots){foreach($e in (Nodes $root)){$current=$e.Current;if($current.ProcessId -ne $explorer){continue};if($root -eq $pointDiscoveredRoot){$r=$current.BoundingRectangle;$b=$p.trayBounds;if($r.Right -le $b.x -or $r.Bottom -le $b.y -or $r.X -ge ($b.x+$b.width) -or $r.Y -ge ($b.y+$b.height)){continue}};if($current.Name -ceq '灵境 · 桌面伙伴' -and -not $current.IsOffscreen){$icons+=@{element=$e;root=$root}}}}
  if($icons.Count -eq 0 -and $p.allowOverflow -eq $true){
   $buttons=@((Nodes $taskbar)|Where-Object {$_.Current.ProcessId -eq $explorer -and ($_.Current.Name -ceq 'Show Hidden Icons') -and $_.Current.AutomationId -ceq 'SystemTrayIcon' -and $_.Current.ClassName -ceq 'SystemTray.NormalButton' -and $_.Current.ControlType -eq [System.Windows.Automation.ControlType]::Button -and -not $_.Current.IsOffscreen})
   if($buttons.Count -ne 1){throw 'UNIQUE_OVERFLOW_BUTTON_UNAVAILABLE'}
