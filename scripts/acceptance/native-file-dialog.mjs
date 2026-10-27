@@ -7,7 +7,7 @@
 // https://learn.microsoft.com/dotnet/api/system.windows.automation.invokepattern.invoke
 import assert from 'node:assert/strict';
 import {spawn} from 'node:child_process';
-import {mkdtempSync,readFileSync,writeFileSync,realpathSync,lstatSync,existsSync,rmSync} from 'node:fs';
+import {mkdtempSync,mkdirSync,readFileSync,writeFileSync,realpathSync,lstatSync,existsSync,rmSync} from 'node:fs';
 import {join,resolve,relative,isAbsolute,dirname,sep} from 'node:path';
 import {randomUUID,createHash} from 'node:crypto';
 import {tmpdir} from 'node:os';
@@ -109,6 +109,7 @@ $tw=[System.Windows.Automation.TreeWalker]
 $ct=[System.Windows.Automation.ControlType]
 $info=[System.Windows.Automation.AutomationElement+AutomationElementInformation]
 Require-Method ([System.Windows.Automation.Automation]) 'Compare' @($ae,$ae) ([bool]) $true
+Require-Method ([System.Windows.Automation.ClientSettings]) 'RegisterClientSideProviderAssembly' @([System.Reflection.AssemblyName]) ([void]) $true
 Require-Method $ae 'FromHandle' @([IntPtr]) $ae $true
 Require-Method $ae 'FindAll' @([System.Windows.Automation.TreeScope],[System.Windows.Automation.Condition]) ([System.Windows.Automation.AutomationElementCollection]) $false
 Require-Method $ae 'TryGetCurrentPattern' @([System.Windows.Automation.AutomationPattern],([object].MakeByRefType())) ([bool]) $false
@@ -137,15 +138,46 @@ $apiChecks++
 if(-not [System.Collections.IEnumerable].IsAssignableFrom([System.Windows.Automation.AutomationElementCollection])){throw 'UIA_API_COLLECTION_NOT_ENUMERABLE'}
 $apiChecks++
 Emit @{phase='uia-api-contract-verified';checks=$apiChecks;reflectionOnly=$true;uiAccessed=$false}
+# c8 Windows evidence: native Edit1148/Combo1148/Button1 exist, but managed
+# UIA exposes none and the standard Win32 client-side provider is not loaded.
+# Explicitly register ONLY the .NET Framework Microsoft GAC provider, never a
+# downloaded/local custom provider. Registration changes this helper only.
+# https://learn.microsoft.com/dotnet/api/system.windows.automation.clientsettings.registerclientsideproviderassembly
+$providerName='UIAutomationClientsideProviders, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35'
+$provider=[System.Reflection.Assembly]::Load($providerName)
+if(-not $provider.GlobalAssemblyCache -or -not [String]::Equals($provider.GetName().FullName,$providerName,[StringComparison]::OrdinalIgnoreCase)){throw 'SYSTEM_UIA_PROVIDER_IDENTITY_MISMATCH'}
+[System.Windows.Automation.ClientSettings]::RegisterClientSideProviderAssembly($provider.GetName())
+Emit @{phase='system-win32-uia-provider-registered';identity=$provider.GetName().FullName;globalAssemblyCache=$provider.GlobalAssemblyCache;uiAccessed=$false}
 
 
-Add-Type @'
+
+Add-Type -AssemblyName System.Drawing
+Add-Type -ReferencedAssemblies ([System.Drawing.Bitmap].Assembly.Location) @'
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 public static class OwnedDialogNative {
  public delegate bool Callback(IntPtr hwnd,IntPtr data);
+ [StructLayout(LayoutKind.Sequential)] public struct Rect {public int left,top,right,bottom;}
+ [DllImport("user32.dll")] static extern bool GetWindowRect(IntPtr hwnd,out Rect rect);
+ [DllImport("user32.dll")] static extern bool PrintWindow(IntPtr hwnd,IntPtr hdc,uint flags);
+ public static void CaptureDialog(IntPtr hwnd,uint pid,string output){
+  if(hwnd==IntPtr.Zero || !IsWindow(hwnd) || Pid(hwnd)!=pid || Class(hwnd)!="#32770" || GetForegroundWindow()!=hwnd)throw new InvalidOperationException("CAPTURE_DIALOG_IDENTITY_MISMATCH");
+  Rect r;if(!GetWindowRect(hwnd,out r))throw new InvalidOperationException("CAPTURE_DIALOG_BOUNDS_FAILED");
+  int w=r.right-r.left,h=r.bottom-r.top;
+  if(w<100 || h<100 || w>4096 || h>4096)throw new InvalidOperationException("CAPTURE_DIALOG_BOUNDS_REFUSED");
+  using(var bitmap=new System.Drawing.Bitmap(w,h)){
+   using(var graphics=System.Drawing.Graphics.FromImage(bitmap)){
+    IntPtr dc=graphics.GetHdc();bool ok;
+    try{ok=PrintWindow(hwnd,dc,0);}finally{graphics.ReleaseHdc(dc);}
+    if(!ok)throw new InvalidOperationException("CAPTURE_DIALOG_PRINT_FAILED");
+   }
+   if(!IsWindow(hwnd) || Pid(hwnd)!=pid || GetForegroundWindow()!=hwnd)throw new InvalidOperationException("CAPTURE_DIALOG_CHANGED");
+   using(var stream=new System.IO.FileStream(output,System.IO.FileMode.CreateNew,System.IO.FileAccess.Write)){bitmap.Save(stream,System.Drawing.Imaging.ImageFormat.Png);}
+  }
+ }
+
  [DllImport("user32.dll")] public static extern bool EnumWindows(Callback callback,IntPtr data);
  // Metadata-only diagnostics, always rooted at a nonzero verified dialog.
  [DllImport("user32.dll")] static extern bool EnumChildWindows(IntPtr parent,Callback callback,IntPtr data);
@@ -324,6 +356,16 @@ try{
    }
   }
   Emit @{phase='filename-control-diagnostic';candidateCount=$candidates.Count;actionCandidateCount=$actions.Count;controls=$metadata;maxControls=16;maxParentDepth=3;valuesCollected=$false}
+  # PrintWindow renders only this exact HWND, never a desktop crop/other window.
+  if($c.dialogCapturePath){
+   try{
+   [void][System.IO.Directory]::CreateDirectory([System.IO.Path]::GetDirectoryName([string]$c.dialogCapturePath))
+   Dialog-Still-Exact $dialog
+   [OwnedDialogNative]::CaptureDialog($dialog,[uint32]$ownerPid,[string]$c.dialogCapturePath)
+   Dialog-Still-Exact $dialog
+   Emit @{phase='owned-dialog-image-captured';path=[string]$c.dialogCapturePath;method='PrintWindow-exact-HWND';dialogHandle=$dialog.ToInt64().ToString();desktopCaptured=$false}
+   }catch{Emit @{phase='owned-dialog-image-unavailable';inputPerformed=$false}}
+  }
   if($candidates.Count -ne 1){throw 'UNIQUE_STANDARD_FILENAME_EDIT_NOT_FOUND'}
   throw 'UNIQUE_EXPECTED_OPEN_SAVE_ACTION_NOT_FOUND'
  }
@@ -371,7 +413,9 @@ export async function driveNativeFileDialog({scope,kind,filePath,ownerPid,ownerW
  const file=validateFile(scope,filePath,kind);const original=kind==='open'?readFileSync(file):null;
  if(kind==='open'){assert.match(expectedSha256||'',/^[a-f0-9]{64}$/);assert.equal(sha(original),expectedSha256,'Open fixture must match caller-selected exact bytes');}
  const id=randomUUID(),scriptFile=join(scope.directory,`dialog-controller-${id}.ps1`),settingsFile=join(scope.directory,`dialog-controller-${id}.json`);
- writeFileSync(scriptFile,'\ufeff'+controller,{flag:'wx'});writeFileSync(settingsFile,JSON.stringify({kind,filePath:file,ownerPid,ownerWindowHandle:String(ownerWindowHandle),ownerExecutablePath:resolve(ownerExecutablePath),expectedTitle,expectedSha256:kind==='open'?expectedSha256:null,timeoutMs}),{flag:'wx'});
+ const captureRoot=resolve('artifacts/foundation/cloud-engineering/backup');mkdirSync(captureRoot,{recursive:true});
+ const captureDirectory=canonical(mkdtempSync(join(captureRoot,'run-native-dialog-'))),dialogCapturePath=join(captureDirectory,'owned-native-dialog.png');
+ writeFileSync(scriptFile,'\ufeff'+controller,{flag:'wx'});writeFileSync(settingsFile,JSON.stringify({kind,filePath:file,ownerPid,ownerWindowHandle:String(ownerWindowHandle),ownerExecutablePath:resolve(ownerExecutablePath),expectedTitle,expectedSha256:kind==='open'?expectedSha256:null,timeoutMs,dialogCapturePath}),{flag:'wx'});
  const shell=join(process.env.SystemRoot||process.env.WINDIR||'C:\\Windows','System32','WindowsPowerShell','v1.0','powershell.exe');
  const systemKeys=new Set(['PATH','PATHEXT','SYSTEMROOT','SYSTEMDRIVE','WINDIR','COMSPEC','TEMP','TMP','TMPDIR','USERPROFILE','APPDATA','LOCALAPPDATA','PROGRAMFILES','PROGRAMFILES(X86)','PROGRAMW6432','RUNNER_TRACKING_ID']);
  const env=Object.fromEntries(Object.entries(process.env).filter(([key])=>systemKeys.has(key.toUpperCase())));
@@ -440,8 +484,8 @@ export async function selftestNativeDialogApis(){
    timer=setTimeout(()=>no(Error(`UIA API selftest timeout: ${stderr}; phases=${stdout.slice(-4000)}`)),35000);
   });
   const phases=stdout.trim().split(/\r?\n/).filter(Boolean).map(line=>JSON.parse(line));
-  assert.ok(phases.some(row=>row.phase==='uia-api-selftest-passed'&&row.uiAccessed===false&&row.checks===30));
-  return {passed:true,reflectionChecks:true,interopCompiled:true,noUiCalls:true,appStarted:false,phases};
+  assert.ok(phases.some(row=>row.phase==='uia-api-selftest-passed'&&row.uiAccessed===false&&row.checks===31));
+  return {passed:true,reflectionChecks:true,systemWin32ProviderRegistered:true,interopCompiled:true,noUiCalls:true,appStarted:false,phases};
  }finally{
   clearTimeout(timer);
   if(child.exitCode===null&&child.signalCode===null)child.kill();
