@@ -1,0 +1,39 @@
+{
+  "scope": "Human-written acceptance summary only. Detailed evidence and the versioned matrix remain unpublished.",
+  "case": "M06",
+  "status": "passed-original-scope",
+  "basis": "Successful normal escape and natural defeat subcases from the earlier run are combined with a later real elapsed-time expiry subcase on the same audited Windows portable package. The expired original encounter was rejected on the original-intent retry without mutation.",
+  "elapsedTime": {
+    "createdUtc": "2026-10-27T13:56:22.829Z",
+    "checkedUtc": "2026-10-27T14:26:23.831Z",
+    "observedMilliseconds": 1801002,
+    "description": "30 minutes and 1.002 seconds of actual elapsed time; no clock change or injected expiry."
+  },
+  "evidence": [
+    {
+      "run": "https://github.com/Syndred/DesktopPet/actions/runs/40515032680",
+      "artifact": "https://github.com/Syndred/DesktopPet/actions/runs/40515032680/artifacts/12738607478",
+      "zipSha256": "f7234cd43038b0ee06a5684486d8f68deb515b9a2019e44e300829abbfd015a5"
+    },
+    {
+      "run": "https://github.com/Syndred/DesktopPet/actions/runs/40516110798",
+      "artifact": "https://github.com/Syndred/DesktopPet/actions/runs/40516110798/artifacts/12741153606",
+      "zipSha256": "76df59ed50efdfa92e1663d428986337a527e1ef0f826b82dd6971f1033ff1ae"
+    }
+  ],
+  "qualifications": [
+    "The earlier run as a whole failed its expiry subcase. Its successful escape/defeat subcases are retained without changing that original failure.",
+    "The later run checks expiry only. Neither run alone is presented as all three subcases passing.",
+    "This is official isolated simulated-local acceptance, not verification of real GPS, a live map service or cloud authority.",
+    "These three subcases establish one original M06 case."
+  ],
+  "coverage": {
+    "acceptedOriginalCases": 66,
+    "totalOriginalCases": 98,
+    "fullCasesOnThisExactPackage": 6,
+    "sourceBoundEarlierCasesCarriedAfterImpactReview": 60,
+    "partial": 5,
+    "notExecuted": 27,
+    "qualification": "One newly accepted original case; prior source-bound cases are not described as newly rerun."
+  }
+}
