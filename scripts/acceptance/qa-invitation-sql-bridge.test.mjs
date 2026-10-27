@@ -3,12 +3,13 @@ import {randomUUID,randomBytes} from 'node:crypto';
 import {mkdtempSync,rmSync} from 'node:fs';
 import {join} from 'node:path';
 import {tmpdir} from 'node:os';
+import {createCompanionInstance,listBuiltinTemplates} from '../../apps/pc-app/runtime/features/companions/instance.mjs';
 import {startInvitationSqlBridge} from './qa-invitation-sql-bridge.mjs';
 const runId=randomUUID(),token=randomBytes(32).toString('hex'),directory=mkdtempSync(join(tmpdir(),'invitation-sql-contract-'));
-const actors=['a','b'].map(role=>({owner:`qa:${runId}:${role}`,account:`contract_${role}`,username:`Contract ${role}`,pet:{ownerAccountId:`qa:${runId}:${role}`,petId:`pet-${role}`,appearance2d:'builtin:lingjing-yuwan-v2',petName:'Test',element:'water'}}));
+const actors=['a','b'].map(role=>{const owner=`qa:${runId}:${role}`;return{owner,account:`contract_${role}`,username:`Contract ${role}`,pet:createCompanionInstance({ownerAccountId:owner,template:listBuiltinTemplates().find(t=>t.element==='metal'),input:{name:'Test',showOnDesktop:false},source:'adopt',petId:`pet-${randomUUID()}`,createdAt:new Date().toISOString(),count:0})};});
 let bridge;
 try{
- bridge=await startInvitationSqlBridge({runId,token,directory});for(const a of actors)await bridge.registerActor(a);
+ bridge=await startInvitationSqlBridge({runId,token,directory});await assert.rejects(bridge.registerActor({...actors[0],pet:{...actors[0].pet,name:undefined,resource:undefined,petName:'wrong DTO',appearance2d:'wrong'}}),/INVALID_COMPANION_INSTANCE/);for(const a of actors)await bridge.registerActor(a);
  async function invoke(a,op,input={}){const response=await fetch(bridge.endpoint,{method:'POST',headers:{'content-type':'application/json','x-qa-run':runId,'x-qa-token':token},body:JSON.stringify({op,...input,userId:a.owner,userAccount:a.account,username:a.username,sessionToken:`qa:${runId}:${a.owner}`})});const value=await response.json();return{status:response.status,...value,data:value.data??value};}
  assert.equal((await invoke({...actors[0],owner:'foreign'},'list_duel_requests')).code,'QA_BOUNDARY_REJECTED');
  assert.equal((await invoke(actors[0],'submit_action')).code,'QA_BOUNDARY_REJECTED');
