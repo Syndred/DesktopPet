@@ -34,7 +34,8 @@ app.whenReady().then(()=>session.defaultSession.webRequest.onBeforeRequest({urls
 require(${JSON.stringify(join(root,'apps/pc-app/dist/main/index.cjs'))});
 `,{flag:'wx'});
 let app,main,pets=[],initialCursor,mouseBlocked=false;
-// The helper only moves the cursor, holds/releases left mouse, and checks owning PID.
+// The helper moves/releases the cursor button only behind owned-window guards;
+// diagnostics read window handles, ownership, visibility, styles and bounds only.
 // It does not change OS preferences, install hooks, or target foreign process windows.
 const nativeSource=String.raw`
 $ErrorActionPreference='Stop'
@@ -46,6 +47,11 @@ public static class QAInput {
  [StructLayout(LayoutKind.Sequential)] public struct INPUT {public uint type;public MOUSEINPUT mi;}
  [DllImport("user32.dll")] public static extern bool SetCursorPos(int x,int y);
  [DllImport("user32.dll")] public static extern bool GetCursorPos(out POINT p);
+ [StructLayout(LayoutKind.Sequential)] public struct RECT {public int Left;public int Top;public int Right;public int Bottom;}
+ [DllImport("user32.dll")] public static extern bool IsWindowVisible(IntPtr h);
+ [DllImport("user32.dll")] public static extern bool IsIconic(IntPtr h);
+ [DllImport("user32.dll")] public static extern bool GetWindowRect(IntPtr h,out RECT r);
+ [DllImport("user32.dll",EntryPoint="GetWindowLongW")] public static extern int GetWindowLong(IntPtr h,int index);
  [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
  [DllImport("user32.dll")] public static extern IntPtr WindowFromPoint(POINT point);
  [DllImport("user32.dll")] public static extern IntPtr GetAncestor(IntPtr hwnd,uint flags);
@@ -57,6 +63,12 @@ public static class QAInput {
 $p=([Console]::In.ReadToEnd()|ConvertFrom-Json)
 $q=New-Object QAInput+POINT
 if($p.action -eq 'read'){[QAInput]::GetCursorPos([ref]$q)|Out-Null;@{x=$q.X;y=$q.Y}|ConvertTo-Json -Compress;exit}
+if($p.action -eq 'probe'){
+ [QAInput]::GetCursorPos([ref]$q)|Out-Null
+ $hit=[QAInput]::WindowFromPoint($q);$rootWindow=[QAInput]::GetAncestor($hit,2);$fg=[QAInput]::GetForegroundWindow()
+ function Describe([IntPtr]$h){[uint32]$ownerPid=0;[QAInput]::GetWindowThreadProcessId($h,[ref]$ownerPid)|Out-Null;$r=New-Object QAInput+RECT;[QAInput]::GetWindowRect($h,[ref]$r)|Out-Null;return @{handle=$h.ToInt64().ToString();processId=$ownerPid;visible=[QAInput]::IsWindowVisible($h);minimized=[QAInput]::IsIconic($h);extendedStyle=[QAInput]::GetWindowLong($h,-20);bounds=@{x=$r.Left;y=$r.Top;width=$r.Right-$r.Left;height=$r.Bottom-$r.Top}}}
+ @{cursor=@{x=$q.X;y=$q.Y};hit=(Describe $hit);root=(Describe $rootWindow);foreground=(Describe $fg);expected=(Describe ([IntPtr][long]$p.windowHandle))}|ConvertTo-Json -Compress -Depth 5;exit
+}
 if($p.action -eq 'release'){[QAInput]::Button(4);exit}
 if($p.action -eq 'restore'){if(-not [QAInput]::SetCursorPos($p.point.x,$p.point.y)){throw 'CURSOR_RESTORE_BLOCKED'};exit}
 [uint32]$foreground=0;[QAInput]::GetWindowThreadProcessId([QAInput]::GetForegroundWindow(),[ref]$foreground)|Out-Null
@@ -93,7 +105,7 @@ async function desktop(pet){return poll(async()=>app.windows().find(p=>p.url().e
 async function metrics(pet){const page=await desktop(pet);await page.locator('.resource-stage[data-status="ready"] canvas').waitFor();const dom=await page.locator('.cp-desktop-visual').evaluate(el=>{const r=el.getBoundingClientRect(),canvas=el.querySelector('canvas');return {visual:{x:r.x,y:r.y,width:r.width,height:r.height},dpr:devicePixelRatio,canvas:{width:canvas.width,height:canvas.height},events:window.__desktopInputs||[]};});const windows=await inventory();return {dom,native:windows.find(w=>w.url.endsWith('/desktop/'+encodeURIComponent(pet.petId))),saved:await invoke('companions','get',{petId:pet.petId})};}
 async function caseRun(id,work){try{const detail=await work();proof.checks.push({id,status:'passed-isolated-subset',detail});}catch(error){const blocked=/NATIVE_CURSOR_BLOCKED|NATIVE_INPUT_BLOCKED|OWNED_WINDOW_NOT_FOREGROUND|OWNED_PET_NOT_AT_POINT|START_OUTSIDE_OWNED_WINDOW/.test(String(error));proof.checks.push({id,status:blocked?'blocked':'failed',error:String(error)});if(blocked)mouseBlocked=true;await main?.screenshot({path:join(output,id+'-failure.png'),timeout:10000}).catch(()=>{});}finally{save();}}
 async function drag(pet,target){
- const before=await metrics(pet),page=await desktop(pet);await page.evaluate(()=>{window.__desktopInputs=[];if(!window.__desktopObserver){window.__desktopObserver=true;for(const type of ['pointerdown','pointerup'])document.addEventListener(type,event=>window.__desktopInputs.push({type:event.type,trusted:event.isTrusted,x:event.screenX,y:event.screenY}),true);}});
+ const before=await metrics(pet),page=await desktop(pet);await page.evaluate(()=>{window.__desktopInputs=[];if(!window.__desktopObserver){window.__desktopObserver=true;for(const type of ['mousemove','mouseenter','mouseleave','pointermove','pointerenter','pointerleave','pointerdown','pointerup'])document.addEventListener(type,event=>{window.__desktopInputs.push({type:event.type,trusted:event.isTrusted,x:event.screenX,y:event.screenY,clientX:event.clientX,clientY:event.clientY});if(window.__desktopInputs.length>96)window.__desktopInputs.shift();},true);}});
  const opaque = await page.locator('.cp-desktop-visual').evaluate(async visual => {
    const canvas = visual.querySelector('canvas'), vr = visual.getBoundingClientRect(), cr = canvas.getBoundingClientRect();
    const probe = document.createElement('canvas'); probe.width = canvas.width; probe.height = canvas.height;
@@ -110,8 +122,19 @@ async function drag(pet,target){
    throw Error('NATIVE_INPUT_BLOCKED: no readable opaque target pixel; no OS press attempted');
  });
  const points=await app.evaluate(({BrowserWindow,screen},{url,opaque,target})=>{const win=BrowserWindow.getAllWindows().find(w=>w.webContents.getURL()===url),bounds=win.getBounds();const main=BrowserWindow.getAllWindows().find(w=>w.webContents.getURL().includes('/ui/index.html'));main.show();main.focus();const offset={x:opaque.x,y:opaque.y};return {from:screen.dipToScreenPoint({x:Math.round(bounds.x+offset.x),y:Math.round(bounds.y+offset.y)}),to:screen.dipToScreenPoint({x:Math.round(target.x+offset.x),y:Math.round(target.y+offset.y)}),bounds:screen.dipToScreenRect(win,bounds),processId:process.pid,windowHandle:(()=>{const h=win.getNativeWindowHandle();return (h.length===8?h.readBigInt64LE():BigInt(h.readInt32LE())).toString();})()};},{url:page.url(),opaque,target});
- proof.inputAttempts ||= []; proof.inputAttempts.push({petId:pet.petId,points,opaque,at:new Date().toISOString()});save();
- let cursor;try{cursor=JSON.parse(native({action:'drag',...points}));}finally{native({action:'release'});}
+ const observe=async(includeNative=true)=>({
+   native:includeNative?JSON.parse(native({action:'probe',windowHandle:points.windowHandle})):null,
+   ownedWindows:await app.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows().map(win=>{const handle=win.getNativeWindowHandle();return {id:win.id,handle:(handle.length===8?handle.readBigInt64LE():BigInt(handle.readInt32LE())).toString(),kind:win.webContents.getURL().includes('/desktop.html')?'pet':'main',visible:win.isVisible(),minimized:win.isMinimized(),alwaysOnTop:win.isAlwaysOnTop(),focused:win.isFocused(),bounds:win.getBounds()};})),
+   renderer:await page.evaluate(point=>{let sampledAlpha=null;try{const canvas=document.querySelector('.cp-desktop-visual canvas'),rect=canvas.getBoundingClientRect(),x=Math.floor((point.x-rect.x)/rect.width*canvas.width),y=Math.floor((point.y-rect.y)/rect.height*canvas.height);if(x>=0&&y>=0&&x<canvas.width&&y<canvas.height){const probe=document.createElement('canvas');probe.width=canvas.width;probe.height=canvas.height;const ctx=probe.getContext('2d',{willReadFrequently:true});ctx.drawImage(canvas,0,0);sampledAlpha=ctx.getImageData(x,y,1,1).data[3];}}catch{}return {events:window.__desktopInputs||[],visualHovered:document.querySelector('.cp-desktop-visual')?.matches(':hover')??false,surfaceHovered:document.querySelector('.cp-desktop-surface')?.matches(':hover')??false,pixelAtOriginalClientPointAlpha:sampledAlpha,focused:document.hasFocus(),visibility:document.visibilityState};},opaque),
+   host:(await invoke('accounts','settingsGet')).host
+ });
+ const attempt={petId:pet.petId,points,opaque,at:new Date().toISOString(),before:await observe(false)};
+ proof.inputAttempts ||= [];proof.inputAttempts.push(attempt);save();
+ let cursor;
+ try{cursor=JSON.parse(native({action:'drag',...points}));attempt.nativeGuard='matched-and-pressed';}
+ catch(error){attempt.nativeGuard=/OWNED_PET_NOT_AT_POINT|OWNED_WINDOW_NOT_FOREGROUND|START_OUTSIDE_OWNED_WINDOW|NATIVE_CURSOR_BLOCKED/.test(String(error))?'blocked-before-press':'native-operation-failed-outcome-unverified';throw error;}
+ finally{native({action:'release'});try{attempt.after=await observe();}catch(error){attempt.observationError=String(error);}save();}
+
  let after;
  try{after=await poll(()=>metrics(pet),m=>m.dom.events.some(e=>e.type==='pointerup')&&Math.abs(m.saved.desktop.position.x-m.native.bounds.x)<=1&&Math.abs(m.saved.desktop.position.y-m.native.bounds.y)<=1, 'No settled pointerup/position after native drag');}
  catch(error){const observed=await metrics(pet);if(!observed.dom.events.some(e=>e.type==='pointerdown'&&e.trusted))throw Error('NATIVE_INPUT_BLOCKED: physical cursor moved but owned renderer did not receive a trusted press');throw error;}

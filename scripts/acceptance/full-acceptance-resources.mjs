@@ -77,17 +77,47 @@ async function databaseSnapshot() {
     finally { db.close(); }
   }, profile);
 }
-async function frames() {
+function playbackObservationPlan(resource, action) {
+  const clip = resource.clips.find(value => value.name === resource.actions[action]) || resource.clips.find(value => value.name === resource.actions.idle) || resource.clips[0];
+  assert.ok(clip, 'An authored clip is required');
+  const frameNames = clip.frameNames || resource.atlas?.animations?.[clip.name];
+  assert.ok(Array.isArray(frameNames) && frameNames.length > 0, 'Real atlas frame sequence is required');
+  const regions = frameNames.map(name => {
+    const frame = resource.atlas?.frames?.[name]?.frame;
+    assert.ok(frame && [frame.x,frame.y,frame.w,frame.h].every(Number.isFinite), 'Authored atlas frame must have a real region');
+    return [frame.x,frame.y,frame.w,frame.h].join(',');
+  });
+  const fps = resource.calibration?.desktop?.fps || clip.fps || 8;
+  assert.ok(Number.isFinite(fps) && fps > 0, 'Effective authored frame rate must be positive');
+  // Idle intentionally holds frame_0 for 15 slots (1.875 s at 8 fps).
+  // Observe a complete authored cycle + scheduling margin, not an arbitrary
+  // 750 ms slice; unchanged pixels during that authored hold are not a freeze.
+  const durationMs = Math.max(750, Math.ceil(frameNames.length / fps * 1000) + 500);
+  assert.ok(durationMs <= 10000, 'Authored clip exceeds this bounded observation scope');
+  return { clip:clip.name, frameCount:frameNames.length, fps, durationMs, regions:[...new Set(regions)] };
+}
+function assertPlaybackObservation(value, plan, label) {
+  assert.equal(value.hidden, false); assert.equal(value.reducedMotion, false); assert.notEqual(value.motion, 'reduced');
+  assert.ok(value.samples.length > 1, `${label}: missing actual frame samples`);
+  for (const sample of value.samples) {
+    assert.ok(Number.isInteger(Number(sample.frame)) && Number(sample.frame) >= 0 && Number(sample.frame) < plan.frameCount, `${label}: invalid live frame index`);
+    assert.ok(typeof sample.texture === 'string' && sample.texture.length > 0, `${label}: missing live Pixi texture identity`);
+    assert.ok(plan.regions.includes(sample.region), `${label}: live texture region not in authored clip`);
+  }
+  if (plan.frameCount > 1) assert.ok(new Set(value.samples.map(row => row.frame)).size > 1, `${label}: actual timeline did not advance`);
+  if (plan.regions.length > 1) assert.ok(new Set(value.samples.map(row => row.region)).size > 1, `${label}: actual texture did not advance`);
+}
+async function frames(plan) {
   let timer;
-  const observation = page.locator('.resources-preview:visible .resource-sprite-host').first().evaluate(async host => {
+  const observation = page.locator('.resources-preview:visible .resource-sprite-host').first().evaluate(async (host, durationMs) => {
     const samples = [], started = performance.now();
-    while (performance.now() - started < 750) {
-      samples.push({ frame: host.dataset.frame, texture: host.dataset.frameTexture, region: host.dataset.textureFrame });
+    while (performance.now() - started < durationMs) {
+      samples.push({ elapsedMs:performance.now()-started, frame: host.dataset.frame, texture: host.dataset.frameTexture, region: host.dataset.textureFrame });
       await new Promise(resolve => setTimeout(resolve, 40));
     }
     return { samples, hidden: document.hidden, reducedMotion: matchMedia('(prefers-reduced-motion: reduce)').matches, motion: host.closest('[data-motion]')?.getAttribute('data-motion') };
-  });
-  try { return await Promise.race([observation,new Promise((_resolve,reject)=>{timer=setTimeout(()=>reject(Error('Real Pixi frame observation timed out')),5000);})]); }
+  }, plan.durationMs);
+  try { return await Promise.race([observation,new Promise((_resolve,reject)=>{timer=setTimeout(()=>reject(Error('Real Pixi frame observation timed out')),plan.durationMs+5000);})]); }
   finally { clearTimeout(timer); }
 }
 async function choose(resource) {
@@ -168,23 +198,26 @@ try {
       await page.getByRole('combobox', { name: '预览动作', exact: true }).click();
       await page.getByRole('option', { name: resource.actions[action] ? label : `${label} · 回退待机`, exact: true }).click();
       await page.getByRole('button', { name: '重播动作', exact: true }).click();
-      const first = await frames();
-      assert.equal(first.hidden, false); assert.equal(first.reducedMotion, false); assert.notEqual(first.motion, 'reduced');
-      const clip = resource.clips.find(clip => clip.name === resource.actions[action]) || resource.clips.find(clip => clip.name === resource.actions.idle) || resource.clips[0];
-      const frameCount = clip.frameNames?.length || clip.frames?.length || resource.atlas?.animations?.[clip.name]?.length || 1;
-      if (frameCount > 1) assert.ok(new Set(first.samples.map(row => row.region)).size > 1, `${resource.name}/${action}: actual texture did not advance`);
+      const plan = playbackObservationPlan(resource, action);
+      proof.animationInProgress = {resourceId:resource.id, action, plan}; saveProof();
+      const first = await frames(plan);
+      proof.animationInProgress.first = first; saveProof();
+      assertPlaybackObservation(first, plan, `${resource.name}/${action}`);
       const key = await stage.getAttribute('data-playback-key');
       await page.getByRole('button', { name: '重播动作', exact: true }).click();
-      assert.notEqual(await stage.getAttribute('data-playback-key'), key);
-      const replay = await frames();
-      if (frameCount > 1) assert.ok(new Set(replay.samples.map(row => row.region)).size > 1, `${resource.name}/${action}: repeated action did not advance`);
-      animations.push({ resourceId: resource.id, action, clip: clip.name, frameCount, first, replay });
+      const replayKey = await stage.getAttribute('data-playback-key');
+      assert.notEqual(replayKey, key);
+      const replay = await frames(plan);
+      Object.assign(proof.animationInProgress,{replay,key,replayKey}); saveProof();
+      assertPlaybackObservation(replay, plan, `${resource.name}/${action} replay`);
+      animations.push({ resourceId: resource.id, action, clip:plan.clip, frameCount:plan.frameCount, plan, first, replay, key, replayKey });
+      delete proof.animationInProgress;
     }
   }
   assert.deepEqual(await databaseSnapshot(), before, 'Preview/animation must not mutate authored resources, preferences, or business rows');
   checkpoint({ id: 'R02', result: 'isolated-native-path-passed', animations, boundary: 'Real current runner motion policy; no OS setting or media-query override.' });
   } catch (error) {
-    checkpoint({ id: 'R02', result: 'not-passed', completedAnimations: animations, failure: error.message });
+    checkpoint({ id: 'R02', result: 'not-passed', completedAnimations: animations, failedAnimation:proof.animationInProgress || null, failure: error.message });
     await page.keyboard.press('Escape');
     await page.screenshot({ path: join(output, 'animation-not-passed.png'), timeout:10000 }).catch(error => { proof.animationScreenshotError=error.message; });
   }

@@ -126,7 +126,10 @@ try {
       record({ id: `native-${pet.element}-capture`, status, capture: captureObservation, error: String(error) });
       stage('capture-incomplete', { petId: pet.petId, status });
     }
-    await desktop.getByRole('button', { name: `摸摸${pet.name}`, exact: true }).click();
+    const surface = desktop.locator(`.cp-desktop-surface[data-pet-id="${pet.petId}"]`);
+    const touch = surface.getByRole('button', { name: /^摸摸/ });
+    assert.equal(await touch.count(), 1, 'Exactly one touch control for the owned pet surface');
+    await touch.click();
     const changed = await invoke(page, 'companions', 'get', { petId: pet.petId }); assert.ok(changed.growth.mood > pet.growth.mood);
     if (pet === pets[0]) {
       await page.getByRole('button', { name: '收起到托盘', exact: true }).click();
@@ -135,7 +138,7 @@ try {
       await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows().find(win => win.webContents.getURL().includes('/ui/index.html')).show());
     }
     record({ id: `native-${pet.element}-desktop`, petId: pet.petId, resourceId: pet.resource.resourceId, requests, native, otherPetDenied: denied.code, logoutDenied: logout.code, interactionMood: changed.growth.mood });
-    const closed = desktop.waitForEvent('close', { timeout: 15000 }); await desktop.getByRole('button', { name: `收回${pet.name}`, exact: true }).click(); await closed;
+    const closed = desktop.waitForEvent('close', { timeout: 15000 }); const retract = surface.getByRole('button', { name: /^收回/ }); assert.equal(await retract.count(), 1); await retract.click(); await closed;
   }
   const rejected = await app.evaluate(async ({ BrowserWindow }, preload) => {
     const untrusted = new BrowserWindow({ show: false, webPreferences: { preload, contextIsolation: true, sandbox: true, nodeIntegration: false } });

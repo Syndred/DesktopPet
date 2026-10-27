@@ -2,12 +2,19 @@ name: DesktopPet audited-package native continuation
 
 on:
   workflow_dispatch:
+    inputs:
+      flows:
+        description: 'Explicit JSON array of affected native flows; omitted successful flows retain version-bound receipts'
+        required: false
+        default: '["backup-ui","navigation","resources","lifecycle","desktop-engineering","context","default-profile","conversation-memory"]'
   push:
     branches: ['codex/cloud-authority-convergence']
     paths:
       - '.github/workflows/cloud-native-continuation.yml'
       - 'scripts/acceptance/verify-portable-reuse.mjs'
       - 'scripts/acceptance/cloud-qa-preflight.mjs'
+      - 'scripts/acceptance/cloud-default-profile-readback.mjs'
+      - 'scripts/acceptance/cloud-conversation-memory-acceptance.mjs'
       - 'scripts/acceptance/cloud-backup-ui-acceptance.mjs'
       - 'scripts/acceptance/cloud-companion-economy-acceptance.mjs'
       - 'scripts/acceptance/portable-session.mjs'
@@ -35,6 +42,11 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 12
     steps:
+      - name: Reject empty, duplicate or unknown flow selections
+        env:
+          SELECTED_FLOWS: ${{ inputs.flows || '["backup-ui","navigation","resources","lifecycle","desktop-engineering","context","default-profile","conversation-memory"]' }}
+        run: |
+          node -e "const assert=require('node:assert/strict');const flows=JSON.parse(process.env.SELECTED_FLOWS);const allowed=new Set(['companion-economy','backup-ui','accounts-navigation','navigation','resources','lifecycle','desktop-engineering','battle-context','context','default-profile','conversation-memory']);assert.ok(Array.isArray(flows)&&flows.length>0&&flows.length<=allowed.size);assert.equal(new Set(flows).size,flows.length);assert.ok(flows.every(x=>typeof x==='string'&&allowed.has(x)));console.log('Validated affected flows:',flows.join(', '));"
       - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
@@ -71,7 +83,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        flow: [companion-economy, backup-ui, accounts-navigation, resources, lifecycle, desktop-engineering, battle-context]
+        flow: ${{ fromJSON(inputs.flows || '["backup-ui","navigation","resources","lifecycle","desktop-engineering","context","default-profile","conversation-memory"]') }}
     env:
       PACKAGE_SOURCE: b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d
     steps:
@@ -108,7 +120,7 @@ jobs:
         timeout-minutes: 8
         run: node scripts/acceptance/full-acceptance-local-account.mjs
       - name: Navigation and detail selection in same audited SFX, separate fixture
-        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'accounts-navigation' }}
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && (matrix.flow == 'accounts-navigation' || matrix.flow == 'navigation') }}
         timeout-minutes: 8
         run: node scripts/acceptance/full-acceptance-navigation.mjs
       - name: Resource UI and Pixi in audited SFX
@@ -121,7 +133,7 @@ jobs:
         run: node scripts/acceptance/cloud-loggedout-window-smoke.mjs
       - name: Compile unchanged product source only for existing dev-Electron engineering harnesses
         id: engineeringbuild
-        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && (matrix.flow == 'desktop-engineering' || matrix.flow == 'battle-context') }}
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && (matrix.flow == 'desktop-engineering' || matrix.flow == 'battle-context' || matrix.flow == 'context') }}
         timeout-minutes: 8
         run: npm run build:pc
       - name: Native window contracts and strict captured pixels
@@ -137,9 +149,17 @@ jobs:
         timeout-minutes: 8
         run: node scripts/acceptance/battle-independent.mjs . artifacts/foundation/cloud-engineering/full-battle/run-current
       - name: Explicit offline simulated capture and territory, no GPS or cloud claim
-        if: ${{ !cancelled() && steps.engineeringbuild.outcome == 'success' && matrix.flow == 'battle-context' }}
+        if: ${{ !cancelled() && steps.engineeringbuild.outcome == 'success' && (matrix.flow == 'battle-context' || matrix.flow == 'context') }}
         timeout-minutes: 8
         run: node scripts/acceptance/context-independent.mjs . artifacts/foundation/cloud-engineering/full-context/run-current
+      - name: Independent persona and memory CRUD in original local QA pet identities
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'conversation-memory' }}
+        timeout-minutes: 10
+        run: node scripts/acceptance/cloud-conversation-memory-acceptance.mjs --source=$env:PACKAGE_SOURCE
+      - name: Ordinary default profile semantics without registry mutation
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'default-profile' }}
+        timeout-minutes: 5
+        run: node scripts/acceptance/cloud-default-profile-readback.mjs --source=$env:PACKAGE_SOURCE
       - name: Retain only new bounded proof, never local profiles or backup contents
         if: always()
         uses: actions/upload-artifact@v7.0.2
@@ -149,6 +169,9 @@ jobs:
           if-no-files-found: warn
           path: |
             artifacts/qa/native-continuation/package-reuse.json
+            artifacts/foundation/cloud-engineering/default-profile/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/conversationMemory/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/conversationMemory/run-*/*-failed.png
             artifacts/foundation/cloud-engineering/companionEconomy/run-*/evidence.json
             artifacts/foundation/cloud-engineering/companionEconomy/run-*/*.png
             artifacts/foundation/cloud-engineering/backup/run-*/evidence.json

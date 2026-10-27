@@ -72,7 +72,7 @@ try {
   await route('/garden'); await page.getByRole('button', { name: '查看演练领地', exact: true }).click();
   await page.getByRole('button', { name: '发起领地挑战', exact: true }).waitFor();
   const beforeTerritory = await invoke('garden', 'snapshot');
-  const assignedPet=page.locator(`button.garden-pet[data-pet-id="${pet.petId}"]`);await assignedPet.click();assert.equal(await assignedPet.getAttribute('aria-pressed'),'true'); await page.getByRole('button', { name: '发起领地挑战', exact: true }).click();
+  const assignedPet=page.locator(`button.garden-pet[data-pet-id="${pet.petId}"]`);await assignedPet.click();assert.equal(await assignedPet.getAttribute('aria-pressed'),'true'); const challengeButton=page.locator('.garden-territory-panel button.garden-primary').filter({hasText:'发起领地挑战'});assert.equal(await challengeButton.count(),1);assert.match(await challengeButton.getAttribute('aria-label'),/^使用.+发起领地挑战$/);await challengeButton.click();
   let territory = await view('territory', 'territory-entry'); territory = await charged(territory); territory = await finish(territory);
   await page.getByRole('button', { name: '占领', exact: true }).click(); await page.waitForFunction(() => location.hash === '#/garden');
   const afterTerritory = await invoke('garden', 'snapshot'), area = afterTerritory.territories.find(area => area.id === territory.context.territoryId);
