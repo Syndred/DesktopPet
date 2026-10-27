@@ -137,7 +137,7 @@ $apiChecks++
 if(-not [System.Collections.IEnumerable].IsAssignableFrom([System.Windows.Automation.AutomationElementCollection])){throw 'UIA_API_COLLECTION_NOT_ENUMERABLE'}
 $apiChecks++
 Emit @{phase='uia-api-contract-verified';checks=$apiChecks;reflectionOnly=$true;uiAccessed=$false}
-if($c.apiSelftest -eq $true){Emit @{phase='uia-api-selftest-passed';checks=$apiChecks;appStarted=$false;uiAccessed=$false};exit 0}
+
 
 Add-Type @'
 using System;
@@ -147,6 +147,29 @@ using System.Text;
 public static class OwnedDialogNative {
  public delegate bool Callback(IntPtr hwnd,IntPtr data);
  [DllImport("user32.dll")] public static extern bool EnumWindows(Callback callback,IntPtr data);
+ // Metadata-only diagnostics, always rooted at a nonzero verified dialog.
+ [DllImport("user32.dll")] static extern bool EnumChildWindows(IntPtr parent,Callback callback,IntPtr data);
+ [DllImport("user32.dll")] static extern bool IsChild(IntPtr parent,IntPtr child);
+ [DllImport("user32.dll")] static extern int GetDlgCtrlID(IntPtr hwnd);
+ [DllImport("user32.dll")] static extern IntPtr GetParent(IntPtr hwnd);
+ [DllImport("user32.dll")] static extern bool IsWindowEnabled(IntPtr hwnd);
+ public sealed class ChildMetadata {
+  public string handle; public string parent; public string className; public int controlId; public bool visible; public bool enabled;
+ }
+ public static ChildMetadata[] DescribeChildren(IntPtr root,uint pid){
+  if(root==IntPtr.Zero || !IsWindow(root) || Pid(root)!=pid || Class(root)!="#32770")throw new InvalidOperationException("CHILD_DIAGNOSTIC_ROOT_INVALID");
+  var found=new List<ChildMetadata>();int inspected=0;
+  EnumChildWindows(root,(h,d)=>{
+   if(++inspected>256 || found.Count>=64)return false;
+   if(!IsWindow(root) || Pid(root)!=pid || !IsChild(root,h) || Pid(h)!=pid)return true;
+   var parent=GetParent(h);
+   if(parent!=root && (!IsChild(root,parent) || Pid(parent)!=pid))return true;
+   // No GetWindowText, ValuePattern, WM_GETTEXT, image, or input operation.
+   found.Add(new ChildMetadata{handle=h.ToInt64().ToString(),parent=parent.ToInt64().ToString(),className=Class(h),controlId=GetDlgCtrlID(h),visible=IsWindowVisible(h),enabled=IsWindowEnabled(h)});
+   return true;
+  },IntPtr.Zero);
+  return found.ToArray();
+ }
  [DllImport("user32.dll")] public static extern bool IsWindow(IntPtr hwnd);
  [DllImport("user32.dll")] public static extern bool IsWindowVisible(IntPtr hwnd);
  [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
@@ -162,6 +185,8 @@ public static class OwnedDialogNative {
 }
 '@ | Out-Null
 Emit @{phase='native-controller-compiled'}
+# Compile interop declarations during selftest, but never invoke Win32/UI APIs.
+if($c.apiSelftest -eq $true){Emit @{phase='uia-api-selftest-passed';checks=$apiChecks;appStarted=$false;uiAccessed=$false};exit 0}
 $owner=[IntPtr]::new([Int64]::Parse([string]$c.ownerWindowHandle))
 $ownerPid=[int]$c.ownerPid
 $birth=$null
@@ -256,6 +281,17 @@ try{
  Emit @{phase='dialog-controls-wait-finished';snapshots=$controlSnapshots;elapsedMs=[int]([DateTime]::UtcNow-$controlWaitStarted).TotalMilliseconds;filenameCandidates=$candidates.Count;actionCandidates=$actions.Count}
  if($candidates.Count -ne 1 -or $actions.Count -ne 1){
   Dialog-Still-Exact $dialog
+  # Independent read-only native child metadata distinguishes absent controls
+  # from legacy Win32 controls missing in managed UIA's provider tree.
+  $nativeChildren=[OwnedDialogNative]::DescribeChildren($dialog,[uint32]$ownerPid)
+  Dialog-Still-Exact $dialog
+  $providerAssemblies=@()
+  foreach($assembly in [AppDomain]::CurrentDomain.GetAssemblies()){
+   $identity=$assembly.GetName()
+   if(@('UIAutomationClient','UIAutomationTypes','UIAutomationClientsideProviders','UIAutomationProvider') -contains $identity.Name){$providerAssemblies+=@{name=$identity.Name;version=$identity.Version.ToString()}}
+  }
+  Emit @{phase='owned-dialog-native-child-diagnostic';dialogHandle=$dialog.ToInt64().ToString();children=$nativeChildren;maxControls=64;maxInspected=256;loadedUiaAssemblies=$providerAssemblies;valuesCollected=$false;inputPerformed=$false}
+
   # Bounded metadata ONLY from this already verified dialog. No ValuePattern,
   # text value, file-list item content, desktop/global walk, or input fallback.
   function Control-Metadata($element){
@@ -381,7 +417,7 @@ export async function driveNativeFileDialog({scope,kind,filePath,ownerPid,ownerW
 }
 
 
-/** Disposable runner-only reflection selftest; no application or UI is accessed. */
+/** Runner-only reflection and interop-compilation selftest; no application/UI calls. */
 export async function selftestNativeDialogApis(){
  assert.equal(process.platform,'win32');assert.equal(process.env.GITHUB_ACTIONS,'true');
  const directory=canonical(mkdtempSync(join(tmpdir(),'lingjing-uia-api-selftest-')));
@@ -405,7 +441,7 @@ export async function selftestNativeDialogApis(){
   });
   const phases=stdout.trim().split(/\r?\n/).filter(Boolean).map(line=>JSON.parse(line));
   assert.ok(phases.some(row=>row.phase==='uia-api-selftest-passed'&&row.uiAccessed===false&&row.checks===30));
-  return {passed:true,reflectionOnly:true,appStarted:false,phases};
+  return {passed:true,reflectionChecks:true,interopCompiled:true,noUiCalls:true,appStarted:false,phases};
  }finally{
   clearTimeout(timer);
   if(child.exitCode===null&&child.signalCode===null)child.kill();
