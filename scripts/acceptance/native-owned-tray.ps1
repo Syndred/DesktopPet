@@ -107,7 +107,7 @@ try{
  $icons=@()
  foreach($root in $roots){foreach($e in (Nodes $root)){if($e.Current.ProcessId -eq $explorer -and $e.Current.Name -ceq '灵境 · 桌面伙伴' -and -not $e.Current.IsOffscreen){$icons+=@{element=$e;root=$root}}}}
  if($icons.Count -eq 0 -and $p.allowOverflow -eq $true){
-  $buttons=@((Nodes $taskbar)|Where-Object {$_.Current.ProcessId -eq $explorer -and ($_.Current.Name -ceq 'Show hidden icons' -or $_.Current.Name -ceq '显示隐藏的图标') -and $_.Current.ControlType -eq [System.Windows.Automation.ControlType]::Button -and -not $_.Current.IsOffscreen})
+  $buttons=@((Nodes $taskbar)|Where-Object {$_.Current.ProcessId -eq $explorer -and ($_.Current.Name -ceq 'Show Hidden Icons') -and $_.Current.AutomationId -ceq 'SystemTrayIcon' -and $_.Current.ClassName -ceq 'SystemTray.NormalButton' -and $_.Current.ControlType -eq [System.Windows.Automation.ControlType]::Button -and -not $_.Current.IsOffscreen})
   if($buttons.Count -ne 1){throw 'UNIQUE_OVERFLOW_BUTTON_UNAVAILABLE'}
   Click $buttons[0] $taskbar $explorer $false;$report.openedOverflow=$true;$report.needsFreshTrayBounds=$true;$report.passed=$true
  }else{

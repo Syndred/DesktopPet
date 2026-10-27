@@ -153,8 +153,16 @@ public static class OwnedDialogNative {
  [DllImport("user32.dll",EntryPoint="SendMessageTimeoutW",SetLastError=true)] static extern IntPtr MessageAction(IntPtr h,uint msg,UIntPtr wp,IntPtr lp,uint flags,uint timeout,out UIntPtr result);
  [DllImport("user32.dll",EntryPoint="GetWindowLongW")] static extern int GetWindowLong(IntPtr hwnd,int index);
  static bool OwnedControl(IntPtr root,IntPtr h,uint pid,string cls,int id){return h!=IntPtr.Zero && IsWindow(h) && IsChild(root,h) && Pid(h)==pid && Class(h)==cls && GetDlgCtrlID(h)==id && IsWindowVisible(h) && IsWindowEnabled(h);}
+ [StructLayout(LayoutKind.Sequential)] struct KeyboardInput {public ushort vk,scan;public uint flags,time;public UIntPtr extra;}
+ [StructLayout(LayoutKind.Sequential)] struct MouseInput {public int x,y;public uint data,flags,time;public UIntPtr extra;}
+ [StructLayout(LayoutKind.Explicit)] struct InputData {[FieldOffset(0)] public KeyboardInput keyboard;[FieldOffset(0)] public MouseInput mouse;}
+ [StructLayout(LayoutKind.Sequential)] struct NativeInput {public uint type;public InputData data;}
+ [DllImport("user32.dll",SetLastError=true)] static extern uint SendInput(uint count,NativeInput[] inputs,int size);
+ [DllImport("user32.dll")] static extern short GetAsyncKeyState(int key);
+ static NativeInput UnicodeInput(char c,bool up){var input=new NativeInput();input.type=1;input.data.keyboard.scan=c;input.data.keyboard.flags=(uint)(4|(up?2:0));return input;}
+ static void NoModifiers(){foreach(int key in new int[]{0x10,0x11,0x12,0x5B,0x5C})if((GetAsyncKeyState(key)&0x8000)!=0)throw new InvalidOperationException("NATIVE_FILENAME_MODIFIER_ALREADY_DOWN");}
  [StructLayout(LayoutKind.Sequential)] struct GuiThreadInfo {public uint cbSize,flags;public IntPtr active,focus,capture,menuOwner,moveSize,caret;public Rect caretRect;}
- public static void VerifyInteropLayouts(){if(Marshal.SizeOf(typeof(GuiThreadInfo))!=(IntPtr.Size==8?72:48))throw new InvalidOperationException("GUI_THREAD_INFO_LAYOUT_MISMATCH");}
+ public static void VerifyInteropLayouts(){if(Marshal.SizeOf(typeof(GuiThreadInfo))!=(IntPtr.Size==8?72:48))throw new InvalidOperationException("GUI_THREAD_INFO_LAYOUT_MISMATCH");if(Marshal.SizeOf(typeof(NativeInput))!=(IntPtr.Size==8?40:28))throw new InvalidOperationException("SENDINPUT_LAYOUT_MISMATCH");}
  [DllImport("user32.dll")] static extern bool GetGUIThreadInfo(uint threadId,ref GuiThreadInfo info);
  static bool ExactEdit(IntPtr root,IntPtr edit,uint pid,string kind){
   if(!IsChild(root,edit) || Pid(edit)!=pid || Class(edit)!="Edit" || !IsWindowVisible(edit) || !IsWindowEnabled(edit))return false;
@@ -189,12 +197,42 @@ public static class OwnedDialogNative {
   if(limit)throw new InvalidOperationException("NATIVE_CONTROL_SCAN_LIMIT");
   ExactRoot(root,pid);return result;
  }
- public static void SetExactFilename(IntPtr root,IntPtr edit,uint pid,string kind,string path){
+ public static string SetExactFilename(IntPtr root,IntPtr edit,uint pid,string kind,string path,DateTime deadline){
   ExactRoot(root,pid);if(!ExactEdit(root,edit,pid,kind) || path.Length<1 || path.Length>4096)throw new InvalidOperationException("NATIVE_FILENAME_CHAIN_CHANGED");
-  UIntPtr result;if(MessageText(edit,0x000C,UIntPtr.Zero,path,34,1000,out result)==IntPtr.Zero || result.ToUInt64()==0)throw new InvalidOperationException("NATIVE_FILENAME_SET_FAILED");
-  ExactRoot(root,pid);if(!ExactEdit(root,edit,pid,kind))throw new InvalidOperationException("NATIVE_FILENAME_CHAIN_CHANGED");
-  var readback=new StringBuilder(4097);
-  if(MessageRead(edit,0x000D,new UIntPtr(4097),readback,34,1000,out result)==IntPtr.Zero || !String.Equals(readback.ToString(),path,StringComparison.Ordinal))throw new InvalidOperationException("NATIVE_FILENAME_READBACK_MISMATCH");
+  UIntPtr result;string method;
+  if(kind=="save" && GetDlgCtrlID(edit)==1001){
+   // WM_SETTEXT changed this modern Edit's pixels but the real dialog returned
+   // its original name (9aee receipt). Send actual Unicode key events ONLY to
+   // its already-focused, independently verified filename edit; never refocus.
+   NoModifiers();
+   if(MessageAction(edit,0x00B1,UIntPtr.Zero,new IntPtr(-1),34,1000,out result)==IntPtr.Zero)throw new InvalidOperationException("NATIVE_FILENAME_SELECTION_FAILED");
+   foreach(char c in path){
+    if(DateTime.UtcNow>=deadline)throw new InvalidOperationException("NATIVE_FILENAME_INPUT_DEADLINE");
+    ExactRoot(root,pid);if(!ExactEdit(root,edit,pid,kind))throw new InvalidOperationException("NATIVE_FILENAME_FOCUS_CHANGED");NoModifiers();
+    var pair=new NativeInput[]{UnicodeInput(c,false),UnicodeInput(c,true)};
+    uint inserted=SendInput(2,pair,Marshal.SizeOf(typeof(NativeInput)));
+    if(inserted==1){
+     // Only release our own submitted Unicode key; no repeated keydown/text
+     // and no release/change to any pre-existing user modifier state.
+     uint released=SendInput(1,new NativeInput[]{UnicodeInput(c,true)},Marshal.SizeOf(typeof(NativeInput)));
+     throw new InvalidOperationException(released==1?"NATIVE_FILENAME_PARTIAL_PAIR_KEYUP_RELEASED":"NATIVE_FILENAME_PARTIAL_PAIR_KEYUP_UNCONFIRMED");
+    }
+    if(inserted!=2)throw new InvalidOperationException("NATIVE_FILENAME_UNICODE_INPUT_INCOMPLETE");
+   }
+   method="UnicodeSendInput-exact-focused-save-field";
+  }else{
+   if(MessageText(edit,0x000C,UIntPtr.Zero,path,34,1000,out result)==IntPtr.Zero || result.ToUInt64()==0)throw new InvalidOperationException("NATIVE_FILENAME_SET_FAILED");
+   method="WM_SETTEXT-exact-standard-field";
+  }
+  var readDeadline=DateTime.UtcNow.AddSeconds(2);if(readDeadline>deadline)readDeadline=deadline;
+  while(DateTime.UtcNow<readDeadline){
+   ExactRoot(root,pid);if(!ExactEdit(root,edit,pid,kind))throw new InvalidOperationException("NATIVE_FILENAME_CHAIN_CHANGED");
+   var readback=new StringBuilder(4097);
+   if(MessageRead(edit,0x000D,new UIntPtr(4097),readback,34,1000,out result)==IntPtr.Zero)throw new InvalidOperationException("NATIVE_FILENAME_READBACK_FAILED");
+   if(String.Equals(readback.ToString(),path,StringComparison.Ordinal))return method;
+   System.Threading.Thread.Sleep(20);
+  }
+  throw new InvalidOperationException("NATIVE_FILENAME_READBACK_MISMATCH");
  }
  public static void ClickExactAction(IntPtr root,IntPtr button,uint pid,string kind){
   ExactRoot(root,pid);if(!ExactAction(root,button,pid,kind))throw new InvalidOperationException("NATIVE_ACTION_CHAIN_CHANGED");
@@ -259,7 +297,7 @@ public static class OwnedDialogNative {
 }
 '@ | Out-Null
 [OwnedDialogNative]::VerifyInteropLayouts()
-Emit @{phase='native-controller-compiled';guiThreadInfoLayoutVerified=$true}
+Emit @{phase='native-controller-compiled';guiThreadInfoLayoutVerified=$true;sendInputLayoutVerified=$true}
 # Compile interop declarations during selftest, but never invoke Win32/UI APIs.
 if($c.apiSelftest -eq $true){Emit @{phase='uia-api-selftest-passed';checks=$apiChecks;appStarted=$false;uiAccessed=$false};exit 0}
 $owner=[IntPtr]::new([Int64]::Parse([string]$c.ownerWindowHandle))
@@ -342,7 +380,7 @@ try{
  if([DateTime]::UtcNow -ge $deadline){throw 'NATIVE_DIALOG_CONTROL_DEADLINE_EXPIRED'}
  Dialog-Still-Exact $dialog
  if($c.kind -eq 'save' -and ([System.IO.File]::Exists([string]$c.filePath) -or [System.IO.Directory]::Exists([string]$c.filePath))){throw 'SAVE_TARGET_APPEARED_REFUSE_OVERWRITE'}
- [OwnedDialogNative]::SetExactFilename($dialog,$controls.edit,[uint32]$ownerPid,[string]$c.kind,[string]$c.filePath)
+ $entryMethod=[OwnedDialogNative]::SetExactFilename($dialog,$controls.edit,[uint32]$ownerPid,[string]$c.kind,[string]$c.filePath,$deadline)
  Dialog-Still-Exact $dialog
  if([DateTime]::UtcNow -ge $deadline){throw 'NATIVE_DIALOG_CONTROL_DEADLINE_EXPIRED'}
  if($c.kind -eq 'save' -and ([System.IO.File]::Exists([string]$c.filePath) -or [System.IO.Directory]::Exists([string]$c.filePath))){throw 'SAVE_TARGET_APPEARED_REFUSE_OVERWRITE'}
@@ -351,7 +389,7 @@ try{
   try{$actualHash=[System.BitConverter]::ToString($hasher.ComputeHash([System.IO.File]::ReadAllBytes([string]$c.filePath))).Replace('-','').ToLowerInvariant()}finally{$hasher.Dispose()}
   if($actualHash -cne [string]$c.expectedSha256){throw 'OPEN_FIXTURE_CHANGED_BEFORE_INVOKE'}
  }
- Emit @{phase='filename-verified';dialogHandle=$dialog.ToInt64().ToString();editHandle=$controls.edit.ToInt64().ToString();actionHandle=$controls.action.ToInt64().ToString();selector=$controls.selector;readbackVerified=$true;action=[string]$c.kind}
+ Emit @{phase='filename-verified';textEntry=$entryMethod;dialogHandle=$dialog.ToInt64().ToString();editHandle=$controls.edit.ToInt64().ToString();actionHandle=$controls.action.ToInt64().ToString();selector=$controls.selector;readbackVerified=$true;action=[string]$c.kind}
  Dialog-Still-Exact $dialog
  [OwnedDialogNative]::ClickExactAction($dialog,$controls.action,[uint32]$ownerPid,[string]$c.kind)
  while([DateTime]::UtcNow -lt $deadline){
