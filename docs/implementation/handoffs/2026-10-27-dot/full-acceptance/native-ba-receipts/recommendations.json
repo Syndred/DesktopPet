@@ -1,0 +1,94 @@
+{
+  "runId": 40474572921,
+  "jobId": 122090228583,
+  "artifactId": 12720680599,
+  "artifactSha256": "ef8fb21907f72ca3dbedd90797d5be54c8874fee444007bb81bc554ca9dd5955",
+  "artifactHashVerified": true,
+  "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "harnessCommit": "ba4310bf2e0e336fc764023ae5729f5fba75aa57",
+  "executableSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb",
+  "passed": true,
+  "rawEvidence": "evidence.json",
+  "observedChecks": [
+    {
+      "id": "N04-hide-to-tray",
+      "passed": true,
+      "before": {
+        "id": 1,
+        "visible": true,
+        "destroyed": false,
+        "minimized": false
+      },
+      "hidden": {
+        "id": 1,
+        "visible": false,
+        "destroyed": false,
+        "minimized": false
+      },
+      "rendererVisibility": "visible",
+      "physicalTrayClick": false
+    },
+    {
+      "id": "N05-same-profile-secondary-exit-and-primary-recall",
+      "passed": true,
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "recalled": {
+        "id": 1,
+        "visible": true,
+        "destroyed": false,
+        "minimized": false
+      },
+      "secondInstance": [
+        {
+          "at": 1793090362095
+        }
+      ],
+      "mainWindows": 1,
+      "existingPetWindowCoverage": false
+    },
+    {
+      "id": "N05-different-fresh-profile-independent-window",
+      "passed": true
+    },
+    {
+      "id": "fresh-profile-databases-integrity-and-zero-accounts",
+      "passed": true,
+      "profiles": 2
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "N04",
+      "status": "partial_current_native",
+      "covered": "实际登录页收起到托盘按钮使原窗口隐藏未销毁；重复启动召回原窗口。",
+      "notCovered": [
+        "原步骤点击关闭与当前收起按钮并非同一个控件",
+        "真实托盘打开动作未做",
+        "不能将 second-instance 召回当托盘菜单恢复"
+      ],
+      "full": false
+    },
+    {
+      "id": "N05",
+      "status": "reused_verified_with_current_native_subset",
+      "covered": "当前 b5 SFX 同profile第二启动自然exit0，恰好1次second-instance、原窗口ID1召回、main数量1；不同profile两个runtime独立；退出后两SQLite integrity_check=ok且账户0。",
+      "originalReuse": "原4e6 N05已发布同宠及业务摘要保全证据+不受影响源码复用审查仍有效，可组合新增当前实测证据。",
+      "notCovered": [
+        "本轮无existing pet，不能写当前已重新验证同宠窗口",
+        "仅退出后空库只读完整性，不是运行中完整业务库占用/数据摘要对比"
+      ],
+      "fullOriginalByExistingReuse": true,
+      "fullNewNative": false
+    },
+    {
+      "id": "A10",
+      "status": "no_new_coverage",
+      "covered": "只有从未登录的fresh profile；不能据此证明未勾保持登录后重启与原业务保留。",
+      "full": false
+    }
+  ],
+  "diagnosticNote": "observationError=Error 为只读PS旁路一次观察失败；关键运行/真实身份检查与4项断言完成，不能删除该诊断也不当产品失败。"
+}

@@ -1,0 +1,131 @@
+{
+  "scope": "Actual Windows SFX, new offline QA profile, production UI and SQLite; file-dialog result bridge explicitly partial.",
+  "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "compiledFingerprint": "b951a6aa7a5d04a04178645f92c0840168e3656ae5cf6f8f0e4839c0328ab48f",
+  "exeSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb",
+  "full98Passed": false,
+  "nativeFilePickerExercised": false,
+  "liveCloudExercised": false,
+  "cases": [
+    {
+      "id": "P04",
+      "coverage": "partial: normal export button and production save, one-shot owned-path dialog bridge; modules/checksum/provenance/secret exclusion/real resource bytes",
+      "status": "partial-engineering-passed",
+      "fullCasePassed": false,
+      "at": "2026-10-27T08:22:28.076Z",
+      "backupSha256": "401585047ea4abe610b381361694cc93b751a93a6a7c4d06e12b93f5ea25702d",
+      "checksum": "f29a9892003b5f2b02b8c298d32cbc2979b796068c8bb4c5824223122180ca3e",
+      "modules": [
+        "legacy",
+        "settings",
+        "companions",
+        "device-desktop",
+        "battle",
+        "garden",
+        "conversation-preservation",
+        "character-resources",
+        "conversations"
+      ],
+      "excluded": [
+        "conversation_credentials"
+      ],
+      "fieldsChecked": 751,
+      "screenshot": "P04-export.png"
+    },
+    {
+      "id": "R05-preview",
+      "coverage": "partial local QA cache repair before preview, no cloud identity/second ordinary profile or completed-restore claim",
+      "status": "partial-engineering-passed",
+      "fullCasePassed": false,
+      "at": "2026-10-27T08:22:28.550Z",
+      "resourceId": "e3521186-6479-41b5-a16e-0ab5968f1c12",
+      "sourceBackupUnchanged": true,
+      "authoredAndActionRowsUnchanged": true,
+      "missingBytesRecoveredOnlyFromBackup": true,
+      "screenshot": "R05-preview-cache-repair.png"
+    },
+    {
+      "id": "R05-restore",
+      "coverage": "partial local QA missing descriptor after preview; normal merge confirmation repairs before protection, original IDs/rows/history retained",
+      "status": "partial-engineering-passed",
+      "fullCasePassed": false,
+      "at": "2026-10-27T08:22:29.203Z",
+      "resourceId": "e3521186-6479-41b5-a16e-0ab5968f1c12",
+      "protectionChecksum": "426008351c2ba591618d5a6c99eecfc4ac36917b4aa4c751f902f28a5b98e026",
+      "originalMetadataAndBytesPreserved": true,
+      "protectionPreviewReadable": true,
+      "screenshot": "R05-merge-protection.png"
+    },
+    {
+      "id": "P05",
+      "coverage": "partial: local QA original settings restored through replace UI; automatic protection retains newer settings; original pet/resource IDs and source files remain",
+      "status": "partial-engineering-passed",
+      "fullCasePassed": false,
+      "at": "2026-10-27T08:22:31.374Z",
+      "petId": "pet-881754b7-c88b-4211-a8f6-ce6674bd5c26",
+      "resourceId": "e3521186-6479-41b5-a16e-0ab5968f1c12",
+      "restoredVolume": 70,
+      "protectedChangedVolume": 71,
+      "protectionChecksum": "6df7b5e9522b3c9b654c46b124b173aeddb23993548bbf69b60a93d6f81fec20",
+      "originalFilesPreserved": true,
+      "resourceRestoredToNewManagedPaths": true,
+      "screenshot": "P05-local-restore.png"
+    },
+    {
+      "id": "P06-corrupt",
+      "coverage": "partial: normal preview rejects corrupt copy, with unchanged business/action/protection state and original backup bytes",
+      "status": "partial-engineering-passed",
+      "fullCasePassed": false,
+      "at": "2026-10-27T08:22:34.343Z",
+      "rejected": true,
+      "originalUnchanged": true,
+      "screenshot": "P06-corrupt-rejected.png"
+    },
+    {
+      "id": "P06-owner",
+      "coverage": "partial: second supported local QA identity rejects original owner backup through preview UI; no identity relabel or forged session",
+      "status": "partial-engineering-passed",
+      "fullCasePassed": false,
+      "at": "2026-10-27T08:22:34.557Z",
+      "originalOwner": "qa:31a64528-7708-4037-bcb5-7f574fb9d292:local-490c5458-f9a4-4073-8f16-43cd0d68db3d",
+      "secondOwner": "qa:31a64528-7708-4037-bcb5-7f574fb9d292:local-5180678a-3401-4f37-a161-e95a6c35c9d8",
+      "rejected": true,
+      "allObservedRowsUnchanged": true,
+      "screenshot": "P06-cross-owner-rejected.png"
+    },
+    {
+      "id": "A13",
+      "status": "not-covered",
+      "fullCasePassed": false,
+      "reason": "Requires ordinary live-cloud new-account adoption and save verification; simulated QA path cannot establish this authority."
+    }
+  ],
+  "passed": true,
+  "startedAt": "2026-10-27T08:22:01.817Z",
+  "ownerAccountId": "qa:31a64528-7708-4037-bcb5-7f574fb9d292:local-490c5458-f9a4-4073-8f16-43cd0d68db3d",
+  "fixture": {
+    "petId": "pet-881754b7-c88b-4211-a8f6-ce6674bd5c26",
+    "resourceId": "e3521186-6479-41b5-a16e-0ab5968f1c12",
+    "preparedWithProductionIpcAndUi": true,
+    "dialogBridge": true
+  },
+  "offlineBlocked": {
+    "node": 0,
+    "fetch": 0,
+    "websocket": 0,
+    "chromium": 0
+  },
+  "pidChecks": [
+    {
+      "pid": 7408,
+      "alive": false
+    },
+    {
+      "pid": 6588,
+      "alive": false
+    }
+  ],
+  "ownedProcessStopped": true,
+  "profileRemoved": true,
+  "completedAt": "2026-10-27T08:22:36.752Z"
+}

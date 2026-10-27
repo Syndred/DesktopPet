@@ -1,0 +1,220 @@
+{
+  "scope": "T02 and A11 local subset: actual audited Windows SFX UI, two same-template local QA pets, synthetic memory CRUD and persona persistence. No cloud owner, cross-device, supplier or generated-chat claim.",
+  "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "compiledFingerprint": "b951a6aa7a5d04a04178645f92c0840168e3656ae5cf6f8f0e4839c0328ab48f",
+  "exeSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb",
+  "cases": [
+    {
+      "id": "T02-setup",
+      "coverage": "Normal product UI local registration and two same-template adoptions; no global serial claim",
+      "status": "passed-local-subset",
+      "startedAt": "2026-10-27T08:22:28.619Z",
+      "owner": "qa:992c16e7-242c-47c5-bccf-fa636c03bb16:local-769213ca-0872-4157-8629-f2e1230b69c9",
+      "petIds": [
+        "pet-b41d5a99-31f6-430f-ad58-c36f16ec46cb",
+        "pet-95f0aeac-11b8-4684-8242-ca972bec6511"
+      ],
+      "templateId": "animal-wood-deer",
+      "completedAt": "2026-10-27T08:22:31.550Z"
+    },
+    {
+      "id": "T02-independent-persona-memory",
+      "coverage": "Actual persona/remember controls for two original local pet IDs",
+      "status": "passed-local-subset",
+      "startedAt": "2026-10-27T08:22:31.550Z",
+      "a": {
+        "petId": "pet-b41d5a99-31f6-430f-ad58-c36f16ec46cb",
+        "profile": {
+          "persona": "甲：简短温柔，喜欢山林。",
+          "replyStyle": "natural",
+          "memoryEnabled": true,
+          "pauseWhileChatting": true,
+          "useOverride": false,
+          "revision": 1
+        },
+        "memories": [
+          {
+            "id": "21d06404-f885-4a6a-860e-98b1bb844837",
+            "petId": "pet-b41d5a99-31f6-430f-ad58-c36f16ec46cb",
+            "content": "甲喜欢绿茶",
+            "revision": 1,
+            "createdAt": 1793089356353,
+            "updatedAt": 1793089356353
+          }
+        ]
+      },
+      "b": {
+        "petId": "pet-95f0aeac-11b8-4684-8242-ca972bec6511",
+        "profile": {
+          "persona": "乙：严谨清晰，喜欢星空。",
+          "replyStyle": "natural",
+          "memoryEnabled": true,
+          "pauseWhileChatting": true,
+          "useOverride": false,
+          "revision": 1
+        },
+        "memories": [
+          {
+            "id": "147be94c-4d2d-4d0e-9930-243fe894cb2b",
+            "petId": "pet-95f0aeac-11b8-4684-8242-ca972bec6511",
+            "content": "乙喜欢红茶",
+            "revision": 1,
+            "createdAt": 1793089356922,
+            "updatedAt": 1793089356922
+          }
+        ]
+      },
+      "completedAt": "2026-10-27T08:22:37.241Z"
+    },
+    {
+      "id": "T02-crud-isolation",
+      "coverage": "Normal memory add/edit/delete, original memory ID retained when editing; other pet unchanged",
+      "status": "passed-local-subset",
+      "startedAt": "2026-10-27T08:22:37.241Z",
+      "editedId": "21d06404-f885-4a6a-860e-98b1bb844837",
+      "revision": 2,
+      "a": {
+        "petId": "pet-b41d5a99-31f6-430f-ad58-c36f16ec46cb",
+        "profile": {
+          "persona": "甲：简短温柔，喜欢山林。",
+          "replyStyle": "natural",
+          "memoryEnabled": true,
+          "pauseWhileChatting": true,
+          "useOverride": false,
+          "revision": 1
+        },
+        "memories": [
+          {
+            "id": "21d06404-f885-4a6a-860e-98b1bb844837",
+            "petId": "pet-b41d5a99-31f6-430f-ad58-c36f16ec46cb",
+            "content": "甲喜欢乌龙茶",
+            "revision": 2,
+            "createdAt": 1793089356353,
+            "updatedAt": 1793089357694
+          }
+        ]
+      },
+      "b": {
+        "petId": "pet-95f0aeac-11b8-4684-8242-ca972bec6511",
+        "profile": {
+          "persona": "乙：严谨清晰，喜欢星空。",
+          "replyStyle": "natural",
+          "memoryEnabled": true,
+          "pauseWhileChatting": true,
+          "useOverride": false,
+          "revision": 1
+        },
+        "memories": [
+          {
+            "id": "147be94c-4d2d-4d0e-9930-243fe894cb2b",
+            "petId": "pet-95f0aeac-11b8-4684-8242-ca972bec6511",
+            "content": "乙喜欢红茶",
+            "revision": 1,
+            "createdAt": 1793089356922,
+            "updatedAt": 1793089356922
+          }
+        ]
+      },
+      "database": {
+        "profiles": [
+          {
+            "owner_account_id": "qa:992c16e7-242c-47c5-bccf-fa636c03bb16:local-769213ca-0872-4157-8629-f2e1230b69c9",
+            "pet_id": "pet-95f0aeac-11b8-4684-8242-ca972bec6511",
+            "persona": "乙：严谨清晰，喜欢星空。",
+            "revision": 1
+          },
+          {
+            "owner_account_id": "qa:992c16e7-242c-47c5-bccf-fa636c03bb16:local-769213ca-0872-4157-8629-f2e1230b69c9",
+            "pet_id": "pet-b41d5a99-31f6-430f-ad58-c36f16ec46cb",
+            "persona": "甲：简短温柔，喜欢山林。",
+            "revision": 1
+          }
+        ],
+        "memories": [
+          {
+            "owner_account_id": "qa:992c16e7-242c-47c5-bccf-fa636c03bb16:local-769213ca-0872-4157-8629-f2e1230b69c9",
+            "pet_id": "pet-95f0aeac-11b8-4684-8242-ca972bec6511",
+            "id": "147be94c-4d2d-4d0e-9930-243fe894cb2b",
+            "content": "乙喜欢红茶",
+            "revision": 1
+          },
+          {
+            "owner_account_id": "qa:992c16e7-242c-47c5-bccf-fa636c03bb16:local-769213ca-0872-4157-8629-f2e1230b69c9",
+            "pet_id": "pet-b41d5a99-31f6-430f-ad58-c36f16ec46cb",
+            "id": "21d06404-f885-4a6a-860e-98b1bb844837",
+            "content": "甲喜欢乌龙茶",
+            "revision": 2
+          }
+        ],
+        "messages": 0,
+        "credentials": 0
+      },
+      "completedAt": "2026-10-27T08:22:40.400Z"
+    },
+    {
+      "id": "T02-normal-restart",
+      "coverage": "Same profile ordinary app.quit, relaunch and explicit normal login, original IDs/persona/memory unchanged",
+      "status": "passed-local-subset",
+      "startedAt": "2026-10-27T08:22:40.401Z",
+      "sameOwner": "qa:992c16e7-242c-47c5-bccf-fa636c03bb16:local-769213ca-0872-4157-8629-f2e1230b69c9",
+      "petIds": [
+        "pet-b41d5a99-31f6-430f-ad58-c36f16ec46cb",
+        "pet-95f0aeac-11b8-4684-8242-ca972bec6511"
+      ],
+      "exactDatabaseReadback": true,
+      "completedAt": "2026-10-27T08:22:59.300Z"
+    },
+    {
+      "id": "A11-local-owner-boundary",
+      "coverage": "Partial only: different local QA account has no first-owner pets, persona, memories or selected conversation; no populated generated-history or real cloud ownership claim",
+      "status": "passed-local-subset",
+      "startedAt": "2026-10-27T08:22:59.301Z",
+      "firstOwner": "qa:992c16e7-242c-47c5-bccf-fa636c03bb16:local-769213ca-0872-4157-8629-f2e1230b69c9",
+      "secondOwner": "qa:992c16e7-242c-47c5-bccf-fa636c03bb16:local-af5135b2-c243-4178-a8a5-8d8dd3b3bb65",
+      "firstOwnerPrivateDataUnchanged": true,
+      "uncovered": [
+        "real cloud accounts",
+        "populated generated message history",
+        "provider keys"
+      ],
+      "completedAt": "2026-10-27T08:23:02.957Z"
+    }
+  ],
+  "passed": true,
+  "startedAt": "2026-10-27T08:22:09.162Z",
+  "offlineBlocked": [
+    {
+      "node": 0,
+      "fetch": 0,
+      "websocket": 0,
+      "chromium": 0
+    },
+    {
+      "node": 0,
+      "fetch": 0,
+      "websocket": 0,
+      "chromium": 0
+    }
+  ],
+  "pidChecks": [
+    {
+      "pid": 6636,
+      "alive": false
+    },
+    {
+      "pid": 8768,
+      "alive": false
+    },
+    {
+      "pid": 7292,
+      "alive": false
+    },
+    {
+      "pid": 7256,
+      "alive": false
+    }
+  ],
+  "ownedProcessStopped": true,
+  "temporaryProfileRemoved": true,
+  "completedAt": "2026-10-27T08:23:03.371Z"
+}

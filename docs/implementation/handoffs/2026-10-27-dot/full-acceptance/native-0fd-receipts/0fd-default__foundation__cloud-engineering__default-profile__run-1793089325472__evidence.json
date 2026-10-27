@@ -1,0 +1,79 @@
+{
+  "scope": "P09 ordinary actual SFX default profile readback; no account or OS startup mutation",
+  "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "executable": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+  "startedAt": "2026-10-27T08:22:05.472Z",
+  "stages": [
+    {
+      "name": "default-and-legacy-paths-absent",
+      "at": "2026-10-27T08:22:09.544Z"
+    },
+    {
+      "name": "owned-runtime-pid-confirmed",
+      "at": "2026-10-27T08:22:31.209Z"
+    },
+    {
+      "name": "default-profile-exact-readback",
+      "at": "2026-10-27T08:22:31.243Z"
+    },
+    {
+      "name": "ordinary-login-without-qa-confirmed",
+      "at": "2026-10-27T08:22:32.174Z"
+    }
+  ],
+  "preflight": {
+    "appData": "C:\\Users\\runneradmin\\AppData\\Roaming",
+    "expected": "C:\\Users\\runneradmin\\AppData\\Roaming\\Lingjing",
+    "candidates": [
+      {
+        "path": "C:\\Users\\runneradmin\\AppData\\Roaming\\Lingjing",
+        "exists": false
+      },
+      {
+        "path": "C:\\Users\\runneradmin\\AppData\\Roaming\\qingpet-desktop-runtime",
+        "exists": false
+      },
+      {
+        "path": "C:\\Users\\runneradmin\\AppData\\Roaming\\qingpet-lord-3d",
+        "exists": false
+      },
+      {
+        "path": "C:\\Users\\runneradmin\\AppData\\Roaming\\lingjing-desktop",
+        "exists": false
+      }
+    ]
+  },
+  "launcherPid": 6612,
+  "ownership": {
+    "chain": [
+      6716,
+      6612
+    ],
+    "pid": 6716
+  },
+  "actual": {
+    "pid": 6716,
+    "ready": true,
+    "appData": "C:\\Users\\runneradmin\\AppData\\Roaming",
+    "userData": "C:\\Users\\runneradmin\\AppData\\Roaming\\Lingjing",
+    "override": null,
+    "qa": null,
+    "portable": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe"
+  },
+  "browserOwner": {
+    "pid": 6716
+  },
+  "loggedOut": true,
+  "passed": true,
+  "cleanup": [
+    {
+      "pid": 6716,
+      "exited": true
+    },
+    {
+      "pid": 6612,
+      "exited": true
+    }
+  ],
+  "completedAt": "2026-10-27T08:22:34.138Z"
+}

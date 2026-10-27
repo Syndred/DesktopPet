@@ -1,0 +1,585 @@
+{
+  "scope": "Fresh logged-out actual portable Windows. N04 hide and second-instance activation partial; N05 same/different profile empty-account subset. No physical tray click or existing pets.",
+  "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "startedAt": "2026-10-27T08:38:38.932Z",
+  "checks": [
+    {
+      "id": "N04-hide-to-tray",
+      "passed": true,
+      "before": {
+        "id": 1,
+        "visible": true,
+        "destroyed": false,
+        "minimized": false
+      },
+      "hidden": {
+        "id": 1,
+        "visible": false,
+        "destroyed": false,
+        "minimized": false
+      },
+      "rendererVisibility": "visible",
+      "physicalTrayClick": false
+    },
+    {
+      "id": "N05-same-profile-secondary-exit-and-primary-recall",
+      "passed": true,
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "recalled": {
+        "id": 1,
+        "visible": true,
+        "destroyed": false,
+        "minimized": false
+      },
+      "secondInstance": [
+        {
+          "at": 1793090362095
+        }
+      ],
+      "mainWindows": 1,
+      "existingPetWindowCoverage": false
+    },
+    {
+      "id": "N05-different-fresh-profile-independent-window",
+      "passed": true
+    },
+    {
+      "id": "fresh-profile-databases-integrity-and-zero-accounts",
+      "passed": true,
+      "profiles": 2
+    }
+  ],
+  "stages": [
+    {
+      "at": "2026-10-27T08:38:38.932Z",
+      "name": "primary-launch-start"
+    },
+    {
+      "at": "2026-10-27T08:39:02.832Z",
+      "name": "primary-inspector-and-renderer-ready"
+    },
+    {
+      "at": "2026-10-27T08:39:02.923Z",
+      "name": "same-profile-duplicate-start"
+    },
+    {
+      "at": "2026-10-27T08:39:22.354Z",
+      "name": "same-profile-duplicate-complete"
+    },
+    {
+      "at": "2026-10-27T08:39:22.355Z",
+      "name": "independent-profile-launch-start"
+    },
+    {
+      "at": "2026-10-27T08:39:38.964Z",
+      "name": "independent-profile-inspector-and-renderer-ready"
+    }
+  ],
+  "observationError": "Error",
+  "launchObservations": [
+    {
+      "at": "2026-10-27T08:39:02.386Z",
+      "loopbackListeners": [],
+      "processes": [
+        {
+          "path": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+          "pid": 2372,
+          "name": "Lingjing-0.1.8-portable-x64.exe",
+          "parentPid": 8148
+        }
+      ]
+    },
+    {
+      "at": "2026-10-27T08:39:05.060Z",
+      "loopbackListeners": [
+        {
+          "port": 64773,
+          "pid": 8648,
+          "address": "127.0.0.1"
+        },
+        {
+          "port": 64772,
+          "pid": 8648,
+          "address": "127.0.0.1"
+        }
+      ],
+      "processes": [
+        {
+          "path": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+          "pid": 2372,
+          "name": "Lingjing-0.1.8-portable-x64.exe",
+          "parentPid": 8148
+        },
+        {
+          "path": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+          "pid": 8584,
+          "name": "Lingjing-0.1.8-portable-x64.exe",
+          "parentPid": 8148
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 8648,
+          "name": "Lingjing.exe",
+          "parentPid": 2372
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 7192,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 9060,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 6592,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        }
+      ]
+    },
+    {
+      "at": "2026-10-27T08:39:10.037Z",
+      "loopbackListeners": [
+        {
+          "port": 64773,
+          "pid": 8648,
+          "address": "127.0.0.1"
+        },
+        {
+          "port": 64772,
+          "pid": 8648,
+          "address": "127.0.0.1"
+        }
+      ],
+      "processes": [
+        {
+          "path": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+          "pid": 2372,
+          "name": "Lingjing-0.1.8-portable-x64.exe",
+          "parentPid": 8148
+        },
+        {
+          "path": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+          "pid": 8584,
+          "name": "Lingjing-0.1.8-portable-x64.exe",
+          "parentPid": 8148
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 8648,
+          "name": "Lingjing.exe",
+          "parentPid": 2372
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 7192,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 9060,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 6592,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        }
+      ]
+    },
+    {
+      "at": "2026-10-27T08:39:15.140Z",
+      "loopbackListeners": [
+        {
+          "port": 64773,
+          "pid": 8648,
+          "address": "127.0.0.1"
+        },
+        {
+          "port": 64772,
+          "pid": 8648,
+          "address": "127.0.0.1"
+        }
+      ],
+      "processes": [
+        {
+          "path": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+          "pid": 2372,
+          "name": "Lingjing-0.1.8-portable-x64.exe",
+          "parentPid": 8148
+        },
+        {
+          "path": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+          "pid": 8584,
+          "name": "Lingjing-0.1.8-portable-x64.exe",
+          "parentPid": 8148
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 8648,
+          "name": "Lingjing.exe",
+          "parentPid": 2372
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 7192,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 9060,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 6592,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        }
+      ]
+    },
+    {
+      "at": "2026-10-27T08:39:20.593Z",
+      "loopbackListeners": [
+        {
+          "port": 64773,
+          "pid": 8648,
+          "address": "127.0.0.1"
+        },
+        {
+          "port": 64772,
+          "pid": 8648,
+          "address": "127.0.0.1"
+        }
+      ],
+      "processes": [
+        {
+          "path": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+          "pid": 2372,
+          "name": "Lingjing-0.1.8-portable-x64.exe",
+          "parentPid": 8148
+        },
+        {
+          "path": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+          "pid": 8584,
+          "name": "Lingjing-0.1.8-portable-x64.exe",
+          "parentPid": 8148
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 8648,
+          "name": "Lingjing.exe",
+          "parentPid": 2372
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 7192,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 9060,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 6592,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        }
+      ]
+    },
+    {
+      "at": "2026-10-27T08:39:24.985Z",
+      "loopbackListeners": [
+        {
+          "port": 64773,
+          "pid": 8648,
+          "address": "127.0.0.1"
+        },
+        {
+          "port": 64772,
+          "pid": 8648,
+          "address": "127.0.0.1"
+        }
+      ],
+      "processes": [
+        {
+          "path": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+          "pid": 2372,
+          "name": "Lingjing-0.1.8-portable-x64.exe",
+          "parentPid": 8148
+        },
+        {
+          "path": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+          "pid": 3880,
+          "name": "Lingjing-0.1.8-portable-x64.exe",
+          "parentPid": 8148
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 8648,
+          "name": "Lingjing.exe",
+          "parentPid": 2372
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 7192,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 9060,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 6592,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        }
+      ]
+    },
+    {
+      "at": "2026-10-27T08:39:29.961Z",
+      "loopbackListeners": [
+        {
+          "port": 64773,
+          "pid": 8648,
+          "address": "127.0.0.1"
+        },
+        {
+          "port": 64772,
+          "pid": 8648,
+          "address": "127.0.0.1"
+        }
+      ],
+      "processes": [
+        {
+          "path": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+          "pid": 2372,
+          "name": "Lingjing-0.1.8-portable-x64.exe",
+          "parentPid": 8148
+        },
+        {
+          "path": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+          "pid": 3880,
+          "name": "Lingjing-0.1.8-portable-x64.exe",
+          "parentPid": 8148
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 8648,
+          "name": "Lingjing.exe",
+          "parentPid": 2372
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 7192,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 9060,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 6592,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        }
+      ]
+    },
+    {
+      "at": "2026-10-27T08:39:34.989Z",
+      "loopbackListeners": [
+        {
+          "port": 64773,
+          "pid": 8648,
+          "address": "127.0.0.1"
+        },
+        {
+          "port": 64772,
+          "pid": 8648,
+          "address": "127.0.0.1"
+        }
+      ],
+      "processes": [
+        {
+          "path": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+          "pid": 2372,
+          "name": "Lingjing-0.1.8-portable-x64.exe",
+          "parentPid": 8148
+        },
+        {
+          "path": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+          "pid": 3880,
+          "name": "Lingjing-0.1.8-portable-x64.exe",
+          "parentPid": 8148
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 8648,
+          "name": "Lingjing.exe",
+          "parentPid": 2372
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 7192,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 9060,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 6592,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        }
+      ]
+    },
+    {
+      "at": "2026-10-27T08:39:39.963Z",
+      "loopbackListeners": [
+        {
+          "port": 64773,
+          "pid": 8648,
+          "address": "127.0.0.1"
+        },
+        {
+          "port": 64772,
+          "pid": 8648,
+          "address": "127.0.0.1"
+        }
+      ],
+      "processes": [
+        {
+          "path": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+          "pid": 2372,
+          "name": "Lingjing-0.1.8-portable-x64.exe",
+          "parentPid": 8148
+        },
+        {
+          "path": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+          "pid": 3880,
+          "name": "Lingjing-0.1.8-portable-x64.exe",
+          "parentPid": 8148
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 8648,
+          "name": "Lingjing.exe",
+          "parentPid": 2372
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nsm9265.tmp\\app\\Lingjing.exe",
+          "pid": 6168,
+          "name": "Lingjing.exe",
+          "parentPid": 3880
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 7192,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 9060,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        },
+        {
+          "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\Lingjing.exe",
+          "pid": 6592,
+          "name": "Lingjing.exe",
+          "parentPid": 8648
+        }
+      ]
+    }
+  ],
+  "duplicateBudget": {
+    "sfxLaunchAndExitMs": 60000,
+    "reason": "The observed primary SFX needed 24.7 seconds before inspector/renderer; NSIS extracts before launching Electron. This is the same 60s SFX readiness ceiling as the driver, not a relaxed singleton result."
+  },
+  "independent": {
+    "scope": "Ordinary actual portable SFX launch with a fresh local profile, no QA marker and no cloud configuration environment variables. Configuration availability, not a live-cloud transaction.",
+    "profile": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\foundation\\cloud-engineering\\loggedout-windows\\run-1793090318931\\independent-profile\\ordinary-config\\fresh-profile",
+    "pid": 3880,
+    "runtimePid": 6168,
+    "focusedInspection": {
+      "independentProfile": true,
+      "loggedOut": true
+    },
+    "actualCloudConfig": {
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "resourceDirectory": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nsm9265.tmp\\app\\resources"
+    },
+    "publicCloud": {
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "resourcePath": "lingjing-cloud-public.json"
+    },
+    "electron": "44.9.3",
+    "defaultProvider": "runtime",
+    "passed": true,
+    "completedAt": "2026-10-27T08:39:40.260Z"
+  },
+  "primary": {
+    "scope": "Ordinary actual portable SFX launch with a fresh local profile, no QA marker and no cloud configuration environment variables. Configuration availability, not a live-cloud transaction.",
+    "profile": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\foundation\\cloud-engineering\\loggedout-windows\\run-1793090318931\\ordinary-config\\fresh-profile",
+    "pid": 2372,
+    "runtimePid": 8648,
+    "focusedInspection": {
+      "sameProfileActivation": true,
+      "distinctProfileIsolation": true,
+      "loggedOut": true
+    },
+    "actualCloudConfig": {
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "resourceDirectory": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nstF124.tmp\\app\\resources"
+    },
+    "publicCloud": {
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "resourcePath": "lingjing-cloud-public.json"
+    },
+    "electron": "44.9.3",
+    "defaultProvider": "runtime",
+    "passed": true,
+    "completedAt": "2026-10-27T08:39:40.608Z"
+  },
+  "passed": true,
+  "completedAt": "2026-10-27T08:39:40.623Z"
+}

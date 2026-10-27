@@ -1,0 +1,274 @@
+{
+  "scope": "Actual Windows SFX UI, official isolated local simulated QA account, external renderer HTTP disabled. No cloud/hardware/location claims.",
+  "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "compiledFingerprint": "b951a6aa7a5d04a04178645f92c0840168e3656ae5cf6f8f0e4839c0328ab48f",
+  "exeSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb",
+  "cases": [
+    {
+      "id": "N01",
+      "coverage": "main navigation + actual renderer history, local QA only; map network/content not validated",
+      "status": "passed",
+      "at": "2026-10-27T08:22:28.657Z",
+      "visited": [
+        {
+          "path": "/companions",
+          "heading": "今天，也有小家伙在等你。"
+        },
+        {
+          "path": "/discovery",
+          "heading": "下楼走走，遇见新伙伴。"
+        },
+        {
+          "path": "/battle",
+          "heading": "对战中心"
+        },
+        {
+          "path": "/garden",
+          "heading": "给伙伴，留一片小天地。"
+        },
+        {
+          "path": "/inventory",
+          "heading": "把喜欢的，都留给你。"
+        },
+        {
+          "path": "/chat",
+          "heading": "聊天"
+        }
+      ],
+      "backForward": true,
+      "screenshot": "N01-navigation.png"
+    },
+    {
+      "id": "C01/C04",
+      "coverage": "actual five-element/owned filters, empty result and recovery; no adoption mutation",
+      "status": "passed",
+      "at": "2026-10-27T08:22:38.084Z",
+      "checks": [
+        {
+          "element": "metal",
+          "count": 1
+        },
+        {
+          "element": "wood",
+          "count": 1
+        },
+        {
+          "element": "water",
+          "count": 4
+        },
+        {
+          "element": "fire",
+          "count": 1
+        },
+        {
+          "element": "earth",
+          "count": 1
+        }
+      ],
+      "ownedFilterCorrect": true,
+      "emptyRecovered": true,
+      "screenshot": "C01-C04-filters.png"
+    },
+    {
+      "id": "C05",
+      "coverage": "partial: each real template preview/resource canvas; full action animation progression not claimed",
+      "status": "passed",
+      "at": "2026-10-27T08:22:40.078Z",
+      "checks": [
+        {
+          "templateId": "big-fish-gentle",
+          "name": "鱼丸",
+          "element": "water",
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "screenshot": "C05-big-fish-gentle.png"
+        },
+        {
+          "templateId": "big-fish-cheerful",
+          "name": "小蓝",
+          "element": "water",
+          "resourceId": "builtin:lingjing-xiaolan-v1",
+          "screenshot": "C05-big-fish-cheerful.png"
+        },
+        {
+          "templateId": "big-fish-foodie",
+          "name": "饭团",
+          "element": "water",
+          "resourceId": "builtin:lingjing-fantuan-v1",
+          "screenshot": "C05-big-fish-foodie.png"
+        },
+        {
+          "templateId": "animal-shiba",
+          "name": "焰柴",
+          "element": "fire",
+          "resourceId": "builtin:lingjing-shiba-v2",
+          "screenshot": "C05-animal-shiba.png"
+        },
+        {
+          "templateId": "animal-hat-cat",
+          "name": "礼帽喵",
+          "element": "metal",
+          "resourceId": "builtin:lingjing-hatcat-v1",
+          "screenshot": "C05-animal-hat-cat.png"
+        },
+        {
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "element": "water",
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "screenshot": "C05-animal-white-fox.png"
+        },
+        {
+          "templateId": "animal-wood-deer",
+          "name": "青芽",
+          "element": "wood",
+          "resourceId": "builtin:lingjing-qingya-v1",
+          "screenshot": "C05-animal-wood-deer.png"
+        },
+        {
+          "templateId": "animal-earth-pangolin",
+          "name": "岩团",
+          "element": "earth",
+          "resourceId": "builtin:lingjing-yantuan-v1",
+          "screenshot": "C05-animal-earth-pangolin.png"
+        }
+      ],
+      "fullAnimationVerified": false
+    },
+    {
+      "id": "C06",
+      "coverage": "all four current pet-detail tabs and return preserve original pet identity",
+      "status": "passed",
+      "at": "2026-10-27T08:22:43.101Z",
+      "petId": "pet-2073c0c0-3541-48cb-a4b6-cf6cb44c55b2",
+      "visited": [
+        "成长",
+        "技能",
+        "回忆",
+        "外观"
+      ],
+      "returned": true,
+      "screenshot": "C06-return.png"
+    },
+    {
+      "id": "P01/P07",
+      "coverage": "partial P01 keyboard/scroll reachability; P07 settings/privacy statements only; no OS startup/location/notification/privacy changes",
+      "status": "passed",
+      "at": "2026-10-27T08:22:45.068Z",
+      "visited": [
+        {
+          "path": "/settings",
+          "title": "按你的节奏，安静陪伴。"
+        },
+        {
+          "path": "/settings/privacy",
+          "title": "留一点安静，给自己。"
+        },
+        {
+          "path": "/settings/ai",
+          "title": "AI 对话"
+        },
+        {
+          "path": "/resources",
+          "title": "让喜欢的角色，来到桌面。"
+        },
+        {
+          "path": "/account",
+          "title": "把每一段陪伴，好好保存。"
+        },
+        {
+          "path": "/settings/about",
+          "title": "关于与本地诊断"
+        }
+      ],
+      "settingsUnchanged": true,
+      "osPermissionsChanged": false,
+      "screenshot": "P01-P07-boundaries.png"
+    },
+    {
+      "id": "N02/N03",
+      "coverage": "partial: native resize and scrolling/settings draft retention, not OS mouse-edge drag or every dialog/list",
+      "status": "passed",
+      "at": "2026-10-27T08:22:50.893Z",
+      "sizes": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 960,
+          "height": 700
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "width": 1240,
+          "height": 820
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "width": 1060,
+          "height": 740
+        }
+      ],
+      "maximized": true,
+      "draftPreserved": true,
+      "unsavedDocumentUnchanged": true,
+      "screenshot": "N02-N03-settings-resize.png"
+    },
+    {
+      "id": "P02",
+      "coverage": "actual non-security volume UI edit: discard by leaving, save and same-profile restart/readback",
+      "status": "passed",
+      "at": "2026-10-27T08:22:51.681Z",
+      "unsavedDiscarded": true,
+      "savedVolume": 71,
+      "persistedSettingsDigest": "0c72b1b65f72c08a94a5d6ef0d0b0d68bb52dde35cbfbf9f7f326c336c484d55",
+      "restartReadback": true,
+      "screenshot": "P02-restarted-settings.png"
+    }
+  ],
+  "passed": true,
+  "startedAt": "2026-10-27T08:22:06.947Z",
+  "fixture": {
+    "owner": "qa:c925c7f7-8824-4b3c-9dcb-cfbf4cb91e25:local-6675ef27-4dd2-4bca-92b1-719860220fd9",
+    "petIds": [
+      "pet-d14055ff-f45c-4936-af87-4e1bb6d03c1e",
+      "pet-2073c0c0-3541-48cb-a4b6-cf6cb44c55b2"
+    ],
+    "preparedWithProductionIpc": true
+  },
+  "offlineBlocked": [
+    {
+      "node": 0,
+      "fetch": 0,
+      "websocket": 0,
+      "chromium": 0
+    },
+    {
+      "node": 0,
+      "fetch": 0,
+      "websocket": 0,
+      "chromium": 0
+    }
+  ],
+  "pidChecks": [
+    {
+      "pid": 1992,
+      "alive": false
+    },
+    {
+      "pid": 5968,
+      "alive": false
+    },
+    {
+      "pid": 9172,
+      "alive": false
+    },
+    {
+      "pid": 2256,
+      "alive": false
+    }
+  ],
+  "ownedProcessStopped": true,
+  "profileRemoved": true,
+  "completedAt": "2026-10-27T08:23:11.436Z"
+}

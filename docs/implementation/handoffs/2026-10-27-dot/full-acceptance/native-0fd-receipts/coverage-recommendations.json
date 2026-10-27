@@ -1,0 +1,856 @@
+{
+  "runId": 40472655634,
+  "productCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "harnessCommit": "0fd05002f49ad479a7eb8c75cae99e4f0801dce4",
+  "matrixEdited": false,
+  "full98Claim": false,
+  "recommendations": [
+    {
+      "id": "N01",
+      "currentStatus": "failed_current_harness",
+      "recommended": "passed_current_native",
+      "artifact": "navigation",
+      "steps": [
+        "依次点击全部主导航",
+        "前进后退并返回"
+      ],
+      "expected": "目标页正确；激活状态和标题一致；无空白",
+      "reason": "All six current App.tsx main-nav entries have correct route, active state and recorded correct heading, followed by actual renderer history back/forward and return. Resource/settings pages separately reached by P01/P07. No map-content/network claim; sidebar-bottom resource shortcut itself not directly clicked, so do not describe this as eight direct main-nav clicks.",
+      "evidence": {
+        "name": "navigation",
+        "artifactId": 12720010500,
+        "apiDigest": "sha256:630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+        "zipSha256": "630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-navigation.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-navigation__foundation__cloud-engineering__navigation__run-1793089326679__evidence.json",
+            "sha256": "3a304e0cd9ac9ce8c340d1faa08ad0382a1524a2e3aea448cd9dcdd1e4b915cd",
+            "bytes": 7601
+          }
+        ],
+        "zipBytes": 5275078
+      }
+    },
+    {
+      "id": "P02",
+      "currentStatus": "reused_verified",
+      "recommended": "passed_current_native",
+      "artifact": "navigation",
+      "steps": [
+        "改非安全偏好",
+        "不保存离开",
+        "再保存并重开"
+      ],
+      "expected": "取消不持久化；保存值正确恢复",
+      "reason": "Fresh persisted form, unsaved volume discarded by leaving, whole document unchanged; save changes only volume to71; ordinary app stop/relaunch/login and exact whole-document readback pass. Prior e9 failure remains historical harness evidence, not deleted.",
+      "evidence": {
+        "name": "navigation",
+        "artifactId": 12720010500,
+        "apiDigest": "sha256:630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+        "zipSha256": "630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-navigation.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-navigation__foundation__cloud-engineering__navigation__run-1793089326679__evidence.json",
+            "sha256": "3a304e0cd9ac9ce8c340d1faa08ad0382a1524a2e3aea448cd9dcdd1e4b915cd",
+            "bytes": 7601
+          }
+        ],
+        "zipBytes": 5275078
+      }
+    },
+    {
+      "id": "T02",
+      "currentStatus": "not_executed_current_native",
+      "recommended": "passed_current_native",
+      "artifact": "memory",
+      "steps": [
+        "分别编辑甲乙人设/记忆",
+        "切换并重开",
+        "合成记忆新增、编辑、删除；切换两只同模板宠物回查归属与重启"
+      ],
+      "expected": "各petId独立持久化；不串实例",
+      "reason": "Original steps require petId persistence, not live-cloud authority. Two same-template pets, distinct persona/memory, real UI add/edit/delete, original edited memory ID revision1→2, other pet unchanged, normal same-profile quit/relaunch/login and exact readonly SQLite readback. This fully establishes local original steps, not cross-device or generated chat.",
+      "evidence": {
+        "name": "memory",
+        "artifactId": 12719247664,
+        "apiDigest": "sha256:45d928c264693e4663b7159ec02798a401c02802e909798bf49c356938dca271",
+        "zipSha256": "45d928c264693e4663b7159ec02798a401c02802e909798bf49c356938dca271",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-memory.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-memory__foundation__cloud-engineering__conversationMemory__run-1793089328877__evidence.json",
+            "sha256": "daa42bf9c4c49f96b7549279e8fba429944cdbd2991fe0f6b19fb48bf204bb12",
+            "bytes": 7715
+          }
+        ],
+        "zipBytes": 3214
+      }
+    },
+    {
+      "id": "R02",
+      "currentStatus": "failed_current_harness",
+      "recommended": "passed_current_native",
+      "artifact": "resources",
+      "steps": [
+        "各角色播放idle/walk/attack/hit等可用动作",
+        "连续相同招式"
+      ],
+      "expected": "实际canvas/纹理帧推进；同动作可重播",
+      "reason": "Eight resources ×12 available mapped actions=96; first and repeated playback=192 observations independently revalidated from all recorded samples. Frame timeline advances, actual texture regions belong to authored clip and change when >1 distinct authored region; replay key changes. No motion/fps/clock overrides. See R02-independent-summary.json.",
+      "evidence": {
+        "name": "resources",
+        "artifactId": 12719772690,
+        "apiDigest": "sha256:d5c175a3610cecee893ab83a47720fafa45b587a31cb67fe341cb16be45944c2",
+        "zipSha256": "d5c175a3610cecee893ab83a47720fafa45b587a31cb67fe341cb16be45944c2",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-resources.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-resources__foundation__full-acceptance__resources__run-1793089332513-d5c389cd__evidence.json",
+            "sha256": "c4e9aebc85092985ef67a26b83aa666cc3ca2486c80ed404a9c2438665cfbd38",
+            "bytes": 1149456
+          }
+        ],
+        "zipBytes": 1200003
+      }
+    },
+    {
+      "id": "P09",
+      "currentStatus": "partial_current_native",
+      "recommended": "passed_current_native",
+      "artifact": "default",
+      "steps": [
+        "核对正常开机启动配置所用可执行路径",
+        "确认不是会清理的SFX临时解压Lingjing.exe",
+        "不用注销或重启系统"
+      ],
+      "expected": "注册持久且存在的便携SFX路径，带正确profile语义；不破坏用户原启动项",
+      "reason": "Composite proof: existing b5 startup-registration receipt writes/reads/removes exact app-only HKCU entry, stable existing outer SFX and args=[], before/after null restored; new ordinary SFX run has override=null,qa=null,userData=AppData/Roaming/Lingjing, legacy/default paths absent beforehand, logged-out ordinary UI, exact owned-PID cleanup. Original steps explicitly require no logout/reboot and no UI toggle. Keep both receipts; new default-profile receipt alone is insufficient.",
+      "evidence": {
+        "name": "default",
+        "artifactId": 12719891812,
+        "apiDigest": "sha256:586aa9907bb1fc6de1df1143c5dd88742425ab6bd59f95ef3679a0d26f749818",
+        "zipSha256": "586aa9907bb1fc6de1df1143c5dd88742425ab6bd59f95ef3679a0d26f749818",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-default.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-default__foundation__cloud-engineering__default-profile__run-1793089325472__evidence.json",
+            "sha256": "209adf11dc63346158a8b3c9d3c913ceaeb58abf3007d9ac2d62e77bba9bfb18",
+            "bytes": 2075
+          }
+        ],
+        "zipBytes": 2106
+      },
+      "compositeEarlierReceipt": {
+        "path": "artifacts/qa/full-acceptance-20261027/b5-receipts/startup-registration__run-1793084545752__evidence.json",
+        "sha256": "e50761dd30e2ab7d3f1405ca154f2b77f7ddc4dfa3890bc7a580b1643608d71d",
+        "bytes": 2031
+      }
+    },
+    {
+      "id": "P04",
+      "currentStatus": "not_executed_current_native",
+      "recommended": "partial_current_native",
+      "artifact": "backup",
+      "steps": [
+        "正常UI导出QA备份",
+        "读取文件"
+      ],
+      "expected": "模块完整；无密码/API密钥；provenance明确",
+      "reason": "Production export UI and real751-field checksum/provenance/module/secret exclusion/resource-byte proof now pass, but file dialog is bridged. No native picker evidence in this run.",
+      "evidence": {
+        "name": "backup",
+        "artifactId": 12719946544,
+        "apiDigest": "sha256:d7dfec795eefde5300c60571706dc4a3f52fef7b66cd768c8e27adcd5a3aa9f1",
+        "zipSha256": "d7dfec795eefde5300c60571706dc4a3f52fef7b66cd768c8e27adcd5a3aa9f1",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-backup.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-backup__foundation__cloud-engineering__backup__run-1793089321590__evidence.json",
+            "sha256": "6a169bf4e1dfd67c5a21427c852f7896ded6fbc52c01794216744f29465a29a3",
+            "bytes": 5210
+          }
+        ],
+        "zipBytes": 967884
+      }
+    },
+    {
+      "id": "P05",
+      "currentStatus": "not_executed_current_native",
+      "recommended": "partial_current_native",
+      "artifact": "backup",
+      "steps": [
+        "导出后改变QA状态",
+        "正常UI恢复",
+        "读取原件保护备份"
+      ],
+      "expected": "恢复正确；恢复前档案保留；不污染普通账号",
+      "reason": "Changed volume70→71, real replace confirmation restores70; automatic original-protection backup preserves71 and is preview-readable, original pet/resource IDs and original files preserved. Bridge picker and no original live memory repeated-restore/deletion conflict reproduction; do not close historical failure solely with local volume restore.",
+      "evidence": {
+        "name": "backup",
+        "artifactId": 12719946544,
+        "apiDigest": "sha256:d7dfec795eefde5300c60571706dc4a3f52fef7b66cd768c8e27adcd5a3aa9f1",
+        "zipSha256": "d7dfec795eefde5300c60571706dc4a3f52fef7b66cd768c8e27adcd5a3aa9f1",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-backup.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-backup__foundation__cloud-engineering__backup__run-1793089321590__evidence.json",
+            "sha256": "6a169bf4e1dfd67c5a21427c852f7896ded6fbc52c01794216744f29465a29a3",
+            "bytes": 5210
+          }
+        ],
+        "zipBytes": 967884
+      }
+    },
+    {
+      "id": "P06",
+      "currentStatus": "not_executed_current_native",
+      "recommended": "partial_current_native",
+      "artifact": "backup",
+      "steps": [
+        "选择损坏或其他身份/模拟来源备份"
+      ],
+      "expected": "产品边界拒绝或警告明确；原数据保留",
+      "reason": "Corrupt copy and second real local QA owner both rejected by product UI; no confirm dialog, SQL/business/action rows unchanged, original backup bytes unchanged. File dialog bridge and local authority only.",
+      "evidence": {
+        "name": "backup",
+        "artifactId": 12719946544,
+        "apiDigest": "sha256:d7dfec795eefde5300c60571706dc4a3f52fef7b66cd768c8e27adcd5a3aa9f1",
+        "zipSha256": "d7dfec795eefde5300c60571706dc4a3f52fef7b66cd768c8e27adcd5a3aa9f1",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-backup.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-backup__foundation__cloud-engineering__backup__run-1793089321590__evidence.json",
+            "sha256": "6a169bf4e1dfd67c5a21427c852f7896ded6fbc52c01794216744f29465a29a3",
+            "bytes": 5210
+          }
+        ],
+        "zipBytes": 967884
+      }
+    },
+    {
+      "id": "R05",
+      "currentStatus": "not_executed_current_native",
+      "recommended": "partial_current_native",
+      "artifact": "backup",
+      "steps": [
+        "正常UI导入自有青芽包",
+        "账号与同步导出本地备份",
+        "同owner同环境第二普通profile正常UI恢复",
+        "只读比对原resourceId、PNG/JSON原bytes、动作映射、校准与历史"
+      ],
+      "expected": "正式账户备份嵌入真实原文件与SHA；新managed路径恢复保留原resourceId/imports/preferences/action map；不改owner、不手拷旧包充当UI导出",
+      "reason": "Missing PNG preview repair and missing descriptor after-preview merge/protection both pass, no authored/history mutation, real backup embeds files/hashes. Same-profile local QA is not same-owner second ordinary profile, not formal cloud-account backup; retain original prerequisites.",
+      "evidence": {
+        "name": "backup",
+        "artifactId": 12719946544,
+        "apiDigest": "sha256:d7dfec795eefde5300c60571706dc4a3f52fef7b66cd768c8e27adcd5a3aa9f1",
+        "zipSha256": "d7dfec795eefde5300c60571706dc4a3f52fef7b66cd768c8e27adcd5a3aa9f1",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-backup.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-backup__foundation__cloud-engineering__backup__run-1793089321590__evidence.json",
+            "sha256": "6a169bf4e1dfd67c5a21427c852f7896ded6fbc52c01794216744f29465a29a3",
+            "bytes": 5210
+          }
+        ],
+        "zipBytes": 967884
+      }
+    },
+    {
+      "id": "A11",
+      "currentStatus": "not_executed_current_native",
+      "recommended": "partial_current_native",
+      "artifact": "memory",
+      "steps": [
+        "甲领养写状态并退出",
+        "乙登录",
+        "甲再登录"
+      ],
+      "expected": "宠物/聊天/战报/设置/桌面不串归属",
+      "reason": "Second local owner sees none of first owner pets/persona/memories/selected conversation; original private rows intact. Does not cover populated generated message history, battle reports/settings/desktop or final A relogin in this subcase.",
+      "evidence": {
+        "name": "memory",
+        "artifactId": 12719247664,
+        "apiDigest": "sha256:45d928c264693e4663b7159ec02798a401c02802e909798bf49c356938dca271",
+        "zipSha256": "45d928c264693e4663b7159ec02798a401c02802e909798bf49c356938dca271",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-memory.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-memory__foundation__cloud-engineering__conversationMemory__run-1793089328877__evidence.json",
+            "sha256": "daa42bf9c4c49f96b7549279e8fba429944cdbd2991fe0f6b19fb48bf204bb12",
+            "bytes": 7715
+          }
+        ],
+        "zipBytes": 3214
+      }
+    },
+    {
+      "id": "N02",
+      "currentStatus": "partial_current_native",
+      "recommended": "partial_current_native",
+      "artifact": "navigation",
+      "steps": [
+        "鼠标缩到支持最小尺寸",
+        "最大化",
+        "恢复"
+      ],
+      "expected": "主要表单/弹窗/滚动均可达；无错位遮挡",
+      "reason": "Native setSize/maximize/restore and settings-scroll/draft pass, not actual mouse-edge drag/all original forms/dialogs.",
+      "evidence": {
+        "name": "navigation",
+        "artifactId": 12720010500,
+        "apiDigest": "sha256:630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+        "zipSha256": "630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-navigation.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-navigation__foundation__cloud-engineering__navigation__run-1793089326679__evidence.json",
+            "sha256": "3a304e0cd9ac9ce8c340d1faa08ad0382a1524a2e3aea448cd9dcdd1e4b915cd",
+            "bytes": 7601
+          }
+        ],
+        "zipBytes": 5275078
+      }
+    },
+    {
+      "id": "N03",
+      "currentStatus": "partial_current_native",
+      "recommended": "partial_current_native",
+      "artifact": "navigation",
+      "steps": [
+        "多页反复缩放",
+        "滚动长列表和弹窗"
+      ],
+      "expected": "布局稳定；不丢选中实体或未提交内容",
+      "reason": "Settings draft survives three native sizes; no unsaved persistence. Does not establish multi-page long lists/dialogs or historical concurrent cross-client persona draft failure.",
+      "evidence": {
+        "name": "navigation",
+        "artifactId": 12720010500,
+        "apiDigest": "sha256:630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+        "zipSha256": "630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-navigation.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-navigation__foundation__cloud-engineering__navigation__run-1793089326679__evidence.json",
+            "sha256": "3a304e0cd9ac9ce8c340d1faa08ad0382a1524a2e3aea448cd9dcdd1e4b915cd",
+            "bytes": 7601
+          }
+        ],
+        "zipBytes": 5275078
+      }
+    },
+    {
+      "id": "P01",
+      "currentStatus": "partial_current_native",
+      "recommended": "partial_current_native",
+      "artifact": "navigation",
+      "steps": [
+        "逐设置页签",
+        "键盘与滚动"
+      ],
+      "expected": "分组/标签/控件状态清楚；无布局遮挡",
+      "reason": "All six current settings groups reached; limited keyboard/scroll checks only, not all controls/layouts.",
+      "evidence": {
+        "name": "navigation",
+        "artifactId": 12720010500,
+        "apiDigest": "sha256:630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+        "zipSha256": "630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-navigation.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-navigation__foundation__cloud-engineering__navigation__run-1793089326679__evidence.json",
+            "sha256": "3a304e0cd9ac9ce8c340d1faa08ad0382a1524a2e3aea448cd9dcdd1e4b915cd",
+            "bytes": 7601
+          }
+        ],
+        "zipBytes": 5275078
+      }
+    },
+    {
+      "id": "C01",
+      "currentStatus": "reused_verified",
+      "recommended": "retain_reused_verified_add_native_subset",
+      "artifact": "navigation",
+      "steps": [
+        "进入领养页",
+        "切全部与金木水火土"
+      ],
+      "expected": "以属性图标分类；去掉大肥鱼/动物伙伴类型标签",
+      "reason": "Current five-element card counts/icons and no animal-partner old label pass; retain reviewed reuse because full visual obsolete-label absence not separately asserted in new receipt.",
+      "evidence": {
+        "name": "navigation",
+        "artifactId": 12720010500,
+        "apiDigest": "sha256:630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+        "zipSha256": "630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-navigation.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-navigation__foundation__cloud-engineering__navigation__run-1793089326679__evidence.json",
+            "sha256": "3a304e0cd9ac9ce8c340d1faa08ad0382a1524a2e3aea448cd9dcdd1e4b915cd",
+            "bytes": 7601
+          }
+        ],
+        "zipBytes": 5275078
+      }
+    },
+    {
+      "id": "C04",
+      "currentStatus": "reused_verified",
+      "recommended": "retain_reused_verified_add_native_subset",
+      "artifact": "navigation",
+      "steps": [
+        "逐个五行筛选",
+        "切只看已拥有",
+        "空结果与恢复"
+      ],
+      "expected": "结果准确；已选预览与筛选一致；可清空筛选",
+      "reason": "Current five filters, owned empty and recovery pass; selected-preview consistency under each filter not asserted by this harness.",
+      "evidence": {
+        "name": "navigation",
+        "artifactId": 12720010500,
+        "apiDigest": "sha256:630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+        "zipSha256": "630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-navigation.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-navigation__foundation__cloud-engineering__navigation__run-1793089326679__evidence.json",
+            "sha256": "3a304e0cd9ac9ce8c340d1faa08ad0382a1524a2e3aea448cd9dcdd1e4b915cd",
+            "bytes": 7601
+          }
+        ],
+        "zipBytes": 5275078
+      }
+    },
+    {
+      "id": "C05",
+      "currentStatus": "reused_verified",
+      "recommended": "retain_reused_verified_add_native_subset",
+      "artifact": "navigation",
+      "steps": [
+        "逐个打开八角色预览/详情"
+      ],
+      "expected": "实际角色资源可见；属性/固定名正确；无占位替代",
+      "reason": "Eight fixed names and expected real-resource canvases rendered, per-role PNGs available. Full animation not part of original C05 and now independently R02-passed; element value in receipt is template snapshot, not UI assertion. May promote only after reviewing eight visual labels if required.",
+      "evidence": {
+        "name": "navigation",
+        "artifactId": 12720010500,
+        "apiDigest": "sha256:630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+        "zipSha256": "630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-navigation.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-navigation__foundation__cloud-engineering__navigation__run-1793089326679__evidence.json",
+            "sha256": "3a304e0cd9ac9ce8c340d1faa08ad0382a1524a2e3aea448cd9dcdd1e4b915cd",
+            "bytes": 7601
+          }
+        ],
+        "zipBytes": 5275078
+      }
+    },
+    {
+      "id": "C06",
+      "currentStatus": "passed_current_native",
+      "recommended": "retain_passed_current_native",
+      "artifact": "navigation",
+      "steps": [
+        "打开灵宠详情",
+        "依次成长/技能/记忆/外观等页签"
+      ],
+      "expected": "内容与petId一致；导航返回保留上下文",
+      "reason": "All four detail tabs/return retain same original pet ID; confirms existing current-native pass.",
+      "evidence": {
+        "name": "navigation",
+        "artifactId": 12720010500,
+        "apiDigest": "sha256:630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+        "zipSha256": "630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-navigation.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-navigation__foundation__cloud-engineering__navigation__run-1793089326679__evidence.json",
+            "sha256": "3a304e0cd9ac9ce8c340d1faa08ad0382a1524a2e3aea448cd9dcdd1e4b915cd",
+            "bytes": 7601
+          }
+        ],
+        "zipBytes": 5275078
+      }
+    },
+    {
+      "id": "R01",
+      "currentStatus": "reused_verified",
+      "recommended": "retain_reused_verified_add_native_subset",
+      "artifact": "resources",
+      "steps": [
+        "打开资源库",
+        "分类筛选",
+        "选角色和动作"
+      ],
+      "expected": "全部资源可渲染；偏好不改变错误petId",
+      "reason": "Eight real canvases, name search empty/reset and unchanged records. Current UI has no category control; this run does not independently exercise preference draft isolation.",
+      "evidence": {
+        "name": "resources",
+        "artifactId": 12719772690,
+        "apiDigest": "sha256:d5c175a3610cecee893ab83a47720fafa45b587a31cb67fe341cb16be45944c2",
+        "zipSha256": "d5c175a3610cecee893ab83a47720fafa45b587a31cb67fe341cb16be45944c2",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-resources.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-resources__foundation__full-acceptance__resources__run-1793089332513-d5c389cd__evidence.json",
+            "sha256": "c4e9aebc85092985ef67a26b83aa666cc3ca2486c80ed404a9c2438665cfbd38",
+            "bytes": 1149456
+          }
+        ],
+        "zipBytes": 1200003
+      }
+    },
+    {
+      "id": "R03",
+      "currentStatus": "reused_verified",
+      "recommended": "retain_reused_verified_add_engineering_subset",
+      "artifact": "resources",
+      "steps": [
+        "用新QA样本从正常文件选择导入"
+      ],
+      "expected": "资源可见可渲染；manifest/字节/历史正确",
+      "reason": "Actual importer/real bytes/history plus UI render pass, but picker bridge not original normal native file selection.",
+      "evidence": {
+        "name": "resources",
+        "artifactId": 12719772690,
+        "apiDigest": "sha256:d5c175a3610cecee893ab83a47720fafa45b587a31cb67fe341cb16be45944c2",
+        "zipSha256": "d5c175a3610cecee893ab83a47720fafa45b587a31cb67fe341cb16be45944c2",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-resources.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-resources__foundation__full-acceptance__resources__run-1793089332513-d5c389cd__evidence.json",
+            "sha256": "c4e9aebc85092985ef67a26b83aa666cc3ca2486c80ed404a9c2438665cfbd38",
+            "bytes": 1149456
+          }
+        ],
+        "zipBytes": 1200003
+      }
+    },
+    {
+      "id": "R04",
+      "currentStatus": "reused_verified",
+      "recommended": "retain_reused_verified_add_engineering_subset",
+      "artifact": "resources",
+      "steps": [
+        "导入无效包/缺文件/路径穿越样本"
+      ],
+      "expected": "拒绝且明确原因；已有资源和文件不破坏",
+      "reason": "Bad JSON/missing atlas/path traversal each rejected with original rows/bytes intact; bridge chooser means supplemental engineering path, not new full native picker pass.",
+      "evidence": {
+        "name": "resources",
+        "artifactId": 12719772690,
+        "apiDigest": "sha256:d5c175a3610cecee893ab83a47720fafa45b587a31cb67fe341cb16be45944c2",
+        "zipSha256": "d5c175a3610cecee893ab83a47720fafa45b587a31cb67fe341cb16be45944c2",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-resources.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-resources__foundation__full-acceptance__resources__run-1793089332513-d5c389cd__evidence.json",
+            "sha256": "c4e9aebc85092985ef67a26b83aa666cc3ca2486c80ed404a9c2438665cfbd38",
+            "bytes": 1149456
+          }
+        ],
+        "zipBytes": 1200003
+      }
+    },
+    {
+      "id": "P07",
+      "currentStatus": "reused_verified",
+      "recommended": "retain_reused_verified_add_native_subset",
+      "artifact": "navigation",
+      "steps": [
+        "查看开机/位置/统计等设置和说明"
+      ],
+      "expected": "界面准确；需OS/隐私实改者记录边界，不代用户修改",
+      "reason": "Read-only startup/location/emotion descriptions reached and document unchanged, no OS/privacy mutation. Original requirement is viewing, not changing OS permissions; no blanket hardware blocker.",
+      "evidence": {
+        "name": "navigation",
+        "artifactId": 12720010500,
+        "apiDigest": "sha256:630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+        "zipSha256": "630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-navigation.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-navigation__foundation__cloud-engineering__navigation__run-1793089326679__evidence.json",
+            "sha256": "3a304e0cd9ac9ce8c340d1faa08ad0382a1524a2e3aea448cd9dcdd1e4b915cd",
+            "bytes": 7601
+          }
+        ],
+        "zipBytes": 5275078
+      }
+    },
+    {
+      "id": "M05",
+      "currentStatus": "partial_current_native",
+      "recommended": "retain_partial_current_native_add_engineering",
+      "artifact": "context",
+      "steps": [
+        "打开相遇",
+        "正常战斗胜利",
+        "尝试捕捉"
+      ],
+      "expected": "胜利才可捕捉；生成指定资源新petId与receipt",
+      "reason": "0fd actual development Electron with simulated location/charged prestate confirms wild victory→capture→correct-resource new instance and single receipt on repeat. Not packaged b5 SFX; cannot promote b5 native.",
+      "evidence": {
+        "name": "context",
+        "artifactId": 12719402732,
+        "apiDigest": "sha256:313f931c5139eb6bd8928c22c32d1e773f44fc1db9f2cb3cba9da7977cbc7d20",
+        "zipSha256": "313f931c5139eb6bd8928c22c32d1e773f44fc1db9f2cb3cba9da7977cbc7d20",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-context.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-context__foundation__cloud-engineering__full-context__run-current__evidence.json",
+            "sha256": "d7863331461548e7efe9d9ec13e6950fd93dfb03d3658d39ae500bd28b56bc8d",
+            "bytes": 60249
+          }
+        ],
+        "zipBytes": 4677886
+      }
+    },
+    {
+      "id": "G03",
+      "currentStatus": "not_executed_current_native",
+      "recommended": "engineering_supplement_only",
+      "artifact": "context",
+      "steps": [
+        "合格定位或明确模拟领地竞争",
+        "自然胜利",
+        "确认占领"
+      ],
+      "expected": "仅胜利占领；服务端/本机receipt一致",
+      "reason": "0fd development Electron explicit simulated territory competition, real kernel victory/confirm and +2 seeds once. Not b5 SFX, no live/server authority claim.",
+      "evidence": {
+        "name": "context",
+        "artifactId": 12719402732,
+        "apiDigest": "sha256:313f931c5139eb6bd8928c22c32d1e773f44fc1db9f2cb3cba9da7977cbc7d20",
+        "zipSha256": "313f931c5139eb6bd8928c22c32d1e773f44fc1db9f2cb3cba9da7977cbc7d20",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-context.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-context__foundation__cloud-engineering__full-context__run-current__evidence.json",
+            "sha256": "d7863331461548e7efe9d9ec13e6950fd93dfb03d3658d39ae500bd28b56bc8d",
+            "bytes": 60249
+          }
+        ],
+        "zipBytes": 4677886
+      }
+    },
+    {
+      "id": "G04",
+      "currentStatus": "not_executed_current_native",
+      "recommended": "engineering_supplement_only",
+      "artifact": "context",
+      "steps": [
+        "竞争失败/取消",
+        "重复占领",
+        "他人已占领场景"
+      ],
+      "expected": "失败确认无占领；冲突清楚；不重复扣奖",
+      "reason": "Repeated territory confirm no inventory/ownership change only; failure/cancel/other-owner conflict branches absent.",
+      "evidence": {
+        "name": "context",
+        "artifactId": 12719402732,
+        "apiDigest": "sha256:313f931c5139eb6bd8928c22c32d1e773f44fc1db9f2cb3cba9da7977cbc7d20",
+        "zipSha256": "313f931c5139eb6bd8928c22c32d1e773f44fc1db9f2cb3cba9da7977cbc7d20",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-context.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-context__foundation__cloud-engineering__full-context__run-current__evidence.json",
+            "sha256": "d7863331461548e7efe9d9ec13e6950fd93dfb03d3658d39ae500bd28b56bc8d",
+            "bytes": 60249
+          }
+        ],
+        "zipBytes": 4677886
+      }
+    },
+    {
+      "id": "B02",
+      "currentStatus": "partial_current_native",
+      "recommended": "retain_partial_current_native_add_engineering",
+      "artifact": "context",
+      "steps": [
+        "普通/技能/防御/治疗逐项操作"
+      ],
+      "expected": "按钮可用性与消耗正确；每操作一回合；动画对应",
+      "reason": "Shared screen controls/resources and selected ultimate/element turns confirmed, not all actions/full original suite.",
+      "evidence": {
+        "name": "context",
+        "artifactId": 12719402732,
+        "apiDigest": "sha256:313f931c5139eb6bd8928c22c32d1e773f44fc1db9f2cb3cba9da7977cbc7d20",
+        "zipSha256": "313f931c5139eb6bd8928c22c32d1e773f44fc1db9f2cb3cba9da7977cbc7d20",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-context.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-context__foundation__cloud-engineering__full-context__run-current__evidence.json",
+            "sha256": "d7863331461548e7efe9d9ec13e6950fd93dfb03d3658d39ae500bd28b56bc8d",
+            "bytes": 60249
+          }
+        ],
+        "zipBytes": 4677886
+      }
+    },
+    {
+      "id": "B04",
+      "currentStatus": "reused_verified",
+      "recommended": "retain_reused_verified_add_engineering_subset",
+      "artifact": "context",
+      "steps": [
+        "训练数回合",
+        "离开返回",
+        "重开应用"
+      ],
+      "expected": "可恢复或明确放弃；不重复开始/结算",
+      "reason": "Wild return resumes same session/round, but no new full original training/restart coverage.",
+      "evidence": {
+        "name": "context",
+        "artifactId": 12719402732,
+        "apiDigest": "sha256:313f931c5139eb6bd8928c22c32d1e773f44fc1db9f2cb3cba9da7977cbc7d20",
+        "zipSha256": "313f931c5139eb6bd8928c22c32d1e773f44fc1db9f2cb3cba9da7977cbc7d20",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-context.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-context__foundation__cloud-engineering__full-context__run-current__evidence.json",
+            "sha256": "d7863331461548e7efe9d9ec13e6950fd93dfb03d3658d39ae500bd28b56bc8d",
+            "bytes": 60249
+          }
+        ],
+        "zipBytes": 4677886
+      }
+    },
+    {
+      "id": "A13",
+      "currentStatus": "not_executed_current_native",
+      "recommended": "retain_not_executed_current_native",
+      "artifact": "backup",
+      "steps": [
+        "正常新QA账号领养",
+        "观察伙伴已保存/其他存档待核对提示",
+        "正常界面核对与返回"
+      ],
+      "expected": "首次确认合理且能完成；不丢宠物/历史/资源/固定名或编号；普通新档案不无故卡住",
+      "reason": "Explicitly not covered; no ordinary live-cloud new-account adoption/save authority.",
+      "evidence": {
+        "name": "backup",
+        "artifactId": 12719946544,
+        "apiDigest": "sha256:d7dfec795eefde5300c60571706dc4a3f52fef7b66cd768c8e27adcd5a3aa9f1",
+        "zipSha256": "d7dfec795eefde5300c60571706dc4a3f52fef7b66cd768c8e27adcd5a3aa9f1",
+        "verified": true,
+        "path": "artifacts/qa/full-acceptance-20261027/0fd-backup.zip",
+        "runId": 40472655634,
+        "evidence": [
+          {
+            "path": "/tmp/0fd-receipts/0fd-backup__foundation__cloud-engineering__backup__run-1793089321590__evidence.json",
+            "sha256": "6a169bf4e1dfd67c5a21427c852f7896ded6fbc52c01794216744f29465a29a3",
+            "bytes": 5210
+          }
+        ],
+        "zipBytes": 967884
+      }
+    },
+    {
+      "id": "N04",
+      "currentStatus": "not_executed_current_native",
+      "recommended": "retain_not_executed_current_native",
+      "steps": [
+        "点击关闭",
+        "托盘打开",
+        "退出自身进程"
+      ],
+      "expected": "行为符合设置；可恢复；不关闭其他进程",
+      "reason": "None of these six artifacts clicks close-to-tray then actually opens via tray and exits via expected UI. Exact own-PID teardown is safety cleanup, not tray acceptance. Navigation titlebar maximize/restore also is not close-to-tray. Do not promote based on navigation passed=true.",
+      "reviewedEvidence": [
+        {
+          "name": "navigation",
+          "artifactId": 12720010500,
+          "apiDigest": "sha256:630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+          "zipSha256": "630eb7c8a468de4cb6fc96f01ab5f34b2a0d0aef0917937d8b9a075f7a5c82b3",
+          "verified": true,
+          "path": "artifacts/qa/full-acceptance-20261027/0fd-navigation.zip",
+          "runId": 40472655634,
+          "evidence": [
+            {
+              "path": "/tmp/0fd-receipts/0fd-navigation__foundation__cloud-engineering__navigation__run-1793089326679__evidence.json",
+              "sha256": "3a304e0cd9ac9ce8c340d1faa08ad0382a1524a2e3aea448cd9dcdd1e4b915cd",
+              "bytes": 7601
+            }
+          ],
+          "zipBytes": 5275078
+        },
+        {
+          "name": "default",
+          "artifactId": 12719891812,
+          "apiDigest": "sha256:586aa9907bb1fc6de1df1143c5dd88742425ab6bd59f95ef3679a0d26f749818",
+          "zipSha256": "586aa9907bb1fc6de1df1143c5dd88742425ab6bd59f95ef3679a0d26f749818",
+          "verified": true,
+          "path": "artifacts/qa/full-acceptance-20261027/0fd-default.zip",
+          "runId": 40472655634,
+          "evidence": [
+            {
+              "path": "/tmp/0fd-receipts/0fd-default__foundation__cloud-engineering__default-profile__run-1793089325472__evidence.json",
+              "sha256": "209adf11dc63346158a8b3c9d3c913ceaeb58abf3007d9ac2d62e77bba9bfb18",
+              "bytes": 2075
+            }
+          ],
+          "zipBytes": 2106
+        }
+      ]
+    }
+  ],
+  "provenanceCaution": "context receipt is sourceCommit0fd development Electron, not b5 SFX; package-reuse receipt in same artifact does not change its execution path.",
+  "reviewedLocalPathsNote": "Paths under /tmp and artifacts refer to hash-verified local inspection copies. Matching small receipts are committed beside this file; the large resources receipt is retained in the exact GitHub artifact with byte/hash references, not duplicated in Git."
+}

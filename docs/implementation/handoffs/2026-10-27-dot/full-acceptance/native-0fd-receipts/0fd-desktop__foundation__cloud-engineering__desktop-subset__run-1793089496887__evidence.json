@@ -1,0 +1,1712 @@
+{
+  "sourceCommit": "0fd05002f49ad479a7eb8c75cae99e4f0801dce4",
+  "startedAt": "2026-10-27T08:24:56.947Z",
+  "scope": "Actual Windows Electron windows and UI on fresh offline QA account. Native OS input records are separate from Chromium control clicks. No physical second display, production data, GPS or old grant.",
+  "scenario": {
+    "schemaVersion": 1,
+    "application": "lingjing",
+    "scenario": "unified-battle",
+    "runId": "32eb4ee5-0f90-48a7-8c27-5ce5e9b66fc0",
+    "isolated": true,
+    "profilePath": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1793089496936-32eb4ee5",
+    "createdAt": "2026-10-27T08:24:56.936Z",
+    "env": {
+      "LINGJING_QA_SCENARIO": "unified-battle",
+      "PET_USER_DATA_DIR": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1793089496936-32eb4ee5"
+    }
+  },
+  "checks": [
+    {
+      "id": "D01-limit-display",
+      "status": "passed-isolated-subset",
+      "detail": {
+        "samples": [
+          [
+            {
+              "id": 2,
+              "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-90965b71-1eae-4bd2-bd8b-f7896481e8b1",
+              "visible": true,
+              "bounds": {
+                "x": 80,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "display": {
+                "accelerometerSupport": "unknown",
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 768
+                },
+                "colorDepth": 24,
+                "colorSpace": "{primaries:BT709, transfer:SRGB, matrix:RGB, range:FULL}",
+                "depthPerComponent": 8,
+                "detected": true,
+                "displayFrequency": 64,
+                "id": 1052078888,
+                "internal": false,
+                "label": "HyperVMonitor",
+                "maximumCursorSize": {
+                  "width": 0,
+                  "height": 0
+                },
+                "monochrome": false,
+                "nativeOrigin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "rotation": 0,
+                "scaleFactor": 1,
+                "size": {
+                  "width": 1024,
+                  "height": 768
+                },
+                "workArea": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 720
+                },
+                "workAreaSize": {
+                  "width": 1024,
+                  "height": 720
+                },
+                "touchSupport": "unknown"
+              },
+              "focused": false
+            }
+          ],
+          [
+            {
+              "id": 3,
+              "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-18c3883f-4576-4adc-9665-8a92c1435bc7",
+              "visible": true,
+              "bounds": {
+                "x": 320,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "display": {
+                "accelerometerSupport": "unknown",
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 768
+                },
+                "colorDepth": 24,
+                "colorSpace": "{primaries:BT709, transfer:SRGB, matrix:RGB, range:FULL}",
+                "depthPerComponent": 8,
+                "detected": true,
+                "displayFrequency": 64,
+                "id": 1052078888,
+                "internal": false,
+                "label": "HyperVMonitor",
+                "maximumCursorSize": {
+                  "width": 0,
+                  "height": 0
+                },
+                "monochrome": false,
+                "nativeOrigin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "rotation": 0,
+                "scaleFactor": 1,
+                "size": {
+                  "width": 1024,
+                  "height": 768
+                },
+                "workArea": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 720
+                },
+                "workAreaSize": {
+                  "width": 1024,
+                  "height": 720
+                },
+                "touchSupport": "unknown"
+              },
+              "focused": false
+            },
+            {
+              "id": 2,
+              "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-90965b71-1eae-4bd2-bd8b-f7896481e8b1",
+              "visible": true,
+              "bounds": {
+                "x": 80,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "display": {
+                "accelerometerSupport": "unknown",
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 768
+                },
+                "colorDepth": 24,
+                "colorSpace": "{primaries:BT709, transfer:SRGB, matrix:RGB, range:FULL}",
+                "depthPerComponent": 8,
+                "detected": true,
+                "displayFrequency": 64,
+                "id": 1052078888,
+                "internal": false,
+                "label": "HyperVMonitor",
+                "maximumCursorSize": {
+                  "width": 0,
+                  "height": 0
+                },
+                "monochrome": false,
+                "nativeOrigin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "rotation": 0,
+                "scaleFactor": 1,
+                "size": {
+                  "width": 1024,
+                  "height": 768
+                },
+                "workArea": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 720
+                },
+                "workAreaSize": {
+                  "width": 1024,
+                  "height": 720
+                },
+                "touchSupport": "unknown"
+              },
+              "focused": false
+            }
+          ],
+          [
+            {
+              "id": 4,
+              "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-60a4236a-5a8b-41bc-b0bf-3e2cc3665ae4",
+              "visible": true,
+              "bounds": {
+                "x": 560,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "display": {
+                "accelerometerSupport": "unknown",
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 768
+                },
+                "colorDepth": 24,
+                "colorSpace": "{primaries:BT709, transfer:SRGB, matrix:RGB, range:FULL}",
+                "depthPerComponent": 8,
+                "detected": true,
+                "displayFrequency": 64,
+                "id": 1052078888,
+                "internal": false,
+                "label": "HyperVMonitor",
+                "maximumCursorSize": {
+                  "width": 0,
+                  "height": 0
+                },
+                "monochrome": false,
+                "nativeOrigin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "rotation": 0,
+                "scaleFactor": 1,
+                "size": {
+                  "width": 1024,
+                  "height": 768
+                },
+                "workArea": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 720
+                },
+                "workAreaSize": {
+                  "width": 1024,
+                  "height": 720
+                },
+                "touchSupport": "unknown"
+              },
+              "focused": false
+            },
+            {
+              "id": 3,
+              "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-18c3883f-4576-4adc-9665-8a92c1435bc7",
+              "visible": true,
+              "bounds": {
+                "x": 320,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "display": {
+                "accelerometerSupport": "unknown",
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 768
+                },
+                "colorDepth": 24,
+                "colorSpace": "{primaries:BT709, transfer:SRGB, matrix:RGB, range:FULL}",
+                "depthPerComponent": 8,
+                "detected": true,
+                "displayFrequency": 64,
+                "id": 1052078888,
+                "internal": false,
+                "label": "HyperVMonitor",
+                "maximumCursorSize": {
+                  "width": 0,
+                  "height": 0
+                },
+                "monochrome": false,
+                "nativeOrigin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "rotation": 0,
+                "scaleFactor": 1,
+                "size": {
+                  "width": 1024,
+                  "height": 768
+                },
+                "workArea": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 720
+                },
+                "workAreaSize": {
+                  "width": 1024,
+                  "height": 720
+                },
+                "touchSupport": "unknown"
+              },
+              "focused": false
+            },
+            {
+              "id": 2,
+              "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-90965b71-1eae-4bd2-bd8b-f7896481e8b1",
+              "visible": true,
+              "bounds": {
+                "x": 80,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "display": {
+                "accelerometerSupport": "unknown",
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 768
+                },
+                "colorDepth": 24,
+                "colorSpace": "{primaries:BT709, transfer:SRGB, matrix:RGB, range:FULL}",
+                "depthPerComponent": 8,
+                "detected": true,
+                "displayFrequency": 64,
+                "id": 1052078888,
+                "internal": false,
+                "label": "HyperVMonitor",
+                "maximumCursorSize": {
+                  "width": 0,
+                  "height": 0
+                },
+                "monochrome": false,
+                "nativeOrigin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "rotation": 0,
+                "scaleFactor": 1,
+                "size": {
+                  "width": 1024,
+                  "height": 768
+                },
+                "workArea": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 720
+                },
+                "workAreaSize": {
+                  "width": 1024,
+                  "height": 720
+                },
+                "touchSupport": "unknown"
+              },
+              "focused": false
+            }
+          ],
+          [
+            {
+              "id": 5,
+              "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-fe19ea8c-71c7-4c32-b9a8-90f42c4fdc1b",
+              "visible": true,
+              "bounds": {
+                "x": 794,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "display": {
+                "accelerometerSupport": "unknown",
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 768
+                },
+                "colorDepth": 24,
+                "colorSpace": "{primaries:BT709, transfer:SRGB, matrix:RGB, range:FULL}",
+                "depthPerComponent": 8,
+                "detected": true,
+                "displayFrequency": 64,
+                "id": 1052078888,
+                "internal": false,
+                "label": "HyperVMonitor",
+                "maximumCursorSize": {
+                  "width": 0,
+                  "height": 0
+                },
+                "monochrome": false,
+                "nativeOrigin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "rotation": 0,
+                "scaleFactor": 1,
+                "size": {
+                  "width": 1024,
+                  "height": 768
+                },
+                "workArea": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 720
+                },
+                "workAreaSize": {
+                  "width": 1024,
+                  "height": 720
+                },
+                "touchSupport": "unknown"
+              },
+              "focused": false
+            },
+            {
+              "id": 4,
+              "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-60a4236a-5a8b-41bc-b0bf-3e2cc3665ae4",
+              "visible": true,
+              "bounds": {
+                "x": 560,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "display": {
+                "accelerometerSupport": "unknown",
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 768
+                },
+                "colorDepth": 24,
+                "colorSpace": "{primaries:BT709, transfer:SRGB, matrix:RGB, range:FULL}",
+                "depthPerComponent": 8,
+                "detected": true,
+                "displayFrequency": 64,
+                "id": 1052078888,
+                "internal": false,
+                "label": "HyperVMonitor",
+                "maximumCursorSize": {
+                  "width": 0,
+                  "height": 0
+                },
+                "monochrome": false,
+                "nativeOrigin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "rotation": 0,
+                "scaleFactor": 1,
+                "size": {
+                  "width": 1024,
+                  "height": 768
+                },
+                "workArea": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 720
+                },
+                "workAreaSize": {
+                  "width": 1024,
+                  "height": 720
+                },
+                "touchSupport": "unknown"
+              },
+              "focused": false
+            },
+            {
+              "id": 3,
+              "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-18c3883f-4576-4adc-9665-8a92c1435bc7",
+              "visible": true,
+              "bounds": {
+                "x": 320,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "display": {
+                "accelerometerSupport": "unknown",
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 768
+                },
+                "colorDepth": 24,
+                "colorSpace": "{primaries:BT709, transfer:SRGB, matrix:RGB, range:FULL}",
+                "depthPerComponent": 8,
+                "detected": true,
+                "displayFrequency": 64,
+                "id": 1052078888,
+                "internal": false,
+                "label": "HyperVMonitor",
+                "maximumCursorSize": {
+                  "width": 0,
+                  "height": 0
+                },
+                "monochrome": false,
+                "nativeOrigin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "rotation": 0,
+                "scaleFactor": 1,
+                "size": {
+                  "width": 1024,
+                  "height": 768
+                },
+                "workArea": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 720
+                },
+                "workAreaSize": {
+                  "width": 1024,
+                  "height": 720
+                },
+                "touchSupport": "unknown"
+              },
+              "focused": false
+            },
+            {
+              "id": 2,
+              "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-90965b71-1eae-4bd2-bd8b-f7896481e8b1",
+              "visible": true,
+              "bounds": {
+                "x": 80,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "display": {
+                "accelerometerSupport": "unknown",
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 768
+                },
+                "colorDepth": 24,
+                "colorSpace": "{primaries:BT709, transfer:SRGB, matrix:RGB, range:FULL}",
+                "depthPerComponent": 8,
+                "detected": true,
+                "displayFrequency": 64,
+                "id": 1052078888,
+                "internal": false,
+                "label": "HyperVMonitor",
+                "maximumCursorSize": {
+                  "width": 0,
+                  "height": 0
+                },
+                "monochrome": false,
+                "nativeOrigin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "rotation": 0,
+                "scaleFactor": 1,
+                "size": {
+                  "width": 1024,
+                  "height": 768
+                },
+                "workArea": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 720
+                },
+                "workAreaSize": {
+                  "width": 1024,
+                  "height": 720
+                },
+                "touchSupport": "unknown"
+              },
+              "focused": false
+            }
+          ],
+          [
+            {
+              "id": 5,
+              "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-fe19ea8c-71c7-4c32-b9a8-90f42c4fdc1b",
+              "visible": true,
+              "bounds": {
+                "x": 794,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "display": {
+                "accelerometerSupport": "unknown",
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 768
+                },
+                "colorDepth": 24,
+                "colorSpace": "{primaries:BT709, transfer:SRGB, matrix:RGB, range:FULL}",
+                "depthPerComponent": 8,
+                "detected": true,
+                "displayFrequency": 64,
+                "id": 1052078888,
+                "internal": false,
+                "label": "HyperVMonitor",
+                "maximumCursorSize": {
+                  "width": 0,
+                  "height": 0
+                },
+                "monochrome": false,
+                "nativeOrigin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "rotation": 0,
+                "scaleFactor": 1,
+                "size": {
+                  "width": 1024,
+                  "height": 768
+                },
+                "workArea": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 720
+                },
+                "workAreaSize": {
+                  "width": 1024,
+                  "height": 720
+                },
+                "touchSupport": "unknown"
+              },
+              "focused": false
+            },
+            {
+              "id": 4,
+              "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-60a4236a-5a8b-41bc-b0bf-3e2cc3665ae4",
+              "visible": true,
+              "bounds": {
+                "x": 560,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "display": {
+                "accelerometerSupport": "unknown",
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 768
+                },
+                "colorDepth": 24,
+                "colorSpace": "{primaries:BT709, transfer:SRGB, matrix:RGB, range:FULL}",
+                "depthPerComponent": 8,
+                "detected": true,
+                "displayFrequency": 64,
+                "id": 1052078888,
+                "internal": false,
+                "label": "HyperVMonitor",
+                "maximumCursorSize": {
+                  "width": 0,
+                  "height": 0
+                },
+                "monochrome": false,
+                "nativeOrigin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "rotation": 0,
+                "scaleFactor": 1,
+                "size": {
+                  "width": 1024,
+                  "height": 768
+                },
+                "workArea": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 720
+                },
+                "workAreaSize": {
+                  "width": 1024,
+                  "height": 720
+                },
+                "touchSupport": "unknown"
+              },
+              "focused": false
+            },
+            {
+              "id": 3,
+              "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-18c3883f-4576-4adc-9665-8a92c1435bc7",
+              "visible": true,
+              "bounds": {
+                "x": 320,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "display": {
+                "accelerometerSupport": "unknown",
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 768
+                },
+                "colorDepth": 24,
+                "colorSpace": "{primaries:BT709, transfer:SRGB, matrix:RGB, range:FULL}",
+                "depthPerComponent": 8,
+                "detected": true,
+                "displayFrequency": 64,
+                "id": 1052078888,
+                "internal": false,
+                "label": "HyperVMonitor",
+                "maximumCursorSize": {
+                  "width": 0,
+                  "height": 0
+                },
+                "monochrome": false,
+                "nativeOrigin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "rotation": 0,
+                "scaleFactor": 1,
+                "size": {
+                  "width": 1024,
+                  "height": 768
+                },
+                "workArea": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 720
+                },
+                "workAreaSize": {
+                  "width": 1024,
+                  "height": 720
+                },
+                "touchSupport": "unknown"
+              },
+              "focused": false
+            },
+            {
+              "id": 2,
+              "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-90965b71-1eae-4bd2-bd8b-f7896481e8b1",
+              "visible": true,
+              "bounds": {
+                "x": 80,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "display": {
+                "accelerometerSupport": "unknown",
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 768
+                },
+                "colorDepth": 24,
+                "colorSpace": "{primaries:BT709, transfer:SRGB, matrix:RGB, range:FULL}",
+                "depthPerComponent": 8,
+                "detected": true,
+                "displayFrequency": 64,
+                "id": 1052078888,
+                "internal": false,
+                "label": "HyperVMonitor",
+                "maximumCursorSize": {
+                  "width": 0,
+                  "height": 0
+                },
+                "monochrome": false,
+                "nativeOrigin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "rotation": 0,
+                "scaleFactor": 1,
+                "size": {
+                  "width": 1024,
+                  "height": 768
+                },
+                "workArea": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1024,
+                  "height": 720
+                },
+                "workAreaSize": {
+                  "width": 1024,
+                  "height": 720
+                },
+                "touchSupport": "unknown"
+              },
+              "focused": false
+            }
+          ]
+        ],
+        "replacement": [
+          {
+            "id": 6,
+            "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-11a666ea-60e1-46ae-915f-9483c8c84534",
+            "visible": false,
+            "bounds": {
+              "x": 794,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            },
+            "display": {
+              "accelerometerSupport": "unknown",
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 1024,
+                "height": 768
+              },
+              "colorDepth": 24,
+              "colorSpace": "{primaries:BT709, transfer:SRGB, matrix:RGB, range:FULL}",
+              "depthPerComponent": 8,
+              "detected": true,
+              "displayFrequency": 64,
+              "id": 1052078888,
+              "internal": false,
+              "label": "HyperVMonitor",
+              "maximumCursorSize": {
+                "width": 0,
+                "height": 0
+              },
+              "monochrome": false,
+              "nativeOrigin": {
+                "x": 0,
+                "y": 0
+              },
+              "rotation": 0,
+              "scaleFactor": 1,
+              "size": {
+                "width": 1024,
+                "height": 768
+              },
+              "workArea": {
+                "x": 0,
+                "y": 0,
+                "width": 1024,
+                "height": 720
+              },
+              "workAreaSize": {
+                "width": 1024,
+                "height": 720
+              },
+              "touchSupport": "unknown"
+            },
+            "focused": false
+          },
+          {
+            "id": 5,
+            "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-fe19ea8c-71c7-4c32-b9a8-90f42c4fdc1b",
+            "visible": false,
+            "bounds": {
+              "x": 794,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            },
+            "display": {
+              "accelerometerSupport": "unknown",
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 1024,
+                "height": 768
+              },
+              "colorDepth": 24,
+              "colorSpace": "{primaries:BT709, transfer:SRGB, matrix:RGB, range:FULL}",
+              "depthPerComponent": 8,
+              "detected": true,
+              "displayFrequency": 64,
+              "id": 1052078888,
+              "internal": false,
+              "label": "HyperVMonitor",
+              "maximumCursorSize": {
+                "width": 0,
+                "height": 0
+              },
+              "monochrome": false,
+              "nativeOrigin": {
+                "x": 0,
+                "y": 0
+              },
+              "rotation": 0,
+              "scaleFactor": 1,
+              "size": {
+                "width": 1024,
+                "height": 768
+              },
+              "workArea": {
+                "x": 0,
+                "y": 0,
+                "width": 1024,
+                "height": 720
+              },
+              "workAreaSize": {
+                "width": 1024,
+                "height": 720
+              },
+              "touchSupport": "unknown"
+            },
+            "focused": false
+          },
+          {
+            "id": 4,
+            "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-60a4236a-5a8b-41bc-b0bf-3e2cc3665ae4",
+            "visible": false,
+            "bounds": {
+              "x": 560,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            },
+            "display": {
+              "accelerometerSupport": "unknown",
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 1024,
+                "height": 768
+              },
+              "colorDepth": 24,
+              "colorSpace": "{primaries:BT709, transfer:SRGB, matrix:RGB, range:FULL}",
+              "depthPerComponent": 8,
+              "detected": true,
+              "displayFrequency": 64,
+              "id": 1052078888,
+              "internal": false,
+              "label": "HyperVMonitor",
+              "maximumCursorSize": {
+                "width": 0,
+                "height": 0
+              },
+              "monochrome": false,
+              "nativeOrigin": {
+                "x": 0,
+                "y": 0
+              },
+              "rotation": 0,
+              "scaleFactor": 1,
+              "size": {
+                "width": 1024,
+                "height": 768
+              },
+              "workArea": {
+                "x": 0,
+                "y": 0,
+                "width": 1024,
+                "height": 720
+              },
+              "workAreaSize": {
+                "width": 1024,
+                "height": 720
+              },
+              "touchSupport": "unknown"
+            },
+            "focused": false
+          },
+          {
+            "id": 3,
+            "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-18c3883f-4576-4adc-9665-8a92c1435bc7",
+            "visible": true,
+            "bounds": {
+              "x": 320,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            },
+            "display": {
+              "accelerometerSupport": "unknown",
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 1024,
+                "height": 768
+              },
+              "colorDepth": 24,
+              "colorSpace": "{primaries:BT709, transfer:SRGB, matrix:RGB, range:FULL}",
+              "depthPerComponent": 8,
+              "detected": true,
+              "displayFrequency": 64,
+              "id": 1052078888,
+              "internal": false,
+              "label": "HyperVMonitor",
+              "maximumCursorSize": {
+                "width": 0,
+                "height": 0
+              },
+              "monochrome": false,
+              "nativeOrigin": {
+                "x": 0,
+                "y": 0
+              },
+              "rotation": 0,
+              "scaleFactor": 1,
+              "size": {
+                "width": 1024,
+                "height": 768
+              },
+              "workArea": {
+                "x": 0,
+                "y": 0,
+                "width": 1024,
+                "height": 720
+              },
+              "workAreaSize": {
+                "width": 1024,
+                "height": 720
+              },
+              "touchSupport": "unknown"
+            },
+            "focused": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "D04-per-pet-scale",
+      "status": "passed-isolated-subset",
+      "detail": {
+        "half": {
+          "bounds": {
+            "x": 80,
+            "y": 520,
+            "width": 115,
+            "height": 140
+          },
+          "scale": 0.5
+        },
+        "twice": {
+          "bounds": {
+            "x": 80,
+            "y": 160,
+            "width": 460,
+            "height": 560
+          },
+          "scale": 2
+        },
+        "otherUnchanged": true
+      }
+    },
+    {
+      "id": "D02-ten-native-drags",
+      "status": "blocked",
+      "error": "Error: Command failed: powershell.exe -NoProfile -NonInteractive -EncodedCommand CgAkAEUAcgByAG8AcgBBAGMAdABpAG8AbgBQAHIAZQBmAGUAcgBlAG4AYwBlAD0AJwBTAHQAbwBwACcACgBBAGQAZAAtAFQAeQBwAGUAIABAACcACgB1AHMAaQBuAGcAIABTAHkAcwB0AGUAbQA7ACAAdQBzAGkAbgBnACAAUwB5AHMAdABlAG0ALgBSAHUAbgB0AGkAbQBlAC4ASQBuAHQAZQByAG8AcABTAGUAcgB2AGkAYwBlAHMAOwAKAHAAdQBiAGwAaQBjACAAcwB0AGEAdABpAGMAIABjAGwAYQBzAHMAIABRAEEASQBuAHAAdQB0ACAAewAKACAAWwBTAHQAcgB1AGMAdABMAGEAeQBvAHUAdAAoAEwAYQB5AG8AdQB0AEsAaQBuAGQALgBTAGUAcQB1AGUAbgB0AGkAYQBsACkAXQAgAHAAdQBiAGwAaQBjACAAcwB0AHIAdQBjAHQAIABQAE8ASQBOAFQAIAB7AHAAdQBiAGwAaQBjACAAaQBuAHQAIABYADsAIABwAHUAYgBsAGkAYwAgAGkAbgB0ACAAWQA7AH0ACgAgAFsAUwB0AHIAdQBjAHQATABhAHkAbwB1AHQAKABMAGEAeQBvAHUAdABLAGkAbgBkAC4AUwBlAHEAdQBlAG4AdABpAGEAbAApAF0AIABwAHUAYgBsAGkAYwAgAHMAdAByAHUAYwB0ACAATQBPAFUAUwBFAEkATgBQAFUAVAAgAHsAcAB1AGIAbABpAGMAIABpAG4AdAAgAGQAeAAsAGQAeQA7AHAAdQBiAGwAaQBjACAAdQBpAG4AdAAgAG0AbwB1AHMAZQBEAGEAdABhACwAZAB3AEYAbABhAGcAcwAsAHQAaQBtAGUAOwBwAHUAYgBsAGkAYwAgAFUASQBuAHQAUAB0AHIAIABkAHcARQB4AHQAcgBhAEkAbgBmAG8AOwB9AAoAIABbAFMAdAByAHUAYwB0AEwAYQB5AG8AdQB0ACgATABhAHkAbwB1AHQASwBpAG4AZAAuAFMAZQBxAHUAZQBuAHQAaQBhAGwAKQBdACAAcAB1AGIAbABpAGMAIABzAHQAcgB1AGMAdAAgAEkATgBQAFUAVAAgAHsAcAB1AGIAbABpAGMAIAB1AGkAbgB0ACAAdAB5AHAAZQA7AHAAdQBiAGwAaQBjACAATQBPAFUAUwBFAEkATgBQAFUAVAAgAG0AaQA7AH0ACgAgAFsARABsAGwASQBtAHAAbwByAHQAKAAiAHUAcwBlAHIAMwAyAC4AZABsAGwAIgApAF0AIABwAHUAYgBsAGkAYwAgAHMAdABhAHQAaQBjACAAZQB4AHQAZQByAG4AIABiAG8AbwBsACAAUwBlAHQAQwB1AHIAcwBvAHIAUABvAHMAKABpAG4AdAAgAHgALABpAG4AdAAgAHkAKQA7AAoAIABbAEQAbABsAEkAbQBwAG8AcgB0ACgAIgB1AHMAZQByADMAMgAuAGQAbABsACIAKQBdACAAcAB1AGIAbABpAGMAIABzAHQAYQB0AGkAYwAgAGUAeAB0AGUAcgBuACAAYgBvAG8AbAAgAEcAZQB0AEMAdQByAHMAbwByAFAAbwBzACgAbwB1AHQAIABQAE8ASQBOAFQAIABwACkAOwAKACAAWwBTAHQAcgB1AGMAdABMAGEAeQBvAHUAdAAoAEwAYQB5AG8AdQB0AEsAaQBuAGQALgBTAGUAcQB1AGUAbgB0AGkAYQBsACkAXQAgAHAAdQBiAGwAaQBjACAAcwB0AHIAdQBjAHQAIABSAEUAQwBUACAAewBwAHUAYgBsAGkAYwAgAGkAbgB0ACAATABlAGYAdAA7AHAAdQBiAGwAaQBjACAAaQBuAHQAIABUAG8AcAA7AHAAdQBiAGwAaQBjACAAaQBuAHQAIABSAGkAZwBoAHQAOwBwAHUAYgBsAGkAYwAgAGkAbgB0ACAAQgBvAHQAdABvAG0AOwB9AAoAIABbAEQAbABsAEkAbQBwAG8AcgB0ACgAIgB1AHMAZQByADMAMgAuAGQAbABsACIAKQBdACAAcAB1AGIAbABpAGMAIABzAHQAYQB0AGkAYwAgAGUAeAB0AGUAcgBuACAAYgBvAG8AbAAgAEkAcwBXAGkAbgBkAG8AdwBWAGkAcwBpAGIAbABlACgASQBuAHQAUAB0AHIAIABoACkAOwAKACAAWwBEAGwAbABJAG0AcABvAHIAdAAoACIAdQBzAGUAcgAzADIALgBkAGwAbAAiACkAXQAgAHAAdQBiAGwAaQBjACAAcwB0AGEAdABpAGMAIABlAHgAdABlAHIAbgAgAGIAbwBvAGwAIABJAHMASQBjAG8AbgBpAGMAKABJAG4AdABQAHQAcgAgAGgAKQA7AAoAIABbAEQAbABsAEkAbQBwAG8AcgB0ACgAIgB1AHMAZQByADMAMgAuAGQAbABsACIAKQBdACAAcAB1AGIAbABpAGMAIABzAHQAYQB0AGkAYwAgAGUAeAB0AGUAcgBuACAAYgBvAG8AbAAgAEcAZQB0AFcAaQBuAGQAbwB3AFIAZQBjAHQAKABJAG4AdABQAHQAcgAgAGgALABvAHUAdAAgAFIARQBDAFQAIAByACkAOwAKACAAWwBEAGwAbABJAG0AcABvAHIAdAAoACIAdQBzAGUAcgAzADIALgBkAGwAbAAiACwARQBuAHQAcgB5AFAAbwBpAG4AdAA9ACIARwBlAHQAVwBpAG4AZABvAHcATABvAG4AZwBXACIAKQBdACAAcAB1AGIAbABpAGMAIABzAHQAYQB0AGkAYwAgAGUAeAB0AGUAcgBuACAAaQBuAHQAIABHAGUAdABXAGkAbgBkAG8AdwBMAG8AbgBnACgASQBuAHQAUAB0AHIAIABoACwAaQBuAHQAIABpAG4AZABlAHgAKQA7AAoAIABbAEQAbABsAEkAbQBwAG8AcgB0ACgAIgB1AHMAZQByADMAMgAuAGQAbABsACIAKQBdACAAcAB1AGIAbABpAGMAIABzAHQAYQB0AGkAYwAgAGUAeAB0AGUAcgBuACAASQBuAHQAUAB0AHIAIABHAGUAdABGAG8AcgBlAGcAcgBvAHUAbgBkAFcAaQBuAGQAbwB3ACgAKQA7AAoAIABbAEQAbABsAEkAbQBwAG8AcgB0ACgAIgB1AHMAZQByADMAMgAuAGQAbABsACIAKQBdACAAcAB1AGIAbABpAGMAIABzAHQAYQB0AGkAYwAgAGUAeAB0AGUAcgBuACAASQBuAHQAUAB0AHIAIABXAGkAbgBkAG8AdwBGAHIAbwBtAFAAbwBpAG4AdAAoAFAATwBJAE4AVAAgAHAAbwBpAG4AdAApADsACgAgAFsARABsAGwASQBtAHAAbwByAHQAKAAiAHUAcwBlAHIAMwAyAC4AZABsAGwAIgApAF0AIABwAHUAYgBsAGkAYwAgAHMAdABhAHQAaQBjACAAZQB4AHQAZQByAG4AIABJAG4AdABQAHQAcgAgAEcAZQB0AEEAbgBjAGUAcwB0AG8AcgAoAEkAbgB0AFAAdAByACAAaAB3AG4AZAAsAHUAaQBuAHQAIABmAGwAYQBnAHMAKQA7AAoAIABbAEQAbABsAEkAbQBwAG8AcgB0ACgAIgB1AHMAZQByADMAMgAuAGQAbABsACIAKQBdACAAcAB1AGIAbABpAGMAIABzAHQAYQB0AGkAYwAgAGUAeAB0AGUAcgBuACAAdQBpAG4AdAAgAEcAZQB0AFcAaQBuAGQAbwB3AFQAaAByAGUAYQBkAFAAcgBvAGMAZQBzAHMASQBkACgASQBuAHQAUAB0AHIAIABoACwAbwB1AHQAIAB1AGkAbgB0ACAAcABpAGQAKQA7AAoAIABbAEQAbABsAEkAbQBwAG8AcgB0ACgAIgB1AHMAZQByADMAMgAuAGQAbABsACIALABTAGUAdABMAGEAcwB0AEUAcgByAG8AcgA9AHQAcgB1AGUAKQBdACAAcwB0AGEAdABpAGMAIABlAHgAdABlAHIAbgAgAHUAaQBuAHQAIABTAGUAbgBkAEkAbgBwAHUAdAAoAHUAaQBuAHQAIABuACwASQBOAFAAVQBUAFsAXQAgAGkAbgBwAHUAdAAsAGkAbgB0ACAAcwBpAHoAZQApADsACgAgAHAAdQBiAGwAaQBjACAAcwB0AGEAdABpAGMAIAB2AG8AaQBkACAAQgB1AHQAdABvAG4AKAB1AGkAbgB0ACAAZgBsAGEAZwBzACkAewB2AGEAcgAgAGkAPQBuAGUAdwAgAEkATgBQAFUAVAAoACkAOwBpAC4AdAB5AHAAZQA9ADAAOwBpAC4AbQBpAC4AZAB3AEYAbABhAGcAcwA9AGYAbABhAGcAcwA7AGkAZgAoAFMAZQBuAGQASQBuAHAAdQB0ACgAMQAsAG4AZQB3AFsAXQB7AGkAfQAsAE0AYQByAHMAaABhAGwALgBTAGkAegBlAE8AZgAoAHQAeQBwAGUAbwBmACgASQBOAFAAVQBUACkAKQApACEAPQAxACkAdABoAHIAbwB3ACAAbgBlAHcAIABFAHgAYwBlAHAAdABpAG8AbgAoACIATgBBAFQASQBWAEUAXwBJAE4AUABVAFQAXwBCAEwATwBDAEsARQBEACIAKQA7AH0ACgB9AAoAJwBAAAoAJABwAD0AKABbAEMAbwBuAHMAbwBsAGUAXQA6ADoASQBuAC4AUgBlAGEAZABUAG8ARQBuAGQAKAApAHwAQwBvAG4AdgBlAHIAdABGAHIAbwBtAC0ASgBzAG8AbgApAAoAJABxAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAFEAQQBJAG4AcAB1AHQAKwBQAE8ASQBOAFQACgBpAGYAKAAkAHAALgBhAGMAdABpAG8AbgAgAC0AZQBxACAAJwByAGUAYQBkACcAKQB7AFsAUQBBAEkAbgBwAHUAdABdADoAOgBHAGUAdABDAHUAcgBzAG8AcgBQAG8AcwAoAFsAcgBlAGYAXQAkAHEAKQB8AE8AdQB0AC0ATgB1AGwAbAA7AEAAewB4AD0AJABxAC4AWAA7AHkAPQAkAHEALgBZAH0AfABDAG8AbgB2AGUAcgB0AFQAbwAtAEoAcwBvAG4AIAAtAEMAbwBtAHAAcgBlAHMAcwA7AGUAeABpAHQAfQAKAGkAZgAoACQAcAAuAGEAYwB0AGkAbwBuACAALQBlAHEAIAAnAHAAcgBvAGIAZQAnACkAewAKACAAWwBRAEEASQBuAHAAdQB0AF0AOgA6AEcAZQB0AEMAdQByAHMAbwByAFAAbwBzACgAWwByAGUAZgBdACQAcQApAHwATwB1AHQALQBOAHUAbABsAAoAIAAkAGgAaQB0AD0AWwBRAEEASQBuAHAAdQB0AF0AOgA6AFcAaQBuAGQAbwB3AEYAcgBvAG0AUABvAGkAbgB0ACgAJABxACkAOwAkAHIAbwBvAHQAVwBpAG4AZABvAHcAPQBbAFEAQQBJAG4AcAB1AHQAXQA6ADoARwBlAHQAQQBuAGMAZQBzAHQAbwByACgAJABoAGkAdAAsADIAKQA7ACQAZgBnAD0AWwBRAEEASQBuAHAAdQB0AF0AOgA6AEcAZQB0AEYAbwByAGUAZwByAG8AdQBuAGQAVwBpAG4AZABvAHcAKAApAAoAIABmAHUAbgBjAHQAaQBvAG4AIABEAGUAcwBjAHIAaQBiAGUAKABbAEkAbgB0AFAAdAByAF0AJABoACkAewBbAHUAaQBuAHQAMwAyAF0AJABvAHcAbgBlAHIAUABpAGQAPQAwADsAWwBRAEEASQBuAHAAdQB0AF0AOgA6AEcAZQB0AFcAaQBuAGQAbwB3AFQAaAByAGUAYQBkAFAAcgBvAGMAZQBzAHMASQBkACgAJABoACwAWwByAGUAZgBdACQAbwB3AG4AZQByAFAAaQBkACkAfABPAHUAdAAtAE4AdQBsAGwAOwAkAHIAPQBOAGUAdwAtAE8AYgBqAGUAYwB0ACAAUQBBAEkAbgBwAHUAdAArAFIARQBDAFQAOwBbAFEAQQBJAG4AcAB1AHQAXQA6ADoARwBlAHQAVwBpAG4AZABvAHcAUgBlAGMAdAAoACQAaAAsAFsAcgBlAGYAXQAkAHIAKQB8AE8AdQB0AC0ATgB1AGwAbAA7AHIAZQB0AHUAcgBuACAAQAB7AGgAYQBuAGQAbABlAD0AJABoAC4AVABvAEkAbgB0ADYANAAoACkALgBUAG8AUwB0AHIAaQBuAGcAKAApADsAcAByAG8AYwBlAHMAcwBJAGQAPQAkAG8AdwBuAGUAcgBQAGkAZAA7AHYAaQBzAGkAYgBsAGUAPQBbAFEAQQBJAG4AcAB1AHQAXQA6ADoASQBzAFcAaQBuAGQAbwB3AFYAaQBzAGkAYgBsAGUAKAAkAGgAKQA7AG0AaQBuAGkAbQBpAHoAZQBkAD0AWwBRAEEASQBuAHAAdQB0AF0AOgA6AEkAcwBJAGMAbwBuAGkAYwAoACQAaAApADsAZQB4AHQAZQBuAGQAZQBkAFMAdAB5AGwAZQA9AFsAUQBBAEkAbgBwAHUAdABdADoAOgBHAGUAdABXAGkAbgBkAG8AdwBMAG8AbgBnACgAJABoACwALQAyADAAKQA7AGIAbwB1AG4AZABzAD0AQAB7AHgAPQAkAHIALgBMAGUAZgB0ADsAeQA9ACQAcgAuAFQAbwBwADsAdwBpAGQAdABoAD0AJAByAC4AUgBpAGcAaAB0AC0AJAByAC4ATABlAGYAdAA7AGgAZQBpAGcAaAB0AD0AJAByAC4AQgBvAHQAdABvAG0ALQAkAHIALgBUAG8AcAB9AH0AfQAKACAAQAB7AGMAdQByAHMAbwByAD0AQAB7AHgAPQAkAHEALgBYADsAeQA9ACQAcQAuAFkAfQA7AGgAaQB0AD0AKABEAGUAcwBjAHIAaQBiAGUAIAAkAGgAaQB0ACkAOwByAG8AbwB0AD0AKABEAGUAcwBjAHIAaQBiAGUAIAAkAHIAbwBvAHQAVwBpAG4AZABvAHcAKQA7AGYAbwByAGUAZwByAG8AdQBuAGQAPQAoAEQAZQBzAGMAcgBpAGIAZQAgACQAZgBnACkAOwBlAHgAcABlAGMAdABlAGQAPQAoAEQAZQBzAGMAcgBpAGIAZQAgACgAWwBJAG4AdABQAHQAcgBdAFsAbABvAG4AZwBdACQAcAAuAHcAaQBuAGQAbwB3AEgAYQBuAGQAbABlACkAKQB9AHwAQwBvAG4AdgBlAHIAdABUAG8ALQBKAHMAbwBuACAALQBDAG8AbQBwAHIAZQBzAHMAIAAtAEQAZQBwAHQAaAAgADUAOwBlAHgAaQB0AAoAfQAKAGkAZgAoACQAcAAuAGEAYwB0AGkAbwBuACAALQBlAHEAIAAnAHIAZQBsAGUAYQBzAGUAJwApAHsAWwBRAEEASQBuAHAAdQB0AF0AOgA6AEIAdQB0AHQAbwBuACgANAApADsAZQB4AGkAdAB9AAoAaQBmACgAJABwAC4AYQBjAHQAaQBvAG4AIAAtAGUAcQAgACcAcgBlAHMAdABvAHIAZQAnACkAewBpAGYAKAAtAG4AbwB0ACAAWwBRAEEASQBuAHAAdQB0AF0AOgA6AFMAZQB0AEMAdQByAHMAbwByAFAAbwBzACgAJABwAC4AcABvAGkAbgB0AC4AeAAsACQAcAAuAHAAbwBpAG4AdAAuAHkAKQApAHsAdABoAHIAbwB3ACAAJwBDAFUAUgBTAE8AUgBfAFIARQBTAFQATwBSAEUAXwBCAEwATwBDAEsARQBEACcAfQA7AGUAeABpAHQAfQAKAFsAdQBpAG4AdAAzADIAXQAkAGYAbwByAGUAZwByAG8AdQBuAGQAPQAwADsAWwBRAEEASQBuAHAAdQB0AF0AOgA6AEcAZQB0AFcAaQBuAGQAbwB3AFQAaAByAGUAYQBkAFAAcgBvAGMAZQBzAHMASQBkACgAWwBRAEEASQBuAHAAdQB0AF0AOgA6AEcAZQB0AEYAbwByAGUAZwByAG8AdQBuAGQAVwBpAG4AZABvAHcAKAApACwAWwByAGUAZgBdACQAZgBvAHIAZQBnAHIAbwB1AG4AZAApAHwATwB1AHQALQBOAHUAbABsAAoAaQBmACgAJABmAG8AcgBlAGcAcgBvAHUAbgBkACAALQBuAGUAIAAkAHAALgBwAHIAbwBjAGUAcwBzAEkAZAApAHsAdABoAHIAbwB3ACAAJwBPAFcATgBFAEQAXwBXAEkATgBEAE8AVwBfAE4ATwBUAF8ARgBPAFIARQBHAFIATwBVAE4ARAAnAH0ACgBpAGYAKAAkAHAALgBmAHIAbwBtAC4AeAAgAC0AbAB0ACAAJABwAC4AYgBvAHUAbgBkAHMALgB4ACAALQBvAHIAIAAkAHAALgBmAHIAbwBtAC4AeQAgAC0AbAB0ACAAJABwAC4AYgBvAHUAbgBkAHMALgB5ACAALQBvAHIAIAAkAHAALgBmAHIAbwBtAC4AeAAgAC0AZwBlACAAKAAkAHAALgBiAG8AdQBuAGQAcwAuAHgAKwAkAHAALgBiAG8AdQBuAGQAcwAuAHcAaQBkAHQAaAApACAALQBvAHIAIAAkAHAALgBmAHIAbwBtAC4AeQAgAC0AZwBlACAAKAAkAHAALgBiAG8AdQBuAGQAcwAuAHkAKwAkAHAALgBiAG8AdQBuAGQAcwAuAGgAZQBpAGcAaAB0ACkAKQB7AHQAaAByAG8AdwAgACcAUwBUAEEAUgBUAF8ATwBVAFQAUwBJAEQARQBfAE8AVwBOAEUARABfAFcASQBOAEQATwBXACcAfQAKAGkAZgAoAC0AbgBvAHQAIABbAFEAQQBJAG4AcAB1AHQAXQA6ADoAUwBlAHQAQwB1AHIAcwBvAHIAUABvAHMAKAAkAHAALgBmAHIAbwBtAC4AeAAsACQAcAAuAGYAcgBvAG0ALgB5ACkAKQB7AHQAaAByAG8AdwAgACcATgBBAFQASQBWAEUAXwBDAFUAUgBTAE8AUgBfAEIATABPAEMASwBFAEQAJwB9AAoAUwB0AGEAcgB0AC0AUwBsAGUAZQBwACAALQBNAGkAbABsAGkAcwBlAGMAbwBuAGQAcwAgADIANQAwAAoAWwBRAEEASQBuAHAAdQB0AF0AOgA6AEcAZQB0AEMAdQByAHMAbwByAFAAbwBzACgAWwByAGUAZgBdACQAcQApAHwATwB1AHQALQBOAHUAbABsAAoAaQBmACgAWwBNAGEAdABoAF0AOgA6AEEAYgBzACgAJABxAC4AWAAtACQAcAAuAGYAcgBvAG0ALgB4ACkAIAAtAGcAdAAgADEAIAAtAG8AcgAgAFsATQBhAHQAaABdADoAOgBBAGIAcwAoACQAcQAuAFkALQAkAHAALgBmAHIAbwBtAC4AeQApACAALQBnAHQAIAAxACkAewB0AGgAcgBvAHcAIAAnAE4AQQBUAEkAVgBFAF8AQwBVAFIAUwBPAFIAXwBCAEwATwBDAEsARQBEACcAfQAKACQAbQBhAHQAYwBoAGUAZAA9ACQAZgBhAGwAcwBlAAoAZgBvAHIAKAAkAGEAdAB0AGUAbQBwAHQAPQAwADsAJABhAHQAdABlAG0AcAB0ACAALQBsAHQAIAAyADAAOwAkAGEAdAB0AGUAbQBwAHQAKwArACkAewAKACAAJABoAGkAdAA9AFsAUQBBAEkAbgBwAHUAdABdADoAOgBXAGkAbgBkAG8AdwBGAHIAbwBtAFAAbwBpAG4AdAAoACQAcQApADsAJAByAG8AbwB0AFcAaQBuAGQAbwB3AD0AWwBRAEEASQBuAHAAdQB0AF0AOgA6AEcAZQB0AEEAbgBjAGUAcwB0AG8AcgAoACQAaABpAHQALAAyACkAOwBbAHUAaQBuAHQAMwAyAF0AJABoAGkAdABQAGkAZAA9ADAAOwBbAHUAaQBuAHQAMwAyAF0AJAByAG8AbwB0AFAAaQBkAD0AMAA7AFsAUQBBAEkAbgBwAHUAdABdADoAOgBHAGUAdABXAGkAbgBkAG8AdwBUAGgAcgBlAGEAZABQAHIAbwBjAGUAcwBzAEkAZAAoACQAaABpAHQALABbAHIAZQBmAF0AJABoAGkAdABQAGkAZAApAHwATwB1AHQALQBOAHUAbABsADsAWwBRAEEASQBuAHAAdQB0AF0AOgA6AEcAZQB0AFcAaQBuAGQAbwB3AFQAaAByAGUAYQBkAFAAcgBvAGMAZQBzAHMASQBkACgAJAByAG8AbwB0AFcAaQBuAGQAbwB3ACwAWwByAGUAZgBdACQAcgBvAG8AdABQAGkAZAApAHwATwB1AHQALQBOAHUAbABsAAoAIABpAGYAKAAkAHIAbwBvAHQAVwBpAG4AZABvAHcALgBUAG8ASQBuAHQANgA0ACgAKQAuAFQAbwBTAHQAcgBpAG4AZwAoACkAIAAtAGUAcQAgACQAcAAuAHcAaQBuAGQAbwB3AEgAYQBuAGQAbABlACAALQBhAG4AZAAgACQAcgBvAG8AdABQAGkAZAAgAC0AZQBxACAAJABwAC4AcAByAG8AYwBlAHMAcwBJAGQAKQB7ACQAbQBhAHQAYwBoAGUAZAA9ACQAdAByAHUAZQA7AGIAcgBlAGEAawB9AAoAIABTAHQAYQByAHQALQBTAGwAZQBlAHAAIAAtAE0AaQBsAGwAaQBzAGUAYwBvAG4AZABzACAAMQAwADAACgB9AAoAaQBmACgALQBuAG8AdAAgACQAbQBhAHQAYwBoAGUAZAApAHsAdABoAHIAbwB3ACAAKAAnAE8AVwBOAEUARABfAFAARQBUAF8ATgBPAFQAXwBBAFQAXwBQAE8ASQBOAFQAIAAnACsAKABAAHsAZQB4AHAAZQBjAHQAZQBkAD0AJABwAC4AdwBpAG4AZABvAHcASABhAG4AZABsAGUAOwBoAGkAdAA9ACQAaABpAHQALgBUAG8ASQBuAHQANgA0ACgAKQAuAFQAbwBTAHQAcgBpAG4AZwAoACkAOwByAG8AbwB0AD0AJAByAG8AbwB0AFcAaQBuAGQAbwB3AC4AVABvAEkAbgB0ADYANAAoACkALgBUAG8AUwB0AHIAaQBuAGcAKAApADsAcgBvAG8AdABQAGkAZAA9ACQAcgBvAG8AdABQAGkAZAA7AHgAPQAkAHEALgBYADsAeQA9ACQAcQAuAFkAfQB8AEMAbwBuAHYAZQByAHQAVABvAC0ASgBzAG8AbgAgAC0AQwBvAG0AcAByAGUAcwBzACkAKQB9AAoAWwB1AGkAbgB0ADMAMgBdACQAZgBvAHIAZQBnAHIAbwB1AG4AZAA9ADAAOwBbAFEAQQBJAG4AcAB1AHQAXQA6ADoARwBlAHQAVwBpAG4AZABvAHcAVABoAHIAZQBhAGQAUAByAG8AYwBlAHMAcwBJAGQAKABbAFEAQQBJAG4AcAB1AHQAXQA6ADoARwBlAHQARgBvAHIAZQBnAHIAbwB1AG4AZABXAGkAbgBkAG8AdwAoACkALABbAHIAZQBmAF0AJABmAG8AcgBlAGcAcgBvAHUAbgBkACkAfABPAHUAdAAtAE4AdQBsAGwACgBpAGYAKAAkAGYAbwByAGUAZwByAG8AdQBuAGQAIAAtAG4AZQAgACQAcAAuAHAAcgBvAGMAZQBzAHMASQBkACkAewB0AGgAcgBvAHcAIAAnAE8AVwBOAEUARABfAFcASQBOAEQATwBXAF8ATgBPAFQAXwBGAE8AUgBFAEcAUgBPAFUATgBEACcAfQAKAHQAcgB5AHsAWwBRAEEASQBuAHAAdQB0AF0AOgA6AEIAdQB0AHQAbwBuACgAMgApADsAUwB0AGEAcgB0AC0AUwBsAGUAZQBwACAALQBNAGkAbABsAGkAcwBlAGMAbwBuAGQAcwAgADEAMgAwADsAZgBvAHIAKAAkAGkAPQAxADsAJABpACAALQBsAGUAIAAxADYAOwAkAGkAKwArACkAewBbAFEAQQBJAG4AcAB1AHQAXQA6ADoAUwBlAHQAQwB1AHIAcwBvAHIAUABvAHMAKABbAGkAbgB0AF0AKAAkAHAALgBmAHIAbwBtAC4AeAArACgAJABwAC4AdABvAC4AeAAtACQAcAAuAGYAcgBvAG0ALgB4ACkAKgAkAGkALwAxADYAKQAsAFsAaQBuAHQAXQAoACQAcAAuAGYAcgBvAG0ALgB5ACsAKAAkAHAALgB0AG8ALgB5AC0AJABwAC4AZgByAG8AbQAuAHkAKQAqACQAaQAvADEANgApACkAfABPAHUAdAAtAE4AdQBsAGwAOwBTAHQAYQByAHQALQBTAGwAZQBlAHAAIAAtAE0AaQBsAGwAaQBzAGUAYwBvAG4AZABzACAANAA1AH0AfQAKAGYAaQBuAGEAbABsAHkAewBbAFEAQQBJAG4AcAB1AHQAXQA6ADoAQgB1AHQAdABvAG4AKAA0ACkAfQAKAFsAUQBBAEkAbgBwAHUAdABdADoAOgBHAGUAdABDAHUAcgBzAG8AcgBQAG8AcwAoAFsAcgBlAGYAXQAkAHEAKQB8AE8AdQB0AC0ATgB1AGwAbAA7AEAAewB4AD0AJABxAC4AWAA7AHkAPQAkAHEALgBZADsAZgBvAHIAZQBnAHIAbwB1AG4AZABQAGkAZAA9ACQAZgBvAHIAZQBnAHIAbwB1AG4AZAA7AGgAaQB0AEgAYQBuAGQAbABlAD0AJABoAGkAdAAuAFQAbwBJAG4AdAA2ADQAKAApAC4AVABvAFMAdAByAGkAbgBnACgAKQA7AGgAaQB0AFAAaQBkAD0AJABoAGkAdABQAGkAZAA7AHIAbwBvAHQASABhAG4AZABsAGUAPQAkAHIAbwBvAHQAVwBpAG4AZABvAHcALgBUAG8ASQBuAHQANgA0ACgAKQAuAFQAbwBTAHQAcgBpAG4AZwAoACkAOwByAG8AbwB0AFAAaQBkAD0AJAByAG8AbwB0AFAAaQBkAH0AfABDAG8AbgB2AGUAcgB0AFQAbwAtAEoAcwBvAG4AIAAtAEMAbwBtAHAAcgBlAHMAcwAKAA==\n#< CLIXML\r\n<Objs Version=\"1.1.0.1\" xmlns=\"http://schemas.microsoft.com/powershell/2004/04\"><Obj S=\"progress\" RefId=\"0\"><TN RefId=\"0\"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N=\"SourceId\">1</I64><PR N=\"Record\"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj><S S=\"Error\">OWNED_PET_NOT_AT_POINT {\"x\":164,\"root\":\"262530\",\"hit\":\"197016\",\"rootPid\":8668,\"expected\":\"131636\",\"y\":551}_x000D__x000A_</S><S S=\"Error\">At line:48 char:19_x000D__x000A_</S><S S=\"Error\">+ ... t $matched){throw ('OWNED_PET_NOT_AT_POINT '+(@{expected=$p.windowHan ..._x000D__x000A_</S><S S=\"Error\">+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~_x000D__x000A_</S><S S=\"Error\">    + CategoryInfo          : OperationStopped: (OWNED_PET_NOT_A...31636\",\"y\":551}:String) [], RuntimeException_x000D__x000A_</S><S S=\"Error\">    + FullyQualifiedErrorId : OWNED_PET_NOT_AT_POINT {\"x\":164,\"root\":\"262530\",\"hit\":\"197016\",\"rootPid\":8668,\"expected\" _x000D__x000A_</S><S S=\"Error\">   :\"131636\",\"y\":551}_x000D__x000A_</S><S S=\"Error\"> _x000D__x000A_</S></Objs>"
+    },
+    {
+      "id": "D03-edge-drag",
+      "status": "blocked",
+      "error": "Error: NATIVE_INPUT_BLOCKED"
+    },
+    {
+      "id": "D06-restart-same-instance",
+      "status": "passed-isolated-subset",
+      "detail": {
+        "before": [
+          {
+            "petId": "pet-90965b71-1eae-4bd2-bd8b-f7896481e8b1",
+            "desktop": {
+              "visible": true,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 80,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 124,
+                "atk": 28,
+                "def": 24,
+                "spd": 20
+              }
+            }
+          },
+          {
+            "petId": "pet-18c3883f-4576-4adc-9665-8a92c1435bc7",
+            "desktop": {
+              "visible": true,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 320,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 124,
+                "atk": 28,
+                "def": 24,
+                "spd": 20
+              }
+            }
+          },
+          {
+            "petId": "pet-60a4236a-5a8b-41bc-b0bf-3e2cc3665ae4",
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 560,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 124,
+                "atk": 28,
+                "def": 24,
+                "spd": 20
+              }
+            }
+          },
+          {
+            "petId": "pet-fe19ea8c-71c7-4c32-b9a8-90f42c4fdc1b",
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 800,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 118,
+                "atk": 33,
+                "def": 20,
+                "spd": 22
+              }
+            }
+          },
+          {
+            "petId": "pet-11a666ea-60e1-46ae-915f-9483c8c84534",
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 1040,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 136,
+                "atk": 30,
+                "def": 30,
+                "spd": 13
+              }
+            }
+          }
+        ],
+        "after": [
+          {
+            "petId": "pet-90965b71-1eae-4bd2-bd8b-f7896481e8b1",
+            "desktop": {
+              "visible": true,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 80,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 124,
+                "atk": 28,
+                "def": 24,
+                "spd": 20
+              }
+            }
+          },
+          {
+            "petId": "pet-18c3883f-4576-4adc-9665-8a92c1435bc7",
+            "desktop": {
+              "visible": true,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 320,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 124,
+                "atk": 28,
+                "def": 24,
+                "spd": 20
+              }
+            }
+          },
+          {
+            "petId": "pet-60a4236a-5a8b-41bc-b0bf-3e2cc3665ae4",
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 560,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 124,
+                "atk": 28,
+                "def": 24,
+                "spd": 20
+              }
+            }
+          },
+          {
+            "petId": "pet-fe19ea8c-71c7-4c32-b9a8-90f42c4fdc1b",
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 800,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 118,
+                "atk": 33,
+                "def": 20,
+                "spd": 22
+              }
+            }
+          },
+          {
+            "petId": "pet-11a666ea-60e1-46ae-915f-9483c8c84534",
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 1040,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 136,
+                "atk": 30,
+                "def": 30,
+                "spd": 13
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "D07-behavior-ui-subset",
+      "status": "passed-isolated-subset",
+      "detail": {
+        "rows": [
+          {
+            "mode": "sleep",
+            "actualClass": "cp-desktop-surface is-sleeping",
+            "action": "sleep"
+          },
+          {
+            "mode": "quiet",
+            "actualClass": "cp-desktop-surface ",
+            "action": "idle"
+          }
+        ],
+        "notCovered": [
+          "wander/follow physical cursor trajectory",
+          "right-click control",
+          "physical click-through"
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "uncovered": [
+    "D05 multi-DPI/monitor",
+    "D08 physical click-through/fullscreen policy",
+    "D09 physical taskbar/tray menu"
+  ],
+  "petIds": [
+    "pet-90965b71-1eae-4bd2-bd8b-f7896481e8b1",
+    "pet-18c3883f-4576-4adc-9665-8a92c1435bc7",
+    "pet-60a4236a-5a8b-41bc-b0bf-3e2cc3665ae4",
+    "pet-fe19ea8c-71c7-4c32-b9a8-90f42c4fdc1b",
+    "pet-11a666ea-60e1-46ae-915f-9483c8c84534"
+  ],
+  "displays": [
+    {
+      "accelerometerSupport": "unknown",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 1024,
+        "height": 768
+      },
+      "colorDepth": 24,
+      "colorSpace": "{primaries:BT709, transfer:SRGB, matrix:RGB, range:FULL}",
+      "depthPerComponent": 8,
+      "detected": true,
+      "displayFrequency": 64,
+      "id": 1052078888,
+      "internal": false,
+      "label": "HyperVMonitor",
+      "maximumCursorSize": {
+        "width": 0,
+        "height": 0
+      },
+      "monochrome": false,
+      "nativeOrigin": {
+        "x": 0,
+        "y": 0
+      },
+      "rotation": 0,
+      "scaleFactor": 1,
+      "size": {
+        "width": 1024,
+        "height": 768
+      },
+      "workArea": {
+        "x": 0,
+        "y": 0,
+        "width": 1024,
+        "height": 720
+      },
+      "workAreaSize": {
+        "width": 1024,
+        "height": 720
+      },
+      "touchSupport": "unknown"
+    }
+  ],
+  "inputAttempts": [
+    {
+      "petId": "pet-90965b71-1eae-4bd2-bd8b-f7896481e8b1",
+      "points": {
+        "from": {
+          "x": 164,
+          "y": 551
+        },
+        "to": {
+          "x": 224,
+          "y": 271
+        },
+        "bounds": {
+          "x": 80,
+          "y": 440,
+          "width": 230,
+          "height": 280
+        },
+        "processId": 8668,
+        "windowHandle": "131636"
+      },
+      "opaque": {
+        "x": 84,
+        "y": 111,
+        "alpha": 252,
+        "frame": 0
+      },
+      "at": "2026-10-27T08:25:18.220Z",
+      "before": {
+        "native": null,
+        "ownedWindows": [
+          {
+            "id": 8,
+            "handle": "131610",
+            "kind": "pet",
+            "visible": true,
+            "minimized": false,
+            "alwaysOnTop": true,
+            "focused": false,
+            "bounds": {
+              "x": 320,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            }
+          },
+          {
+            "id": 7,
+            "handle": "131636",
+            "kind": "pet",
+            "visible": true,
+            "minimized": false,
+            "alwaysOnTop": true,
+            "focused": false,
+            "bounds": {
+              "x": 80,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            }
+          },
+          {
+            "id": 1,
+            "handle": "262530",
+            "kind": "main",
+            "visible": true,
+            "minimized": false,
+            "alwaysOnTop": false,
+            "focused": true,
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1024,
+              "height": 720
+            }
+          }
+        ],
+        "renderer": {
+          "events": [],
+          "visualHovered": false,
+          "surfaceHovered": false,
+          "pixelAtOriginalClientPointAlpha": 0,
+          "focused": true,
+          "visibility": "visible"
+        },
+        "host": {
+          "startup": false,
+          "ownerAccountId": "qa:32eb4ee5-0f90-48a7-8c27-5ce5e9b66fc0:local-202768df-00b1-4cad-83d0-933f70db672a",
+          "fullscreenMonitor": true,
+          "fullscreenMonitorReady": false,
+          "foregroundFullscreen": false,
+          "fullscreenSource": null,
+          "companionWindows": 2,
+          "companionLimit": 4,
+          "clickThroughWindows": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "windows": [
+            {
+              "id": 7,
+              "alwaysOnTop": true,
+              "visible": true,
+              "slotAllocated": true,
+              "hiddenReason": null
+            },
+            {
+              "id": 8,
+              "alwaysOnTop": true,
+              "visible": true,
+              "slotAllocated": true,
+              "hiddenReason": null
+            }
+          ],
+          "locationAllowed": false,
+          "emotionStatistics": false,
+          "closeToTrayConnected": true,
+          "companionLimitConnected": true
+        }
+      },
+      "nativeGuard": "blocked-before-press",
+      "after": {
+        "native": {
+          "hit": {
+            "handle": "197016",
+            "extendedStyle": 32,
+            "visible": true,
+            "processId": 8668,
+            "bounds": {
+              "y": 0,
+              "width": 1024,
+              "height": 720,
+              "x": 0
+            },
+            "minimized": false
+          },
+          "root": {
+            "handle": "262530",
+            "extendedStyle": 2097408,
+            "visible": true,
+            "processId": 8668,
+            "bounds": {
+              "y": 0,
+              "width": 1040,
+              "height": 728,
+              "x": -8
+            },
+            "minimized": false
+          },
+          "cursor": {
+            "y": 551,
+            "x": 164
+          },
+          "expected": {
+            "handle": "131636",
+            "extendedStyle": 136839208,
+            "visible": true,
+            "processId": 8668,
+            "bounds": {
+              "y": 440,
+              "width": 230,
+              "height": 280,
+              "x": 80
+            },
+            "minimized": false
+          },
+          "foreground": {
+            "handle": "262530",
+            "extendedStyle": 2097408,
+            "visible": true,
+            "processId": 8668,
+            "bounds": {
+              "y": 0,
+              "width": 1040,
+              "height": 728,
+              "x": -8
+            },
+            "minimized": false
+          }
+        },
+        "ownedWindows": [
+          {
+            "id": 8,
+            "handle": "131610",
+            "kind": "pet",
+            "visible": true,
+            "minimized": false,
+            "alwaysOnTop": true,
+            "focused": false,
+            "bounds": {
+              "x": 320,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            }
+          },
+          {
+            "id": 7,
+            "handle": "131636",
+            "kind": "pet",
+            "visible": true,
+            "minimized": false,
+            "alwaysOnTop": true,
+            "focused": false,
+            "bounds": {
+              "x": 80,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            }
+          },
+          {
+            "id": 1,
+            "handle": "262530",
+            "kind": "main",
+            "visible": true,
+            "minimized": false,
+            "alwaysOnTop": false,
+            "focused": true,
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1024,
+              "height": 720
+            }
+          }
+        ],
+        "renderer": {
+          "events": [],
+          "visualHovered": false,
+          "surfaceHovered": false,
+          "pixelAtOriginalClientPointAlpha": 0,
+          "focused": true,
+          "visibility": "visible"
+        },
+        "host": {
+          "startup": false,
+          "ownerAccountId": "qa:32eb4ee5-0f90-48a7-8c27-5ce5e9b66fc0:local-202768df-00b1-4cad-83d0-933f70db672a",
+          "fullscreenMonitor": true,
+          "fullscreenMonitorReady": false,
+          "foregroundFullscreen": false,
+          "fullscreenSource": null,
+          "companionWindows": 2,
+          "companionLimit": 4,
+          "clickThroughWindows": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "windows": [
+            {
+              "id": 7,
+              "alwaysOnTop": true,
+              "visible": true,
+              "slotAllocated": true,
+              "hiddenReason": null
+            },
+            {
+              "id": 8,
+              "alwaysOnTop": true,
+              "visible": true,
+              "slotAllocated": true,
+              "hiddenReason": null
+            }
+          ],
+          "locationAllowed": false,
+          "emotionStatistics": false,
+          "closeToTrayConnected": true,
+          "companionLimitConnected": true
+        }
+      }
+    }
+  ],
+  "passed": false,
+  "mouseReleased": true,
+  "cursorRestored": true,
+  "completedAt": "2026-10-27T08:25:27.300Z"
+}

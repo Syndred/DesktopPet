@@ -1,0 +1,1849 @@
+{
+  "allPassed": true,
+  "count": 96,
+  "resources": 8,
+  "checks": [
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "idle",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 65,
+          "distinctFrames": 17,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 65,
+          "distinctFrames": 17,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "blink",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "walk",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 21,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 21,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "wave",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 32,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 32,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "eat",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "attack_windup",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "attack_release",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "attack",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 25,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 25,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "hit",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 22,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 22,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "skill",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 28,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 28,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "victory",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "sleep",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "action": "idle",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 65,
+          "distinctFrames": 17,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 65,
+          "distinctFrames": 17,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "action": "blink",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "action": "walk",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 21,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 21,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "action": "wave",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 32,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 32,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "action": "eat",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "action": "attack_windup",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "action": "attack_release",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "action": "attack",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 25,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 25,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "action": "hit",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 22,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 22,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "action": "skill",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 28,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 28,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "action": "victory",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "action": "sleep",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "action": "idle",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 65,
+          "distinctFrames": 17,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 65,
+          "distinctFrames": 17,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "action": "blink",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "action": "walk",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 21,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 21,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "action": "wave",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 32,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 32,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "action": "eat",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "action": "attack_windup",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "action": "attack_release",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "action": "attack",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 25,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 25,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "action": "hit",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 22,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 22,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "action": "skill",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 28,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 28,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "action": "victory",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "action": "sleep",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "action": "idle",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 65,
+          "distinctFrames": 17,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 65,
+          "distinctFrames": 17,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "action": "blink",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "action": "walk",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 21,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 21,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "action": "wave",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 32,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 32,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "action": "eat",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "action": "attack_windup",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "action": "attack_release",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "action": "attack",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 25,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 25,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "action": "hit",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 22,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 22,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "action": "skill",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 28,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 28,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "action": "victory",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "action": "sleep",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "idle",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 65,
+          "distinctFrames": 17,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 65,
+          "distinctFrames": 17,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "blink",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "walk",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 21,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 21,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "wave",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 32,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 32,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "eat",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "attack_windup",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "attack_release",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "attack",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 25,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 25,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "hit",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 22,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 22,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "skill",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 28,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 28,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "victory",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "sleep",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "action": "idle",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 65,
+          "distinctFrames": 17,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 65,
+          "distinctFrames": 17,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "action": "blink",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "action": "walk",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 21,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 21,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "action": "wave",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 32,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 32,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "action": "eat",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "action": "attack_windup",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "action": "attack_release",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "action": "attack",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 25,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 25,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "action": "hit",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 22,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 22,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "action": "skill",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 28,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 28,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "action": "victory",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "action": "sleep",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "action": "idle",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 65,
+          "distinctFrames": 17,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 65,
+          "distinctFrames": 17,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "action": "blink",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "action": "walk",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 21,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 21,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "action": "wave",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 32,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 32,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "action": "eat",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "action": "attack_windup",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "action": "attack_release",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "action": "attack",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 25,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 25,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "action": "hit",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 22,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 22,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "action": "skill",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 28,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 28,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "action": "victory",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "action": "sleep",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "action": "idle",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 65,
+          "distinctFrames": 17,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 65,
+          "distinctFrames": 17,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "action": "blink",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "action": "walk",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 21,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 21,
+          "distinctFrames": 2,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "action": "wave",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 32,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 33,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "action": "eat",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "action": "attack_windup",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "action": "attack_release",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 19,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "action": "attack",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 25,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 25,
+          "distinctFrames": 4,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "action": "hit",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 22,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 22,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "action": "skill",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 28,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        },
+        {
+          "mode": "replay",
+          "samples": 28,
+          "distinctFrames": 5,
+          "distinctRegions": 3
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "action": "victory",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 3,
+          "distinctRegions": 2
+        }
+      ],
+      "replayKeyChanged": true
+    },
+    {
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "action": "sleep",
+      "observations": [
+        {
+          "mode": "first",
+          "samples": 37,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        },
+        {
+          "mode": "replay",
+          "samples": 37,
+          "distinctFrames": 1,
+          "distinctRegions": 1
+        }
+      ],
+      "replayKeyChanged": true
+    }
+  ],
+  "evidence": {
+    "name": "resources",
+    "artifactId": 12719772690,
+    "apiDigest": "sha256:d5c175a3610cecee893ab83a47720fafa45b587a31cb67fe341cb16be45944c2",
+    "zipSha256": "d5c175a3610cecee893ab83a47720fafa45b587a31cb67fe341cb16be45944c2",
+    "verified": true,
+    "path": "artifacts/qa/full-acceptance-20261027/0fd-resources.zip",
+    "runId": 40472655634,
+    "evidence": [
+      {
+        "path": "/tmp/0fd-receipts/0fd-resources__foundation__full-acceptance__resources__run-1793089332513-d5c389cd__evidence.json",
+        "sha256": "c4e9aebc85092985ef67a26b83aa666cc3ca2486c80ed404a9c2438665cfbd38",
+        "bytes": 1149456
+      }
+    ],
+    "zipBytes": 1200003
+  },
+  "fullRawReceiptRetainedOnlyInDownloadedArtifactAndTmp": true
+}
