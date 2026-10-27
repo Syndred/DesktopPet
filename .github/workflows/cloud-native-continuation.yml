@@ -6,7 +6,7 @@ on:
       flows:
         description: 'Explicit JSON array of affected native flows; omitted successful flows retain version-bound receipts'
         required: false
-        default: '["desktop-restart","native-backup"]'
+        default: '["native-backup"]'
   push:
     branches: ['codex/cloud-authority-convergence']
     paths:
@@ -45,7 +45,7 @@ jobs:
     steps:
       - name: Reject empty, duplicate or unknown flow selections
         env:
-          SELECTED_FLOWS: ${{ inputs.flows || '["desktop-restart","native-backup"]' }}
+          SELECTED_FLOWS: ${{ inputs.flows || '["native-backup"]' }}
         run: |
           node -e "const assert=require('node:assert/strict');const flows=JSON.parse(process.env.SELECTED_FLOWS);const allowed=new Set(['companion-economy','native-backup','backup-ui','accounts-navigation','navigation','resources','lifecycle','desktop-restart','desktop-input','desktop-engineering','battle-context','context','default-profile','conversation-memory']);assert.ok(Array.isArray(flows)&&flows.length>0&&flows.length<=allowed.size);assert.equal(new Set(flows).size,flows.length);assert.ok(flows.every(x=>typeof x==='string'&&allowed.has(x)));console.log('Validated affected flows:',flows.join(', '));"
       - uses: actions/checkout@v7.0.1
@@ -84,7 +84,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        flow: ${{ fromJSON(inputs.flows || '["desktop-restart","native-backup"]') }}
+        flow: ${{ fromJSON(inputs.flows || '["native-backup"]') }}
     env:
       PACKAGE_SOURCE: b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d
     steps:

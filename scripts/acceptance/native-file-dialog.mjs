@@ -72,9 +72,13 @@ if($settingsText.Length -gt 65536){throw 'OWNED_SETTINGS_TOO_LARGE'}
 $c=$json.DeserializeObject($settingsText)
 [Console]::Out.WriteLine('{"phase":"settings-json-parsed"}');[Console]::Out.Flush()
 [Console]::Out.WriteLine('{"phase":"settings-read"}');[Console]::Out.Flush()
-# Add-Type is needed for the unchanged Win32/UIA declarations. Import only the
-# trusted binary beside this exact system PowerShell host, not module discovery.
-Microsoft.PowerShell.Core\Import-Module -Name ([System.IO.Path]::Combine($PSHOME,'Microsoft.PowerShell.Commands.Utility.dll')) -ErrorAction Stop
+# Windows PowerShell ships the Utility manifest under PSHOME/Modules; its
+# binary may be GAC-resolved, not a DLL directly beside powershell.exe.
+# Fixed system manifest only; automatic module discovery remains disabled.
+# https://devblogs.microsoft.com/scripting/verify-powershell-module-manifests/
+$utilityManifest=[System.IO.Path]::Combine($PSHOME,'Modules\Microsoft.PowerShell.Utility\Microsoft.PowerShell.Utility.psd1')
+if(-not [System.IO.File]::Exists($utilityManifest)){throw 'SYSTEM_UTILITY_MANIFEST_MISSING'}
+Microsoft.PowerShell.Core\Import-Module -Name $utilityManifest -ErrorAction Stop
 Emit @{phase='system-utility-loaded'}
 Add-Type -AssemblyName UIAutomationClient
 Add-Type -AssemblyName UIAutomationTypes
