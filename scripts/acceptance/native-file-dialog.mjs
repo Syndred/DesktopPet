@@ -159,16 +159,55 @@ try{
  Dialog-Still-Exact $dialog
  $root=[System.Windows.Automation.AutomationElement]::FromHandle($dialog)
  if($root.Current.ProcessId -ne $ownerPid -or $root.Current.ClassName -ne '#32770'){throw 'UIA_ROOT_IDENTITY_MISMATCH'}
+ $walker=[System.Windows.Automation.TreeWalker]::ControlViewWalker
  $edits=$root.FindAll([System.Windows.Automation.TreeScope]::Descendants,([System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ControlTypeProperty,[System.Windows.Automation.ControlType]::Edit)))
  $candidates=@()
  foreach($edit in $edits){
   $id=$edit.Current.AutomationId;$name=$edit.Current.Name
-  if($id -eq '1148' -or $name -match '^(File name:|File name|文件名\(?[Nn]?\)?:|文件名[：:]?)$'){
+  $parent=$walker.GetParent($edit)
+  # Modern IFileDialog: filename ComboBox 1148 owns Edit 1001. Never
+  # accept an arbitrary Edit 1001 (the dialog also has search/address edits).
+  $modern=$id -eq '1001' -and $edit.Current.ClassName -eq 'Edit' -and $null -ne $parent -and $parent.Current.ProcessId -eq $ownerPid -and $parent.Current.ControlType -eq [System.Windows.Automation.ControlType]::ComboBox -and $parent.Current.AutomationId -eq '1148' -and $parent.Current.ClassName -eq 'ComboBox'
+  $standard=$id -eq '1148' -or $name -match '^(File name:|File name|文件名\(?[Nn]?\)?:|文件名[：:]?)$'
+  if($standard -or $modern){
    $pattern=$null
-   if($edit.Current.ProcessId -eq $ownerPid -and $edit.Current.IsEnabled -and -not $edit.Current.IsOffscreen -and $edit.TryGetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern,[ref]$pattern) -and -not $pattern.Current.IsReadOnly){$candidates+=@{element=$edit;pattern=$pattern;id=$id;name=$name}}
+   if($edit.Current.ProcessId -eq $ownerPid -and $edit.Current.IsEnabled -and -not $edit.Current.IsOffscreen -and $edit.TryGetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern,[ref]$pattern) -and -not $pattern.Current.IsReadOnly){$candidates+=@{element=$edit;pattern=$pattern;id=$id;name=$name;selector=$(if($modern){'filename-combobox-1148/direct-edit-1001'}else{'standard-filename-edit'})}}
   }
  }
- if($candidates.Count -ne 1){throw 'UNIQUE_STANDARD_FILENAME_EDIT_NOT_FOUND'}
+ if($candidates.Count -ne 1){
+  Dialog-Still-Exact $dialog
+  # Bounded metadata ONLY from this already verified dialog. No ValuePattern,
+  # text value, file-list item content, desktop/global walk, or input fallback.
+  function Control-Metadata($element){
+   $v=$element.Current
+   return @{controlType=$v.ControlType.ProgrammaticName;id=([string]$v.AutomationId).Substring(0,[Math]::Min(80,([string]$v.AutomationId).Length));name=([string]$v.Name).Substring(0,[Math]::Min(120,([string]$v.Name).Length));class=([string]$v.ClassName).Substring(0,[Math]::Min(80,([string]$v.ClassName).Length));enabled=$v.IsEnabled;offscreen=$v.IsOffscreen}
+  }
+  $metadata=@()
+  # ControlView may skip a provider root: independently prove each diagnostic
+  # ancestor belongs to this dialog before reading its display metadata.
+  $dialogMembers=$root.FindAll([System.Windows.Automation.TreeScope]::Descendants,[System.Windows.Automation.Condition]::TrueCondition)
+  $combos=$root.FindAll([System.Windows.Automation.TreeScope]::Descendants,([System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ControlTypeProperty,[System.Windows.Automation.ControlType]::ComboBox)))
+  foreach($group in @($edits,$combos)){
+   foreach($element in $group){
+    if($metadata.Count -ge 16){break}
+    if($element.Current.ProcessId -ne $ownerPid){continue}
+    $entry=Control-Metadata $element;$parents=@();$ancestor=$walker.GetParent($element)
+    for($depth=0;$depth -lt 3 -and $null -ne $ancestor;$depth++){
+     $insideDialog=[System.Windows.Automation.AutomationElement]::Compare($ancestor,$root)
+     if(-not $insideDialog -and $dialogMembers.Count -le 512){
+      foreach($member in $dialogMembers){if([System.Windows.Automation.AutomationElement]::Compare($ancestor,$member)){$insideDialog=$true;break}}
+     }
+     if(-not $insideDialog -or $ancestor.Current.ProcessId -ne $ownerPid){break}
+     $parents+=Control-Metadata $ancestor
+     if([System.Windows.Automation.AutomationElement]::Compare($ancestor,$root)){break}
+     $ancestor=$walker.GetParent($ancestor)
+    }
+    $entry.parents=$parents;$metadata+=$entry
+   }
+  }
+  Emit @{phase='filename-control-diagnostic';candidateCount=$candidates.Count;controls=$metadata;maxControls=16;maxParentDepth=3;valuesCollected=$false}
+  throw 'UNIQUE_STANDARD_FILENAME_EDIT_NOT_FOUND'
+ }
  $buttons=$root.FindAll([System.Windows.Automation.TreeScope]::Descendants,([System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ControlTypeProperty,[System.Windows.Automation.ControlType]::Button)))
  $actions=@()
  foreach($button in $buttons){
@@ -189,7 +228,7 @@ try{
   try{$actualHash=[System.BitConverter]::ToString($hasher.ComputeHash([System.IO.File]::ReadAllBytes([string]$c.filePath))).Replace('-','').ToLowerInvariant()}finally{$hasher.Dispose()}
   if($actualHash -cne [string]$c.expectedSha256){throw 'OPEN_FIXTURE_CHANGED_BEFORE_INVOKE'}
  }
- Emit @{phase='filename-verified';dialogHandle=$dialog.ToInt64().ToString();editAutomationId=$candidates[0].id;action=$actions[0].name}
+ Emit @{phase='filename-verified';dialogHandle=$dialog.ToInt64().ToString();editAutomationId=$candidates[0].id;selector=$candidates[0].selector;action=$actions[0].name}
  $actions[0].pattern.Invoke()
  while([DateTime]::UtcNow -lt $deadline){
   Owner-Still-Exact | Out-Null
