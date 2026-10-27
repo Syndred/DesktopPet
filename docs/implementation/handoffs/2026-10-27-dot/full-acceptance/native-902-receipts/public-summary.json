@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "evidenceLevel": "Human-reviewed public summary only; no raw receipts or internal coverage matrix.",
+  "runUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40514260964",
+  "artifactUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40514260964/artifacts/12739135465",
+  "artifactZipSha256": "6b0016f1ede8c1dcf4a982c67d559f1ca5d59c2ee3af3ae8292fccb020e693d3",
+  "originalCase": "G04",
+  "conclusion": "Passed the original territory failure, cancellation, repeated confirmation and other-owner occupation case on the audited Windows portable package.",
+  "observed": "Two normally registered isolated local accounts shared the original simulated territory. A stale territory version returned an explicit conflict without changing attempts, rewards or receipts. Actual UI cancellation produced an abandoned challenge. A second challenge ended in a natural defeat after 31 normal rounds; UI confirmation preserved the other owner. Replaying the original successful and defeated confirmation intents left the recorded state unchanged, within the ordinary two-attempt daily cap.",
+  "limitations": "Official simulated-local scope only, not production cloud or real GPS. Screenshots show the other-owner state and one then zero remaining attempts; their offline basemap warning is not evidence of successful online map loading.",
+  "priorAttempt": "The earlier attempt stopped within a broad preparation stage without enough diagnostics to establish its exact cause. This rerun added observations only, preserving the original assertions and natural battle policy. Success does not retrospectively establish a product defect or product fix.",
+  "acceptanceConclusion": {
+    "acceptedOriginalCases": 63,
+    "comparison": "Previously accepted 62 plus one original case. Three original cases have been fully exercised on this exact package; 60 retain exact-version, impact-reviewed earlier evidence. Four execution checks here count as one case."
+  },
+  "publicationBoundary": "Detailed receipts and the versioned matrix remain local. Public traceability uses only the existing workflow artifact and whole-archive checksum."
+}
