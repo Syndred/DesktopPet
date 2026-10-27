@@ -19,6 +19,7 @@ export interface AppInfo {
   runtime: { electron: string; node: string; modules: string; napi: string; arch: string; tray: { active: boolean; bounds?: { x: number; y: number; width: number; height: number } } };
   user: { id: string; account?: string; username?: string } | null;
   build?: { sourceCommit: string; codeFingerprint: string; compiledFingerprint: string; [key: string]: unknown };
+  support?: { packaged: boolean; executablePath: string | null; logsPath: string; logsAvailable: boolean; automaticUpdates: false };
   scenario?: { id: string; provenance: 'simulated'; isolated: true };
 }
 export interface AccountsCommands {
@@ -102,7 +103,7 @@ export interface DiscoveryCommands {
 }
 /** Domain owners may augment their command interface when a reviewed contract grows. */
 export interface IpcCommands {
-  app: { info: IpcMethod<void, AppInfo> };
+  app: { info: IpcMethod<void, AppInfo>; openLogs: IpcMethod<void, { opened: boolean }>; showExecutable: IpcMethod<void, { revealed: boolean }> };
   accounts: AccountsCommands;
   companions: CompanionsCommands;
   resources: ResourcesCommands;

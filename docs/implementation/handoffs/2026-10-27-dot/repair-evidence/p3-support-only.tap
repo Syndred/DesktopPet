@@ -1,0 +1,13 @@
+✔ support reports verified outer launcher, not temporary Electron child; contains no identity or credentials (1.578616ms)
+✔ actions use only host-derived paths and do not upload or execute commands (0.212739ms)
+✔ unavailable outer launcher and missing logs fail without shell calls (0.529413ms)
+✔ OS open failure is reported, never claimed as success (0.148393ms)
+✔ development mode never reports Node/Electron binary as installed program (0.150455ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 88.561098

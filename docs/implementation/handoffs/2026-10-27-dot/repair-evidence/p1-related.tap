@@ -1,0 +1,36 @@
+✔ PROTOCOL UNIT simulated: modern HTTPS config and stable distinct per-profile device IDs (3.959981ms)
+✔ PROTOCOL UNIT simulated: Auth UID links additively to old text owner without tokens in SQLite/public session (40.944551ms)
+✔ PROTOCOL UNIT simulated: concurrent refresh is single-flight and adopts a 12-character opaque token (20.944739ms)
+✔ PROTOCOL UNIT simulated: a refresh finishing after logout cannot restore main-process login (4.764114ms)
+✔ PROTOCOL UNIT simulated: protected sync archives the original and reports partial synchronization honestly (12.084319ms)
+✔ PROTOCOL UNIT simulated: one session SDK reads current token after refresh and removes channels on logout (8.283179ms)
+✔ PROTOCOL UNIT simulated: async asset hydration rejects same-owner re-login but accepts same-SID refresh (6.074754ms)
+✔ PROTOCOL UNIT simulated: untouched empty battle/garden modules are absent-state equivalents, real history remains significant (2.8075ms)
+✔ real SQLite with simulated Auth: old cloud previews cannot replace live data and still expire across session transitions (19.68076ms)
+✔ LOCAL SQLite and protocol double: initial migration resumes its original request after before-commit (16.747099ms)
+✔ LOCAL SQLite and protocol double: initial migration resumes its original request after lost-acknowledgement (5.587979ms)
+✔ LOCAL SQLite and protocol double: initial migration uses independent cloud ownership without replaying companion commands or trusting the local pet cache (5.820856ms)
+✔ LOCAL SQLite and protocol double: repeating an interrupted backup import confirms its original action before planning additions (9.350099ms)
+✔ LOCAL SQLite and protocol double: preserved originals survive backup export and restore without credentials or cloud request replay (19.044705ms)
+✔ LOCAL SQLite and protocol double: imported prefixes and existing tails have the same original order on both devices (11.977808ms)
+✔ LOCAL SQLite and protocol double: contradictory observed histories are archived instead of silently reordering the cloud (9.252412ms)
+✔ LOCAL SQLite and protocol double: two independent caches read the same server record and preserve original IDs (6.840891ms)
+✔ LOCAL SQLite and protocol double: lost write acknowledgement retries the original immutable action exactly once at the server (4.494878ms)
+✔ LOCAL SQLite and protocol double: one record conflict does not block another pet or automatically reissue the conflicting edit (9.576412ms)
+✔ LOCAL SQLite and protocol double: connection metadata travels while each device key stays local and bound to its endpoint (8.910826ms)
+✔ LOCAL SQLite and protocol double: divergent legacy content is archived per record without blocking the adopted cloud version (7.618595ms)
+✔ LOCAL SQLite and protocol double: a late response after account switching is rejected before materializing another owner (1.983465ms)
+✔ LOCAL SQLite and protocol double: an explicit choice restores one archived record and keeps its original archive (9.333083ms)
+✔ LOCAL SQLite and protocol double: a lost acknowledgement while resolving a preserved record reuses its frozen body (7.892148ms)
+✔ LOCAL SQLite and protocol double: restarting the author retains a partial reply and confirms interruption under its original message IDs (4.009434ms)
+✔ LOCAL SQLite and protocol double: restarting a viewer never cancels another device active message (7.17837ms)
+✔ resource backup restores actual 2D pack bytes to new managed paths and rejects a different owner (104.235453ms)
+✔ standard Pixi atlas survives backup restore and complete user-data relocation (124.763488ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 319.592596

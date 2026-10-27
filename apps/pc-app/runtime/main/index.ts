@@ -3,7 +3,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { existsSync, readFileSync } from 'node:fs';
 import { randomUUID } from 'node:crypto';
-import { app, BrowserWindow, ipcMain, Menu, nativeImage, protocol, safeStorage, screen, session, Tray } from 'electron';
+import { app, BrowserWindow, ipcMain, Menu, nativeImage, protocol, safeStorage, screen, session, shell, Tray } from 'electron';
 
 const require = createRequire(import.meta.url);
 const runtime = resolve(dirname(fileURLToPath(import.meta.url)), '../../runtime');
@@ -166,7 +166,10 @@ if (profileInstance.primary) app.whenReady().then(async () => {
   if (services.get('backups') && services.get('companions')?.backupAdapter && !services.get('backups').adapters.has('companions')) services.get('backups').register(services.get('companions').backupAdapter);
   if (services.get('backups') && services.get('resources')) services.get('backups').register(require(join(runtime, 'core/resource-backup.cjs')).createResourceBackupAdapter(services));
   if (services.get('backups') && services.get('conversations')) services.get('backups').register(services.get('conversations').createBackupAdapter());
-  services.ipc.handle('app:info', () => ({ version: app.getVersion(), platform: process.platform, build,
+  const support = require(join(runtime, 'core/app-support.cjs')).createAppSupport({ app, shell });
+  services.ipc.handle('app:openLogs', () => support.openLogs(), { public: true });
+  services.ipc.handle('app:showExecutable', () => support.showExecutable(), { public: true });
+  services.ipc.handle('app:info', () => ({ version: app.getVersion(), platform: process.platform, build, support: support.info(),
     runtime: { electron: process.versions.electron, node: process.versions.node, modules: process.versions.modules, napi: process.versions.napi, arch: process.arch,
       tray: { active: Boolean(tray && !tray.isDestroyed()), ...(tray && !tray.isDestroyed() && process.platform === 'win32' ? { bounds: tray.getBounds() } : {}) } },
     features: features.map(x => ({ id: x.id, commands: x.commands })), user: services.session.getCurrentUser(), ...(qaScenario ? { scenario: qaScenario.descriptor } : {}) }), { public: true });

@@ -1,0 +1,18 @@
+{
+  "kind": "jsdom-source-only",
+  "nativePassed": false,
+  "results": [
+    {
+      "name": "signed-out version uses public runtime version and build rather than hardcoded package",
+      "passed": true
+    },
+    {
+      "name": "about reports no automatic update service and fixed host actions",
+      "passed": true
+    },
+    {
+      "name": "app info failure is visible and never invented as a version",
+      "passed": true
+    }
+  ]
+}

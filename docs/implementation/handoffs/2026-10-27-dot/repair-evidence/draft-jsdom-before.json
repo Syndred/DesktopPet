@@ -1,0 +1,54 @@
+{
+  "kind": "jsdom-source-only",
+  "nativePassed": false,
+  "baseline": true,
+  "source": "apps/pc-app/ui/src/features/conversations/settings-page.tsx",
+  "sourceSha256": "275393cf7aad677788524d5230224cb9b1e2f7b1e6f8c168683452c6ad2dacb3",
+  "fixtureSha256": "46e00cebd0dfc1052a829b0e320e799246d2833600972624bb1f280623324dce",
+  "startedAt": "2026-10-27T05:27:48.256Z",
+  "results": [
+    {
+      "name": "normal saves advance the baseline and allow another save without stale revision",
+      "passed": true
+    },
+    {
+      "name": "unchanged notification retains dirty drafts without a false remote warning",
+      "passed": true
+    },
+    {
+      "name": "explicit discard adopts remote versions and clears connection secret",
+      "passed": false,
+      "error": "Error: Missing explicit discard\n    at check (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-conversation-settings-dom.mjs:26:14), <anonymous>:45433:23)\n    at eval (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-conversation-settings-dom.mjs:26:14), <anonymous>:45578:9)\n    at async window.runHookRegressions (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-conversation-settings-dom.mjs:26:14), <anonymous>:45652:9)\n    at async file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-conversation-settings-dom.mjs:27:20"
+    },
+    {
+      "name": "pet scope change clears private drafts and unsaved global key",
+      "passed": false,
+      "error": "Error: Pet scope retained old draft or secret\n    at check (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-conversation-settings-dom.mjs:26:14), <anonymous>:45433:23)\n    at eval (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-conversation-settings-dom.mjs:26:14), <anonymous>:45590:7)\n    at async window.runHookRegressions (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-conversation-settings-dom.mjs:26:14), <anonymous>:45652:9)\n    at async file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-conversation-settings-dom.mjs:27:20"
+    },
+    {
+      "name": "dirty persona survives a newer remote version without an implicit save",
+      "passed": false,
+      "error": "Error: Remote refresh silently replaced unsaved persona\n    at check (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-conversation-settings-dom.mjs:26:14), <anonymous>:45433:23)\n    at eval (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-conversation-settings-dom.mjs:26:14), <anonymous>:45598:7)\n    at async window.runHookRegressions (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-conversation-settings-dom.mjs:26:14), <anonymous>:45652:9)\n    at async file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-conversation-settings-dom.mjs:27:20"
+    },
+    {
+      "name": "stale persona save uses its original edit revision and retains the rejected draft",
+      "passed": false,
+      "error": "Error: Stale draft used the newer unseen revision\n    at check (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-conversation-settings-dom.mjs:26:14), <anonymous>:45433:23)\n    at eval (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-conversation-settings-dom.mjs:26:14), <anonymous>:45610:7)\n    at async window.runHookRegressions (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-conversation-settings-dom.mjs:26:14), <anonymous>:45652:9)\n    at async file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-conversation-settings-dom.mjs:27:20"
+    },
+    {
+      "name": "a clean persona form adopts a newer remote version",
+      "passed": true
+    },
+    {
+      "name": "dirty connection and unsaved secret survive refresh and keep their original CAS revision",
+      "passed": false,
+      "error": "Error: Remote refresh silently replaced connection draft\n    at check (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-conversation-settings-dom.mjs:26:14), <anonymous>:45433:23)\n    at eval (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-conversation-settings-dom.mjs:26:14), <anonymous>:45629:7)\n    at async window.runHookRegressions (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-conversation-settings-dom.mjs:26:14), <anonymous>:45652:9)\n    at async file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-conversation-settings-dom.mjs:27:20"
+    },
+    {
+      "name": "changing account/session removes the previous persona draft and secret input",
+      "passed": true
+    }
+  ],
+  "passed": 4,
+  "completedAt": "2026-10-27T05:27:49.803Z"
+}

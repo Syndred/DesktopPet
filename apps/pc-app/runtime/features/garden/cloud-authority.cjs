@@ -9,7 +9,7 @@ const problem=(code,message)=>{throw new GardenError(code,message);};
 const territoryOps={territoryLocate:'locate',territoryChallenge:'challenge',territorySettle:'settle',garrison:'garrison'};
 const actorKey=actor=>[actor.ownerAccountId,actor.authUserId,actor.deviceId,actor.sessionId].join('\0');
 class CloudGardenAuthority{
-  constructor(services,garden){this.services=services;this.garden=garden;this.db=services.db;this.backup=createGardenBackupAdapter(this.db);this.companions=createCompanionBackupAdapter(this.db);this.battles=new BattleStore(this.db);this.locks=new Map();}
+  constructor(services,garden){this.services=services;this.garden=garden;this.db=services.db;this.backup=createGardenBackupAdapter(this.db);this.companions=createCompanionBackupAdapter(this.db);this.battles=new BattleStore(this.db);this.locks=new Map();this.observations=new Map();}
   session(){return this.services.get('accounts')?.privateSession?.()||null;}
   isCloud(context){const session=this.session();return !this.services.get('qaScenario')&&session?.provider==='runtime'&&session.ownerAccountId===context.ownerAccountId;}
   assertOwner(context){if(this.services.session.getOwnerAccountId()!==context.ownerAccountId)problem('SESSION_CHANGED','账号已切换，请重新打开菜园');}
@@ -77,11 +77,19 @@ class CloudGardenAuthority{
     });
   }
   project(snapshot){const map=this.services.get('discovery')?.map,scenario=(snapshot.territories||[]).find(record=>record.worldMode==='simulated');return {...snapshot,...(scenario?{scenario:{mode:'simulated',id:scenario.scenarioId,label:'云端定位演练'}}:{}),territories:(snapshot.territories||[]).map(record=>({...record,...(map?.project?{mapBoundary:record.boundary.map(point=>map.project(point))}:{})}))};}
+  status(owner){
+    const pending=this.db.prepare("SELECT count(*) n FROM garden_cloud_requests WHERE owner_account_id=? AND status='pending'").get(owner).n;
+    const conflicts=this.db.prepare("SELECT count(*) n FROM garden_cloud_requests WHERE owner_account_id=? AND status='conflict'").get(owner).n;
+    const initialized=Boolean(this.db.prepare('SELECT 1 FROM garden_cloud_state WHERE owner_account_id=?').get(owner));
+    return {initialized,pending,conflicts,error:this.observations.get(owner)?.error||null};
+  }
   async snapshot(context){
-    await this.request('garden-sync',{op:'snapshot'},context);
-    const remote=await this.request('territory-sync',{op:'snapshot'},context);this.applyReadback(context,remote);
-    const pending=this.db.prepare("SELECT count(*) count FROM garden_cloud_requests WHERE owner_account_id=? AND status='pending'").get(context.ownerAccountId).count;
-    return {ok:true,revision:remote.snapshot.revision,data:this.project({...remote.snapshot,sync:{mode:'cloud',pending,conflicts:0}})};
+    try {
+      await this.request('garden-sync',{op:'snapshot'},context);
+      const remote=await this.request('territory-sync',{op:'snapshot'},context);this.applyReadback(context,remote);
+      this.observations.set(context.ownerAccountId,{error:null});
+      return {ok:true,revision:remote.snapshot.revision,data:this.project({...remote.snapshot,sync:{mode:'cloud',...this.status(context.ownerAccountId)}})};
+    } catch(error){this.observations.set(context.ownerAccountId,{error:error.code||'CLOUD_UNAVAILABLE'});throw error;}
   }
   serial(owner,task){const before=this.locks.get(owner)||Promise.resolve(),next=before.catch(()=>{}).then(task);this.locks.set(owner,next);return next.finally(()=>{if(this.locks.get(owner)===next)this.locks.delete(owner);});}
   async journal(context,endpoint,op,kind,input){

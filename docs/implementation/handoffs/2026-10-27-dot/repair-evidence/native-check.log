@@ -1,0 +1,6 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> lingjing-desktop@0.1.8 native:check
+> node scripts/desktop/verify-native.cjs
+
+{"passed":true,"at":"2026-10-27T05:26:50.208Z","directory":"/workspace/scratch/857bd0cbeaf1/DesktopPet/artifacts/foundation/cloud-engineering/native/probe-Y84kK2","node":{"runtime":"node","versions":{"node":"24.22.1","electron":null,"modules":"137","napi":"10"},"sqlitePackage":"13.0.3","sqliteEngine":"3.53.4","rows":[{"runtime":"node","version":"24.22.1"}]},"electron":{"runtime":"electron","versions":{"node":"24.22.0","electron":"44.9.3","modules":"149","napi":"10"},"sqlitePackage":"13.0.3","sqliteEngine":"3.53.4","rows":[{"runtime":"electron","version":"44.9.3"},{"runtime":"node","version":"24.22.1"}]},"nativePolicy":"better-sqlite3 13 uses bundled N-API prebuilds. Do not rebuild a shared node_modules tree for an older Electron ABI."}

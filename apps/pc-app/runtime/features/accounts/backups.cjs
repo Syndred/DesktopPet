@@ -132,6 +132,14 @@ class BackupManager {
     for(const [id,module]of Object.entries(envelope.data.modules))await this.adapters.get(id)?.prepareCloud?.(owner,module);
     this.validate(envelope,owner);
   }
+  // Cache-only hydration from already validated backup bytes. Never import rows here.
+  prepareCache(envelope,owner) {
+    this.validate(envelope,owner);
+    for(const [id,module] of Object.entries(this.normalizeData(envelope.data,owner).modules)) {
+      const result=this.adapters.get(id)?.prepareCache?.(owner,module);
+      invariant(!result?.then,"ASYNC_BACKUP_ADAPTER","缓存修复必须同步执行。");
+    }
+  }
   cloudData(data,owner) {
     const modules={...data.modules};
     for(const [id,module]of Object.entries(modules))if(this.adapters.get(id)?.cloudModule)modules[id]=this.adapters.get(id).cloudModule(owner,module);
@@ -190,6 +198,7 @@ class BackupManager {
     let envelope;
     try { envelope = JSON.parse(readFileSync(file, "utf8")); } catch { invariant(false, "INVALID_BACKUP", "无法读取备份文件。"); }
     this.validate(envelope, owner);
+    this.prepareCache(envelope,owner);
     const id = randomUUID();
     const currentChecksum = this.dataChecksum(owner);
     // Bound retained imports; preview payloads never contain paths selected by the renderer.
@@ -220,6 +229,7 @@ class BackupManager {
     });
     invariant(!cloudContext || Number.isSafeInteger(cloudContext.revision) && cloudContext.revision > 0,
       'SYNC_RECEIPT_MISMATCH', '云端预览版本无效，请重新预览。');
+    this.prepareCache(preview.envelope,owner);
     invariant(this.dataChecksum(owner) === preview.currentChecksum, "SAVE_CHANGED", "存档在预览后发生变化，请重新预览。");
     const preserved = this.save(owner, null, "before-restore");
     const result = transaction(this.db, () => {

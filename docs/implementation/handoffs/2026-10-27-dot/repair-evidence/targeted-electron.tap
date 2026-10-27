@@ -1,0 +1,36 @@
+✔ normal cloud-account restore repairs a known missing cache before protection export, retaining identity and stable retry (607.518853ms)
+✔ a valid original backup can be previewed when its known local cache file was already missing, without importing business rows (313.399028ms)
+✔ account status includes one durable original garden request without retrying it, including after provider recreation (14.834678ms)
+✔ a current primary network failure outranks an older optional serial metadata warning (6.860769ms)
+✔ primary errors in a later domain outrank an earlier metadata-only warning (6.444499ms)
+✔ confirmed rejection is not counted as unknown pending, while a 401 remains unconfirmed (6.487895ms)
+✔ support reports verified outer launcher, not temporary Electron child; contains no identity or credentials (1.194433ms)
+✔ actions use only host-derived paths and do not upload or execute commands (0.295126ms)
+✔ unavailable outer launcher and missing logs fail without shell calls (0.481868ms)
+✔ OS open failure is reported, never claimed as success (0.114933ms)
+✔ development mode never reports Node/Electron binary as installed program (0.117508ms)
+✔ cached garden projection retains the original durable pending count without replaying the command (21.842948ms)
+✔ a fresh import of the same backup can restore the same memory after an earlier restore and later deletion (34.3296ms)
+✔ retrying a resolved import is idempotent while a separate fresh import offers a new choice even at the same cloud revision (17.384847ms)
+✔ account restore retry after import acknowledgement loss keeps its durable original action and one protection receipt (12.811182ms)
+✔ explicit restore choice rejects a stale review revision without overwriting a newer memory (6.906357ms)
+✔ repair cannot install a different valid PNG under an existing resource pack hash (106.908006ms)
+ℹ {"validationAccepted":false,"rejectedCode":"RESOURCE_BACKUP_INVALID","substitutedImageInstalled":false,"originalBytesPreserved":true,"nativeAcceptance":false}
+✔ validate all cache plans before writes: later current-hash conflict leaves earlier missing resource untouched (155.178439ms)
+✔ recomputed file and whole-package hashes do not authorize new bytes for an existing ID (59.28654ms)
+✔ existing damaged bytes are rejected and never overwritten (36.830436ms)
+✔ cache repair rejects file symlink without touching target (32.810584ms)
+✔ cache repair rejects parent symlink without touching target (31.598732ms)
+✔ owner mismatch cannot repair or mutate another owner resource (30.290894ms)
+✔ registered asset-key set missing entry rejects before repair (33.047941ms)
+✔ registered asset-key set extra entry rejects before repair (37.111729ms)
+✔ cache repair and repeat merge retain current authored metadata, revision, registry, and imports (99.202103ms)
+✔ merge restore repairs a missing imported asset from backup while retaining its original ID, metadata and preserved file (122.93127ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 731.48666

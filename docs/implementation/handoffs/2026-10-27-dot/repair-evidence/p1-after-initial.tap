@@ -1,0 +1,15 @@
+✔ normal cloud-account restore repairs a known missing cache before protection export, retaining identity and stable retry (724.669977ms)
+✔ a valid original backup can be previewed when its known local cache file was already missing, without importing business rows (354.21581ms)
+✔ a fresh import of the same backup can restore the same memory after an earlier restore and later deletion (38.194856ms)
+✔ retrying a resolved import is idempotent while a separate fresh import offers a new choice even at the same cloud revision (10.898031ms)
+✔ repair cannot install a different valid PNG under an existing resource pack hash (84.21917ms)
+ℹ {"validationAccepted":false,"rejectedCode":"RESOURCE_BACKUP_INVALID","substitutedImageInstalled":false,"originalBytesPreserved":true,"nativeAcceptance":false}
+✔ merge restore repairs a missing imported asset from backup while retaining its original ID, metadata and preserved file (142.892567ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 825.14448

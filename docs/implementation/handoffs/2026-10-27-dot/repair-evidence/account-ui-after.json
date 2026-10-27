@@ -1,0 +1,21 @@
+{
+  "kind": "jsdom-source-only",
+  "nativePassed": false,
+  "baseline": false,
+  "source": "apps/pc-app/ui/src/features/accounts/account.tsx",
+  "sourceSha256": "ae6755a352df1a4d031cc127de1dd0146cd0f219243605f07d3bb603cf9173b0",
+  "fixtureSha256": "dffa0a8d110ed9385939c56c3e43e8f7bb78c820e593c6806b312dee0c598891",
+  "startedAt": "2026-10-27T05:27:23.683Z",
+  "results": [
+    {
+      "name": "lost receipt retries the same action, preview and mode; success allows a distinct new import",
+      "passed": true
+    },
+    {
+      "name": "switching account clears an uncertain restore intent and its preview",
+      "passed": true
+    }
+  ],
+  "passed": 2,
+  "completedAt": "2026-10-27T05:27:24.715Z"
+}

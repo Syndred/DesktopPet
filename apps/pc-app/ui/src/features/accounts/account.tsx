@@ -18,6 +18,7 @@ export function SettingsNavigation() {
     <a href="#/settings" aria-current={path === "/settings" ? "page" : undefined}><Monitor size={19} /><span>桌面与行为</span></a><a href="#/settings/privacy" aria-current={path === "/settings/privacy" ? "page" : undefined}><Bell size={19} /><span>通知与隐私</span></a>
     <a href="#/settings/ai" aria-current={path === "/settings/ai" ? "page" : undefined}><MessageCircle size={19} /><span>AI 对话</span></a><a href="#/resources" aria-current={path === "/resources" ? "page" : undefined}><Box size={19} /><span>角色资源</span></a>
     <a href="#/account" aria-current={path === "/account" ? "page" : undefined}><RefreshCw size={19} /><span>账号与云端</span></a>
+    <a href="#/settings/about" aria-current={path === "/settings/about" ? "page" : undefined}><Monitor size={19} /><span>关于与诊断</span></a>
   </nav>;
 }
 function dateText(value?: string | null) { return value ? new Date(value).toLocaleString("zh-CN") : "尚未完成"; }
@@ -37,9 +38,10 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
   const [preview, setPreview] = useState<BackupPreview | null>(null);
   const [restoreMode, setRestoreMode] = useState<"merge" | "replace">("merge");
   const [showPreserved, setShowPreserved] = useState(false);
+  const restoreIntent = useRef<{ previewId: string; mode: string; actionId: string } | null>(null);
   const previewOpener = useRef<HTMLButtonElement | null>(null);
   const returnPreviewFocus = useRef(false);
-  const closePreview = () => { returnPreviewFocus.current = true; setPreview(null); };
+  const closePreview = () => { restoreIntent.current = null; returnPreviewFocus.current = true; setPreview(null); };
   useEffect(() => {
     if (preview || pending || !returnPreviewFocus.current) return;
     returnPreviewFocus.current = false;
@@ -183,7 +185,10 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
       <p className="ac-hint">{authoritative ? '导入聊天、角色资源与本机设置。不同版本的记录会单独保留供你选择；云端伙伴、库存与游戏进度使用当前版本。' : '恢复前会自动备份当前存档；账号资料和登录状态保持不变。'}</p>
       {!authoritative && restoreMode === "replace" && <p className="ac-error">当前存档将替换为此备份版本。</p>}
       <div className="ac-actions"><Button className="ac-secondary" disabled={Boolean(pending)} onClick={closePreview}>取消</Button><Button className="ac-primary" disabled={Boolean(pending)} onClick={() => void run("restore", async () => {
-        const result = await request<{ preservedBackup: { filePath: string } }>("backupRestore", { previewId: preview.previewId, mode: restoreMode, actionId: newActionId() });
+        if (!restoreIntent.current || restoreIntent.current.previewId !== preview.previewId || restoreIntent.current.mode !== restoreMode) {
+          restoreIntent.current = { previewId: preview.previewId, mode: restoreMode, actionId: newActionId() };
+        }
+        const result = await request<{ preservedBackup: { filePath: string } }>("backupRestore", restoreIntent.current);
         closePreview(); await refresh(); return authoritative ? '导入完成，原存档已备份；如有不同版本，可逐条查看。' : result.preservedBackup ? "恢复完成，原存档已备份。" : "恢复完成。";
       })}>{pending === "restore" ? authoritative ? '正在导入…' : "正在恢复…" : authoritative ? '确认导入' : "确认恢复"}</Button></div>
       {error && <p role="alert" className="ac-error">{error}</p>}

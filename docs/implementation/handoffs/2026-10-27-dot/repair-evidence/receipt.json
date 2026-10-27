@@ -1,0 +1,159 @@
+{
+  "observedAt": "2026-10-27T05:31:10.984148+00:00",
+  "baseHead": "545eeab97453716cd2a8a965341ec4b912c8e4a3",
+  "productBaseline": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "stage": "source-repairs-verified-windows-workflow-awaiting-push",
+  "nativeWindowsPassed": false,
+  "liveAccountPassed": false,
+  "sourceSha256": {
+    "apps/pc-app/runtime/core/resource-backup.cjs": "0bbd4cdb13ad551af42ff939817b8d799ee32951f212326c1e5590d57a5e237c",
+    "apps/pc-app/runtime/features/accounts/backups.cjs": "db0e3c3d01865d7711355e22913ca15004a5970d1d6e4cc96dc05964ea0724c4",
+    "apps/pc-app/runtime/features/accounts/service.cjs": "37fbb9c7454bf0951371f33b212e2433e11ace39d2f9670a0b11d357dd16bb9f",
+    "apps/pc-app/runtime/features/conversations/cloud-records.cjs": "9d5e8fb753bff22cae9cb6d71c01ab6d8aa121942d8178fbe515822e8c69fc3c",
+    "apps/pc-app/runtime/features/conversations/index.cjs": "bc27a446687c5c4d7c0480617e03c4529cde675d3b3f8b8862e4de6658dd4ba7",
+    "apps/pc-app/runtime/features/garden/cloud-authority.cjs": "3fe73cbaaf5ad8128751b7c8f240207be576e3b3f030a4a86d24397dae67610a",
+    "apps/pc-app/runtime/features/garden/index.cjs": "d020ae4d6b6e57bdea70c19943087e4e7ab36300f48d96eb6ee4c0e127bbb239",
+    "apps/pc-app/runtime/main/index.ts": "764de1c0d31bf107e0b7b864917aa9356ea55d2407b181e7ede94137edc7a2e3",
+    "apps/pc-app/ui/src/features/accounts/account.tsx": "ae6755a352df1a4d031cc127de1dd0146cd0f219243605f07d3bb603cf9173b0",
+    "apps/pc-app/ui/src/features/accounts/auth.tsx": "5ddfcfdc64cba1117a65e8647f658258023c52869f8787ed53ca1e8eb7737899",
+    "apps/pc-app/ui/src/features/accounts/index.tsx": "03309126b52344a6534c3caf4790160f688e9344d2e8975ef03635b863e24269",
+    "apps/pc-app/ui/src/features/conversations/settings-page.tsx": "2cad3223e494fa3a706068207bc04a8117b6028b13a6262c05311532646856ea",
+    "packages/shared-types/src/ipc.ts": "b20d1a497967ad01ec802e28bb39b0255912f7754c8b34b56ebad4aaf5b9bc89",
+    "scripts/acceptance/portable-config-smoke.mjs": "78ac02f7c84e4679c1f090a54d1c7f54a953d3a624ef22fe7193c75f590e8265",
+    ".github/workflows/cloud-repair-windows.yml": "d1503c1edffa20e7d4a60fed78091dc9df95c5c80c4c15709284d2b8d35d24fc",
+    "apps/pc-app/runtime/core/app-support.cjs": "dac6773f74038efa9c51446c2f64482f96c295322e8cf2f8fb35a0dfcbf84ebf",
+    "apps/pc-app/ui/src/features/accounts/about.tsx": "1b33c25502089550df76ce0460efdb190bcb00449c869d5cfa82dfd85a9cb8e7",
+    "scripts/acceptance/cloud-repair-portable.mjs": "de8a81a65bd28987d78e4d411fdf559abc25f3b3509f35f98899a2146dc6cab7"
+  },
+  "evidence": [
+    {
+      "file": "p1-before.tap",
+      "sha256": "5a2be688e0617998c4ec3931285ef11c02f694e21633f8d6862105f274dd95b6",
+      "rawSha256": "fb52c5a6a9746721188b48cbb728912a67683f8761fb92384b5df9aa7fda68c4",
+      "normalization": "trailing-whitespace-only"
+    },
+    {
+      "file": "p1-after-initial.tap",
+      "sha256": "f9d5231b24de4c650a4a0e5512ba54d3a610449cdaa91407ee3307a6fe7bcde0"
+    },
+    {
+      "file": "p1-related.tap",
+      "sha256": "ece582de26fce98475d048c2298250cdc259708645b7e3e7dbdf326bc91ba8c7"
+    },
+    {
+      "file": "p2-status-before.tap",
+      "sha256": "ddead5130775579fc0e1a03394410cec2f284f2942da9e96a57441589a17ae50",
+      "rawSha256": "7f925866ca79e733a3fcda457e7f0f2c5756bfc3fda951f6b70dcc61039dd5d7",
+      "normalization": "trailing-whitespace-only"
+    },
+    {
+      "file": "targeted-electron.tap",
+      "sha256": "5c89aade843d33e8a9c09d2112a2e22cd0342f2223a2877e4ede7f1166c819c7"
+    },
+    {
+      "file": "garden-pending-recovery.tap",
+      "sha256": "2b272eaa39a2149f9b042342e493eefe79041557b48d8a010d17f3f97e45eb00"
+    },
+    {
+      "file": "draft-jsdom-before.json",
+      "sha256": "82169d458a50b26335e3581dcdcc5701735ef7e1c905ddff16482e77037d084d"
+    },
+    {
+      "file": "draft-jsdom-after.json",
+      "sha256": "3c7728cd365df89106ff2052768f2ac317750ce12654ce88bd839abdc8088035"
+    },
+    {
+      "file": "account-ui-before.json",
+      "sha256": "b5023125198598e3f4c8d0eaa8ea0715895f021a966912f6d0286040d8e357be"
+    },
+    {
+      "file": "account-ui-after.json",
+      "sha256": "957bff0699113530ca803409f880794c36bbeaf4f9559f3412c6ce9c086a3146"
+    },
+    {
+      "file": "p3-support.tap",
+      "sha256": "9e869dbc4d4d403ccd261d88d86d9f595d6b1744da782fe192b24a010d642a9e",
+      "rawSha256": "daa03943217814c01c6968b319969f829c0708bf543d8938e41d269219d09c68",
+      "normalization": "trailing-whitespace-only"
+    },
+    {
+      "file": "native-check.log",
+      "sha256": "ed2dfee4f7960a8384da8c34addf7116232843e71eb5f2fc81f1ad47c04999ec"
+    },
+    {
+      "file": "build-pc.log",
+      "sha256": "56d0192e434c1606b343fe8d0c2789e8b3d8f9f79a8f8950fd33cc94b1174213"
+    },
+    {
+      "file": "typecheck-main.log",
+      "sha256": "4ec0b01c958ff411cf0cf7ad4d409ff89db1f6b38c1e7d3fe7db116e1b49779b"
+    },
+    {
+      "file": "typecheck-ui.log",
+      "sha256": "b67983c9fd469953df77cc327c1a978a7c21cc613a6d2f52e40be94923e37a39"
+    },
+    {
+      "file": "p3-about-jsdom.json",
+      "sha256": "1fd3c902006da7e36e15058ab4e06c5c4734369e0f0686dc4c2dd362eceb7a88"
+    },
+    {
+      "file": "p3-startup-platform-independent.tap",
+      "sha256": "93923475fb4e1510332c512b234ece29c02150bd0e1a7a94cbab3cf30e0801a1"
+    },
+    {
+      "file": "p3-support-only.tap",
+      "sha256": "acd406a1be8ac6eb0136074507f49c759874757b6d443461572b3dd57cc15de0"
+    }
+  ],
+  "results": {
+    "targetedElectronCjs": {
+      "passed": 27,
+      "failed": 0,
+      "boundary": "Linux Electron run-as-node, actual SQLite N-API; not native GUI"
+    },
+    "gardenOriginalRequestRecovery": {
+      "passed": 1,
+      "failed": 0,
+      "boundary": "real SQLite reopened, protocol double, no cloud"
+    },
+    "conversationReactDom": {
+      "passed": 9,
+      "failed": 0,
+      "boundary": "JSDOM with synthetic IPC/CAS; original 5-case baseline 3 failed"
+    },
+    "accountReactDom": {
+      "passed": 2,
+      "failed": 0,
+      "boundary": "JSDOM with synthetic IPC; baseline lost-ack retry failed"
+    },
+    "aboutReactDom": {
+      "passed": 3,
+      "failed": 0
+    },
+    "relatedOriginalTests": {
+      "passed": 28,
+      "failed": 0
+    },
+    "startupPortableIndependentSubset": {
+      "passed": 14,
+      "failed": 0
+    },
+    "buildPc": "passed; closure 125 files/219 edges/6 JS dependencies",
+    "typecheckMain": "passed",
+    "typecheckUi": "passed"
+  },
+  "limitations": [
+    "Cloud browser launch denied Unix socket EPERM; escalation wrapper failed before execution. No bypass attempted.",
+    "Linux native runtime probe is not Windows portable startup. Dedicated cloud Windows workflow added for logged-out fresh-profile acceptance.",
+    "Original startup combined suite had one Windows-path-only assertion fail on Linux; original source/test unchanged, not recorded as product regression.",
+    "Live cloud original owner/pet/action path not re-authorized or exercised; old expired QA grants unused.",
+    "Inherited 98-case frozen result/status unchanged."
+  ],
+  "inherited": {
+    "BC-001": "inherited open, needs native retest, not current-baseline repro",
+    "BC-002": "inherited open, needs native retest, not closed by status fix",
+    "QA-021": "existing preserved-record UI integration inspected; no forced restore loop found; native verification outstanding",
+    "QA-027": "existing resource-draft hook/22 DOM frozen evidence untouched; distinct from AI draft fix",
+    "I02": "existing exact-one synthesis and insufficient-material UI evidence read; no new action executed"
+  }
+}

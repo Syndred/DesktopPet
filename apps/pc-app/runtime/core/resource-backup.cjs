@@ -42,6 +42,9 @@ function createResourceBackupAdapter(services) {
         if (!bytes.length || total > 18 * 1024 * 1024 || hash(bytes) !== file.sha256) reject('角色备份文件完整性校验失败，或超过备份容量。');
         files.set(file.key, bytes);
       }
+      const digest=createHash('sha256');
+      for(const [key,bytes] of [...files].sort(([a],[b])=>a.localeCompare(b)))digest.update(key).update('\0').update(bytes);
+      if(digest.digest('hex')!==row.content_hash||document.contentHash!==row.content_hash)reject('角色备份整包哈希不一致。');
       const entry = files.get(safeRelative(document.entryAsset));
       if (!entry) reject('角色备份缺少主文件。');
       if (document.kind === 'model3d') {
@@ -76,8 +79,60 @@ function createResourceBackupAdapter(services) {
       if (prior && prior.owner_account_id !== owner) reject('导入历史编号属于其他账号。');
     }
   }
+  // Rebuild only known immutable cache bytes. No authored row, ID, revision,
+  // import, preference or restore receipt is changed during preview preparation.
+  function repairCache(owner,data) {
+    validate(data,owner);
+    const root=fs.realpathSync(storage), plans=[];
+    const within=(parent,child)=>{const rel=path.relative(parent,child);return rel!==''&&rel!=='..'&&!rel.startsWith('..'+path.sep)&&!path.isAbsolute(rel);};
+    const inspectPath=destination=>{
+      if(!within(path.resolve(storage),destination))reject('资源缓存路径越界。');
+      const relative=path.relative(path.resolve(storage),destination);
+      let cursor=root;
+      for(const part of relative.split(path.sep)) {
+        cursor=path.join(cursor,part);
+        let stat;try{stat=fs.lstatSync(cursor);}catch(error){if(error.code!=='ENOENT')throw error;continue;}
+        if(stat.isSymbolicLink()||(!stat.isFile()&&!stat.isDirectory()))reject('资源缓存路径存在不安全替换。');
+        if(cursor!==path.join(root,relative)&&!stat.isDirectory())reject('资源缓存父路径无效。');
+        if(!within(root,fs.realpathSync(cursor)))reject('资源缓存真实路径越界。');
+      }
+      return path.join(root,relative);
+    };
+    for(const resource of data.resources) {
+      const current=db.prepare('SELECT * FROM lingjing_resources WHERE resource_id=?').get(resource.row.resource_id);
+      if(!current)continue; // Preview cannot create a resource or import new content.
+      const document=JSON.parse(current.document_json);
+      if(current.owner_account_id!==owner||document.origin!=='import'||current.content_hash!==resource.row.content_hash||document.contentHash!==current.content_hash)reject('已有角色资源的不可变哈希不匹配。');
+      const registered=db.prepare('SELECT asset_key,file_path FROM lingjing_resource_files WHERE resource_id=? ORDER BY asset_key').all(current.resource_id);
+      const files=new Map(resource.files.map(file=>[file.key,file]));
+      if(registered.length!==files.size||registered.some(file=>!files.has(file.asset_key)))reject('已有资源文件集合不一致。');
+      for(const file of registered) {
+        const entry=files.get(file.asset_key), bytes=Buffer.from(entry.bytes,'base64');
+        const destination=inspectPath(path.resolve(service.currentFilePath(document,file.asset_key,file.file_path)));
+        try {
+          const stat=fs.lstatSync(destination);
+          if(!stat.isFile()||stat.isSymbolicLink()||hash(fs.readFileSync(destination))!==entry.sha256)reject('已有资源文件不匹配，原文件已保留。');
+        } catch(error) {
+          if(error.code!=='ENOENT')throw error;
+          plans.push({destination,bytes});
+        }
+      }
+    }
+    // Validate every plan before writing any file. Exclusive writes cannot
+    // overwrite originals; racing creation is accepted only for exact bytes.
+    for(const {destination,bytes} of plans) {
+      inspectPath(destination);
+      fs.mkdirSync(path.dirname(destination),{recursive:true});
+      inspectPath(destination);
+      try{fs.writeFileSync(destination,bytes,{flag:'wx'});}
+      catch(error){if(error.code!=='EEXIST')throw error;
+        if(fs.lstatSync(destination).isSymbolicLink()||!fs.lstatSync(destination).isFile()||!fs.readFileSync(destination).equals(bytes))reject('资源缓存已变化，原文件已保留。');}
+    }
+    return {repaired:plans.length};
+  }
   function restore(owner, data, mode) {
     validate(data, owner);
+    if (mode !== 'replace')repairCache(owner,data);
     if (mode === 'replace') {
       const ids = owned(owner).map(row => row.resource_id);
       db.prepare('DELETE FROM lingjing_resource_imports WHERE owner_account_id=?').run(owner);
@@ -105,6 +160,6 @@ function createResourceBackupAdapter(services) {
       for (const row of rows) statement.run(...fields.map(column => row[column]));
     }
   }
-  return require('../features/resources/cloud-backup.cjs').attachCloudBackup({ id: 'character-resources', version: 1, tables: TABLES, export: exportData, validate, restore },services);
+  return require('../features/resources/cloud-backup.cjs').attachCloudBackup({ id: 'character-resources', version: 1, tables: TABLES, export: exportData, validate, restore, prepareCache:(owner,module)=>module?.version===1?repairCache(owner,module.data):undefined },services);
 }
 module.exports = { createResourceBackupAdapter };

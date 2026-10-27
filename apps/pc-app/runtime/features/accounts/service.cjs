@@ -12,8 +12,8 @@ const { assertQaDatabase, publicScenario, qaRemoteBoundary, qaHostBoundary } = r
 
 function domainObservation(domain,value,error,checkedAt){
   const code=error||value?.error||value?.metadataError||null,category=code?cloudErrorCategory(code):null;
-  return {domain,checkedAt,error:code,category,pending:value?.pending||0,
-    status:code?(value?.metadataError&&!error?'partial':category==='permission'?'blocked':category==='network'?'offline':category==='conflict'?'conflict':'error')
+  return {domain,checkedAt,error:code,metadataWarning:Boolean(value?.metadataError&&!error&&!value?.error),category,pending:value?.pending||0,
+    status:code?(value?.metadataError&&!error&&!value?.error?'partial':category==='permission'?'blocked':category==='network'?'offline':category==='conflict'?'conflict':'error')
       :value?.initialized===false||value?.pending||value?.status==='cached'?'pending':'ready'};
 }
 
@@ -64,7 +64,7 @@ class AccountsService {
         return domainObservation(domain,value,result.status==='rejected'?(result.reason?.code||'CLOUD_READ_FAILED'):null,checkedAt);
       });
       const failed=results.find(result=>result.status==='rejected');
-      this.cloudObservations.set(owner,{checkedAt,error:domains.find(domain=>domain.error)?.error||null,domains});
+      this.cloudObservations.set(owner,{checkedAt,error:domains.find(domain=>domain.error&&!domain.metadataWarning)?.error||domains.find(domain=>domain.error)?.error||null,domains});
       if(failed&&results.every(result=>result.status==='rejected'))throw failed.reason;
       const recordIndex=jobs.findIndex(job=>job.domain==='conversations');
       return {verified:domains.every(domain=>domain.status==='ready'),records:results[recordIndex]?.status==='fulfilled'?results[recordIndex].value:null};
@@ -75,17 +75,16 @@ class AccountsService {
     const observation=this.cloudObservations.get(owner),cache=this.cloudCache.status(owner),records=this.services.get('conversations')?.cloudStatus?.(owner);
     const last=this.db.prepare('SELECT max(verified_at) at FROM account_cloud_readbacks WHERE owner_account_id=?').get(owner)?.at||null;
     const domainStates=(observation?.domains||cache.domains.map(domain=>({domain:domain.domain,status:'ready',error:null}))).map(domain=>({...domain}));
-    const companion=this.services.get('companions')?.cloudStatus?.(owner);
-    for(const [domain,value]of [['companions',companion],['conversations',records]])if(value){
+    const companion=this.services.get('companions')?.cloudStatus?.(owner),garden=this.services.get('garden')?.cloudStatus?.(owner);
+    for(const [domain,value]of [['companions',companion],['garden',garden],['conversations',records]])if(value){
       const current=domainObservation(domain,value,null,observation?.checkedAt||null),index=domainStates.findIndex(row=>row.domain===domain);
       if(index<0)domainStates.push(current);else domainStates[index]=current;
     }
     const statuses=domainStates.map(domain=>domain.status),status=!statuses.length?'waiting':statuses.every(value=>value==='ready')?'ready'
       :statuses.every(value=>value==='offline')?'offline':statuses.every(value=>value==='blocked')?'blocked':'partial';
-    const companionPending=companion?.pending||0;
-    return {mode:'cloud-authority',status,recordsInitialized:Boolean(records?.initialized),configured:true,cloudRevision:cache.revision,pending:(records?.pending||0)+companionPending,conflicts:records?.conflicts||0,
+    return {mode:'cloud-authority',status,recordsInitialized:Boolean(records?.initialized),configured:true,cloudRevision:cache.revision,pending:domainStates.reduce((sum,domain)=>sum+(domain.pending||0),0),conflicts:(records?.conflicts||0)+(garden?.conflicts||0),
       running:Boolean(this.automaticSyncRunning),localChanged:false,remoteChanged:false,unverifiedLocal:0,privacyRedactions:0,
-      lastVerifiedAt:last,lastCloudCheckedAt:observation?.checkedAt||null,lastError:domainStates.find(domain=>domain.error)?.error||null,
+      lastVerifiedAt:last,lastCloudCheckedAt:observation?.checkedAt||null,lastError:domainStates.find(domain=>domain.error&&!domain.metadataWarning)?.error||domainStates.find(domain=>domain.error)?.error||null,
       preservedLocalRecords:records?.preservedLocalRecords||0,domains:cache.domains,domainStates};
   }
   identity(owner) { return this.db.prepare("SELECT * FROM account_identities WHERE owner_account_id=?").get(owner); }
@@ -413,6 +412,7 @@ class AccountsService {
         this.backups.validate(preview.envelope,owner);
         invariant(!preview.cloudRevision,'CLOUD_DATA_DIRECT','云端数据已直接读取，请刷新数据。');
         const normalized=this.backups.normalizeData(preview.envelope.data,owner);
+        this.backups.prepareCache(preview.envelope,owner);
         state={restored:false,mode:'record-import',preservedBackup:this.backups.save(owner,null,'before-record-import'),
           modules:Object.fromEntries(Object.entries(normalized.modules).filter(([name])=>['conversations','conversation-preservation','settings','device-desktop','character-resources','resources'].includes(name))),appliedModules:[]};
         this.db.prepare('INSERT INTO account_actions VALUES(?,?,?,?,?,?)').run(owner,id,'restore-records',inputHash,JSON.stringify(state),new Date().toISOString());
@@ -424,7 +424,7 @@ class AccountsService {
       const conversations=this.services.get('conversations');
       if(modules['conversation-preservation']&&!state.appliedModules.includes('conversation-preservation'))transaction(this.db,()=>{
         this.backups.adapters.get('conversation-preservation').restore(owner,modules['conversation-preservation'].data,'merge');state.appliedModules.push('conversation-preservation');checkpoint();});
-      if(modules.conversations&&!state.appliedModules.includes('conversations')){await conversations.importCloudRecords(owner,modules.conversations.data);state.appliedModules.push('conversations');checkpoint();}
+      if(modules.conversations&&!state.appliedModules.includes('conversations')){await conversations.importCloudRecords(owner,modules.conversations.data,{actionId:id});state.appliedModules.push('conversations');checkpoint();}
       invariant(epoch===this.epoch&&this.current?.ownerAccountId===owner,'SESSION_CHANGED','账号已切换，原备份已保留。');
       if(modules.settings&&!state.appliedModules.includes('settings'))transaction(this.db,()=>{this.backups.adapters.get('settings').restore(owner,modules.settings.data,'replace');state.appliedModules.push('settings');checkpoint();});
       if(modules['device-desktop']&&!state.appliedModules.includes('device-desktop'))transaction(this.db,()=>{this.backups.adapters.get('device-desktop')?.restore(owner,modules['device-desktop'].data,'merge');state.appliedModules.push('device-desktop');checkpoint();});

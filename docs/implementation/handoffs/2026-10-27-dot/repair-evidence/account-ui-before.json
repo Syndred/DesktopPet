@@ -1,0 +1,22 @@
+{
+  "kind": "jsdom-source-only",
+  "nativePassed": false,
+  "baseline": true,
+  "source": "apps/pc-app/ui/src/features/accounts/account.tsx",
+  "sourceSha256": "9c1aa38f5ef5688760632733f3f9d7b4625c002c626f7c0320c3d1d9f5cedfef",
+  "fixtureSha256": "dffa0a8d110ed9385939c56c3e43e8f7bb78c820e593c6806b312dee0c598891",
+  "startedAt": "2026-10-27T05:27:22.253Z",
+  "results": [
+    {
+      "name": "lost receipt retries the same action, preview and mode; success allows a distinct new import",
+      "passed": false,
+      "error": "Error: A receipt-loss retry changed action identity or input\n    at check (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-account-restore-ui.mjs:26:14), <anonymous>:44732:23)\n    at eval (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-account-restore-ui.mjs:26:14), <anonymous>:44804:7)\n    at async window.runHookRegressions (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-account-restore-ui.mjs:26:14), <anonymous>:44831:9)\n    at async file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-account-restore-ui.mjs:27:20"
+    },
+    {
+      "name": "switching account clears an uncertain restore intent and its preview",
+      "passed": true
+    }
+  ],
+  "passed": 1,
+  "completedAt": "2026-10-27T05:27:23.202Z"
+}

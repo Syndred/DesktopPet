@@ -1,0 +1,59 @@
+✔ mock Windows runtime: portable target is the absolute outer EXE with empty arguments, preserving spaces and Chinese characters (2.049289ms)
+✔ mock Windows runtime: installed application keeps its stable process executable (0.43139ms)
+▶ mock Windows runtime: missing, relative, quoted, deleted, directory and extracted-child portable paths never fall back to the temporary executable
+  ✔ missing FILE (0.246151ms)
+  ✔ relative (0.201243ms)
+  ✔ rooted without drive (0.096866ms)
+  ✔ drive-relative (0.130787ms)
+  ✔ quoted (0.084337ms)
+  ✔ non-executable (0.080992ms)
+  ✔ child (0.238199ms)
+  ✔ case-insensitive TEMP (0.175465ms)
+  ✔ dot traversal into TEMP (0.090867ms)
+✔ mock Windows runtime: missing, relative, quoted, deleted, directory and extracted-child portable paths never fall back to the temporary executable (3.280174ms)
+✖ isolated files only: executable existence/type is checked and removed portable files are not registered (1.661865ms)
+✔ mock Electron only: no startup writes without explicit user change; on/off and readback use exactly the same stable path/args (0.567215ms)
+✔ mock Electron only: unresolvable launcher rejects enabling with zero writes; explicit disabling is still available without registering the child (0.44484ms)
+✔ mock desktop host: opening settings, account restore and unrelated edits do not touch OS login items; only explicit toggles reach the mock (1.993816ms)
+✔ real isolated SQLite + mock OS only: AccountsService writes startup solely on a saved explicit toggle and retains settings on failure (47.091941ms)
+✔ support reports verified outer launcher, not temporary Electron child; contains no identity or credentials (1.314341ms)
+✔ actions use only host-derived paths and do not upload or execute commands (0.253873ms)
+✔ unavailable outer launcher and missing logs fail without shell calls (0.589128ms)
+✔ OS open failure is reported, never claimed as success (0.194153ms)
+✔ development mode outside Windows does not report Node/Electron binary as installed program (0.141192ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 21
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 143.861927
+
+✖ failing tests:
+
+test at apps/pc-app/runtime/features/accounts/tests/startup.test.cjs:34:1
+✖ isolated files only: executable existence/type is checked and removed portable files are not registered (1.661865ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + null
+  - {
+  -   args: [],
+  -   path: '/tmp/lingjing-startup-PuWlzy/原始 便携版.exe'
+  - }
+
+      at TestContext.<anonymous> (/workspace/scratch/857bd0cbeaf1/DesktopPet/apps/pc-app/runtime/features/accounts/tests/startup.test.cjs:39:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: { path: '/tmp/lingjing-startup-PuWlzy/原始 便携版.exe', args: [] },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

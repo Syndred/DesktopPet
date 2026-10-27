@@ -196,12 +196,15 @@ class ConversationCloudRecords {
       this.db.prepare("UPDATE conversation_cloud_outbox SET status='superseded' WHERE owner_account_id=? AND action_id=? AND status='conflict'").run(owner,input.reason.slice('record-conflict:'.length));
     await this.pull(owner,identity);await this.materialize(owner);return this.status(owner);
   });}
-  async importData(owner,data){const {createConversationBackupAdapter}=require('./backup.cjs');createConversationBackupAdapter(this.services).validate(data,owner);
+  async importData(owner,data,intent={}){const {createConversationBackupAdapter}=require('./backup.cjs');createConversationBackupAdapter(this.services).validate(data,owner);
     return this.serial(owner,async()=>{
       const identity=this.identity(owner);
+      if(intent.actionId!==undefined&&!(typeof intent.actionId==='string'&&/^[0-9a-f-]{36}$/i.test(intent.actionId)))fail('RECORD_INVALID','恢复操作编号无效。');
+      // A new explicit restore is a new review intent; retrying it keeps this key.
+      // AccountsService owns the durable action/input binding and passes its original ID.
       this.db.prepare('INSERT OR IGNORE INTO conversation_cloud_archives VALUES(?,?,?,?)').run(owner,checksum(data),JSON.stringify(data),Date.now());
       await this.initialize(owner,identity);await this.flushInside(owner,identity);await this.pull(owner,identity);
-      const {recordId}=await this.contract,remote=this.cached(owner),reason=`backup-import:${checksum(data)}`,additions=[];
+      const {recordId}=await this.contract,remote=this.cached(owner),reason=`backup-import:${checksum(data)}${intent.actionId?`:intent:${intent.actionId}`:''}`,additions=[];
       const rows=Object.entries(data.tables).flatMap(([collection,items])=>items.map(document=>({collection,id:recordId(collection,document),document})));
       const placements=this.messagePlacements(owner,rows,remote,reason);
       for(const [collection,rows]of Object.entries(data.tables))for(const document of rows){const id=recordId(collection,document),prior=remote.get(keyOf(collection,id));

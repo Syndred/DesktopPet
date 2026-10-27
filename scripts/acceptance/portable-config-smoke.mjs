@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 
-export async function verifyPortableDefaultConfig({ executable, expectedSource, output }) {
+export async function verifyPortableDefaultConfig({ executable, expectedSource, output, inspect }) {
   const directory = join(output, 'ordinary-config'); mkdirSync(directory, { recursive: true });
   const profile = join(directory, 'fresh-profile'); mkdirSync(profile);
   const env = { ...process.env, PET_USER_DATA_DIR: profile };
@@ -37,6 +37,7 @@ export async function verifyPortableDefaultConfig({ executable, expectedSource, 
     const resourceDirectory = loadedFile.slice(0, boundary), bytes = readFileSync(join(resourceDirectory, 'lingjing-cloud-public.json')), actualCloud = JSON.parse(bytes);
     const actualSha = createHash('sha256').update(bytes).digest('hex');
     assert.equal(actualSha, info.data.build.publicCloud.sha256); assert.equal(actualCloud.projectRef, info.data.build.publicCloud.projectRef); assert.equal(actualCloud.url, info.data.build.publicCloud.url);
+    if (inspect) proof.focusedInspection = await inspect({ page, info: info.data, profile });
     proof.actualCloudConfig = { projectRef: actualCloud.projectRef, url: actualCloud.url, sha256: actualSha, resourceDirectory };
     proof.publicCloud = info.data.build.publicCloud; proof.electron = info.data.runtime.electron; proof.defaultProvider = session.data.defaultProvider; proof.passed = true;
     return proof;

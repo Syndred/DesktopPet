@@ -86,7 +86,7 @@ function register(services) {
     hasActive, refreshCloud, cloudStatus: owner => cloudRecords.status(owner),
     preservedRecords: owner => cloudRecords.listPreserved(owner),
     resolvePreservedRecord: (owner,input) => cloudRecords.resolve(owner,input),
-    importCloudRecords: (owner,data) => cloudRecords.importData(owner,data),
+    importCloudRecords: (owner,data,intent) => cloudRecords.importData(owner,data,intent),
     getProfile: (ownerAccountId, petId) => feature.service.store.getProfile(ownerAccountId, petId),
     isChatting: (ownerAccountId, petId) => feature.service.active.has(JSON.stringify([ownerAccountId, "chat", petId])),
     // Optional ASR/TTS adapters consume text through commands; no audio data is stored yet.

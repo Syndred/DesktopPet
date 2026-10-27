@@ -59,6 +59,7 @@ module.exports = {
       snapshot: context => service.snapshot(context),
       applyCloudReadback:(owner,remote)=>cloud.applyReadback({ownerAccountId:owner},remote),
       refreshCloud:owner=>cloud.snapshot({ownerAccountId:owner}),
+      cloudStatus:owner=>cloud.status(owner),
       territories,
       getBattleSerialViews:input=>serialViews.read(input),
       cloudBattles:{owns:(payload,context)=>cloud.ownsBattle(payload,context),invoke:(name,payload,context)=>cloud.battleCommand(name,payload,context)},
@@ -99,7 +100,7 @@ module.exports = {
           // A failed first cloud read cannot mint a local starter inventory.
           if (!services.db.prepare('SELECT 1 FROM garden_accounts WHERE owner_account_id=?').get(context.ownerAccountId)) return service.failure(error,context.ownerAccountId);
           const cached = service.snapshot(context);
-          if (cached.ok) cached.data.sync = { mode: 'cached', pending: 0, conflicts: error.code === 'CLOUD_LOCAL_CONFLICT' ? 1 : 0, issue: error.message || '云端菜园尚不可用' };
+          if (cached.ok) cached.data.sync = { mode: 'cached', ...cloud.status(context.ownerAccountId), conflicts: Math.max(cloud.status(context.ownerAccountId).conflicts, error.code === 'CLOUD_LOCAL_CONFLICT' ? 1 : 0), issue: error.message || '云端菜园尚不可用' };
           return cached;
         }
       }

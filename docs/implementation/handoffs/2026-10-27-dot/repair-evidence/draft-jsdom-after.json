@@ -1,0 +1,49 @@
+{
+  "kind": "jsdom-source-only",
+  "nativePassed": false,
+  "baseline": false,
+  "source": "apps/pc-app/ui/src/features/conversations/settings-page.tsx",
+  "sourceSha256": "2cad3223e494fa3a706068207bc04a8117b6028b13a6262c05311532646856ea",
+  "fixtureSha256": "46e00cebd0dfc1052a829b0e320e799246d2833600972624bb1f280623324dce",
+  "startedAt": "2026-10-27T05:27:50.305Z",
+  "results": [
+    {
+      "name": "normal saves advance the baseline and allow another save without stale revision",
+      "passed": true
+    },
+    {
+      "name": "unchanged notification retains dirty drafts without a false remote warning",
+      "passed": true
+    },
+    {
+      "name": "explicit discard adopts remote versions and clears connection secret",
+      "passed": true
+    },
+    {
+      "name": "pet scope change clears private drafts and unsaved global key",
+      "passed": true
+    },
+    {
+      "name": "dirty persona survives a newer remote version without an implicit save",
+      "passed": true
+    },
+    {
+      "name": "stale persona save uses its original edit revision and retains the rejected draft",
+      "passed": true
+    },
+    {
+      "name": "a clean persona form adopts a newer remote version",
+      "passed": true
+    },
+    {
+      "name": "dirty connection and unsaved secret survive refresh and keep their original CAS revision",
+      "passed": true
+    },
+    {
+      "name": "changing account/session removes the previous persona draft and secret input",
+      "passed": true
+    }
+  ],
+  "passed": 9,
+  "completedAt": "2026-10-27T05:27:51.817Z"
+}

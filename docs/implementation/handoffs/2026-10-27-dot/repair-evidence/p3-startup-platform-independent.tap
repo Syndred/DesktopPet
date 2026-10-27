@@ -1,0 +1,23 @@
+✔ mock Windows runtime: portable target is the absolute outer EXE with empty arguments, preserving spaces and Chinese characters (1.952664ms)
+✔ mock Windows runtime: installed application keeps its stable process executable (0.423737ms)
+▶ mock Windows runtime: missing, relative, quoted, deleted, directory and extracted-child portable paths never fall back to the temporary executable
+  ✔ missing FILE (0.156408ms)
+  ✔ relative (0.822878ms)
+  ✔ rooted without drive (0.134696ms)
+  ✔ drive-relative (0.101879ms)
+  ✔ quoted (0.095389ms)
+  ✔ non-executable (0.138031ms)
+  ✔ child (0.183968ms)
+  ✔ case-insensitive TEMP (0.208954ms)
+  ✔ dot traversal into TEMP (0.085054ms)
+✔ mock Windows runtime: missing, relative, quoted, deleted, directory and extracted-child portable paths never fall back to the temporary executable (3.267379ms)
+✔ mock Electron only: no startup writes without explicit user change; on/off and readback use exactly the same stable path/args (0.559315ms)
+✔ mock Electron only: unresolvable launcher rejects enabling with zero writes; explicit disabling is still available without registering the child (0.469344ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 95.144284

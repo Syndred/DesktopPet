@@ -1,0 +1,102 @@
+name: DesktopPet focused Windows repair acceptance
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/cloud-authority-convergence']
+    paths:
+      - '.github/workflows/cloud-repair-windows.yml'
+      - 'apps/pc-app/runtime/**'
+      - 'apps/pc-app/ui/src/**'
+      - 'packages/shared-types/**'
+      - 'tests/regressions/cloud-repair/**'
+      - 'scripts/acceptance/cloud-repair-portable.mjs'
+      - 'scripts/acceptance/portable-config-smoke.mjs'
+      - 'scripts/desktop/**'
+      - 'scripts/release/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'electron.vite.config.ts'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: focused-repair-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  focused-windows:
+    # Deliberately not a release, deployment, real-account test or the old 98-case batch.
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
+    runs-on: windows-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - name: Ordinary isolated dependency install
+        run: npm ci
+      - name: Shared Node and Electron SQLite N-API probe
+        run: npm run native:check
+      - name: Type-check touched desktop and UI contracts
+        run: |
+          npm run typecheck
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm run typecheck:ui
+      - name: Only repair and directly related CJS regressions in real Windows Electron
+        shell: pwsh
+        run: |
+          $files = @(Get-ChildItem tests/regressions/cloud-repair/*.test.cjs | ForEach-Object { $_.FullName })
+          $files += @('tests/foundation/resource-backup.test.cjs', 'apps/pc-app/runtime/features/conversations/tests/cloud-records.test.cjs', 'apps/pc-app/runtime/features/accounts/tests/supabase-main.test.cjs')
+          New-Item -ItemType Directory -Force artifacts/qa/dot-repair-20261027 | Out-Null
+          node scripts/desktop/run-native-tests.cjs @files | Tee-Object artifacts/qa/dot-repair-20261027/windows-native-regressions.tap
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node --test tests/regressions/cloud-repair/garden-pending-recovery.test.mjs | Tee-Object artifacts/qa/dot-repair-20261027/windows-garden-recovery.tap
+      - name: Real Windows Chromium draft preservation and CAS regression
+        run: node tests/regressions/cloud-repair/run-conversation-settings.mjs
+      - name: Install optional DOM-only test dependency outside product checkout
+        shell: pwsh
+        run: |
+          npm install --prefix "$env:RUNNER_TEMP/desktoppet-dom" --ignore-scripts --no-audit --no-fund jsdom@30.1.3
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          "JSDOM_MODULE_PATH=$env:RUNNER_TEMP/desktoppet-dom/node_modules/jsdom" >> $env:GITHUB_ENV
+          "JSDOM_MODULE=$env:RUNNER_TEMP/desktoppet-dom/node_modules/jsdom" >> $env:GITHUB_ENV
+      - name: Actual account restore UI and About components with synthetic IPC
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force artifacts/qa/dot-repair-20261027 | Out-Null
+          node tests/regressions/cloud-repair/run-account-restore-ui.mjs | Tee-Object artifacts/qa/dot-repair-20261027/account-ui-windows.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node tests/regressions/cloud-repair/run-about-dom.cjs | Tee-Object artifacts/qa/dot-repair-20261027/about-ui-windows.json
+      - name: Build actual portable Windows executable from clean committed source
+        run: npm run package:pc:win
+      - name: Verify ASAR closure, exact source/native bytes and public-only config
+        run: npm run release:audit
+      - name: Fresh-profile ordinary portable launch without login or QA grants
+        run: node scripts/acceptance/cloud-repair-portable.mjs
+      - name: Retain controlled proof only, never profiles, databases or credentials
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: desktoppet-focused-windows-${{ github.sha }}
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            artifacts/pc-cloud-upgrade/*.exe
+            apps/pc-app/dist/build-manifest.json
+            apps/pc-app/dist/runtime-closure.json
+            artifacts/foundation/cloud-engineering/native/latest.json
+            artifacts/foundation/cloud-engineering/package-audit.json
+            artifacts/foundation/cloud-engineering/focused-portable/*/evidence.json
+            artifacts/foundation/cloud-engineering/focused-portable/*/about.png
+            artifacts/foundation/cloud-engineering/focused-portable/*/ordinary-config/evidence.json
+            artifacts/qa/dot-repair-20261027/dom-runs/*/report.json
+            artifacts/qa/dot-repair-20261027/account-ui-windows.json
+            artifacts/qa/dot-repair-20261027/about-ui-windows.json
+            artifacts/qa/dot-repair-20261027/windows-native-regressions.tap
+            artifacts/qa/dot-repair-20261027/windows-garden-recovery.tap

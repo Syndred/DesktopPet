@@ -1,0 +1,102 @@
+✖ normal cloud-account restore repairs a known missing cache before protection export, retaining identity and stable retry (360.019422ms)
+✖ a valid original backup can be previewed when its known local cache file was already missing, without importing business rows (217.628111ms)
+✖ a fresh import of the same backup can restore the same memory after an earlier restore and later deletion (32.160614ms)
+✖ retrying a resolved import is idempotent while a separate fresh import offers a new choice even at the same cloud revision (13.473803ms)
+✔ repair cannot install a different valid PNG under an existing resource pack hash (110.275656ms)
+ℹ {"validationAccepted":true,"rejectedCode":null,"substitutedImageInstalled":false,"originalBytesPreserved":true,"nativeAcceptance":false}
+✖ merge restore repairs a missing imported asset from backup while retaining its original ID, metadata and preserved file (102.167514ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 1
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 489.092619
+
+✖ failing tests:
+
+test at tests/regressions/cloud-repair/account-backup-missing-cache.regression.test.cjs:17:1
+✖ normal cloud-account restore repairs a known missing cache before protection export, retaining identity and stable retry (360.019422ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/account-backup-missing-fixture-lud518/managed/5611549c-22e7-4546-b974-8be23af91baa/sprites.png'
+      at Object.openSync (node:fs:621:18)
+      at Object.readFileSync (node:fs:487:35)
+      at /workspace/scratch/857bd0cbeaf1/DesktopPet/apps/pc-app/runtime/core/resource-backup.cjs:18:24
+      at Array.map (<anonymous>)
+      at /workspace/scratch/857bd0cbeaf1/DesktopPet/apps/pc-app/runtime/core/resource-backup.cjs:17:192
+      at Array.map (<anonymous>)
+      at Object.exportData [as export] (/workspace/scratch/857bd0cbeaf1/DesktopPet/apps/pc-app/runtime/core/resource-backup.cjs:17:36)
+      at /workspace/scratch/857bd0cbeaf1/DesktopPet/apps/pc-app/runtime/features/accounts/backups.cjs:72:36
+      at transaction (/workspace/scratch/857bd0cbeaf1/DesktopPet/apps/pc-app/runtime/features/accounts/util.cjs:62:19)
+      at BackupManager.snapshot (/workspace/scratch/857bd0cbeaf1/DesktopPet/apps/pc-app/runtime/features/accounts/backups.cjs:69:12) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/account-backup-missing-fixture-lud518/managed/5611549c-22e7-4546-b974-8be23af91baa/sprites.png'
+  }
+
+test at tests/regressions/cloud-repair/account-backup-preview-missing-cache.regression.test.cjs:14:1
+✖ a valid original backup can be previewed when its known local cache file was already missing, without importing business rows (217.628111ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/backup-preview-missing-fixture-HdlEAL/managed/1bea952b-d489-4a2d-b9a4-17ccdd329613/sprites.png'
+      at Object.openSync (node:fs:621:18)
+      at Object.readFileSync (node:fs:487:35)
+      at /workspace/scratch/857bd0cbeaf1/DesktopPet/apps/pc-app/runtime/core/resource-backup.cjs:18:24
+      at Array.map (<anonymous>)
+      at /workspace/scratch/857bd0cbeaf1/DesktopPet/apps/pc-app/runtime/core/resource-backup.cjs:17:192
+      at Array.map (<anonymous>)
+      at Object.exportData [as export] (/workspace/scratch/857bd0cbeaf1/DesktopPet/apps/pc-app/runtime/core/resource-backup.cjs:17:36)
+      at /workspace/scratch/857bd0cbeaf1/DesktopPet/apps/pc-app/runtime/features/accounts/backups.cjs:72:36
+      at transaction (/workspace/scratch/857bd0cbeaf1/DesktopPet/apps/pc-app/runtime/features/accounts/util.cjs:62:19)
+      at BackupManager.snapshot (/workspace/scratch/857bd0cbeaf1/DesktopPet/apps/pc-app/runtime/features/accounts/backups.cjs:69:12) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/backup-preview-missing-fixture-HdlEAL/managed/1bea952b-d489-4a2d-b9a4-17ccdd329613/sprites.png'
+  }
+
+test at tests/regressions/cloud-repair/memory-reimport.regression.test.cjs:50:1
+✖ a fresh import of the same backup can restore the same memory after an earlier restore and later deletion (32.160614ms)
+  AssertionError [ERR_ASSERTION]: a new confirmed import must expose the deleted original as a new reviewable choice
+
+  0 !== 1
+
+      at TestContext.<anonymous> (/workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/memory-reimport.regression.test.cjs:59:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/regressions/cloud-repair/memory-reimport.regression.test.cjs:72:1
+✖ retrying a resolved import is idempotent while a separate fresh import offers a new choice even at the same cloud revision (13.473803ms)
+  AssertionError [ERR_ASSERTION]: a separate confirmed restore must remain possible after choosing the cloud version
+
+  0 !== 1
+
+      at TestContext.<anonymous> (/workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/memory-reimport.regression.test.cjs:78:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/regressions/cloud-repair/resource-merge-repair.regression.test.cjs:9:1
+✖ merge restore repairs a missing imported asset from backup while retaining its original ID, metadata and preserved file (102.167514ms)
+  Error [ResourceError]: 资源文件已缺失
+      at fail (/workspace/scratch/857bd0cbeaf1/DesktopPet/apps/pc-app/runtime/features/resources/validation.cjs:11:38)
+      at /workspace/scratch/857bd0cbeaf1/DesktopPet/apps/pc-app/runtime/features/resources/service.cjs:147:60
+      at async ResourcesService.assetFile (/workspace/scratch/857bd0cbeaf1/DesktopPet/apps/pc-app/runtime/features/resources/service.cjs:147:20)
+      at async TestContext.<anonymous> (/workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/resource-merge-repair.regression.test.cjs:20:20)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    code: 'MISSING_ASSET',
+    details: {}
+  }

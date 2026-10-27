@@ -1,3 +1,4 @@
+import { AppVersion } from './about';
 import { Button } from "../../components/ui";
 import { useState, type FormEvent } from "react";
 import { Eye, EyeOff, HardDrive, FlaskConical, LockKeyhole } from "lucide-react";
@@ -82,5 +83,6 @@ export function AuthPage({ session, onSignedIn }: { session: AccountsSession; on
       {session.migration.unresolved.length > 0 && <p className="ac-hint">有 {session.migration.unresolved.length} 项旧记录待核对，原件已保留。</p>}
       </TabsContent>
     </Tabs>
+    <AppVersion/>
   </div>;
 }
