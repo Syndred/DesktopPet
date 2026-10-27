@@ -153,11 +153,26 @@ public static class OwnedDialogNative {
  [DllImport("user32.dll",EntryPoint="SendMessageTimeoutW",SetLastError=true)] static extern IntPtr MessageAction(IntPtr h,uint msg,UIntPtr wp,IntPtr lp,uint flags,uint timeout,out UIntPtr result);
  [DllImport("user32.dll",EntryPoint="GetWindowLongW")] static extern int GetWindowLong(IntPtr hwnd,int index);
  static bool OwnedControl(IntPtr root,IntPtr h,uint pid,string cls,int id){return h!=IntPtr.Zero && IsWindow(h) && IsChild(root,h) && Pid(h)==pid && Class(h)==cls && GetDlgCtrlID(h)==id && IsWindowVisible(h) && IsWindowEnabled(h);}
- static bool ExactEdit(IntPtr root,IntPtr edit,uint pid){
-  if(!OwnedControl(root,edit,pid,"Edit",1148))return false;
+ [StructLayout(LayoutKind.Sequential)] struct GuiThreadInfo {public uint cbSize,flags;public IntPtr active,focus,capture,menuOwner,moveSize,caret;public Rect caretRect;}
+ public static void VerifyInteropLayouts(){if(Marshal.SizeOf(typeof(GuiThreadInfo))!=(IntPtr.Size==8?72:48))throw new InvalidOperationException("GUI_THREAD_INFO_LAYOUT_MISMATCH");}
+ [DllImport("user32.dll")] static extern bool GetGUIThreadInfo(uint threadId,ref GuiThreadInfo info);
+ static bool ExactEdit(IntPtr root,IntPtr edit,uint pid,string kind){
+  if(!IsChild(root,edit) || Pid(edit)!=pid || Class(edit)!="Edit" || !IsWindowVisible(edit) || !IsWindowEnabled(edit))return false;
   int style=GetWindowLong(edit,-16);if(style==0 || (style&0x0800)!=0)return false;
-  var combo=GetParent(edit);if(!OwnedControl(root,combo,pid,"ComboBox",1148))return false;
-  var outer=GetParent(combo);return OwnedControl(root,outer,pid,"ComboBoxEx32",1148) && GetParent(outer)==root;
+  var combo=GetParent(edit);
+  if(GetDlgCtrlID(edit)==1148){
+   if(!OwnedControl(root,combo,pid,"ComboBox",1148))return false;
+   var outer=GetParent(combo);return OwnedControl(root,outer,pid,"ComboBoxEx32",1148) && GetParent(outer)==root;
+  }
+  // Actual 63ae Save dialog: only its focused filename Edit1001 under the
+  // measured FloatNotifySink/DirectUI chain, never address/search Edit1001.
+  if(kind!="save" || GetDlgCtrlID(edit)!=1001 || !OwnedControl(root,combo,pid,"ComboBox",0))return false;
+  var sink=GetParent(combo);if(!OwnedControl(root,sink,pid,"FloatNotifySink",0))return false;
+  var direct=GetParent(sink);if(!OwnedControl(root,direct,pid,"DirectUIHWND",0))return false;
+  var view=GetParent(direct);if(!OwnedControl(root,view,pid,"DUIViewWndClassName",0) || GetParent(view)!=root)return false;
+  uint processId;uint thread=GetWindowThreadProcessId(root,out processId);
+  var info=new GuiThreadInfo();info.cbSize=(uint)Marshal.SizeOf(typeof(GuiThreadInfo));
+  return thread!=0 && processId==pid && GetGUIThreadInfo(thread,ref info) && info.active==root && info.focus==edit;
  }
  static bool ExactAction(IntPtr root,IntPtr button,uint pid,string kind){
   if(!OwnedControl(root,button,pid,"Button",1) || GetParent(button)!=root)return false;
@@ -167,17 +182,17 @@ public static class OwnedDialogNative {
   return kind=="save" ? label=="Save" || label=="保存" || label=="保存(S)" : label=="Open" || label=="打开" || label=="打开(O)";
  }
  static void ExactRoot(IntPtr root,uint pid){if(root==IntPtr.Zero || !IsWindow(root) || Pid(root)!=pid || Class(root)!="#32770" || GetForegroundWindow()!=root)throw new InvalidOperationException("NATIVE_CONTROL_ROOT_CHANGED");}
- public sealed class FileControls {public IntPtr edit;public IntPtr action;public int editCount;public int actionCount;}
+ public sealed class FileControls {public IntPtr edit;public IntPtr action;public int editCount;public int actionCount;public string selector;}
  public static FileControls FindFileControls(IntPtr root,uint pid,string kind){
   ExactRoot(root,pid);var result=new FileControls();int count=0;bool limit=false;
-  EnumChildWindows(root,(h,d)=>{if(++count>256){limit=true;return false;}if(ExactEdit(root,h,pid)){result.edit=h;result.editCount++;}if(ExactAction(root,h,pid,kind)){result.action=h;result.actionCount++;}return true;},IntPtr.Zero);
+  EnumChildWindows(root,(h,d)=>{if(++count>256){limit=true;return false;}if(ExactEdit(root,h,pid,kind)){result.edit=h;result.editCount++;result.selector=GetDlgCtrlID(h)==1148?"Edit1148-Combo1148-ComboEx1148-dialog":"FocusedSaveEdit1001-Combo0-FloatSink0-DirectUI0-DUIView0-dialog";}if(ExactAction(root,h,pid,kind)){result.action=h;result.actionCount++;}return true;},IntPtr.Zero);
   if(limit)throw new InvalidOperationException("NATIVE_CONTROL_SCAN_LIMIT");
   ExactRoot(root,pid);return result;
  }
- public static void SetExactFilename(IntPtr root,IntPtr edit,uint pid,string path){
-  ExactRoot(root,pid);if(!ExactEdit(root,edit,pid) || path.Length<1 || path.Length>4096)throw new InvalidOperationException("NATIVE_FILENAME_CHAIN_CHANGED");
+ public static void SetExactFilename(IntPtr root,IntPtr edit,uint pid,string kind,string path){
+  ExactRoot(root,pid);if(!ExactEdit(root,edit,pid,kind) || path.Length<1 || path.Length>4096)throw new InvalidOperationException("NATIVE_FILENAME_CHAIN_CHANGED");
   UIntPtr result;if(MessageText(edit,0x000C,UIntPtr.Zero,path,34,1000,out result)==IntPtr.Zero || result.ToUInt64()==0)throw new InvalidOperationException("NATIVE_FILENAME_SET_FAILED");
-  ExactRoot(root,pid);if(!ExactEdit(root,edit,pid))throw new InvalidOperationException("NATIVE_FILENAME_CHAIN_CHANGED");
+  ExactRoot(root,pid);if(!ExactEdit(root,edit,pid,kind))throw new InvalidOperationException("NATIVE_FILENAME_CHAIN_CHANGED");
   var readback=new StringBuilder(4097);
   if(MessageRead(edit,0x000D,new UIntPtr(4097),readback,34,1000,out result)==IntPtr.Zero || !String.Equals(readback.ToString(),path,StringComparison.Ordinal))throw new InvalidOperationException("NATIVE_FILENAME_READBACK_MISMATCH");
  }
@@ -243,7 +258,8 @@ public static class OwnedDialogNative {
  public static IntPtr[] Dialogs(uint pid){var found=new List<IntPtr>();EnumWindows((h,d)=>{if(Pid(h)==pid&&Class(h)=="#32770")found.Add(h);return true;},IntPtr.Zero);return found.ToArray();}
 }
 '@ | Out-Null
-Emit @{phase='native-controller-compiled'}
+[OwnedDialogNative]::VerifyInteropLayouts()
+Emit @{phase='native-controller-compiled';guiThreadInfoLayoutVerified=$true}
 # Compile interop declarations during selftest, but never invoke Win32/UI APIs.
 if($c.apiSelftest -eq $true){Emit @{phase='uia-api-selftest-passed';checks=$apiChecks;appStarted=$false;uiAccessed=$false};exit 0}
 $owner=[IntPtr]::new([Int64]::Parse([string]$c.ownerWindowHandle))
@@ -305,7 +321,7 @@ try{
   $controlSnapshots++
   if($controls.editCount -gt 1 -or $controls.actionCount -gt 1){throw 'MULTIPLE_NATIVE_FILE_CONTROLS_REFUSED'}
   if($controlSnapshots -eq 1 -or ($controls.editCount -eq 1 -and $controls.actionCount -eq 1)){
-   Emit @{phase='dialog-controls-snapshot';selector='Win32-Edit1148-Combo1148-ComboEx1148-direct-dialog/Button1';snapshot=$controlSnapshots;elapsedMs=[int]([DateTime]::UtcNow-$controlWaitStarted).TotalMilliseconds;filenameCandidates=$controls.editCount;actionCandidates=$controls.actionCount}
+   Emit @{phase='dialog-controls-snapshot';selector=$controls.selector;snapshot=$controlSnapshots;elapsedMs=[int]([DateTime]::UtcNow-$controlWaitStarted).TotalMilliseconds;filenameCandidates=$controls.editCount;actionCandidates=$controls.actionCount}
   }
   if($controls.editCount -eq 1 -and $controls.actionCount -eq 1){break}
   [System.Threading.Thread]::Sleep(100)
@@ -326,7 +342,7 @@ try{
  if([DateTime]::UtcNow -ge $deadline){throw 'NATIVE_DIALOG_CONTROL_DEADLINE_EXPIRED'}
  Dialog-Still-Exact $dialog
  if($c.kind -eq 'save' -and ([System.IO.File]::Exists([string]$c.filePath) -or [System.IO.Directory]::Exists([string]$c.filePath))){throw 'SAVE_TARGET_APPEARED_REFUSE_OVERWRITE'}
- [OwnedDialogNative]::SetExactFilename($dialog,$controls.edit,[uint32]$ownerPid,[string]$c.filePath)
+ [OwnedDialogNative]::SetExactFilename($dialog,$controls.edit,[uint32]$ownerPid,[string]$c.kind,[string]$c.filePath)
  Dialog-Still-Exact $dialog
  if([DateTime]::UtcNow -ge $deadline){throw 'NATIVE_DIALOG_CONTROL_DEADLINE_EXPIRED'}
  if($c.kind -eq 'save' -and ([System.IO.File]::Exists([string]$c.filePath) -or [System.IO.Directory]::Exists([string]$c.filePath))){throw 'SAVE_TARGET_APPEARED_REFUSE_OVERWRITE'}
@@ -335,7 +351,7 @@ try{
   try{$actualHash=[System.BitConverter]::ToString($hasher.ComputeHash([System.IO.File]::ReadAllBytes([string]$c.filePath))).Replace('-','').ToLowerInvariant()}finally{$hasher.Dispose()}
   if($actualHash -cne [string]$c.expectedSha256){throw 'OPEN_FIXTURE_CHANGED_BEFORE_INVOKE'}
  }
- Emit @{phase='filename-verified';dialogHandle=$dialog.ToInt64().ToString();editHandle=$controls.edit.ToInt64().ToString();actionHandle=$controls.action.ToInt64().ToString();selector='Win32-Edit1148-Combo1148-ComboEx1148-direct-dialog/Button1';readbackVerified=$true;action=[string]$c.kind}
+ Emit @{phase='filename-verified';dialogHandle=$dialog.ToInt64().ToString();editHandle=$controls.edit.ToInt64().ToString();actionHandle=$controls.action.ToInt64().ToString();selector=$controls.selector;readbackVerified=$true;action=[string]$c.kind}
  Dialog-Still-Exact $dialog
  [OwnedDialogNative]::ClickExactAction($dialog,$controls.action,[uint32]$ownerPid,[string]$c.kind)
  while([DateTime]::UtcNow -lt $deadline){

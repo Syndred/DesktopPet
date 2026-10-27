@@ -6,7 +6,7 @@ on:
       flows:
         description: 'Explicit JSON array of affected native flows; omitted successful flows retain version-bound receipts'
         required: false
-        default: '["native-backup","c08-only"]'
+        default: '["native-backup","native-tray"]'
   push:
     branches: ['codex/cloud-authority-convergence']
     paths:
@@ -19,6 +19,8 @@ on:
       - 'scripts/acceptance/cloud-settings-reachability-acceptance.mjs'
       - 'scripts/acceptance/cloud-native-border-resize.mjs'
       - 'scripts/acceptance/native-border-resize.ps1'
+      - 'scripts/acceptance/cloud-native-tray-acceptance.mjs'
+      - 'scripts/acceptance/native-owned-tray.ps1'
       - 'scripts/acceptance/cloud-connection-selections-acceptance.mjs'
       - 'scripts/acceptance/cloud-backup-ui-acceptance.mjs'
       - 'scripts/acceptance/native-file-dialog.mjs'
@@ -50,9 +52,9 @@ jobs:
     steps:
       - name: Reject empty, duplicate or unknown flow selections
         env:
-          SELECTED_FLOWS: ${{ inputs.flows || '["native-backup","c08-only"]' }}
+          SELECTED_FLOWS: ${{ inputs.flows || '["native-backup","native-tray"]' }}
         run: |
-          node -e "const assert=require('node:assert/strict');const flows=JSON.parse(process.env.SELECTED_FLOWS);const allowed=new Set(['settings-reachability','main-border-resize','c08-only','desktop-preferences','connection-selections','companion-economy','native-backup','backup-ui','accounts-navigation','navigation','resources','lifecycle','desktop-restart','desktop-input','desktop-engineering','battle-context','context','default-profile','conversation-memory']);assert.ok(Array.isArray(flows)&&flows.length>0&&flows.length<=allowed.size);assert.equal(new Set(flows).size,flows.length);assert.ok(flows.every(x=>typeof x==='string'&&allowed.has(x)));console.log('Validated affected flows:',flows.join(', '));"
+          node -e "const assert=require('node:assert/strict');const flows=JSON.parse(process.env.SELECTED_FLOWS);const allowed=new Set(['native-tray','settings-reachability','main-border-resize','c08-only','desktop-preferences','connection-selections','companion-economy','native-backup','backup-ui','accounts-navigation','navigation','resources','lifecycle','desktop-restart','desktop-input','desktop-engineering','battle-context','context','default-profile','conversation-memory']);assert.ok(Array.isArray(flows)&&flows.length>0&&flows.length<=allowed.size);assert.equal(new Set(flows).size,flows.length);assert.ok(flows.every(x=>typeof x==='string'&&allowed.has(x)));console.log('Validated affected flows:',flows.join(', '));"
       - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
@@ -89,7 +91,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        flow: ${{ fromJSON(inputs.flows || '["native-backup","c08-only"]') }}
+        flow: ${{ fromJSON(inputs.flows || '["native-backup","native-tray"]') }}
     env:
       PACKAGE_SOURCE: b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d
     steps:
@@ -117,6 +119,10 @@ jobs:
         if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'settings-reachability' }}
         timeout-minutes: 12
         run: node scripts/acceptance/cloud-settings-reachability-acceptance.mjs --source=$env:PACKAGE_SOURCE
+      - name: Real owned application tray open and exit in disposable runner
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'native-tray' }}
+        timeout-minutes: 8
+        run: node scripts/acceptance/cloud-native-tray-acceptance.mjs --source=$env:PACKAGE_SOURCE
       - name: Exact main-window native edge drag to supported minimum
         if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'main-border-resize' }}
         timeout-minutes: 8
@@ -211,6 +217,10 @@ jobs:
             artifacts/foundation/cloud-engineering/default-profile/run-*/evidence.json
             artifacts/foundation/cloud-engineering/settingsReachability/run-*/evidence.json
             artifacts/foundation/cloud-engineering/settingsReachability/run-*/P01-*.png
+            artifacts/qa/native-tray/run-*/evidence.json
+            artifacts/qa/native-tray/run-*/open-owned-menu.png
+            artifacts/qa/native-tray/run-*/exit-owned-menu.png
+            artifacts/qa/native-tray/run-*/reopened-main.png
             artifacts/qa/native-border-resize/run-*/evidence.json
             artifacts/qa/native-border-resize/run-*/native-minimum.png
             artifacts/foundation/cloud-engineering/desktopPreferences/run-*/evidence.json
