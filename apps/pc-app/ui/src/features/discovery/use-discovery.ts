@@ -32,11 +32,11 @@ export function useDiscovery() {
   const [error, setError] = useState('');
   const [pending, setPending] = useState(false);
   const [sessionEpoch, setSessionEpoch] = useState(0);
-  const alive = useRef(true), generation = useRef(0), locked = useRef(false);
+  const alive = useRef(true), generation = useRef(0), sessionGeneration = useRef(0), locked = useRef(false);
   const refresh = useCallback(async () => {
     const current = ++generation.current;
     try { const state = await request<DiscoverySnapshot>('discovery', 'snapshot'); if (alive.current && generation.current === current) setData(state); }
-    catch (e) { if (alive.current) setError(e instanceof Error ? e.message : String(e)); }
+    catch (e) { if (alive.current && generation.current === current) setError(e instanceof Error ? e.message : String(e)); }
   }, []);
   useEffect(() => {
     alive.current = true;
@@ -44,18 +44,26 @@ export function useDiscovery() {
     void refresh();
     const subscriptions = ['discovery:changed', 'discovery:location', 'companions:changed', 'garden:changed'].map(event => window.lingjing?.subscribe(event, () => void refresh()));
     for (const event of ['app:session','accounts:session-changed']) subscriptions.push(window.lingjing?.subscribe(event, () => {
-      ++generation.current; setSessionEpoch(value => value + 1); setData(null); setError('');
+      ++generation.current; ++sessionGeneration.current; locked.current = false; setPending(false); setError(''); setSessionEpoch(value => value + 1); setData(null); setError('');
       setExploring(inExploration() && document.visibilityState === 'visible'); void refresh();
     }));
     const timer = setInterval(() => { if(document.visibilityState === 'visible') void refresh(); }, 15000);
-    return () => { alive.current = false;clearInterval(timer);release(); for (const off of subscriptions) off?.(); };
+    return () => { alive.current = false; ++sessionGeneration.current;clearInterval(timer);release(); for (const off of subscriptions) off?.(); };
   }, [refresh]);
   const run = useCallback(async <T,>(command: string, payload?: unknown): Promise<T | undefined> => {
     if (locked.current) return undefined;
+    const epoch = sessionGeneration.current;
+    const current = () => alive.current && sessionGeneration.current === epoch;
     locked.current = true; setPending(true); setError('');
-    try { const result = await request<T>('discovery', command, payload); await refresh(); return result; }
-    catch (e) { if (alive.current) setError(e instanceof Error ? e.message : String(e)); await refresh(); return undefined; }
-    finally { locked.current = false; if (alive.current) setPending(false); }
+    try {
+      const result = await request<T>('discovery', command, payload);
+      if (!current()) return undefined;
+      await refresh();
+      return current() ? result : undefined;
+    } catch (e) {
+      if (current()) { setError(e instanceof Error ? e.message : String(e)); await refresh(); }
+      return undefined;
+    } finally { if (current()) { locked.current = false; setPending(false); } }
   }, [refresh]);
   return { data, error, pending, run, refresh, sessionEpoch };
 }

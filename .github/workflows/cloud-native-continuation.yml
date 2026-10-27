@@ -7,35 +7,8 @@ on:
         description: 'Explicit JSON array of affected native flows; omitted successful flows retain version-bound receipts'
         required: false
         default: '["native-fullscreen"]'
-  push:
-    branches: ['codex/cloud-authority-convergence']
-    paths:
-      - '.github/workflows/cloud-native-continuation.yml'
-      - 'scripts/acceptance/verify-portable-reuse.mjs'
-      - 'scripts/acceptance/cloud-qa-preflight.mjs'
-      - 'scripts/acceptance/cloud-default-profile-readback.mjs'
-      - 'scripts/acceptance/cloud-conversation-memory-acceptance.mjs'
-      - 'scripts/acceptance/cloud-desktop-preferences-acceptance.mjs'
-      - 'scripts/acceptance/cloud-settings-reachability-acceptance.mjs'
-      - 'scripts/acceptance/cloud-native-border-resize.mjs'
-      - 'scripts/acceptance/native-border-resize.ps1'
-      - 'scripts/acceptance/cloud-native-tray-acceptance.mjs'
-      - 'scripts/acceptance/native-owned-tray.ps1'
-      - 'scripts/acceptance/cloud-native-fullscreen-acceptance.mjs'
-      - 'scripts/acceptance/native-owned-fullscreen-probe.ps1'
-      - 'scripts/acceptance/cloud-connection-selections-acceptance.mjs'
-      - 'scripts/acceptance/cloud-backup-ui-acceptance.mjs'
-      - 'scripts/acceptance/native-file-dialog.mjs'
-      - 'scripts/acceptance/cloud-companion-economy-acceptance.mjs'
-      - 'scripts/acceptance/portable-session.mjs'
-      - 'scripts/acceptance/cloud-loggedout-window-smoke.mjs'
-      - 'scripts/acceptance/full-acceptance-resources.mjs'
-      - 'scripts/acceptance/full-acceptance-local-account.mjs'
-      - 'scripts/acceptance/full-acceptance-navigation.mjs'
-      - 'scripts/acceptance/full-acceptance-desktop.mjs'
-      - 'scripts/acceptance/engineering-electron.mjs'
-      - 'scripts/acceptance/battle-independent.mjs'
-      - 'scripts/acceptance/context-independent.mjs'
+  # Historical baseline continuation is manual-only. New scoped workflows own
+  # their exact source/artifact and must not trigger this obsolete beea batch.
 
 permissions:
   contents: read

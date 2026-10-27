@@ -3,7 +3,7 @@ const {DiscoveryService}=require('./service.cjs');
 const {CloudDiscoveryAuthority}=require('./cloud-adapter.cjs');
 const {CloudLocationProofs}=require('./cloud-location.cjs');
 const {CloudDiscoveryRuntime}=require('./cloud-runtime.cjs');
-const {TileCache}=require('./tile-cache.cjs');
+const {TileCache,loadMapTile}=require('./tile-cache.cjs');
 const {join}=require('node:path');
 const {TerritoryMapAdapter}=require('./territory-adapter.cjs');
 const {LocationService}=require('./location-adapter.cjs');
@@ -45,7 +45,7 @@ module.exports={
       stopWatch:()=>{discovery.location.stopWatch(); return discovery.snapshot();},
       setDemo:payload=>{discovery.location.setDemo(payload.enabled===true); return discovery.snapshot();},
       setProvider:payload=>{const result=discovery.map.setProvider(payload.providerId); return result.ok ? discovery.snapshot() : {ok:false,code:result.error.code,message:result.error.message};},
-      tile:async payload=>({ok:true,data:await tiles.get(discovery.map.snapshot(),payload.z,payload.x,payload.y)}),
+      tile:payload=>loadMapTile(discovery.map,tiles,payload),
       ...(qaLocation?{qaTarget:async payload=>{qaLocation.selectTemplate(payload.templateId);location.reset();const result=await location.locate();return result.ok?discovery.snapshot():{ok:false,code:result.error.code,message:result.error.message};}}:{}),
       observe:payload=>discovery.observe(payload),begin:payload=>discovery.begin(payload),act:payload=>discovery.act(payload),cancel:payload=>discovery.cancel(payload),confirm:payload=>discovery.confirm(payload),
       pokedex:()=>({ok:true,data:discovery.captureViews(discovery.owner())}),memories:payload=>discovery.memories(payload)

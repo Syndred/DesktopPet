@@ -12,6 +12,7 @@ export function DiscoverySettings({ state, pending, run }: { state: DiscoverySna
         <SelectTrigger aria-label="底图" aria-labelledby="discovery-provider-label"><SelectValue/></SelectTrigger>
         <SelectContent>{state.map.providers.map(provider => <SelectItem key={provider.id} value={provider.id}>{provider.name}{provider.available ? '' : '（尚未配置）'}</SelectItem>)}</SelectContent>
       </Select>
+      {state.map.imageryNotice ? <p>{state.map.imageryNotice}</p> : null}
       <div className="discovery-setting-row"><label htmlFor="discovery-demo">演示模式</label><Switch id="discovery-demo" aria-label="演示模式" checked={state.location.mode === 'demo'} disabled={pending} onCheckedChange={enabled => void run('setDemo', { enabled })}/></div>
       <div className="discovery-setting-row"><label htmlFor="discovery-watch">探索时持续更新位置</label><Switch id="discovery-watch" aria-label="探索时持续更新位置" checked={state.location.watching} disabled={pending || state.location.mode === 'demo'} onCheckedChange={enabled => void run(enabled ? 'watch' : 'stopWatch')}/></div>
       <p>演示坐标只供浏览。离开探索页或收起窗口后，持续定位会停止。</p>

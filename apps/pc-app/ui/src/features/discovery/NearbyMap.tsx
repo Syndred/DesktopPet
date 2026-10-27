@@ -17,20 +17,20 @@ setWorkerUrl(workerUrl);
 // MapLibre owns tiles, projection, gestures and camera movement. This protocol
 // only routes visible tile requests through the existing main-process cache.
 addProtocol('lingjing-raster', async (parameters, controller) => {
-  const match = parameters.url.match(/^lingjing-raster:\/\/osm\/(\d+)\/(\d+)\/(\d+)$/);
+  const match = parameters.url.match(/^lingjing-raster:\/\/(osm|nasa-gibs-bluemarble)\/(\d+)\/(\d+)\/(\d+)$/);
   if (!match) throw new Error('Invalid map tile');
   if (controller.signal.aborted) throw new DOMException('Aborted', 'AbortError');
-  const tile = await request<{ dataUrl: string }>('discovery', 'tile', { z: Number(match[1]), x: Number(match[2]), y: Number(match[3]) });
+  const tile = await request<{ dataUrl: string }>('discovery', 'tile', { providerId: match[1], z: Number(match[2]), x: Number(match[3]), y: Number(match[4]) });
   if (controller.signal.aborted) throw new DOMException('Aborted', 'AbortError');
   return { data: Uint8Array.from(atob(tile.dataUrl.split(',')[1]), value => value.charCodeAt(0)).buffer };
 });
 const empty: FeatureCollection<Polygon> = { type: 'FeatureCollection', features: [] };
 function mapStyle(state: DiscoverySnapshot): StyleSpecification {
   return { version: 8, sources: {
-    osm: { type: 'raster', tiles: ['lingjing-raster://osm/{z}/{x}/{y}'], tileSize: 256, attribution: state.map.attribution, maxzoom: state.map.maxZoom },
+    basemap: { type: 'raster', tiles: [`lingjing-raster://${state.map.id}/{z}/{x}/{y}`], tileSize: 256, attribution: state.map.attribution, maxzoom: state.map.maxNativeZoom ?? state.map.maxZoom },
     accuracy: { type: 'geojson', data: empty }, territories: { type: 'geojson', data: empty }
   }, layers: [
-    { id: 'base', type: 'raster', source: 'osm', paint: { 'raster-opacity': .86, 'raster-saturation': -.2 } },
+    { id: 'base', type: 'raster', source: 'basemap', paint: { 'raster-opacity': .86, 'raster-saturation': -.2 } },
     { id: 'territories', type: 'fill', source: 'territories', paint: { 'fill-color': ['case', ['get', 'owned'], '#6592f7', '#e6a16e'], 'fill-opacity': .16 } },
     { id: 'territory-lines', type: 'line', source: 'territories', paint: { 'line-color': ['case', ['get', 'owned'], '#5682ee', '#e29c67'], 'line-width': 2, 'line-dasharray': [2, 2] } },
     { id: 'accuracy', type: 'fill', source: 'accuracy', paint: { 'fill-color': '#6394ff', 'fill-opacity': .15 } },
@@ -46,33 +46,35 @@ export function NearbyMap({ state, selectedId, onSelect, mini = false }: { state
   useEffect(() => {
     if (!host.current || !canRender || !center) return;
     setReady(false); setError(''); setLoadedTiles(0); setPaint({ idle: false, tilesLoaded: false, zoom: 0, lat: 0, lng: 0 });
-    const instance = new LibreMap({ container: host.current, style: mapStyle(latest.current), center: [center.lng, center.lat], zoom: mini ? 14 : 16.8,
-      minZoom: 11, maxZoom: state.map.maxZoom, attributionControl: false, interactive: !mini, dragRotate: false, pitchWithRotate: false,
+    const instance = new LibreMap({ container: host.current, style: mapStyle(latest.current), center: [center.lng, center.lat], zoom: state.map.initialZoom ?? (mini ? 14 : 16.8),
+      minZoom: state.map.minZoom ?? 11, maxZoom: state.map.maxZoom, attributionControl: false, interactive: !mini, dragRotate: false, pitchWithRotate: false,
       renderWorldCopies: false, fadeDuration: 0, maxTileCacheSize: 64 });
     map.current = instance;
-    instance.addControl(new AttributionControl({ compact: false, customAttribution: '<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors</a>' }), 'bottom-right');
+    let active = true;
+    instance.addControl(new AttributionControl({ compact: false, customAttribution: state.map.id === 'nasa-gibs-bluemarble' ? '<a href="https://nasa-gibs.github.io/gibs-api-docs/" target="_blank" rel="noreferrer">NASA GIBS / MODIS Blue Marble</a>' : '<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors</a>' }), 'bottom-right');
     if (!mini) instance.addControl(new NavigationControl({ showCompass: true }), 'top-right');
     // Overlays depend on the style, not on every remote raster tile finishing.
     // A slow or failed tile must not hide the reported position or encounters.
-    instance.on('style.load', () => setReady(true));
+    instance.on('style.load', () => { if (active) setReady(true); });
     // Style readiness and a historical tile count do not prove the current
     // frame has painted. Idle follows all requested tiles and camera/fades.
-    const markBusy = () => setPaint(value => value.idle ? { ...value, idle: false, tilesLoaded: false } : value);
+    const markBusy = () => { if (active) setPaint(value => value.idle ? { ...value, idle: false, tilesLoaded: false } : value); };
     instance.on('dataloading', markBusy); instance.on('movestart', markBusy);
     instance.on('idle', () => {
+      if (!active) return;
       const center = instance.getCenter();
       const next = { idle: true, tilesLoaded: instance.areTilesLoaded(), zoom: instance.getZoom(), lat: center.lat, lng: center.lng };
       setPaint(value => value.idle === next.idle && value.tilesLoaded === next.tilesLoaded && value.zoom === next.zoom && value.lat === next.lat && value.lng === next.lng ? value : next);
     });
     const tiles = new Set<string>();
     instance.on('sourcedata', event => {
-      if (event.sourceId !== 'osm' || !event.tile || typeof event.tile !== 'object') return;
+      if (!active || event.sourceId !== 'basemap' || !event.tile || typeof event.tile !== 'object') return;
       const tile = event.tile as { state?: string; tileID?: { key?: string } };
       if (tile.state === 'loaded') { tiles.add(String(tile.tileID?.key)); setLoadedTiles(tiles.size); }
     });
-    instance.on('error', event => { console.warn('[discovery:map]', event.error?.message); setError('部分底图暂时无法加载，可稍后重试。'); });
+    instance.on('error', event => { if (!active) return; console.warn('[discovery:map]', event.error?.message); setError('部分底图暂时无法加载，可稍后重试。'); });
     const observer = new ResizeObserver(() => instance.resize()); observer.observe(host.current);
-    return () => { observer.disconnect(); instance.remove(); map.current = null; };
+    return () => { active = false; observer.disconnect(); instance.remove(); map.current = null; };
   }, [canRender, state.map.id, mini, retry]);
   useEffect(() => {
     const instance = map.current; if (!instance || !ready || !center) return;
@@ -103,6 +105,7 @@ export function NearbyMap({ state, selectedId, onSelect, mini = false }: { state
   return <div className={`discovery-map ${mini ? 'mini' : ''}`} data-map-engine="maplibre-gl" data-map-ready={canRender && ready} data-map-loaded-tiles={loadedTiles} data-map-idle={canRender && paint.idle} data-map-tiles-complete={canRender && paint.tilesLoaded} data-map-zoom={paint.zoom} data-map-center-lat={paint.lat} data-map-center-lng={paint.lng} aria-label={mini ? '相遇位置小地图' : '附近探索地图'}>
     <div className="discovery-map-canvas" ref={host}/>
     {!canRender ? <div className="discovery-map-empty"><Crosshair size={30}/><strong>{center ? '当前底图尚未配置' : '让相遇，从这里开始。'}</strong><span>{center ? '请选择已配置的地图服务。' : '获取系统位置，或明确进入演示模式。'}</span></div> : null}
+    {state.map.imageryNotice ? <span className="discovery-imagery-notice" role="note">{state.map.imageryNotice}</span> : null}
     {!mini ? <><div className="discovery-map-legend"><PawPrint size={16}/>可相遇伙伴 <Flag size={15}/>领地</div><div className="discovery-map-controls"><Button variant="ghost" aria-label="地图回到当前位置" onClick={() => { if (center) map.current?.easeTo({ center: [center.lng, center.lat], duration: 0 }); }}><Crosshair size={19}/></Button><Button variant="ghost" aria-label="重新加载底图" onClick={() => setRetry(v => v + 1)}><RefreshCw size={17}/></Button></div>{error ? <span className="discovery-map-error" role="status">{error}</span> : null}</> : null}
   </div>;
 }
