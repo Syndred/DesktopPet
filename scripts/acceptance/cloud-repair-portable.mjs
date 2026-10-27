@@ -14,8 +14,8 @@ const output = resolve('artifacts/foundation/cloud-engineering/focused-portable'
 mkdirSync(output, { recursive: true });
 const proof = { scope: 'Actual Windows portable SFX, fresh logged-out profile. Startup/configuration only, not live-account repair acceptance.', sourceCommit: build.sourceCommit, startedAt: new Date().toISOString(), executable, executableSha256: await sha256(executable) };
 try {
-  proof.ordinary = await verifyPortableDefaultConfig({ executable, expectedSource: build.sourceCommit, output, inspect: async ({page, info, profile}) => {
-    const signedOut = await inspectSignedOut({page, output});
+  proof.ordinary = await verifyPortableDefaultConfig({ executable, expectedSource: build.sourceCommit, output, inspect: async ({page, main, info, profile}) => {
+    const signedOut = await inspectSignedOut({page, main, output});
     const versionLabel = page.getByLabel('应用版本');
     await versionLabel.waitFor();
     await page.waitForFunction(expected => document.querySelector('[aria-label="应用版本"]')?.textContent.includes(expected), build.sourceCommit.slice(0,12));

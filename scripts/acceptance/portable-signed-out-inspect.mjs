@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import {join} from 'node:path';
 import {writeFileSync} from 'node:fs';
 import {pollState} from './poll-state.mjs';
-export async function inspectSignedOut({page, output}) {
+export async function inspectSignedOut({page, main, output}) {
   const proof={scope:'Actual Windows SFX signed-out UI only; no account creation/login, QA grant, production write or simulated component.',cases:[],validAuthenticationSubmissions:0};
   const runtime=await page.evaluate(()=>window.lingjing.invoke('app','info',{}));assert.equal(runtime.ok,true);
   proof.sourceCommit=runtime.data.build.sourceCommit;proof.compiledFingerprint=runtime.data.build.compiledFingerprint;proof.executablePath=runtime.data.support?.executablePath;
@@ -46,9 +46,11 @@ export async function inspectSignedOut({page, output}) {
       await page.getByRole('combobox',{name:'账号类型',exact:true}).focus();const order=[];
       for(let i=0;i<8;i++){await page.keyboard.press('Tab');order.push(await page.evaluate(()=>{const node=document.activeElement;return {tag:node.tagName,role:node.getAttribute('role'),label:node.getAttribute('aria-label'),autocomplete:node.getAttribute('autocomplete'),text:node.textContent?.trim().slice(0,60)};}));}
       assert.equal(order[0].autocomplete,'username');assert.equal(order[1].label,'密码');assert.equal(order[2].label,'显示密码');assert.equal(order[3].label,'记住账号');
+      const reverse=[];for(let i=0;i<8;i++){await page.keyboard.press('Shift+Tab');reverse.push(await page.evaluate(()=>{const node=document.activeElement;return {role:node.getAttribute('role'),label:node.getAttribute('aria-label'),autocomplete:node.getAttribute('autocomplete'),text:node.textContent?.trim().slice(0,60)};}));}
+      assert.equal(reverse[0].text,'登录进入 →');assert.equal(reverse[1].label,'登录保护');assert.equal(reverse[2].label,'保持登录');assert.equal(reverse[3].label,'记住账号');assert.equal(reverse[4].label,'显示密码');assert.equal(reverse[5].label,'密码');assert.equal(reverse[6].autocomplete,'username');assert.equal(reverse[7].label,'账号类型');
       await password.focus();await page.keyboard.press('Shift+Tab');assert.equal(await page.locator('input[autocomplete="username"]').evaluate(node=>node===document.activeElement),true);
       await page.keyboard.press('Enter');assert.equal(await page.locator('form').evaluate(form=>form.checkValidity()),false);
-      return {order,passwordValuePreserved:true,enterPreventedByConstraint:true,screenshot:await capture('signed-out-A07-empty-enter'),successfulLoginNotTested:true};
+      return {order,reverse,passwordValuePreserved:true,enterPreventedByConstraint:true,screenshot:await capture('signed-out-A07-empty-enter'),successfulLoginNotTested:true};
     });
     await run('A03','partial: empty login only; invalid account/wrong password require authorized Auth test',async()=>{
       await page.getByRole('button',{name:'登录进入 →',exact:true}).click();
@@ -64,15 +66,30 @@ export async function inspectSignedOut({page, output}) {
       await account.fill('');await page.getByLabel('密码',{exact:true}).fill('');await page.getByLabel('确认密码',{exact:true}).fill('');await page.getByRole('tab',{name:'登录',exact:true}).click();return {short,confirmationRejectedBeforeAuth:true,screenshot};
     });
     await run('N02','partial: actual native window bounds/maximize/restore while logged out; not OS mouse edge drag or authenticated dialogs',async()=>{
-      const cdp=await page.context().newCDPSession(page);try{
-        const {windowId,bounds}=await cdp.send('Browser.getWindowForTarget');
-        await cdp.send('Browser.setWindowBounds',{windowId,bounds:{windowState:'normal'}});await cdp.send('Browser.setWindowBounds',{windowId,bounds:{width:960,height:700}});
+      assert.equal(typeof main,'function','N02 requires the owned Electron main inspector, not a renderer viewport mock');
+      const targetUrl=page.url();
+      const control=async(action,bounds)=>main(({BrowserWindow},{targetUrl,action,bounds})=>{
+        const matches=BrowserWindow.getAllWindows().filter(win=>win.webContents.getURL()===targetUrl);
+        if(matches.length!==1)throw new Error('Expected exactly one owned signed-out BrowserWindow');
+        const win=matches[0];
+        if(action==='bounds'){win.unmaximize();win.setBounds(bounds);}
+        else if(action==='maximize')win.maximize();
+        else if(action==='unmaximize')win.unmaximize();
+        return {windowId:win.id,bounds:win.getBounds(),maximized:win.isMaximized(),minimumSize:win.getMinimumSize()};
+      },{targetUrl,action,bounds});
+      const initial=await control('read');
+      try{
+        await control('bounds',{...initial.bounds,width:960,height:700});
+        const minimum=await pollState(()=>control('read'),state=>!state.maximized&&state.bounds.width===Math.max(960,state.minimumSize[0])&&state.bounds.height===Math.max(700,state.minimumSize[1]),{timeoutMs:5000,intervalMs:100,label:'Signed-out native resize'});
         await page.getByRole('button',{name:'登录进入 →',exact:true}).scrollIntoViewIfNeeded();assert.equal(await page.getByRole('button',{name:'登录进入 →',exact:true}).isVisible(),true);
-        const minimum=await cdp.send('Browser.getWindowBounds',{windowId});const screenshot=await capture('signed-out-N02-minimum');
-        await cdp.send('Browser.setWindowBounds',{windowId,bounds:{windowState:'maximized'}});const maximized=await pollState(()=>cdp.send('Browser.getWindowBounds',{windowId}),value=>value.bounds.windowState==='maximized',{timeoutMs:5000,intervalMs:100,label:'Signed-out native maximize'});
-        await cdp.send('Browser.setWindowBounds',{windowId,bounds:{windowState:'normal'}});await cdp.send('Browser.setWindowBounds',{windowId,bounds:{left:bounds.left,top:bounds.top,width:bounds.width,height:bounds.height}});
-        return {initial:bounds,minimum:minimum.bounds,maximized:maximized.bounds,screenshot,mouseEdgeDragVerified:false,authenticatedDialogsVerified:false};
-      }finally{await cdp.detach();}
+        const screenshot=await capture('signed-out-N02-minimum');
+        await control('maximize');const maximized=await pollState(()=>control('read'),state=>state.maximized,{timeoutMs:5000,intervalMs:100,label:'Signed-out native maximize'});
+        await control('unmaximize');await pollState(()=>control('read'),state=>!state.maximized,{timeoutMs:5000,intervalMs:100,label:'Signed-out native unmaximize'});
+        await control('bounds',initial.bounds);
+        const restored=await pollState(()=>control('read'),state=>!state.maximized&&Object.keys(initial.bounds).every(key=>state.bounds[key]===initial.bounds[key]),{timeoutMs:5000,intervalMs:100,label:'Signed-out native bounds restore'});
+        return {controller:'owned Electron main BrowserWindow',initial,minimum,maximized,restored,screenshot,mouseEdgeDragVerified:false,authenticatedDialogsVerified:false};
+      }finally{await control('bounds',initial.bounds);if(initial.maximized)await control('maximize');}
+
     });
     const session=await page.evaluate(()=>window.lingjing.invoke('accounts','session',{}));assert.equal(session.ok,true);assert.equal(session.data.currentUser,null);
     proof.noSessionCreated=true;proof.passed=true;return proof;

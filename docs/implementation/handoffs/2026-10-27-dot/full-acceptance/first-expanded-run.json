@@ -1,0 +1,39 @@
+{
+  "sourceCommit": "a2b3f5d3183bfc12975925172e290d9184ddcc5a",
+  "run": 40460974817,
+  "windowsJob": 122045233802,
+  "conclusion": "cancelled to diagnose native capture stall; never a pass",
+  "windowsEngineering": {
+    "nativeCjs": {
+      "passed": 459,
+      "failed": 0,
+      "skipped": 0
+    },
+    "unit": {
+      "passed": 49,
+      "failed": 0
+    },
+    "focusedCjs": 72,
+    "gardenRecovery": 1,
+    "feedingCooldown": 4,
+    "typechecks": "passed",
+    "buildAsarAudit": "passed"
+  },
+  "nativeChecks": {
+    "A02": "passed actual SFX geometry/keyboard/focus; screenshot independently viewed",
+    "A07": "visibility and forward keyboard checks passed; complete reverse traversal added next round",
+    "A03": "empty login substep passed; full case not complete",
+    "A04": "short account/mismatch substeps passed; full case not complete",
+    "N02": "driver failed: Electron does not implement Browser.getWindowForTarget; repaired using verified owned main BrowserWindow",
+    "desktopCapture": "engineering-electron line71 capturePage stalled from 06:37:30 to cancellation06:45:34; new bounded native capture keeps failed/blocked outcomes"
+  },
+  "artifact": {
+    "id": 12715257789,
+    "bytes": 171070104,
+    "sha256": "a39f5be67294927aa17112051366bc73d466b4bb53c961d3982f6c23123ed46b",
+    "url": "https://github.com/Syndred/DesktopPet/actions/runs/40460974817/artifacts/12715257789",
+    "independentDownloadHashVerified": true,
+    "imagesRetained": true
+  },
+  "safety": "Only dedicated workflow group superseded; no P09 registry step had started, no production/account/grant changes. Runner cleaned orphan processes."
+}
