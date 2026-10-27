@@ -1,0 +1,75 @@
+name: DesktopPet explicitly authorized live QA acceptance
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: desktoppet-live-qa-acceptance
+  cancel-in-progress: false
+
+jobs:
+  scoped-live:
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence' && github.run_attempt == 1
+    runs-on: windows-latest
+    timeout-minutes: 58
+    env:
+      PACKAGE_SOURCE: b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d
+      QA_OUTPUT: artifacts/qa/live-qa-holder
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v8.0.2
+        with:
+          name: desktoppet-focused-windows-b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d
+          run-id: 40463514290
+          github-token: ${{ github.token }}
+          path: artifacts/qa/native-baseline
+      - name: Bind unchanged product and exact audited Windows package
+        run: node scripts/acceptance/verify-portable-reuse.mjs --source=$env:PACKAGE_SOURCE
+      - name: Register at most two dedicated accounts and retain passwords only in this job's process memory
+        timeout-minutes: 5
+        run: |
+          $scenario = "cloud-acceptance-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
+          ./scripts/acceptance/cloud-live-qa-process.ps1 -Action start -Output $env:QA_OUTPUT -Executable artifacts/pc-cloud-upgrade/Lingjing-0.1.8-portable-x64.exe -Source $env:PACKAGE_SOURCE -Scenario $scenario
+          ./scripts/acceptance/cloud-live-qa-process.ps1 -Action identity -Output $env:QA_OUTPUT
+      - name: Publish only non-secret exact identities for separately authorized grant verification
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: desktoppet-live-qa-identities-${{ github.run_id }}-${{ github.run_attempt }}
+          retention-days: 7
+          if-no-files-found: error
+          path: artifacts/qa/live-qa-holder/identity.json
+      - name: Wait for exact three-device grant and execute reviewed scoped cases in the same process
+        timeout-minutes: 47
+        run: ./scripts/acceptance/cloud-live-qa-process.ps1 -Action final -Output $env:QA_OUTPUT
+      - name: Stop only this job's owned holder and child processes
+        if: always()
+        timeout-minutes: 2
+        run: ./scripts/acceptance/cloud-live-qa-process.ps1 -Action stop -Output $env:QA_OUTPUT
+      - name: Retain strictly enumerated non-secret proof, never profiles, logs, traces or login screenshots
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: desktoppet-live-qa-proof-${{ github.run_id }}-${{ github.run_attempt }}
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            artifacts/qa/native-continuation/package-reuse.json
+            artifacts/qa/live-qa-holder/identity-checkpoint.json
+            artifacts/qa/live-qa-holder/identity.json
+            artifacts/qa/live-qa-holder/status.json
+            artifacts/qa/live-qa-holder/ready.json
+            artifacts/qa/live-qa-holder/final.json
+            artifacts/qa/live-qa-holder/live-business-intents.json
+            artifacts/qa/live-qa-holder/live-business-evidence.json
