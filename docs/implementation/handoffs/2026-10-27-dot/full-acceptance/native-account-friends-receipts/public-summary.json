@@ -1,0 +1,58 @@
+{
+  "scope": "Four independently reviewed original acceptance cases on the same audited Windows portable package. This is a newly written minimal summary, not raw evidence or the versioned matrix.",
+  "results": {
+    "B07": {
+      "status": "passed-original-scope",
+      "basis": "Both normal UI clients observe the same invitation rejected, pending UI clears, no room/reward is created, and a distinct new invitation is possible after known rejection. Official isolated loopback, not cloud/presence/expiry enforcement.",
+      "evidenceGroup": "B07"
+    },
+    "B10": {
+      "status": "passed-original-scope",
+      "basis": "Normal two-client friend battle: before-send transport failure, same original pending action retry, natural completion and unique settlement/report on both clients; repeated synchronization unchanged. Official loopback, not server-committed lost response, JWT or Realtime.",
+      "evidenceGroup": "B10"
+    },
+    "A11": {
+      "status": "passed-original-scope",
+      "basis": "Normal isolated local A-B-A-B-A account switching preserves original ownership and separate pets, conversations, training reports, settings and desktop state. Actual UI and normal IPC; loopback synthetic model replies, not external model or cloud account isolation.",
+      "evidenceGroup": "accounts"
+    },
+    "S01": {
+      "status": "passed-original-scope",
+      "basis": "Normal username edit keeps original account identity, increments revision and survives normal relogin with local save readback. Official local QA only; no cross-device/cloud synchronization claim.",
+      "evidenceGroup": "accounts"
+    }
+  },
+  "evidence": {
+    "B07": {
+      "run": "https://github.com/Syndred/DesktopPet/actions/runs/40522388634",
+      "artifact": "https://github.com/Syndred/DesktopPet/actions/runs/40522388634/artifacts/12742980577",
+      "zipSha256": "1480ec3b3bce567d3de8a246d3fa57e2ab1b73345078e4ca87a4d016c5f0e7fd"
+    },
+    "B10": {
+      "run": "https://github.com/Syndred/DesktopPet/actions/runs/40522664559",
+      "artifact": "https://github.com/Syndred/DesktopPet/actions/runs/40522664559/artifacts/12741979087",
+      "zipSha256": "26f3cf45ed690186ad566fe047b85d4b8d86f8c2bc5ada482d882861c95f838d"
+    },
+    "accounts": {
+      "run": "https://github.com/Syndred/DesktopPet/actions/runs/40522932074",
+      "artifact": "https://github.com/Syndred/DesktopPet/actions/runs/40522932074/artifacts/12742886746",
+      "zipSha256": "598e52ca28e67bc76a20b2edb5b82de538e5bc39877d942a8a457c016a5b1b90"
+    }
+  },
+  "qualifications": [
+    "Official isolated local QA and private loopback fixtures do not establish production cloud JWT authorization, Realtime delivery, online presence or external model quality.",
+    "B10 failure was injected before sending. It is not evidence of recovering a response lost after server commit.",
+    "B07 screenshot of the new invitation shows the upper page, not the pending panel. New pending status is established by actual UI assertions and independent readback from both clients, not that screenshot.",
+    "The account evidence retains its original passed-local-subset labels; full original-case classification follows separate review of the literal original requirements. No raw receipt was rewritten.",
+    "Four original cases are added, regardless of the number of execution rows."
+  ],
+  "coverage": {
+    "acceptedOriginalCases": 70,
+    "totalOriginalCases": 98,
+    "fullCasesOnThisExactPackage": 10,
+    "sourceBoundEarlierCasesCarriedAfterImpactReview": 60,
+    "partial": 4,
+    "notExecuted": 24,
+    "qualification": "Earlier source-bound cases are not claimed to have been rerun on this package."
+  }
+}
