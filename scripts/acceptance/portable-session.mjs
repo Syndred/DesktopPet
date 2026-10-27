@@ -16,7 +16,7 @@ async function inspector(url){
   socket.on('error',()=>{});
   socket.on('close',()=>{for(const request of pending.values()){clearTimeout(request.timer);request.reject(new Error('Owned main inspector disconnected'));}pending.clear();});
   await new Promise((done,fail)=>{const timer=setTimeout(()=>fail(new Error('Main inspector connection timed out')),5000);socket.once('open',()=>{clearTimeout(timer);done();});socket.once('error',error=>{clearTimeout(timer);fail(error);});});
-  return {close:()=>socket.close(),send(method,params={}){return new Promise((resolve,reject)=>{const requestId=++id,timer=setTimeout(()=>{pending.delete(requestId);reject(new Error('Main inspector request timed out'));},30000);pending.set(requestId,{resolve,reject,timer});socket.send(JSON.stringify({id:requestId,method,params}),error=>{if(error){clearTimeout(timer);pending.delete(requestId);reject(error);}});});}};
+  return {close:()=>socket.close(),async detach(){if(socket.readyState===WebSocket.CLOSED)return;await new Promise((done,fail)=>{const timer=setTimeout(()=>fail(new Error('Owned inspector detach timed out')),5000);socket.once('close',()=>{clearTimeout(timer);done();});socket.close();});},send(method,params={}){return new Promise((resolve,reject)=>{const requestId=++id,timer=setTimeout(()=>{pending.delete(requestId);reject(new Error('Main inspector request timed out'));},30000);pending.set(requestId,{resolve,reject,timer});socket.send(JSON.stringify({id:requestId,method,params}),error=>{if(error){clearTimeout(timer);pending.delete(requestId);reject(error);}});});}};
 }
 
 export async function launchPortableSession({executable,profile,expectedSource,label='portable',environment={}}){
@@ -66,7 +66,7 @@ export async function launchPortableSession({executable,profile,expectedSource,l
     await page.waitForFunction(()=>Boolean(window.lingjing));page.setDefaultTimeout(25000);
     const call=async(feature,command,payload={})=>{const result=await page.evaluate(input=>window.lingjing.invoke(input.feature,input.command,input.payload),{feature,command,payload});assert.equal(result.ok,true,`${feature}:${command} ${result.code||''} ${result.message||''}`);return result.data;};
     const info=await call('app','info');assert.equal(info.build.sourceCommit,expectedSource);assert.ok(!page.url().includes('win-unpacked'));
-    return {label,profile,page,browser,main,call,stop,info,runtime,launcherPid:child.pid,pages:()=>browser.contexts().flatMap(context=>context.pages())};
+    return {label,profile,page,browser,main,call,stop,async detachInspector(){if(connection){await connection.detach();connection=undefined;}return {ownedMainInspectorDetached:true,appQuitInvoked:false,processKillInvoked:false,browserCloseInvoked:false};},info,runtime,launcherPid:child.pid,pages:()=>browser.contexts().flatMap(context=>context.pages())};
   }catch(error){
     let mainState={available:false};
     if(connection)try{mainState=await main(({app,BrowserWindow},expected)=>({available:true,ready:app.isReady(),windowCount:BrowserWindow.getAllWindows().length,profileMatches:process.getBuiltinModule('node:fs').realpathSync.native(app.getPath('userData')).toLowerCase()===expected.toLowerCase()}),profile);}catch{}

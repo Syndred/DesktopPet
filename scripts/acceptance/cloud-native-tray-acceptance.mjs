@@ -57,7 +57,11 @@ try{
  const opened=await trayAction('open');proof.reopened=await pollState(state,x=>x.visible&&!x.destroyed,{timeoutMs:5000,label:'Physical tray menu did not reopen main'});
  await model.page.screenshot({path:join(output,'reopened-main.png'),timeout:10000});
  const exited=await trayAction('exit');assert.equal(exited.explorerPid,opened.explorerPid);
- proof.exitedNaturally=await pollState(()=>[...pids].map(pid=>({pid,alive:alive(pid)})),rows=>rows.every(x=>!x.alive),{timeoutMs:10000,label:'Physical Exit menu did not stop owned app naturally'});
+ // The Node inspector can hold process exit until its debugger disconnects.
+ // Detach only this driver's WS; no app quit command, browser close or kill.
+ proof.inspectorDetach=await model.detachInspector();
+ proof.exitPidObservations=[];
+ proof.exitedNaturally=await pollState(()=>{const rows=[...pids].map(pid=>({pid,alive:alive(pid)}));proof.exitPidObservations.push({at:new Date().toISOString(),rows});return rows;},rows=>rows.every(x=>!x.alive),{timeoutMs:10000,intervalMs:500,label:'Physical Exit menu did not stop owned app naturally after inspector detach'});
  assert.equal(alive(exited.explorerPid),true);proof.explorerPreserved=true;proof.passed=true;
 }catch(error){proof.error=String(error);proof.passed=false;process.exitCode=1;}
 finally{

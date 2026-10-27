@@ -6,7 +6,7 @@ on:
       flows:
         description: 'Explicit JSON array of affected native flows; omitted successful flows retain version-bound receipts'
         required: false
-        default: '["native-tray"]'
+        default: '["native-tray","g02-only"]'
   push:
     branches: ['codex/cloud-authority-convergence']
     paths:
@@ -52,9 +52,9 @@ jobs:
     steps:
       - name: Reject empty, duplicate or unknown flow selections
         env:
-          SELECTED_FLOWS: ${{ inputs.flows || '["native-tray"]' }}
+          SELECTED_FLOWS: ${{ inputs.flows || '["native-tray","g02-only"]' }}
         run: |
-          node -e "const assert=require('node:assert/strict');const flows=JSON.parse(process.env.SELECTED_FLOWS);const allowed=new Set(['native-tray','settings-reachability','main-border-resize','c08-only','desktop-preferences','connection-selections','companion-economy','native-backup','backup-ui','accounts-navigation','navigation','resources','lifecycle','desktop-restart','desktop-input','desktop-engineering','battle-context','context','default-profile','conversation-memory']);assert.ok(Array.isArray(flows)&&flows.length>0&&flows.length<=allowed.size);assert.equal(new Set(flows).size,flows.length);assert.ok(flows.every(x=>typeof x==='string'&&allowed.has(x)));console.log('Validated affected flows:',flows.join(', '));"
+          node -e "const assert=require('node:assert/strict');const flows=JSON.parse(process.env.SELECTED_FLOWS);const allowed=new Set(['g02-only','native-tray','settings-reachability','main-border-resize','c08-only','desktop-preferences','connection-selections','companion-economy','native-backup','backup-ui','accounts-navigation','navigation','resources','lifecycle','desktop-restart','desktop-input','desktop-engineering','battle-context','context','default-profile','conversation-memory']);assert.ok(Array.isArray(flows)&&flows.length>0&&flows.length<=allowed.size);assert.equal(new Set(flows).size,flows.length);assert.ok(flows.every(x=>typeof x==='string'&&allowed.has(x)));console.log('Validated affected flows:',flows.join(', '));"
       - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
@@ -91,7 +91,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        flow: ${{ fromJSON(inputs.flows || '["native-tray"]') }}
+        flow: ${{ fromJSON(inputs.flows || '["native-tray","g02-only"]') }}
     env:
       PACKAGE_SOURCE: b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d
     steps:
@@ -127,6 +127,10 @@ jobs:
         if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'main-border-resize' }}
         timeout-minutes: 8
         run: node scripts/acceptance/cloud-native-border-resize.mjs --source=$env:PACKAGE_SOURCE
+      - name: Independent garrison replacement without repeating passed role selections
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'g02-only' }}
+        timeout-minutes: 12
+        run: node scripts/acceptance/cloud-connection-selections-acceptance.mjs --source=$env:PACKAGE_SOURCE --cases=g02
       - name: Recheck independent feature selections without repeating passed connection cases
         if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'c08-only' }}
         timeout-minutes: 12
@@ -230,6 +234,8 @@ jobs:
             artifacts/foundation/cloud-engineering/connectionSelections/run-*/T06-original-turn-recovered.png
             artifacts/foundation/cloud-engineering/connectionSelections/run-*/C08-independent-first-three.png
             artifacts/foundation/cloud-engineering/connectionSelections/run-*/C08-four-independent-roles.png
+            artifacts/foundation/cloud-engineering/connectionSelections/run-*/G02-b-candidate-a-still-garrison.png
+            artifacts/foundation/cloud-engineering/connectionSelections/run-*/G02-c-confirmed-owner-unchanged.png
             artifacts/foundation/cloud-engineering/conversationMemory/run-*/evidence.json
             artifacts/foundation/cloud-engineering/conversationMemory/run-*/*-failed.png
             artifacts/foundation/cloud-engineering/companionEconomy/run-*/evidence.json
