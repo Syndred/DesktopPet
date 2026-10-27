@@ -8,11 +8,15 @@ import { tmpdir } from 'node:os';
 import { randomUUID } from 'node:crypto';
 import assert from 'node:assert/strict';
 if(process.platform!=='win32'||process.env.GITHUB_ACTIONS!=='true')throw Error('Only the ephemeral cloud Windows runner is authorized');
+const restartOnly=process.argv.includes('--restart-only');
+if(process.argv.slice(2).some(arg=>arg!=='--restart-only'))throw Error('Unknown desktop acceptance argument');
 const root=resolve('.'), build=JSON.parse(readFileSync('apps/pc-app/dist/build-manifest.json'));
 assert.equal(build.sourceCommit,execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim());assert.deepEqual(build.sourceDirtyFiles,[]);
 const output=resolve('artifacts/foundation/cloud-engineering/desktop-subset',`run-${Date.now()}`);mkdirSync(output,{recursive:true});
 const scenario=JSON.parse(execFileSync(process.execPath,['scripts/acceptance/create-scenario-profile.mjs'],{encoding:'utf8'}));
 const proof={sourceCommit:build.sourceCommit,startedAt:new Date().toISOString(),scope:'Actual Windows Electron windows and UI on fresh offline QA account. Native OS input records are separate from Chromium control clicks. No physical second display, production data, GPS or old grant.',scenario,checks:[],errors:[],uncovered:['D05 multi-DPI/monitor','D08 physical click-through/fullscreen policy','D09 physical taskbar/tray menu']};
+proof.executionMode=restartOnly?'restart-only: D02 ten-drag regression intentionally not rerun':'desktop-subset';
+if(restartOnly)proof.uncovered.push('D02 ten-drag regression not rerun in this restart-only execution');
 const save=()=>writeFileSync(join(output,'evidence.json'),JSON.stringify(proof,null,2));
 const credentials={provider:'local',account:`desktop_${Date.now()}`,username:'隔离桌面验收',password:`Fixture-${randomUUID()}!`,rememberSession:false};
 const disposable=realpathSync.native(mkdtempSync(join(realpathSync.native(tmpdir()),'lingjing-offline-desktop-')));
@@ -202,13 +206,42 @@ try{
    assert.deepEqual(await invoke('companions','get',{petId:pets[1].petId}),other);
    assert.ok(Math.abs(half.native.bounds.width-115)<=1&&Math.abs(twice.native.bounds.width-460)<=1);
    await pressScale('Home',2,.5);
-   for(let n=0;n<10;n++)await pressScale('ArrowRight',.5+n*.05,.55+n*.05);
-   await settled(1);
-   return {half:{bounds:half.native.bounds,scale:half.saved.desktop.scale},twice:{bounds:twice.native.bounds,scale:twice.saved.desktop.scale},otherUnchanged:true};
+   const finalScale=restartOnly?.75:1;
+   for(let n=0;n<(restartOnly?5:10);n++)await pressScale('ArrowRight',.5+n*.05,.55+n*.05);
+   await settled(finalScale);
+   return {half:{bounds:half.native.bounds,scale:half.saved.desktop.scale},twice:{bounds:twice.native.bounds,scale:twice.saved.desktop.scale},otherUnchanged:true,retainedScaleForRestart:finalScale};
  });
- await caseRun('D02-ten-native-drags',async()=>{const otherBefore=await invoke('companions','get',{petId:pets[1].petId}),ownGrowth=(await invoke('companions','get',{petId:pets[0].petId})).growth;const records=[];for(let n=0;n<10;n++){const current=await metrics(pets[0]),area=current.native.display.workArea;const x=area.x+Math.min(140+(n%2)*80,area.width-current.native.bounds.width),y=area.y+Math.min(160+(n%2)*60,area.height-current.native.bounds.height);records.push(await drag(pets[0],{x,y}));}const stable=records.map(r=>r.after);assert.ok(Math.max(...stable.map(x=>x.bounds.width))-Math.min(...stable.map(x=>x.bounds.width))<=1);assert.ok(Math.max(...stable.map(x=>x.bounds.height))-Math.min(...stable.map(x=>x.bounds.height))<=1);assert.ok(stable.every(x=>x.scale===1));assert.deepEqual(await invoke('companions','get',{petId:pets[1].petId}),otherBefore);assert.deepEqual((await invoke('companions','get',{petId:pets[0].petId})).growth,ownGrowth);return records;});
+ if(!restartOnly)await caseRun('D02-ten-native-drags',async()=>{const otherBefore=await invoke('companions','get',{petId:pets[1].petId}),ownGrowth=(await invoke('companions','get',{petId:pets[0].petId})).growth;const records=[];for(let n=0;n<10;n++){const current=await metrics(pets[0]),area=current.native.display.workArea;const x=area.x+Math.min(140+(n%2)*80,area.width-current.native.bounds.width),y=area.y+Math.min(160+(n%2)*60,area.height-current.native.bounds.height);records.push(await drag(pets[0],{x,y}));}const stable=records.map(r=>r.after);assert.ok(Math.max(...stable.map(x=>x.bounds.width))-Math.min(...stable.map(x=>x.bounds.width))<=1);assert.ok(Math.max(...stable.map(x=>x.bounds.height))-Math.min(...stable.map(x=>x.bounds.height))<=1);assert.ok(stable.every(x=>x.scale===1));assert.deepEqual(await invoke('companions','get',{petId:pets[1].petId}),otherBefore);assert.deepEqual((await invoke('companions','get',{petId:pets[0].petId})).growth,ownGrowth);return records;});
  await caseRun('D03-edge-drag',async()=>{if(mouseBlocked)throw Error('NATIVE_INPUT_BLOCKED');const records=[];for(const side of ['left','right','top','bottom']){const m=await metrics(pets[0]),a=m.native.display.workArea,b=m.native.bounds,target={x:b.x,y:b.y};if(side==='left')target.x=a.x;if(side==='right')target.x=a.x+a.width-b.width;if(side==='top')target.y=a.y;if(side==='bottom')target.y=a.y+a.height-b.height;const r=await drag(pets[0],target);assert.ok(r.after.bounds.x>=a.x&&r.after.bounds.y>=a.y&&r.after.bounds.x+r.after.bounds.width<=a.x+a.width+1&&r.after.bounds.y+r.after.bounds.height<=a.y+a.height+1);records.push({side,...r});}return records;});
- await caseRun('D06-restart-same-instance',async()=>{const before=(await invoke('companions','list')).pets.map(p=>({petId:p.petId,desktop:p.desktop,growth:p.growth}));await app.close();app=null;await open();assert.equal((await invoke('accounts','session')).currentUser,null);await invoke('accounts','login',credentials);await count(2);const after=(await invoke('companions','list')).pets.map(p=>({petId:p.petId,desktop:p.desktop,growth:p.growth}));assert.deepEqual(after,before);return {before,after};});
+ await caseRun('D06-restart-same-instance',async()=>{
+   const savedRoster=async()=>(await invoke('companions','list')).pets.map(p=>({petId:p.petId,desktop:p.desktop,growth:p.growth}));
+   const capture=async roster=>{
+     const windows=await inventory(),visiblePets=roster.filter(p=>p.desktop.visible),rows=[];
+     assert.equal(windows.filter(w=>w.visible).length,visiblePets.length,'Unexpected visible companion window');
+     assert.equal(new Set(windows.map(w=>w.url)).size,windows.length,'Duplicate same-pet window');
+     assert.ok(windows.every(w=>roster.some(p=>w.url.endsWith('/desktop/'+encodeURIComponent(p.petId)))),'Unknown pet window');
+     for(const pet of visiblePets){
+       const exact=windows.filter(w=>w.url.endsWith('/desktop/'+encodeURIComponent(pet.petId)));
+       assert.equal(exact.length,1,'Expected exactly one original pet window');
+       const m=await metrics(pet),area=m.native.display.workArea,b=m.native.bounds;
+       const expected={width:Math.round(230*pet.desktop.scale),height:Math.round(280*pet.desktop.scale)};
+       assert.equal(b.width,expected.width);assert.equal(b.height,expected.height);
+       assert.ok(b.x>=area.x&&b.y>=area.y&&b.x+b.width<=area.x+area.width&&b.y+b.height<=area.y+area.height,'Restored window outside effective work area');
+       const safeSaved={x:Math.round(Math.min(Math.max(pet.desktop.position.x,area.x),Math.max(area.x,area.x+area.width-b.width))),y:Math.round(Math.min(Math.max(pet.desktop.position.y,area.y),Math.max(area.y,area.y+area.height-b.height)))};
+       assert.equal(b.x,safeSaved.x);assert.equal(b.y,safeSaved.y);
+       rows.push({petId:pet.petId,windowId:m.native.id,url:m.native.url,bounds:b,workArea:area,scale:pet.desktop.scale,savedPosition:pet.desktop.position,canvas:m.dom.canvas,visual:m.dom.visual,dpr:m.dom.dpr});
+     }
+     return rows.sort((a,b)=>a.petId.localeCompare(b.petId));
+   };
+   const before=await savedRoster();
+   if(restartOnly)assert.equal(before.find(p=>p.petId===pets[0].petId).desktop.scale,.75,'Non-default size must remain selected through restart');
+   const nativeBefore=await capture(before);proof.restartGeometry={nativeBefore};save();
+   await app.close();app=null;await open();assert.equal((await invoke('accounts','session')).currentUser,null);await invoke('accounts','login',credentials);await count(2);
+   const after=await savedRoster();assert.deepEqual(after,before);
+   const nativeAfter=await capture(after);proof.restartGeometry.nativeAfter=nativeAfter;save();
+   assert.deepEqual(nativeAfter.map(({windowId,url,...geometry})=>geometry),nativeBefore.map(({windowId,url,...geometry})=>geometry),'Original pet native position/size/canvas/DPR changed across restart');
+   return {before,after,nativeBefore,nativeAfter,nonDefaultScaleCovered:restartOnly,extraPetRecords:false,extraPetWindows:false};
+ });
  await caseRun('D07-behavior-ui-subset',async()=>{await detail(pets[0]);const rows=[];for(const [mode,label] of [['sleep','好好休息'],['quiet','安静陪伴']]){await main.locator('.cp-behavior-select').click();await main.getByRole('option',{name:label,exact:true}).click();await poll(()=>invoke('companions','get',{petId:pets[0].petId}),p=>p.desktop.behavior===mode,'Behavior not saved');const page=await desktop(pets[0]);await page.waitForFunction(mode=>document.querySelector('.cp-desktop-surface')?.classList.contains('is-sleeping')===(mode==='sleep'),mode);await page.waitForFunction(action=>document.querySelector('.resource-stage')?.getAttribute('data-action')===action,mode==='sleep'?'sleep':'idle');rows.push({mode,actualClass:await page.locator('.cp-desktop-surface').getAttribute('class'),action:await page.locator('.resource-stage').getAttribute('data-action')});}return {rows,notCovered:['wander/follow physical cursor trajectory','right-click control','physical click-through']};});
  proof.passed=proof.checks.every(c=>c.status==='passed-isolated-subset');
 }catch(error){proof.failure=String(error);proof.passed=false;}

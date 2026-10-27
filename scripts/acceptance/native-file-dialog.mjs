@@ -50,18 +50,32 @@ function validateFile(scope,filePath,kind){
 }
 const controller=String.raw`param([Parameter(Mandatory=$true)][string]$SettingsFile)
 $ErrorActionPreference='Stop'
+$ProgressPreference='SilentlyContinue'
+# Never discover modules through inherited/user/network module search paths.
+$PSModuleAutoLoadingPreference='None'
 # Literal ASCII phase must not depend on ConvertTo-Json/module autoload.
 [Console]::Out.WriteLine('{"phase":"controller-script-entered"}');[Console]::Out.Flush()
 [Console]::OutputEncoding=[System.Text.UTF8Encoding]::new($false)
-function Emit($value){[Console]::Out.WriteLine(($value|ConvertTo-Json -Compress -Depth 6));[Console]::Out.Flush()}
+# Windows PowerShell 5 runs on .NET Framework. DeserializeObject does not
+# instantiate caller-specified types; only the flat owned controller JSON is read.
+[void][System.Reflection.Assembly]::Load('System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35')
+$json=[System.Web.Script.Serialization.JavaScriptSerializer]::new()
+$json.MaxJsonLength=65536
+$json.RecursionLimit=16
+function Emit($value){[Console]::Out.WriteLine($json.Serialize($value));[Console]::Out.Flush()}
 [Console]::Out.WriteLine('{"phase":"controller-started"}');[Console]::Out.Flush()
 # Read only the exact settings file created by this operation. Avoid the
 # Management Get-Content/provider initialization path; retain JSON parsing.
 $settingsText=[System.IO.File]::ReadAllText($SettingsFile,[System.Text.Encoding]::UTF8)
 [Console]::Out.WriteLine('{"phase":"settings-text-read"}');[Console]::Out.Flush()
-$c=ConvertFrom-Json -InputObject $settingsText
+if($settingsText.Length -gt 65536){throw 'OWNED_SETTINGS_TOO_LARGE'}
+$c=$json.DeserializeObject($settingsText)
 [Console]::Out.WriteLine('{"phase":"settings-json-parsed"}');[Console]::Out.Flush()
 [Console]::Out.WriteLine('{"phase":"settings-read"}');[Console]::Out.Flush()
+# Add-Type is needed for the unchanged Win32/UIA declarations. Import only the
+# trusted binary beside this exact system PowerShell host, not module discovery.
+Microsoft.PowerShell.Core\Import-Module -Name ([System.IO.Path]::Combine($PSHOME,'Microsoft.PowerShell.Commands.Utility.dll')) -ErrorAction Stop
+Emit @{phase='system-utility-loaded'}
 Add-Type -AssemblyName UIAutomationClient
 Add-Type -AssemblyName UIAutomationTypes
 Emit @{phase='uia-assemblies-loaded'}
@@ -135,7 +149,7 @@ try{
   }
   $fg=[OwnedDialogNative]::GetForegroundWindow()
   if($fg -ne $owner -and [OwnedDialogNative]::Pid($fg) -ne $ownerPid){throw 'FOREGROUND_LEFT_OWNED_PROCESS'}
-  Start-Sleep -Milliseconds 100
+  [System.Threading.Thread]::Sleep(100)
  }
  if($dialog -eq [IntPtr]::Zero){throw 'EXPECTED_NATIVE_DIALOG_NOT_FOUND'}
  Dialog-Still-Exact $dialog
@@ -161,12 +175,16 @@ try{
  }
  if($actions.Count -ne 1){throw 'UNIQUE_EXPECTED_OPEN_SAVE_ACTION_NOT_FOUND'}
  Dialog-Still-Exact $dialog
- if($c.kind -eq 'save' -and (Test-Path -LiteralPath $c.filePath)){throw 'SAVE_TARGET_APPEARED_REFUSE_OVERWRITE'}
+ if($c.kind -eq 'save' -and ([System.IO.File]::Exists([string]$c.filePath) -or [System.IO.Directory]::Exists([string]$c.filePath))){throw 'SAVE_TARGET_APPEARED_REFUSE_OVERWRITE'}
  $candidates[0].pattern.SetValue([string]$c.filePath)
  if($candidates[0].pattern.Current.Value -cne [string]$c.filePath){throw 'FILENAME_VALUE_READBACK_MISMATCH'}
  Dialog-Still-Exact $dialog
- if($c.kind -eq 'save' -and (Test-Path -LiteralPath $c.filePath)){throw 'SAVE_TARGET_APPEARED_REFUSE_OVERWRITE'}
- if($c.kind -eq 'open' -and (Get-FileHash -LiteralPath $c.filePath -Algorithm SHA256).Hash.ToLowerInvariant() -cne [string]$c.expectedSha256){throw 'OPEN_FIXTURE_CHANGED_BEFORE_INVOKE'}
+ if($c.kind -eq 'save' -and ([System.IO.File]::Exists([string]$c.filePath) -or [System.IO.Directory]::Exists([string]$c.filePath))){throw 'SAVE_TARGET_APPEARED_REFUSE_OVERWRITE'}
+ if($c.kind -eq 'open'){
+  $hasher=[System.Security.Cryptography.SHA256]::Create()
+  try{$actualHash=[System.BitConverter]::ToString($hasher.ComputeHash([System.IO.File]::ReadAllBytes([string]$c.filePath))).Replace('-','').ToLowerInvariant()}finally{$hasher.Dispose()}
+  if($actualHash -cne [string]$c.expectedSha256){throw 'OPEN_FIXTURE_CHANGED_BEFORE_INVOKE'}
+ }
  Emit @{phase='filename-verified';dialogHandle=$dialog.ToInt64().ToString();editAutomationId=$candidates[0].id;action=$actions[0].name}
  $actions[0].pattern.Invoke()
  while([DateTime]::UtcNow -lt $deadline){
@@ -177,7 +195,7 @@ try{
   }
   # Includes overwrite/error/credential subdialogs: never accept or type in them.
   if([OwnedDialogNative]::GetForegroundWindow() -ne $dialog){throw 'UNEXPECTED_SECONDARY_DIALOG_OR_FOREGROUND'}
-  Start-Sleep -Milliseconds 100
+  [System.Threading.Thread]::Sleep(100)
  }
  throw 'NATIVE_DIALOG_DID_NOT_CLOSE'
 }catch{Emit @{phase='failed';message=$_.Exception.Message};exit 1}
