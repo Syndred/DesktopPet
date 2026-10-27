@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "evidenceLevel": "Human-reviewed acceptance summary, not raw execution evidence. Full receipts are not published in this repository.",
+  "runUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40493798065",
+  "artifactUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40493798065/artifacts/12730456183",
+  "artifactZipSha256": "2ab77f4a222209fcfc01d9e556793ee5c24deb02fe41fc3ac86faee874f7bf11",
+  "executionScope": "Audited Windows portable application, isolated offline test fixture on a disposable cloud runner. No user devices or production-cloud validation.",
+  "caseConclusions": {
+    "P04": {
+      "status": "passed_current_native",
+      "originalRequirement": "Normal UI backup export and file validation: complete modules, excluded credentials, explicit provenance.",
+      "reviewedResult": "Native file selection and normal application export completed; module completeness, credential exclusion, provenance, checksum and embedded resource bytes were checked."
+    },
+    "P06": {
+      "status": "passed_current_native",
+      "originalRequirement": "Reject damaged or other-identity backup with clear feedback and preserve original data.",
+      "reviewedResult": "Damaged input and a backup selected under a separately registered test identity were rejected through normal UI. Original data and backup bytes remained unchanged."
+    },
+    "P05": {
+      "status": "partial_current_native",
+      "reviewedResult": "Local settings restoration and automatic pre-restore protection were verified.",
+      "remaining": "The historical cloud-memory delete-and-reimport scenario using the original record identity remains unverified."
+    },
+    "R05": {
+      "status": "partial_current_native",
+      "reviewedResult": "Same-profile resource-cache recovery from backup and preservation of existing data were verified offline.",
+      "remaining": "The original same-owner second ordinary-profile UI restoration requirement remains unverified."
+    },
+    "A13": {
+      "status": "not_executed_current_native",
+      "reviewedResult": "No new-account cloud save-confirmation acceptance was performed."
+    }
+  },
+  "qualification": [
+    "Successful native dialog interactions are actions, not additional acceptance cases.",
+    "Actual interaction used Windows native controls; UIA reflection checks are not UIA interaction evidence.",
+    "Raw legacy partial/UIA wording was reviewed against actual backend and original case requirements; raw evidence was not edited.",
+    "This summary does not establish production-cloud authority or completion of all acceptance cases."
+  ]
+}
