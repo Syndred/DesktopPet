@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "evidenceLevel": "Human-reviewed public acceptance summary only; no raw receipts or internal coverage matrix.",
+  "runUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40500938395",
+  "artifactUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40500938395/artifacts/12733531471",
+  "artifactZipSha256": "5da52f634f8775e1bbbc32ddeb7e99490afda8f84431f52985ddc8581ff0e3d1",
+  "packageScope": "New audited Windows portable package with a narrowly scoped desktop-pet context-menu fix; tested on a disposable cloud runner using isolated offline fixtures, not user devices or production cloud.",
+  "acceptanceConclusion": {
+    "acceptedOriginalCases": 57,
+    "newlyCompletedOriginalCase": "D07",
+    "comparison": "Previously accepted 56 original cases remain source-bound after impact review; D07 adds one. This does not mean 57 full cases were rerun on the new package.",
+    "executionDistinction": "One original case was fully exercised on this new package. The other 56 accepted cases retain exact-version prior evidence, with reviewed unaffected paths or explicitly mixed affected-path support. Incomplete cases remain incomplete."
+  },
+  "newPackageFindings": {
+    "D07": "Normal quiet, wandering and cursor-follow behavior, actual right-click menu cancellation, interaction affecting only the intended pet, and recall of only that pet satisfy the original case.",
+    "D02": "One actual affected-path drag shows no accidental interaction. Combined with prior complete repeated-drag evidence and unchanged geometry paths, acceptance is retained as mixed/reused support—not a new ten-drag test.",
+    "D08": "Only own-pet hit/miss after closing the menu was exercised. Full-screen and other-application behavior remain unverified; case remains partial."
+  },
+  "impactQualification": "Product changes are confined to the desktop pet renderer and its scoped menu styling. Unchanged account, backup, resource-management, cloud, battle, garden, main-window navigation, settings and tray paths retain earlier evidence and its original limitations. Prior desktop geometry and restart results are retained with explicit mixed support, not presented as new-package reruns.",
+  "publicationBoundary": "The complete versioned matrix and detailed execution evidence remain local and are not published here. Public traceability is limited to the existing workflow artifact and whole-archive checksum."
+}
