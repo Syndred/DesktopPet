@@ -52,7 +52,7 @@ $contracts=@{
  'AutomationElement.FindAll'=([System.Windows.Automation.AutomationElement].GetMethod('FindAll',[type[]]@([System.Windows.Automation.TreeScope],[System.Windows.Automation.Condition])) -ne $null)
  'AutomationElement.ProcessIdProperty'=([System.Windows.Automation.AutomationElement].GetField('ProcessIdProperty') -ne $null)
 }
-foreach($property in @('Name','AutomationId','ClassName','BoundingRectangle','ProcessId','IsEnabled','IsOffscreen','ControlType')){$contracts['Current.'+$property]=([System.Windows.Automation.AutomationElement+AutomationElementInformation].GetProperty($property) -ne $null)}
+foreach($property in @('Name','AutomationId','ClassName','BoundingRectangle','ProcessId','IsEnabled','IsOffscreen','ControlType','NativeWindowHandle')){$contracts['Current.'+$property]=([System.Windows.Automation.AutomationElement+AutomationElementInformation].GetProperty($property) -ne $null)}
 foreach($method in @('PrintWindow','GetCursorPos','WindowFromPoint','GetAncestor','GetWindowRect','GetWindowThreadProcessId','MoveAbsolute','Button','Children')){$contracts['Interop.'+$method]=([QATray].GetMethod($method) -ne $null)}
 foreach($key in $contracts.Keys){if(-not $contracts[$key]){throw ('API_CONTRACT_MISSING: '+$key)}}
 if($p.action -eq 'selftest'){@{passed=$true;reflectionOnly=$true;osInputPerformed=$false;contracts=$contracts}|ConvertTo-Json -Depth 4 -Compress;exit}
@@ -128,13 +128,29 @@ try{
   $e=$icons[0].element;$pt=Center $e;$b=$p.trayBounds
   if($b.width -le 0 -or $b.height -le 0 -or $pt.x -lt $b.x -or $pt.y -lt $b.y -or $pt.x -ge ($b.x+$b.width) -or $pt.y -ge ($b.y+$b.height)){throw 'UIA_ICON_DOES_NOT_MATCH_OWN_TRAY_BOUNDS'}
   $report.icon=@{name=$e.Current.Name;bounds=(Rect $e);nativeRoot=$icons[0].root.ToInt64().ToString();trayBounds=$b}
+  $condition=[System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ProcessIdProperty,[int]$p.processId)
+  $beforeRoots=@([System.Windows.Automation.AutomationElement]::RootElement.FindAll([System.Windows.Automation.TreeScope]::Children,$condition)|ForEach-Object {$_.Current.NativeWindowHandle})
   Click $e $icons[0].root $explorer $true;Start-Sleep -Milliseconds 250
   # Search only top-level UIA roots of the exact fresh app PID; never invoke UIA.
   $name=if($p.action -eq 'open'){'打开灵境'}elseif($p.action -eq 'exit'){'退出灵境'}else{throw 'UNSUPPORTED_ACTION'}
   $items=@()
   $condition=[System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ProcessIdProperty,[int]$p.processId)
   $tops=[System.Windows.Automation.AutomationElement]::RootElement.FindAll([System.Windows.Automation.TreeScope]::Children,$condition)
-  foreach($top in $tops){foreach($item in $top.FindAll([System.Windows.Automation.TreeScope]::Descendants,[System.Windows.Automation.Condition]::TrueCondition)){if($item.Current.ProcessId -eq $p.processId -and $item.Current.Name -ceq $name -and $item.Current.ControlType -eq [System.Windows.Automation.ControlType]::MenuItem -and -not $item.Current.IsOffscreen){$items+=$item}}}
+  $fg=[QATray]::GetAncestor([QATray]::GetForegroundWindow(),2)
+  $report.menuDiscovery=@{expectedName=$name;topCount=$tops.Count;foreground=@{hwnd=$fg.ToInt64().ToString();pid=(Owner $fg)};roots=@()}
+  foreach($top in $tops){
+   if($report.menuDiscovery.roots.Count -ge 12){throw 'OWNED_MENU_ROOT_SCAN_LIMIT'}
+   if($top.Current.ProcessId -ne $p.processId -or $beforeRoots -contains $top.Current.NativeWindowHandle){continue}
+   if($top.Current.ControlType -eq [System.Windows.Automation.ControlType]::Menu -and $top.Current.NativeWindowHandle -eq $fg.ToInt64() -and $fg -ne $h -and (Owner $fg) -eq $p.processId -and [QATray]::IsWindowVisible($fg)){CaptureOwnedMenu $p.screenshot $fg}
+   $row=@{controlType=$top.Current.ControlType.ProgrammaticName;nativeWindowHandle=$top.Current.NativeWindowHandle;name=(Short $top.Current.Name);className=(Short $top.Current.ClassName);pid=$top.Current.ProcessId;bounds=(Rect $top);elements=@();skippedForeignProvider=0}
+   foreach($item in $top.FindAll([System.Windows.Automation.TreeScope]::Descendants,[System.Windows.Automation.Condition]::TrueCondition)){
+    if($row.elements.Count -ge 60){$report.menuDiscovery.roots+=$row;throw 'OWNED_MENU_ITEM_SCAN_LIMIT'}
+    $current=$item.Current;if($current.ProcessId -ne $p.processId){$row.skippedForeignProvider++;continue}
+    if($row.elements.Count -lt 60){$row.elements+=@{name=(Short $current.Name);className=(Short $current.ClassName);automationId=(Short $current.AutomationId);controlType=$current.ControlType.ProgrammaticName;pid=$current.ProcessId;offscreen=$current.IsOffscreen;bounds=(Rect $item)}}
+    if($current.Name -ceq $name -and $current.ControlType -eq [System.Windows.Automation.ControlType]::MenuItem -and -not $current.IsOffscreen){$items+=$item}
+   }
+   if($report.menuDiscovery.roots.Count -lt 12){$report.menuDiscovery.roots+=$row}
+  }
   if($items.Count -ne 1){throw 'EXACT_OWNED_MENU_ITEM_UNAVAILABLE'}
   $item=$items[0];$menuRoot=RootAt (Center $item)
   if((Owner $menuRoot) -ne $p.processId){throw 'MENU_NOT_OWNED_BY_APP'}
