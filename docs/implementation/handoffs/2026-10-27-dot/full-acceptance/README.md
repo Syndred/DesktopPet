@@ -2,7 +2,7 @@
 
 ## 当前批次 b5dbcfe（2026-10-27）
 
-[逐项最新矩阵](coverage-b5dbcfe.json)：**21 当前完整原生通过 + 13 经代码影响核对复用 + 22 部分覆盖 + 2 原生输入受阻 + 40 尚未完整执行 = 98**。不是 98 全通过。复用保留原源版本、EXE 和证据 hash，不冒称新包重跑；不受影响项不随纯测试脚本提交清零。详见 [独立复用审查](reuse-original-evidence-review.json)。
+[逐项最新矩阵](coverage-b5dbcfe.json)：**25 当前完整原生通过 + 13 经代码影响核对复用 + 20 部分覆盖 + 0 原生输入受阻 + 40 尚未完整执行 = 98**。不是 98 全通过。复用保留原源版本、EXE 和证据 hash，不冒称新包重跑；不受影响项不随纯测试脚本提交清零。详见 [独立复用审查](reuse-original-evidence-review.json)。
 
 当前实包仍是 b5dbcfe，EXE SHA-256 `ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb`。0fd 测试批次仅修改验收脚本，逐项校验原产品路径、ASAR 审计及包 hash 后复用。
 
@@ -10,7 +10,7 @@
 
 e9 经济真实自然成熟已完成：07:24:43 种稻米，07:49:44 收获，合成2份米饭/不足拒绝、指定宠物一次喂养/快速重复、同档案重启库存回执保持；云同步仍未覆盖。账号 A05/A08/A14、详情 C06 和其他此前完整证据保留。
 
-剩余原生拖拽在按下前被严格 HWND 护栏阻止，不假记通过；正在做真实 compositor 采样与仅移动诊断。原生文件选择器首轮在 controller 初始化阶段超时，bridge 结果仍只算部分证据。生命周期 ba4310 已成功：N04 收起/重复启动召回只算部分；N05 原宠物/业务保全仍用已核复用，加本次恰好一次 second-instance 子集，不重复运行已充分通过项。真实云两专用新账号批次仅准备、尚未注册，须完整模块审查并确认三设备同 scope 后继续；旧冻结记录不变。
+423 批次原生拖拽已通过：D02 同宠物 10 次真实 OS SendInput 拖动，逐次严格 HWND/PID 命中与 trusted 事件，窗口 230×280、canvas 212×247、DPR=1、scale=1 均不累乘。该批是 Windows **开发态 Electron 加载 built dist**，源/验收提交为 `4233936`，经产品路径核对无产品变化；不能写成便携 SFX 拖动验收。见 [原始 artifact 引用与 hash](native-423-receipts/desktop.artifact-reference.json) 和 [独立摘录](native-423-receipts/desktop-independent-summary.json)。ae612 后续 restart-only 已实际成功：D03 四边后原宠物重启实际位置 851,510；D04 甲保持 0.75/173×210、乙保持 1/230×280；D06 逐原 petId 对应窗口的位置、尺寸、canvas、visual、DPR 与原记录重启前后一致且无额外实例，三项原步骤闭环。仍是固定 DPR=1 的开发态 Windows Electron，不冒称 SFX/多显示器测试。见 [ae612 原回执引用](native-ae612-receipts/desktop-restart.artifact-reference.json) 与 [独立摘录](native-ae612-receipts/desktop-restart-independent-summary.json)；D02 未重复运行，保留 423 已通过证据。原生文件选择器首轮在 controller 初始化阶段超时，bridge 结果仍只算部分证据。生命周期 ba4310 已成功：N04 收起/重复启动召回只算部分；N05 原宠物/业务保全仍用已核复用，加本次恰好一次 second-instance 子集，不重复运行已充分通过项。真实云两专用新账号批次仅准备、尚未注册，须完整模块审查并确认三设备同 scope 后继续；旧冻结记录不变。
 
 ## 初始 764aa2e 盘点（历史保留，不是最新数字）
 

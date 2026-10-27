@@ -1,0 +1,49 @@
+{
+  "runId": 40480874976,
+  "harnessCommitPrefix": "8123e459",
+  "jobId": 122110563123,
+  "status": "failed-supervisor-identity-comparison-registration-outcome-unknown",
+  "source": "Parent coordinator verified run logs and artifact metadata; this entry records that observation, not a new execution",
+  "checks": {
+    "requestScopeGuard": "passed",
+    "dependencies": "passed",
+    "packageVerification": "passed"
+  },
+  "failure": {
+    "component": "supervisorStartTime comparison",
+    "classification": "misclassified PID as reused"
+  },
+  "lastObservedHolderState": {
+    "stage": "registering",
+    "attempts": 1,
+    "slot": 1,
+    "at": "2026-10-27T09:28:35.064Z"
+  },
+  "registrationOutcome": "unknown; pending parent database readback; must not assume zero registration or retry with a replacement identity",
+  "businessCases": "not established; no case marked passed",
+  "artifact": {
+    "id": 12723076815,
+    "sha256": "5d9092022bf8ea2b5175ede72284cef0ae81c1056524dde42a44ea0a394534b5",
+    "url": "https://github.com/Syndred/DesktopPet/actions/runs/40480874976/artifacts/12723076815",
+    "contents": "status and package-reuse only; no identities or passwords"
+  },
+  "previousYamlAttempt": {
+    "runId": 40480355872,
+    "jobs": [],
+    "execution": "confirmed no jobs executed"
+  },
+  "matrixImpact": "none; original 98 counts unchanged",
+  "subsequentReadOnlyResolution": {
+    "source": "Parent coordinator exact auth_directory/account_key and auth.users mapping verification",
+    "observedAt": "2026-10-27T09:31:58Z",
+    "a": {
+      "accountKey": "qa20261027a8be246d1",
+      "authUserId": "65dd4c6b-7bfb-435f-840e-d2457c42e692",
+      "ownerAccountId": "account:354d8831-51fc-417b-bc69-19a18b74387b",
+      "status": "active",
+      "createdAt": "2026-10-27T09:28:43.502583Z"
+    },
+    "b": "No directory reservation at the observed time",
+    "recovery": "No re-registration or alternate identity. Password recovery awaits explicit authorization and controlled channel."
+  }
+}

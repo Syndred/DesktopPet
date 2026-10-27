@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "repeated-json-start-ticks-roundtrip",
+      "passed": true
+    },
+    {
+      "name": "changed-start-ticks-rejected",
+      "passed": true
+    },
+    {
+      "name": "numeric-json-ticks-rejected",
+      "passed": true
+    },
+    {
+      "name": "different-image-path-rejected",
+      "passed": true
+    },
+    {
+      "name": "restored-record-exact-pid-stop",
+      "passed": true
+    }
+  ],
+  "ownedProcessStopped": true,
+  "scope": "Offline owned-node supervisor identity selftest; no account, SDK or network",
+  "evidenceBinding": {
+    "runId": 40481878904,
+    "jobId": 122113934982,
+    "sourceCommit": "2d196e987edbe7e4204f7a59e3a5b0d5c4cfacde",
+    "artifactId": 12722998079,
+    "artifactSha256": "eed4a5ba943cc2c7f27e7d38f66f1239c1c8a1c09953169709d3978b2052fd9d"
+  }
+}

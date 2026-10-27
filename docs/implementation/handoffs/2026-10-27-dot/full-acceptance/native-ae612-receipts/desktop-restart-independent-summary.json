@@ -1,0 +1,765 @@
+{
+  "runId": 40481111713,
+  "jobId": 122112307641,
+  "artifactId": 12722113540,
+  "artifactSha256": "2619f08a38da054f86eec3d177d5fa918d69048c40f54de37495f02c3010ca82",
+  "artifactUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40481111713/artifacts/12722113540",
+  "rawReceiptPath": "foundation/cloud-engineering/desktop-subset/run-1793093566105/evidence.json",
+  "rawReceiptSha256": "f4d72c103512823071336a0921d95c2d729351ed81fe4f5fbcc3a06f6cc74fd8",
+  "rawReceiptBytes": 264075,
+  "downloadHashIndependentlyVerified": true,
+  "harnessCommit": "ae6129443a387f9843837e094e95f2d4caab26a0",
+  "runtimeType": "Windows development Electron built dist offline QA wrapper, not ordinary SFX",
+  "storage": "Raw receipt retained in linked artifact; independent summary is not raw receipt replacement",
+  "executionMode": "restart-only: D02 ten-drag regression intentionally not rerun",
+  "startedAt": "2026-10-27T09:32:46.166Z",
+  "completedAt": "2026-10-27T09:33:38.267Z",
+  "passed": true,
+  "D02": "Not rerun; prior 423 original repeated-drag pass retained",
+  "D03": [
+    {
+      "side": "left",
+      "before": {
+        "bounds": {
+          "x": 80,
+          "y": 510,
+          "width": 173,
+          "height": 210
+        },
+        "canvas": {
+          "width": 155,
+          "height": 177
+        },
+        "dpr": 1,
+        "scale": 0.75
+      },
+      "after": {
+        "bounds": {
+          "x": 0,
+          "y": 510,
+          "width": 173,
+          "height": 210
+        },
+        "canvas": {
+          "width": 155,
+          "height": 177
+        },
+        "dpr": 1,
+        "scale": 0.75,
+        "position": {
+          "x": 0,
+          "y": 510,
+          "displayId": "1008516418"
+        }
+      },
+      "guardMatched": true,
+      "trustedDown": true,
+      "trustedUp": true,
+      "allInjectionCountsOneErrorsZero": true
+    },
+    {
+      "side": "right",
+      "before": {
+        "bounds": {
+          "x": 0,
+          "y": 510,
+          "width": 173,
+          "height": 210
+        },
+        "canvas": {
+          "width": 155,
+          "height": 177
+        },
+        "dpr": 1,
+        "scale": 0.75
+      },
+      "after": {
+        "bounds": {
+          "x": 851,
+          "y": 510,
+          "width": 173,
+          "height": 210
+        },
+        "canvas": {
+          "width": 155,
+          "height": 177
+        },
+        "dpr": 1,
+        "scale": 0.75,
+        "position": {
+          "x": 851,
+          "y": 510,
+          "displayId": "1008516418"
+        }
+      },
+      "guardMatched": true,
+      "trustedDown": true,
+      "trustedUp": true,
+      "allInjectionCountsOneErrorsZero": true
+    },
+    {
+      "side": "top",
+      "before": {
+        "bounds": {
+          "x": 851,
+          "y": 510,
+          "width": 173,
+          "height": 210
+        },
+        "canvas": {
+          "width": 155,
+          "height": 177
+        },
+        "dpr": 1,
+        "scale": 0.75
+      },
+      "after": {
+        "bounds": {
+          "x": 851,
+          "y": 0,
+          "width": 173,
+          "height": 210
+        },
+        "canvas": {
+          "width": 155,
+          "height": 177
+        },
+        "dpr": 1,
+        "scale": 0.75,
+        "position": {
+          "x": 851,
+          "y": 0,
+          "displayId": "1008516418"
+        }
+      },
+      "guardMatched": true,
+      "trustedDown": true,
+      "trustedUp": true,
+      "allInjectionCountsOneErrorsZero": true
+    },
+    {
+      "side": "bottom",
+      "before": {
+        "bounds": {
+          "x": 851,
+          "y": 0,
+          "width": 173,
+          "height": 210
+        },
+        "canvas": {
+          "width": 155,
+          "height": 177
+        },
+        "dpr": 1,
+        "scale": 0.75
+      },
+      "after": {
+        "bounds": {
+          "x": 851,
+          "y": 510,
+          "width": 173,
+          "height": 210
+        },
+        "canvas": {
+          "width": 155,
+          "height": 177
+        },
+        "dpr": 1,
+        "scale": 0.75,
+        "position": {
+          "x": 851,
+          "y": 510,
+          "displayId": "1008516418"
+        }
+      },
+      "guardMatched": true,
+      "trustedDown": true,
+      "trustedUp": true,
+      "allInjectionCountsOneErrorsZero": true
+    }
+  ],
+  "D04": {
+    "half": {
+      "bounds": {
+        "x": 80,
+        "y": 520,
+        "width": 115,
+        "height": 140
+      },
+      "scale": 0.5
+    },
+    "twice": {
+      "bounds": {
+        "x": 80,
+        "y": 160,
+        "width": 460,
+        "height": 560
+      },
+      "scale": 2
+    },
+    "otherUnchanged": true,
+    "retainedScaleForRestart": 0.75
+  },
+  "D06": {
+    "before": [
+      {
+        "petId": "pet-9da310f9-a169-48b9-817f-edd5fb8ea481",
+        "desktop": {
+          "visible": true,
+          "behavior": "quiet",
+          "scale": 0.75,
+          "position": {
+            "x": 851,
+            "y": 510,
+            "displayId": "1008516418"
+          }
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-4f0a650b-a4bc-4ec5-a975-398617928fdd",
+        "desktop": {
+          "visible": true,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 320,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-54e7e4cb-0659-4659-9ba2-842da8d3dacb",
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 560,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-99aaa5dd-ee54-4faf-b347-a940db636344",
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 800,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 20,
+            "spd": 22
+          }
+        }
+      },
+      {
+        "petId": "pet-6e721323-d2de-4e64-8f1c-0693e3fee15b",
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 1040,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 136,
+            "atk": 30,
+            "def": 30,
+            "spd": 13
+          }
+        }
+      }
+    ],
+    "after": [
+      {
+        "petId": "pet-9da310f9-a169-48b9-817f-edd5fb8ea481",
+        "desktop": {
+          "visible": true,
+          "behavior": "quiet",
+          "scale": 0.75,
+          "position": {
+            "x": 851,
+            "y": 510,
+            "displayId": "1008516418"
+          }
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-4f0a650b-a4bc-4ec5-a975-398617928fdd",
+        "desktop": {
+          "visible": true,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 320,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-54e7e4cb-0659-4659-9ba2-842da8d3dacb",
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 560,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-99aaa5dd-ee54-4faf-b347-a940db636344",
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 800,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 20,
+            "spd": 22
+          }
+        }
+      },
+      {
+        "petId": "pet-6e721323-d2de-4e64-8f1c-0693e3fee15b",
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 1040,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 136,
+            "atk": 30,
+            "def": 30,
+            "spd": 13
+          }
+        }
+      }
+    ],
+    "nativeBefore": [
+      {
+        "petId": "pet-4f0a650b-a4bc-4ec5-a975-398617928fdd",
+        "windowId": 8,
+        "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-4f0a650b-a4bc-4ec5-a975-398617928fdd",
+        "bounds": {
+          "x": 320,
+          "y": 440,
+          "width": 230,
+          "height": 280
+        },
+        "workArea": {
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 720
+        },
+        "scale": 1,
+        "savedPosition": {
+          "x": 320,
+          "y": 520,
+          "displayId": null
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "visual": {
+          "x": 9,
+          "y": 25,
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1
+      },
+      {
+        "petId": "pet-9da310f9-a169-48b9-817f-edd5fb8ea481",
+        "windowId": 7,
+        "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-9da310f9-a169-48b9-817f-edd5fb8ea481",
+        "bounds": {
+          "x": 851,
+          "y": 510,
+          "width": 173,
+          "height": 210
+        },
+        "workArea": {
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 720
+        },
+        "scale": 0.75,
+        "savedPosition": {
+          "x": 851,
+          "y": 510,
+          "displayId": "1008516418"
+        },
+        "canvas": {
+          "width": 155,
+          "height": 177
+        },
+        "visual": {
+          "x": 9,
+          "y": 25,
+          "width": 155,
+          "height": 177
+        },
+        "dpr": 1
+      }
+    ],
+    "nativeAfter": [
+      {
+        "petId": "pet-4f0a650b-a4bc-4ec5-a975-398617928fdd",
+        "windowId": 5,
+        "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-4f0a650b-a4bc-4ec5-a975-398617928fdd",
+        "bounds": {
+          "x": 320,
+          "y": 440,
+          "width": 230,
+          "height": 280
+        },
+        "workArea": {
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 720
+        },
+        "scale": 1,
+        "savedPosition": {
+          "x": 320,
+          "y": 520,
+          "displayId": null
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "visual": {
+          "x": 9,
+          "y": 25,
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1
+      },
+      {
+        "petId": "pet-9da310f9-a169-48b9-817f-edd5fb8ea481",
+        "windowId": 4,
+        "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-9da310f9-a169-48b9-817f-edd5fb8ea481",
+        "bounds": {
+          "x": 851,
+          "y": 510,
+          "width": 173,
+          "height": 210
+        },
+        "workArea": {
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 720
+        },
+        "scale": 0.75,
+        "savedPosition": {
+          "x": 851,
+          "y": 510,
+          "displayId": "1008516418"
+        },
+        "canvas": {
+          "width": 155,
+          "height": 177
+        },
+        "visual": {
+          "x": 9,
+          "y": 25,
+          "width": 155,
+          "height": 177
+        },
+        "dpr": 1
+      }
+    ],
+    "nonDefaultScaleCovered": true,
+    "extraPetRecords": false,
+    "extraPetWindows": false
+  },
+  "restartGeometry": {
+    "nativeBefore": [
+      {
+        "petId": "pet-4f0a650b-a4bc-4ec5-a975-398617928fdd",
+        "windowId": 8,
+        "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-4f0a650b-a4bc-4ec5-a975-398617928fdd",
+        "bounds": {
+          "x": 320,
+          "y": 440,
+          "width": 230,
+          "height": 280
+        },
+        "workArea": {
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 720
+        },
+        "scale": 1,
+        "savedPosition": {
+          "x": 320,
+          "y": 520,
+          "displayId": null
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "visual": {
+          "x": 9,
+          "y": 25,
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1
+      },
+      {
+        "petId": "pet-9da310f9-a169-48b9-817f-edd5fb8ea481",
+        "windowId": 7,
+        "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-9da310f9-a169-48b9-817f-edd5fb8ea481",
+        "bounds": {
+          "x": 851,
+          "y": 510,
+          "width": 173,
+          "height": 210
+        },
+        "workArea": {
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 720
+        },
+        "scale": 0.75,
+        "savedPosition": {
+          "x": 851,
+          "y": 510,
+          "displayId": "1008516418"
+        },
+        "canvas": {
+          "width": 155,
+          "height": 177
+        },
+        "visual": {
+          "x": 9,
+          "y": 25,
+          "width": 155,
+          "height": 177
+        },
+        "dpr": 1
+      }
+    ],
+    "nativeAfter": [
+      {
+        "petId": "pet-4f0a650b-a4bc-4ec5-a975-398617928fdd",
+        "windowId": 5,
+        "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-4f0a650b-a4bc-4ec5-a975-398617928fdd",
+        "bounds": {
+          "x": 320,
+          "y": 440,
+          "width": 230,
+          "height": 280
+        },
+        "workArea": {
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 720
+        },
+        "scale": 1,
+        "savedPosition": {
+          "x": 320,
+          "y": 520,
+          "displayId": null
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "visual": {
+          "x": 9,
+          "y": 25,
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1
+      },
+      {
+        "petId": "pet-9da310f9-a169-48b9-817f-edd5fb8ea481",
+        "windowId": 4,
+        "url": "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-9da310f9-a169-48b9-817f-edd5fb8ea481",
+        "bounds": {
+          "x": 851,
+          "y": 510,
+          "width": 173,
+          "height": 210
+        },
+        "workArea": {
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 720
+        },
+        "scale": 0.75,
+        "savedPosition": {
+          "x": 851,
+          "y": 510,
+          "displayId": "1008516418"
+        },
+        "canvas": {
+          "width": 155,
+          "height": 177
+        },
+        "visual": {
+          "x": 9,
+          "y": 25,
+          "width": 155,
+          "height": 177
+        },
+        "dpr": 1
+      }
+    ]
+  },
+  "scope": "D03/D04/D06 original steps now observed on single DPR1 Windows Electron. No SFX/multi-DPI claim; no manufactured out-of-bounds profile injection."
+}

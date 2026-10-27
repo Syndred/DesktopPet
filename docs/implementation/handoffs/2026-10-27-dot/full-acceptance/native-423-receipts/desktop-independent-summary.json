@@ -1,0 +1,1306 @@
+{
+  "runId": 40478560628,
+  "jobId": 122103604893,
+  "artifactId": 12722126170,
+  "artifactSha256": "34da39aca8b3d8a8c3f2b19d8f6444166a215c5e92b774065bc855b2d8cb0deb",
+  "artifactUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40478560628/artifacts/12722126170",
+  "rawReceiptPath": "foundation/cloud-engineering/desktop-subset/run-1793092337693/evidence.json",
+  "rawReceiptSha256": "b8ec4b52c0feb29791e4f64fdfd8204b26a0218a344641ebaf8d8d943541d32a",
+  "rawReceiptBytes": 752832,
+  "downloadHashIndependentlyVerified": true,
+  "scope": "Independent read-only extraction from the exact raw receipt, not a replacement for raw evidence",
+  "harnessCommit": "4233936818286bb281e9a900f07a44dc6ebd613c",
+  "runtimeType": "Windows Electron built dist via isolated offline wrapper, not ordinary portable SFX",
+  "productPathsUnchanged": true,
+  "startedAt": "2026-10-27T09:12:17.755Z",
+  "completedAt": "2026-10-27T09:14:06.329Z",
+  "D02": [
+    {
+      "index": 1,
+      "side": null,
+      "before": {
+        "bounds": {
+          "x": 80,
+          "y": 440,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1
+      },
+      "after": {
+        "bounds": {
+          "x": 140,
+          "y": 160,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1,
+        "position": {
+          "x": 140,
+          "y": 160,
+          "displayId": "1598540943"
+        }
+      },
+      "points": {
+        "from": {
+          "x": 195,
+          "y": 588
+        },
+        "to": {
+          "x": 255,
+          "y": 308
+        },
+        "bounds": {
+          "x": 80,
+          "y": 440,
+          "width": 230,
+          "height": 280
+        },
+        "processId": 7096,
+        "windowHandle": "262228"
+      },
+      "actualRootHandle": "262228",
+      "actualRootPid": 7096,
+      "injectionCount": 19,
+      "allInjectionCountsOneErrorsZero": true,
+      "eventTypes": {
+        "pointerenter": 15,
+        "mouseenter": 16,
+        "pointermove": 26,
+        "mousemove": 26,
+        "pointerdown": 1,
+        "pointerleave": 5,
+        "mouseleave": 5,
+        "pointerup": 2
+      },
+      "allEventsTrusted": true
+    },
+    {
+      "index": 2,
+      "side": null,
+      "before": {
+        "bounds": {
+          "x": 140,
+          "y": 160,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1
+      },
+      "after": {
+        "bounds": {
+          "x": 220,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1,
+        "position": {
+          "x": 220,
+          "y": 220,
+          "displayId": "1598540943"
+        }
+      },
+      "points": {
+        "from": {
+          "x": 255,
+          "y": 308
+        },
+        "to": {
+          "x": 335,
+          "y": 368
+        },
+        "bounds": {
+          "x": 140,
+          "y": 160,
+          "width": 230,
+          "height": 280
+        },
+        "processId": 7096,
+        "windowHandle": "262228"
+      },
+      "actualRootHandle": "262228",
+      "actualRootPid": 7096,
+      "injectionCount": 19,
+      "allInjectionCountsOneErrorsZero": true,
+      "eventTypes": {
+        "pointermove": 26,
+        "mousemove": 26,
+        "pointerdown": 1,
+        "pointerleave": 5,
+        "mouseleave": 5,
+        "pointerup": 2,
+        "pointerenter": 5,
+        "mouseenter": 5
+      },
+      "allEventsTrusted": true
+    },
+    {
+      "index": 3,
+      "side": null,
+      "before": {
+        "bounds": {
+          "x": 220,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1
+      },
+      "after": {
+        "bounds": {
+          "x": 140,
+          "y": 160,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1,
+        "position": {
+          "x": 140,
+          "y": 160,
+          "displayId": "1598540943"
+        }
+      },
+      "points": {
+        "from": {
+          "x": 335,
+          "y": 368
+        },
+        "to": {
+          "x": 255,
+          "y": 308
+        },
+        "bounds": {
+          "x": 220,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "processId": 7096,
+        "windowHandle": "262228"
+      },
+      "actualRootHandle": "262228",
+      "actualRootPid": 7096,
+      "injectionCount": 19,
+      "allInjectionCountsOneErrorsZero": true,
+      "eventTypes": {
+        "pointermove": 26,
+        "mousemove": 26,
+        "pointerdown": 1,
+        "pointerleave": 5,
+        "mouseleave": 5,
+        "pointerup": 2,
+        "pointerenter": 5,
+        "mouseenter": 5
+      },
+      "allEventsTrusted": true
+    },
+    {
+      "index": 4,
+      "side": null,
+      "before": {
+        "bounds": {
+          "x": 140,
+          "y": 160,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1
+      },
+      "after": {
+        "bounds": {
+          "x": 220,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1,
+        "position": {
+          "x": 220,
+          "y": 220,
+          "displayId": "1598540943"
+        }
+      },
+      "points": {
+        "from": {
+          "x": 255,
+          "y": 308
+        },
+        "to": {
+          "x": 335,
+          "y": 368
+        },
+        "bounds": {
+          "x": 140,
+          "y": 160,
+          "width": 230,
+          "height": 280
+        },
+        "processId": 7096,
+        "windowHandle": "262228"
+      },
+      "actualRootHandle": "262228",
+      "actualRootPid": 7096,
+      "injectionCount": 19,
+      "allInjectionCountsOneErrorsZero": true,
+      "eventTypes": {
+        "pointermove": 26,
+        "mousemove": 26,
+        "pointerdown": 1,
+        "pointerleave": 5,
+        "mouseleave": 5,
+        "pointerup": 2,
+        "pointerenter": 5,
+        "mouseenter": 5
+      },
+      "allEventsTrusted": true
+    },
+    {
+      "index": 5,
+      "side": null,
+      "before": {
+        "bounds": {
+          "x": 220,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1
+      },
+      "after": {
+        "bounds": {
+          "x": 140,
+          "y": 160,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1,
+        "position": {
+          "x": 140,
+          "y": 160,
+          "displayId": "1598540943"
+        }
+      },
+      "points": {
+        "from": {
+          "x": 335,
+          "y": 368
+        },
+        "to": {
+          "x": 255,
+          "y": 308
+        },
+        "bounds": {
+          "x": 220,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "processId": 7096,
+        "windowHandle": "262228"
+      },
+      "actualRootHandle": "262228",
+      "actualRootPid": 7096,
+      "injectionCount": 19,
+      "allInjectionCountsOneErrorsZero": true,
+      "eventTypes": {
+        "pointermove": 27,
+        "mousemove": 27,
+        "pointerdown": 1,
+        "pointerleave": 5,
+        "mouseleave": 5,
+        "pointerup": 2,
+        "pointerenter": 5,
+        "mouseenter": 5
+      },
+      "allEventsTrusted": true
+    },
+    {
+      "index": 6,
+      "side": null,
+      "before": {
+        "bounds": {
+          "x": 140,
+          "y": 160,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1
+      },
+      "after": {
+        "bounds": {
+          "x": 220,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1,
+        "position": {
+          "x": 220,
+          "y": 220,
+          "displayId": "1598540943"
+        }
+      },
+      "points": {
+        "from": {
+          "x": 255,
+          "y": 308
+        },
+        "to": {
+          "x": 335,
+          "y": 368
+        },
+        "bounds": {
+          "x": 140,
+          "y": 160,
+          "width": 230,
+          "height": 280
+        },
+        "processId": 7096,
+        "windowHandle": "262228"
+      },
+      "actualRootHandle": "262228",
+      "actualRootPid": 7096,
+      "injectionCount": 19,
+      "allInjectionCountsOneErrorsZero": true,
+      "eventTypes": {
+        "pointermove": 26,
+        "mousemove": 26,
+        "pointerdown": 1,
+        "pointerleave": 5,
+        "mouseleave": 5,
+        "pointerup": 2,
+        "pointerenter": 5,
+        "mouseenter": 5
+      },
+      "allEventsTrusted": true
+    },
+    {
+      "index": 7,
+      "side": null,
+      "before": {
+        "bounds": {
+          "x": 220,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1
+      },
+      "after": {
+        "bounds": {
+          "x": 140,
+          "y": 160,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1,
+        "position": {
+          "x": 140,
+          "y": 160,
+          "displayId": "1598540943"
+        }
+      },
+      "points": {
+        "from": {
+          "x": 335,
+          "y": 368
+        },
+        "to": {
+          "x": 255,
+          "y": 308
+        },
+        "bounds": {
+          "x": 220,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "processId": 7096,
+        "windowHandle": "262228"
+      },
+      "actualRootHandle": "262228",
+      "actualRootPid": 7096,
+      "injectionCount": 19,
+      "allInjectionCountsOneErrorsZero": true,
+      "eventTypes": {
+        "pointermove": 26,
+        "mousemove": 26,
+        "pointerdown": 1,
+        "pointerleave": 5,
+        "mouseleave": 5,
+        "pointerup": 2,
+        "pointerenter": 5,
+        "mouseenter": 5
+      },
+      "allEventsTrusted": true
+    },
+    {
+      "index": 8,
+      "side": null,
+      "before": {
+        "bounds": {
+          "x": 140,
+          "y": 160,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1
+      },
+      "after": {
+        "bounds": {
+          "x": 220,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1,
+        "position": {
+          "x": 220,
+          "y": 220,
+          "displayId": "1598540943"
+        }
+      },
+      "points": {
+        "from": {
+          "x": 255,
+          "y": 308
+        },
+        "to": {
+          "x": 335,
+          "y": 368
+        },
+        "bounds": {
+          "x": 140,
+          "y": 160,
+          "width": 230,
+          "height": 280
+        },
+        "processId": 7096,
+        "windowHandle": "262228"
+      },
+      "actualRootHandle": "262228",
+      "actualRootPid": 7096,
+      "injectionCount": 19,
+      "allInjectionCountsOneErrorsZero": true,
+      "eventTypes": {
+        "pointermove": 26,
+        "mousemove": 26,
+        "pointerdown": 1,
+        "pointerleave": 5,
+        "mouseleave": 5,
+        "pointerup": 2,
+        "pointerenter": 5,
+        "mouseenter": 5
+      },
+      "allEventsTrusted": true
+    },
+    {
+      "index": 9,
+      "side": null,
+      "before": {
+        "bounds": {
+          "x": 220,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1
+      },
+      "after": {
+        "bounds": {
+          "x": 140,
+          "y": 160,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1,
+        "position": {
+          "x": 140,
+          "y": 160,
+          "displayId": "1598540943"
+        }
+      },
+      "points": {
+        "from": {
+          "x": 335,
+          "y": 368
+        },
+        "to": {
+          "x": 255,
+          "y": 308
+        },
+        "bounds": {
+          "x": 220,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "processId": 7096,
+        "windowHandle": "262228"
+      },
+      "actualRootHandle": "262228",
+      "actualRootPid": 7096,
+      "injectionCount": 19,
+      "allInjectionCountsOneErrorsZero": true,
+      "eventTypes": {
+        "pointermove": 26,
+        "mousemove": 26,
+        "pointerdown": 1,
+        "pointerleave": 5,
+        "mouseleave": 5,
+        "pointerup": 2,
+        "pointerenter": 5,
+        "mouseenter": 5
+      },
+      "allEventsTrusted": true
+    },
+    {
+      "index": 10,
+      "side": null,
+      "before": {
+        "bounds": {
+          "x": 140,
+          "y": 160,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1
+      },
+      "after": {
+        "bounds": {
+          "x": 220,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1,
+        "position": {
+          "x": 220,
+          "y": 220,
+          "displayId": "1598540943"
+        }
+      },
+      "points": {
+        "from": {
+          "x": 255,
+          "y": 308
+        },
+        "to": {
+          "x": 335,
+          "y": 368
+        },
+        "bounds": {
+          "x": 140,
+          "y": 160,
+          "width": 230,
+          "height": 280
+        },
+        "processId": 7096,
+        "windowHandle": "262228"
+      },
+      "actualRootHandle": "262228",
+      "actualRootPid": 7096,
+      "injectionCount": 19,
+      "allInjectionCountsOneErrorsZero": true,
+      "eventTypes": {
+        "pointermove": 27,
+        "mousemove": 27,
+        "pointerdown": 1,
+        "pointerleave": 5,
+        "mouseleave": 5,
+        "pointerup": 2,
+        "pointerenter": 5,
+        "mouseenter": 5
+      },
+      "allEventsTrusted": true
+    }
+  ],
+  "D03": [
+    {
+      "index": 1,
+      "side": "left",
+      "before": {
+        "bounds": {
+          "x": 220,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1
+      },
+      "after": {
+        "bounds": {
+          "x": 0,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1,
+        "position": {
+          "x": 0,
+          "y": 220,
+          "displayId": "1598540943"
+        }
+      },
+      "points": {
+        "from": {
+          "x": 335,
+          "y": 368
+        },
+        "to": {
+          "x": 115,
+          "y": 368
+        },
+        "bounds": {
+          "x": 220,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "processId": 7096,
+        "windowHandle": "262228"
+      },
+      "actualRootHandle": "262228",
+      "actualRootPid": 7096,
+      "injectionCount": 19,
+      "allInjectionCountsOneErrorsZero": true,
+      "eventTypes": {
+        "pointermove": 26,
+        "mousemove": 26,
+        "pointerdown": 1,
+        "pointerleave": 5,
+        "mouseleave": 5,
+        "pointerup": 2,
+        "pointerenter": 5,
+        "mouseenter": 5
+      },
+      "allEventsTrusted": true
+    },
+    {
+      "index": 2,
+      "side": "right",
+      "before": {
+        "bounds": {
+          "x": 0,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1
+      },
+      "after": {
+        "bounds": {
+          "x": 794,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1,
+        "position": {
+          "x": 794,
+          "y": 220,
+          "displayId": "1598540943"
+        }
+      },
+      "points": {
+        "from": {
+          "x": 115,
+          "y": 368
+        },
+        "to": {
+          "x": 909,
+          "y": 368
+        },
+        "bounds": {
+          "x": 0,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "processId": 7096,
+        "windowHandle": "262228"
+      },
+      "actualRootHandle": "262228",
+      "actualRootPid": 7096,
+      "injectionCount": 19,
+      "allInjectionCountsOneErrorsZero": true,
+      "eventTypes": {
+        "pointermove": 30,
+        "mousemove": 30,
+        "pointerdown": 1,
+        "pointerleave": 5,
+        "mouseleave": 5,
+        "pointerup": 2,
+        "pointerenter": 5,
+        "mouseenter": 5
+      },
+      "allEventsTrusted": true
+    },
+    {
+      "index": 3,
+      "side": "top",
+      "before": {
+        "bounds": {
+          "x": 794,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1
+      },
+      "after": {
+        "bounds": {
+          "x": 794,
+          "y": 0,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1,
+        "position": {
+          "x": 794,
+          "y": 0,
+          "displayId": "1598540943"
+        }
+      },
+      "points": {
+        "from": {
+          "x": 909,
+          "y": 368
+        },
+        "to": {
+          "x": 909,
+          "y": 148
+        },
+        "bounds": {
+          "x": 794,
+          "y": 220,
+          "width": 230,
+          "height": 280
+        },
+        "processId": 7096,
+        "windowHandle": "262228"
+      },
+      "actualRootHandle": "262228",
+      "actualRootPid": 7096,
+      "injectionCount": 19,
+      "allInjectionCountsOneErrorsZero": true,
+      "eventTypes": {
+        "pointermove": 27,
+        "mousemove": 27,
+        "pointerdown": 1,
+        "pointerleave": 5,
+        "mouseleave": 5,
+        "pointerup": 2,
+        "pointerenter": 5,
+        "mouseenter": 5
+      },
+      "allEventsTrusted": true
+    },
+    {
+      "index": 4,
+      "side": "bottom",
+      "before": {
+        "bounds": {
+          "x": 794,
+          "y": 0,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1
+      },
+      "after": {
+        "bounds": {
+          "x": 794,
+          "y": 440,
+          "width": 230,
+          "height": 280
+        },
+        "canvas": {
+          "width": 212,
+          "height": 247
+        },
+        "dpr": 1,
+        "scale": 1,
+        "position": {
+          "x": 794,
+          "y": 440,
+          "displayId": "1598540943"
+        }
+      },
+      "points": {
+        "from": {
+          "x": 909,
+          "y": 148
+        },
+        "to": {
+          "x": 909,
+          "y": 588
+        },
+        "bounds": {
+          "x": 794,
+          "y": 0,
+          "width": 230,
+          "height": 280
+        },
+        "processId": 7096,
+        "windowHandle": "262228"
+      },
+      "actualRootHandle": "262228",
+      "actualRootPid": 7096,
+      "injectionCount": 19,
+      "allInjectionCountsOneErrorsZero": true,
+      "eventTypes": {
+        "pointermove": 26,
+        "mousemove": 26,
+        "pointerdown": 1,
+        "pointerleave": 5,
+        "mouseleave": 5,
+        "pointerup": 2,
+        "pointerenter": 5,
+        "mouseenter": 5
+      },
+      "allEventsTrusted": true
+    }
+  ],
+  "D04": {
+    "half": {
+      "bounds": {
+        "x": 80,
+        "y": 520,
+        "width": 115,
+        "height": 140
+      },
+      "scale": 0.5
+    },
+    "twice": {
+      "bounds": {
+        "x": 80,
+        "y": 160,
+        "width": 460,
+        "height": 560
+      },
+      "scale": 2
+    },
+    "otherUnchanged": true
+  },
+  "D06": {
+    "before": [
+      {
+        "petId": "pet-01db29f0-c2f6-48ea-a5f2-886e650126c0",
+        "desktop": {
+          "visible": true,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 794,
+            "y": 440,
+            "displayId": "1598540943"
+          }
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-621d6282-eaca-4a29-9a64-1c5c54508225",
+        "desktop": {
+          "visible": true,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 320,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-f8fad3bb-89b8-4685-8802-29bc124e3fe4",
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 560,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-8718a830-09e2-4ac2-8473-bdf5dde07d9f",
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 800,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 20,
+            "spd": 22
+          }
+        }
+      },
+      {
+        "petId": "pet-84214637-1b22-408d-87ee-76ab243ef6e5",
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 1040,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 136,
+            "atk": 30,
+            "def": 30,
+            "spd": 13
+          }
+        }
+      }
+    ],
+    "after": [
+      {
+        "petId": "pet-01db29f0-c2f6-48ea-a5f2-886e650126c0",
+        "desktop": {
+          "visible": true,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 794,
+            "y": 440,
+            "displayId": "1598540943"
+          }
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-621d6282-eaca-4a29-9a64-1c5c54508225",
+        "desktop": {
+          "visible": true,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 320,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-f8fad3bb-89b8-4685-8802-29bc124e3fe4",
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 560,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-8718a830-09e2-4ac2-8473-bdf5dde07d9f",
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 800,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 20,
+            "spd": 22
+          }
+        }
+      },
+      {
+        "petId": "pet-84214637-1b22-408d-87ee-76ab243ef6e5",
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 1040,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 136,
+            "atk": 30,
+            "def": 30,
+            "spd": 13
+          }
+        }
+      }
+    ]
+  },
+  "mouseReleased": true,
+  "cursorRestored": true,
+  "limitations": [
+    "Single fixed DPR=1, no multiple monitor/DPI claim",
+    "D03 and D06 restart compared persistent records and visible window count, not post-restart per-pet native geometry",
+    "D04 reset scale to 1 before restart: non-default scale persistence not yet observed",
+    "New restart-only harness preparation is not an executed acceptance result"
+  ]
+}
