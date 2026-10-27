@@ -50,9 +50,11 @@ function validateFile(scope,filePath,kind){
 }
 const controller=String.raw`param([Parameter(Mandatory=$true)][string]$SettingsFile)
 $ErrorActionPreference='Stop'
+# Literal ASCII phase must not depend on ConvertTo-Json/module autoload.
+[Console]::Out.WriteLine('{"phase":"controller-script-entered"}');[Console]::Out.Flush()
 [Console]::OutputEncoding=[System.Text.UTF8Encoding]::new($false)
 function Emit($value){[Console]::Out.WriteLine(($value|ConvertTo-Json -Compress -Depth 6));[Console]::Out.Flush()}
-Emit @{phase='controller-started'}
+[Console]::Out.WriteLine('{"phase":"controller-started"}');[Console]::Out.Flush()
 $c=Get-Content -LiteralPath $SettingsFile -Raw -Encoding UTF8 | ConvertFrom-Json
 Emit @{phase='settings-read'}
 Add-Type -AssemblyName UIAutomationClient
@@ -194,9 +196,15 @@ export async function driveNativeFileDialog({scope,kind,filePath,ownerPid,ownerW
  const id=randomUUID(),scriptFile=join(scope.directory,`dialog-controller-${id}.ps1`),settingsFile=join(scope.directory,`dialog-controller-${id}.json`);
  writeFileSync(scriptFile,'\ufeff'+controller,{flag:'wx'});writeFileSync(settingsFile,JSON.stringify({kind,filePath:file,ownerPid,ownerWindowHandle:String(ownerWindowHandle),ownerExecutablePath:resolve(ownerExecutablePath),expectedTitle,expectedSha256:kind==='open'?expectedSha256:null,timeoutMs}),{flag:'wx'});
  const shell=join(process.env.SystemRoot||process.env.WINDIR||'C:\\Windows','System32','WindowsPowerShell','v1.0','powershell.exe');
- const systemKeys=new Set(['PATH','PATHEXT','SYSTEMROOT','SYSTEMDRIVE','WINDIR','COMSPEC','TEMP','TMP','TMPDIR','USERPROFILE','APPDATA','LOCALAPPDATA','PROGRAMFILES','PROGRAMFILES(X86)','PROGRAMW6432']);
+ const systemKeys=new Set(['PATH','PATHEXT','SYSTEMROOT','SYSTEMDRIVE','WINDIR','COMSPEC','TEMP','TMP','TMPDIR','USERPROFILE','APPDATA','LOCALAPPDATA','PROGRAMFILES','PROGRAMFILES(X86)','PROGRAMW6432','RUNNER_TRACKING_ID']);
  const env=Object.fromEntries(Object.entries(process.env).filter(([key])=>systemKeys.has(key.toUpperCase())));
- const child=spawn(shell,['-NoProfile','-NonInteractive','-STA','-ExecutionPolicy','Bypass','-File',scriptFile,'-SettingsFile',settingsFile],{env,windowsHide:true,stdio:['ignore','pipe','pipe']});
+ // Match the working Windows runner's EncodedCommand launch, with a first
+ // literal Console marker before ANY script-file loading or JSON/module cmdlet.
+ // Both paths are exact files created in this operation's fresh owned scope;
+ // single-quote escaping prevents path text from becoming PowerShell code.
+ const psLiteral=value=>"'"+value.replaceAll("'","''")+"'";
+ const bootstrap=`[Console]::Out.WriteLine('{"phase":"controller-bootstrap-entered"}');[Console]::Out.Flush(); & ${psLiteral(scriptFile)} -SettingsFile ${psLiteral(settingsFile)}`;
+ const child=spawn(shell,['-NoProfile','-NonInteractive','-STA','-ExecutionPolicy','Bypass','-EncodedCommand',Buffer.from(bootstrap,'utf16le').toString('base64')],{env,windowsHide:true,stdio:['ignore','pipe','pipe']});
  let stderr='',buffer='',readyResolve,readyReject,doneResolve,doneReject,timer;const phases=[];
  const ready=new Promise((yes,no)=>{readyResolve=yes;readyReject=no;}),done=new Promise((yes,no)=>{doneResolve=yes;doneReject=no;});
  // Attach rejection handlers before trigger/handshake sequencing.

@@ -47,6 +47,7 @@ public static class QAInput {
  [StructLayout(LayoutKind.Sequential)] public struct INPUT {public uint type;public MOUSEINPUT mi;}
  [DllImport("user32.dll")] public static extern bool SetCursorPos(int x,int y);
  [DllImport("user32.dll")] public static extern bool GetCursorPos(out POINT p);
+ [DllImport("user32.dll")] public static extern int GetSystemMetrics(int index);
  [StructLayout(LayoutKind.Sequential)] public struct RECT {public int Left;public int Top;public int Right;public int Bottom;}
  [DllImport("user32.dll")] public static extern bool IsWindowVisible(IntPtr h);
  [DllImport("user32.dll")] public static extern bool IsIconic(IntPtr h);
@@ -57,6 +58,8 @@ public static class QAInput {
  [DllImport("user32.dll")] public static extern IntPtr GetAncestor(IntPtr hwnd,uint flags);
  [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr h,out uint pid);
  [DllImport("user32.dll",SetLastError=true)] static extern uint SendInput(uint n,INPUT[] input,int size);
+ public static void MoveRelative(int dx,int dy){var i=new INPUT();i.type=0;i.mi.dx=dx;i.mi.dy=dy;i.mi.dwFlags=1;if(SendInput(1,new[]{i},Marshal.SizeOf(typeof(INPUT)))!=1)throw new Exception("NATIVE_INPUT_BLOCKED");}
+ public static void MoveAbsolute(int x,int y){int left=GetSystemMetrics(76),top=GetSystemMetrics(77),width=GetSystemMetrics(78),height=GetSystemMetrics(79);if(width<2||height<2||x<left||y<top||x>=left+width||y>=top+height)throw new Exception("NATIVE_INPUT_BLOCKED: target outside virtual desktop");var i=new INPUT();i.type=0;i.mi.dx=(int)Math.Round((x-left)*65535.0/(width-1));i.mi.dy=(int)Math.Round((y-top)*65535.0/(height-1));i.mi.dwFlags=1|0x8000|0x4000;if(SendInput(1,new[]{i},Marshal.SizeOf(typeof(INPUT)))!=1)throw new Exception("NATIVE_INPUT_BLOCKED");}
  public static void Button(uint flags){var i=new INPUT();i.type=0;i.mi.dwFlags=flags;if(SendInput(1,new[]{i},Marshal.SizeOf(typeof(INPUT)))!=1)throw new Exception("NATIVE_INPUT_BLOCKED");}
 }
 '@
@@ -83,11 +86,13 @@ if($p.action -eq 'move'){
  if($q.X -ne $warmX -or $q.Y -ne $p.from.y){throw 'NATIVE_CURSOR_BLOCKED'}
  $warm=@{x=$q.X;y=$q.Y}
 }
-if(-not [QAInput]::SetCursorPos($p.from.x,$p.from.y)){throw 'NATIVE_CURSOR_BLOCKED'}
+# SetCursorPos positions the warm point but does not drive Electron's WH_MOUSE_LL
+# forwarding hook. This movement must use genuine SendInput MOUSEEVENTF_MOVE.
+if($p.action -eq 'move'){[QAInput]::MoveRelative(($p.from.x-$warm.x),0)}else{[QAInput]::MoveAbsolute($p.from.x,$p.from.y)}
 Start-Sleep -Milliseconds 250
 [QAInput]::GetCursorPos([ref]$q)|Out-Null
 if([Math]::Abs($q.X-$p.from.x) -gt 1 -or [Math]::Abs($q.Y-$p.from.y) -gt 1){throw 'NATIVE_CURSOR_BLOCKED'}
-if($p.action -eq 'move'){@{warm=$warm;at=@{x=$q.X;y=$q.Y};physicalDeltaPixels=[Math]::Abs($q.X-$warm.x);pressed=$false}|ConvertTo-Json -Compress -Depth 3;exit}
+if($p.action -eq 'move'){@{warm=$warm;at=@{x=$q.X;y=$q.Y};physicalDeltaPixels=[Math]::Abs($q.X-$warm.x);motionSource="SendInput-MOUSEEVENTF_MOVE-relative";pressed=$false}|ConvertTo-Json -Compress -Depth 3;exit}
 $matched=$false
 for($attempt=0;$attempt -lt 20;$attempt++){
  $hit=[QAInput]::WindowFromPoint($q);$rootWindow=[QAInput]::GetAncestor($hit,2);[uint32]$hitPid=0;[uint32]$rootPid=0;[QAInput]::GetWindowThreadProcessId($hit,[ref]$hitPid)|Out-Null;[QAInput]::GetWindowThreadProcessId($rootWindow,[ref]$rootPid)|Out-Null
@@ -97,9 +102,9 @@ for($attempt=0;$attempt -lt 20;$attempt++){
 if(-not $matched){throw ('OWNED_PET_NOT_AT_POINT '+(@{expected=$p.windowHandle;hit=$hit.ToInt64().ToString();root=$rootWindow.ToInt64().ToString();rootPid=$rootPid;x=$q.X;y=$q.Y}|ConvertTo-Json -Compress))}
 [uint32]$foreground=0;[QAInput]::GetWindowThreadProcessId([QAInput]::GetForegroundWindow(),[ref]$foreground)|Out-Null
 if($foreground -ne $p.processId){throw 'OWNED_WINDOW_NOT_FOREGROUND'}
-try{[QAInput]::Button(2);Start-Sleep -Milliseconds 120;for($i=1;$i -le 16;$i++){[QAInput]::SetCursorPos([int]($p.from.x+($p.to.x-$p.from.x)*$i/16),[int]($p.from.y+($p.to.y-$p.from.y)*$i/16))|Out-Null;Start-Sleep -Milliseconds 45}}
+try{[QAInput]::Button(2);Start-Sleep -Milliseconds 120;for($i=1;$i -le 16;$i++){[QAInput]::MoveAbsolute([int]($p.from.x+($p.to.x-$p.from.x)*$i/16),[int]($p.from.y+($p.to.y-$p.from.y)*$i/16));Start-Sleep -Milliseconds 45}}
 finally{[QAInput]::Button(4)}
-[QAInput]::GetCursorPos([ref]$q)|Out-Null;@{x=$q.X;y=$q.Y;foregroundPid=$foreground;hitHandle=$hit.ToInt64().ToString();hitPid=$hitPid;rootHandle=$rootWindow.ToInt64().ToString();rootPid=$rootPid}|ConvertTo-Json -Compress
+[QAInput]::GetCursorPos([ref]$q)|Out-Null;@{x=$q.X;y=$q.Y;foregroundPid=$foreground;hitHandle=$hit.ToInt64().ToString();hitPid=$hitPid;rootHandle=$rootWindow.ToInt64().ToString();rootPid=$rootPid;motionSource="SendInput-MOUSEEVENTF_MOVE-absolute-virtual-desktop"}|ConvertTo-Json -Compress
 `;
 function native(payload){return execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-EncodedCommand',Buffer.from(nativeSource,'utf16le').toString('base64')],{input:JSON.stringify(payload),encoding:'utf8',windowsHide:true,timeout:15000}).trim();}
 async function open(){app=await electron.launch({args:[wrapper],cwd:root,env});main=await app.firstWindow();main.setDefaultTimeout(15000);main.on('pageerror',error=>proof.errors.push(error.message));await main.waitForFunction(()=>Boolean(window.lingjing));}
@@ -176,7 +181,28 @@ try{
  const roster=await invoke('companions','list');for(const template of roster.templates.slice(0,5))pets.push((await invoke('companions','adopt',{templateId:template.templateId,name:template.name,showOnDesktop:false,actionId:randomUUID()})).pet);
  assert.equal(pets.length,5);proof.petIds=pets.map(p=>p.petId);proof.displays=await app.evaluate(({screen})=>screen.getAllDisplays());
  await caseRun('D01-limit-display',async()=>{await limit(4);const samples=[];for(let i=0;i<5;i++){await visible(pets[i],true);samples.push(await count(Math.min(i+1,4)));}await limit(1);const one=await count(1),first=one.find(w=>w.visible);await visible(pets.find(p=>first.url.endsWith('/desktop/'+encodeURIComponent(p.petId))),false);const replacement=await count(1);assert.notEqual(replacement.find(w=>w.visible).url,first.url);for(const pet of pets)await visible(pet,false);await limit(4);await visible(pets[0],true);await visible(pets[1],true);await count(2);return {samples,replacement};});
- await caseRun('D04-per-pet-scale',async()=>{const other=await invoke('companions','get',{petId:pets[1].petId});await detail(pets[0]);const slider=main.locator('.cp-scale-slider [role="slider"]');await slider.focus();await slider.press('Home');await poll(()=>invoke('companions','get',{petId:pets[0].petId}),p=>p.desktop.scale===.5,'50% scale not saved');const half=await metrics(pets[0]);await slider.press('End');await poll(()=>invoke('companions','get',{petId:pets[0].petId}),p=>p.desktop.scale===2,'200% scale not saved');const twice=await metrics(pets[0]);assert.deepEqual(await invoke('companions','get',{petId:pets[1].petId}),other);assert.ok(Math.abs(half.native.bounds.width-115)<=1&&Math.abs(twice.native.bounds.width-460)<=1);await slider.press('Home');await poll(()=>invoke('companions','get',{petId:pets[0].petId}),p=>p.desktop.scale===.5,'Scale reset not saved');for(let n=0;n<10;n++){await slider.press('ArrowRight');await poll(()=>invoke('companions','get',{petId:pets[0].petId}),p=>Math.abs(p.desktop.scale-(.55+n*.05))<.001,'Scale step not saved');}await poll(()=>invoke('companions','get',{petId:pets[0].petId}),p=>Math.abs(p.desktop.scale-1)<.001,'100% scale not restored');return {half:{bounds:half.native.bounds,scale:half.saved.desktop.scale},twice:{bounds:twice.native.bounds,scale:twice.saved.desktop.scale},otherUnchanged:true};});
+ await caseRun('D04-per-pet-scale',async()=>{
+   const other=await invoke('companions','get',{petId:pets[1].petId});await detail(pets[0]);
+   const slider=main.locator('.cp-scale-slider [role="slider"]');
+   proof.scaleSteps=[];
+   const settled=async expected=>poll(async()=>({
+     saved:(await invoke('companions','get',{petId:pets[0].petId})).desktop.scale,
+     ui:await slider.evaluate(el=>({value:Number(el.getAttribute('aria-valuenow')),disabled:el.getAttribute('aria-disabled')==='true'||Boolean(el.closest('[data-disabled]')),focused:document.activeElement===el}))
+   }),row=>Math.abs(row.saved-expected)<.001&&Math.abs(row.ui.value-expected)<.001&&!row.ui.disabled,'Scale UI and saved value did not settle together');
+   const pressScale=async(key,from,to)=>{
+     const step={key,expectedBefore:from,expectedAfter:to};proof.scaleSteps.push(step);save();
+     step.before=await settled(from);await slider.focus();await slider.press(key);
+     try{step.after=await settled(to);}finally{step.observed={saved:(await invoke('companions','get',{petId:pets[0].petId})).desktop.scale,ui:await slider.evaluate(el=>({value:el.getAttribute('aria-valuenow'),disabled:el.getAttribute('aria-disabled')==='true'||Boolean(el.closest('[data-disabled]')),focused:document.activeElement===el}))};save();}
+   };
+   await pressScale('Home',(await invoke('companions','get',{petId:pets[0].petId})).desktop.scale,.5);const half=await metrics(pets[0]);
+   await pressScale('End',.5,2);const twice=await metrics(pets[0]);
+   assert.deepEqual(await invoke('companions','get',{petId:pets[1].petId}),other);
+   assert.ok(Math.abs(half.native.bounds.width-115)<=1&&Math.abs(twice.native.bounds.width-460)<=1);
+   await pressScale('Home',2,.5);
+   for(let n=0;n<10;n++)await pressScale('ArrowRight',.5+n*.05,.55+n*.05);
+   await settled(1);
+   return {half:{bounds:half.native.bounds,scale:half.saved.desktop.scale},twice:{bounds:twice.native.bounds,scale:twice.saved.desktop.scale},otherUnchanged:true};
+ });
  await caseRun('D02-ten-native-drags',async()=>{const otherBefore=await invoke('companions','get',{petId:pets[1].petId}),ownGrowth=(await invoke('companions','get',{petId:pets[0].petId})).growth;const records=[];for(let n=0;n<10;n++){const current=await metrics(pets[0]),area=current.native.display.workArea;const x=area.x+Math.min(140+(n%2)*80,area.width-current.native.bounds.width),y=area.y+Math.min(160+(n%2)*60,area.height-current.native.bounds.height);records.push(await drag(pets[0],{x,y}));}const stable=records.map(r=>r.after);assert.ok(Math.max(...stable.map(x=>x.bounds.width))-Math.min(...stable.map(x=>x.bounds.width))<=1);assert.ok(Math.max(...stable.map(x=>x.bounds.height))-Math.min(...stable.map(x=>x.bounds.height))<=1);assert.ok(stable.every(x=>x.scale===1));assert.deepEqual(await invoke('companions','get',{petId:pets[1].petId}),otherBefore);assert.deepEqual((await invoke('companions','get',{petId:pets[0].petId})).growth,ownGrowth);return records;});
  await caseRun('D03-edge-drag',async()=>{if(mouseBlocked)throw Error('NATIVE_INPUT_BLOCKED');const records=[];for(const side of ['left','right','top','bottom']){const m=await metrics(pets[0]),a=m.native.display.workArea,b=m.native.bounds,target={x:b.x,y:b.y};if(side==='left')target.x=a.x;if(side==='right')target.x=a.x+a.width-b.width;if(side==='top')target.y=a.y;if(side==='bottom')target.y=a.y+a.height-b.height;const r=await drag(pets[0],target);assert.ok(r.after.bounds.x>=a.x&&r.after.bounds.y>=a.y&&r.after.bounds.x+r.after.bounds.width<=a.x+a.width+1&&r.after.bounds.y+r.after.bounds.height<=a.y+a.height+1);records.push({side,...r});}return records;});
  await caseRun('D06-restart-same-instance',async()=>{const before=(await invoke('companions','list')).pets.map(p=>({petId:p.petId,desktop:p.desktop,growth:p.growth}));await app.close();app=null;await open();assert.equal((await invoke('accounts','session')).currentUser,null);await invoke('accounts','login',credentials);await count(2);const after=(await invoke('companions','list')).pets.map(p=>({petId:p.petId,desktop:p.desktop,growth:p.growth}));assert.deepEqual(after,before);return {before,after};});
