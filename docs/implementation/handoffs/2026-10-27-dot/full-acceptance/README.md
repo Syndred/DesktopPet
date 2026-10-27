@@ -2,9 +2,13 @@
 
 ## 当前批次 b5dbcfe（2026-10-27）
 
-[逐项最新矩阵](coverage-b5dbcfe.json)：**25 当前完整原生通过 + 21 经代码影响核对复用 + 15 部分覆盖 + 0 原生输入受阻 + 37 尚未完整执行 = 98**。不是 98 全通过。复用保留原源版本、EXE 和证据 hash，不冒称新包重跑；不受影响项不随纯测试脚本提交清零。详见 [独立复用审查](reuse-original-evidence-review.json)。
+[逐项最新矩阵](coverage-b5dbcfe.json)：**28 当前完整原生通过 + 21 经代码影响核对复用 + 14 部分覆盖 + 0 原生输入受阻 + 35 尚未完整执行 = 98**。不是 98 全通过。复用保留原源版本、EXE 和证据 hash，不冒称新包重跑；不受影响项不随纯测试脚本提交清零。详见 [独立复用审查](reuse-original-evidence-review.json)。
 
 追加逐函数影响核对与已发布证据 hash 复用：A03/A04/A09/A10/T04/T05/G05/G06 共 8 项，保留旧源 `4e6c3de`、旧 EXE SHA 和准确原证明/截图路径；不是新原生重跑。T04/T05 的上游是**明确模拟的 loopback**，产品与云端读回为真实，不能称外部模型验证。G06 保留原自然成熟与跨客户端唯一收获证明；不重开旧账号/旧 grant。详见 [第二部分完整复用审查](reuse-original-evidence-review-part2.json)。A15 和密码重置未因此计为通过。
+
+670 新增 **D01/P03 原步骤完整通过**：真实审计 b5 便携 SFX，在一次性云端 Windows 离线 QA 显示 1/2/3/4/4 只、隐藏后补位/重显、设置上限 1–4 并逐窗核对原 petId、角色资源和无可见姓名编号。音量 0/100/37 保存后，四个实际桌面 renderer 均收到正确 owner 与音量政策，其他设置不变。这里是**应用音量政策生效，不是声压/系统音量实测**；未使用用户电脑或生产云。见 [原回执及独立核验](native-670-receipts/independent-summary.json)，原 JSON 与包复用证据完整随附。P01 新脚本尚未执行，不因此升级。
+
+T06 采用**当前原生 + 不受影响旧云证据组合**关闭：670 真实 SFX 的连接保存/取消、同原消息错误重试、备份无 key 和 UI 清 key 三项通过；旧 `4e6c3de` 实际云公开 connection 无 key 读回经源文件影响核对复用。上游明确为模拟 loopback，不是外部模型成功，也不是 670 新云上传。connection-selections 总回执仍因独立 C08-garrison 失败而 `passed=false`，**C08 未升级**。见 [完整证据组合与边界](native-670-receipts/T06-independent-summary.json)。
 
 当前实包仍是 b5dbcfe，EXE SHA-256 `ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb`。0fd 测试批次仅修改验收脚本，逐项校验原产品路径、ASAR 审计及包 hash 后复用。
 

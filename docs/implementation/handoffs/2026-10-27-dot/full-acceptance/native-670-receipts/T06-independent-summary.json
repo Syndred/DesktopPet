@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "caseId": "T06",
+  "recommendation": "passed_current_native",
+  "evidenceComposition": "mixed-current-native-with-impact-verified-historical-support",
+  "runId": 40485472846,
+  "artifactId": 12724278534,
+  "artifactUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40485472846/artifacts/12724278534",
+  "zipSha256": "084d58dac16647db7c8f1d005280771c05a95241925d7d34ff65d281b63522de",
+  "harnessCommit": "670c88590087cb6e80c577420c4e062eb0efd401",
+  "productCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "exeSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb",
+  "receipt": {
+    "path": "connection-selections-evidence.json",
+    "sha256": "62a65557680e3aedf08a52b7beede4928321d96ad7d9f448469c1e6d456d2f56",
+    "bytes": 4839
+  },
+  "nativeCaseIds": [
+    "T06-ui-connections",
+    "T06-original-chat-retry",
+    "T06-ui-key-clear"
+  ],
+  "nativeAssertions": [
+    "UI global/independent connection save and draft discard",
+    "Dedicated synthetic dummy credentials; actual owned loopback HTTP 401/429/socket failure and cancellation",
+    "Same original message IDs/action ID across retries, eventual owned loopback success",
+    "Backup public exported tables contain no credentials while 2 local credential rows exist",
+    "Normal UI clears both dummy credentials; actual local credential rows zero"
+  ],
+  "historicalSupport": [
+    {
+      "path": "docs/implementation/handoffs/2026-10-27-cloud-authority-paused/proofs/root-T05-T06-final-cloud-independent.json",
+      "sha256": "aa7a27ce29e7b769bcd8445e7a9059592959d732574145ddf8993136db8b7511"
+    },
+    {
+      "path": "docs/implementation/handoffs/2026-10-27-cloud-authority-paused/proofs/native-model-v2-normal-restart-error-and-cleanup-seal.json",
+      "sha256": "cc698d368612b5fee246bffad05408c9aaac7904c65977d230f22562feaf8d1e"
+    }
+  ],
+  "historicalSourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+  "historicalExeSha256": "49e7c00055acf533bd2e0418157ac446cc88e13bda9cbaf9185248c9b0c87d61",
+  "supportScope": "Actual old cloud public connection records independently read back with forbiddenCredentialField=false and containsSyntheticCredential=false. Old actual invalid dummy rejection, cleanup seal and settings restoration retained. Not rerun cloud in 670.",
+  "impactVerification": {
+    "compared": [
+      "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+      "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d"
+    ],
+    "unchanged": [
+      "apps/pc-app/runtime/features/conversations/backup.cjs",
+      "apps/pc-app/runtime/features/conversations/cloud-record-contract.mjs",
+      "apps/pc-app/runtime/features/conversations/secrets.cjs"
+    ],
+    "cloudRecordsDelta": "importData gains validated actionId and preservation reason intent only; normal connection serialization/write/flush paths unchanged. Current changed settings UI retested."
+  },
+  "qualifications": [
+    "Current upstream intentionally simulated owned loopback, not an external model.",
+    "No current production/cloud upload or external internet outage claim.",
+    "Whole connection-selections receipt passed=false due separate C08-garrison failure; T06 three subcases passed. C08 status NOT upgraded.",
+    "Original T06 permits synthetic invalid credentials; acoustic/hardware/external model success are not requirements.",
+    "670 HTTP 401 is selected by owned provider mode after authorized=true; actual invalid-dummy credential validation is historical seal support, not a new 670 authentication rejection."
+  ],
+  "originalExpected": "Credentials absent from cloud/backup; errors retryable; no credential leakage.",
+  "cleanup": {
+    "ownedPidsExited": true,
+    "temporaryProfileRemoved": true,
+    "loopbackClosed": true
+  }
+}

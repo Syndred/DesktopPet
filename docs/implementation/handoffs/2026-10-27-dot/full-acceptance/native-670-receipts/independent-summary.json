@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "runId": 40485472846,
+  "jobId": 122126902072,
+  "artifactId": 12724712692,
+  "artifactUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40485472846/artifacts/12724712692",
+  "zipSha256": "dbb238606498a6603ff6f546836b7a02208c3e996805354cc888d80ae52e2aa0",
+  "harnessCommit": "670c88590087cb6e80c577420c4e062eb0efd401",
+  "productCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "exeSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb",
+  "evidence": {
+    "path": "evidence.json",
+    "sha256": "5bc6f036c1bdb2449c56883379dde3c580f7e8af13f1432952621011329f6f4a",
+    "bytes": 38137
+  },
+  "packageReuse": {
+    "path": "package-reuse.json",
+    "sha256": "1c66f136a91d2b33ee7d4c002ac60b9db6412467aaf96faffa87ec30762bb275"
+  },
+  "execution": "Actual audited b5 Windows portable SFX on disposable cloud Windows runner, official fresh offline QA. No user devices, real credentials or production cloud.",
+  "independentChecks": {
+    "D01": {
+      "originalSteps": "Show 1–4; exceed limit; hide/re-show; only image without visible name/number. Lower limit obeyed and instances isolated.",
+      "observedCounts": [
+        1,
+        2,
+        3,
+        4,
+        4
+      ],
+      "savedLimitsAndActualCounts": [
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "fiveUniqueFixtureIds": true,
+      "everyVisibleWindowUniqueKnownIdAndResourceCanvas": true,
+      "everyVisibleTextEmpty": true,
+      "ariaLabelsPreserved": true,
+      "recommendation": "passed_current_native"
+    },
+    "P03": {
+      "originalSteps": "Modify 1–4 limit and volume; save; check desktop. Legal range, effective and correct per-pet ownership.",
+      "volumeValues": [
+        0,
+        100,
+        37
+      ],
+      "eachValueDeliveredToActualFourPetRenderers": true,
+      "ownerAndPetIdsVerified": true,
+      "unrelatedSettingsUnchanged": true,
+      "recommendation": "passed_current_native",
+      "boundary": "Application volume settings and actual host policy delivery, not physical loudness or OS mixer. Original P03 does not require acoustic measurement; D04 separately supplies actual per-pet scale evidence."
+    }
+  },
+  "cleanup": {
+    "ownedPidsExited": true,
+    "temporaryProfileRemoved": true
+  },
+  "claimsExcluded": [
+    "production cloud",
+    "physical loudness",
+    "user machines",
+    "new product build"
+  ]
+}

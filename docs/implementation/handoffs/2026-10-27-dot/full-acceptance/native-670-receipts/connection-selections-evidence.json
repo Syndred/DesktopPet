@@ -1,0 +1,134 @@
+{
+  "scope": "T06/C08 actual audited Windows SFX + fresh local QA profile; owned loopback fake upstream/dummy keys, not external model or real cloud. C08 real UI role selection; territory fixture naturally won under official simulated local QA.",
+  "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "compiledFingerprint": "b951a6aa7a5d04a04178645f92c0840168e3656ae5cf6f8f0e4839c0328ab48f",
+  "exeSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb",
+  "cases": [
+    {
+      "id": "fixture-local",
+      "coverage": "Normal local QA UI registration and four normal same-template UI adoptions",
+      "status": "passed-native-scoped",
+      "fullCasePassed": false,
+      "startedAt": "2026-10-27T10:06:43.310Z",
+      "owner": "qa:f7144e51-e56a-421f-9178-969196cae383:local-c8f61bb7-3e02-44c7-9a7b-77f32afe2ad7",
+      "petIds": [
+        "pet-ce534c82-b5da-4b76-9c00-13c9ff2c3780",
+        "pet-8b19069c-df69-45f9-90b6-db75d2841dea",
+        "pet-8218861f-cc66-4e1c-addb-0ed6004ebef2",
+        "pet-36328726-a082-4464-8ebb-0376584cd086"
+      ],
+      "mode": "simulated-local",
+      "completedAt": "2026-10-27T10:06:46.503Z"
+    },
+    {
+      "id": "T06-ui-connections",
+      "coverage": "Actual UI invalid-key tests, 401/429/disconnect and cancellation, original form drafts/global-independent save and discard",
+      "status": "passed-native-scoped",
+      "fullCasePassed": false,
+      "startedAt": "2026-10-27T10:06:46.504Z",
+      "requestModes": [
+        "401",
+        "429",
+        "disconnect",
+        "hold",
+        "success",
+        "success"
+      ],
+      "allRequestsOwnedLoopback": true,
+      "savedDraftsDiscarded": true,
+      "publicBackupKeyAbsent": true,
+      "exportedTables": [
+        "conversation_profiles",
+        "conversation_connections",
+        "conversation_messages",
+        "conversation_memories",
+        "conversation_preferences"
+      ],
+      "credentialRows": 2,
+      "uncovered": [
+        "real cloud upload",
+        "external model",
+        "external actual network outage"
+      ],
+      "completedAt": "2026-10-27T10:06:48.727Z"
+    },
+    {
+      "id": "T06-original-chat-retry",
+      "coverage": "Actual native send then 401/429/socket failure and successful retries of the original message pair, never a new turn",
+      "status": "passed-native-scoped",
+      "fullCasePassed": false,
+      "startedAt": "2026-10-27T10:06:48.728Z",
+      "messageIds": [
+        "2ddac11d-0125-4b8e-859f-9d4dae039d2e",
+        "bda096a0-bddf-497c-bdf5-bc56e8c714e8"
+      ],
+      "originalActionId": "fec8ac08-3995-41b9-a3f5-f391ad899212",
+      "sameTurnAcrossThreeRetries": true,
+      "source": "owned-loopback-only",
+      "completedAt": "2026-10-27T10:06:50.996Z"
+    },
+    {
+      "id": "T06-ui-key-clear",
+      "coverage": "Normal UI clears both dummy keys and disables independent override; real local credential count becomes zero",
+      "status": "passed-native-scoped",
+      "fullCasePassed": false,
+      "startedAt": "2026-10-27T10:06:50.997Z",
+      "publicBackupKeyAbsent": true,
+      "exportedTables": [
+        "conversation_profiles",
+        "conversation_connections",
+        "conversation_messages",
+        "conversation_memories",
+        "conversation_preferences"
+      ],
+      "credentialRows": 0,
+      "completedAt": "2026-10-27T10:06:51.596Z"
+    },
+    {
+      "id": "C08-desktop-chat-training",
+      "coverage": "Actual UI assigns A desktop, B chat, C training independently; unrelated overview selection cannot replace those roles",
+      "status": "passed-native-scoped",
+      "fullCasePassed": false,
+      "startedAt": "2026-10-27T10:06:51.597Z",
+      "desktop": "pet-ce534c82-b5da-4b76-9c00-13c9ff2c3780",
+      "chat": "pet-8b19069c-df69-45f9-90b6-db75d2841dea",
+      "training": "pet-8218861f-cc66-4e1c-addb-0ed6004ebef2",
+      "overview": "pet-36328726-a082-4464-8ebb-0376584cd086",
+      "completedAt": "2026-10-27T10:06:54.223Z"
+    },
+    {
+      "id": "C08-garrison",
+      "coverage": "Official local simulated territory, natural challenge fixture then real UI D confirmed garrison; four roles stay independent",
+      "status": "failed",
+      "fullCasePassed": false,
+      "startedAt": "2026-10-27T10:06:54.223Z",
+      "error": "ASSERTION_OR_STAGE_FAILED",
+      "stage": "C08-garrison",
+      "completedAt": "2026-10-27T10:06:57.988Z"
+    }
+  ],
+  "passed": false,
+  "startedAt": "2026-10-27T10:06:24.974Z",
+  "loopbackClosed": true,
+  "offlineBlocked": [
+    {
+      "node": 0,
+      "fetch": 0,
+      "websocket": 0,
+      "chromium": 38
+    }
+  ],
+  "pidChecks": [
+    {
+      "pid": 9100,
+      "alive": false
+    },
+    {
+      "pid": 7212,
+      "alive": false
+    }
+  ],
+  "ownedProcessStopped": true,
+  "temporaryProfileRemoved": true,
+  "completedAt": "2026-10-27T10:06:58.686Z"
+}

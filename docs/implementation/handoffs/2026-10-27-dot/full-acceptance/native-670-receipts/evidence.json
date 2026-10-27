@@ -1,0 +1,1012 @@
+{
+  "scope": "D01/P03: actual audited Windows SFX, fresh offline QA pets. Real UI display limits and app volume; native window/renderer policy readback. No OS audio changes, physical loudness or cloud claims.",
+  "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "compiledFingerprint": "b951a6aa7a5d04a04178645f92c0840168e3656ae5cf6f8f0e4839c0328ab48f",
+  "exeSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb",
+  "cases": [
+    {
+      "id": "D01",
+      "coverage": "1–4 native pet windows, overflow, hide/re-show and no visible name/number labels",
+      "status": "passed-original-scope-offline",
+      "startedAt": "2026-10-27T10:06:45.926Z",
+      "samples": [
+        [
+          {
+            "id": 2,
+            "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+            "visible": true,
+            "bounds": {
+              "x": 80,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            },
+            "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+            "dom": {
+              "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "visibleText": "",
+              "canvasCount": 1
+            }
+          }
+        ],
+        [
+          {
+            "id": 3,
+            "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+            "visible": true,
+            "bounds": {
+              "x": 320,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            },
+            "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+            "dom": {
+              "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "visibleText": "",
+              "canvasCount": 1
+            }
+          },
+          {
+            "id": 2,
+            "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+            "visible": true,
+            "bounds": {
+              "x": 80,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            },
+            "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+            "dom": {
+              "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "visibleText": "",
+              "canvasCount": 1
+            }
+          }
+        ],
+        [
+          {
+            "id": 4,
+            "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+            "visible": true,
+            "bounds": {
+              "x": 560,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            },
+            "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+            "dom": {
+              "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "visibleText": "",
+              "canvasCount": 1
+            }
+          },
+          {
+            "id": 3,
+            "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+            "visible": true,
+            "bounds": {
+              "x": 320,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            },
+            "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+            "dom": {
+              "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "visibleText": "",
+              "canvasCount": 1
+            }
+          },
+          {
+            "id": 2,
+            "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+            "visible": true,
+            "bounds": {
+              "x": 80,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            },
+            "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+            "dom": {
+              "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "visibleText": "",
+              "canvasCount": 1
+            }
+          }
+        ],
+        [
+          {
+            "id": 5,
+            "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-0bbabc97-df96-42bc-8f76-5a37110ffad2",
+            "visible": true,
+            "bounds": {
+              "x": 794,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            },
+            "petId": "pet-0bbabc97-df96-42bc-8f76-5a37110ffad2",
+            "dom": {
+              "petId": "pet-0bbabc97-df96-42bc-8f76-5a37110ffad2",
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "visibleText": "",
+              "canvasCount": 1
+            }
+          },
+          {
+            "id": 4,
+            "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+            "visible": true,
+            "bounds": {
+              "x": 560,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            },
+            "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+            "dom": {
+              "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "visibleText": "",
+              "canvasCount": 1
+            }
+          },
+          {
+            "id": 3,
+            "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+            "visible": true,
+            "bounds": {
+              "x": 320,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            },
+            "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+            "dom": {
+              "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "visibleText": "",
+              "canvasCount": 1
+            }
+          },
+          {
+            "id": 2,
+            "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+            "visible": true,
+            "bounds": {
+              "x": 80,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            },
+            "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+            "dom": {
+              "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "visibleText": "",
+              "canvasCount": 1
+            }
+          }
+        ],
+        [
+          {
+            "id": 5,
+            "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-0bbabc97-df96-42bc-8f76-5a37110ffad2",
+            "visible": true,
+            "bounds": {
+              "x": 794,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            },
+            "petId": "pet-0bbabc97-df96-42bc-8f76-5a37110ffad2",
+            "dom": {
+              "petId": "pet-0bbabc97-df96-42bc-8f76-5a37110ffad2",
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "visibleText": "",
+              "canvasCount": 1
+            }
+          },
+          {
+            "id": 4,
+            "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+            "visible": true,
+            "bounds": {
+              "x": 560,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            },
+            "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+            "dom": {
+              "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "visibleText": "",
+              "canvasCount": 1
+            }
+          },
+          {
+            "id": 3,
+            "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+            "visible": true,
+            "bounds": {
+              "x": 320,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            },
+            "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+            "dom": {
+              "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "visibleText": "",
+              "canvasCount": 1
+            }
+          },
+          {
+            "id": 2,
+            "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+            "visible": true,
+            "bounds": {
+              "x": 80,
+              "y": 440,
+              "width": 230,
+              "height": 280
+            },
+            "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+            "dom": {
+              "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "visibleText": "",
+              "canvasCount": 1
+            }
+          }
+        ]
+      ],
+      "afterHide": [
+        {
+          "id": 6,
+          "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+          "visible": true,
+          "bounds": {
+            "x": 794,
+            "y": 440,
+            "width": 230,
+            "height": 280
+          },
+          "petId": "pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+          "dom": {
+            "petId": "pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "visibleText": "",
+            "canvasCount": 1
+          }
+        },
+        {
+          "id": 4,
+          "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+          "visible": true,
+          "bounds": {
+            "x": 560,
+            "y": 440,
+            "width": 230,
+            "height": 280
+          },
+          "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+          "dom": {
+            "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "visibleText": "",
+            "canvasCount": 1
+          }
+        },
+        {
+          "id": 3,
+          "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+          "visible": true,
+          "bounds": {
+            "x": 320,
+            "y": 440,
+            "width": 230,
+            "height": 280
+          },
+          "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+          "dom": {
+            "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "visibleText": "",
+            "canvasCount": 1
+          }
+        },
+        {
+          "id": 2,
+          "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+          "visible": true,
+          "bounds": {
+            "x": 80,
+            "y": 440,
+            "width": 230,
+            "height": 280
+          },
+          "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+          "dom": {
+            "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "visibleText": "",
+            "canvasCount": 1
+          }
+        }
+      ],
+      "afterShow": [
+        {
+          "id": 6,
+          "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+          "visible": true,
+          "bounds": {
+            "x": 794,
+            "y": 440,
+            "width": 230,
+            "height": 280
+          },
+          "petId": "pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+          "dom": {
+            "petId": "pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "visibleText": "",
+            "canvasCount": 1
+          }
+        },
+        {
+          "id": 4,
+          "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+          "visible": true,
+          "bounds": {
+            "x": 560,
+            "y": 440,
+            "width": 230,
+            "height": 280
+          },
+          "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+          "dom": {
+            "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "visibleText": "",
+            "canvasCount": 1
+          }
+        },
+        {
+          "id": 3,
+          "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+          "visible": true,
+          "bounds": {
+            "x": 320,
+            "y": 440,
+            "width": 230,
+            "height": 280
+          },
+          "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+          "dom": {
+            "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "visibleText": "",
+            "canvasCount": 1
+          }
+        },
+        {
+          "id": 2,
+          "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+          "visible": true,
+          "bounds": {
+            "x": 80,
+            "y": 440,
+            "width": 230,
+            "height": 280
+          },
+          "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+          "dom": {
+            "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "visibleText": "",
+            "canvasCount": 1
+          }
+        }
+      ],
+      "limits": [
+        {
+          "limit": 1,
+          "windows": [
+            {
+              "id": 2,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "visible": true,
+              "bounds": {
+                "x": 80,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "dom": {
+                "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            }
+          ]
+        },
+        {
+          "limit": 2,
+          "windows": [
+            {
+              "id": 3,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+              "visible": true,
+              "bounds": {
+                "x": 320,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+              "dom": {
+                "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            },
+            {
+              "id": 2,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "visible": true,
+              "bounds": {
+                "x": 80,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "dom": {
+                "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            }
+          ]
+        },
+        {
+          "limit": 3,
+          "windows": [
+            {
+              "id": 4,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+              "visible": true,
+              "bounds": {
+                "x": 560,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+              "dom": {
+                "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            },
+            {
+              "id": 3,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+              "visible": true,
+              "bounds": {
+                "x": 320,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+              "dom": {
+                "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            },
+            {
+              "id": 2,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "visible": true,
+              "bounds": {
+                "x": 80,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "dom": {
+                "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            }
+          ]
+        },
+        {
+          "limit": 4,
+          "windows": [
+            {
+              "id": 6,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+              "visible": true,
+              "bounds": {
+                "x": 794,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+              "dom": {
+                "petId": "pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            },
+            {
+              "id": 4,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+              "visible": true,
+              "bounds": {
+                "x": 560,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+              "dom": {
+                "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            },
+            {
+              "id": 3,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+              "visible": true,
+              "bounds": {
+                "x": 320,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+              "dom": {
+                "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            },
+            {
+              "id": 2,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "visible": true,
+              "bounds": {
+                "x": 80,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "dom": {
+                "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            }
+          ]
+        }
+      ],
+      "visibleNamesAndNumbers": false,
+      "ariaAccessibilityNamesNotHidden": true,
+      "completedAt": "2026-10-27T10:06:58.613Z"
+    },
+    {
+      "id": "P03",
+      "coverage": "App volume 0/100/37 UI/save + actual per-pet policy; native limit 1–4 already verified in same fixture",
+      "status": "passed-original-scope-offline",
+      "startedAt": "2026-10-27T10:06:58.614Z",
+      "results": [
+        {
+          "volume": 0,
+          "policies": [
+            {
+              "petId": "pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+              "event": {
+                "ownerAccountId": "qa:4f086b34-d253-4de7-8c65-dc8310b401a9:local-ed4dd220-17e1-4b97-9cd8-132f0f8c94f3",
+                "volume": 0,
+                "companionLimit": 4
+              }
+            },
+            {
+              "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+              "event": {
+                "ownerAccountId": "qa:4f086b34-d253-4de7-8c65-dc8310b401a9:local-ed4dd220-17e1-4b97-9cd8-132f0f8c94f3",
+                "volume": 0,
+                "companionLimit": 4
+              }
+            },
+            {
+              "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+              "event": {
+                "ownerAccountId": "qa:4f086b34-d253-4de7-8c65-dc8310b401a9:local-ed4dd220-17e1-4b97-9cd8-132f0f8c94f3",
+                "volume": 0,
+                "companionLimit": 4
+              }
+            },
+            {
+              "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "event": {
+                "ownerAccountId": "qa:4f086b34-d253-4de7-8c65-dc8310b401a9:local-ed4dd220-17e1-4b97-9cd8-132f0f8c94f3",
+                "volume": 0,
+                "companionLimit": 4
+              }
+            }
+          ],
+          "windows": [
+            {
+              "id": 6,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+              "visible": true,
+              "bounds": {
+                "x": 794,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+              "dom": {
+                "petId": "pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            },
+            {
+              "id": 4,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+              "visible": true,
+              "bounds": {
+                "x": 560,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+              "dom": {
+                "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            },
+            {
+              "id": 3,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+              "visible": true,
+              "bounds": {
+                "x": 320,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+              "dom": {
+                "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            },
+            {
+              "id": 2,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "visible": true,
+              "bounds": {
+                "x": 80,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "dom": {
+                "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            }
+          ],
+          "scope": "Application value and actual renderer policy delivery only; no OS audio or acoustic measurement"
+        },
+        {
+          "volume": 100,
+          "policies": [
+            {
+              "petId": "pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+              "event": {
+                "ownerAccountId": "qa:4f086b34-d253-4de7-8c65-dc8310b401a9:local-ed4dd220-17e1-4b97-9cd8-132f0f8c94f3",
+                "volume": 100,
+                "companionLimit": 4
+              }
+            },
+            {
+              "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+              "event": {
+                "ownerAccountId": "qa:4f086b34-d253-4de7-8c65-dc8310b401a9:local-ed4dd220-17e1-4b97-9cd8-132f0f8c94f3",
+                "volume": 100,
+                "companionLimit": 4
+              }
+            },
+            {
+              "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+              "event": {
+                "ownerAccountId": "qa:4f086b34-d253-4de7-8c65-dc8310b401a9:local-ed4dd220-17e1-4b97-9cd8-132f0f8c94f3",
+                "volume": 100,
+                "companionLimit": 4
+              }
+            },
+            {
+              "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "event": {
+                "ownerAccountId": "qa:4f086b34-d253-4de7-8c65-dc8310b401a9:local-ed4dd220-17e1-4b97-9cd8-132f0f8c94f3",
+                "volume": 100,
+                "companionLimit": 4
+              }
+            }
+          ],
+          "windows": [
+            {
+              "id": 6,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+              "visible": true,
+              "bounds": {
+                "x": 794,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+              "dom": {
+                "petId": "pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            },
+            {
+              "id": 4,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+              "visible": true,
+              "bounds": {
+                "x": 560,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+              "dom": {
+                "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            },
+            {
+              "id": 3,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+              "visible": true,
+              "bounds": {
+                "x": 320,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+              "dom": {
+                "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            },
+            {
+              "id": 2,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "visible": true,
+              "bounds": {
+                "x": 80,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "dom": {
+                "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            }
+          ],
+          "scope": "Application value and actual renderer policy delivery only; no OS audio or acoustic measurement"
+        },
+        {
+          "volume": 37,
+          "policies": [
+            {
+              "petId": "pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+              "event": {
+                "ownerAccountId": "qa:4f086b34-d253-4de7-8c65-dc8310b401a9:local-ed4dd220-17e1-4b97-9cd8-132f0f8c94f3",
+                "volume": 37,
+                "companionLimit": 4
+              }
+            },
+            {
+              "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+              "event": {
+                "ownerAccountId": "qa:4f086b34-d253-4de7-8c65-dc8310b401a9:local-ed4dd220-17e1-4b97-9cd8-132f0f8c94f3",
+                "volume": 37,
+                "companionLimit": 4
+              }
+            },
+            {
+              "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+              "event": {
+                "ownerAccountId": "qa:4f086b34-d253-4de7-8c65-dc8310b401a9:local-ed4dd220-17e1-4b97-9cd8-132f0f8c94f3",
+                "volume": 37,
+                "companionLimit": 4
+              }
+            },
+            {
+              "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "event": {
+                "ownerAccountId": "qa:4f086b34-d253-4de7-8c65-dc8310b401a9:local-ed4dd220-17e1-4b97-9cd8-132f0f8c94f3",
+                "volume": 37,
+                "companionLimit": 4
+              }
+            }
+          ],
+          "windows": [
+            {
+              "id": 6,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+              "visible": true,
+              "bounds": {
+                "x": 794,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+              "dom": {
+                "petId": "pet-c35486ce-1a80-4c5c-8aa0-940b11380b01",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            },
+            {
+              "id": 4,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+              "visible": true,
+              "bounds": {
+                "x": 560,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+              "dom": {
+                "petId": "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            },
+            {
+              "id": 3,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+              "visible": true,
+              "bounds": {
+                "x": 320,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+              "dom": {
+                "petId": "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            },
+            {
+              "id": 2,
+              "url": "file:///C:/Users/RUNNER~1/AppData/Local/Temp/nshD435.tmp/app/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "visible": true,
+              "bounds": {
+                "x": 80,
+                "y": 440,
+                "width": 230,
+                "height": 280
+              },
+              "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+              "dom": {
+                "petId": "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "visibleText": "",
+                "canvasCount": 1
+              }
+            }
+          ],
+          "scope": "Application value and actual renderer policy delivery only; no OS audio or acoustic measurement"
+        }
+      ],
+      "unrelatedSettingsUnchanged": true,
+      "noSystemVolumeMutation": true,
+      "completedAt": "2026-10-27T10:07:00.430Z"
+    }
+  ],
+  "passed": true,
+  "startedAt": "2026-10-27T10:06:19.895Z",
+  "fixture": {
+    "owner": "qa:4f086b34-d253-4de7-8c65-dc8310b401a9:local-ed4dd220-17e1-4b97-9cd8-132f0f8c94f3",
+    "petIds": [
+      "pet-b8ae2993-476f-4198-8ba0-08c9c0feee2f",
+      "pet-0fac2735-57ef-45d8-97bb-9c423a1fabed",
+      "pet-07a99584-499d-4ed4-a69c-7b35741bc4f2",
+      "pet-0bbabc97-df96-42bc-8f76-5a37110ffad2",
+      "pet-c35486ce-1a80-4c5c-8aa0-940b11380b01"
+    ],
+    "preparation": "normal product IPC, no SQL injection"
+  },
+  "offlineBlocked": [
+    {
+      "node": 0,
+      "fetch": 0,
+      "websocket": 0,
+      "chromium": 0
+    }
+  ],
+  "pidChecks": [
+    {
+      "pid": 5268,
+      "alive": false
+    },
+    {
+      "pid": 5320,
+      "alive": false
+    }
+  ],
+  "ownedProcessStopped": true,
+  "temporaryProfileRemoved": true,
+  "completedAt": "2026-10-27T10:07:01.131Z"
+}
