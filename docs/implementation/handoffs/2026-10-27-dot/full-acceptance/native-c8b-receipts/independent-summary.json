@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "runId": 40487552479,
+  "harnessCommit": "c8baaecb1b24dca92cb64d4c609d6f1e735871a3",
+  "productCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "exeSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb",
+  "scope": "Actual audited b5 portable SFX on disposable cloud Windows, official offline QA. No user machines or production cloud.",
+  "P01": {
+    "recommendation": "passed_current_native",
+    "jobId": 122133891936,
+    "artifactId": 12725503844,
+    "artifactUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40487552479/artifacts/12725503844",
+    "zipSha256": "5e1e094ef903537123a25016b7ebc7fad8f7b940f900c7d7073d6ce4f183b741",
+    "receipt": {
+      "path": "settings-reachability-evidence.json",
+      "sha256": "27edc61ab1ab4a6f5c46759dfb7e51e4ff957d7914a90dcb4e538ded6f0865c8",
+      "bytes": 53035
+    },
+    "originalSteps": [
+      "Each settings tab",
+      "Keyboard and scrolling"
+    ],
+    "observed": {
+      "nativeBounds": [
+        960,
+        700
+      ],
+      "categories": [
+        "桌面与行为",
+        "通知与隐私",
+        "账号与云端",
+        "AI 对话",
+        "角色资源",
+        "关于与诊断"
+      ],
+      "targetControls": 19,
+      "enabledControlsWithFocusVisibleAndCenterHit": 18,
+      "disabledControls": {
+        "保存连接": "Empty model configuration: expected disabled, geometry checked only; not claimed keyboard/action available"
+      },
+      "allTargetsWithinViewportAndClippingAncestors": true,
+      "settingsDocumentAndRevisionUnchanged": true,
+      "sixScreenshotsVisuallyReviewed": true
+    },
+    "screenshots": [
+      {
+        "artifactPath": "foundation/cloud-engineering/settingsReachability/run-1793096561460/P01-1.png",
+        "sha256": "60575173167d4a7cfcf94f2f077df7655b38685136ed748473b0cb71691d53e6"
+      },
+      {
+        "artifactPath": "foundation/cloud-engineering/settingsReachability/run-1793096561460/P01-2.png",
+        "sha256": "a5cd511f01f20db4d1346365ea902ccbcd2bd499603ca37294f4e59a847ffa06"
+      },
+      {
+        "artifactPath": "foundation/cloud-engineering/settingsReachability/run-1793096561460/P01-3.png",
+        "sha256": "c06f0a871825a247d271c070cee78bef72eee3e4698ff9e85bd0c92145bae67e"
+      },
+      {
+        "artifactPath": "foundation/cloud-engineering/settingsReachability/run-1793096561460/P01-4.png",
+        "sha256": "ccf6b91effd2403b97dfac8903f31444c57ad443c448d2a604d7216bf1a26e16"
+      },
+      {
+        "artifactPath": "foundation/cloud-engineering/settingsReachability/run-1793096561460/P01-5.png",
+        "sha256": "7731742836ce6472a4ff25516e4011d902ba61b0cf9a4f0ff5fbc34acf7f900b"
+      },
+      {
+        "artifactPath": "foundation/cloud-engineering/settingsReachability/run-1793096561460/P01-6.png",
+        "sha256": "c8f4805c497f0930c90390eebdf7f766521f8813cf964f28ee7851968b72273c"
+      }
+    ],
+    "supplementaryPriorNavigation": {
+      "path": "native-0fd-receipts/0fd-navigation__foundation__cloud-engineering__navigation__run-1793089326679__evidence.json",
+      "sha256": "3a304e0cd9ac9ce8c340d1faa08ad0382a1524a2e3aea448cd9dcdd1e4b915cd",
+      "subcase": "P01/P07",
+      "scope": "Same b5 SFX existing six-category navigation, no new settings write"
+    }
+  },
+  "N02": {
+    "recommendation": "passed_current_native",
+    "jobId": 122133891977,
+    "artifactId": 12725044458,
+    "artifactUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40487552479/artifacts/12725044458",
+    "zipSha256": "bf41ba900f4219cb99fbbd73f680cdf20b4c5fabed008baa3d3cc28619a069b3",
+    "receipt": {
+      "path": "native-border-evidence.json",
+      "sha256": "e06e046b890810c91586eae996761e600d9543a64df8502fd9af16ecd46281ed",
+      "bytes": 4216
+    },
+    "actualMouseStep": "Exact own main HWND/PID, HTBOTTOMRIGHT=17, SendInput physical edge resize from1000x708 to unchanged minimum960x700; 19 SendInput return1/error0. Owned release/cursor/bounds restore and process/profile cleanup recorded.",
+    "minimumScreenshot": {
+      "artifactPath": "qa/native-border-resize/run-1793096587288/native-minimum.png",
+      "sha256": "0aeb5f8f745c8e610ae4f7e102f0427886a744b061e9a9e14c23124088d7eba4",
+      "review": "Login form and lower about entry visible; reviewed by native-input worker."
+    },
+    "priorMaximizeRestore": {
+      "path": "native-0fd-receipts/0fd-navigation__foundation__cloud-engineering__navigation__run-1793089326679__evidence.json",
+      "sha256": "3a304e0cd9ac9ce8c340d1faa08ad0382a1524a2e3aea448cd9dcdd1e4b915cd",
+      "subcase": "N02/N03",
+      "scope": "Actual UI maximize and restore, same audited b5 SFX. Prior setSize is not used as mouse proof."
+    },
+    "notClaimed": [
+      "all dialogs newly retested",
+      "current native picker business acceptance",
+      "multi-DPI",
+      "OS resolution changes",
+      "N03 completed"
+    ],
+    "evidenceComposition": "mixed-current-native-with-impact-verified-historical-layout-support",
+    "historicalLayoutSupport": {
+      "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+      "exeSha256": "49e7c00055acf533bd2e0418157ac446cc88e13bda9cbaf9185248c9b0c87d61",
+      "evidence": [
+        {
+          "path": "docs/implementation/handoffs/2026-10-27-cloud-authority-paused/screenshots/native-N02-original-B2-minimum-open-backup-dialog-full-child.png",
+          "sha256": "c6f379fbc79aa49cf3566d5bae5905f03f3221e42ea837ba8fcaa17c7f2b8d0d"
+        },
+        {
+          "path": "docs/implementation/handoffs/2026-10-27-cloud-authority-paused/proofs/native-navigation-settings-window-and-version-visibility-seal.json",
+          "sha256": "fb70ec5402fadd801ecb51c91fc1768449a4eca68c3891fc8ee8df62c2f0ba99"
+        },
+        {
+          "path": "docs/implementation/handoffs/2026-10-27-cloud-authority-paused/screenshots/native-N02-original-B2-minimum-chat-outer-scroll.png",
+          "sha256": "4acb3d56733040a6e9e1b12db69755c93f20b58c6212ca9867abecb8e7a49913"
+        }
+      ],
+      "visualReview": "Original actual minimum-window native file chooser complete filename/Open/Cancel controls visible; old minimum chat outer scroll reaches composer and memory. Images personally reviewed, no current user machine accessed.",
+      "impactReview": {
+        "unchanged": [
+          "apps/pc-app/runtime/features/accounts/desktop-host.cjs",
+          "apps/pc-app/ui/src/components/dialog.tsx",
+          "apps/pc-app/ui/src/components/ui/dialog.tsx",
+          "apps/pc-app/ui/src/features/accounts/preserved-records.tsx",
+          "apps/pc-app/ui/src/features/conversations/chat-page.tsx",
+          "apps/pc-app/ui/src/features/conversations/components.tsx",
+          "apps/pc-app/ui/src/features/conversations/styles.css"
+        ],
+        "accountModalDelta": "Restore action intent behavior changes, no modal layout JSX change; additional About navigation covered by current P01."
+      },
+      "limits": [
+        "Old seal dimensions fields are invalid capture metadata, not used as pixel-size evidence. Use actual images and original native operation seal.",
+        "Old minimum mouse drag failed; excluded. Current c8b physical edge proof supplies that exact step.",
+        "Preservation panel screenshot is inline, not a separate modal; not substituted for chooser.",
+        "Old native chooser geometry/Cancel support is not current picker automation success."
+      ],
+      "reviewer": "Independent reviewer plus current evidence writer hash/source checks"
+    }
+  },
+  "cleanup": "Both new owned sessions exited and temporary profiles removed; no production settings changed"
+}

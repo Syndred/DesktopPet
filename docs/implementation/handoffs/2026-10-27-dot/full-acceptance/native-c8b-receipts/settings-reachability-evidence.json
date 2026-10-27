@@ -1,0 +1,1944 @@
+{
+  "scope": "P01: actual audited Windows SFX, fresh offline QA pets. Read-only minimum-size keyboard and scroll reachability. Supplements prior navigation evidence; no N02/N03 upgrade.",
+  "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "compiledFingerprint": "b951a6aa7a5d04a04178645f92c0840168e3656ae5cf6f8f0e4839c0328ab48f",
+  "exeSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb",
+  "cases": [
+    {
+      "id": "P01",
+      "coverage": "Minimum-size real keyboard category entry and bottom control reachability; no settings mutations",
+      "status": "passed-original-scope-offline",
+      "startedAt": "2026-10-27T10:23:03.468Z",
+      "groups": [
+        {
+          "name": "桌面与行为",
+          "path": "/settings",
+          "entryTabCount": 2,
+          "checks": [
+            {
+              "label": "恢复默认设置",
+              "disabled": false,
+              "tabs": 27,
+              "rect": {
+                "x": 351,
+                "y": 648.1875,
+                "width": 123,
+                "height": 36
+              },
+              "viewport": {
+                "width": 960,
+                "height": 700
+              },
+              "insideViewport": true,
+              "hit": true,
+              "focused": true,
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": "3px",
+              "shadow": "none",
+              "clips": [
+                {
+                  "x": 166,
+                  "y": 54,
+                  "width": 794,
+                  "height": 646,
+                  "overflowX": "auto",
+                  "overflowY": "auto",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "width": 960,
+                  "height": 700,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                }
+              ]
+            },
+            {
+              "label": "界面动效",
+              "disabled": false,
+              "tabs": 1,
+              "rect": {
+                "x": 578.5,
+                "y": 655.1875,
+                "width": 38,
+                "height": 22
+              },
+              "viewport": {
+                "width": 960,
+                "height": 700
+              },
+              "insideViewport": true,
+              "hit": true,
+              "focused": true,
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": "3px",
+              "shadow": "none",
+              "clips": [
+                {
+                  "x": 166,
+                  "y": 54,
+                  "width": 794,
+                  "height": 646,
+                  "overflowX": "auto",
+                  "overflowY": "auto",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "width": 960,
+                  "height": 700,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                }
+              ]
+            },
+            {
+              "label": "保存设置",
+              "disabled": false,
+              "tabs": 1,
+              "rect": {
+                "x": 771,
+                "y": 648.1875,
+                "width": 150,
+                "height": 36
+              },
+              "viewport": {
+                "width": 960,
+                "height": 700
+              },
+              "insideViewport": true,
+              "hit": true,
+              "focused": true,
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": "3px",
+              "shadow": "none",
+              "clips": [
+                {
+                  "x": 166,
+                  "y": 54,
+                  "width": 794,
+                  "height": 646,
+                  "overflowX": "auto",
+                  "overflowY": "auto",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "width": 960,
+                  "height": 700,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "通知与隐私",
+          "path": "/settings/privacy",
+          "entryTabCount": 3,
+          "checks": [
+            {
+              "label": "情绪统计",
+              "disabled": false,
+              "tabs": 23,
+              "rect": {
+                "x": 868,
+                "y": 655.75,
+                "width": 38,
+                "height": 22
+              },
+              "viewport": {
+                "width": 960,
+                "height": 700
+              },
+              "insideViewport": true,
+              "hit": true,
+              "focused": true,
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": "3px",
+              "shadow": "none",
+              "clips": [
+                {
+                  "x": 351,
+                  "y": 504.75,
+                  "width": 570,
+                  "height": 202,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 166,
+                  "y": 54,
+                  "width": 794,
+                  "height": 646,
+                  "overflowX": "auto",
+                  "overflowY": "auto",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "width": 960,
+                  "height": 700,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                }
+              ]
+            },
+            {
+              "label": "测试已保存的通知设置",
+              "disabled": false,
+              "tabs": 4,
+              "rect": {
+                "x": 351,
+                "y": 644.75,
+                "width": 570,
+                "height": 39
+              },
+              "viewport": {
+                "width": 960,
+                "height": 700
+              },
+              "insideViewport": true,
+              "hit": true,
+              "focused": true,
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": "3px",
+              "shadow": "none",
+              "clips": [
+                {
+                  "x": 166,
+                  "y": 54,
+                  "width": 794,
+                  "height": 646,
+                  "overflowX": "auto",
+                  "overflowY": "auto",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "width": 960,
+                  "height": 700,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "账号与云端",
+          "path": "/account",
+          "entryTabCount": 6,
+          "checks": [
+            {
+              "label": "导出本地备份",
+              "disabled": false,
+              "tabs": 15,
+              "rect": {
+                "x": 367,
+                "y": 403.1875,
+                "width": 123,
+                "height": 39
+              },
+              "viewport": {
+                "width": 960,
+                "height": 700
+              },
+              "insideViewport": true,
+              "hit": true,
+              "focused": true,
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": "3px",
+              "shadow": "none",
+              "clips": [
+                {
+                  "x": 349,
+                  "y": 149.1875,
+                  "width": 572,
+                  "height": 311,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 166,
+                  "y": 54,
+                  "width": 794,
+                  "height": 646,
+                  "overflowX": "auto",
+                  "overflowY": "auto",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "width": 960,
+                  "height": 700,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                }
+              ]
+            },
+            {
+              "label": "恢复本地备份",
+              "disabled": false,
+              "tabs": 1,
+              "rect": {
+                "x": 499,
+                "y": 403.1875,
+                "width": 100,
+                "height": 39
+              },
+              "viewport": {
+                "width": 960,
+                "height": 700
+              },
+              "insideViewport": true,
+              "hit": true,
+              "focused": true,
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": "3px",
+              "shadow": "none",
+              "clips": [
+                {
+                  "x": 349,
+                  "y": 149.1875,
+                  "width": 572,
+                  "height": 311,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 166,
+                  "y": 54,
+                  "width": 794,
+                  "height": 646,
+                  "overflowX": "auto",
+                  "overflowY": "auto",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "width": 960,
+                  "height": 700,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                }
+              ]
+            },
+            {
+              "label": "退出登录",
+              "disabled": false,
+              "tabs": 1,
+              "rect": {
+                "x": 367,
+                "y": 611.6875,
+                "width": 536,
+                "height": 39
+              },
+              "viewport": {
+                "width": 960,
+                "height": 700
+              },
+              "insideViewport": true,
+              "hit": true,
+              "focused": true,
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": "3px",
+              "shadow": "none",
+              "clips": [
+                {
+                  "x": 349,
+                  "y": 476.1875,
+                  "width": 572,
+                  "height": 192.5,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 166,
+                  "y": 54,
+                  "width": 794,
+                  "height": 646,
+                  "overflowX": "auto",
+                  "overflowY": "auto",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "width": 960,
+                  "height": 700,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "AI 对话",
+          "path": "/settings/ai",
+          "entryTabCount": 4,
+          "checks": [
+            {
+              "label": "服务提供商",
+              "disabled": false,
+              "tabs": 11,
+              "rect": {
+                "x": 288,
+                "y": 330.1875,
+                "width": 259.515625,
+                "height": 40.390625
+              },
+              "viewport": {
+                "width": 960,
+                "height": 700
+              },
+              "insideViewport": true,
+              "hit": true,
+              "focused": true,
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": "3px",
+              "shadow": "none",
+              "clips": [
+                {
+                  "x": 166,
+                  "y": 54,
+                  "width": 794,
+                  "height": 646,
+                  "overflowX": "auto",
+                  "overflowY": "auto",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "width": 960,
+                  "height": 700,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                }
+              ]
+            },
+            {
+              "label": "url",
+              "disabled": false,
+              "tabs": 3,
+              "rect": {
+                "x": 288,
+                "y": 429.578125,
+                "width": 259.515625,
+                "height": 33
+              },
+              "viewport": {
+                "width": 960,
+                "height": 700
+              },
+              "insideViewport": true,
+              "hit": true,
+              "focused": true,
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": "2px",
+              "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklab(0.783196 -0.0000374615 -0.109336 / 0.5) 0px 0px 0px 3px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+              "clips": [
+                {
+                  "x": 166,
+                  "y": 54,
+                  "width": 794,
+                  "height": 646,
+                  "overflowX": "auto",
+                  "overflowY": "auto",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "width": 960,
+                  "height": 700,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                }
+              ]
+            },
+            {
+              "label": "保存连接",
+              "disabled": true,
+              "tabs": null,
+              "rect": {
+                "x": 467.515625,
+                "y": 576.71875,
+                "width": 80,
+                "height": 43.796875
+              },
+              "viewport": {
+                "width": 960,
+                "height": 700
+              },
+              "insideViewport": true,
+              "hit": false,
+              "focused": false,
+              "focusVisible": false,
+              "outline": "none",
+              "outlineWidth": "3px",
+              "shadow": "none",
+              "clips": [
+                {
+                  "x": 166,
+                  "y": 54,
+                  "width": 794,
+                  "height": 646,
+                  "overflowX": "auto",
+                  "overflowY": "auto",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "width": 960,
+                  "height": 700,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                }
+              ]
+            },
+            {
+              "label": "性格设定",
+              "disabled": false,
+              "tabs": 9,
+              "rect": {
+                "x": 597.515625,
+                "y": 559.375,
+                "width": 306.484375,
+                "height": 90
+              },
+              "viewport": {
+                "width": 960,
+                "height": 700
+              },
+              "insideViewport": true,
+              "hit": true,
+              "focused": true,
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": "2px",
+              "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklab(0.783196 -0.0000374615 -0.109336 / 0.5) 0px 0px 0px 3px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+              "clips": [
+                {
+                  "x": 166,
+                  "y": 54,
+                  "width": 794,
+                  "height": 646,
+                  "overflowX": "auto",
+                  "overflowY": "auto",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "width": 960,
+                  "height": 700,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                }
+              ]
+            },
+            {
+              "label": "保存伙伴人设",
+              "disabled": false,
+              "tabs": 8,
+              "rect": {
+                "x": 597.515625,
+                "y": 483.640625,
+                "width": 82,
+                "height": 43.796875
+              },
+              "viewport": {
+                "width": 960,
+                "height": 700
+              },
+              "insideViewport": true,
+              "hit": true,
+              "focused": true,
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": "3px",
+              "shadow": "none",
+              "clips": [
+                {
+                  "x": 166,
+                  "y": 54,
+                  "width": 794,
+                  "height": 646,
+                  "overflowX": "auto",
+                  "overflowY": "auto",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "width": 960,
+                  "height": 700,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                }
+              ]
+            },
+            {
+              "label": "添加记忆",
+              "disabled": false,
+              "tabs": 2,
+              "rect": {
+                "x": 874,
+                "y": 577.4375,
+                "width": 30,
+                "height": 30
+              },
+              "viewport": {
+                "width": 960,
+                "height": 700
+              },
+              "insideViewport": true,
+              "hit": true,
+              "focused": true,
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": "3px",
+              "shadow": "none",
+              "clips": [
+                {
+                  "x": 166,
+                  "y": 54,
+                  "width": 794,
+                  "height": 646,
+                  "overflowX": "auto",
+                  "overflowY": "auto",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "width": 960,
+                  "height": 700,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "角色资源",
+          "path": "/resources",
+          "entryTabCount": 5,
+          "checks": [
+            {
+              "label": "填写来源与许可",
+              "disabled": false,
+              "tabs": 11,
+              "rect": {
+                "x": 282.0625,
+                "y": 616.484375,
+                "width": 84,
+                "height": 23
+              },
+              "viewport": {
+                "width": 960,
+                "height": 700
+              },
+              "insideViewport": true,
+              "hit": true,
+              "focused": true,
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": "2px",
+              "shadow": "none",
+              "clips": [
+                {
+                  "x": 166,
+                  "y": 54,
+                  "width": 794,
+                  "height": 646,
+                  "overflowX": "auto",
+                  "overflowY": "auto",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "width": 960,
+                  "height": 700,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                }
+              ]
+            },
+            {
+              "label": "选择文件并导入",
+              "disabled": false,
+              "tabs": 1,
+              "rect": {
+                "x": 215,
+                "y": 647.484375,
+                "width": 218.125,
+                "height": 35
+              },
+              "viewport": {
+                "width": 960,
+                "height": 700
+              },
+              "insideViewport": true,
+              "hit": true,
+              "focused": true,
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": "2px",
+              "shadow": "none",
+              "clips": [
+                {
+                  "x": 166,
+                  "y": 54,
+                  "width": 794,
+                  "height": 646,
+                  "overflowX": "auto",
+                  "overflowY": "auto",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "width": 960,
+                  "height": 700,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "关于与诊断",
+          "path": "/settings/about",
+          "entryTabCount": 7,
+          "checks": [
+            {
+              "label": "显示程序文件",
+              "disabled": false,
+              "tabs": 2,
+              "rect": {
+                "x": 190,
+                "y": 527.1875,
+                "width": 122,
+                "height": 39
+              },
+              "viewport": {
+                "width": 960,
+                "height": 700
+              },
+              "insideViewport": true,
+              "hit": true,
+              "focused": true,
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": "3px",
+              "shadow": "none",
+              "clips": [
+                {
+                  "x": 166,
+                  "y": 54,
+                  "width": 794,
+                  "height": 646,
+                  "overflowX": "auto",
+                  "overflowY": "auto",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "width": 960,
+                  "height": 700,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                }
+              ]
+            },
+            {
+              "label": "打开本地日志目录",
+              "disabled": false,
+              "tabs": 1,
+              "rect": {
+                "x": 316.15625,
+                "y": 527.1875,
+                "width": 150,
+                "height": 39
+              },
+              "viewport": {
+                "width": 960,
+                "height": 700
+              },
+              "insideViewport": true,
+              "hit": true,
+              "focused": true,
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": "3px",
+              "shadow": "none",
+              "clips": [
+                {
+                  "x": 166,
+                  "y": 54,
+                  "width": 794,
+                  "height": 646,
+                  "overflowX": "auto",
+                  "overflowY": "auto",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "width": 960,
+                  "height": 700,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                }
+              ]
+            },
+            {
+              "label": "← 返回设置",
+              "disabled": false,
+              "tabs": 14,
+              "rect": {
+                "x": 190,
+                "y": 79,
+                "width": 74.15625,
+                "height": 18
+              },
+              "viewport": {
+                "width": 960,
+                "height": 700
+              },
+              "insideViewport": true,
+              "hit": true,
+              "focused": true,
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": "3px",
+              "shadow": "none",
+              "clips": [
+                {
+                  "x": 166,
+                  "y": 54,
+                  "width": 794,
+                  "height": 646,
+                  "overflowX": "auto",
+                  "overflowY": "auto",
+                  "insideX": true,
+                  "insideY": true
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "width": 960,
+                  "height": 700,
+                  "overflowX": "hidden",
+                  "overflowY": "hidden",
+                  "insideX": true,
+                  "insideY": true
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "settingsDocumentAndRevisionUnchanged": true,
+      "actionsNotActivated": "No save/export/import/logout/diagnostic/permission buttons activated; only categories navigated",
+      "priorEvidence": "0fd navigation supplies existing six-category route and native size/maximize checks; this run supplies missing keyboard/focus/scroll checks only",
+      "notClaimed": [
+        "N02 mouse-border resizing",
+        "N03 cloud draft semantics",
+        "physical multi-DPI"
+      ],
+      "completedAt": "2026-10-27T10:23:14.594Z"
+    }
+  ],
+  "passed": true,
+  "startedAt": "2026-10-27T10:22:41.752Z",
+  "fixture": {
+    "owner": "qa:3d2eb91b-8193-42e7-89d3-e53e76166f39:local-e7d10d44-fd86-4bf1-b4b8-5f3e387c8691",
+    "petIds": [
+      "pet-725838ed-7609-4842-b2cc-013eb7b6172e",
+      "pet-6458db32-cd2d-418b-9c22-b6ee37763b89"
+    ],
+    "preparation": "normal local QA product IPC; hidden pets"
+  },
+  "bounds": {
+    "x": 0,
+    "y": 0,
+    "width": 960,
+    "height": 700
+  },
+  "latestInspection": {
+    "label": "← 返回设置",
+    "disabled": false,
+    "tabs": 14,
+    "rect": {
+      "x": 190,
+      "y": 79,
+      "width": 74.15625,
+      "height": 18
+    },
+    "viewport": {
+      "width": 960,
+      "height": 700
+    },
+    "insideViewport": true,
+    "hit": true,
+    "focused": true,
+    "focusVisible": true,
+    "outline": "solid",
+    "outlineWidth": "3px",
+    "shadow": "none",
+    "clips": [
+      {
+        "x": 166,
+        "y": 54,
+        "width": 794,
+        "height": 646,
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "insideX": true,
+        "insideY": true
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "width": 960,
+        "height": 700,
+        "overflowX": "hidden",
+        "overflowY": "hidden",
+        "insideX": true,
+        "insideY": true
+      }
+    ]
+  },
+  "progress": [
+    {
+      "name": "桌面与行为",
+      "path": "/settings",
+      "entryTabCount": 2,
+      "checks": [
+        {
+          "label": "恢复默认设置",
+          "disabled": false,
+          "tabs": 27,
+          "rect": {
+            "x": 351,
+            "y": 648.1875,
+            "width": 123,
+            "height": 36
+          },
+          "viewport": {
+            "width": 960,
+            "height": 700
+          },
+          "insideViewport": true,
+          "hit": true,
+          "focused": true,
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": "3px",
+          "shadow": "none",
+          "clips": [
+            {
+              "x": 166,
+              "y": 54,
+              "width": 794,
+              "height": 646,
+              "overflowX": "auto",
+              "overflowY": "auto",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 960,
+              "height": 700,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            }
+          ]
+        },
+        {
+          "label": "界面动效",
+          "disabled": false,
+          "tabs": 1,
+          "rect": {
+            "x": 578.5,
+            "y": 655.1875,
+            "width": 38,
+            "height": 22
+          },
+          "viewport": {
+            "width": 960,
+            "height": 700
+          },
+          "insideViewport": true,
+          "hit": true,
+          "focused": true,
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": "3px",
+          "shadow": "none",
+          "clips": [
+            {
+              "x": 166,
+              "y": 54,
+              "width": 794,
+              "height": 646,
+              "overflowX": "auto",
+              "overflowY": "auto",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 960,
+              "height": 700,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            }
+          ]
+        },
+        {
+          "label": "保存设置",
+          "disabled": false,
+          "tabs": 1,
+          "rect": {
+            "x": 771,
+            "y": 648.1875,
+            "width": 150,
+            "height": 36
+          },
+          "viewport": {
+            "width": 960,
+            "height": 700
+          },
+          "insideViewport": true,
+          "hit": true,
+          "focused": true,
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": "3px",
+          "shadow": "none",
+          "clips": [
+            {
+              "x": 166,
+              "y": 54,
+              "width": 794,
+              "height": 646,
+              "overflowX": "auto",
+              "overflowY": "auto",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 960,
+              "height": 700,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "通知与隐私",
+      "path": "/settings/privacy",
+      "entryTabCount": 3,
+      "checks": [
+        {
+          "label": "情绪统计",
+          "disabled": false,
+          "tabs": 23,
+          "rect": {
+            "x": 868,
+            "y": 655.75,
+            "width": 38,
+            "height": 22
+          },
+          "viewport": {
+            "width": 960,
+            "height": 700
+          },
+          "insideViewport": true,
+          "hit": true,
+          "focused": true,
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": "3px",
+          "shadow": "none",
+          "clips": [
+            {
+              "x": 351,
+              "y": 504.75,
+              "width": 570,
+              "height": 202,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 166,
+              "y": 54,
+              "width": 794,
+              "height": 646,
+              "overflowX": "auto",
+              "overflowY": "auto",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 960,
+              "height": 700,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            }
+          ]
+        },
+        {
+          "label": "测试已保存的通知设置",
+          "disabled": false,
+          "tabs": 4,
+          "rect": {
+            "x": 351,
+            "y": 644.75,
+            "width": 570,
+            "height": 39
+          },
+          "viewport": {
+            "width": 960,
+            "height": 700
+          },
+          "insideViewport": true,
+          "hit": true,
+          "focused": true,
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": "3px",
+          "shadow": "none",
+          "clips": [
+            {
+              "x": 166,
+              "y": 54,
+              "width": 794,
+              "height": 646,
+              "overflowX": "auto",
+              "overflowY": "auto",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 960,
+              "height": 700,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "账号与云端",
+      "path": "/account",
+      "entryTabCount": 6,
+      "checks": [
+        {
+          "label": "导出本地备份",
+          "disabled": false,
+          "tabs": 15,
+          "rect": {
+            "x": 367,
+            "y": 403.1875,
+            "width": 123,
+            "height": 39
+          },
+          "viewport": {
+            "width": 960,
+            "height": 700
+          },
+          "insideViewport": true,
+          "hit": true,
+          "focused": true,
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": "3px",
+          "shadow": "none",
+          "clips": [
+            {
+              "x": 349,
+              "y": 149.1875,
+              "width": 572,
+              "height": 311,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 166,
+              "y": 54,
+              "width": 794,
+              "height": 646,
+              "overflowX": "auto",
+              "overflowY": "auto",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 960,
+              "height": 700,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            }
+          ]
+        },
+        {
+          "label": "恢复本地备份",
+          "disabled": false,
+          "tabs": 1,
+          "rect": {
+            "x": 499,
+            "y": 403.1875,
+            "width": 100,
+            "height": 39
+          },
+          "viewport": {
+            "width": 960,
+            "height": 700
+          },
+          "insideViewport": true,
+          "hit": true,
+          "focused": true,
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": "3px",
+          "shadow": "none",
+          "clips": [
+            {
+              "x": 349,
+              "y": 149.1875,
+              "width": 572,
+              "height": 311,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 166,
+              "y": 54,
+              "width": 794,
+              "height": 646,
+              "overflowX": "auto",
+              "overflowY": "auto",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 960,
+              "height": 700,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            }
+          ]
+        },
+        {
+          "label": "退出登录",
+          "disabled": false,
+          "tabs": 1,
+          "rect": {
+            "x": 367,
+            "y": 611.6875,
+            "width": 536,
+            "height": 39
+          },
+          "viewport": {
+            "width": 960,
+            "height": 700
+          },
+          "insideViewport": true,
+          "hit": true,
+          "focused": true,
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": "3px",
+          "shadow": "none",
+          "clips": [
+            {
+              "x": 349,
+              "y": 476.1875,
+              "width": 572,
+              "height": 192.5,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 166,
+              "y": 54,
+              "width": 794,
+              "height": 646,
+              "overflowX": "auto",
+              "overflowY": "auto",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 960,
+              "height": 700,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "AI 对话",
+      "path": "/settings/ai",
+      "entryTabCount": 4,
+      "checks": [
+        {
+          "label": "服务提供商",
+          "disabled": false,
+          "tabs": 11,
+          "rect": {
+            "x": 288,
+            "y": 330.1875,
+            "width": 259.515625,
+            "height": 40.390625
+          },
+          "viewport": {
+            "width": 960,
+            "height": 700
+          },
+          "insideViewport": true,
+          "hit": true,
+          "focused": true,
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": "3px",
+          "shadow": "none",
+          "clips": [
+            {
+              "x": 166,
+              "y": 54,
+              "width": 794,
+              "height": 646,
+              "overflowX": "auto",
+              "overflowY": "auto",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 960,
+              "height": 700,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            }
+          ]
+        },
+        {
+          "label": "url",
+          "disabled": false,
+          "tabs": 3,
+          "rect": {
+            "x": 288,
+            "y": 429.578125,
+            "width": 259.515625,
+            "height": 33
+          },
+          "viewport": {
+            "width": 960,
+            "height": 700
+          },
+          "insideViewport": true,
+          "hit": true,
+          "focused": true,
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": "2px",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklab(0.783196 -0.0000374615 -0.109336 / 0.5) 0px 0px 0px 3px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+          "clips": [
+            {
+              "x": 166,
+              "y": 54,
+              "width": 794,
+              "height": 646,
+              "overflowX": "auto",
+              "overflowY": "auto",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 960,
+              "height": 700,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            }
+          ]
+        },
+        {
+          "label": "保存连接",
+          "disabled": true,
+          "tabs": null,
+          "rect": {
+            "x": 467.515625,
+            "y": 576.71875,
+            "width": 80,
+            "height": 43.796875
+          },
+          "viewport": {
+            "width": 960,
+            "height": 700
+          },
+          "insideViewport": true,
+          "hit": false,
+          "focused": false,
+          "focusVisible": false,
+          "outline": "none",
+          "outlineWidth": "3px",
+          "shadow": "none",
+          "clips": [
+            {
+              "x": 166,
+              "y": 54,
+              "width": 794,
+              "height": 646,
+              "overflowX": "auto",
+              "overflowY": "auto",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 960,
+              "height": 700,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            }
+          ]
+        },
+        {
+          "label": "性格设定",
+          "disabled": false,
+          "tabs": 9,
+          "rect": {
+            "x": 597.515625,
+            "y": 559.375,
+            "width": 306.484375,
+            "height": 90
+          },
+          "viewport": {
+            "width": 960,
+            "height": 700
+          },
+          "insideViewport": true,
+          "hit": true,
+          "focused": true,
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": "2px",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklab(0.783196 -0.0000374615 -0.109336 / 0.5) 0px 0px 0px 3px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+          "clips": [
+            {
+              "x": 166,
+              "y": 54,
+              "width": 794,
+              "height": 646,
+              "overflowX": "auto",
+              "overflowY": "auto",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 960,
+              "height": 700,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            }
+          ]
+        },
+        {
+          "label": "保存伙伴人设",
+          "disabled": false,
+          "tabs": 8,
+          "rect": {
+            "x": 597.515625,
+            "y": 483.640625,
+            "width": 82,
+            "height": 43.796875
+          },
+          "viewport": {
+            "width": 960,
+            "height": 700
+          },
+          "insideViewport": true,
+          "hit": true,
+          "focused": true,
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": "3px",
+          "shadow": "none",
+          "clips": [
+            {
+              "x": 166,
+              "y": 54,
+              "width": 794,
+              "height": 646,
+              "overflowX": "auto",
+              "overflowY": "auto",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 960,
+              "height": 700,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            }
+          ]
+        },
+        {
+          "label": "添加记忆",
+          "disabled": false,
+          "tabs": 2,
+          "rect": {
+            "x": 874,
+            "y": 577.4375,
+            "width": 30,
+            "height": 30
+          },
+          "viewport": {
+            "width": 960,
+            "height": 700
+          },
+          "insideViewport": true,
+          "hit": true,
+          "focused": true,
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": "3px",
+          "shadow": "none",
+          "clips": [
+            {
+              "x": 166,
+              "y": 54,
+              "width": 794,
+              "height": 646,
+              "overflowX": "auto",
+              "overflowY": "auto",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 960,
+              "height": 700,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "角色资源",
+      "path": "/resources",
+      "entryTabCount": 5,
+      "checks": [
+        {
+          "label": "填写来源与许可",
+          "disabled": false,
+          "tabs": 11,
+          "rect": {
+            "x": 282.0625,
+            "y": 616.484375,
+            "width": 84,
+            "height": 23
+          },
+          "viewport": {
+            "width": 960,
+            "height": 700
+          },
+          "insideViewport": true,
+          "hit": true,
+          "focused": true,
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": "2px",
+          "shadow": "none",
+          "clips": [
+            {
+              "x": 166,
+              "y": 54,
+              "width": 794,
+              "height": 646,
+              "overflowX": "auto",
+              "overflowY": "auto",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 960,
+              "height": 700,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            }
+          ]
+        },
+        {
+          "label": "选择文件并导入",
+          "disabled": false,
+          "tabs": 1,
+          "rect": {
+            "x": 215,
+            "y": 647.484375,
+            "width": 218.125,
+            "height": 35
+          },
+          "viewport": {
+            "width": 960,
+            "height": 700
+          },
+          "insideViewport": true,
+          "hit": true,
+          "focused": true,
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": "2px",
+          "shadow": "none",
+          "clips": [
+            {
+              "x": 166,
+              "y": 54,
+              "width": 794,
+              "height": 646,
+              "overflowX": "auto",
+              "overflowY": "auto",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 960,
+              "height": 700,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "关于与诊断",
+      "path": "/settings/about",
+      "entryTabCount": 7,
+      "checks": [
+        {
+          "label": "显示程序文件",
+          "disabled": false,
+          "tabs": 2,
+          "rect": {
+            "x": 190,
+            "y": 527.1875,
+            "width": 122,
+            "height": 39
+          },
+          "viewport": {
+            "width": 960,
+            "height": 700
+          },
+          "insideViewport": true,
+          "hit": true,
+          "focused": true,
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": "3px",
+          "shadow": "none",
+          "clips": [
+            {
+              "x": 166,
+              "y": 54,
+              "width": 794,
+              "height": 646,
+              "overflowX": "auto",
+              "overflowY": "auto",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 960,
+              "height": 700,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            }
+          ]
+        },
+        {
+          "label": "打开本地日志目录",
+          "disabled": false,
+          "tabs": 1,
+          "rect": {
+            "x": 316.15625,
+            "y": 527.1875,
+            "width": 150,
+            "height": 39
+          },
+          "viewport": {
+            "width": 960,
+            "height": 700
+          },
+          "insideViewport": true,
+          "hit": true,
+          "focused": true,
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": "3px",
+          "shadow": "none",
+          "clips": [
+            {
+              "x": 166,
+              "y": 54,
+              "width": 794,
+              "height": 646,
+              "overflowX": "auto",
+              "overflowY": "auto",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 960,
+              "height": 700,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            }
+          ]
+        },
+        {
+          "label": "← 返回设置",
+          "disabled": false,
+          "tabs": 14,
+          "rect": {
+            "x": 190,
+            "y": 79,
+            "width": 74.15625,
+            "height": 18
+          },
+          "viewport": {
+            "width": 960,
+            "height": 700
+          },
+          "insideViewport": true,
+          "hit": true,
+          "focused": true,
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": "3px",
+          "shadow": "none",
+          "clips": [
+            {
+              "x": 166,
+              "y": 54,
+              "width": 794,
+              "height": 646,
+              "overflowX": "auto",
+              "overflowY": "auto",
+              "insideX": true,
+              "insideY": true
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 960,
+              "height": 700,
+              "overflowX": "hidden",
+              "overflowY": "hidden",
+              "insideX": true,
+              "insideY": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "offlineBlocked": [
+    {
+      "node": 0,
+      "fetch": 0,
+      "websocket": 0,
+      "chromium": 0
+    }
+  ],
+  "pidChecks": [
+    {
+      "pid": 8996,
+      "alive": false
+    },
+    {
+      "pid": 5124,
+      "alive": false
+    }
+  ],
+  "ownedProcessStopped": true,
+  "temporaryProfileRemoved": true,
+  "completedAt": "2026-10-27T10:23:15.285Z"
+}
