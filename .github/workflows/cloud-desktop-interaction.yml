@@ -1,0 +1,88 @@
+name: DesktopPet focused desktop interaction repair
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/cloud-authority-convergence']
+    paths:
+      - '.github/workflows/cloud-desktop-interaction.yml'
+      - 'apps/pc-app/ui/src/features/companions/DesktopCompanion.tsx'
+      - 'apps/pc-app/ui/src/features/companions/desktop.css'
+      - 'tests/regressions/cloud-repair/desktop-context-menu.regressions.jsx'
+      - 'tests/regressions/cloud-repair/run-desktop-context-menu.cjs'
+      - 'scripts/acceptance/cloud-native-pet-menu-acceptance.mjs'
+      - 'scripts/acceptance/native-owned-pet-menu.ps1'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: desktop-interaction-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  desktop-interaction:
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
+    runs-on: windows-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - name: Isolated normal dependencies
+        run: npm ci
+      - name: Type-check affected UI and desktop contracts
+        run: |
+          npm run typecheck
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm run typecheck:ui
+      - name: Existing owner, action binding and per-pet interaction guards
+        run: node scripts/desktop/run-native-tests.cjs --test-name-pattern="action IDs bind|main-derived account ownership|touch cooldown|desktop, chat, battle" apps/pc-app/runtime/features/companions/tests/service.test.cjs
+      - name: Existing desktop position, visibility and input contracts
+        run: node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/companions/tests/desktop-position.test.cjs apps/pc-app/runtime/features/companions/tests/desktop-display.test.cjs
+      - name: Install DOM fixture dependency outside product checkout
+        run: |
+          npm install --prefix "$env:RUNNER_TEMP/desktoppet-dom" --ignore-scripts --no-audit --no-fund jsdom@30.1.3
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          "JSDOM_MODULE=$env:RUNNER_TEMP/desktoppet-dom/node_modules/jsdom" >> $env:GITHUB_ENV
+      - name: Real desktop component menu, busy, identity and drag regression
+        run: |
+          New-Item -ItemType Directory -Force artifacts/qa/desktop-interaction | Out-Null
+          node tests/regressions/cloud-repair/run-desktop-context-menu.cjs | Tee-Object artifacts/qa/desktop-interaction/desktop-menu-dom.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Build one actual Windows portable from committed changed product
+        run: npm run package:pc:win
+      - name: Audit ASAR, exact source fingerprint, native closure and public config
+        id: audit
+        run: npm run release:audit
+      - name: New executable ordinary signed-out startup
+        if: ${{ !cancelled() && steps.audit.outcome == 'success' }}
+        timeout-minutes: 6
+        run: node scripts/acceptance/cloud-repair-portable.mjs
+      - name: Actual new executable owned-pet interaction and narrow drag recovery
+        if: ${{ !cancelled() && steps.audit.outcome == 'success' }}
+        timeout-minutes: 12
+        run: node scripts/acceptance/cloud-native-pet-menu-acceptance.mjs --source=$env:GITHUB_SHA
+      - name: Retain new executable and bounded acceptance evidence only
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: desktoppet-desktop-interaction-${{ github.sha }}
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            artifacts/pc-cloud-upgrade/*.exe
+            apps/pc-app/dist/build-manifest.json
+            apps/pc-app/dist/runtime-closure.json
+            artifacts/foundation/cloud-engineering/package-audit.json
+            artifacts/qa/desktop-interaction/desktop-menu-dom.json
+            artifacts/foundation/cloud-engineering/focused-portable/*/evidence.json
+            artifacts/foundation/cloud-engineering/focused-portable/*/signed-out-evidence.json
+            artifacts/qa/native-pet-menu/run-*/evidence.json
+            artifacts/qa/native-pet-menu/run-*/menu-open.png
+            artifacts/qa/native-pet-menu/run-*/menu-after-pet.png
+            artifacts/qa/native-pet-menu/run-*/failure.png

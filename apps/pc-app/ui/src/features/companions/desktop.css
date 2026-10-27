@@ -10,3 +10,6 @@
 .cp-desktop-tools .button { width: 28px; height: 27px; min-height: 0; padding: 5px; border-radius: 8px; background: var(--cream, #fbfcff); box-shadow: none; }
 .cp-desktop-message { position: absolute; top: 45px; right: 5px; left: 5px; padding: 5px 7px; font-size: 11px; background: var(--cream, #fbfcff); border: 1px solid var(--line, #e3eaf8); border-radius: 10px; text-align: center; pointer-events: none; }
 .is-sleeping .cp-desktop-visual { opacity: .9; }
+
+.cp-desktop-context-menu { position: absolute; z-index: 5; display: flex; flex-direction: column; gap: 3px; width: 112px; max-width: 100%; max-height: 100%; overflow: auto; padding: 5px; box-sizing: border-box; border: 1px solid var(--line, #e3eaf8); border-radius: 10px; background: var(--cream, #fbfcff); box-shadow: 0 3px 12px #27374c26; }
+.cp-desktop-context-menu .button { width: 100%; min-height: 28px; padding: 5px 8px; justify-content: flex-start; gap: 8px; font-size: 12px; }
