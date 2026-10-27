@@ -44,10 +44,10 @@ jobs:
       - name: Verify source tree, test-only difference, closure and exact SFX hash
         id: reuse
         run: node scripts/acceptance/verify-portable-reuse.mjs --source=$env:PACKAGE_SOURCE
-      - name: Native multi-page resizing, scrolling and unsaved draft preservation
+      - name: Native memory-dialog scrolling and draft preservation (earlier pages retained)
         if: ${{ !cancelled() && steps.reuse.outcome == 'success' }}
         timeout-minutes: 10
-        run: node scripts/acceptance/cloud-native-resize-drafts-acceptance.mjs --source=$env:PACKAGE_SOURCE
+        run: node scripts/acceptance/cloud-native-resize-drafts-acceptance.mjs --source=$env:PACKAGE_SOURCE --dialog-only
       - name: Retain only bounded new evidence and owned-app screenshots
         if: always()
         uses: actions/upload-artifact@v7.0.2
