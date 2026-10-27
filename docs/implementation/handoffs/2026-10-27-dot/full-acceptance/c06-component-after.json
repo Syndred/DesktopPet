@@ -1,0 +1,30 @@
+{
+  "baseline": false,
+  "sourceCommit": "a2b3f5d3183bfc12975925172e290d9184ddcc5a",
+  "componentSha256": "87d1ab613d3783f97798ebc2ae45d44253ae347b44424196f7c24c2e1760c0a2",
+  "selectionHookSha256": "91344ea9224ec34d6fabfcf9079e31ba46987c298725487eff6e8759cad96b0c",
+  "kind": "actual-component-and-hash-navigation-jsdom",
+  "boundary": "GPU portrait replaced with null; fixture read-only IPC, no Electron/native claim",
+  "results": [
+    {
+      "name": "second pet selection survives actual detail route and normal return",
+      "passed": true
+    },
+    {
+      "name": "switching owner clears old selected entity",
+      "passed": true
+    },
+    {
+      "name": "removing selected pet falls back to a current owned pet",
+      "passed": true
+    },
+    {
+      "name": "same-owner session event clears transient navigation selection",
+      "passed": true
+    },
+    {
+      "name": "session reset while overview is unmounted cannot restore stale selection",
+      "passed": true
+    }
+  ]
+}

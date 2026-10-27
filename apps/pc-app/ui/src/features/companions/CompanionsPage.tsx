@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useOverviewSelection } from './overview-selection';
 import { ArrowRight, ChevronRight, Plus, Sparkles, Swords } from 'lucide-react';
 import { navigate } from '../../app/navigation';
 import { Badge, Button, Card, ErrorNotice, PageHeader } from '../../components/ui';
@@ -12,8 +13,9 @@ import { activeSnapshot, CompanionCloudNotice, CompanionElement, DesktopControls
 
 export function CompanionsPage() {
   usePageScroll(); const controller = useCompanions();
-  const [selectedId, setSelectedId] = useState<string | null>(null); const [desktopOnly, setDesktopOnly] = useState(false);
+  const [desktopOnly, setDesktopOnly] = useState(false);
   const snapshot = controller.snapshot && activeSnapshot(controller.snapshot);
+  const { selectedId, select: setSelectedId } = useOverviewSelection(snapshot?.ownerAccountId, snapshot?.pets.map(pet => pet.petId) ?? []);
   if (!snapshot?.pets.length) return <div className="cp-page"><CompanionCloudNotice controller={controller}/><LoadingOrEmpty controller={controller}/></div>;
   const selected = snapshot.pets.find(pet => pet.petId === selectedId) || snapshot.pets[0];
   const selectedIdentity = companionIdentity(selected);

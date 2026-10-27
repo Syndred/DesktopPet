@@ -28,7 +28,7 @@ permissions:
 
 concurrency:
   group: focused-repair-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   focused-windows:
@@ -91,6 +91,8 @@ jobs:
         run: node tests/regressions/cloud-repair/run-qa021-guidance.mjs | Tee-Object artifacts/qa/dot-repair-20261027/qa021-windows.json
       - name: Actual App public About whitelist and protected route gate
         run: node tests/regressions/cloud-repair/run-app-public-about.mjs | Tee-Object artifacts/qa/dot-repair-20261027/app-about-windows.json
+      - name: C06 actual component route return and session isolation
+        run: node tests/regressions/cloud-repair/run-overview-selection.cjs | Tee-Object artifacts/qa/dot-repair-20261027/overview-selection-windows.json
       - name: Build actual portable Windows executable from clean committed source
         id: buildportable
         run: npm run package:pc:win
@@ -98,30 +100,57 @@ jobs:
         id: auditportable
         run: npm run release:audit
       - name: Fresh-profile ordinary portable launch without login or QA grants
+        timeout-minutes: 6
         if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
         run: node scripts/acceptance/cloud-repair-portable.mjs
+      - name: Keep completed signed-out native proof immediately
+        if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: desktoppet-signedout-${{ github.sha }}
+          retention-days: 14
+          path: |
+            artifacts/foundation/cloud-engineering/focused-portable/*/evidence.json
+            artifacts/foundation/cloud-engineering/focused-portable/*/signed-out-evidence.json
+            artifacts/foundation/cloud-engineering/focused-portable/*/signed-out-*.png
       - name: Offline production Electron desktop windows and IPC with disposable local QA data
+        timeout-minutes: 6
         if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
         run: npm run pc:smoke:engineering
       - name: Explicit simulated deferred tray service in real native windows
+        timeout-minutes: 6
         if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
         run: node scripts/acceptance/tray-recall-native.mjs
       - name: Signed-out actual SFX profile isolation and window lifecycle
+        timeout-minutes: 6
         if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
         run: node scripts/acceptance/cloud-loggedout-window-smoke.mjs
       - name: Disposable runner app-only startup registration and removal
+        timeout-minutes: 6
         if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
         run: node scripts/acceptance/cloud-startup-registration-smoke.mjs
       - name: Offline actual resource UI and canvas evidence
+        timeout-minutes: 6
         if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
         run: node scripts/acceptance/full-acceptance-resources.mjs
       - name: Offline disposable account UI lifecycle
+        timeout-minutes: 6
         if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
         run: node scripts/acceptance/full-acceptance-local-account.mjs
+      - name: Offline native navigation, settings and preserved detail context
+        timeout-minutes: 6
+        if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
+        run: node scripts/acceptance/full-acceptance-navigation.mjs
+      - name: Offline native desktop instances and owned-window OS drag input
+        timeout-minutes: 6
+        if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
+        run: node scripts/acceptance/full-acceptance-desktop.mjs
       - name: Offline isolated battle rendering and public player controls
+        timeout-minutes: 6
         if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
         run: node scripts/acceptance/battle-independent.mjs . artifacts/foundation/cloud-engineering/full-battle/run-current
       - name: Explicit simulated discovery and territory shared-battle paths
+        timeout-minutes: 6
         if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
         run: node scripts/acceptance/context-independent.mjs . artifacts/foundation/cloud-engineering/full-context/run-current
       - name: Retain controlled proof only, never profiles, databases or credentials
@@ -146,6 +175,11 @@ jobs:
             artifacts/qa/dot-repair-20261027/about-ui-windows.json
             artifacts/qa/dot-repair-20261027/qa021-windows.json
             artifacts/qa/dot-repair-20261027/app-about-windows.json
+            artifacts/qa/dot-repair-20261027/overview-selection-windows.json
+            artifacts/foundation/cloud-engineering/navigation/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/navigation/run-*/*.png
+            artifacts/foundation/cloud-engineering/desktop-subset/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/desktop-subset/run-*/*-failure.png
             artifacts/qa/dot-repair-20261027/windows-native-regressions.tap
             artifacts/qa/dot-repair-20261027/windows-garden-recovery.tap
 

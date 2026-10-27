@@ -1,0 +1,34 @@
+{
+  "observedAt": "2026-10-27T06:28:24Z",
+  "sourceCommit": "a2b3f5d3183bfc12975925172e290d9184ddcc5a",
+  "run": 40460974817,
+  "job": 122045233417,
+  "url": "https://github.com/Syndred/DesktopPet/actions/runs/40460974817",
+  "conclusion": "success",
+  "checks": {
+    "strictMigrationNames": "passed",
+    "generatedBattleGardenDiscoverySourcesUnchanged": "passed",
+    "nodeSqlTests": {
+      "files": 29,
+      "passed": 129,
+      "failed": 0
+    },
+    "denoResource": {
+      "passed": 5,
+      "failed": 0
+    },
+    "denoPersonalRecordsCheck": "passed",
+    "denoBattleDisplay": {
+      "passed": 10,
+      "failed": 0
+    }
+  },
+  "artifact": {
+    "id": 12714791789,
+    "bytes": 14975,
+    "sha256": "456f27612288081f12d8952eacd57eed22f8ff877615c31c0b575d312865560e",
+    "url": "https://github.com/Syndred/DesktopPet/actions/runs/40460974817/artifacts/12714791789"
+  },
+  "scope": "GitHub Ubuntu isolated source/SQL/WASM/Deno contracts, no production endpoints/accounts/deployments. Not original 98 live-cloud acceptance.",
+  "localLimit": "Current dot Deno downloads failed TTL on both mirror and official registry; same frozen official registry locks verified in GitHub runner."
+}

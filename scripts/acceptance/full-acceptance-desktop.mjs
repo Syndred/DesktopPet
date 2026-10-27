@@ -1,0 +1,113 @@
+// Isolated cloud-Windows desktop subset. No production account/grant/profile.
+// Real OS mouse injection is restricted to the owned foreground Electron process.
+import { _electron as electron } from 'playwright';
+import { execFileSync } from 'node:child_process';
+import { mkdirSync,mkdtempSync,readFileSync,writeFileSync } from 'node:fs';
+import { resolve,join } from 'node:path';
+import { tmpdir } from 'node:os';
+import { randomUUID } from 'node:crypto';
+import assert from 'node:assert/strict';
+if(process.platform!=='win32'||process.env.GITHUB_ACTIONS!=='true')throw Error('Only the ephemeral cloud Windows runner is authorized');
+const root=resolve('.'), build=JSON.parse(readFileSync('apps/pc-app/dist/build-manifest.json'));
+assert.equal(build.sourceCommit,execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim());assert.deepEqual(build.sourceDirtyFiles,[]);
+const output=resolve('artifacts/foundation/cloud-engineering/desktop-subset',`run-${Date.now()}`);mkdirSync(output,{recursive:true});
+const scenario=JSON.parse(execFileSync(process.execPath,['scripts/acceptance/create-scenario-profile.mjs'],{encoding:'utf8'}));
+const proof={sourceCommit:build.sourceCommit,startedAt:new Date().toISOString(),scope:'Actual Windows Electron windows and UI on fresh offline QA account. Native OS input records are separate from Chromium control clicks. No physical second display, production data, GPS or old grant.',scenario,checks:[],errors:[],uncovered:['D05 multi-DPI/monitor','D08 physical click-through/fullscreen policy','D09 physical taskbar/tray menu']};
+const save=()=>writeFileSync(join(output,'evidence.json'),JSON.stringify(proof,null,2));
+const credentials={provider:'local',account:`desktop_${Date.now()}`,username:'隔离桌面验收',password:`Fixture-${randomUUID()}!`,rememberSession:false};
+const disposable=mkdtempSync(join(tmpdir(),'lingjing-offline-desktop-'));
+const publicConfig=join(disposable,'offline-public.json');writeFileSync(publicConfig,'{}',{flag:'wx'});
+const systemKeys=new Set(['PATH','PATHEXT','SYSTEMROOT','SYSTEMDRIVE','WINDIR','COMSPEC','TEMP','TMP','TMPDIR','HOME','USERPROFILE','APPDATA','LOCALAPPDATA','PROGRAMFILES','PROGRAMFILES(X86)','PROGRAMW6432','DISPLAY','WAYLAND_DISPLAY','XDG_RUNTIME_DIR','LANG','LC_ALL','CI']);
+const env=Object.fromEntries(Object.entries(process.env).filter(([key])=>systemKeys.has(key.toUpperCase())));
+Object.assign(env,scenario.env,{LINGJING_PUBLIC_CONFIG:publicConfig});
+const wrapper=join(disposable,'entry.cjs');
+writeFileSync(wrapper,`const {app,session}=require('electron');
+app.setPath('appData',${JSON.stringify(disposable)});app.setPath('userData',${JSON.stringify(scenario.profilePath)});
+globalThis.__desktopOfflineBlocked=[];
+const denied=()=>{globalThis.__desktopOfflineBlocked.push('node-network');throw new Error('OFFLINE_QA_NETWORK_FORBIDDEN');};
+for(const name of ['node:http','node:https']){const t=require(name);t.request=denied;t.get=denied;}
+for(const name of ['node:net','node:tls']){const t=require(name);t.connect=denied;if(t.createConnection)t.createConnection=denied;}
+require('node:http2').connect=denied;
+const fetch=globalThis.fetch;globalThis.fetch=(input,...args)=>/^(https?|wss?):/i.test(String(input?.url||input))?Promise.reject(new Error('OFFLINE_QA_NETWORK_FORBIDDEN')):fetch(input,...args);
+globalThis.WebSocket=class {constructor(){denied();}};
+app.whenReady().then(()=>session.defaultSession.webRequest.onBeforeRequest({urls:['http://*/*','https://*/*','ws://*/*','wss://*/*']},(details,callback)=>{globalThis.__desktopOfflineBlocked.push('chromium-network');callback({cancel:true});}));
+require(${JSON.stringify(join(root,'apps/pc-app/dist/main/index.cjs'))});
+`,{flag:'wx'});
+let app,main,pets=[],initialCursor,mouseBlocked=false;
+// The helper only moves the cursor, holds/releases left mouse, and checks owning PID.
+// It does not change OS preferences, install hooks, or target foreign process windows.
+const nativeSource=String.raw`
+$ErrorActionPreference='Stop'
+Add-Type @'
+using System; using System.Runtime.InteropServices;
+public static class QAInput {
+ [StructLayout(LayoutKind.Sequential)] public struct POINT {public int X; public int Y;}
+ [StructLayout(LayoutKind.Sequential)] public struct MOUSEINPUT {public int dx,dy;public uint mouseData,dwFlags,time;public UIntPtr dwExtraInfo;}
+ [StructLayout(LayoutKind.Sequential)] public struct INPUT {public uint type;public MOUSEINPUT mi;}
+ [DllImport("user32.dll")] public static extern bool SetCursorPos(int x,int y);
+ [DllImport("user32.dll")] public static extern bool GetCursorPos(out POINT p);
+ [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
+ [DllImport("user32.dll")] public static extern IntPtr WindowFromPoint(POINT point);
+ [DllImport("user32.dll")] public static extern IntPtr GetAncestor(IntPtr hwnd,uint flags);
+ [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr h,out uint pid);
+ [DllImport("user32.dll",SetLastError=true)] static extern uint SendInput(uint n,INPUT[] input,int size);
+ public static void Button(uint flags){var i=new INPUT();i.type=0;i.mi.dwFlags=flags;if(SendInput(1,new[]{i},Marshal.SizeOf(typeof(INPUT)))!=1)throw new Exception("NATIVE_INPUT_BLOCKED");}
+}
+'@
+$p=([Console]::In.ReadToEnd()|ConvertFrom-Json)
+$q=New-Object QAInput+POINT
+if($p.action -eq 'read'){[QAInput]::GetCursorPos([ref]$q)|Out-Null;@{x=$q.X;y=$q.Y}|ConvertTo-Json -Compress;exit}
+if($p.action -eq 'release'){[QAInput]::Button(4);exit}
+if($p.action -eq 'restore'){if(-not [QAInput]::SetCursorPos($p.point.x,$p.point.y)){throw 'CURSOR_RESTORE_BLOCKED'};exit}
+[uint32]$foreground=0;[QAInput]::GetWindowThreadProcessId([QAInput]::GetForegroundWindow(),[ref]$foreground)|Out-Null
+if($foreground -ne $p.processId){throw 'OWNED_WINDOW_NOT_FOREGROUND'}
+if($p.from.x -lt $p.bounds.x -or $p.from.y -lt $p.bounds.y -or $p.from.x -ge ($p.bounds.x+$p.bounds.width) -or $p.from.y -ge ($p.bounds.y+$p.bounds.height)){throw 'START_OUTSIDE_OWNED_WINDOW'}
+if(-not [QAInput]::SetCursorPos($p.from.x,$p.from.y)){throw 'NATIVE_CURSOR_BLOCKED'}
+Start-Sleep -Milliseconds 250
+[QAInput]::GetCursorPos([ref]$q)|Out-Null
+if([Math]::Abs($q.X-$p.from.x) -gt 1 -or [Math]::Abs($q.Y-$p.from.y) -gt 1){throw 'NATIVE_CURSOR_BLOCKED'}
+$hit=[QAInput]::WindowFromPoint($q);$rootWindow=[QAInput]::GetAncestor($hit,2);[uint32]$hitPid=0;[uint32]$rootPid=0;[QAInput]::GetWindowThreadProcessId($hit,[ref]$hitPid)|Out-Null;[QAInput]::GetWindowThreadProcessId($rootWindow,[ref]$rootPid)|Out-Null
+if($rootWindow.ToInt64().ToString() -ne $p.windowHandle -or $rootPid -ne $p.processId){throw 'OWNED_PET_NOT_AT_POINT'}
+try{[QAInput]::Button(2);Start-Sleep -Milliseconds 120;for($i=1;$i -le 16;$i++){[QAInput]::SetCursorPos([int]($p.from.x+($p.to.x-$p.from.x)*$i/16),[int]($p.from.y+($p.to.y-$p.from.y)*$i/16))|Out-Null;Start-Sleep -Milliseconds 45}}
+finally{[QAInput]::Button(4)}
+[QAInput]::GetCursorPos([ref]$q)|Out-Null;@{x=$q.X;y=$q.Y;foregroundPid=$foreground;hitHandle=$hit.ToInt64().ToString();hitPid=$hitPid;rootHandle=$rootWindow.ToInt64().ToString();rootPid=$rootPid}|ConvertTo-Json -Compress
+`;
+function native(payload){return execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-EncodedCommand',Buffer.from(nativeSource,'utf16le').toString('base64')],{input:JSON.stringify(payload),encoding:'utf8',windowsHide:true,timeout:15000}).trim();}
+async function open(){app=await electron.launch({args:[wrapper],cwd:root,env});main=await app.firstWindow();main.setDefaultTimeout(15000);main.on('pageerror',error=>proof.errors.push(error.message));await main.waitForFunction(()=>Boolean(window.lingjing));}
+async function invoke(feature,command,payload={}){const r=await main.evaluate(x=>window.lingjing.invoke(x.feature,x.command,x.payload),{feature,command,payload});assert.equal(r.ok,true,`${feature}.${command}: ${JSON.stringify(r)}`);return r.data;}
+async function poll(read,accept,label){for(let i=0;i<60;i++){const x=await read();if(accept(x))return x;await new Promise(r=>setTimeout(r,100));}throw Error(label);}
+async function route(path){await main.evaluate(path=>{location.hash='#'+path;},path);}
+async function detail(pet){await route('/companions/'+pet.petId);await main.getByRole('tab',{name:'外观',exact:true}).click();await main.locator('.cp-desktop-controls').waitFor();}
+async function visible(pet,wanted){await detail(pet);const toggle=main.locator('.cp-desktop-controls').getByRole('switch');if((await toggle.getAttribute('aria-checked'))!==String(wanted))await toggle.click();await poll(()=>invoke('companions','get',{petId:pet.petId}),p=>p.desktop.visible===wanted,'Desktop preference did not settle');}
+async function limit(value){await route('/settings');await main.getByRole('combobox',{name:'桌面陪伴数量',exact:true}).click();await main.getByRole('option',{name:String(value),exact:true}).click();await main.getByRole('button',{name:'保存设置',exact:true}).click();await poll(()=>invoke('accounts','settingsGet'),s=>s.document.desktop.companionLimit===value,'Limit did not save');}
+async function inventory(){return app.evaluate(({BrowserWindow,screen})=>BrowserWindow.getAllWindows().filter(w=>w.webContents.getURL().includes('/desktop.html')).map(w=>({id:w.id,url:w.webContents.getURL(),visible:w.isVisible(),bounds:w.getBounds(),display:screen.getDisplayMatching(w.getBounds()),focused:w.isFocused()})));}
+async function count(n){return poll(inventory,rows=>rows.filter(r=>r.visible).length===n,`Expected ${n} visible companion windows`);}
+async function desktop(pet){return poll(async()=>app.windows().find(p=>p.url().endsWith('/desktop/'+encodeURIComponent(pet.petId)))||null,p=>Boolean(p),'Desktop page missing');}
+async function metrics(pet){const page=await desktop(pet);await page.locator('.resource-stage[data-status="ready"] canvas').waitFor();const dom=await page.locator('.cp-desktop-visual').evaluate(el=>{const r=el.getBoundingClientRect(),canvas=el.querySelector('canvas');return {visual:{x:r.x,y:r.y,width:r.width,height:r.height},dpr:devicePixelRatio,canvas:{width:canvas.width,height:canvas.height},events:window.__desktopInputs||[]};});const windows=await inventory();return {dom,native:windows.find(w=>w.url.endsWith('/desktop/'+encodeURIComponent(pet.petId))),saved:await invoke('companions','get',{petId:pet.petId})};}
+async function caseRun(id,work){try{const detail=await work();proof.checks.push({id,status:'passed-isolated-subset',detail});}catch(error){const blocked=/NATIVE_CURSOR_BLOCKED|NATIVE_INPUT_BLOCKED|OWNED_WINDOW_NOT_FOREGROUND|OWNED_PET_NOT_AT_POINT|START_OUTSIDE_OWNED_WINDOW/.test(String(error));proof.checks.push({id,status:blocked?'blocked':'failed',error:String(error)});if(blocked)mouseBlocked=true;await main?.screenshot({path:join(output,id+'-failure.png')}).catch(()=>{});}finally{save();}}
+async function drag(pet,target){
+ const before=await metrics(pet),page=await desktop(pet);await page.evaluate(()=>{window.__desktopInputs=[];if(!window.__desktopObserver){window.__desktopObserver=true;for(const type of ['pointerdown','pointerup'])document.addEventListener(type,event=>window.__desktopInputs.push({type:event.type,trusted:event.isTrusted,x:event.screenX,y:event.screenY}),true);}});
+ const points=await app.evaluate(({BrowserWindow,screen},{url,visual,target})=>{const win=BrowserWindow.getAllWindows().find(w=>w.webContents.getURL()===url),bounds=win.getBounds();const main=BrowserWindow.getAllWindows().find(w=>w.webContents.getURL().includes('/ui/index.html'));main.show();main.focus();const offset={x:visual.x+visual.width/2,y:visual.y+visual.height*.55};return {from:screen.dipToScreenPoint({x:Math.round(bounds.x+offset.x),y:Math.round(bounds.y+offset.y)}),to:screen.dipToScreenPoint({x:Math.round(target.x+offset.x),y:Math.round(target.y+offset.y)}),bounds:screen.dipToScreenRect(win,bounds),processId:process.pid,windowHandle:(()=>{const h=win.getNativeWindowHandle();return (h.length===8?h.readBigInt64LE():BigInt(h.readInt32LE())).toString();})()};},{url:page.url(),visual:before.dom.visual,target});
+ let cursor;try{cursor=JSON.parse(native({action:'drag',...points}));}finally{native({action:'release'});}
+ let after;
+ try{after=await poll(()=>metrics(pet),m=>m.dom.events.some(e=>e.type==='pointerup')&&Math.abs(m.saved.desktop.position.x-m.native.bounds.x)<=1&&Math.abs(m.saved.desktop.position.y-m.native.bounds.y)<=1, 'No settled pointerup/position after native drag');}
+ catch(error){const observed=await metrics(pet);if(!observed.dom.events.some(e=>e.type==='pointerdown'&&e.trusted))throw Error('NATIVE_INPUT_BLOCKED: physical cursor moved but owned renderer did not receive a trusted press');throw error;}
+ assert.ok(after.dom.events.length>=2&&after.dom.events.every(e=>e.trusted),'Native drag must produce trusted pointerdown/up');
+ assert.ok(after.native.bounds.x!==before.native.bounds.x||after.native.bounds.y!==before.native.bounds.y,'Trusted drag did not move the native window');
+ assert.equal(after.saved.desktop.scale,before.saved.desktop.scale);assert.equal(after.saved.petId,before.saved.petId);
+ return {before:{bounds:before.native.bounds,canvas:before.dom.canvas,dpr:before.dom.dpr,scale:before.saved.desktop.scale},after:{bounds:after.native.bounds,canvas:after.dom.canvas,dpr:after.dom.dpr,scale:after.saved.desktop.scale,position:after.saved.desktop.position},points,cursor,events:after.dom.events};
+}
+try{
+ initialCursor=JSON.parse(native({action:'read'}));await open();await invoke('accounts','register',{...credentials,confirmPassword:credentials.password});
+ const info=await invoke('app','info');assert.equal(info.scenario.runId,scenario.runId);
+ const roster=await invoke('companions','list');for(const template of roster.templates.slice(0,5))pets.push((await invoke('companions','adopt',{templateId:template.templateId,name:template.name,showOnDesktop:false,actionId:randomUUID()})).pet);
+ assert.equal(pets.length,5);proof.petIds=pets.map(p=>p.petId);proof.displays=await app.evaluate(({screen})=>screen.getAllDisplays());
+ await caseRun('D01-limit-display',async()=>{await limit(4);const samples=[];for(let i=0;i<5;i++){await visible(pets[i],true);samples.push(await count(Math.min(i+1,4)));}await limit(1);const one=await count(1),first=one.find(w=>w.visible);await visible(pets.find(p=>first.url.endsWith('/desktop/'+encodeURIComponent(p.petId))),false);const replacement=await count(1);assert.notEqual(replacement.find(w=>w.visible).url,first.url);for(const pet of pets)await visible(pet,false);await limit(4);await visible(pets[0],true);await visible(pets[1],true);await count(2);return {samples,replacement};});
+ await caseRun('D04-per-pet-scale',async()=>{const other=await invoke('companions','get',{petId:pets[1].petId});await detail(pets[0]);const slider=main.locator('.cp-scale-slider [role="slider"]');await slider.focus();await slider.press('Home');await poll(()=>invoke('companions','get',{petId:pets[0].petId}),p=>p.desktop.scale===.5,'50% scale not saved');const half=await metrics(pets[0]);await slider.press('End');await poll(()=>invoke('companions','get',{petId:pets[0].petId}),p=>p.desktop.scale===2,'200% scale not saved');const twice=await metrics(pets[0]);assert.deepEqual(await invoke('companions','get',{petId:pets[1].petId}),other);assert.ok(Math.abs(half.native.bounds.width-115)<=1&&Math.abs(twice.native.bounds.width-460)<=1);await slider.press('Home');await poll(()=>invoke('companions','get',{petId:pets[0].petId}),p=>p.desktop.scale===.5,'Scale reset not saved');for(let n=0;n<10;n++){await slider.press('ArrowRight');await poll(()=>invoke('companions','get',{petId:pets[0].petId}),p=>Math.abs(p.desktop.scale-(.55+n*.05))<.001,'Scale step not saved');}await poll(()=>invoke('companions','get',{petId:pets[0].petId}),p=>Math.abs(p.desktop.scale-1)<.001,'100% scale not restored');return {half:{bounds:half.native.bounds,scale:half.saved.desktop.scale},twice:{bounds:twice.native.bounds,scale:twice.saved.desktop.scale},otherUnchanged:true};});
+ await caseRun('D02-ten-native-drags',async()=>{const otherBefore=await invoke('companions','get',{petId:pets[1].petId}),ownGrowth=(await invoke('companions','get',{petId:pets[0].petId})).growth;const records=[];for(let n=0;n<10;n++){const current=await metrics(pets[0]),area=current.native.display.workArea;const x=area.x+Math.min(140+(n%2)*80,area.width-current.native.bounds.width),y=area.y+Math.min(160+(n%2)*60,area.height-current.native.bounds.height);records.push(await drag(pets[0],{x,y}));}const stable=records.map(r=>r.after);assert.ok(Math.max(...stable.map(x=>x.bounds.width))-Math.min(...stable.map(x=>x.bounds.width))<=1);assert.ok(Math.max(...stable.map(x=>x.bounds.height))-Math.min(...stable.map(x=>x.bounds.height))<=1);assert.ok(stable.every(x=>x.scale===1));assert.deepEqual(await invoke('companions','get',{petId:pets[1].petId}),otherBefore);assert.deepEqual((await invoke('companions','get',{petId:pets[0].petId})).growth,ownGrowth);return records;});
+ await caseRun('D03-edge-drag',async()=>{if(mouseBlocked)throw Error('NATIVE_INPUT_BLOCKED');const records=[];for(const side of ['left','right','top','bottom']){const m=await metrics(pets[0]),a=m.native.display.workArea,b=m.native.bounds,target={x:b.x,y:b.y};if(side==='left')target.x=a.x;if(side==='right')target.x=a.x+a.width-b.width;if(side==='top')target.y=a.y;if(side==='bottom')target.y=a.y+a.height-b.height;const r=await drag(pets[0],target);assert.ok(r.after.bounds.x>=a.x&&r.after.bounds.y>=a.y&&r.after.bounds.x+r.after.bounds.width<=a.x+a.width+1&&r.after.bounds.y+r.after.bounds.height<=a.y+a.height+1);records.push({side,...r});}return records;});
+ await caseRun('D06-restart-same-instance',async()=>{const before=(await invoke('companions','list')).pets.map(p=>({petId:p.petId,desktop:p.desktop,growth:p.growth}));await app.close();app=null;await open();assert.equal((await invoke('accounts','session')).currentUser,null);await invoke('accounts','login',credentials);await count(2);const after=(await invoke('companions','list')).pets.map(p=>({petId:p.petId,desktop:p.desktop,growth:p.growth}));assert.deepEqual(after,before);return {before,after};});
+ await caseRun('D07-behavior-ui-subset',async()=>{await detail(pets[0]);const rows=[];for(const [mode,label] of [['sleep','好好休息'],['quiet','安静陪伴']]){await main.locator('.cp-behavior-select').click();await main.getByRole('option',{name:label,exact:true}).click();await poll(()=>invoke('companions','get',{petId:pets[0].petId}),p=>p.desktop.behavior===mode,'Behavior not saved');const page=await desktop(pets[0]);await page.waitForFunction(mode=>document.querySelector('.cp-desktop-surface')?.classList.contains('is-sleeping')===(mode==='sleep'),mode);await page.waitForFunction(action=>document.querySelector('.resource-stage')?.getAttribute('data-action')===action,mode==='sleep'?'sleep':'idle');rows.push({mode,actualClass:await page.locator('.cp-desktop-surface').getAttribute('class'),action:await page.locator('.resource-stage').getAttribute('data-action')});}return {rows,notCovered:['wander/follow physical cursor trajectory','right-click control','physical click-through']};});
+ proof.passed=proof.checks.every(c=>c.status==='passed-isolated-subset');
+}catch(error){proof.failure=String(error);proof.passed=false;}
+finally{try{native({action:'release'});proof.mouseReleased=true;}catch(error){proof.mouseReleaseError=String(error);proof.passed=false;}if(app)await app.close().catch(error=>{proof.closeError=String(error);proof.passed=false;});if(initialCursor)try{native({action:'restore',point:initialCursor});proof.cursorRestored=true;}catch(error){proof.cursorRestoreError=String(error);proof.passed=false;}proof.completedAt=new Date().toISOString();save();console.log(JSON.stringify({output,checks:proof.checks,passed:proof.passed,failure:proof.failure},null,2));if(!proof.passed)process.exitCode=1;}
