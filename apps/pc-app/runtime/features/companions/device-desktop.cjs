@@ -46,6 +46,16 @@ class DeviceDesktop {
     const pets=this.listPets(owner).map(pet=>this.project(pet)).filter(pet=>pet.desktop.visible);
     for(const pet of pets)this.update(owner,{actionId:`${actionId}:${pet.petId}`,petId:pet.petId,visible:false});
     const result={ok:true,data:{recalled:pets.map(pet=>pet.petId)}};this.db.prepare('INSERT INTO companion_device_actions VALUES(?,?,?,?,?)').run(owner,actionId,digest,JSON.stringify(result),Date.now());return result;});}
+  showAll(owner,actionId){
+    if(!this.enabled(owner)||typeof actionId!=='string'||!actionId||actionId.length>200)fail('桌面显示请求无效。');
+    return transaction(this.db,()=>{
+      this.capture(owner);const digest=checksum({command:'show-all'}),prior=this.db.prepare('SELECT * FROM companion_device_actions WHERE owner_account_id=? AND action_id=?').get(owner,actionId);
+      if(prior){if(prior.input_hash!==digest)throw Object.assign(new Error('操作编号已用于其他设置。'),{code:'ACTION_ID_REUSED'});return {...JSON.parse(prior.result),duplicate:true};}
+      const pets=this.listPets(owner).map(pet=>this.project(pet)).filter(pet=>!pet.desktop.visible&&pet.resource.kind==='2d');
+      for(const pet of pets){const desktop=validated({...pet.desktop,visible:true});this.db.prepare(`INSERT INTO companion_device_desktop VALUES(?,?,?,1,?) ON CONFLICT(owner_account_id,pet_id) DO UPDATE SET document_json=excluded.document_json,revision=companion_device_desktop.revision+1,updated_at=excluded.updated_at`).run(owner,pet.petId,JSON.stringify(desktop),Date.now());}
+      const result={ok:true,data:{shown:pets.map(pet=>pet.petId)}};this.db.prepare('INSERT INTO companion_device_actions VALUES(?,?,?,?,?)').run(owner,actionId,digest,JSON.stringify(result),Date.now());return result;
+    });
+  }
   backup(){return {id:'device-desktop',version:1,tables:['companion_device_desktop','companion_device_actions','companion_device_initialization'],
     // Revision zero only pins an unchanged legacy layout already present in the
     // original companion archive. Export actual device edits, not read-cache initialization.

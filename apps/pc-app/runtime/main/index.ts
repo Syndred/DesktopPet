@@ -18,7 +18,7 @@ const { createServices, discoverFeatures } = require(join(runtime, 'core/service
 const { readQaScenario } = require(join(runtime, 'core/qa-scenario.cjs'));
 const { createRuntimeCompatibility } = require(join(runtime, 'core/runtime-compat.cjs'));
 const { validateIpcRequest, desktopEventAllowed } = require(join(runtime, 'core/ipc-guard.cjs'));
-const { recallDesktopCompanions } = require(join(runtime, 'core/tray-recall.cjs'));
+const { createDesktopTrayActions } = require(join(runtime, 'core/tray-recall.cjs'));
 const { mainWindowDisplayProbe, fitMainWindowBounds } = require(join(runtime, 'core/main-window-geometry.cjs'));
 const resourceEntry = join(runtime, 'features/resources/index.cjs');
 if (existsSync(resourceEntry)) require(resourceEntry).registerResourceScheme(protocol);
@@ -200,10 +200,14 @@ if (profileInstance.primary) app.whenReady().then(async () => {
   const icon = nativeImage.createFromPath(join(runtime, 'assets/brand/logo-mark.png')).resize({ width: 20, height: 20 });
   tray = new Tray(icon);
   tray.setToolTip('灵境 · 桌面伙伴');
+  const desktopTrayActions = createDesktopTrayActions(services, randomUUID);
   tray.setContextMenu(Menu.buildFromTemplate([
     { label: '打开灵境', click: windows.showMain },
+    { label: '显示全部桌面伙伴', click: async () => {
+      if (!quitting) await desktopTrayActions.show();
+    } },
     { label: '收起桌面伙伴', click: async () => {
-      if (!quitting) await recallDesktopCompanions(services, randomUUID());
+      if (!quitting) await desktopTrayActions.recall();
     } },
     { type: 'separator' }, { label: '退出灵境', click: () => { quitting = true; app.quit(); } }
   ]));

@@ -98,6 +98,10 @@ module.exports = {
         return result;
       },
       select(ownerAccountId, input) { if(cloud.enabled(ownerAccountId)){const result=cloud.execute(ownerAccountId,'select',input);void result.catch(()=>{});return result;}const result = service.select(ownerAccountId, input); changed(ownerAccountId); return result; },
+      showAll(ownerAccountId, actionId) {
+        const result = cloud.enabled(ownerAccountId) ? devices.showAll(ownerAccountId, actionId) : service.showAll(ownerAccountId, actionId);
+        changed(ownerAccountId); return result;
+      },
       recallAll(ownerAccountId, actionId) {
         if(cloud.enabled(ownerAccountId)){const result=devices.recallAll(ownerAccountId,actionId);changed(ownerAccountId);return result;}
         const result = service.action(ownerAccountId, 'recall-all', { actionId }, () => {

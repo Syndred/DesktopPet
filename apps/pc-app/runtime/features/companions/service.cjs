@@ -144,6 +144,14 @@ class CompanionsService {
     });
   }
 
+  showAll(ownerAccountId, actionId) {
+    return this.action(ownerAccountId, 'show-all', { actionId }, () => {
+      const pets = this.snapshot(ownerAccountId).data.pets.filter(pet => !pet.desktop.visible && pet.resource.kind === '2d');
+      for (const pet of pets) { pet.desktop.visible = true; this.storePet(pet); }
+      return { shown: pets.map(pet => pet.petId) };
+    });
+  }
+
   newPet(ownerAccountId, template, input, source) {
     const createdAt = this.now().toISOString();
     const petId = `pet-${this.uuid()}`;

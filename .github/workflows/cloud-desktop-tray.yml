@@ -1,0 +1,88 @@
+name: DesktopPet focused desktop tray visibility repair
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/cloud-authority-convergence']
+    paths:
+      - '.github/workflows/cloud-desktop-tray.yml'
+      - 'apps/pc-app/runtime/core/tray-recall.cjs'
+      - 'apps/pc-app/runtime/features/companions/device-desktop.cjs'
+      - 'apps/pc-app/runtime/features/companions/index.cjs'
+      - 'apps/pc-app/runtime/features/companions/service.cjs'
+      - 'apps/pc-app/runtime/main/index.ts'
+      - 'apps/pc-app/runtime/features/companions/tests/show-all.test.cjs'
+      - 'tests/foundation/tray-show.test.cjs'
+      - 'tests/foundation/tray-recall.test.cjs'
+      - 'scripts/acceptance/cloud-native-tray-visibility-acceptance.mjs'
+      - 'scripts/acceptance/native-owned-tray-visibility.ps1'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: desktop-tray-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  desktop-tray:
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
+    runs-on: windows-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - name: Isolated normal dependencies
+        run: npm ci
+      - name: Type-check affected host contracts
+        run: npm run typecheck
+      - name: Atomic owner-bound visibility intents and symmetric tray session guards
+        run: node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/companions/tests/show-all.test.cjs tests/foundation/tray-show.test.cjs tests/foundation/tray-recall.test.cjs
+      - name: Existing device isolation, companion service and visibility policies
+        run: node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/companions/tests/service.test.cjs apps/pc-app/runtime/features/companions/tests/device-desktop.test.cjs apps/pc-app/runtime/features/companions/tests/desktop-display.test.cjs
+      - name: Build one actual Windows portable from committed changed product
+        run: npm run package:pc:win
+      - name: Audit ASAR, exact source fingerprint, native closure and public config
+        id: audit
+        run: npm run release:audit
+      - name: New executable ordinary signed-out startup
+        if: ${{ !cancelled() && steps.audit.outcome == 'success' }}
+        timeout-minutes: 6
+        run: node scripts/acceptance/cloud-repair-portable.mjs
+      - name: Actual own tray hide and show with existing companion limit
+        if: ${{ !cancelled() && steps.audit.outcome == 'success' }}
+        timeout-minutes: 12
+        run: node scripts/acceptance/cloud-native-tray-visibility-acceptance.mjs --source=$env:GITHUB_SHA
+      - name: Same-package full-screen visibility and per-pet interaction recovery
+        if: ${{ !cancelled() && steps.audit.outcome == 'success' }}
+        timeout-minutes: 10
+        run: node scripts/acceptance/cloud-native-fullscreen-acceptance.mjs --source=$env:GITHUB_SHA
+      - name: Retain new executable and bounded acceptance evidence only
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: desktoppet-desktop-tray-${{ github.sha }}
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            artifacts/pc-cloud-upgrade/*.exe
+            apps/pc-app/dist/build-manifest.json
+            apps/pc-app/dist/runtime-closure.json
+            artifacts/foundation/cloud-engineering/package-audit.json
+            artifacts/foundation/cloud-engineering/focused-portable/*/evidence.json
+            artifacts/foundation/cloud-engineering/focused-portable/*/signed-out-evidence.json
+            artifacts/qa/native-tray-visibility/run-*/evidence.json
+            artifacts/qa/native-tray-visibility/run-*/hide-owned-menu.png
+            artifacts/qa/native-tray-visibility/run-*/show-owned-menu.png
+            artifacts/qa/native-tray-visibility/run-*/open-owned-menu.png
+            artifacts/qa/native-tray-visibility/run-*/reopened-main.png
+            artifacts/qa/native-tray-visibility/run-*/failure.png
+            artifacts/qa/native-fullscreen/run-*/evidence.json
+            artifacts/qa/native-fullscreen/run-*/restored-pet-1.png
+            artifacts/qa/native-fullscreen/run-*/restored-pet-2.png
+            artifacts/qa/native-fullscreen/run-*/failure.png
