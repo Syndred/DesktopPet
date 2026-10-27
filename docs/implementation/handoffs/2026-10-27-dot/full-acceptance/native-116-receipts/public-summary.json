@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "evidenceLevel": "Human-reviewed public summary only; no raw receipts or internal coverage matrix.",
+  "runUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40511452484",
+  "artifactUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40511452484/artifacts/12737018570",
+  "artifactZipSha256": "bf872e6e26b7e12f976c1e2873895f7b33787b05e948038ec51419f0aea23d78",
+  "packageScope": "New audited Windows portable package with a narrowly scoped tray show-all/hide-all repair and session-boundary guards, tested on a disposable cloud runner with isolated local fixtures.",
+  "newPackageFindings": {
+    "D09": "Actual native tray show-all and hide-all actions now affect the intended pets correctly, preserve independent identities and obey the display limit. The original tray case is complete.",
+    "D08": "Normal settings controls, real owned-window fullscreen detection, hiding/restoration and independent interaction with both restored pets passed again on this new package."
+  },
+  "acceptanceConclusion": {
+    "acceptedOriginalCases": 62,
+    "comparison": "Previously accepted 61 plus newly completed D09. Two original cases were fully exercised on this exact new package; 60 retain exact-version earlier evidence after independent impact review. This does not mean 62 cases were rerun."
+  },
+  "impactQualification": "Changes are limited to tray visibility commands and their companion/session integration. Earlier evidence retains its original execution versions and limitations; unaffected paths are not described as newly tested.",
+  "limitations": "One cloud-runner display and owned application windows only. No multi-monitor, cross-DPI, external-game or production-cloud claim. Incomplete cases remain incomplete.",
+  "publicationBoundary": "Detailed evidence and both versioned matrices remain local. Public traceability uses the existing workflow artifact and its whole-archive checksum."
+}
