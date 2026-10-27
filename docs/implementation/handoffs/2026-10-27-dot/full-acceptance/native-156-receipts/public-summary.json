@@ -1,0 +1,43 @@
+{
+  "scope": "Two independently reviewed original acceptance cases on the same audited Windows portable package. Human-written summary only; detailed evidence and the versioned matrix are not published here.",
+  "results": {
+    "N03": {
+      "status": "passed-original-scope",
+      "basis": "Repeated window sizes, maximize/restore, long-list scrolling and retained selection/drafts across companion, chat and AI settings pages, combined with real memory-dialog scrolling and cancel without saving.",
+      "qualification": "Combination of successful subcases from two runs on the same package. The earlier run failed an incorrect harness expectation that an auto-growing textarea itself must overflow; it is not described as an entirely successful run. The later run checks only the remaining dialog subcase. No cross-device cloud draft synchronization or different-DPI claim.",
+      "evidence": [
+        {
+          "run": "https://github.com/Syndred/DesktopPet/actions/runs/40517530081",
+          "artifact": "https://github.com/Syndred/DesktopPet/actions/runs/40517530081/artifacts/12739938055",
+          "zipSha256": "f00dec0c7f75c1ab86cae0bd4c24c48ef9ae41ae750658ec1c1c85a2a8f88910"
+        },
+        {
+          "run": "https://github.com/Syndred/DesktopPet/actions/runs/40518703327",
+          "artifact": "https://github.com/Syndred/DesktopPet/actions/runs/40518703327/artifacts/12741360703",
+          "zipSha256": "c899907731c0fe546cf9e6507eeb5fe82bd180f661d453cf9198ae24361f7d17"
+        }
+      ]
+    },
+    "B12": {
+      "status": "passed-original-scope",
+      "basis": "Empty search/invitations; a stopped owned second client leaves an invitation pending; an unjoined room and its abandoned report show explicit unknown/waiting states without invented opponent portraits, resources, HP or elemental attributes.",
+      "qualification": "Official isolated local QA with a private loopback fixture. Stopped-client nonresponse is not verification of live online presence. Three execution rows establish one original case. Temporary clients, loopback server and private fixture data were cleaned up.",
+      "evidence": [
+        {
+          "run": "https://github.com/Syndred/DesktopPet/actions/runs/40518703343",
+          "artifact": "https://github.com/Syndred/DesktopPet/actions/runs/40518703343/artifacts/12740542673",
+          "zipSha256": "00ec1b13694058113ade41031fb9f2023364d9e196608f349916504638e1f203"
+        }
+      ]
+    }
+  },
+  "coverage": {
+    "acceptedOriginalCases": 65,
+    "totalOriginalCases": 98,
+    "fullCasesOnThisExactPackage": 5,
+    "sourceBoundEarlierCasesCarriedAfterImpactReview": 60,
+    "partial": 5,
+    "notExecuted": 28,
+    "qualification": "Only two new original cases are added here. Earlier source-bound evidence is not claimed to have been rerun on this package."
+  }
+}
