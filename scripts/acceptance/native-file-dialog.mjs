@@ -185,6 +185,8 @@ try{
   $metadata=@()
   # ControlView may skip a provider root: independently prove each diagnostic
   # ancestor belongs to this dialog before reading its display metadata.
+  # Compare is on Automation (not AutomationElement):
+  # https://learn.microsoft.com/dotnet/api/system.windows.automation.automation.compare
   $dialogMembers=$root.FindAll([System.Windows.Automation.TreeScope]::Descendants,[System.Windows.Automation.Condition]::TrueCondition)
   $combos=$root.FindAll([System.Windows.Automation.TreeScope]::Descendants,([System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ControlTypeProperty,[System.Windows.Automation.ControlType]::ComboBox)))
   foreach($group in @($edits,$combos)){
@@ -193,13 +195,13 @@ try{
     if($element.Current.ProcessId -ne $ownerPid){continue}
     $entry=Control-Metadata $element;$parents=@();$ancestor=$walker.GetParent($element)
     for($depth=0;$depth -lt 3 -and $null -ne $ancestor;$depth++){
-     $insideDialog=[System.Windows.Automation.AutomationElement]::Compare($ancestor,$root)
+     $insideDialog=[System.Windows.Automation.Automation]::Compare($ancestor,$root)
      if(-not $insideDialog -and $dialogMembers.Count -le 512){
-      foreach($member in $dialogMembers){if([System.Windows.Automation.AutomationElement]::Compare($ancestor,$member)){$insideDialog=$true;break}}
+      foreach($member in $dialogMembers){if([System.Windows.Automation.Automation]::Compare($ancestor,$member)){$insideDialog=$true;break}}
      }
      if(-not $insideDialog -or $ancestor.Current.ProcessId -ne $ownerPid){break}
      $parents+=Control-Metadata $ancestor
-     if([System.Windows.Automation.AutomationElement]::Compare($ancestor,$root)){break}
+     if([System.Windows.Automation.Automation]::Compare($ancestor,$root)){break}
      $ancestor=$walker.GetParent($ancestor)
     }
     $entry.parents=$parents;$metadata+=$entry
