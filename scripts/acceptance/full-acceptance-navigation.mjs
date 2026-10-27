@@ -15,8 +15,8 @@ const config=JSON.parse(readFileSync('scripts/release/electron-builder.pc.json')
 const executable=resolve(option('executable')||join(config.directories.output,`Lingjing-${version}-portable-x64.exe`)),expectedSource=option('source')||build.sourceCommit;
 assert.equal(process.platform,'win32');assert.match(expectedSource,/^[a-f0-9]{40}$/);
 const output=resolve('artifacts/foundation/cloud-engineering/navigation',`run-${Date.now()}`);mkdirSync(output,{recursive:true});
-const profile=mkdtempSync(join(tmpdir(),'lingjing-navigation-')),runId=randomUUID(),secret=`Qa-${randomUUID()}!`,account=`qa_nav_${runId.slice(0,8)}`;
-writeFileSync(join(profile,MARKER),JSON.stringify({schemaVersion:1,application:'lingjing',scenario:SCENARIO,runId,isolated:true,profilePath:realpathSync(profile),createdAt:new Date().toISOString()}),{flag:'wx'});
+const profile=realpathSync.native(mkdtempSync(join(tmpdir(),'lingjing-navigation-'))),runId=randomUUID(),secret=`Qa-${randomUUID()}!`,account=`qa_nav_${runId.slice(0,8)}`;
+writeFileSync(join(profile,MARKER),JSON.stringify({schemaVersion:1,application:'lingjing',scenario:SCENARIO,runId,isolated:true,profilePath:realpathSync.native(profile),createdAt:new Date().toISOString()}),{flag:'wx'});
 const offlineConfig=join(profile,'offline-public.json');writeFileSync(offlineConfig,'{}',{flag:'wx'});
 const systemKeys=new Set(['PATH','PATHEXT','SYSTEMROOT','SYSTEMDRIVE','WINDIR','COMSPEC','TEMP','TMP','TMPDIR','HOME','USERPROFILE','APPDATA','LOCALAPPDATA','PROGRAMFILES','PROGRAMFILES(X86)','PROGRAMW6432','LANG','LC_ALL','CI']);
 const offlineEnvironment=Object.fromEntries(Object.keys(process.env).filter(key=>!systemKeys.has(key.toUpperCase())).map(key=>[key,undefined]));Object.assign(offlineEnvironment,{LINGJING_QA_SCENARIO:SCENARIO,LINGJING_PUBLIC_CONFIG:offlineConfig});
@@ -76,4 +76,4 @@ try{
  });
  proof.passed=proof.cases.every(row=>row.status==='passed');
 }catch(error){proof.error=redact(error);process.exitCode=1;}
-finally{try{await stop();proof.ownedProcessStopped=true;}catch(error){proof.stopError=redact(error);proof.passed=false;process.exitCode=1;}try{assert.equal(dirname(resolve(profile)),resolve(tmpdir()));assert.ok(basename(profile).startsWith('lingjing-navigation-'));if(!proof.ownedProcessStopped)throw Error('Profile retained outside artifacts: process exit not confirmed');rmSync(profile,{recursive:true,force:true});proof.profileRemoved=true;}catch(error){proof.cleanupError=redact(error);proof.passed=false;process.exitCode=1;}proof.completedAt=new Date().toISOString();save();console.log(JSON.stringify(proof,null,2));}
+finally{try{await stop();proof.ownedProcessStopped=true;}catch(error){proof.stopError=redact(error);proof.passed=false;process.exitCode=1;}try{assert.equal(dirname(resolve(profile)),resolve(realpathSync.native(tmpdir())));assert.ok(basename(profile).startsWith('lingjing-navigation-'));if(!proof.ownedProcessStopped)throw Error('Profile retained outside artifacts: process exit not confirmed');rmSync(profile,{recursive:true,force:true});proof.profileRemoved=true;}catch(error){proof.cleanupError=redact(error);proof.passed=false;process.exitCode=1;}proof.completedAt=new Date().toISOString();save();console.log(JSON.stringify(proof,null,2));}

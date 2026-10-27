@@ -15,8 +15,8 @@ const config=JSON.parse(readFileSync('scripts/release/electron-builder.pc.json')
 const executable=resolve(option('executable')||join(config.directories.output,`Lingjing-${version}-portable-x64.exe`)),expectedSource=option('source')||build.sourceCommit;
 assert.equal(process.platform,'win32','This is actual Windows portable acceptance, not a Linux simulation');assert.match(expectedSource,/^[a-f0-9]{40}$/);
 const output=resolve('artifacts/foundation/cloud-engineering/local-account',`run-${Date.now()}`);mkdirSync(output,{recursive:true});
-const profile=mkdtempSync(join(tmpdir(),'lingjing-local-acceptance-')),runId=randomUUID();
-const marker={schemaVersion:1,application:'lingjing',scenario:SCENARIO,runId,isolated:true,profilePath:realpathSync(profile),createdAt:new Date().toISOString()};
+const profile=realpathSync.native(mkdtempSync(join(tmpdir(),'lingjing-local-acceptance-'))),runId=randomUUID();
+const marker={schemaVersion:1,application:'lingjing',scenario:SCENARIO,runId,isolated:true,profilePath:realpathSync.native(profile),createdAt:new Date().toISOString()};
 writeFileSync(join(profile,MARKER),JSON.stringify(marker),{flag:'wx'});
 const account=`qa_local_${runId.slice(0,8)}`,oldSecret=`Qa-${randomUUID()}!`,newSecret=`Qa-${randomUUID()}!`,wrongSecret=`Wrong-${randomUUID()}!`;
 const redact=value=>{let text=String(value);for(const secret of[oldSecret,newSecret,wrongSecret])text=text.split(secret).join('[redacted]');return text;};
@@ -69,6 +69,6 @@ finally{
  try{await stopOwned();proof.ownedProcessStopped=true;proof.ownedPids=[...ownedPids];}catch(error){proof.stopError=redact(error);proof.ownedPids=[...ownedPids];proof.passed=false;process.exitCode=1;}
  // The only disposable profile created by this script lives outside artifacts.
  // Remove it after owned-process termination; never upload local password hashes.
- try{assert.equal(dirname(resolve(profile)),resolve(tmpdir()));assert.ok(basename(profile).startsWith('lingjing-local-acceptance-'));if(proof.stopError||!proof.ownedProcessStopped)throw Error('Owned process stop not confirmed; profile retained outside artifact directory');rmSync(profile,{recursive:true,force:true});proof.temporaryProfileRemoved=true;}catch(error){proof.cleanupError=redact(error);proof.passed=false;process.exitCode=1;}
+ try{assert.equal(dirname(resolve(profile)),resolve(realpathSync.native(tmpdir())));assert.ok(basename(profile).startsWith('lingjing-local-acceptance-'));if(proof.stopError||!proof.ownedProcessStopped)throw Error('Owned process stop not confirmed; profile retained outside artifact directory');rmSync(profile,{recursive:true,force:true});proof.temporaryProfileRemoved=true;}catch(error){proof.cleanupError=redact(error);proof.passed=false;process.exitCode=1;}
  proof.completedAt=new Date().toISOString();save();console.log(JSON.stringify(proof,null,2));
 }

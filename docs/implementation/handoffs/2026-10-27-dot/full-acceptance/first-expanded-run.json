@@ -35,5 +35,1170 @@
     "independentDownloadHashVerified": true,
     "imagesRetained": true
   },
-  "safety": "Only dedicated workflow group superseded; no P09 registry step had started, no production/account/grant changes. Runner cleaned orphan processes."
+  "safety": "Only dedicated workflow group superseded; no P09 registry step had started, no production/account/grant changes. Runner cleaned orphan processes.",
+  "original98Coverage": {
+    "rules": "Per exact original steps on this source version. Prior 764aa2e P08 proof is preserved separately but not inherited; canceled run is not a pass. Engineering counts do not enter native pass counts.",
+    "counts": {
+      "passed_native": 2,
+      "partial_native": 3,
+      "harness_failed": 1,
+      "not_executed_current_native": 92
+    },
+    "cases": [
+      {
+        "id": "A01",
+        "title": "首次冷启动",
+        "status": "passed_native",
+        "executedSubsteps": [
+          "New isolated profile and original SFX cold launch",
+          "Login illustration, version/source footer and usable login controls visually inspected"
+        ],
+        "missingSubsteps": [],
+        "evidence": [
+          "signed-out-a2b3f5d3.json",
+          "artifact:focused-portable/run-1793083027264/signed-out-A02-focus-lock.png"
+        ]
+      },
+      {
+        "id": "A02",
+        "title": "登录保持行对齐 QA-001",
+        "status": "passed_native",
+        "executedSubsteps": [
+          "Default login form alignment measured",
+          "Remember/keep-login/lock keyboard focus and tooltip checked",
+          "Actual screenshot visually inspected"
+        ],
+        "missingSubsteps": [],
+        "evidence": [
+          "signed-out-a2b3f5d3.json"
+        ]
+      },
+      {
+        "id": "A03",
+        "title": "空值与错误登录",
+        "status": "partial_native",
+        "executedSubsteps": [
+          "Empty form blocked by native validation"
+        ],
+        "missingSubsteps": [
+          "Nonexistent account and wrong password scenarios"
+        ],
+        "evidence": [
+          "signed-out-a2b3f5d3.json"
+        ]
+      },
+      {
+        "id": "A04",
+        "title": "注册校验",
+        "status": "partial_native",
+        "executedSubsteps": [
+          "Short account native validation",
+          "Password confirmation mismatch rejected before auth"
+        ],
+        "missingSubsteps": [
+          "Duplicate account and any remaining complete original registration guards"
+        ],
+        "evidence": [
+          "signed-out-a2b3f5d3.json"
+        ]
+      },
+      {
+        "id": "A05",
+        "title": "合成QA本地注册",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "填写独立QA身份",
+          "正常提交注册"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "A06",
+        "title": "云端合成账号注册登录",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "全新普通隔离档案注册独立QA账号",
+          "正常登录"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "A07",
+        "title": "显隐密码与键盘顺序",
+        "status": "partial_native",
+        "executedSubsteps": [
+          "Password show/hide preserves value",
+          "Complete forward tab traversal",
+          "Single reverse step and empty-form Enter validation"
+        ],
+        "missingSubsteps": [
+          "Complete reverse traversal; added in b5dbcfe harness, not yet evidenced here"
+        ],
+        "evidence": [
+          "signed-out-a2b3f5d3.json"
+        ]
+      },
+      {
+        "id": "A08",
+        "title": "记住账号",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "勾记住账号登录",
+          "退出并重启"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "A09",
+        "title": "保持登录重启",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "云账号勾保持登录",
+          "退出应用并重启同档案"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "A10",
+        "title": "未保持登录重启",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "不勾保持登录正常登录",
+          "关闭重开"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "A11",
+        "title": "账号切换隔离",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "甲领养写状态并退出",
+          "乙登录",
+          "甲再登录"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "A12",
+        "title": "退出与失效会话",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "退出登录",
+          "重复访问业务页",
+          "云端撤销专用QA会话后继续操作"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "N01",
+        "title": "所有主导航入口",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "依次点击全部主导航",
+          "前进后退并返回"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "N02",
+        "title": "最小尺寸与最大化",
+        "status": "harness_failed",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "All actual native bounds/maximize assertions: unsupported Electron CDP command failed first"
+        ],
+        "evidence": [
+          "signed-out-a2b3f5d3.json"
+        ]
+      },
+      {
+        "id": "N03",
+        "title": "窗口连续缩放与滚动",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "多页反复缩放",
+          "滚动长列表和弹窗"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "N04",
+        "title": "关闭到托盘与恢复",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "点击关闭",
+          "托盘打开",
+          "退出自身进程"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "C01",
+        "title": "属性图标分类 QA-002",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "进入领养页",
+          "切全部与金木水火土"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "C02",
+        "title": "同模板连续领养",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "同模板正常领养两次",
+          "查看拥有列表"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "C03",
+        "title": "固定角色名和唯一编号 QA-003",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "领养",
+          "查看列表/详情/桌面/聊天/对战",
+          "重启与同步回读",
+          "按2026-10-25新增规则核对公开界面数字编号、桌面无名无编号"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "C04",
+        "title": "五行筛选与拥有筛选",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "逐个五行筛选",
+          "切只看已拥有",
+          "空结果与恢复"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "C05",
+        "title": "八角色详情与动画",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "逐个打开八角色预览/详情"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "C06",
+        "title": "详情页全部页签",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "打开灵宠详情",
+          "依次成长/技能/记忆/外观等页签"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "C07",
+        "title": "养成互动与冷却",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "指定甲互动",
+          "立即重复",
+          "查看乙"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "C08",
+        "title": "每宠独立选择",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "甲放桌面",
+          "乙聊天",
+          "丙训练",
+          "丁驻守"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "C09",
+        "title": "无宠物空状态",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "新账号访问详情/桌面/聊天/训练"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "C10",
+        "title": "领养快速连点与返回",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "快速重复点击领养",
+          "返回列表再进入"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "D01",
+        "title": "显示隐藏与上限",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "显示1至4只",
+          "尝试超限",
+          "隐藏后再显示",
+          "桌面仅保留灵宠形象，不显示名字或编号"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "D02",
+        "title": "重复拖动变大 QA-004",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "正常拖动同一灵宠至少10次",
+          "每次读取DIP/DPI和实际精灵尺寸"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "D03",
+        "title": "边缘与越界恢复",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "拖向四边",
+          "关闭重启"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "D04",
+        "title": "单宠大小偏好",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "详情调甲大小",
+          "观察乙",
+          "保存重开"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "D05",
+        "title": "DPI与多显示器",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "当前DPI真实拖动",
+          "有硬件时跨DPI屏拖动"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "D06",
+        "title": "拖动持久化与重启",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "拖到新位置",
+          "退出自身应用",
+          "重开登录"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "D07",
+        "title": "行为与鼠标交互",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "切站立/行走/跟随等真实可用模式",
+          "单击/右键观察"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "D08",
+        "title": "穿透与全屏隐藏",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "使用正常UI切换穿透",
+          "观察全屏隐藏策略"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "D09",
+        "title": "托盘全部显示隐藏",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "正常托盘显示/隐藏全部",
+          "回到主窗口"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "T01",
+        "title": "空状态和切宠",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "无宠访问聊天",
+          "有宠选甲后选乙"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "T02",
+        "title": "人设与记忆独立",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "分别编辑甲乙人设/记忆",
+          "切换并重开",
+          "合成记忆新增、编辑、删除；切换两只同模板宠物回查归属与重启"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "T03",
+        "title": "无供应商配置错误",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "未配有效LLM发送合成消息"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "T04",
+        "title": "发送流式与取消",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "配置专用测试供应商或标明模拟",
+          "发送",
+          "生成中取消"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "T05",
+        "title": "历史与再生成",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "正常发送多轮",
+          "离开返回",
+          "重启",
+          "重试或再生成"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "T06",
+        "title": "凭据边界与失联",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "专用无效key配置",
+          "请求失败/断网",
+          "查看同步载荷",
+          "全局和独立连接切换、保存和取消、测试连接和取消；清除自己QA密钥并观察状态"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "M01",
+        "title": "地图初始与图层",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "打开附近",
+          "等待地图",
+          "缩放/平移"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "M02",
+        "title": "定位未授权与重试",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "未授权定位状态查看",
+          "重试定位"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "M03",
+        "title": "真实定位精度准入",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "正常定位",
+          "查看精度",
+          "尝试准入"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "M04",
+        "title": "探索扫描与无结果",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "合格定位或明确模拟场景扫描",
+          "切范围与重试"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "M05",
+        "title": "野外相遇到捕捉",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "打开相遇",
+          "正常战斗胜利",
+          "尝试捕捉"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "M06",
+        "title": "失败逃跑与过期",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "相遇逃跑/失败",
+          "过期后重试",
+          "离页返回"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "M07",
+        "title": "网络异常与重新定位",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "专用进程断网",
+          "地图/相遇请求",
+          "恢复网络"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "B01",
+        "title": "训练选择与开始",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "选指定宠物",
+          "选择训练配置",
+          "点击开始"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "B02",
+        "title": "全部招式与回合反馈",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "普通/技能/防御/治疗逐项操作"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "B03",
+        "title": "自然胜负与奖励",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "持续正常操作到自然终局",
+          "确认",
+          "重开战报"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "B04",
+        "title": "进行中返回恢复",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "训练数回合",
+          "离开返回",
+          "重开应用"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "B05",
+        "title": "历史和回放",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "打开本轮真实战报",
+          "逐回合回顾"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "B06",
+        "title": "好友邀请和接受",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "双独立合成账号建立联系",
+          "甲邀请乙",
+          "乙接受"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "B07",
+        "title": "好友拒绝",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "甲邀请乙",
+          "乙拒绝"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "B08",
+        "title": "好友取消",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "甲发邀请",
+          "甲取消",
+          "乙尝试接受"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "B09",
+        "title": "邀请过期",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "发真实或明确模拟过期邀请",
+          "等待产品过期",
+          "接受"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "B10",
+        "title": "断网重连与重复操作",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "双端对战",
+          "仅QA进程网络中断",
+          "恢复并继续"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "B11",
+        "title": "好友自然终局和重启",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "真实双方自然打至终局",
+          "两端重开",
+          "独立云回读"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "B12",
+        "title": "未知对手与空态",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "无好友/离线对手/信息未到时打开邀请"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "G01",
+        "title": "领地初始地图与列表",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "打开领地/菜园",
+          "缩放与选领地"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "G02",
+        "title": "驻守选宠与更换",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "选择甲驻守",
+          "查看乙",
+          "更换为丙"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "G03",
+        "title": "竞争胜利占领",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "合格定位或明确模拟领地竞争",
+          "自然胜利",
+          "确认占领"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "G04",
+        "title": "竞争失败取消和占用",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "竞争失败/取消",
+          "重复占领",
+          "他人已占领场景"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "G05",
+        "title": "种植与库存扣减",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "指定地块种可用种子",
+          "重复点击",
+          "查看背包"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "G06",
+        "title": "成熟等待与收获",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "查看未成熟",
+          "到实际/明确模拟成熟点",
+          "收获和重试"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "G07",
+        "title": "离线与云端冲突",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "双QA端修改同领地或断网写入",
+          "恢复"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "I01",
+        "title": "分类与空背包",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "逐分类查看",
+          "选择物品",
+          "无库存状态"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "I02",
+        "title": "合成成功与不足",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "选择配方",
+          "足量合成",
+          "不足时重试"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "I03",
+        "title": "指定实例喂养",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "选甲喂一个物品",
+          "查乙",
+          "重复点击"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "I04",
+        "title": "库存重启同步",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "本轮真实经济操作后重启/同步",
+          "独立读receipt"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "R01",
+        "title": "库筛选预览与偏好",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "打开资源库",
+          "分类筛选",
+          "选角色和动作"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "R02",
+        "title": "真实动作全套与重复播放",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "各角色播放idle/walk/attack/hit等可用动作",
+          "连续相同招式"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "R03",
+        "title": "本地资源导入",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "用新QA样本从正常文件选择导入"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "R04",
+        "title": "无效导入与路径边界",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "导入无效包/缺文件/路径穿越样本"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "R05",
+        "title": "资源随账户备份导出与恢复",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "正常UI导入自有青芽包",
+          "账号与同步导出本地备份",
+          "同owner同环境第二普通profile正常UI恢复",
+          "只读比对原resourceId、PNG/JSON原bytes、动作映射、校准与历史"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "R06",
+        "title": "偏好与资源云端恢复",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "云QA端导入与改偏好",
+          "第二新档案同步"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "S01",
+        "title": "账户页资料与状态",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "查看用户/设备/同步状态",
+          "修改合成用户名"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "S02",
+        "title": "自动同步完整域",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "云QA端写宠物/聊天/战报/领地/背包/偏好",
+          "第二端正常登录"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "S03",
+        "title": "离线写入恢复",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "只中断QA进程业务网络",
+          "修改",
+          "重开后联网"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "S04",
+        "title": "双端并发冲突",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "甲乙基于同版本更改",
+          "先后同步",
+          "解决冲突"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "S05",
+        "title": "权限与跨账号隔离",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "甲写私有数据",
+          "乙访问甲已知ID与频道"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "S06",
+        "title": "同步错误与手动重试",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "模拟/真实专用网络错",
+          "点重试",
+          "恢复"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "P01",
+        "title": "所有设置分组可达",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "逐设置页签",
+          "键盘与滚动"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "P02",
+        "title": "保存取消与重启",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "改非安全偏好",
+          "不保存离开",
+          "再保存并重开"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "P03",
+        "title": "桌面上限音量尺寸",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "1–4上限与音量正常修改",
+          "保存",
+          "核对桌面"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "P04",
+        "title": "导出本地备份",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "正常UI导出QA备份",
+          "读取文件"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "P05",
+        "title": "恢复备份与回滚",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "导出后改变QA状态",
+          "正常UI恢复",
+          "读取原件保护备份"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "P06",
+        "title": "无效跨身份备份",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "选择损坏或其他身份/模拟来源备份"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "P07",
+        "title": "通知开机和隐私边界",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "查看开机/位置/统计等设置和说明"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "P08",
+        "title": "版本日志和更新入口",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "打开关于/版本/日志/更新等实际入口"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "A13",
+        "title": "存档待核对提示与正常确认",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "正常新QA账号领养",
+          "观察伙伴已保存/其他存档待核对提示",
+          "正常界面核对与返回"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "N05",
+        "title": "同一档案重复启动",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "同一独立profile再次启动同一EXE",
+          "比较进程/窗口/同宠窗口与SQLite占用"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "P09",
+        "title": "便携版开机启动路径稳定",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "核对正常开机启动配置所用可执行路径",
+          "确认不是会清理的SFX临时解压Lingjing.exe",
+          "不用注销或重启系统"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "A14",
+        "title": "本机合成QA账号修改密码",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "只使用本验收创建的合成local账号",
+          "错误当前密码与确认不一致",
+          "正确改密后旧密码拒绝、新密码可登录",
+          "回查宠物历史/设备归属与持久会话"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "A15",
+        "title": "真实云端合成QA账号修改密码",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "只使用本验收创建的合成cloud账号",
+          "错误当前密码与确认不一致",
+          "正确改密后旧密码拒绝、新密码可登录",
+          "回查宠物历史/设备归属与持久会话"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "C11",
+        "title": "同类型跨用户连续数字编号",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "两个真实合成云账号同类型分别领养，0001起连续递增",
+          "该类型野外捕获接续相同序列",
+          "野外权威相遇阶段已有编号；重复刷新/战斗离开再进保持同一号，捕获后继承同号，不因每次刷新新分配",
+          "并发创建、原actionId重复重试不重复编号",
+          "另一类型独立从其序列起点递增",
+          "重启/同步/切账号后编号不变且归属正确"
+        ],
+        "evidence": []
+      },
+      {
+        "id": "C12",
+        "title": "旧档案升级保留身份与历史",
+        "status": "not_executed_current_native",
+        "executedSubsteps": [],
+        "missingSubsteps": [
+          "正常关闭自己旧QA包后以新候选开启原profile",
+          "核对3只同模板含旧昵称，内部petId不变且旧昵称不覆盖标准名",
+          "旧人设/记忆/聊天/战报/花园库存保存",
+          "重启和同步后数字编号不变"
+        ],
+        "evidence": []
+      }
+    ]
+  },
+  "executableSha256": "4b944a0b86be1a2a031efb2b834bd947d2c91c009c7aba40535f373aa43f283a",
+  "A01A02VisualReview": {
+    "reviewedAt": "2026-10-27T06:57:49Z",
+    "imageSha256": "7b744d2235c351183917c980423181cc73082016e12b15379368d62564c67794",
+    "observed": "Visible illustration/login form, source a2b3f5d3183b, no white screen, centered lock and visible focus/tooltip; no claim of authenticated login."
+  }
 }

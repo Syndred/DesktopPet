@@ -1,0 +1,1023 @@
+{
+  "at": "2026-10-27T07:05:14.884Z",
+  "source": "D:\\a\\DesktopPet\\DesktopPet",
+  "scenario": {
+    "schemaVersion": 1,
+    "application": "lingjing",
+    "scenario": "unified-battle",
+    "runId": "48f79df8-1823-478b-a07f-2d0f368c8d83",
+    "isolated": true,
+    "profilePath": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1793084714874-48f79df8",
+    "createdAt": "2026-10-27T07:05:14.874Z",
+    "env": {
+      "LINGJING_QA_SCENARIO": "unified-battle",
+      "PET_USER_DATA_DIR": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1793084714874-48f79df8"
+    }
+  },
+  "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "sourceDirty": "",
+  "build": [
+    {
+      "name": "app-BwLr9w42.js",
+      "sha256": "6305503cd1e4f6b28baac4db83ff686a7e2f9d62957e3a153f1c4d9477d51376"
+    },
+    {
+      "name": "app-C4WFxOeW.css",
+      "sha256": "43efb17821e4da49dcd6df0d0f9259cfbc157e2750f9d5714a4dbc58c9f16454"
+    },
+    {
+      "name": "arrow-down-CnCxGWE9.js",
+      "sha256": "9ec4b7ab1bf1408a397d75b3c3fc2eebeb32c2e3c57da44448c4234340842dbd"
+    },
+    {
+      "name": "arrow-right-Dz9ryaXp.js",
+      "sha256": "05c728e8186d8be53014f5f70d178993333c19b6aa2a612e5c0440d677a81868"
+    },
+    {
+      "name": "BattleMoves-BVISVj5e.css",
+      "sha256": "d15e48240130cee34549251a0f0af7827cb65c71e008ae90c295d2c8fc771a69"
+    },
+    {
+      "name": "BattleMoves-D7dcM_Bi.js",
+      "sha256": "8eddd5e3b3b0a12df1d68f1c205f1867fc35a19d1d6bd2f2f6c9358b63f5f27b"
+    },
+    {
+      "name": "BattleScreen-r5IEO0BS.css",
+      "sha256": "be59ac8237a872e0bb4b4a55e8a3d26da218c8b225b5e883d12b252df123ccd7"
+    },
+    {
+      "name": "BattleScreen-wL53JyCW.js",
+      "sha256": "09bb0178d9d6a697826beafbcc08f6c54472f7bc573064a1738a7d27e1665bc3"
+    },
+    {
+      "name": "bell-5P0CLi7P.js",
+      "sha256": "b5135d0e821554efb0eb594cec8868fcc17cd9e97fbfc3289714dc551deabdfd"
+    },
+    {
+      "name": "browserAll-Mu8NqfKS.js",
+      "sha256": "bb06cb428a6c6e1f953ab959e3f4d4cb2d004909a5a2f413e69b2fa86b424bfb"
+    },
+    {
+      "name": "checkbox-C7AjbuRc.js",
+      "sha256": "4140be4ff82b090ddf3b680a2d8a1781efbc9f95dfde7366ff627d6eecdbb753"
+    },
+    {
+      "name": "chevron-left-D3F4xeOQ.js",
+      "sha256": "6ccc71369081098d03dc1b4df7f5ea8ba69df2d9f0e19dcd167501afe75fe248"
+    },
+    {
+      "name": "clock-3-zmSEi13r.js",
+      "sha256": "a0fa2541a3b41c4ef4d6954f2ff5fe2a05a5c02ec662c2d060182acd6b785845"
+    },
+    {
+      "name": "cloud-check-Ddcm3-TP.js",
+      "sha256": "d965360470a9170d6d5330c39ec89593a40a0e396e73ea8a4d09d5c5e5f3bba1"
+    },
+    {
+      "name": "cloud-orcGhJht.js",
+      "sha256": "a6fb2f18177a3aaa6176a46280f67ed2c8582d1f16fb02af09f0509c637272d5"
+    },
+    {
+      "name": "CompanionPortrait-CSlqyHCO.js",
+      "sha256": "020310a6d3d54f86acbbccc1dd6eff75fa3a0de237382466dd0b7a04c09446da"
+    },
+    {
+      "name": "desktop-8TSkBdWx.css",
+      "sha256": "6fd6a1e03a1153fcc757ed3f153f61810026b7c714a94489710c4fa45d1464a1"
+    },
+    {
+      "name": "desktop-BldyC-C7.js",
+      "sha256": "92f878d059a5c0650cd823a259fe3b31b3786328d41c4d164ac54b3ec1dbd514"
+    },
+    {
+      "name": "desktop-policy-CBBfyBw7.js",
+      "sha256": "5e2c82b236d510ffe60afb338a6e17e2c032dbc59053bd77c6b94ec49f8d1559"
+    },
+    {
+      "name": "DesktopCompanion-DNYdtMJ3.css",
+      "sha256": "e9a80187f12572bd7e9eabc1b0145c0a8b44bf8f012289bb0ec4b8e5eeb61341"
+    },
+    {
+      "name": "DesktopCompanion-DY2gzQ7I.js",
+      "sha256": "25044ae5cc1fed049f4f3482477db725672324374d49268c7a9d11d672b15f25"
+    },
+    {
+      "name": "dialog-DMyioOD2.js",
+      "sha256": "dea68f82a5a4e06a1a90862626b5c3a3280df10291246be988224ae22093aa05"
+    },
+    {
+      "name": "dialog-TjzXKJb7.js",
+      "sha256": "6e388c22455f5b0ea3204d447cf469154dd41f34379b36b8fbc9a11b2486482d"
+    },
+    {
+      "name": "display-identity-C4-AnOPq.js",
+      "sha256": "e771f03bf6ce823fd8636384b59717bc514c32cf10f12cab1843da4f63d2aa1f"
+    },
+    {
+      "name": "face-slightly-smiling-p1zF2fVw.js",
+      "sha256": "4390758ad9fc4fa311e3c244677db97bebe47d3fe478bcf8fc3ef14bf505be85"
+    },
+    {
+      "name": "flag-BSxFPhxN.js",
+      "sha256": "cc919d7bab4360eee2b50c74205c5b29333dfd6caa70c75b1aa849f7cea37d5b"
+    },
+    {
+      "name": "hard-drive-Dnd3_k9-.js",
+      "sha256": "72258da505c3a3d700d5357ff2277b16f1b2a6be6c3d2fa335318e7cb95b1731"
+    },
+    {
+      "name": "heart-Bya5rdf_.js",
+      "sha256": "6ad0a70d109aa82510e68563c97729689a4e65743ca93e4e53a084b36e85c493"
+    },
+    {
+      "name": "index-BBw1jWVF.css",
+      "sha256": "82c56294c9612d13dc120e783ba534d300e2b87c3abd1c8991dd3983ab715463"
+    },
+    {
+      "name": "index-BcnX1dK0.css",
+      "sha256": "0b3538b4a6fe26f3a8032ce9aa3d792fdefde9cfdf73dd083896c540878ed9d2"
+    },
+    {
+      "name": "index-BN2NGbbS.js",
+      "sha256": "354ce14378050e4596e95fe23fa486ac90aad2ba7dc6d4039b1dd7ff541bb0ef"
+    },
+    {
+      "name": "index-BRvmD8qk.js",
+      "sha256": "70f8b3b60df019927afd8310bd9496780025933d9a3cdfbb85c4456baa7fbf50"
+    },
+    {
+      "name": "index-C4ywuhRf.css",
+      "sha256": "710f5771ae40b7feb2b7c186c26c0ffd4d4db6e46a3220b37dca243e2f3647be"
+    },
+    {
+      "name": "index-CPkmdXmF.js",
+      "sha256": "a0f6d96a5903b6cc831dd3c9f62a27d5b26dcc2e777adc80508a3fa9e5cc69c7"
+    },
+    {
+      "name": "index-CX8G5YX6.css",
+      "sha256": "b44b4937ac5419ad5fd3d4c3b07aa76645909d8c6b86cf8dde69f56795b70654"
+    },
+    {
+      "name": "index-CZB9Gpnt.js",
+      "sha256": "3f21fb007055651d373ffe0fc245d98f3b4c620ac5893e368092d97dc73bb046"
+    },
+    {
+      "name": "index-D0v4IT6s.js",
+      "sha256": "4b77cef168ea135758b666607a382f813356e040ef7c827b28f2ea29acb674a5"
+    },
+    {
+      "name": "index-Da_AFaW9.js",
+      "sha256": "bae8efba120167c81f0bb0cb8ac64bd3262bd1e4e504a867f901ee4c72398933"
+    },
+    {
+      "name": "index-DjlXXRZx.js",
+      "sha256": "5763bda744dcabfe41d63bc7f652fda68e8a76fc0d9b9f2b97c86d03096f178e"
+    },
+    {
+      "name": "index-DnleNtCq.js",
+      "sha256": "68b3ff64da43b6afdc4cbb943b5909a11b6e7b037a8eb3228ceee5fdd7506ce1"
+    },
+    {
+      "name": "index-DYF_jUc8.css",
+      "sha256": "57cc7f8b0b149b7da571ccc96a609df0dfc71503ec9b13c85cc781055f69b6fe"
+    },
+    {
+      "name": "index-SQ_rq34j.js",
+      "sha256": "2597369ac08b58f7640a505ff0df4c290bd10ccb6aac12d4c23db692ccd4a075"
+    },
+    {
+      "name": "info-Mn2C--Zj.js",
+      "sha256": "6076cb570693ae8c98e3d3a967d45d0608853c471f99d3af14ba5d378d6872f6"
+    },
+    {
+      "name": "init-Cw69i4HW.js",
+      "sha256": "1de6082e403884afe434bbd47953d21d13ceb2334bf8f8869aef46a0cef01c2a"
+    },
+    {
+      "name": "input-DZh5e-qo.js",
+      "sha256": "0b8088bb6c57025fcba8d919de52af192490a776c7556995d1aa830e5ddfb082"
+    },
+    {
+      "name": "lock-keyhole-CKSJHopN.js",
+      "sha256": "40da15d7145e292c3cc7d5c52def85daf94d16a0584001ba248d28c4e1cb3a43"
+    },
+    {
+      "name": "map-pin-C2dxkTPF.js",
+      "sha256": "b71cf21d88304f5029ae62d0f0fb52fded226244d55ed1ff76fca50664f405a8"
+    },
+    {
+      "name": "maplibre-gl-worker-BJZj9QkU.js",
+      "sha256": "214560363975d3075c01106123b51ed094605f3526c8a7b0d1699f83eb25fcd7"
+    },
+    {
+      "name": "monitor-Cn1vHvSE.js",
+      "sha256": "3322eeec7627124c3d0687073940061be9d41da357690578a70e0ce190fd213a"
+    },
+    {
+      "name": "motion-CECw42xB.js",
+      "sha256": "ec002293c826fe2993d42bb079b2e2772a473731ddc47feb1f3c804343ba0592"
+    },
+    {
+      "name": "mountain-r8mqbjJe.js",
+      "sha256": "22acce06474a2f500b514e151e5e09f7ddeb47c6108d738c59b3505efd0a3fb6"
+    },
+    {
+      "name": "ParticleBuffer-Dfj8lT6_.js",
+      "sha256": "6475e43b3be3183b402bf9aab52afd4960a17a6c6097d0dbf7771ac51f4644d6"
+    },
+    {
+      "name": "pause-C1d1UhjN.js",
+      "sha256": "0233515cdf281217efeab40ec2a6e93256a70062586da8e013689c7ff36a1010"
+    },
+    {
+      "name": "play-CrhhaCbw.js",
+      "sha256": "97353ae2e392378412f54b76b31f5936c40bddea223cc5c99e2e4cc3b39571f0"
+    },
+    {
+      "name": "plus-DQWLmWwe.js",
+      "sha256": "4c4e22c39e5806990a92d271404a3adf79f722241eff63744b0d0702b8705926"
+    },
+    {
+      "name": "popover-BeNWNMNW.js",
+      "sha256": "df29c2196176d629175d387d7ae7764c0ccbc83ca9478fe5dfe5df13e65103d9"
+    },
+    {
+      "name": "refresh-cw-0dW_f3zK.js",
+      "sha256": "9d78cd92ba53e48631392880794a0c4ce4ecea4f3ad6c303505ce0489425a919"
+    },
+    {
+      "name": "ResourcePortrait-BtVfzUjW.css",
+      "sha256": "ae1a08625f3a1808312ac63375bc4abcbcee5bbb958345b34adcf1829b1a3576"
+    },
+    {
+      "name": "ResourcePortrait-zHbn1ZVV.js",
+      "sha256": "631b41196f109baf14f30eae3b07b238948bb24acb4b2a97a0f6ac253d83e530"
+    },
+    {
+      "name": "save-C2dYwAFk.js",
+      "sha256": "705baaa3a2e425ba8a95ab579608259d17aa526eb39a6f2d8160c2d254b9d9cc"
+    },
+    {
+      "name": "scroll-area-BWj3wO1z.js",
+      "sha256": "16746872f675cac87f2532fcdc48e3a4b3999988464f4eea8cc1c6441aff41e5"
+    },
+    {
+      "name": "search-DGhSXy-W.js",
+      "sha256": "1af2f09dd1c5f514e3be40ad58c1ead6ed25050e782107caeb27721d041e08ba"
+    },
+    {
+      "name": "select-B3GmHrbV.js",
+      "sha256": "a1884d6bd72f1bb9271853a0c996833e31dbd9d742bda8ceb18bfea60c1838e2"
+    },
+    {
+      "name": "slider-CskG1X0P.js",
+      "sha256": "1602a376bc91f3f5bab1eb9b46dc22cd94ad1336b3a0473f67e87f940b89f4ca"
+    },
+    {
+      "name": "styles-0cHkftPM.css",
+      "sha256": "1b47251e1faa42544fe0fa4fe6bf1565d4873af1ccd240229e55996ad60fd323"
+    },
+    {
+      "name": "styles-C_iYH9IU.js",
+      "sha256": "83fe658e7373ca7791a6d54b768be8501aa26b74dc358fac8d1df6ad3dcbb587"
+    },
+    {
+      "name": "styles-I1RYCssw.css",
+      "sha256": "2b71557976dbc132190d6832a5f8e173e542c977d4f49250a237e2f13c08ead4"
+    },
+    {
+      "name": "switch-BKrURik7.js",
+      "sha256": "6ef53ee60ebe413c25d34038d374494b11c12f509be135b5e068043836cf614e"
+    },
+    {
+      "name": "tabs-phElNpsA.js",
+      "sha256": "6e7099ed4d13be4cb066a8001e6f026d18c6fb08bec5cfe48e384e606b6a6a24"
+    },
+    {
+      "name": "webworkerAll-BVLOzZbG.js",
+      "sha256": "4a3f1ddeb67a6c09527eefc84ff0220b14d5c8f574f4e9c63b5a71b6f08753e2"
+    }
+  ],
+  "provenance": "Independent actual Electron observations. New verified QA profile, legal charged state and scripted opponent actions; actual public battle rules, resources, persistence and player controls. No live cloud or physical GPS claim.",
+  "checks": [
+    {
+      "id": "verified-scenario",
+      "passed": true,
+      "detail": {
+        "id": "unified-battle",
+        "runId": "48f79df8-1823-478b-a07f-2d0f368c8d83",
+        "provenance": "simulated",
+        "isolated": true
+      }
+    },
+    {
+      "id": "eight-distinct-five-element-instances",
+      "passed": true,
+      "detail": [
+        {
+          "templateId": "big-fish-gentle",
+          "name": "鱼丸",
+          "category": "big-fish",
+          "element": "water",
+          "description": "安静温柔的鲸尾少女，喜欢陪你度过日常。",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "big-fish-cheerful",
+          "name": "小蓝",
+          "category": "big-fish",
+          "element": "water",
+          "description": "活泼的侧马尾伙伴，穿着宽松鲸鱼斗篷。",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaolan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "big-fish-foodie",
+          "name": "饭团",
+          "category": "big-fish",
+          "element": "water",
+          "description": "盘着双丸子头的美食家，认真珍惜每一顿饭。",
+          "resource": {
+            "resourceId": "builtin:lingjing-fantuan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "animal-shiba",
+          "name": "焰柴",
+          "category": "animal",
+          "element": "fire",
+          "description": "热情勇敢的柴犬，星星项圈总是闪闪发亮。",
+          "resource": {
+            "resourceId": "builtin:lingjing-shiba-v2",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 20,
+            "spd": 22
+          }
+        },
+        {
+          "templateId": "animal-hat-cat",
+          "name": "礼帽喵",
+          "category": "animal",
+          "element": "metal",
+          "description": "戴着礼帽的燕尾猫，擅长温柔的小魔术。",
+          "resource": {
+            "resourceId": "builtin:lingjing-hatcat-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 136,
+            "atk": 30,
+            "def": 30,
+            "spd": 13
+          }
+        },
+        {
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "category": "animal",
+          "element": "water",
+          "description": "安静机灵的雪白小狐，像雪花一样轻盈。",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "animal-wood-deer",
+          "name": "青芽",
+          "category": "animal",
+          "element": "wood",
+          "description": "戴着枝叶小角的林间幼鹿，喜欢收集新芽。",
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 18
+          }
+        },
+        {
+          "templateId": "animal-earth-pangolin",
+          "name": "岩团",
+          "category": "animal",
+          "element": "earth",
+          "description": "披着暖褐鳞甲的小穿山甲，稳稳守住每一步。",
+          "resource": {
+            "resourceId": "builtin:lingjing-yantuan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 142,
+            "atk": 24,
+            "def": 34,
+            "spd": 11
+          }
+        }
+      ]
+    },
+    {
+      "id": "start:metal:dodge",
+      "passed": true,
+      "detail": {
+        "id": "battle-e5f03cd5-0459-4b55-87b3-61d31cab93d4",
+        "player": {
+          "petId": "pet-ef38655f-507b-4ab7-98cc-1690d100a672",
+          "petName": "礼帽喵",
+          "element": "metal",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-hatcat-v1",
+          "resource": {
+            "resourceId": "builtin:lingjing-hatcat-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-hatcat-v1",
+          "displayKind": "instance",
+          "displayIdentity": {
+            "roleName": "礼帽喵",
+            "instanceNumber": "待同步",
+            "historicalNickname": null
+          }
+        },
+        "context": {
+          "id": "training:fire",
+          "authority": "simulated",
+          "scenarioId": "48f79df8-1823-478b-a07f-2d0f368c8d83",
+          "qaPreset": "charged",
+          "qaEnemyAction": "dodge"
+        }
+      }
+    }
+  ],
+  "sessions": [
+    {
+      "id": "battle-e5f03cd5-0459-4b55-87b3-61d31cab93d4",
+      "petId": "pet-ef38655f-507b-4ab7-98cc-1690d100a672",
+      "element": "metal",
+      "enemyAction": "dodge"
+    }
+  ],
+  "errors": [],
+  "roster": {
+    "ownerAccountId": "qa:48f79df8-1823-478b-a07f-2d0f368c8d83:local-dfd312a2-4166-491b-b0d9-e789d6e06547",
+    "pets": [
+      {
+        "ownerAccountId": "qa:48f79df8-1823-478b-a07f-2d0f368c8d83:local-dfd312a2-4166-491b-b0d9-e789d6e06547",
+        "petId": "pet-e5c96a81-1fd3-4464-8581-fa6f1389c06f",
+        "templateId": "big-fish-gentle",
+        "name": "鱼丸",
+        "serial": "E5C96A81",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 80,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "revision": 1,
+        "createdAt": "2026-10-27T07:05:15.604Z",
+        "updatedAt": "2026-10-27T07:05:15.604Z"
+      },
+      {
+        "ownerAccountId": "qa:48f79df8-1823-478b-a07f-2d0f368c8d83:local-dfd312a2-4166-491b-b0d9-e789d6e06547",
+        "petId": "pet-80701de8-3b90-46f1-8779-7e7e3360ba31",
+        "templateId": "big-fish-cheerful",
+        "name": "小蓝",
+        "serial": "80701DE8",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaolan-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 320,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "revision": 1,
+        "createdAt": "2026-10-27T07:05:15.609Z",
+        "updatedAt": "2026-10-27T07:05:15.609Z"
+      },
+      {
+        "ownerAccountId": "qa:48f79df8-1823-478b-a07f-2d0f368c8d83:local-dfd312a2-4166-491b-b0d9-e789d6e06547",
+        "petId": "pet-acd5e6f3-2eb2-4f8b-8114-81738999d1cb",
+        "templateId": "big-fish-foodie",
+        "name": "饭团",
+        "serial": "ACD5E6F3",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-fantuan-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 560,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "revision": 1,
+        "createdAt": "2026-10-27T07:05:15.612Z",
+        "updatedAt": "2026-10-27T07:05:15.612Z"
+      },
+      {
+        "ownerAccountId": "qa:48f79df8-1823-478b-a07f-2d0f368c8d83:local-dfd312a2-4166-491b-b0d9-e789d6e06547",
+        "petId": "pet-e8a2e260-5990-4dc9-90cf-813de6c29cc8",
+        "templateId": "animal-shiba",
+        "name": "焰柴",
+        "serial": "E8A2E260",
+        "element": "fire",
+        "resource": {
+          "resourceId": "builtin:lingjing-shiba-v2",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 20,
+            "spd": 22
+          }
+        },
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 800,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "revision": 1,
+        "createdAt": "2026-10-27T07:05:15.615Z",
+        "updatedAt": "2026-10-27T07:05:15.615Z"
+      },
+      {
+        "ownerAccountId": "qa:48f79df8-1823-478b-a07f-2d0f368c8d83:local-dfd312a2-4166-491b-b0d9-e789d6e06547",
+        "petId": "pet-ef38655f-507b-4ab7-98cc-1690d100a672",
+        "templateId": "animal-hat-cat",
+        "name": "礼帽喵",
+        "serial": "EF38655F",
+        "element": "metal",
+        "resource": {
+          "resourceId": "builtin:lingjing-hatcat-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 136,
+            "atk": 30,
+            "def": 30,
+            "spd": 13
+          }
+        },
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 1040,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "revision": 1,
+        "createdAt": "2026-10-27T07:05:15.618Z",
+        "updatedAt": "2026-10-27T07:05:15.618Z"
+      },
+      {
+        "ownerAccountId": "qa:48f79df8-1823-478b-a07f-2d0f368c8d83:local-dfd312a2-4166-491b-b0d9-e789d6e06547",
+        "petId": "pet-ed98d508-5aa5-47b8-989d-13ca120599c8",
+        "templateId": "animal-white-fox",
+        "name": "小狐",
+        "serial": "ED98D508",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 80,
+            "y": 470,
+            "displayId": null
+          }
+        },
+        "revision": 1,
+        "createdAt": "2026-10-27T07:05:15.622Z",
+        "updatedAt": "2026-10-27T07:05:15.622Z"
+      },
+      {
+        "ownerAccountId": "qa:48f79df8-1823-478b-a07f-2d0f368c8d83:local-dfd312a2-4166-491b-b0d9-e789d6e06547",
+        "petId": "pet-e326346e-e790-46a3-872c-aed23b4f3171",
+        "templateId": "animal-wood-deer",
+        "name": "青芽",
+        "serial": "E326346E",
+        "element": "wood",
+        "resource": {
+          "resourceId": "builtin:lingjing-qingya-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 18
+          }
+        },
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 320,
+            "y": 470,
+            "displayId": null
+          }
+        },
+        "revision": 1,
+        "createdAt": "2026-10-27T07:05:15.626Z",
+        "updatedAt": "2026-10-27T07:05:15.626Z"
+      },
+      {
+        "ownerAccountId": "qa:48f79df8-1823-478b-a07f-2d0f368c8d83:local-dfd312a2-4166-491b-b0d9-e789d6e06547",
+        "petId": "pet-fc2f213e-6c5b-4f6b-991b-fa04dcbfd5ab",
+        "templateId": "animal-earth-pangolin",
+        "name": "岩团",
+        "serial": "FC2F213E",
+        "element": "earth",
+        "resource": {
+          "resourceId": "builtin:lingjing-yantuan-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 142,
+            "atk": 24,
+            "def": 34,
+            "spd": 11
+          }
+        },
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 560,
+            "y": 470,
+            "displayId": null
+          }
+        },
+        "revision": 1,
+        "createdAt": "2026-10-27T07:05:15.630Z",
+        "updatedAt": "2026-10-27T07:05:15.630Z"
+      }
+    ],
+    "selections": {
+      "chatPetId": null,
+      "battlePetId": null,
+      "guardPetId": null
+    },
+    "templates": [
+      {
+        "templateId": "big-fish-gentle",
+        "name": "鱼丸",
+        "category": "big-fish",
+        "element": "water",
+        "description": "安静温柔的鲸尾少女，喜欢陪你度过日常。",
+        "resource": {
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "kind": "2d"
+        },
+        "baseStats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        }
+      },
+      {
+        "templateId": "big-fish-cheerful",
+        "name": "小蓝",
+        "category": "big-fish",
+        "element": "water",
+        "description": "活泼的侧马尾伙伴，穿着宽松鲸鱼斗篷。",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaolan-v1",
+          "kind": "2d"
+        },
+        "baseStats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        }
+      },
+      {
+        "templateId": "big-fish-foodie",
+        "name": "饭团",
+        "category": "big-fish",
+        "element": "water",
+        "description": "盘着双丸子头的美食家，认真珍惜每一顿饭。",
+        "resource": {
+          "resourceId": "builtin:lingjing-fantuan-v1",
+          "kind": "2d"
+        },
+        "baseStats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        }
+      },
+      {
+        "templateId": "animal-shiba",
+        "name": "焰柴",
+        "category": "animal",
+        "element": "fire",
+        "description": "热情勇敢的柴犬，星星项圈总是闪闪发亮。",
+        "resource": {
+          "resourceId": "builtin:lingjing-shiba-v2",
+          "kind": "2d"
+        },
+        "baseStats": {
+          "hp": 118,
+          "atk": 33,
+          "def": 20,
+          "spd": 22
+        }
+      },
+      {
+        "templateId": "animal-hat-cat",
+        "name": "礼帽喵",
+        "category": "animal",
+        "element": "metal",
+        "description": "戴着礼帽的燕尾猫，擅长温柔的小魔术。",
+        "resource": {
+          "resourceId": "builtin:lingjing-hatcat-v1",
+          "kind": "2d"
+        },
+        "baseStats": {
+          "hp": 136,
+          "atk": 30,
+          "def": 30,
+          "spd": 13
+        }
+      },
+      {
+        "templateId": "animal-white-fox",
+        "name": "小狐",
+        "category": "animal",
+        "element": "water",
+        "description": "安静机灵的雪白小狐，像雪花一样轻盈。",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "kind": "2d"
+        },
+        "baseStats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        }
+      },
+      {
+        "templateId": "animal-wood-deer",
+        "name": "青芽",
+        "category": "animal",
+        "element": "wood",
+        "description": "戴着枝叶小角的林间幼鹿，喜欢收集新芽。",
+        "resource": {
+          "resourceId": "builtin:lingjing-qingya-v1",
+          "kind": "2d"
+        },
+        "baseStats": {
+          "hp": 130,
+          "atk": 26,
+          "def": 26,
+          "spd": 18
+        }
+      },
+      {
+        "templateId": "animal-earth-pangolin",
+        "name": "岩团",
+        "category": "animal",
+        "element": "earth",
+        "description": "披着暖褐鳞甲的小穿山甲，稳稳守住每一步。",
+        "resource": {
+          "resourceId": "builtin:lingjing-yantuan-v1",
+          "kind": "2d"
+        },
+        "baseStats": {
+          "hp": 142,
+          "atk": 24,
+          "def": 34,
+          "spd": 11
+        }
+      }
+    ],
+    "revision": 9,
+    "desktopDisplay": {
+      "ownerAccountId": "qa:48f79df8-1823-478b-a07f-2d0f368c8d83:local-dfd312a2-4166-491b-b0d9-e789d6e06547",
+      "available": true,
+      "limit": 3,
+      "pets": [
+        {
+          "petId": "pet-e5c96a81-1fd3-4464-8581-fa6f1389c06f",
+          "state": "off",
+          "reason": null
+        },
+        {
+          "petId": "pet-80701de8-3b90-46f1-8779-7e7e3360ba31",
+          "state": "off",
+          "reason": null
+        },
+        {
+          "petId": "pet-acd5e6f3-2eb2-4f8b-8114-81738999d1cb",
+          "state": "off",
+          "reason": null
+        },
+        {
+          "petId": "pet-e8a2e260-5990-4dc9-90cf-813de6c29cc8",
+          "state": "off",
+          "reason": null
+        },
+        {
+          "petId": "pet-ef38655f-507b-4ab7-98cc-1690d100a672",
+          "state": "off",
+          "reason": null
+        },
+        {
+          "petId": "pet-ed98d508-5aa5-47b8-989d-13ca120599c8",
+          "state": "off",
+          "reason": null
+        },
+        {
+          "petId": "pet-e326346e-e790-46a3-872c-aed23b4f3171",
+          "state": "off",
+          "reason": null
+        },
+        {
+          "petId": "pet-fc2f213e-6c5b-4f6b-991b-fa04dcbfd5ab",
+          "state": "off",
+          "reason": null
+        }
+      ]
+    }
+  },
+  "failure": "Error: locator.evaluate: TypeError: Cannot read properties of null (reading 'getBoundingClientRect')\n    at rect (eval at evaluate (:370:30), <anonymous>:2:49)\n    at eval (eval at evaluate (:370:30), <anonymous>:9:66)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+  "passed": false
+}

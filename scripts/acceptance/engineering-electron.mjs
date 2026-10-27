@@ -44,7 +44,16 @@ try {
   const page = await app.firstWindow(); page.setDefaultTimeout(15000); page.on('pageerror', error => proof.errors.push(error.message));
   await page.reload();
   await page.waitForFunction(() => Boolean(window.lingjing?.call));
-  await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0].setSize(1280, 844));
+  const mainPlacement = await app.evaluate(({ BrowserWindow, screen }) => {
+    const win = BrowserWindow.getAllWindows()[0], area = screen.getDisplayMatching(win.getBounds()).workArea;
+    const minimum = win.getMinimumSize();
+    const bounds = { x: area.x, y: area.y, width: Math.max(minimum[0], Math.min(1280, area.width - 60)), height: Math.max(minimum[1], Math.min(844, area.height - 60)) };
+    win.setBounds(bounds);
+    const sized = win.getBounds();
+    win.setPosition(area.x + Math.max(0, Math.floor((area.width - sized.width) / 2)), area.y + Math.max(0, Math.floor((area.height - sized.height) / 2)));
+    const actual = win.getBounds();
+    return { area, minimum, requested: bounds, actual, fitsWorkArea: actual.width <= area.width && actual.height <= area.height };
+  }); stage('main-window-within-workarea', mainPlacement);
   const password = `Engineering-${randomUUID()}!`;
   await invoke(page, 'accounts', 'register', { provider: 'local', account: `qa_engine_${Date.now()}`, username: '公共工程验收', password, confirmPassword: password, rememberSession: false });
   await page.getByRole('navigation', { name: '主导航' }).waitFor();
@@ -72,10 +81,21 @@ try {
     const denied = await invoke(desktop, 'companions', 'get', { petId: pets.find(other => other.petId !== pet.petId).petId }, false); assert.equal(denied.code, 'WINDOW_SCOPE_VIOLATION');
     const logout = await invoke(desktop, 'accounts', 'logout', {}, false); assert.equal(logout.code, 'WINDOW_SCOPE_VIOLATION');
     const visual = await desktop.locator('.cp-desktop-visual').evaluate(element => { const box = element.getBoundingClientRect(); return { x: box.x, y: box.y, width: box.width, height: box.height, innerWidth }; });
-    const native = await app.evaluate(({ BrowserWindow }, id) => {
-      const win = BrowserWindow.getAllWindows().find(value => value.webContents.getURL().includes(encodeURIComponent(id)));
-      return { url: win.webContents.getURL(), bounds: win.getBounds(), background: win.getBackgroundColor(), visibleWindow: win.isVisible(), alwaysOnTop: win.isAlwaysOnTop(), resizable: win.isResizable(), focusable: win.isFocusable(), webPreferences: win.webContents.getLastWebPreferences() };
-    }, pet.petId);
+    let native, stableVisible = 0;
+    const nativeSamples = [];
+    for (let attempt = 0; attempt < 50; attempt++) {
+      native = await app.evaluate(({ BrowserWindow }, url) => {
+        const win = BrowserWindow.getAllWindows().find(value => value.webContents.getURL() === url);
+        if (!win) return { missing: true, url };
+        return { url: win.webContents.getURL(), bounds: win.getBounds(), background: win.getBackgroundColor(), visibleWindow: win.isVisible(), alwaysOnTop: win.isAlwaysOnTop(), resizable: win.isResizable(), focusable: win.isFocusable(), webPreferences: win.webContents.getLastWebPreferences() };
+      }, desktop.url());
+      nativeSamples.push(native);
+      stableVisible = native.visibleWindow ? stableVisible + 1 : 0;
+      if (stableVisible >= 3) break;
+      await desktop.waitForTimeout(100);
+    }
+    stage('native-window-observation', { petId: pet.petId, native, nativeSamples, host: (await invoke(page, 'accounts', 'settingsGet')).host });
+    assert.ok(stableVisible >= 3, 'Exact pet window did not remain visible for three consecutive observations');
     assert.ok(native.visibleWindow && native.alwaysOnTop && !native.resizable && !native.focusable);
     assert.ok(native.webPreferences.contextIsolation && native.webPreferences.sandbox && !native.webPreferences.nodeIntegration);
     record({ id: `native-${pet.element}-window-and-ipc`, status: 'passed', native, otherPetDenied: denied.code, logoutDenied: logout.code });

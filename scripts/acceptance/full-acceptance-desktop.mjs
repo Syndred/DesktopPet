@@ -2,7 +2,7 @@
 // Real OS mouse injection is restricted to the owned foreground Electron process.
 import { _electron as electron } from 'playwright';
 import { execFileSync } from 'node:child_process';
-import { mkdirSync,mkdtempSync,readFileSync,writeFileSync } from 'node:fs';
+import { mkdirSync,mkdtempSync,realpathSync,readFileSync,writeFileSync } from 'node:fs';
 import { resolve,join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { randomUUID } from 'node:crypto';
@@ -15,7 +15,7 @@ const scenario=JSON.parse(execFileSync(process.execPath,['scripts/acceptance/cre
 const proof={sourceCommit:build.sourceCommit,startedAt:new Date().toISOString(),scope:'Actual Windows Electron windows and UI on fresh offline QA account. Native OS input records are separate from Chromium control clicks. No physical second display, production data, GPS or old grant.',scenario,checks:[],errors:[],uncovered:['D05 multi-DPI/monitor','D08 physical click-through/fullscreen policy','D09 physical taskbar/tray menu']};
 const save=()=>writeFileSync(join(output,'evidence.json'),JSON.stringify(proof,null,2));
 const credentials={provider:'local',account:`desktop_${Date.now()}`,username:'隔离桌面验收',password:`Fixture-${randomUUID()}!`,rememberSession:false};
-const disposable=mkdtempSync(join(tmpdir(),'lingjing-offline-desktop-'));
+const disposable=realpathSync.native(mkdtempSync(join(realpathSync.native(tmpdir()),'lingjing-offline-desktop-')));
 const publicConfig=join(disposable,'offline-public.json');writeFileSync(publicConfig,'{}',{flag:'wx'});
 const systemKeys=new Set(['PATH','PATHEXT','SYSTEMROOT','SYSTEMDRIVE','WINDIR','COMSPEC','TEMP','TMP','TMPDIR','HOME','USERPROFILE','APPDATA','LOCALAPPDATA','PROGRAMFILES','PROGRAMFILES(X86)','PROGRAMW6432','DISPLAY','WAYLAND_DISPLAY','XDG_RUNTIME_DIR','LANG','LC_ALL','CI']);
 const env=Object.fromEntries(Object.entries(process.env).filter(([key])=>systemKeys.has(key.toUpperCase())));
@@ -66,8 +66,15 @@ if(-not [QAInput]::SetCursorPos($p.from.x,$p.from.y)){throw 'NATIVE_CURSOR_BLOCK
 Start-Sleep -Milliseconds 250
 [QAInput]::GetCursorPos([ref]$q)|Out-Null
 if([Math]::Abs($q.X-$p.from.x) -gt 1 -or [Math]::Abs($q.Y-$p.from.y) -gt 1){throw 'NATIVE_CURSOR_BLOCKED'}
-$hit=[QAInput]::WindowFromPoint($q);$rootWindow=[QAInput]::GetAncestor($hit,2);[uint32]$hitPid=0;[uint32]$rootPid=0;[QAInput]::GetWindowThreadProcessId($hit,[ref]$hitPid)|Out-Null;[QAInput]::GetWindowThreadProcessId($rootWindow,[ref]$rootPid)|Out-Null
-if($rootWindow.ToInt64().ToString() -ne $p.windowHandle -or $rootPid -ne $p.processId){throw 'OWNED_PET_NOT_AT_POINT'}
+$matched=$false
+for($attempt=0;$attempt -lt 20;$attempt++){
+ $hit=[QAInput]::WindowFromPoint($q);$rootWindow=[QAInput]::GetAncestor($hit,2);[uint32]$hitPid=0;[uint32]$rootPid=0;[QAInput]::GetWindowThreadProcessId($hit,[ref]$hitPid)|Out-Null;[QAInput]::GetWindowThreadProcessId($rootWindow,[ref]$rootPid)|Out-Null
+ if($rootWindow.ToInt64().ToString() -eq $p.windowHandle -and $rootPid -eq $p.processId){$matched=$true;break}
+ Start-Sleep -Milliseconds 100
+}
+if(-not $matched){throw ('OWNED_PET_NOT_AT_POINT '+(@{expected=$p.windowHandle;hit=$hit.ToInt64().ToString();root=$rootWindow.ToInt64().ToString();rootPid=$rootPid;x=$q.X;y=$q.Y}|ConvertTo-Json -Compress))}
+[uint32]$foreground=0;[QAInput]::GetWindowThreadProcessId([QAInput]::GetForegroundWindow(),[ref]$foreground)|Out-Null
+if($foreground -ne $p.processId){throw 'OWNED_WINDOW_NOT_FOREGROUND'}
 try{[QAInput]::Button(2);Start-Sleep -Milliseconds 120;for($i=1;$i -le 16;$i++){[QAInput]::SetCursorPos([int]($p.from.x+($p.to.x-$p.from.x)*$i/16),[int]($p.from.y+($p.to.y-$p.from.y)*$i/16))|Out-Null;Start-Sleep -Milliseconds 45}}
 finally{[QAInput]::Button(4)}
 [QAInput]::GetCursorPos([ref]$q)|Out-Null;@{x=$q.X;y=$q.Y;foregroundPid=$foreground;hitHandle=$hit.ToInt64().ToString();hitPid=$hitPid;rootHandle=$rootWindow.ToInt64().ToString();rootPid=$rootPid}|ConvertTo-Json -Compress
@@ -87,7 +94,23 @@ async function metrics(pet){const page=await desktop(pet);await page.locator('.r
 async function caseRun(id,work){try{const detail=await work();proof.checks.push({id,status:'passed-isolated-subset',detail});}catch(error){const blocked=/NATIVE_CURSOR_BLOCKED|NATIVE_INPUT_BLOCKED|OWNED_WINDOW_NOT_FOREGROUND|OWNED_PET_NOT_AT_POINT|START_OUTSIDE_OWNED_WINDOW/.test(String(error));proof.checks.push({id,status:blocked?'blocked':'failed',error:String(error)});if(blocked)mouseBlocked=true;await main?.screenshot({path:join(output,id+'-failure.png'),timeout:10000}).catch(()=>{});}finally{save();}}
 async function drag(pet,target){
  const before=await metrics(pet),page=await desktop(pet);await page.evaluate(()=>{window.__desktopInputs=[];if(!window.__desktopObserver){window.__desktopObserver=true;for(const type of ['pointerdown','pointerup'])document.addEventListener(type,event=>window.__desktopInputs.push({type:event.type,trusted:event.isTrusted,x:event.screenX,y:event.screenY}),true);}});
- const points=await app.evaluate(({BrowserWindow,screen},{url,visual,target})=>{const win=BrowserWindow.getAllWindows().find(w=>w.webContents.getURL()===url),bounds=win.getBounds();const main=BrowserWindow.getAllWindows().find(w=>w.webContents.getURL().includes('/ui/index.html'));main.show();main.focus();const offset={x:visual.x+visual.width/2,y:visual.y+visual.height*.55};return {from:screen.dipToScreenPoint({x:Math.round(bounds.x+offset.x),y:Math.round(bounds.y+offset.y)}),to:screen.dipToScreenPoint({x:Math.round(target.x+offset.x),y:Math.round(target.y+offset.y)}),bounds:screen.dipToScreenRect(win,bounds),processId:process.pid,windowHandle:(()=>{const h=win.getNativeWindowHandle();return (h.length===8?h.readBigInt64LE():BigInt(h.readInt32LE())).toString();})()};},{url:page.url(),visual:before.dom.visual,target});
+ const opaque = await page.locator('.cp-desktop-visual').evaluate(async visual => {
+   const canvas = visual.querySelector('canvas'), vr = visual.getBoundingClientRect(), cr = canvas.getBoundingClientRect();
+   const probe = document.createElement('canvas'); probe.width = canvas.width; probe.height = canvas.height;
+   const ctx = probe.getContext('2d', {willReadFrequently:true});
+   for (let frame = 0; frame < 30; frame++) {
+     await new Promise(resolve=>{requestAnimationFrame(resolve);setTimeout(resolve,100);}); ctx.clearRect(0,0,probe.width,probe.height); ctx.drawImage(canvas,0,0);
+     const pixels = ctx.getImageData(0,0,probe.width,probe.height).data;
+     for (let y = Math.floor(probe.height*.35); y < probe.height*.8; y += 3) for (let x = Math.floor(probe.width*.3); x < probe.width*.7; x += 3) {
+       if (pixels[(y*probe.width+x)*4+3] < 240) continue;
+       const point={x:cr.x+x/probe.width*cr.width,y:cr.y+y/probe.height*cr.height};
+       if(point.x>vr.x+vr.width*.15&&point.x<vr.right-vr.width*.15&&point.y>vr.y+vr.height*.08&&point.y<vr.bottom)return {...point,alpha:pixels[(y*probe.width+x)*4+3],frame};
+     }
+   }
+   throw Error('NATIVE_INPUT_BLOCKED: no readable opaque target pixel; no OS press attempted');
+ });
+ const points=await app.evaluate(({BrowserWindow,screen},{url,opaque,target})=>{const win=BrowserWindow.getAllWindows().find(w=>w.webContents.getURL()===url),bounds=win.getBounds();const main=BrowserWindow.getAllWindows().find(w=>w.webContents.getURL().includes('/ui/index.html'));main.show();main.focus();const offset={x:opaque.x,y:opaque.y};return {from:screen.dipToScreenPoint({x:Math.round(bounds.x+offset.x),y:Math.round(bounds.y+offset.y)}),to:screen.dipToScreenPoint({x:Math.round(target.x+offset.x),y:Math.round(target.y+offset.y)}),bounds:screen.dipToScreenRect(win,bounds),processId:process.pid,windowHandle:(()=>{const h=win.getNativeWindowHandle();return (h.length===8?h.readBigInt64LE():BigInt(h.readInt32LE())).toString();})()};},{url:page.url(),opaque,target});
+ proof.inputAttempts ||= []; proof.inputAttempts.push({petId:pet.petId,points,opaque,at:new Date().toISOString()});save();
  let cursor;try{cursor=JSON.parse(native({action:'drag',...points}));}finally{native({action:'release'});}
  let after;
  try{after=await poll(()=>metrics(pet),m=>m.dom.events.some(e=>e.type==='pointerup')&&Math.abs(m.saved.desktop.position.x-m.native.bounds.x)<=1&&Math.abs(m.saved.desktop.position.y-m.native.bounds.y)<=1, 'No settled pointerup/position after native drag');}

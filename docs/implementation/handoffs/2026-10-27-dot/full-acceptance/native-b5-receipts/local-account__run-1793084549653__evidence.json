@@ -1,0 +1,16 @@
+{
+  "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "compiledFingerprint": "b951a6aa7a5d04a04178645f92c0840168e3656ae5cf6f8f0e4839c0328ab48f",
+  "executableSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb",
+  "scenario": "unified-battle",
+  "scenarioRunId": "8db7ed8c-0ef6-42f5-987a-030993bcab02",
+  "scope": "Actual Windows portable + official isolated local QA scenario; simulated offline account only, no real cloud acceptance. Profile and plaintext passwords excluded from artifacts.",
+  "startedAt": "2026-10-27T07:02:29.842Z",
+  "cases": [],
+  "passed": false,
+  "error": "Error: Real portable did not open its renderer",
+  "stopError": "Error: A launch failed before owned PIDs were returned; profile retained because process exit cannot be verified",
+  "ownedPids": [],
+  "cleanupError": "Error: Owned process stop not confirmed; profile retained outside artifact directory",
+  "completedAt": "2026-10-27T07:03:43.056Z"
+}

@@ -1,0 +1,95 @@
+{
+  "at": "2026-10-27T07:01:44.307Z",
+  "scope": "Actual Electron BrowserWindow/MenuItem control with explicitly simulated deferred companion responses/session identities. No real cloud, production-menu or final portable claim.",
+  "scenario": {
+    "schemaVersion": 1,
+    "application": "lingjing",
+    "scenario": "unified-battle",
+    "runId": "eb4d6ea6-a9c4-4068-a00d-8ed312a992d5",
+    "isolated": true,
+    "profilePath": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1793084504296-eb4d6ea6",
+    "createdAt": "2026-10-27T07:01:44.297Z",
+    "env": {
+      "LINGJING_QA_SCENARIO": "unified-battle",
+      "PET_USER_DATA_DIR": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1793084504296-eb4d6ea6"
+    }
+  },
+  "helperSha256": "7316ab00e15abd6c4f22e4e26462589834e9582acde6110ec6acc299d8150d66",
+  "checks": [
+    {
+      "mode": "success",
+      "passed": true,
+      "originalWindowIds": [
+        2,
+        3
+      ],
+      "closed": [
+        "pet-a"
+      ],
+      "warnings": [],
+      "result": {
+        "ok": true,
+        "closed": [
+          "pet-a"
+        ]
+      }
+    },
+    {
+      "mode": "failure",
+      "passed": true,
+      "originalWindowIds": [
+        4,
+        5
+      ],
+      "closed": [],
+      "warnings": [
+        {
+          "name": "accounts:host-warning",
+          "value": {
+            "code": "COMPANION_RECALL_UNCONFIRMED",
+            "operation": "recall-all"
+          }
+        }
+      ],
+      "result": {
+        "ok": false,
+        "code": "COMPANION_RECALL_UNCONFIRMED"
+      }
+    },
+    {
+      "mode": "switched",
+      "passed": true,
+      "originalWindowIds": [
+        6,
+        7
+      ],
+      "closed": [],
+      "warnings": [],
+      "result": {
+        "ok": false,
+        "code": "SESSION_CHANGED"
+      }
+    },
+    {
+      "mode": "replaced",
+      "passed": true,
+      "originalWindowIds": [
+        8,
+        9
+      ],
+      "replacementId": 10,
+      "closed": [],
+      "warnings": [],
+      "result": {
+        "ok": true,
+        "closed": []
+      }
+    }
+  ],
+  "runtime": {
+    "electron": "44.9.3",
+    "node": "24.22.0"
+  },
+  "passed": true,
+  "completedAt": "2026-10-27T07:01:44.693Z"
+}

@@ -50,10 +50,10 @@ async function inspect(session, label) {
     const styles = element => { const c = getComputedStyle(element); return { font: c.fontFamily, size: c.fontSize, weight: c.fontWeight, gap: c.gap, padding: c.padding, margin: c.margin, boxShadow: c.boxShadow }; };
     return {
       viewport: { width: innerWidth, height: innerHeight }, mode: root.getAttribute('data-battle-mode'), authority: root.getAttribute('data-authority'),
-      title: { ...rect(root.querySelector('h1')), ...styles(root.querySelector('h1')) },
+      title: { ...rect(root.querySelector('h1')), ...styles(root.querySelector('h1')), text: root.querySelector('h1').textContent, display: getComputedStyle(root.querySelector('h1')).display },
       moves: [...root.querySelectorAll('.battle-move')].map(element => ({ ...rect(element), ...styles(element), text: element.textContent, disabled: element.disabled, action: element.className })),
       hud: [...root.querySelectorAll('.combatant-status')].map(rect),
-      stage: rect(root.querySelector('.battle-stage')), sidebar: rect(root.querySelector('.battle-side-panel')),
+      stage: rect(root.querySelector('.battle-stage')), currentLog: rect(root.querySelector('.battle-current-log')),
       resources: [...root.querySelectorAll('.battle-stage .resource-stage')].map(element => ({ resourceId: element.getAttribute('data-resource-id'), action: element.getAttribute('data-action'), fallback: element.getAttribute('data-fallback'), canvas: element.querySelectorAll('canvas').length })),
       portraitCount: root.querySelectorAll('.combatant-status [data-framing="portrait"]').length,
       duplicateArena: document.querySelectorAll('.discovery-arena,.discovery-combatants,.discovery-battle-actions').length,
@@ -63,7 +63,11 @@ async function inspect(session, label) {
   });
   await page.screenshot({ path: join(output, `${label}.png`) });
   check(`${label}:shared-layout-and-identity`, metrics.mode === session.mode && metrics.hud.length === 2 && metrics.portraitCount === 2 && metrics.duplicateArena === 0 && !metrics.horizontalOverflow && metrics.resources.every((resource, index) => resource.canvas === 1 && resource.fallback === 'false' && resource.resourceId === (session[index ? 'enemy' : 'player'].resource?.resourceId || session[index ? 'enemy' : 'player'].appearance2d)), metrics);
-  check(`${label}:font-and-four-cards`, metrics.title.size === '28px' && metrics.title.weight === '700' && metrics.moves.length === 4 && metrics.moves.every(move => move.bottom <= metrics.viewport.height + 1 && move.y >= 0 && move.width >= 70 && move.boxShadow === 'none') && Math.max(...metrics.moves.map(move => move.width)) - Math.min(...metrics.moves.map(move => move.width)) < 1, metrics.moves);
+  // V3 intentionally hides the toolbar heading, replaces the side panel with
+  // an in-arena log and uses a larger ultimate orb. Assert that actual contract
+  // rather than the retired V2 equal-card/28px-heading design.
+  const compact=metrics.viewport.width<=1100, ordinaryWidth=compact?58:64, ultimateWidth=compact?76:86;
+  check(`${label}:v3-toolbar-log-and-four-commands`, Boolean(metrics.title.text.trim()) && metrics.title.display==='none' && metrics.currentLog.width>=200 && metrics.currentLog.height>=138 && metrics.moves.length===4 && metrics.moves.every(move=>move.bottom<=metrics.viewport.height+1 && move.y>=0 && Math.abs(move.width-(move.action.split(' ').includes('ultimate')?ultimateWidth:ordinaryWidth))<1 && move.boxShadow==='none'), {title:metrics.title,log:metrics.currentLog,moves:metrics.moves});
   check(`${label}:concise-battle`, !/五行与行动说明|本机训练|电脑对手|选择本回合行动|行动结算后，|规则以.*为准/.test(metrics.text), metrics.text);
   return metrics;
 }

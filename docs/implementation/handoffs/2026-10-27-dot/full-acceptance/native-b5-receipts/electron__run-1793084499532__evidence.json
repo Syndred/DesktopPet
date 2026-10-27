@@ -1,0 +1,365 @@
+{
+  "at": "2026-10-27T07:01:39.580Z",
+  "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "scenario": {
+    "schemaVersion": 1,
+    "application": "lingjing",
+    "scenario": "unified-battle",
+    "runId": "34f0ce8e-fcf1-4cbe-83af-aecff4cd86c7",
+    "isolated": true,
+    "profilePath": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1793084499571-34f0ce8e",
+    "createdAt": "2026-10-27T07:01:39.572Z",
+    "env": {
+      "LINGJING_QA_SCENARIO": "unified-battle",
+      "PET_USER_DATA_DIR": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1793084499571-34f0ce8e"
+    }
+  },
+  "scope": "Real production Electron/native windows/tray/IPC/Pixi and request graph. Explicit isolated simulated account; no cloud-service receipt.",
+  "checks": [
+    {
+      "id": "app-entry-lazy-and-supported",
+      "requests": [
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/app-BwLr9w42.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/motion-CECw42xB.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/app-BwLr9w42.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/motion-CECw42xB.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/index-CPkmdXmF.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/tabs-phElNpsA.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/select-B3GmHrbV.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/input-DZh5e-qo.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/switch-BKrURik7.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/checkbox-C7AjbuRc.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/slider-CskG1X0P.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/hard-drive-Dnd3_k9-.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/lock-keyhole-CKSJHopN.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/dialog-DMyioOD2.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/dialog-TjzXKJb7.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/cloud-orcGhJht.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/refresh-cw-0dW_f3zK.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/cloud-check-Ddcm3-TP.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/monitor-Cn1vHvSE.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/bell-5P0CLi7P.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/desktop-policy-CBBfyBw7.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/index-D0v4IT6s.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/DesktopCompanion-DY2gzQ7I.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/CompanionPortrait-CSlqyHCO.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/ResourcePortrait-zHbn1ZVV.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/index-CZB9Gpnt.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/display-identity-C4-AnOPq.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/heart-Bya5rdf_.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/BattleMoves-D7dcM_Bi.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/mountain-r8mqbjJe.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/clock-3-zmSEi13r.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/plus-DQWLmWwe.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/info-Mn2C--Zj.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/face-slightly-smiling-p1zF2fVw.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/arrow-right-Dz9ryaXp.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/play-CrhhaCbw.js",
+        "file:///D:/a/DesktopPet/DesktopPet/apps/pc-app/dist/ui/assets/map-pin-C2dxkTPF.js"
+      ],
+      "runtime": {
+        "electron": "44.9.3",
+        "node": "24.22.0",
+        "modules": "149",
+        "napi": "10",
+        "arch": "x64",
+        "tray": {
+          "active": true,
+          "bounds": {
+            "x": 790,
+            "y": 720,
+            "width": 32,
+            "height": 48
+          }
+        }
+      }
+    },
+    {
+      "id": "lazy-navigation-and-eight-assets",
+      "resources": [
+        {
+          "id": "builtin:lingjing-yuwan-v2",
+          "kind": "spritesheet",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-xiaolan-v1",
+          "kind": "spritesheet",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-fantuan-v1",
+          "kind": "spritesheet",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-shiba-v2",
+          "kind": "spritesheet",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-hatcat-v1",
+          "kind": "spritesheet",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-xiaohu-v1",
+          "kind": "spritesheet",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-qingya-v1",
+          "kind": "spritesheet",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-yantuan-v1",
+          "kind": "spritesheet",
+          "availability": "ready"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "info": {
+    "version": "0.1.8",
+    "platform": "win32",
+    "build": {
+      "schemaVersion": 2,
+      "builtAt": "2026-10-27T06:57:32.422Z",
+      "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+      "sourceTree": "1d93a91290fb6b76d3a33fd0b8240b97c9e9dc5a",
+      "sourceDirtyFiles": [],
+      "codeFingerprint": "65814abce471926df505ca29fe0861625609a2db08f742a81f30c4dcd67144e0",
+      "canonicalSourceFingerprint": "de4c0a3ae85cb47ece59bc35bf560360e60ff37e40d4a36c3456a0f6ba63739d",
+      "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+      "compiledFingerprint": "b951a6aa7a5d04a04178645f92c0840168e3656ae5cf6f8f0e4839c0328ab48f",
+      "codeFiles": 329,
+      "compiledFiles": 90,
+      "toolchain": {
+        "node": "24.22.1",
+        "electron": "44.9.3",
+        "sqlite": "13.0.3",
+        "vite": "7.3.7",
+        "typescript": "5.9.3",
+        "platform": "win32",
+        "arch": "x64"
+      },
+      "entrypoints": {
+        "main": "main/index.cjs",
+        "app": "ui/index.html",
+        "desktop": "ui/desktop.html",
+        "preload": "preload/index.cjs"
+      },
+      "publicCloud": {
+        "projectRef": "jbvrdmrkwpznbrvteive",
+        "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+        "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+        "resourcePath": "lingjing-cloud-public.json"
+      },
+      "packageName": "lingjing-desktop",
+      "runtimeClosure": {
+        "manifest": "runtime-closure.json",
+        "files": 125,
+        "edges": 219,
+        "sha256": "dc3bc4b004b8b4bb502480f21cf196531654a03b059acbc981fc9c6816f6ebd3"
+      }
+    },
+    "support": {
+      "packaged": false,
+      "executablePath": null,
+      "logsPath": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1793084499571-34f0ce8e\\logs",
+      "logsAvailable": true,
+      "automaticUpdates": false
+    },
+    "runtime": {
+      "electron": "44.9.3",
+      "node": "24.22.0",
+      "modules": "149",
+      "napi": "10",
+      "arch": "x64",
+      "tray": {
+        "active": true,
+        "bounds": {
+          "x": 790,
+          "y": 720,
+          "width": 32,
+          "height": 48
+        }
+      }
+    },
+    "features": [
+      {
+        "id": "accounts",
+        "commands": [
+          "session",
+          "login",
+          "register",
+          "logout",
+          "profileSave",
+          "passwordChange",
+          "settingsGet",
+          "settingsDefaults",
+          "settingsSave",
+          "backupList",
+          "backupExport",
+          "backupPreview",
+          "backupRestore",
+          "syncStatus",
+          "preservedRecords",
+          "resolvePreservedRecord",
+          "syncNow",
+          "syncRetry",
+          "cloudPreview",
+          "testNotification",
+          "pointer"
+        ]
+      },
+      {
+        "id": "resources",
+        "commands": [
+          "list",
+          "history",
+          "cloudStatus",
+          "cloudSync",
+          "cloudPull",
+          "resolve",
+          "save",
+          "import"
+        ]
+      },
+      {
+        "id": "companions",
+        "commands": [
+          "list",
+          "get",
+          "combatProfile",
+          "identity",
+          "desktopInput",
+          "adopt",
+          "rename",
+          "desktop",
+          "select",
+          "interact",
+          "perform",
+          "appearance"
+        ]
+      },
+      {
+        "id": "battle",
+        "commands": [
+          "overview",
+          "rules",
+          "context",
+          "settleContext",
+          "selectPet",
+          "startTraining",
+          "snapshot",
+          "act",
+          "retryAction",
+          "search",
+          "invitations",
+          "pendingInvitations",
+          "invite",
+          "respondInvite",
+          "cancelInvite",
+          "createRoom",
+          "joinRoom",
+          "sync",
+          "leave",
+          "listReports",
+          "getReport",
+          "retrySettlement",
+          "qaPreset"
+        ]
+      },
+      {
+        "id": "garden",
+        "commands": [
+          "plant",
+          "harvest",
+          "craft",
+          "feed",
+          "garrison",
+          "snapshot",
+          "territoryLocate",
+          "territoryChallenge",
+          "territorySettle"
+        ]
+      },
+      {
+        "id": "discovery",
+        "commands": [
+          "snapshot",
+          "setExploring",
+          "locate",
+          "watch",
+          "stopWatch",
+          "setDemo",
+          "setProvider",
+          "tile",
+          "qaTarget",
+          "observe",
+          "begin",
+          "act",
+          "cancel",
+          "confirm",
+          "pokedex",
+          "memories"
+        ]
+      },
+      {
+        "id": "conversations",
+        "commands": [
+          "snapshot",
+          "select",
+          "history",
+          "profile.save",
+          "connection.save",
+          "connection.test",
+          "connection.cancel",
+          "memory.save",
+          "memory.delete",
+          "send",
+          "retry",
+          "cancel",
+          "history.clear",
+          "legacy.preview",
+          "legacy.import"
+        ]
+      }
+    ],
+    "user": {
+      "id": "qa:34f0ce8e-fcf1-4cbe-83af-aecff4cd86c7:local-c99e20fc-a030-45b2-a98d-338f1a6618de",
+      "subjectId": "qa:34f0ce8e-fcf1-4cbe-83af-aecff4cd86c7:local-c99e20fc-a030-45b2-a98d-338f1a6618de",
+      "ownerAccountId": "qa:34f0ce8e-fcf1-4cbe-83af-aecff4cd86c7:local-c99e20fc-a030-45b2-a98d-338f1a6618de",
+      "provider": "local",
+      "account": "qa_engine_1793084500156",
+      "username": "公共工程验收",
+      "revision": 0,
+      "createdAt": "2026-10-27T07:01:40.165Z",
+      "updatedAt": "2026-10-27T07:01:40.165Z",
+      "dataMode": "simulated"
+    },
+    "scenario": {
+      "id": "unified-battle",
+      "runId": "34f0ce8e-fcf1-4cbe-83af-aecff4cd86c7",
+      "provenance": "simulated",
+      "isolated": true
+    }
+  },
+  "failure": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert.ok(native.visibleWindow && native.alwaysOnTop && !native.resizable && !native.focusable)\n",
+  "passed": false,
+  "status": "failed",
+  "stages": [
+    {
+      "at": "2026-10-27T07:01:43.605Z",
+      "name": "owned-app-close-start"
+    },
+    {
+      "at": "2026-10-27T07:01:43.736Z",
+      "name": "owned-app-close-complete"
+    }
+  ],
+  "completedAt": "2026-10-27T07:01:43.736Z"
+}

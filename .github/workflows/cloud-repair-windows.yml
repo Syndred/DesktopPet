@@ -33,7 +33,9 @@ concurrency:
 jobs:
   focused-windows:
     # Deliberately not a release, deployment, real-account test or the old 98-case batch.
-    if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
+    # Test-only continuation commits use the immutable-package workflow; its guard
+    # rejects any product/dependency/build change before reusing prior results.
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence' && !contains(github.event.head_commit.message, '[native-only]')
     runs-on: windows-latest
     timeout-minutes: 55
     steps:
@@ -202,7 +204,9 @@ jobs:
             artifacts/foundation/cloud-engineering/loggedout-windows/run-*/independent-profile/ordinary-config/evidence.json
 
   isolated-cloud-source:
-    if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
+    # Test-only continuation commits use the immutable-package workflow; its guard
+    # rejects any product/dependency/build change before reusing prior results.
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence' && !contains(github.event.head_commit.message, '[native-only]')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:

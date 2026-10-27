@@ -1,0 +1,255 @@
+{
+  "scope": "Actual Windows SFX signed-out UI only; no account creation/login, QA grant, production write or simulated component.",
+  "cases": [
+    {
+      "id": "A02",
+      "coverage": "exact original signed-out steps",
+      "status": "passed",
+      "startedAt": "2026-10-27T07:01:29.663Z",
+      "geometry": [
+        {
+          "text": "记住账号",
+          "checkbox": 500.6875,
+          "label": 500.6875
+        },
+        {
+          "text": "保持登录",
+          "checkbox": 532.6875,
+          "label": 532.6875
+        }
+      ],
+      "lockAlignment": {
+        "label": 532.6875,
+        "icon": 532.6875
+      },
+      "secureStorageAvailable": true,
+      "keyboardReachedLock": true,
+      "tooltip": "在这台电脑上保持登录，密码不会保存在页面中。",
+      "focus": {
+        "outline": "solid",
+        "boxShadow": "none"
+      },
+      "screenshot": "signed-out-A02-focus-lock.png",
+      "visualFocusHumanReviewRequired": true,
+      "completedAt": "2026-10-27T07:01:29.904Z"
+    },
+    {
+      "id": "A07",
+      "coverage": "password visibility and keyboard traversal; Enter uses empty-form validation, not authenticated submission",
+      "status": "passed",
+      "startedAt": "2026-10-27T07:01:29.904Z",
+      "order": [
+        {
+          "tag": "INPUT",
+          "role": null,
+          "label": null,
+          "autocomplete": "username",
+          "text": ""
+        },
+        {
+          "tag": "INPUT",
+          "role": null,
+          "label": "密码",
+          "autocomplete": "current-password",
+          "text": ""
+        },
+        {
+          "tag": "BUTTON",
+          "role": null,
+          "label": "显示密码",
+          "autocomplete": null,
+          "text": ""
+        },
+        {
+          "tag": "BUTTON",
+          "role": "checkbox",
+          "label": "记住账号",
+          "autocomplete": null,
+          "text": ""
+        },
+        {
+          "tag": "BUTTON",
+          "role": "checkbox",
+          "label": "保持登录",
+          "autocomplete": null,
+          "text": ""
+        },
+        {
+          "tag": "SPAN",
+          "role": null,
+          "label": "登录保护",
+          "autocomplete": null,
+          "text": ""
+        },
+        {
+          "tag": "BUTTON",
+          "role": null,
+          "label": null,
+          "autocomplete": null,
+          "text": "登录进入 →"
+        },
+        {
+          "tag": "A",
+          "role": null,
+          "label": null,
+          "autocomplete": null,
+          "text": "关于与诊断"
+        }
+      ],
+      "reverse": [
+        {
+          "role": null,
+          "label": null,
+          "autocomplete": null,
+          "text": "登录进入 →"
+        },
+        {
+          "role": null,
+          "label": "登录保护",
+          "autocomplete": null,
+          "text": ""
+        },
+        {
+          "role": "checkbox",
+          "label": "保持登录",
+          "autocomplete": null,
+          "text": ""
+        },
+        {
+          "role": "checkbox",
+          "label": "记住账号",
+          "autocomplete": null,
+          "text": ""
+        },
+        {
+          "role": null,
+          "label": "显示密码",
+          "autocomplete": null,
+          "text": ""
+        },
+        {
+          "role": null,
+          "label": "密码",
+          "autocomplete": "current-password",
+          "text": ""
+        },
+        {
+          "role": null,
+          "label": null,
+          "autocomplete": "username",
+          "text": ""
+        },
+        {
+          "role": "combobox",
+          "label": "账号类型",
+          "autocomplete": null,
+          "text": "云端账号"
+        }
+      ],
+      "passwordValuePreserved": true,
+      "enterPreventedByConstraint": true,
+      "screenshot": "signed-out-A07-empty-enter.png",
+      "successfulLoginNotTested": true,
+      "completedAt": "2026-10-27T07:01:30.411Z"
+    },
+    {
+      "id": "A03",
+      "coverage": "partial: empty login only; invalid account/wrong password require authorized Auth test",
+      "status": "passed",
+      "startedAt": "2026-10-27T07:01:30.411Z",
+      "invalid": {
+        "missing": true,
+        "message": "Please fill out this field."
+      },
+      "screenshot": "signed-out-A03-empty.png",
+      "completedAt": "2026-10-27T07:01:30.609Z"
+    },
+    {
+      "id": "A04",
+      "coverage": "partial: short account and mismatched passwords; duplicate account deliberately not submitted",
+      "status": "passed",
+      "startedAt": "2026-10-27T07:01:30.609Z",
+      "short": {
+        "tooShort": true,
+        "message": "Please lengthen this text to 3 characters or more (you are currently using 2 characters)."
+      },
+      "confirmationRejectedBeforeAuth": true,
+      "screenshot": "signed-out-A04-mismatch.png",
+      "completedAt": "2026-10-27T07:01:30.999Z"
+    },
+    {
+      "id": "N02",
+      "coverage": "partial: actual native window bounds/maximize/restore while logged out; not OS mouse edge drag or authenticated dialogs",
+      "status": "passed",
+      "startedAt": "2026-10-27T07:01:31.000Z",
+      "controller": "owned Electron main BrowserWindow",
+      "initial": {
+        "windowId": 1,
+        "bounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 720
+        },
+        "maximized": false,
+        "minimumSize": [
+          960,
+          700
+        ]
+      },
+      "minimum": {
+        "windowId": 1,
+        "bounds": {
+          "x": 0,
+          "y": 0,
+          "width": 960,
+          "height": 700
+        },
+        "maximized": false,
+        "minimumSize": [
+          960,
+          700
+        ]
+      },
+      "maximized": {
+        "windowId": 1,
+        "bounds": {
+          "x": -8,
+          "y": -8,
+          "width": 1040,
+          "height": 736
+        },
+        "maximized": true,
+        "minimumSize": [
+          960,
+          700
+        ]
+      },
+      "restored": {
+        "windowId": 1,
+        "bounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 720
+        },
+        "maximized": false,
+        "minimumSize": [
+          960,
+          700
+        ]
+      },
+      "screenshot": "signed-out-N02-minimum.png",
+      "mouseEdgeDragVerified": false,
+      "authenticatedDialogsVerified": false,
+      "completedAt": "2026-10-27T07:01:31.170Z"
+    }
+  ],
+  "validAuthenticationSubmissions": 0,
+  "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "compiledFingerprint": "b951a6aa7a5d04a04178645f92c0840168e3656ae5cf6f8f0e4839c0328ab48f",
+  "executablePath": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+  "noSessionCreated": true,
+  "passed": true,
+  "completedAt": "2026-10-27T07:01:31.174Z"
+}

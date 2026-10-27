@@ -1,0 +1,57 @@
+{
+  "startedAt": "2026-10-27T07:02:28.749Z",
+  "scope": "Isolated offline QA / actual Electron UI and Pixi. Not live-cloud or Windows-portable acceptance.",
+  "candidate": {
+    "schemaVersion": 2,
+    "builtAt": "2026-10-27T06:57:32.422Z",
+    "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+    "sourceTree": "1d93a91290fb6b76d3a33fd0b8240b97c9e9dc5a",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "65814abce471926df505ca29fe0861625609a2db08f742a81f30c4dcd67144e0",
+    "canonicalSourceFingerprint": "de4c0a3ae85cb47ece59bc35bf560360e60ff37e40d4a36c3456a0f6ba63739d",
+    "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+    "compiledFingerprint": "b951a6aa7a5d04a04178645f92c0840168e3656ae5cf6f8f0e4839c0328ab48f",
+    "codeFiles": 329,
+    "compiledFiles": 90,
+    "toolchain": {
+      "node": "24.22.1",
+      "electron": "44.9.3",
+      "sqlite": "13.0.3",
+      "vite": "7.3.7",
+      "typescript": "5.9.3",
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "entrypoints": {
+      "main": "main/index.cjs",
+      "app": "ui/index.html",
+      "desktop": "ui/desktop.html",
+      "preload": "preload/index.cjs"
+    },
+    "publicCloud": {
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "resourcePath": "lingjing-cloud-public.json"
+    },
+    "packageName": "lingjing-desktop",
+    "runtimeClosure": {
+      "manifest": "runtime-closure.json",
+      "files": 125,
+      "edges": 219,
+      "sha256": "dc3bc4b004b8b4bb502480f21cf196531654a03b059acbc981fc9c6816f6ebd3"
+    }
+  },
+  "profile": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\lingjing-offline-resources-9JVYLT\\qa-profile",
+  "runId": "ac43f8d6-6e5b-4310-ab7d-da38a6d385f0",
+  "cases": [],
+  "errors": [],
+  "nativeFilePickerExercised": false,
+  "productionWrites": false,
+  "passed": false,
+  "failure": {
+    "message": "electronApplication.firstWindow: Target page, context or browser has been closed",
+    "stack": "electronApplication.firstWindow: Target page, context or browser has been closed\n    at D:\\a\\DesktopPet\\DesktopPet\\scripts\\acceptance\\full-acceptance-resources.mjs:91:20"
+  },
+  "completedAt": "2026-10-27T07:02:29.110Z"
+}

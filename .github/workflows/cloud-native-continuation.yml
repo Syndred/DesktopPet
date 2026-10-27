@@ -1,0 +1,172 @@
+name: DesktopPet audited-package native continuation
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/cloud-authority-convergence']
+    paths:
+      - '.github/workflows/cloud-native-continuation.yml'
+      - 'scripts/acceptance/verify-portable-reuse.mjs'
+      - 'scripts/acceptance/cloud-qa-preflight.mjs'
+      - 'scripts/acceptance/cloud-backup-ui-acceptance.mjs'
+      - 'scripts/acceptance/cloud-companion-economy-acceptance.mjs'
+      - 'scripts/acceptance/portable-session.mjs'
+      - 'scripts/acceptance/cloud-loggedout-window-smoke.mjs'
+      - 'scripts/acceptance/full-acceptance-resources.mjs'
+      - 'scripts/acceptance/full-acceptance-local-account.mjs'
+      - 'scripts/acceptance/full-acceptance-navigation.mjs'
+      - 'scripts/acceptance/full-acceptance-desktop.mjs'
+      - 'scripts/acceptance/engineering-electron.mjs'
+      - 'scripts/acceptance/battle-independent.mjs'
+      - 'scripts/acceptance/context-independent.mjs'
+
+permissions:
+  contents: read
+  actions: read
+
+# Preserve a natural 25-minute crop run instead of restarting its elapsed timer.
+concurrency:
+  group: native-continuation-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
+    runs-on: windows-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v8.0.2
+        with:
+          name: desktoppet-focused-windows-b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d
+          run-id: 40463514290
+          github-token: ${{ github.token }}
+          path: artifacts/qa/native-baseline
+      - run: node scripts/acceptance/verify-portable-reuse.mjs --source=b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d
+      - name: Prove real renderer and unchanged QA identity gate before starting long flows
+        timeout-minutes: 3
+        run: node scripts/acceptance/cloud-qa-preflight.mjs --source=b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d
+      - if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: desktoppet-native-preflight-${{ github.sha }}
+          retention-days: 14
+          path: |
+            artifacts/qa/native-continuation/package-reuse.json
+            artifacts/qa/native-continuation/qa-preflight.json
+
+  native:
+    needs: preflight
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
+    runs-on: windows-latest
+    timeout-minutes: 50
+    strategy:
+      fail-fast: false
+      matrix:
+        flow: [companion-economy, backup-ui, accounts-navigation, resources, lifecycle, desktop-engineering, battle-context]
+    env:
+      PACKAGE_SOURCE: b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - name: Isolated test dependencies, no build or deployment
+        run: npm ci
+      - name: Download this repository's exact audited package artifact
+        uses: actions/download-artifact@v8.0.2
+        with:
+          name: desktoppet-focused-windows-b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d
+          run-id: 40463514290
+          github-token: ${{ github.token }}
+          path: artifacts/qa/native-baseline
+      - name: Bind unchanged product source, manifest, ASAR audit and exact SFX hash
+        id: reuse
+        run: node scripts/acceptance/verify-portable-reuse.mjs --source=$env:PACKAGE_SOURCE
+      - name: Native local companions and natural crop maturity, never clock injection
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'companion-economy' }}
+        timeout-minutes: 38
+        run: node scripts/acceptance/cloud-companion-economy-acceptance.mjs --source=$env:PACKAGE_SOURCE --wait-harvest
+      - name: Native backup controls with explicitly partial one-shot file-dialog bridge
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'backup-ui' }}
+        timeout-minutes: 10
+        run: node scripts/acceptance/cloud-backup-ui-acceptance.mjs --source=$env:PACKAGE_SOURCE
+      - name: Local account lifecycle in audited SFX
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'accounts-navigation' }}
+        timeout-minutes: 8
+        run: node scripts/acceptance/full-acceptance-local-account.mjs
+      - name: Navigation and detail selection in same audited SFX, separate fixture
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'accounts-navigation' }}
+        timeout-minutes: 8
+        run: node scripts/acceptance/full-acceptance-navigation.mjs
+      - name: Resource UI and Pixi in audited SFX
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'resources' }}
+        timeout-minutes: 8
+        run: node scripts/acceptance/full-acceptance-resources.mjs
+      - name: Actual signed-out native window hide and profile isolation
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'lifecycle' }}
+        timeout-minutes: 8
+        run: node scripts/acceptance/cloud-loggedout-window-smoke.mjs
+      - name: Compile unchanged product source only for existing dev-Electron engineering harnesses
+        id: engineeringbuild
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && (matrix.flow == 'desktop-engineering' || matrix.flow == 'battle-context') }}
+        timeout-minutes: 8
+        run: npm run build:pc
+      - name: Native window contracts and strict captured pixels
+        if: ${{ !cancelled() && steps.engineeringbuild.outcome == 'success' && matrix.flow == 'desktop-engineering' }}
+        timeout-minutes: 8
+        run: npm run pc:smoke:engineering
+      - name: Exact-owned-pet physical input and independent desktop controls
+        if: ${{ !cancelled() && steps.engineeringbuild.outcome == 'success' && matrix.flow == 'desktop-engineering' }}
+        timeout-minutes: 8
+        run: node scripts/acceptance/full-acceptance-desktop.mjs
+      - name: Explicit offline charged battle rendering and controls
+        if: ${{ !cancelled() && steps.engineeringbuild.outcome == 'success' && matrix.flow == 'battle-context' }}
+        timeout-minutes: 8
+        run: node scripts/acceptance/battle-independent.mjs . artifacts/foundation/cloud-engineering/full-battle/run-current
+      - name: Explicit offline simulated capture and territory, no GPS or cloud claim
+        if: ${{ !cancelled() && steps.engineeringbuild.outcome == 'success' && matrix.flow == 'battle-context' }}
+        timeout-minutes: 8
+        run: node scripts/acceptance/context-independent.mjs . artifacts/foundation/cloud-engineering/full-context/run-current
+      - name: Retain only new bounded proof, never local profiles or backup contents
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: desktoppet-native-${{ matrix.flow }}-${{ github.sha }}
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            artifacts/qa/native-continuation/package-reuse.json
+            artifacts/foundation/cloud-engineering/companionEconomy/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/companionEconomy/run-*/*.png
+            artifacts/foundation/cloud-engineering/backup/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/backup/run-*/*.png
+            artifacts/foundation/cloud-engineering/local-account/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/local-account/run-*/*.png
+            artifacts/foundation/cloud-engineering/navigation/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/navigation/run-*/*.png
+            artifacts/foundation/full-acceptance/resources/run-*/evidence.json
+            artifacts/foundation/full-acceptance/resources/run-*/*.png
+            artifacts/foundation/cloud-engineering/loggedout-windows/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/loggedout-windows/run-*/ordinary-config/evidence.json
+            artifacts/foundation/cloud-engineering/loggedout-windows/run-*/independent-profile/ordinary-config/evidence.json
+            artifacts/foundation/cloud-engineering/electron/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/electron/run-*/*.png
+            artifacts/foundation/cloud-engineering/desktop-subset/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/desktop-subset/run-*/*-failure.png
+            artifacts/foundation/cloud-engineering/full-battle/run-current/evidence.json
+            artifacts/foundation/cloud-engineering/full-battle/run-current/*.png
+            artifacts/foundation/cloud-engineering/full-context/run-current/evidence.json
+            artifacts/foundation/cloud-engineering/full-context/run-current/*.png

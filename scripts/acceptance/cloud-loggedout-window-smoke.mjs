@@ -6,6 +6,7 @@ import { resolve, join } from 'node:path';
 import { createRequire } from 'node:module';
 import assert from 'node:assert/strict';
 import { verifyPortableDefaultConfig } from './portable-config-smoke.mjs';
+import { pollState } from './poll-state.mjs';
 const require=createRequire(import.meta.url), config=JSON.parse(readFileSync('scripts/release/electron-builder.pc.json'));
 const version=JSON.parse(readFileSync('package.json')).version, build=JSON.parse(readFileSync('apps/pc-app/dist/build-manifest.json'));
 const executable=resolve(config.directories.output,`Lingjing-${version}-portable-x64.exe`);
@@ -15,16 +16,19 @@ const cleanEnv=profile=>{const env={...process.env,PET_USER_DATA_DIR:profile};fo
 const currentSession=async page=>{const result=await page.evaluate(()=>window.lingjing.invoke('accounts','session',{}));assert.equal(result.ok,true);assert.equal(result.data.currentUser,null);assert.equal(result.data.scenario,null);return result.data;};
 let duplicate;
 try {
- proof.primary=await verifyPortableDefaultConfig({executable,expectedSource:build.sourceCommit,output,inspect:async({page,info,profile})=>{
+ proof.primary=await verifyPortableDefaultConfig({executable,expectedSource:build.sourceCommit,output,inspect:async({page,main,info,profile})=>{
   await currentSession(page);assert.equal(info.runtime.tray.active,true);
+  const targetUrl=page.url();
+  const native=()=>main(({BrowserWindow},targetUrl)=>{const matches=BrowserWindow.getAllWindows().filter(win=>win.webContents.getURL()===targetUrl);if(matches.length!==1)throw Error('Expected one exact owned main window');const win=matches[0];return {id:win.id,visible:win.isVisible(),destroyed:win.isDestroyed(),minimized:win.isMinimized()};},targetUrl);
+  const before=await native();assert.equal(before.visible,true);
   await page.getByRole('button',{name:'收起到托盘',exact:true}).click();
-  await page.waitForFunction(()=>document.visibilityState==='hidden');assert.equal(page.isClosed(),false);
-  proof.checks.push({id:'N04-hide-to-tray',passed:true,physicalTrayClick:false});
+  const hidden=await pollState(native,row=>!row.visible&&!row.destroyed,{timeoutMs:5000,label:'Actual owned main window did not hide to tray'});assert.equal(page.isClosed(),false);
+  proof.checks.push({id:'N04-hide-to-tray',passed:true,before,hidden,rendererVisibility:await page.evaluate(()=>document.visibilityState),physicalTrayClick:false});
   duplicate=spawn(executable,[],{env:cleanEnv(profile),windowsHide:true,stdio:'ignore'});
   const exit=await new Promise((resolveExit,reject)=>{const timer=setTimeout(()=>reject(Error('Duplicate portable process did not exit within 20 seconds')),20000);duplicate.once('error',error=>{clearTimeout(timer);reject(error);});duplicate.once('exit',(code,signal)=>{clearTimeout(timer);resolveExit({code,signal});});});
-  assert.equal(exit.code,0);await page.waitForFunction(()=>document.visibilityState==='visible');
+  assert.equal(exit.code,0);const recalled=await pollState(native,row=>row.visible&&!row.destroyed&&row.id===before.id,{timeoutMs:5000,label:'Same-profile secondary process did not recall original native window'});
   assert.equal(page.context().pages().filter(p=>p.url().includes('/ui/index.html')).length,1);await currentSession(page);
-  proof.checks.push({id:'N05-same-profile-secondary-exit-and-primary-recall',passed:true,exit,mainWindows:1,existingPetWindowCoverage:false});
+  proof.checks.push({id:'N05-same-profile-secondary-exit-and-primary-recall',passed:true,exit,recalled,mainWindows:1,existingPetWindowCoverage:false});
   const secondaryRoot=join(output,'independent-profile');mkdirSync(secondaryRoot);
   proof.independent=await verifyPortableDefaultConfig({executable,expectedSource:build.sourceCommit,output:secondaryRoot,inspect:async({page:second,profile:secondProfile})=>{
    assert.notEqual(secondProfile,profile);assert.notEqual(second.context().browser(),page.context().browser());

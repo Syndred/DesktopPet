@@ -1,0 +1,59 @@
+{
+  "scope": "P09 partial: actual original host startup controller writes and removes app-owned HKCU startup entry, stable packaged SFX path. No UI account login or reboot.",
+  "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "controllerSha256": "ac28b6e3a5a28866f844e0bf8de75c75c66df487f09abfba12e0156a6cc40892",
+  "name": "com.lingjing.desktop",
+  "keys": [
+    "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+    "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\StartupApproved\\Run"
+  ],
+  "executable": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+  "startedAt": "2026-10-27T07:02:25.753Z",
+  "before": [
+    {
+      "key": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+      "value": null
+    },
+    {
+      "key": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\StartupApproved\\Run",
+      "value": null
+    }
+  ],
+  "target": {
+    "path": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+    "args": []
+  },
+  "enabled": {
+    "launchItems": [
+      {
+        "name": "com.lingjing.desktop",
+        "path": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+        "args": [],
+        "scope": "user",
+        "enabled": true
+      }
+    ],
+    "executableWillLaunchAtLogin": true,
+    "openAtLogin": true,
+    "wasOpenedAtLogin": false
+  },
+  "registration": {
+    "command": "\"D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe\"",
+    "stableOuterExecutable": true
+  },
+  "controllerDisabled": true,
+  "after": [
+    {
+      "key": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+      "value": null
+    },
+    {
+      "key": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\StartupApproved\\Run",
+      "value": null
+    }
+  ],
+  "registryRestored": true,
+  "cleanupErrors": [],
+  "passed": true,
+  "completedAt": "2026-10-27T07:02:28.208Z"
+}

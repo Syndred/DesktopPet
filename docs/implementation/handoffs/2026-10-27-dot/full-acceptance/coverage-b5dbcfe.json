@@ -1,0 +1,1144 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-10-27T07:16:24Z",
+  "productCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "harnessRun": 40463514290,
+  "exeSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb",
+  "rule": "Full current native, affected-path verified reuse, partial, blocked and not-run are distinct. No blanket inheritance of historical 39 passed, no all-98 claim. Original freeze is unchanged.",
+  "counts": {
+    "blocked_current_native": 2,
+    "not_executed_current_native": 77,
+    "partial_current_native": 12,
+    "passed_current_native": 4,
+    "reused_verified": 3
+  },
+  "artifact": {
+    "id": 12715524288,
+    "sha256": "4f6bf318239a74a4ddd4636ae55550aaed54b0013aac35abcb2f674c0041be74",
+    "bytes": 176218012,
+    "downloadHashIndependentlyVerified": true,
+    "url": "https://github.com/Syndred/DesktopPet/actions/runs/40463514290/artifacts/12715524288"
+  },
+  "receipts": [
+    {
+      "path": "native-b5-receipts/desktop-subset__run-1793084695783__evidence.json",
+      "sha256": "11f926b658798e56bff5ac7a4aa657bece16d775b25a00469441ecd1f7bb9789"
+    },
+    {
+      "path": "native-b5-receipts/focused-portable__run-1793084473873__ordinary-config__evidence.json",
+      "sha256": "96ce9473a137bd19a778d913306595de3f4f9a95873c97a62f88b684fd437b03"
+    },
+    {
+      "path": "native-b5-receipts/full-battle__run-current__evidence.json",
+      "sha256": "6e87a138dac7124ff43e330c035563914107855b6a2464282ea95a4c9c90f73b"
+    },
+    {
+      "path": "native-b5-receipts/local-account__run-1793084549653__evidence.json",
+      "sha256": "a924e94274c8f2cff8945dd33275f572ca1b924029bb577544200d97747f17bd"
+    },
+    {
+      "path": "native-b5-receipts/focused-portable__run-1793084473873__evidence.json",
+      "sha256": "b71d6fb176090715ebeac769ad2b0beafebb9b686f999e365432f6a0b6700c86"
+    },
+    {
+      "path": "native-b5-receipts/full-context__run-current__evidence.json",
+      "sha256": "ee4ff35d716b946e985441f2a6689ddad9923c570ec2c1764a1943b8f9261df6"
+    },
+    {
+      "path": "native-b5-receipts/electron__run-1793084499532__evidence.json",
+      "sha256": "998815a8d6d45f6507314973871d19b7ddec16cd6f4292c7bbbf0280c948d5c0"
+    },
+    {
+      "path": "native-b5-receipts/loggedout-windows__run-1793084505232__ordinary-config__evidence.json",
+      "sha256": "cfd070ff6ab3f60086c2200f398eba64bf8f562fd1a977ac524af2f028ad6aed"
+    },
+    {
+      "path": "native-b5-receipts/startup-registration__run-1793084545752__evidence.json",
+      "sha256": "12876acf321bf16dfeb73c83960c3d227c876d2b841002de9befd0be12c4b13a"
+    },
+    {
+      "path": "native-b5-receipts/tray-native__run-1793084504257__evidence.json",
+      "sha256": "643f49bb76ac9ac8155ff664b53ff280d3735144b476e9567c3b0cfabbb0b17e"
+    },
+    {
+      "path": "native-b5-receipts/loggedout-windows__run-1793084505232__evidence.json",
+      "sha256": "00e08f1ba05907de3bd5f5456af9623a3f37eeab83c4cb5c949111c7d8c3de66"
+    },
+    {
+      "path": "native-b5-receipts/artifacts__foundation__full-acceptance__resources__run-1793084548745-6587e8d1__evidence.json",
+      "sha256": "2d2f7dcd9427766b0c8fb632f3a965b796a91f133bb3a09a702fe94d352ca09d"
+    },
+    {
+      "path": "native-b5-receipts/focused-portable__run-1793084473873__signed-out-evidence.json",
+      "sha256": "9c9cdea72a0572292c0183dc8d3061a4e07694d2be7bf85c532d57bcbac31394"
+    },
+    {
+      "path": "native-b5-receipts/navigation__run-1793084623607__evidence.json",
+      "sha256": "b0eb98ae062e7cc6243f40074e87f8a526ac6e75d1a741f71a6ec947be03d738"
+    }
+  ],
+  "cases": [
+    {
+      "id": "A01",
+      "title": "首次冷启动",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "A01"
+      },
+      "status": "passed_current_native",
+      "remainingPrerequisite": "none",
+      "observed": "Actual fresh SFX, illustration/login/version manifest visible; no ordinary user profile read",
+      "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+      "exeSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb"
+    },
+    {
+      "id": "A02",
+      "title": "登录保持行对齐 QA-001",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "A02"
+      },
+      "status": "passed_current_native",
+      "remainingPrerequisite": "cloud Windows isolated desktop; only public/unauthenticated substeps executable",
+      "observed": "Actual checkbox/lock alignment and keyboard focus/tooltip",
+      "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+      "exeSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb"
+    },
+    {
+      "id": "A03",
+      "title": "空值与错误登录",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "A03"
+      },
+      "status": "partial_current_native",
+      "remainingPrerequisite": "cloud Windows isolated desktop; only public/unauthenticated substeps executable",
+      "observed": "Empty-login native validation only; wrong/nonexistent login remains",
+      "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d"
+    },
+    {
+      "id": "A04",
+      "title": "注册校验",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "A04"
+      },
+      "status": "partial_current_native",
+      "remainingPrerequisite": "cloud Windows isolated desktop; only public/unauthenticated substeps executable",
+      "observed": "Short account and mismatch only; duplicate account remains",
+      "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d"
+    },
+    {
+      "id": "A05",
+      "title": "合成QA本地注册",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "A05"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "A06",
+      "title": "云端合成账号注册登录",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "A06"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized dedicated real cloud account(s), app-level sessions and bounded data/network mutation; no admin-auth bypass"
+    },
+    {
+      "id": "A07",
+      "title": "显隐密码与键盘顺序",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "A07"
+      },
+      "status": "passed_current_native",
+      "remainingPrerequisite": "cloud Windows isolated desktop; only public/unauthenticated substeps executable",
+      "observed": "Password eyes plus complete forward/reverse keyboard traversal and empty-form Enter guard",
+      "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+      "exeSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb"
+    },
+    {
+      "id": "A08",
+      "title": "记住账号",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "A08"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "A09",
+      "title": "保持登录重启",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "A09"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized dedicated real cloud account(s), app-level sessions and bounded data/network mutation; no admin-auth bypass"
+    },
+    {
+      "id": "A10",
+      "title": "未保持登录重启",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "A10"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "A11",
+      "title": "账号切换隔离",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "A11"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "A12",
+      "title": "退出与失效会话",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "A12"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized dedicated real cloud account(s), app-level sessions and bounded data/network mutation; no admin-auth bypass"
+    },
+    {
+      "id": "N01",
+      "title": "所有主导航入口",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "N01"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "N02",
+      "title": "最小尺寸与最大化",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "N02"
+      },
+      "status": "partial_current_native",
+      "remainingPrerequisite": "cloud Windows isolated desktop; only public/unauthenticated substeps executable",
+      "observed": "Actual native bounds/maximize/restore; mouse-edge and authenticated dialogs remain",
+      "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d"
+    },
+    {
+      "id": "N03",
+      "title": "窗口连续缩放与滚动",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "N03"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "N04",
+      "title": "关闭到托盘与恢复",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "N04"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "cloud Windows isolated desktop; only public/unauthenticated substeps executable"
+    },
+    {
+      "id": "C01",
+      "title": "属性图标分类 QA-002",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "C01"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "C02",
+      "title": "同模板连续领养",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "C02"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "C03",
+      "title": "固定角色名和唯一编号 QA-003",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "C03"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Explicit valid application QA global-serial grant and authorized dedicated identities; expired grant cannot be revived"
+    },
+    {
+      "id": "C04",
+      "title": "五行筛选与拥有筛选",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "C04"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "C05",
+      "title": "八角色详情与动画",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "C05"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "C06",
+      "title": "详情页全部页签",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "C06"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "C07",
+      "title": "养成互动与冷却",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "C07"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "C08",
+      "title": "每宠独立选择",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "C08"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "C09",
+      "title": "无宠物空状态",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "C09"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "C10",
+      "title": "领养快速连点与返回",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "C10"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "D01",
+      "title": "显示隐藏与上限",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "D01"
+      },
+      "status": "partial_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted",
+      "observed": "Actual Electron 1-4 limit/show-hide counts; full visual/name and lower-limit steps not all recorded",
+      "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d"
+    },
+    {
+      "id": "D02",
+      "title": "重复拖动变大 QA-004",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "D02"
+      },
+      "status": "blocked_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted",
+      "observed": "Physical input stopped before MouseDown: actual hit HWND was not exact target pet; fix opaque-point acquisition without loosening guard",
+      "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d"
+    },
+    {
+      "id": "D03",
+      "title": "边缘与越界恢复",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "D03"
+      },
+      "status": "blocked_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted",
+      "observed": "Depends on successful owned physical drag; no edge-drag claim",
+      "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d"
+    },
+    {
+      "id": "D04",
+      "title": "单宠大小偏好",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "D04"
+      },
+      "status": "partial_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted",
+      "observed": "Actual per-pet scale UI/readback; complete restart scale case not independently sealed",
+      "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d"
+    },
+    {
+      "id": "D05",
+      "title": "DPI与多显示器",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "D05"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized test identity where required plus real map/location or explicitly supported simulated scenario; GPS/DPI hardware proof cannot be invented"
+    },
+    {
+      "id": "D06",
+      "title": "拖动持久化与重启",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "D06"
+      },
+      "status": "partial_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted",
+      "observed": "Same-instance restart passed; required successful new physical drag did not occur",
+      "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d"
+    },
+    {
+      "id": "D07",
+      "title": "行为与鼠标交互",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "D07"
+      },
+      "status": "partial_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted",
+      "observed": "Sleep/quiet UI controls passed; walking/follow/right-click and no-drag-misfire remain",
+      "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d"
+    },
+    {
+      "id": "D08",
+      "title": "穿透与全屏隐藏",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "D08"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "D09",
+      "title": "托盘全部显示隐藏",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "D09"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "T01",
+      "title": "空状态和切宠",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "T01"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "T02",
+      "title": "人设与记忆独立",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "T02"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "T03",
+      "title": "无供应商配置错误",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "T03"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "T04",
+      "title": "发送流式与取消",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "T04"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "T05",
+      "title": "历史与再生成",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "T05"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "T06",
+      "title": "凭据边界与失联",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "T06"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "M01",
+      "title": "地图初始与图层",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "M01"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized test identity where required plus real map/location or explicitly supported simulated scenario; GPS/DPI hardware proof cannot be invented"
+    },
+    {
+      "id": "M02",
+      "title": "定位未授权与重试",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "M02"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized test identity where required plus real map/location or explicitly supported simulated scenario; GPS/DPI hardware proof cannot be invented"
+    },
+    {
+      "id": "M03",
+      "title": "真实定位精度准入",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "M03"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized test identity where required plus real map/location or explicitly supported simulated scenario; GPS/DPI hardware proof cannot be invented"
+    },
+    {
+      "id": "M04",
+      "title": "探索扫描与无结果",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "M04"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized test identity where required plus real map/location or explicitly supported simulated scenario; GPS/DPI hardware proof cannot be invented"
+    },
+    {
+      "id": "M05",
+      "title": "野外相遇到捕捉",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "M05"
+      },
+      "status": "partial_current_native",
+      "remainingPrerequisite": "Authorized test identity where required plus real map/location or explicitly supported simulated scenario; GPS/DPI hardware proof cannot be invented",
+      "observed": "Explicit simulated-location victory/capture/receipt and repeat checked; true location/admission remains",
+      "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d"
+    },
+    {
+      "id": "M06",
+      "title": "失败逃跑与过期",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "M06"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized test identity where required plus real map/location or explicitly supported simulated scenario; GPS/DPI hardware proof cannot be invented"
+    },
+    {
+      "id": "M07",
+      "title": "网络异常与重新定位",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "M07"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized test identity where required plus real map/location or explicitly supported simulated scenario; GPS/DPI hardware proof cannot be invented"
+    },
+    {
+      "id": "B01",
+      "title": "训练选择与开始",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "B01"
+      },
+      "status": "partial_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted",
+      "observed": "Training start and exact identity/resources observed with explicit charged fixture; full normal round-zero config remains",
+      "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d"
+    },
+    {
+      "id": "B02",
+      "title": "全部招式与回合反馈",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "B02"
+      },
+      "status": "partial_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted",
+      "observed": "Simulated wild ultimate/element actions progressed; full action/animation original case incomplete",
+      "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d"
+    },
+    {
+      "id": "B03",
+      "title": "自然胜负与奖励",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "B03"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "B04",
+      "title": "进行中返回恢复",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "B04"
+      },
+      "status": "partial_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted",
+      "observed": "Simulated wild return/resume passed; original training/restart full case not established",
+      "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d"
+    },
+    {
+      "id": "B05",
+      "title": "历史和回放",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "B05"
+      },
+      "status": "reused_verified",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted",
+      "observed": "Battle domain/UI/report data and read-only fourteen-round review unchanged; no new economic operation inferred",
+      "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+      "exeSha256": "49e7c00055acf533bd2e0418157ac446cc88e13bda9cbaf9185248c9b0c87d61",
+      "originalEvidence": "docs/implementation/handoffs/2026-10-27-cloud-authority-paused/proofs/native-training-selection-restart-natural-settlement-and-review-seal.json",
+      "evidenceSha256": "40468d2473f1943dca2a5dd0a836ab0f1839f8ce2a072b2bbbbca8ef7546116d",
+      "impactCheck": {
+        "targetCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+        "unchangedPaths": [
+          "apps/pc-app/runtime/features/battle",
+          "apps/pc-app/ui/src/features/battle"
+        ],
+        "diff": ""
+      },
+      "notClaimedRerun": true
+    },
+    {
+      "id": "B06",
+      "title": "好友邀请和接受",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "B06"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized dedicated real cloud account(s), app-level sessions and bounded data/network mutation; no admin-auth bypass"
+    },
+    {
+      "id": "B07",
+      "title": "好友拒绝",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "B07"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized dedicated real cloud account(s), app-level sessions and bounded data/network mutation; no admin-auth bypass"
+    },
+    {
+      "id": "B08",
+      "title": "好友取消",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "B08"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized dedicated real cloud account(s), app-level sessions and bounded data/network mutation; no admin-auth bypass"
+    },
+    {
+      "id": "B09",
+      "title": "邀请过期",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "B09"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized dedicated real cloud account(s), app-level sessions and bounded data/network mutation; no admin-auth bypass"
+    },
+    {
+      "id": "B10",
+      "title": "断网重连与重复操作",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "B10"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized dedicated real cloud account(s), app-level sessions and bounded data/network mutation; no admin-auth bypass"
+    },
+    {
+      "id": "B11",
+      "title": "好友自然终局和重启",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "B11"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized dedicated real cloud account(s), app-level sessions and bounded data/network mutation; no admin-auth bypass"
+    },
+    {
+      "id": "B12",
+      "title": "未知对手与空态",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "B12"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "G01",
+      "title": "领地初始地图与列表",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "G01"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized test identity where required plus real map/location or explicitly supported simulated scenario; GPS/DPI hardware proof cannot be invented"
+    },
+    {
+      "id": "G02",
+      "title": "驻守选宠与更换",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "G02"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "G03",
+      "title": "竞争胜利占领",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "G03"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized test identity where required plus real map/location or explicitly supported simulated scenario; GPS/DPI hardware proof cannot be invented"
+    },
+    {
+      "id": "G04",
+      "title": "竞争失败取消和占用",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "G04"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized test identity where required plus real map/location or explicitly supported simulated scenario; GPS/DPI hardware proof cannot be invented"
+    },
+    {
+      "id": "G05",
+      "title": "种植与库存扣减",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "G05"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "G06",
+      "title": "成熟等待与收获",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "G06"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "G07",
+      "title": "离线与云端冲突",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "G07"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized dedicated real cloud account(s), app-level sessions and bounded data/network mutation; no admin-auth bypass"
+    },
+    {
+      "id": "I01",
+      "title": "分类与空背包",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "I01"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "I02",
+      "title": "合成成功与不足",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "I02"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "I03",
+      "title": "指定实例喂养",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "I03"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "I04",
+      "title": "库存重启同步",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "I04"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "R01",
+      "title": "库筛选预览与偏好",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "R01"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "R02",
+      "title": "真实动作全套与重复播放",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "R02"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "R03",
+      "title": "本地资源导入",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "R03"
+      },
+      "status": "reused_verified",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted",
+      "observed": "Normal importer/validation/UI/assets unchanged; independent backup repair does not alter ordinary import",
+      "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+      "exeSha256": "49e7c00055acf533bd2e0418157ac446cc88e13bda9cbaf9185248c9b0c87d61",
+      "originalEvidence": "docs/implementation/handoffs/2026-10-27-cloud-authority-paused/proofs/native-R03-R04-normal-import-and-negative-boundaries-seal.json",
+      "evidenceSha256": "65a564a494e73b4871ee2694436a915801f35318eaacf8fcf5aa6fb519625d69",
+      "impactCheck": {
+        "targetCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+        "unchangedPaths": [
+          "apps/pc-app/runtime/features/resources",
+          "apps/pc-app/ui/src/features/resources"
+        ],
+        "diff": ""
+      },
+      "notClaimedRerun": true
+    },
+    {
+      "id": "R04",
+      "title": "无效导入与路径边界",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "R04"
+      },
+      "status": "reused_verified",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted",
+      "observed": "Normal invalid/missing/path-traversal rejection unchanged; original resources unchanged evidence preserved",
+      "sourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+      "exeSha256": "49e7c00055acf533bd2e0418157ac446cc88e13bda9cbaf9185248c9b0c87d61",
+      "originalEvidence": "docs/implementation/handoffs/2026-10-27-cloud-authority-paused/proofs/native-R03-R04-normal-import-and-negative-boundaries-seal.json",
+      "evidenceSha256": "65a564a494e73b4871ee2694436a915801f35318eaacf8fcf5aa6fb519625d69",
+      "impactCheck": {
+        "targetCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+        "unchangedPaths": [
+          "apps/pc-app/runtime/features/resources",
+          "apps/pc-app/ui/src/features/resources"
+        ],
+        "diff": ""
+      },
+      "notClaimedRerun": true
+    },
+    {
+      "id": "R05",
+      "title": "资源随账户备份导出与恢复",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "R05"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "R06",
+      "title": "偏好与资源云端恢复",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "R06"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized dedicated real cloud account(s), app-level sessions and bounded data/network mutation; no admin-auth bypass"
+    },
+    {
+      "id": "S01",
+      "title": "账户页资料与状态",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "S01"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "S02",
+      "title": "自动同步完整域",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "S02"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized dedicated real cloud account(s), app-level sessions and bounded data/network mutation; no admin-auth bypass"
+    },
+    {
+      "id": "S03",
+      "title": "离线写入恢复",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "S03"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized dedicated real cloud account(s), app-level sessions and bounded data/network mutation; no admin-auth bypass"
+    },
+    {
+      "id": "S04",
+      "title": "双端并发冲突",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "S04"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized dedicated real cloud account(s), app-level sessions and bounded data/network mutation; no admin-auth bypass"
+    },
+    {
+      "id": "S05",
+      "title": "权限与跨账号隔离",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "S05"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized dedicated real cloud account(s), app-level sessions and bounded data/network mutation; no admin-auth bypass"
+    },
+    {
+      "id": "S06",
+      "title": "同步错误与手动重试",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "S06"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized dedicated real cloud account(s), app-level sessions and bounded data/network mutation; no admin-auth bypass"
+    },
+    {
+      "id": "P01",
+      "title": "所有设置分组可达",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "P01"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "P02",
+      "title": "保存取消与重启",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "P02"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "P03",
+      "title": "桌面上限音量尺寸",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "P03"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "P04",
+      "title": "导出本地备份",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "P04"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "P05",
+      "title": "恢复备份与回滚",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "P05"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "P06",
+      "title": "无效跨身份备份",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "P06"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "P07",
+      "title": "通知开机和隐私边界",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "P07"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "cloud Windows isolated desktop; only public/unauthenticated substeps executable"
+    },
+    {
+      "id": "P08",
+      "title": "版本日志和更新入口",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "P08"
+      },
+      "status": "passed_current_native",
+      "remainingPrerequisite": "none",
+      "observed": "Actual About/source manifest/stable outer EXE/log directory IPC and honest update status",
+      "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+      "exeSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb"
+    },
+    {
+      "id": "A13",
+      "title": "存档待核对提示与正常确认",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "A13"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "N05",
+      "title": "同一档案重复启动",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "N05"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "cloud Windows isolated desktop; only public/unauthenticated substeps executable"
+    },
+    {
+      "id": "P09",
+      "title": "便携版开机启动路径稳定",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "P09"
+      },
+      "status": "partial_current_native",
+      "remainingPrerequisite": "cloud Windows isolated desktop; only public/unauthenticated substeps executable",
+      "observed": "Original controller exact app-only HKCU register/read/remove passed; profile/UI linkage remains explicitly qualified",
+      "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d"
+    },
+    {
+      "id": "A14",
+      "title": "本机合成QA账号修改密码",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "A14"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Allowed isolated offline temporary QA local account/pet fixture, no real credentials/cloud/global grant; original cloud-specific steps remain separately restricted"
+    },
+    {
+      "id": "A15",
+      "title": "真实云端合成QA账号修改密码",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "A15"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized dedicated real cloud account(s), app-level sessions and bounded data/network mutation; no admin-auth bypass"
+    },
+    {
+      "id": "C11",
+      "title": "同类型跨用户连续数字编号",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "C11"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Explicit valid application QA global-serial grant and authorized dedicated identities; expired grant cannot be revived"
+    },
+    {
+      "id": "C12",
+      "title": "旧档案升级保留身份与历史",
+      "originalDefinition": {
+        "file": "coverage-764aa2e.json",
+        "id": "C12"
+      },
+      "status": "not_executed_current_native",
+      "remainingPrerequisite": "Authorized original old QA profile preserving exact identities/history; exported evidence is not profile"
+    }
+  ]
+}
