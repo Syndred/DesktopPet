@@ -8,7 +8,7 @@ import {createRequire} from 'node:module';
 import {randomUUID,createHash} from 'node:crypto';
 import {mkdtempSync,mkdirSync,readFileSync,writeFileSync,copyFileSync,realpathSync,renameSync,existsSync,rmSync,lstatSync} from 'node:fs';
 import {tmpdir} from 'node:os';
-import {resolve,join,dirname,basename,relative,isAbsolute} from 'node:path';
+import {resolve,join,dirname,basename,relative,isAbsolute,sep} from 'node:path';
 import {launchPortableSession} from './portable-session.mjs';
 import {createNativeDialogScope,nativeWindowHandleDecimal,driveNativeFileDialog} from './native-file-dialog.mjs';
 import {pollState} from './poll-state.mjs';
@@ -32,7 +32,7 @@ const save=()=>writeFileSync(join(output,'evidence.json'),JSON.stringify(proof,n
 const digest=value=>createHash('sha256').update(typeof value==='string'||Buffer.isBuffer(value)?value:JSON.stringify(value)).digest('hex');
 const within=(root,file)=>{const rel=relative(realpathSync(root),realpathSync(file));assert.ok(rel&&rel!=='..'&&!rel.startsWith('..\\')&&!rel.startsWith('../')&&!isAbsolute(rel),'Fixture path must remain within exact temporary profile');return file;};
 function alive(pid){try{process.kill(pid,0);return true;}catch(error){if(error.code==='ESRCH')return false;throw error;}}
-async function stop(){if(model){proof.offlineBlocked=await model.main(()=>globalThis.__backupOfflineBlocked).catch(()=>({observation:'unavailable'}));await model.stop();}if(uncertain)throw Error('Launch outcome/PID unknown; retain profile');proof.pidChecks=await pollState(()=>[...pids].map(pid=>({pid,alive:alive(pid)})),rows=>rows.every(row=>!row.alive),{timeoutMs:10000,intervalMs:200,label:'Owned process still alive; retain profile'});model=null;}
+async function stop(){if(model){proof.offlineBlocked=await model.main(()=>globalThis.__backupOfflineBlocked).catch(()=>({observation:'unavailable'}));await model.stop();}if(uncertain)throw Error('Owned process or native-save outcome requires investigation; retain profile');proof.pidChecks=await pollState(()=>[...pids].map(pid=>({pid,alive:alive(pid)})),rows=>rows.every(row=>!row.alive),{timeoutMs:10000,intervalMs:200,label:'Owned process still alive; retain profile'});model=null;}
 async function launch(){uncertain=true;model=await launchPortableSession({executable,profile,expectedSource,label:'backup-offline-qa',environment});for(const pid of[model.launcherPid,model.runtime.pid])if(Number.isInteger(pid)&&pid>0)pids.add(pid);uncertain=false;
  assert.equal((await model.call('accounts','session')).scenario?.runId,runId);assert.equal(model.info.build.compiledFingerprint,build.compiledFingerprint);
  await model.main(({session})=>{globalThis.__backupOfflineBlocked={node:0,fetch:0,websocket:0,chromium:0};const denied=kind=>{globalThis.__backupOfflineBlocked[kind]++;throw Error('OFFLINE_QA_REMOTE_NETWORK_FORBIDDEN');};const local=value=>{try{const host=typeof value==='string'||value instanceof URL?new URL(String(value)).hostname:value?.hostname||value?.host||'localhost';return ['localhost','127.0.0.1','::1','[::1]'].includes(String(host).split(':').length===2?String(host).split(':')[0]:String(host));}catch{return false;}};
@@ -70,6 +70,30 @@ async function selectFile(kind,title,file,trigger,verifyUi){
  },model.page.url());
  assert.equal(identity.pid,model.runtime.pid);
  const row={kind,title,windowId:identity.windowId,status:'running'};proof.nativeDialogs.push(row);save();
+ // Observe the REAL save result without replacing it. Never inspect files outside
+ // this fixture; a closed native dialog is not proof that the expected export exists.
+ const observationId=kind==='save'?randomUUID():null;
+ if(observationId)await model.main(({dialog},id,title)=>{
+  if(globalThis.__nativeBackupSaveObserver)throw Error('NATIVE_SAVE_OBSERVER_ALREADY_PRESENT');
+  const original=dialog.showSaveDialog,observer={id,original,invocations:0,result:null};
+  observer.wrapper=async function(...args){
+   const matched=args[args.length-1]?.title===title;
+   if(matched)observer.invocations++;
+   try{const result=await original.apply(this,args);if(matched)observer.result={canceled:result.canceled===true,filePath:typeof result.filePath==='string'?result.filePath:null};return result;}
+   catch(error){if(matched)observer.result={failed:true};throw error;}
+  };
+  globalThis.__nativeBackupSaveObserver=observer;dialog.showSaveDialog=observer.wrapper;
+ },observationId,title);
+ async function observeSave(){
+  if(!observationId)return;
+  row.saveObservation=await model.main((_electron,id)=>{const observer=globalThis.__nativeBackupSaveObserver;if(observer?.id!==id)throw Error('NATIVE_SAVE_OBSERVER_ID_MISMATCH');return {invocations:observer.invocations,result:observer.result};},observationId);
+  const classify=path=>{if(typeof path!=='string')return 'no-path';if(resolve(path).toLowerCase()===resolve(file).toLowerCase())return 'exact-expected';const rel=relative(resolve(profile),resolve(path));return rel!==''&&rel!=='..'&&!rel.startsWith('..'+sep)&&!isAbsolute(rel)?'owned-profile':'outside-owned-profile-not-read';};
+  if(row.saveObservation.result)row.saveObservation.result.pathScope=classify(row.saveObservation.result.filePath);
+  const observed=row.saveObservation.result;
+  if(row.saveObservation.invocations!==1||!observed||observed.failed||(!observed.canceled&&observed.pathScope!=='exact-expected')){uncertain=true;row.saveOutcomeRequiresInvestigation=true;}
+  row.backupReceiptsObserved=(await model.call('accounts','backupList')).map(receipt=>({id:receipt.id,reason:receipt.reason,filePath:receipt.filePath,createdAt:receipt.createdAt,pathScope:classify(receipt.filePath)}));
+  row.uiFeedbackObserved=await model.page.locator('.ac-feedback [role="status"], .ac-feedback [role="alert"]').allTextContents();row.uiFeedbackObserved=row.uiFeedbackObserved.slice(0,4).map(text=>text.slice(0,500));
+ }
  try{
   Object.assign(row,await driveNativeFileDialog({scope:dialogScope,kind,filePath:file,ownerPid:identity.pid,ownerWindowHandle:nativeWindowHandleDecimal(identity.handle),ownerExecutablePath:identity.exe,expectedTitle:title,expectedSha256:kind==='open'?digest(readFileSync(file)):undefined},trigger,async fileEvidence=>{
    await verifyUi();return {verified:true,observed:'production UI outcome plus exact selected file bytes',sha256:fileEvidence.sha256};
@@ -77,7 +101,13 @@ async function selectFile(kind,title,file,trigger,verifyUi){
  }catch(error){row.status='failed';row.error=redact(error);row.evidence=error.nativeDialogEvidence;
   if(String(error).includes('Exact native-dialog helper exit was not confirmed'))uncertain=true;
   throw error;
- }finally{save();}
+ }finally{
+  if(observationId){
+   try{await observeSave();}catch{row.saveObservationError='READ_ONLY_SAVE_OBSERVATION_FAILED';uncertain=true;row.saveOutcomeRequiresInvestigation=true;}
+   try{await model.main(({dialog},id)=>{const observer=globalThis.__nativeBackupSaveObserver;if(observer?.id!==id)throw Error('NATIVE_SAVE_OBSERVER_ID_MISMATCH');if(dialog.showSaveDialog!==observer.wrapper)throw Error('NATIVE_SAVE_OBSERVER_REPLACED');dialog.showSaveDialog=observer.original;delete globalThis.__nativeBackupSaveObserver;},observationId);}catch{row.saveObserverCleanupError='SAVE_OBSERVER_RESTORE_FAILED';uncertain=true;}
+  }
+  save();
+ }
 }
 async function preview(file){await selectFile('open','选择灵境账号备份',file,()=>model.page.getByRole('button',{name:'恢复本地备份',exact:true}).click(),()=>model.page.getByRole('dialog',{name:'预览恢复内容',exact:true}).waitFor());}
 async function cancelPreview(){await model.page.getByRole('dialog',{name:'预览恢复内容',exact:true}).getByRole('button',{name:'取消',exact:true}).click();await model.page.getByRole('dialog',{name:'预览恢复内容',exact:true}).waitFor({state:'hidden'});}

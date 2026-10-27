@@ -25,6 +25,11 @@ public static class QATray {
  [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr h,out uint pid);
  [DllImport("user32.dll",SetLastError=true)] static extern uint SendInput(uint n,INPUT[] input,int size);
  [DllImport("kernel32.dll")] static extern void SetLastError(uint code);
+ public delegate bool EnumProc(IntPtr hwnd,IntPtr param);
+ [DllImport("user32.dll")] static extern bool EnumChildWindows(IntPtr hwnd,EnumProc callback,IntPtr param);
+ [DllImport("user32.dll")] static extern int GetDlgCtrlID(IntPtr hwnd);
+ public class ChildReceipt {public string hwnd,windowClass;public int controlId,x,y,width,height;public uint processId;public bool visible;}
+ public static List<ChildReceipt> Children(IntPtr root,uint expectedPid){var rows=new List<ChildReceipt>();EnumChildWindows(root,(h,p)=>{uint pid;GetWindowThreadProcessId(h,out pid);if(pid!=expectedPid)return true;var cls=new System.Text.StringBuilder(256);GetClassName(h,cls,cls.Capacity);RECT r;GetWindowRect(h,out r);rows.Add(new ChildReceipt{hwnd=h.ToInt64().ToString(),windowClass=cls.ToString(),controlId=GetDlgCtrlID(h),x=r.Left,y=r.Top,width=r.Right-r.Left,height=r.Bottom-r.Top,processId=pid,visible=IsWindowVisible(h)});return rows.Count<120;},IntPtr.Zero);return rows;}
  public class InputReceipt {public uint flags;public int dx,dy;public uint returnCount;public int lastError;}
  public static List<InputReceipt> receipts=new List<InputReceipt>();
  static void Inject(INPUT i){SetLastError(0);uint count=SendInput(1,new[]{i},Marshal.SizeOf(typeof(INPUT)));int error=Marshal.GetLastWin32Error();receipts.Add(new InputReceipt{flags=i.mi.dwFlags,dx=i.mi.dx,dy=i.mi.dy,returnCount=count,lastError=error});if(count!=1)throw new Exception("NATIVE_INPUT_BLOCKED: SendInput returnCount="+count+" lastError="+error);}
@@ -47,8 +52,8 @@ $contracts=@{
  'AutomationElement.FindAll'=([System.Windows.Automation.AutomationElement].GetMethod('FindAll',[type[]]@([System.Windows.Automation.TreeScope],[System.Windows.Automation.Condition])) -ne $null)
  'AutomationElement.ProcessIdProperty'=([System.Windows.Automation.AutomationElement].GetField('ProcessIdProperty') -ne $null)
 }
-foreach($property in @('Name','BoundingRectangle','ProcessId','IsEnabled','IsOffscreen','ControlType')){$contracts['Current.'+$property]=([System.Windows.Automation.AutomationElement+AutomationElementInformation].GetProperty($property) -ne $null)}
-foreach($method in @('PrintWindow','GetCursorPos','WindowFromPoint','GetAncestor','GetWindowRect','GetWindowThreadProcessId','MoveAbsolute','Button')){$contracts['Interop.'+$method]=([QATray].GetMethod($method) -ne $null)}
+foreach($property in @('Name','AutomationId','ClassName','BoundingRectangle','ProcessId','IsEnabled','IsOffscreen','ControlType')){$contracts['Current.'+$property]=([System.Windows.Automation.AutomationElement+AutomationElementInformation].GetProperty($property) -ne $null)}
+foreach($method in @('PrintWindow','GetCursorPos','WindowFromPoint','GetAncestor','GetWindowRect','GetWindowThreadProcessId','MoveAbsolute','Button','Children')){$contracts['Interop.'+$method]=([QATray].GetMethod($method) -ne $null)}
 foreach($key in $contracts.Keys){if(-not $contracts[$key]){throw ('API_CONTRACT_MISSING: '+$key)}}
 if($p.action -eq 'selftest'){@{passed=$true;reflectionOnly=$true;osInputPerformed=$false;contracts=$contracts}|ConvertTo-Json -Depth 4 -Compress;exit}
 $q=New-Object QATray+POINT
@@ -64,6 +69,7 @@ $explorer=Owner $taskbar
 $exe=[System.Diagnostics.Process]::GetProcessById($explorer).MainModule.FileName
 if(-not [string]::Equals($exe,[System.IO.Path]::Combine($env:WINDIR,'explorer.exe'),[StringComparison]::OrdinalIgnoreCase)){throw 'TASKBAR_NOT_SYSTEM_EXPLORER'}
 function Nodes([IntPtr]$w){$root=[System.Windows.Automation.AutomationElement]::FromHandle($w);return $root.FindAll([System.Windows.Automation.TreeScope]::Descendants,[System.Windows.Automation.Condition]::TrueCondition)}
+function Short([string]$value){if($value.Length -gt 160){return $value.Substring(0,160)};return $value}
 function Rect($e){$r=$e.Current.BoundingRectangle;return @{x=$r.X;y=$r.Y;width=$r.Width;height=$r.Height}}
 function Center($e){$r=$e.Current.BoundingRectangle;if($e.Current.IsOffscreen -or $r.Width -le 0 -or $r.Height -le 0){throw 'UIA_TARGET_NOT_VISIBLE'};return @{x=[int]($r.X+$r.Width/2);y=[int]($r.Y+$r.Height/2)}}
 function RootAt($pt){$q=New-Object QATray+POINT;$q.X=$pt.x;$q.Y=$pt.y;return [QATray]::GetAncestor([QATray]::WindowFromPoint($q),2)}
@@ -91,10 +97,17 @@ $report=@{passed=$false;explorerPid=$explorer;action=$p.action;input=@();openedO
 try{
  $roots=@($taskbar)
  foreach($cls in @('NotifyIconOverflowWindow','TopLevelWindowForOverflowXamlIsland')){$w=[QATray]::FindWindow($cls,$null);if($w -ne [IntPtr]::Zero -and [QATray]::IsWindowVisible($w) -and (Owner $w) -eq $explorer){$roots+= $w}}
+ # Read-only bounded provider diagnostics, restricted to verified Explorer roots.
+ $report.discovery=@{trayBounds=$p.trayBounds;roots=@()}
+ foreach($root in $roots){
+  $all=Nodes $root;$rows=@();$count=0;$skipped=0
+  foreach($element in $all){$count++;$current=$element.Current;if($current.ProcessId -ne $explorer){$skipped++;continue};if($rows.Count -lt 120){$rows+=@{name=(Short $current.Name);automationId=(Short $current.AutomationId);className=(Short $current.ClassName);controlType=$current.ControlType.ProgrammaticName;pid=$current.ProcessId;offscreen=$current.IsOffscreen;bounds=(Rect $element)}}}
+  $report.discovery.roots+=@{hwnd=$root.ToInt64().ToString();count=$count;skippedForeignProvider=$skipped;truncated=($count -gt 120);elements=$rows;nativeChildren=@([QATray]::Children($root,$explorer))}
+ }
  $icons=@()
- foreach($root in $roots){foreach($e in (Nodes $root)){if($e.Current.Name -ceq '灵境 · 桌面伙伴' -and -not $e.Current.IsOffscreen){$icons+=@{element=$e;root=$root}}}}
+ foreach($root in $roots){foreach($e in (Nodes $root)){if($e.Current.ProcessId -eq $explorer -and $e.Current.Name -ceq '灵境 · 桌面伙伴' -and -not $e.Current.IsOffscreen){$icons+=@{element=$e;root=$root}}}}
  if($icons.Count -eq 0 -and $p.allowOverflow -eq $true){
-  $buttons=@((Nodes $taskbar)|Where-Object {($_.Current.Name -ceq 'Show hidden icons' -or $_.Current.Name -ceq '显示隐藏的图标') -and $_.Current.ControlType -eq [System.Windows.Automation.ControlType]::Button -and -not $_.Current.IsOffscreen})
+  $buttons=@((Nodes $taskbar)|Where-Object {$_.Current.ProcessId -eq $explorer -and ($_.Current.Name -ceq 'Show hidden icons' -or $_.Current.Name -ceq '显示隐藏的图标') -and $_.Current.ControlType -eq [System.Windows.Automation.ControlType]::Button -and -not $_.Current.IsOffscreen})
   if($buttons.Count -ne 1){throw 'UNIQUE_OVERFLOW_BUTTON_UNAVAILABLE'}
   Click $buttons[0] $taskbar $explorer $false;$report.openedOverflow=$true;$report.needsFreshTrayBounds=$true;$report.passed=$true
  }else{
@@ -108,7 +121,7 @@ try{
   $items=@()
   $condition=[System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ProcessIdProperty,[int]$p.processId)
   $tops=[System.Windows.Automation.AutomationElement]::RootElement.FindAll([System.Windows.Automation.TreeScope]::Children,$condition)
-  foreach($top in $tops){foreach($item in $top.FindAll([System.Windows.Automation.TreeScope]::Descendants,[System.Windows.Automation.Condition]::TrueCondition)){if($item.Current.Name -ceq $name -and $item.Current.ControlType -eq [System.Windows.Automation.ControlType]::MenuItem -and -not $item.Current.IsOffscreen){$items+=$item}}}
+  foreach($top in $tops){foreach($item in $top.FindAll([System.Windows.Automation.TreeScope]::Descendants,[System.Windows.Automation.Condition]::TrueCondition)){if($item.Current.ProcessId -eq $p.processId -and $item.Current.Name -ceq $name -and $item.Current.ControlType -eq [System.Windows.Automation.ControlType]::MenuItem -and -not $item.Current.IsOffscreen){$items+=$item}}}
   if($items.Count -ne 1){throw 'EXACT_OWNED_MENU_ITEM_UNAVAILABLE'}
   $item=$items[0];$menuRoot=RootAt (Center $item)
   if((Owner $menuRoot) -ne $p.processId){throw 'MENU_NOT_OWNED_BY_APP'}
