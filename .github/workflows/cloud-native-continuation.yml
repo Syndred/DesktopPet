@@ -6,7 +6,7 @@ on:
       flows:
         description: 'Explicit JSON array of affected native flows; omitted successful flows retain version-bound receipts'
         required: false
-        default: '["native-tray","g02-only"]'
+        default: '["native-fullscreen"]'
   push:
     branches: ['codex/cloud-authority-convergence']
     paths:
@@ -21,6 +21,8 @@ on:
       - 'scripts/acceptance/native-border-resize.ps1'
       - 'scripts/acceptance/cloud-native-tray-acceptance.mjs'
       - 'scripts/acceptance/native-owned-tray.ps1'
+      - 'scripts/acceptance/cloud-native-fullscreen-acceptance.mjs'
+      - 'scripts/acceptance/native-owned-fullscreen-probe.ps1'
       - 'scripts/acceptance/cloud-connection-selections-acceptance.mjs'
       - 'scripts/acceptance/cloud-backup-ui-acceptance.mjs'
       - 'scripts/acceptance/native-file-dialog.mjs'
@@ -52,9 +54,9 @@ jobs:
     steps:
       - name: Reject empty, duplicate or unknown flow selections
         env:
-          SELECTED_FLOWS: ${{ inputs.flows || '["native-tray","g02-only"]' }}
+          SELECTED_FLOWS: ${{ inputs.flows || '["native-fullscreen"]' }}
         run: |
-          node -e "const assert=require('node:assert/strict');const flows=JSON.parse(process.env.SELECTED_FLOWS);const allowed=new Set(['g02-only','native-tray','settings-reachability','main-border-resize','c08-only','desktop-preferences','connection-selections','companion-economy','native-backup','backup-ui','accounts-navigation','navigation','resources','lifecycle','desktop-restart','desktop-input','desktop-engineering','battle-context','context','default-profile','conversation-memory']);assert.ok(Array.isArray(flows)&&flows.length>0&&flows.length<=allowed.size);assert.equal(new Set(flows).size,flows.length);assert.ok(flows.every(x=>typeof x==='string'&&allowed.has(x)));console.log('Validated affected flows:',flows.join(', '));"
+          node -e "const assert=require('node:assert/strict');const flows=JSON.parse(process.env.SELECTED_FLOWS);const allowed=new Set(['native-fullscreen','g02-only','native-tray','settings-reachability','main-border-resize','c08-only','desktop-preferences','connection-selections','companion-economy','native-backup','backup-ui','accounts-navigation','navigation','resources','lifecycle','desktop-restart','desktop-input','desktop-engineering','battle-context','context','default-profile','conversation-memory']);assert.ok(Array.isArray(flows)&&flows.length>0&&flows.length<=allowed.size);assert.equal(new Set(flows).size,flows.length);assert.ok(flows.every(x=>typeof x==='string'&&allowed.has(x)));console.log('Validated affected flows:',flows.join(', '));"
       - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
@@ -66,14 +68,14 @@ jobs:
       - run: npm ci
       - uses: actions/download-artifact@v8.0.2
         with:
-          name: desktoppet-focused-windows-b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d
-          run-id: 40463514290
+          name: desktoppet-desktop-interaction-beea6e41c0021f7343ee7c27fab3800c00d6a5fa
+          run-id: 40500938395
           github-token: ${{ github.token }}
           path: artifacts/qa/native-baseline
-      - run: node scripts/acceptance/verify-portable-reuse.mjs --source=b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d
+      - run: node scripts/acceptance/verify-portable-reuse.mjs --source=beea6e41c0021f7343ee7c27fab3800c00d6a5fa
       - name: Prove real renderer and unchanged QA identity gate before starting long flows
         timeout-minutes: 3
-        run: node scripts/acceptance/cloud-qa-preflight.mjs --source=b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d
+        run: node scripts/acceptance/cloud-qa-preflight.mjs --source=beea6e41c0021f7343ee7c27fab3800c00d6a5fa
       - if: always()
         uses: actions/upload-artifact@v7.0.2
         with:
@@ -91,9 +93,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        flow: ${{ fromJSON(inputs.flows || '["native-tray","g02-only"]') }}
+        flow: ${{ fromJSON(inputs.flows || '["native-fullscreen"]') }}
     env:
-      PACKAGE_SOURCE: b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d
+      PACKAGE_SOURCE: beea6e41c0021f7343ee7c27fab3800c00d6a5fa
     steps:
       - uses: actions/checkout@v7.0.1
         with:
@@ -108,13 +110,17 @@ jobs:
       - name: Download this repository's exact audited package artifact
         uses: actions/download-artifact@v8.0.2
         with:
-          name: desktoppet-focused-windows-b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d
-          run-id: 40463514290
+          name: desktoppet-desktop-interaction-beea6e41c0021f7343ee7c27fab3800c00d6a5fa
+          run-id: 40500938395
           github-token: ${{ github.token }}
           path: artifacts/qa/native-baseline
       - name: Bind unchanged product source, manifest, ASAR audit and exact SFX hash
         id: reuse
         run: node scripts/acceptance/verify-portable-reuse.mjs --source=$env:PACKAGE_SOURCE
+      - name: Real owned fullscreen policy and per-pet interaction recovery
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'native-fullscreen' }}
+        timeout-minutes: 10
+        run: node scripts/acceptance/cloud-native-fullscreen-acceptance.mjs --source=$env:PACKAGE_SOURCE
       - name: Minimum-window keyboard and scrolled settings reachability
         if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'settings-reachability' }}
         timeout-minutes: 12
@@ -221,6 +227,10 @@ jobs:
             artifacts/foundation/cloud-engineering/default-profile/run-*/evidence.json
             artifacts/foundation/cloud-engineering/settingsReachability/run-*/evidence.json
             artifacts/foundation/cloud-engineering/settingsReachability/run-*/P01-*.png
+            artifacts/qa/native-fullscreen/run-*/evidence.json
+            artifacts/qa/native-fullscreen/run-*/restored-pet-1.png
+            artifacts/qa/native-fullscreen/run-*/restored-pet-2.png
+            artifacts/qa/native-fullscreen/run-*/failure.png
             artifacts/qa/native-tray/run-*/evidence.json
             artifacts/qa/native-tray/run-*/open-owned-menu.png
             artifacts/qa/native-tray/run-*/exit-owned-menu.png
