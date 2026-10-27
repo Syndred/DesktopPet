@@ -42,6 +42,9 @@ jobs:
           path: artifacts/qa/native-baseline
       - name: Bind unchanged product and exact audited Windows package
         run: node scripts/acceptance/verify-portable-reuse.mjs --source=$env:PACKAGE_SOURCE
+      - name: Verify exact owned-process identity and cleanup without accounts or network
+        timeout-minutes: 2
+        run: ./scripts/acceptance/cloud-live-qa-process.ps1 -Action selftest -Output artifacts/qa/supervisor-selftest
       - name: Register at most two dedicated accounts and retain passwords only in this job's process memory
         timeout-minutes: 5
         run: |
@@ -71,6 +74,7 @@ jobs:
           retention-days: 14
           if-no-files-found: warn
           path: |
+            artifacts/qa/supervisor-selftest/supervisor-selftest.json
             artifacts/qa/native-continuation/package-reuse.json
             artifacts/qa/live-qa-holder/identity-checkpoint.json
             artifacts/qa/live-qa-holder/identity.json

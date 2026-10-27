@@ -1,0 +1,29 @@
+name: DesktopPet offline supervisor contract
+on:
+  push:
+    branches: ['codex/cloud-authority-convergence']
+    paths:
+      - 'scripts/acceptance/cloud-live-qa-process.ps1'
+      - '.github/workflows/qa-supervisor-contract.yml'
+permissions:
+  contents: read
+jobs:
+  supervisor:
+    runs-on: windows-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+      - name: Verify owned timer PID, UTC ticks, rejection and exact cleanup
+        timeout-minutes: 2
+        run: ./scripts/acceptance/cloud-live-qa-process.ps1 -Action selftest -Output artifacts/qa/supervisor-selftest
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: desktoppet-offline-supervisor-${{ github.sha }}
+          path: artifacts/qa/supervisor-selftest/supervisor-selftest.json
+          if-no-files-found: error
