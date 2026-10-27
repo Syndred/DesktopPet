@@ -1,0 +1,34 @@
+{
+  "scope": "Human-written summary of two independently reviewed original acceptance cases on the same audited Windows portable package. Detailed evidence and the versioned matrix remain unpublished.",
+  "results": {
+    "B08": {
+      "status": "passed-original-scope",
+      "basis": "Normal UI cancellation is visible to both clients on the original invitation. A stale recipient acceptance is actually clicked and rejected by the original SQL path; the invitation remains cancelled and no battle or rewards are created."
+    },
+    "B09": {
+      "status": "passed-original-scope",
+      "basis": "After 300101 milliseconds of real elapsed time, both clients show expiry and no acceptance control. The normal domain rejects acceptance; direct original-ID SQL retries also reject, without creating rooms, rounds or rewards.",
+      "elapsedTime": "Five minutes and 0.101 seconds; no clock change or injected expiry."
+    }
+  },
+  "evidence": {
+    "run": "https://github.com/Syndred/DesktopPet/actions/runs/40527450442",
+    "artifact": "https://github.com/Syndred/DesktopPet/actions/runs/40527450442/artifacts/12745400956",
+    "zipSha256": "84de630266916722e7296a02ef5aa63739929db4288ea52486b9eb86fcae5492"
+  },
+  "qualifications": [
+    "This combines actual client UI, normal domain handling and direct checks of the original production handler/SQL using a local PGlite fixture.",
+    "Official isolated local QA does not establish production Auth, Realtime or deployed-cloud behavior. No production deployment is claimed.",
+    "The earlier DTO-failed run remains failed. Its raw receipt is not rewritten or described as passing.",
+    "Two execution rows establish two original cases, not additional untested invitation scenarios."
+  ],
+  "coverage": {
+    "acceptedOriginalCases": 72,
+    "totalOriginalCases": 98,
+    "fullCasesOnThisExactPackage": 12,
+    "sourceBoundEarlierCasesCarriedAfterImpactReview": 60,
+    "partial": 5,
+    "notExecuted": 21,
+    "qualification": "Two cases added. Earlier source-bound cases are not claimed to have been rerun; partial cases remain incomplete."
+  }
+}
