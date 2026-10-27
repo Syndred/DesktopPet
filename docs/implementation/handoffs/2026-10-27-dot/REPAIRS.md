@@ -1,5 +1,7 @@
 # 2026-10-27 Dot 云端修复增量
 
+> **最新收口（2026-10-27 06:04 UTC）**：五组代码修复及 TODO6 可独立工程补核完成；代码 `764aa2e38d5b5d7c99148d99153b7fb4cbe11317` 已通过云端 Windows 定向测试、实际 portable 打包及未登录新档案原生启动。以下阶段性记录保留，最终结果以文末和 [windows-final.json](repair-evidence/windows-final.json) 为准。
+
 本记录新增，不改原冻结 98 项状态。用户已授权继续修复验收；执行仅 dot 云端，未访问用户 Windows/Mac，未写生产云端或续旧 QA grant。
 
 ## 已实现的五组代码
@@ -48,3 +50,20 @@ I03/C07 可独立代码路径：真实 Electron Node 模式 4/4 通过（指定�
 外层实际 App 路由工程回归 6/6 通过，修复前相同 fixture 3 失败；仅 route registry 和 motion wrapper 隔离，真实 gate/navigation/bridge/About 保留。包含加载中公共关于、未登录链接/返回、受保护业务与相似前缀、已登录原业务导航。motion 与真实注册仍由第二轮 Windows portable 验证。
 
 第二轮 Windows 已通过新增 BC/喂养/互动与真实 Chromium 资源 22 项；About JSDOM 用固定 30ms 等待产生偶发失败。测试已改 React act 完整刷新并连续 10 次 3/3 通过，不放宽断言、不改产品；继续第三轮实包。
+
+## 最终云端 Windows 验收与交付
+
+- 测试产品源码：`764aa2e38d5b5d7c99148d99153b7fb4cbe11317`，构建工作区干净；本次最终文档提交不改变该产品源码，不重复触发 CI。
+- [第三轮 Windows run 40457618988](https://github.com/Syndred/DesktopPet/actions/runs/40457618988) 全部步骤成功：实际 Electron 72 个 CJS；园地原请求重开/失回执恢复 1 个；选中宠物喂食与独立冷却 4 个；实际 Chromium 草稿 9 个、资源 hook 22 个；模拟 IPC 的真实组件账户恢复 2 个、关于 3 个、QA021 4 个、App 路由 6 个。测试数量不等于原 98 场景全量验收。
+- 主/UI 类型、Node/Electron 原生 SQLite、实际 Windows portable 构建、ASAR 源码/native/public 配置审计均成功。普通 SFX 实际启动使用新建未登录隔离 profile，无 QA marker；登录版本、关于构建信息、外层 EXE 路径和固定日志目录入口均通过。独立下载并查看关于页截图，版本/commit/指纹与 manifest 一致。
+- [下载本轮构建及受控证据](https://github.com/Syndred/DesktopPet/actions/runs/40457618988/artifacts/12713443078)，artifact 截止 **2026-11-10 05:58:32 UTC**；未发布 release，EXE 未签名。下载可能需要 GitHub 登录。
+- `Lingjing-0.1.8-portable-x64.exe` SHA-256：`36a0e6d706225e32a22fda8095b8f309ae4555031d3f756a77e6d4c3b00fdfcc`。独立下载 ZIP 为 169444279 bytes，SHA-256：`667d2e8ef50b36d44b8b26d3c1e0fe1daee45764e3405e0f3b94109b258a8731`；本地再次读取 ZIP 内 EXE 哈希一致。
+- 关于页源码指纹 `67ec7e1a749791d2f9d6b1cfef98c28fddb06a0f2a9af6f6dc8091f57d73d887`，编译指纹 `695d3b9d0be977580a5f989fa7a549d952b5500ba1850fe7cceb3eee599b2110`，构建时间 `2026-10-27T05:53:19.096Z`。
+
+### 已收口与保留边界
+
+五组修复及上述可独立工程补核已完成；前两轮发现的实际 App 未登录 About 门禁错误与 About DOM 固定睡眠竞态也已修复并在第三轮通过。BC001/002、QA021/027、I03/C07 的当前工程路径已覆盖；I02 只补录原始独立证明，不重做原操作、不改原版本登记。
+
+本轮没有访问用户 Windows/Mac，没有真实账号登录/生产数据写入，没有续过期 QA grant。原 owner 双端真实冲突/恢复、旧代理环境连接风暴根因、受控全局编号、定位/硬件/多 DPI/系统启动及部分动态效果仍缺对应真实前置，不能以隔离测试代替。原 98 冻结登记保持原状。显示 EXE 的 IPC 无错误不等于 Explorer 视觉选中；打开日志目录不证明存在日志或所有日志内容安全。
+
+在本轮已授权的隔离云端修复验收范围内，未发现剩余可独立推进的失败项。扩大到上述真实条件验收需明确对应身份/数据/环境边界，不以换 ID、换账号或重放旧操作规避。无需占用用户电脑来完成本轮交付。

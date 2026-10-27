@@ -1,0 +1,213 @@
+{
+  "observedAt": "2026-10-27T06:01:01.664Z",
+  "productCommit": "764aa2e38d5b5d7c99148d99153b7fb4cbe11317",
+  "workflowRun": 40457618988,
+  "jobId": 122034516930,
+  "url": "https://github.com/Syndred/DesktopPet/actions/runs/40457618988",
+  "conclusion": "success",
+  "job": {
+    "id": 122034516930,
+    "name": "focused-windows",
+    "status": "completed",
+    "conclusion": "success",
+    "run_id": 40457618988,
+    "logs_url": null,
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1
+      },
+      {
+        "name": "Run actions/checkout@v7.0.1",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2
+      },
+      {
+        "name": "Run actions/setup-node@v7.1.0",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3
+      },
+      {
+        "name": "Ordinary isolated dependency install",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4
+      },
+      {
+        "name": "Shared Node and Electron SQLite N-API probe",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5
+      },
+      {
+        "name": "Type-check touched desktop and UI contracts",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6
+      },
+      {
+        "name": "Only repair and directly related CJS regressions in real Windows Electron",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7
+      },
+      {
+        "name": "Selected-pet feed and per-pet interaction guard regressions",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8
+      },
+      {
+        "name": "Real Windows Chromium draft preservation and CAS regression",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9
+      },
+      {
+        "name": "Existing QA-027 resource draft regression in real Windows Chromium",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10
+      },
+      {
+        "name": "Install optional DOM-only test dependency outside product checkout",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11
+      },
+      {
+        "name": "Actual account restore UI and About components with synthetic IPC",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12
+      },
+      {
+        "name": "QA-021 conflict guidance and preserved-record action boundaries",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 13
+      },
+      {
+        "name": "Actual App public About whitelist and protected route gate",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 14
+      },
+      {
+        "name": "Build actual portable Windows executable from clean committed source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15
+      },
+      {
+        "name": "Verify ASAR closure, exact source/native bytes and public-only config",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16
+      },
+      {
+        "name": "Fresh-profile ordinary portable launch without login or QA grants",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 17
+      },
+      {
+        "name": "Retain controlled proof only, never profiles, databases or credentials",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 18
+      },
+      {
+        "name": "Post Run actions/setup-node@v7.1.0",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 35
+      },
+      {
+        "name": "Post Run actions/checkout@v7.0.1",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 36
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 37
+      }
+    ]
+  },
+  "portable": {
+    "scope": "Actual Windows portable SFX, fresh logged-out profile. Startup/configuration only, not live-account repair acceptance.",
+    "sourceCommit": "764aa2e38d5b5d7c99148d99153b7fb4cbe11317",
+    "startedAt": "2026-10-27T05:57:48.295Z",
+    "executable": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+    "executableSha256": "36a0e6d706225e32a22fda8095b8f309ae4555031d3f756a77e6d4c3b00fdfcc",
+    "ordinary": {
+      "scope": "Ordinary actual portable SFX launch with a fresh local profile, no QA marker and no cloud configuration environment variables. Configuration availability, not a live-cloud transaction.",
+      "profile": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\foundation\\cloud-engineering\\focused-portable\\run-1793080668295\\ordinary-config\\fresh-profile",
+      "pid": 5476,
+      "focusedInspection": {
+        "loginVersion": true,
+        "aboutVersionBuild": true,
+        "outerLauncherPathVerified": true,
+        "revealIpcReturnedWithoutError": true,
+        "explorerVisualVerified": false,
+        "logs": "owned-profile-directory-opened",
+        "notLiveAccountAcceptance": true
+      },
+      "actualCloudConfig": {
+        "projectRef": "jbvrdmrkwpznbrvteive",
+        "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+        "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+        "resourceDirectory": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\nsh63DA.tmp\\app\\resources"
+      },
+      "publicCloud": {
+        "projectRef": "jbvrdmrkwpznbrvteive",
+        "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+        "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+        "resourcePath": "lingjing-cloud-public.json"
+      },
+      "electron": "44.9.3",
+      "defaultProvider": "runtime",
+      "passed": true,
+      "completedAt": "2026-10-27T05:58:32.561Z"
+    },
+    "passed": true,
+    "completedAt": "2026-10-27T05:58:32.562Z"
+  },
+  "artifact": {
+    "id": 12713443078,
+    "url": "https://github.com/Syndred/DesktopPet/actions/runs/40457618988/artifacts/12713443078",
+    "expiresAt": "2026-11-10T05:58:32Z",
+    "zipSha256": "667d2e8ef50b36d44b8b26d3c1e0fe1daee45764e3405e0f3b94109b258a8731",
+    "contains": "portable EXE, build/audit and controlled fresh-profile screenshot/proofs; no profiles/databases"
+  },
+  "boundary": [
+    "Windows cloud runner only; user's devices untouched",
+    "Logged-out SFX runtime acceptance, no live account data writes or production grant changes",
+    "Known P1/P2 behavior covered by targeted actual runtime/SQLite and synthetic IPC/CAS tests, not original-owner dual-client live transactions",
+    "Original 98 frozen results remain unchanged; hardware/location/global serial permission/old proxy environment still not claimed verified",
+    "Executable unsigned because no signing certificate was configured; no release published"
+  ],
+  "independentArtifactVerification": {
+    "observedAt": "2026-10-27T06:04:34Z",
+    "zipBytes": 169444279,
+    "zipSha256": "667d2e8ef50b36d44b8b26d3c1e0fe1daee45764e3405e0f3b94109b258a8731",
+    "extractedExeSha256": "36a0e6d706225e32a22fda8095b8f309ae4555031d3f756a77e6d4c3b00fdfcc",
+    "manifest": {
+      "sourceCommit": "764aa2e38d5b5d7c99148d99153b7fb4cbe11317",
+      "sourceDirtyFiles": [],
+      "codeFingerprint": "67ec7e1a749791d2f9d6b1cfef98c28fddb06a0f2a9af6f6dc8091f57d73d887",
+      "compiledFingerprint": "695d3b9d0be977580a5f989fa7a549d952b5500ba1850fe7cceb3eee599b2110",
+      "builtAt": "2026-10-27T05:53:19.096Z",
+      "canonicalSourceFingerprint": "24f52eb9acde53fc46534f093210a89f519580f60be12969fc3a6a934d4a783c"
+    },
+    "aboutScreenshotReviewed": true,
+    "visualObservation": "Fresh-profile Windows About screen visibly shows version 0.1.8, exact commit/build/fingerprints, win32/x64 runtime, stable outer EXE and support buttons; no Explorer visual verification."
+  }
+}
