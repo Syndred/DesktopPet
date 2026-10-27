@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "evidenceLevel": "Human-reviewed public summary only; no raw receipts or internal matrix.",
+  "runUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40510154824",
+  "artifactUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40510154824/artifacts/12736598463",
+  "artifactZipSha256": "d48c0a86a5c8edab051c5441b0f2065c3ce28a6e020e62c630ced6e7fbbd6f5d",
+  "originalCase": "D08",
+  "conclusion": "Passed the original click-through and fullscreen-policy scope on the audited Windows portable package.",
+  "observed": "Normal settings UI click-through toggles, actual owned foreground main-window fullscreen detected by Win32, hide policy off/on, recovery of both pets and independent post-recovery interactions. Single runner display only; no external game/multi-DPI claim.",
+  "recovery": "Both pets restored after fullscreen ended and each accepted a real independent interaction. Unrelated settings remained unchanged; temporary windows, input state and isolated processes were cleaned up.",
+  "harnessDiagnosis": "The earlier probe failure was traced to the isolated harness omitting the standard PowerShell module search path (PSModulePath). Correcting that test environment enabled the unchanged application fullscreen monitor; it was not evidence of a product fullscreen-policy defect.",
+  "limitations": "Real native observations on one disposable cloud runner display and an owned application window. No claim about external games, multiple monitors or cross-DPI behavior.",
+  "acceptanceConclusion": {
+    "acceptedOriginalCases": 61,
+    "comparison": "Previously accepted 60 plus one original case. Five original cases have been fully exercised on this package; 56 retain exact-version, impact-reviewed prior evidence. Three checks within this run count as one original case."
+  },
+  "publicationBoundary": "Detailed receipts and the complete versioned matrix remain local. Public traceability uses only the existing workflow artifact and whole-archive checksum."
+}
