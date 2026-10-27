@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "evidenceLevel": "Human-reviewed public summary only; no raw receipts or internal matrix.",
+  "runUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40509509242",
+  "artifactUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40509509242/artifacts/12736772006",
+  "artifactZipSha256": "56fee3d3bc205d7a1bee8501d01b769c248b701bcfa36a55212a8577ba9b5ca5",
+  "originalCase": "B02",
+  "conclusion": "Passed original action-and-round-feedback scope on the audited Windows portable package using an isolated local simulation.",
+  "observed": "Nine normal UI rounds covered ordinary, elemental, dodge and ultimate actions, button availability and actual anger consumption, one round per operation, and corresponding rendered animation samples. Ultimate healing and status healing were observed.",
+  "limitations": "The dodge action consumed the available four anger but was hit by an elemental action; this is not evidence of successfully dodging a normal attack. Animation was naturally enabled, with no OS motion-setting override, forced charge or altered battle outcome. No real cloud claim.",
+  "acceptanceConclusion": {
+    "acceptedOriginalCases": 60,
+    "comparison": "Previously accepted 59 plus one original case, not nine cases. Four original cases have been fully exercised on this package; 56 retain exact-version, impact-reviewed earlier evidence."
+  },
+  "publicationBoundary": "Complete execution evidence and the versioned matrix remain local. Only the existing public workflow artifact and whole-archive checksum are referenced."
+}
