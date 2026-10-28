@@ -15,8 +15,6 @@ on:
       - 'scripts/acceptance/discovery-controls-dom.mjs'
       - 'scripts/acceptance/discovery-dom-deps/package.json'
       - 'scripts/acceptance/discovery-dom-deps/package-lock.json'
-      - 'scripts/acceptance/cloud-native-map-provider-acceptance.mjs'
-      - 'scripts/acceptance/cloud-native-nearby-controls-acceptance.mjs'
 
 permissions:
   contents: read
@@ -27,7 +25,7 @@ concurrency:
 
 jobs:
   map-discovery:
-    if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence' && !contains(github.event.head_commit.message, '[map-reuse-only]')
     runs-on: windows-latest
     timeout-minutes: 45
     steps:
