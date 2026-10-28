@@ -21,7 +21,7 @@ function CheckRoot {
   $script:stage='root-item-read'
   $item=Get-Item -LiteralPath $script:root -Force
   if(-not $item.PSIsContainer -or (($item.Attributes -band [IO.FileAttributes]::ReparsePoint) -ne 0)){Reject}
-  $script:stage='root-acl-read'; $acl=Get-Acl -LiteralPath $script:root
+  $script:stage='root-acl-read'; $acl=[IO.Directory]::GetAccessControl($script:root)
   $script:stage='root-acl-protected'
   if(-not $acl.AreAccessRulesProtected){Reject}
   CheckAcl $acl
@@ -48,17 +48,19 @@ function WriteNew($name,$value) {
   $bytes=[Text.Encoding]::UTF8.GetBytes(($value|ConvertTo-Json -Compress -Depth 10))
   $stream=[IO.File]::Open($path,[IO.FileMode]::CreateNew,[IO.FileAccess]::Write,[IO.FileShare]::None)
   try {$stream.Write($bytes,0,$bytes.Length);$stream.Flush($true)} finally {$stream.Dispose();[Array]::Clear($bytes,0,$bytes.Length)}
-  CheckAcl (Get-Acl -LiteralPath $path)
+  CheckAcl ([IO.File]::GetAccessControl($path))
 }
 function ReadOwn($name) {
   CheckRoot; $path=FilePath $name; $item=Get-Item -LiteralPath $path -Force
   if($item.PSIsContainer -or (($item.Attributes -band [IO.FileAttributes]::ReparsePoint) -ne 0) -or $item.Length -gt 32768){Reject}
-  CheckAcl (Get-Acl -LiteralPath $path)
+  CheckAcl ([IO.File]::GetAccessControl($path))
   return ([IO.File]::ReadAllText($path)|ConvertFrom-Json)
 }
 try {
   if($env:GITHUB_ACTIONS -cne 'true' -or -not $env:RUNNER_TEMP -or -not $env:GITHUB_RUN_ID -or $env:GITHUB_SHA -notmatch '^[a-f0-9]{40}$'){Reject}
   $script:stage='load-system-security';Add-Type -AssemblyName System.Security
+  $script:stage='acl-framework-api-contract'
+  if($null -eq [IO.Directory].GetMethod('SetAccessControl',[type[]]@([string],[Security.AccessControl.DirectorySecurity])) -or $null -eq [IO.Directory].GetMethod('GetAccessControl',[type[]]@([string])) -or $null -eq [IO.File].GetMethod('GetAccessControl',[type[]]@([string]))){Reject}
   $script:stage='read-synthetic-stdin';$inputText=[Console]::In.ReadToEnd()
   if($inputText.Length -gt 32768){Reject}
   $x=$inputText|ConvertFrom-Json; $inputText=$null
@@ -77,12 +79,12 @@ try {
     $script:stage='init-protect-dacl';$acl.SetAccessRuleProtection($true,$false)
     $script:stage='init-create-rules'
     foreach($id in @($sid,'S-1-5-18')){$r=New-Object Security.AccessControl.FileSystemAccessRule((New-Object Security.Principal.SecurityIdentifier($id)),[Security.AccessControl.FileSystemRights]::FullControl,([Security.AccessControl.InheritanceFlags]::ContainerInherit -bor [Security.AccessControl.InheritanceFlags]::ObjectInherit),[Security.AccessControl.PropagationFlags]::None,[Security.AccessControl.AccessControlType]::Allow);$acl.AddAccessRule($r)}
-    $script:stage='init-apply-acl';Set-Acl -LiteralPath $root -AclObject $acl;CheckRoot
+    $script:stage='init-apply-acl';[IO.Directory]::SetAccessControl($root,$acl);CheckRoot
     $result=@{initialized=$true;aclExact=$true}
   } elseif($Action -eq 'cleanup') {
     CheckRoot
     if(-not(Test-Path -LiteralPath (FilePath 'terminal.json'))){WriteNew 'terminal.json' @{state='closed';at=(Now)}}
-    foreach($item in @(Get-ChildItem -LiteralPath $root -Force)){if($item.Name -notin @('sealed.json','intent.json','receipt.json','terminal.json') -or $item.PSIsContainer -or (($item.Attributes -band [IO.FileAttributes]::ReparsePoint) -ne 0)){Reject};CheckAcl (Get-Acl -LiteralPath $item.FullName)}
+    foreach($item in @(Get-ChildItem -LiteralPath $root -Force)){if($item.Name -notin @('sealed.json','intent.json','receipt.json','terminal.json') -or $item.PSIsContainer -or (($item.Attributes -band [IO.FileAttributes]::ReparsePoint) -ne 0)){Reject};CheckAcl ([IO.File]::GetAccessControl($item.FullName))}
     Remove-Item -LiteralPath $root -Recurse -Force
     if(Test-Path -LiteralPath $root){Reject}
     $result=@{removed=$true;forensicErasureClaim=$false}
@@ -130,7 +132,7 @@ try {
   [Console]::Out.WriteLine((@{ok=$true;result=$result}|ConvertTo-Json -Compress -Depth 5))
 } catch {
   $type=$_.Exception.GetType().FullName
-  if($type -notin @('System.Management.Automation.RuntimeException','System.Management.Automation.MethodInvocationException','System.Management.Automation.ParameterBindingException','System.UnauthorizedAccessException','System.Security.Cryptography.CryptographicException','System.IO.IOException')){$type='OTHER'}
+  if($type -notin @('System.Management.Automation.CommandNotFoundException','System.Management.Automation.RuntimeException','System.Management.Automation.MethodInvocationException','System.Management.Automation.ParameterBindingException','System.UnauthorizedAccessException','System.Security.Cryptography.CryptographicException','System.IO.IOException')){$type='OTHER'}
   [Console]::Out.WriteLine((@{ok=$false;error='DPAPI_CONTRACT_REJECTED';stage=$script:stage;exceptionType=$type;acl=$script:aclObservation}|ConvertTo-Json -Compress -Depth 4));exit 1
 } finally {
   if($null -ne $plain){[Array]::Clear($plain,0,$plain.Length)}
