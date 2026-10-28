@@ -17,10 +17,11 @@ jobs:
       (github.event_name == 'push' &&
       github.actor == 'Syndred' && github.triggering_actor == 'Syndred' && github.run_attempt == 1 &&
       startsWith(github.event.head_commit.message, 'acceptance: authorized same-run completion '))
-    environment: desktop-pet-qa-completion
+    environment: desktoppet-qa-20261028
     runs-on: windows-latest
     timeout-minutes: 330
     env:
+      DESKTOPPET_QA_CUSTODY_BINDING_JSON: ${{ vars.DESKTOPPET_QA_CUSTODY_BINDING_JSON }}
       PACKAGE_SOURCE: 5016f1c3f7de04b4e2b322d0b47ec52248596771
     steps:
       - name: Preserve original job deadline with ten-minute terminal cleanup reserve

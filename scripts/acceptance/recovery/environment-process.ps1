@@ -16,7 +16,28 @@ $clockItem=Get-Item -LiteralPath $clockPath
 if(($clockItem.Attributes -band [IO.FileAttributes]::ReparsePoint) -or $clockItem.Length -gt 2048){throw 'JOB_CLOCK_INVALID'}
 $clock=Get-Content -LiteralPath $clockPath -Raw|ConvertFrom-Json
 if($clock.version -ne 1 -or [string]$clock.run -cne $env:GITHUB_RUN_ID -or $clock.commit -cne $env:GITHUB_SHA -or ($clock.hardEndMs-$clock.startedAtMs) -ne 19200000){throw 'JOB_CLOCK_INVALID'}
-$hardEnd=[DateTimeOffset]::FromUnixTimeMilliseconds([long]$clock.hardEndMs).UtcDateTime
+# The original job clock stays truthful. Parent custody is an additional absolute cap.
+$custodyPath=Join-Path $directory 'environment-custody-window.json'
+function Validate-Custody($value){
+ if((($value.PSObject.Properties.Name|Sort-Object)-join ',') -cne 'absoluteCleanupDeadlineMs,custodyStartedAtMs,environmentId,nonce,version' -or $value.version -ne 1 -or $value.environmentId -ne 25567576058 -or $value.nonce -notmatch '^[a-f0-9-]{36}$'){throw 'CUSTODY_BINDING_INVALID'}
+ foreach($n in @($value.custodyStartedAtMs,$value.absoluteCleanupDeadlineMs)){if($n -isnot [long] -and $n -isnot [int]){throw 'CUSTODY_TIME_INVALID'};if($n -le 0 -or $n -gt 9007199254740991){throw 'CUSTODY_TIME_INVALID'}}
+ if(($value.absoluteCleanupDeadlineMs-$value.custodyStartedAtMs) -ne 19800000 -or $value.custodyStartedAtMs -gt $clock.startedAtMs){throw 'CUSTODY_WINDOW_INVALID'}
+}
+if(Test-Path -LiteralPath $custodyPath){
+ $item=Get-Item -LiteralPath $custodyPath;if(($item.Attributes -band [IO.FileAttributes]::ReparsePoint) -or $item.Length -gt 2048){throw 'CUSTODY_FILE_INVALID'}
+ $custody=Get-Content -LiteralPath $custodyPath -Raw|ConvertFrom-Json;Validate-Custody $custody
+ if($Action -ne 'stop'){$current=$env:DESKTOPPET_QA_CUSTODY_BINDING_JSON|ConvertFrom-Json;Validate-Custody $current;foreach($k in $custody.PSObject.Properties.Name){if($custody.$k -cne $current.$k){throw 'NO_CUSTODY_DEADLINE_RESTART'}}}
+}else{
+ if($Action -ne 'selftest'){throw 'ORIGINAL_CUSTODY_WINDOW_REQUIRED'}
+ if(!$env:DESKTOPPET_QA_CUSTODY_BINDING_JSON -or $env:DESKTOPPET_QA_CUSTODY_BINDING_JSON.Length -gt 2048){throw 'CUSTODY_BINDING_REQUIRED'}
+ $custody=$env:DESKTOPPET_QA_CUSTODY_BINDING_JSON|ConvertFrom-Json;Validate-Custody $custody
+ New-Item -ItemType Directory -Path $directory -Force|Out-Null
+ $stream=[IO.File]::Open($custodyPath,[IO.FileMode]::CreateNew,[IO.FileAccess]::Write,[IO.FileShare]::None);try{$bytes=[Text.Encoding]::UTF8.GetBytes(($custody|ConvertTo-Json -Compress));$stream.Write($bytes,0,$bytes.Length)}finally{$stream.Dispose()}
+}
+$effectiveHardEndMs=[Math]::Min([long]$clock.hardEndMs,[long]$custody.absoluteCleanupDeadlineMs)
+$hardEnd=[DateTimeOffset]::FromUnixTimeMilliseconds($effectiveHardEndMs).UtcDateTime
+# Terminal cleanup remains callable even after the business/custody wait deadline.
+if($Action -ne 'stop' -and [DateTime]::UtcNow -ge $hardEnd){throw 'CUSTODY_WINDOW_EXPIRED'}
 function Write-Owned($process) {
  $process.Refresh()
  $ticks=$process.StartTime.ToUniversalTime().Ticks.ToString([Globalization.CultureInfo]::InvariantCulture)
@@ -58,7 +79,7 @@ if($Action -eq 'start'){
  $entry=Join-Path $PSScriptRoot 'environment-bootstrap.mjs'
  $child=Start-Process -FilePath (Get-Command node).Source -ArgumentList ('"'+$entry+'"') -WorkingDirectory $root -PassThru -WindowStyle Hidden -RedirectStandardOutput (Join-Path $directory 'private-stdout.txt') -RedirectStandardError (Join-Path $directory 'private-stderr.txt')
  $null=$child.Handle;Write-Owned $child|Out-Null
- $until=[DateTime]::UtcNow.AddSeconds(20)
+ $until=[DateTime]::UtcNow.AddSeconds(20);if($until -gt $hardEnd){$until=$hardEnd}
  while([DateTime]::UtcNow -lt $until){if(!(Resolve-Owned)){throw 'ENVIRONMENT_ENTRY_STOPPED_BEFORE_READY'};$path=Join-Path $directory 'environment-status.json';if(Test-Path -LiteralPath $path){$r=Read-SafeJson $path;if($r.version -ne 1 -or [string]$r.run -cne $env:GITHUB_RUN_ID -or $r.commit -cne $env:GITHUB_SHA -or $r.source -cne 'github-environment-v1' -or $r.mainCalled -ne $true){throw 'ENVIRONMENT_READY_BINDING_INVALID'};if($r.ticks -ge 1 -and $r.stage -ne 'failed' -and (Resolve-Owned)){@{version=1;run=$env:GITHUB_RUN_ID;commit=$env:GITHUB_SHA;firstTickVerified=$true;ownedPidAlive=$true}|ConvertTo-Json|Set-Content -LiteralPath (Join-Path $directory 'environment-start-ready.json') -Encoding UTF8;exit 0}};Start-Sleep -Milliseconds 100}
  throw 'ENVIRONMENT_START_HANDSHAKE_TIMEOUT'
 }
@@ -66,7 +87,8 @@ if($Action -eq 'reconcile'){
  $bindingPath=Join-Path $directory 'entry-binding.json';if(!(Test-Path -LiteralPath $bindingPath)){Write-Output 'NO_PLATFORM_BINDING_NO_READBACK';exit 0}
  if(Test-Path -LiteralPath $reconcilePidFile){throw 'NO_SECOND_READBACK_HOLDER'}
  $status=Read-SafeJson (Join-Path $directory 'environment-status.json');if($status.stage -eq 'completed' -and $status.passed -eq $true){Write-Output 'COMPLETED_NO_READBACK';exit 0}
- $until=[DateTime]::UtcNow.AddSeconds(45);while((Resolve-Owned) -and [DateTime]::UtcNow -lt $until){Start-Sleep -Milliseconds 100};if(Resolve-Owned){throw 'ORIGINAL_HOLDER_EXIT_UNCONFIRMED_NO_RESTART'}
+ $until=[DateTime]::UtcNow.AddSeconds(45);if($until -gt $hardEnd){$until=$hardEnd};while((Resolve-Owned) -and [DateTime]::UtcNow -lt $until){Start-Sleep -Milliseconds 100};if(Resolve-Owned){throw 'ORIGINAL_HOLDER_EXIT_UNCONFIRMED_NO_RESTART'}
+ if([DateTime]::UtcNow -ge $hardEnd){throw 'CUSTODY_WINDOW_EXPIRED_NO_READBACK_START'}
  $pidFile=$reconcilePidFile;$entry=Join-Path $PSScriptRoot 'environment-bootstrap.mjs'
  $child=Start-Process -FilePath (Get-Command node).Source -ArgumentList ('"'+$entry+'" --reconcile-only') -WorkingDirectory $root -PassThru -WindowStyle Hidden -RedirectStandardOutput (Join-Path $directory 'private-readback-stdout.txt') -RedirectStandardError (Join-Path $directory 'private-readback-stderr.txt');$null=$child.Handle;Write-Owned $child|Out-Null
  $until=[DateTime]::UtcNow.AddMinutes(2);if($until -gt $hardEnd){$until=$hardEnd}
@@ -113,7 +135,7 @@ if($Action -eq 'stop'){
  throw 'WATCHDOG_CLEANUP_TIMEOUT_NOT_CONFIRMED'
 }
 
-$bindingPath=Join-Path $directory 'entry-binding.json';$bindingUntil=[DateTime]::UtcNow.AddMinutes(2)
+$bindingPath=Join-Path $directory 'entry-binding.json';$bindingUntil=[DateTime]::UtcNow.AddMinutes(2);if($bindingUntil -gt $hardEnd){$bindingUntil=$hardEnd}
 while(!(Test-Path -LiteralPath $bindingPath) -and [DateTime]::UtcNow -lt $bindingUntil){if(!(Resolve-Owned)){throw 'ENVIRONMENT_STOPPED_BEFORE_BINDING'};Start-Sleep -Milliseconds 100}
 $binding=Read-SafeJson $bindingPath;if($binding.version -ne 1 -or [string]$binding.run -cne $env:GITHUB_RUN_ID -or $binding.commit -cne $env:GITHUB_SHA -or $binding.requestDigest -notmatch '^[a-f0-9]{64}$'){throw 'PLATFORM_PHASE_BINDING_REQUIRED'}
 if($Action -eq 'baseline'){
