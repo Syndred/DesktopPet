@@ -18,6 +18,9 @@ jobs:
   synthetic-only:
     runs-on: windows-latest
     timeout-minutes: 8
+    env:
+      TEMP: ${{ runner.temp }}
+      TMP: ${{ runner.temp }}
     steps:
       - uses: actions/checkout@v7.0.1
         with:
@@ -27,11 +30,19 @@ jobs:
           node-version: 24
       - name: Isolated pinned cryptography dependency only
         run: npm ci --prefix scripts/acceptance/recovery --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
-      - name: Synthetic authorization data and forged capability rejection; approval pin stays null
+      - name: Synthetic authorization data and forged capability rejection; only pinned parent public key trusted
         run: node --test scripts/acceptance/dpapi/authorized-vault-contract.test.mjs
       - name: Fake credential, real short watchdog deadline and same-VM process restart
         timeout-minutes: 4
         run: node scripts/acceptance/dpapi/authorized-vault-windows.test.mjs
+      - name: Synthetic exact entry supervisor contract with original job deadline
+        shell: pwsh
+        run: |
+          $p=Join-Path $env:RUNNER_TEMP ('same-run-job-clock-'+$env:GITHUB_RUN_ID+'.json')
+          if(Test-Path -LiteralPath $p){throw 'NO_JOB_DEADLINE_RESTART'}
+          $now=[DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
+          @{version=1;run=$env:GITHUB_RUN_ID;commit=$env:GITHUB_SHA;startedAtMs=$now;hardEndMs=($now+19200000)}|ConvertTo-Json|Set-Content -LiteralPath $p -Encoding utf8
+          ./scripts/acceptance/recovery/same-run-process.ps1 -Action selftest
       - uses: actions/upload-artifact@v7.0.2
         if: always()
         with:

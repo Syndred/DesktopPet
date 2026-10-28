@@ -12,6 +12,6 @@ test('exact future fixed batch data contract only; all substituted identity/run/
  for(const mutate of [x=>x.expiresAt=1000,x=>x.expiresAt=x.issuedAt+19800001,x=>x.identities.C.accountKey='another',x=>x.packageSource='b'.repeat(40),x=>x.permissions.push('reset-other'),x=>x.recovery.expectedUpdatedAt.B='unknown',x=>x.recovery.resetNonces.B=x.recovery.resetNonces.A,x=>x.recovery.encryptionKeySha256='0'.repeat(64)]){const x=structuredClone(a);mutate(x);assert.throws(()=>validateAuthorizationData(x,env,1500));}
  assert.throws(()=>validateAuthorizationData(a,{...env,GITHUB_RUN_ATTEMPT:'2'},1500));assert.throws(()=>validateAuthorizationData(a,{...env,GITHUB_TRIGGERING_ACTOR:'other'},1500));
 });
-test('fake methods/boolean are not authorization or vault capabilities; actual signing pin stays closed',async()=>{
- assert.equal(APPROVAL_KEY_SHA256,null);assert.throws(()=>assertAuthorizedVault({sealBeforeMutation(){},ready:true}));assert.throws(()=>assertSameRunAuthorization({approved:true}));await assert.rejects(verifySameRunAuthorization({ticket:'not-a-real-ticket',publicKeyPem:a.recovery.signingPublicPem,env}));
+test('fake methods/boolean are not authorization or vault capabilities; only pinned parent signing key is trusted',async()=>{
+ assert.equal(APPROVAL_KEY_SHA256,'bc18889a509bc5aa204ac95135d9811f4f6ec2af51d54ebc915d99f9b8c4ae12');assert.throws(()=>assertAuthorizedVault({sealBeforeMutation(){},ready:true}));assert.throws(()=>assertSameRunAuthorization({approved:true}));await assert.rejects(verifySameRunAuthorization({ticket:'not-a-real-ticket',publicKeyPem:a.recovery.signingPublicPem,env}));
 });

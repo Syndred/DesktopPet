@@ -1,6 +1,6 @@
 # Purpose-specific same-run vault. Invoked ONLY via reviewed authorized-vault-client private pipes.
 # No console/CLI plaintext consumer; restore payload is captured internally by the owned Node holder.
-param([Parameter(Mandatory=$true)][ValidateSet('init','seal','restore','claim','readback','receipt','cleanup','bind-holder','bind-supervisor','register-owned','registry','business-deadline','request-stop','destroy-ciphertext')][string]$Action)
+param([Parameter(Mandatory=$true)][ValidateSet('init','seal','restore','claim','readback','receipt','cleanup','bind-holder','bind-supervisor','register-owned','registry','business-deadline','request-stop','inspect-intent','destroy-ciphertext')][string]$Action)
 $ErrorActionPreference='Stop'
 $plain=$null; $clear=$null; $script:stage='bootstrap'; $script:aclObservation=$null
 function Reject { throw 'AUTHORIZED_VAULT_REJECTED' }
@@ -165,7 +165,14 @@ try {
     }
     CheckBinding $x.binding
     $lease=ReadOwn 'lease.json';if($lease.requestDigest -cne $x.requestDigest -or [long]$lease.expiresAt -ne [long]$x.binding.expiresAt -or [long]$lease.issuedAt -ne [long]$x.binding.issuedAt){Reject}
-    if($Action -eq 'seal') {
+    if($Action -eq 'inspect-intent') {
+      if($x.intentDigest -notmatch '^[a-f0-9]{64}$' -or $x.operation -notin @('reset','register')){Reject}
+      $hasSeal=Test-Path -LiteralPath (FilePath $script:sealedName);$hasClaim=Test-Path -LiteralPath (FilePath $script:intentName);$hasReceipt=Test-Path -LiteralPath (FilePath $script:receiptName)
+      if($hasSeal){$sealed=ReadOwn $script:sealedName;if([Convert]::ToBase64String((Entropy $sealed.binding)) -cne [Convert]::ToBase64String((Entropy $x.binding))){Reject}}
+      if($hasReceipt -and -not $hasClaim){Reject};if($hasClaim -and -not $hasSeal){Reject}
+      if(-not $hasClaim){$state=if($hasSeal){'sealed-not-submitted'}else{'not-sealed'};$result=@{state=$state;claimed=$false;requiresAuthoritativeReadback=$false;mayBlindRetry=$false}}
+      else{$claim=ReadOwn $script:intentName;if($claim.intent -cne $x.intentDigest -or $claim.operation -cne $x.operation -or [Convert]::ToBase64String((Entropy $claim.binding)) -cne [Convert]::ToBase64String((Entropy $x.binding))){Reject};$state='claimed-unknown';if($hasReceipt){$receipt=ReadOwn $script:receiptName;if($receipt.state -cne 'confirmed-after-readback' -or $receipt.intent -cne $claim.intent -or $receipt.outcome -notin @('confirmed','rejected')){Reject};$state='locally-'+$receipt.outcome};$result=@{state=$state;claimed=$true;requiresAuthoritativeReadback=(-not $hasReceipt);mayBlindRetry=$false}}
+    } elseif($Action -eq 'seal') {
       if($x.secret -isnot [string] -or $x.secret.Length -lt 40 -or $x.secret.Length -gt 64 -or $x.secret -match '[\x00-\x1f]'){Reject}
       $plain=[Text.Encoding]::UTF8.GetBytes($x.secret)
       $cipher=[Security.Cryptography.ProtectedData]::Protect($plain,(Entropy $x.binding),[Security.Cryptography.DataProtectionScope]::CurrentUser)
