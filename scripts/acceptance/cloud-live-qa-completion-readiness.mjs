@@ -2,7 +2,7 @@
 // operation is implemented here. An unimplemented selected case blocks BEFORE
 // the holder may recover/login any identity. Static inventory is not acceptance.
 import assert from 'node:assert/strict';
-import {preparationStage,preparationAllocationStart,preparationDirectory,preparationFailed,cleanupPreparation,preparationSnapshot} from './recovery/preparation-state.mjs';
+import {preparationPureContractFailure,preparationStage,preparationAllocationStart,preparationDirectory,preparationFailed,cleanupPreparation,preparationSnapshot} from './recovery/preparation-state.mjs';
 import {assertCompletionAuthorization,vaultChildEnvironment} from './dpapi/authorized-vault-client.mjs';
 import {readFileSync,readdirSync} from 'node:fs';
 import {createHash} from 'node:crypto';
@@ -18,7 +18,7 @@ const root=fileURLToPath(new URL('../../',import.meta.url));
 const sha=x=>createHash('sha256').update(x).digest('hex');
 const frozen=x=>Object.freeze(x);
 export const MODULES=frozen({
- preparationObservation:frozen({file:'recovery/preparation-state.mjs',sha256:'7fca7c5c40a701d9304897394593ee6197ee84a3cb30366bac223b775353d5f4',exports:['createPreparationState','preparationStage','cleanupPreparation','preparationSnapshot'],tests:['recovery/preparation-state.test.mjs']}),
+ preparationObservation:frozen({file:'recovery/preparation-state.mjs',sha256:'aa04d061fe004d68a3bedf6d511dac6b88e5eb159044c1a6312e0ede0a2bda85',exports:['createPreparationState','preparationStage','cleanupPreparation','preparationSnapshot'],tests:['recovery/preparation-state.test.mjs']}),
  platformAdmission:frozen({file:'recovery/github-environment-admission.mjs',sha256:'1326909620ba2d4983620bc68e2afd4d9ef77505df941b93d0e56eb05ff5cc76',exports:['admitGitHubEnvironment', 'assertPlatformAdmission', 'validatePlatformReadbacks'],tests:['recovery/github-environment-admission.test.mjs']}),
  s06Platform:frozen({file:'cloud-live-qa-s06-platform-transition.mjs',sha256:'c04df3f87d5c6af19180ee21bd39b2991fdba15fffbfd2a7d178a42145f212ec',exports:['observePlatformFourGrantTransition', 'consumePlatformGrantTransition'],tests:['cloud-live-qa-s06-platform-transition.test.mjs'],dependencies:['vaultClient']}),
  s02Platform:frozen({file:'cloud-live-qa-s02-platform-cell.mjs',sha256:'0964be069d35644008164b3ec3cca62ea45f30bdaeec072218bad46ccd0ff47a',exports:['createPlatformCellRequest', 'consumePlatformCellRequest'],tests:['cloud-live-qa-s02-platform-cell.test.mjs'],dependencies:['platformAdmission']}),
@@ -109,7 +109,7 @@ export async function prepareCompletionArtifacts({selectedCases=DEFAULT_REQUESTE
  // Import and run the ACTUAL fixed pure contracts before identity handling. No
  // caller-supplied runner/shell/test callback can manufacture a success result.
  preparationStage(preparation,'pure-contracts');
- const driver=await import(new URL('cloud-live-qa-completion-driver.mjs',import.meta.url).href);assert.equal(typeof driver.runPreparedCloudCompletion,'function');const tests=[...new Set([...moduleNames.flatMap(k=>MODULES[k].tests),'cloud-live-qa-completion-readiness.test.mjs'])];if(tests.length)execFileSync(process.execPath,['--test',...tests.map(p=>'scripts/acceptance/'+p)],{cwd:root,timeout:120000,maxBuffer:2*1024*1024,stdio:'pipe',env:vaultChildEnvironment()});
+ const driver=await import(new URL('cloud-live-qa-completion-driver.mjs',import.meta.url).href);assert.equal(typeof driver.runPreparedCloudCompletion,'function');const tests=[...new Set([...moduleNames.flatMap(k=>MODULES[k].tests),'cloud-live-qa-completion-readiness.test.mjs'])];if(tests.length){try{execFileSync(process.execPath,['--test','--test-reporter=tap',...tests.map(p=>'scripts/acceptance/'+p)],{cwd:root,timeout:120000,maxBuffer:2*1024*1024,stdio:'pipe',env:vaultChildEnvironment()});}catch(error){preparationPureContractFailure(preparation,error,tests.map(p=>readFileSync(new URL(p,import.meta.url),'utf8')));throw error;}}
  const packageProof=await verifyCompletionPackageBeforeCredentials(packageBinding,{preparation});
  const tickets={};await loaded.native.selftestNativeDialogApis({preparation});for(const role of['a','a2','a3','b','c']){preparationStage(preparation,'profile-allocation');preparationAllocationStart(preparation);tickets[role]=loaded.native.allocateLiveNativeProfile({runId});preparationDirectory(preparation,tickets[role].profile);}
  const value=Object.freeze({});artifactHandles.set(value,{loaded,tickets,moduleHashes,packageProof,preparation,used:false});return value;
