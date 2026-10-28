@@ -1,0 +1,41 @@
+name: DesktopPet authorized-vault primitives synthetic contract
+on:
+  push:
+    branches: ['codex/cloud-authority-convergence']
+    paths:
+      - 'scripts/acceptance/dpapi/authorized-vault.ps1'
+      - 'scripts/acceptance/dpapi/authorized-vault-client.mjs'
+      - 'scripts/acceptance/dpapi/holder-supervisor.ps1'
+      - 'scripts/acceptance/dpapi/authorized-vault-contract.test.mjs'
+      - 'scripts/acceptance/dpapi/authorized-vault-windows.test.mjs'
+      - '.github/workflows/cloud-authorized-dpapi-contract.yml'
+permissions:
+  contents: read
+concurrency:
+  group: desktoppet-authorized-dpapi-synthetic-contract
+  cancel-in-progress: false
+jobs:
+  synthetic-only:
+    runs-on: windows-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+      - name: Isolated pinned cryptography dependency only
+        run: npm ci --prefix scripts/acceptance/recovery --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
+      - name: Synthetic authorization data and forged capability rejection; approval pin stays null
+        run: node --test scripts/acceptance/dpapi/authorized-vault-contract.test.mjs
+      - name: Fake credential, real short watchdog deadline and same-VM process restart
+        timeout-minutes: 4
+        run: node scripts/acceptance/dpapi/authorized-vault-windows.test.mjs
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: authorized-dpapi-synthetic-contract-${{ github.run_id }}
+          path: artifacts/qa/authorized-dpapi-synthetic/evidence.json
+          if-no-files-found: warn
+          retention-days: 7

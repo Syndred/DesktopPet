@@ -1,0 +1,51 @@
+// Synthetic-only integration of new production-purpose primitives. No Auth/SDK/network.
+// Fixed known identity strings are binding fixtures; the only secret is a public fake string.
+import assert from 'node:assert/strict';
+import {spawn} from 'node:child_process';
+import {createHash,randomUUID} from 'node:crypto';
+import {mkdirSync,mkdtempSync,writeFileSync,readFileSync,existsSync,rmSync} from 'node:fs';
+import {join,resolve} from 'node:path';
+if(process.platform!=='win32'||process.env.GITHUB_ACTIONS!=='true')throw Error('WINDOWS_GITHUB_ONLY');
+const hash=x=>createHash('sha256').update(x).digest('hex'),requestDigest=hash('SYNTHETIC:'+randomUUID()),directoryName=`dpapi-authorized-${process.env.GITHUB_RUN_ID}-${requestDigest}`,root=join(process.env.RUNNER_TEMP,directoryName);
+const ps=join(process.env.SystemRoot,'System32','WindowsPowerShell','v1.0','powershell.exe'),helper=resolve('scripts/acceptance/dpapi/authorized-vault.ps1'),supervisor=resolve('scripts/acceptance/dpapi/holder-supervisor.ps1');
+const proof={version:1,syntheticOnly:true,realAccountOperations:false,passed:false,checks:[]};const owned=[],ownedProfiles=[];let watchdog,created=false;
+const stamp=()=>Date.now();let lease,binding,businessDeadlineValue;
+const base={purpose:'same-run-qa-continuity-v1',directoryName,requestDigest};
+function capture(args,input,timeout=15000){return new Promise((ok,no)=>{const c=spawn(ps,args,{stdio:['pipe','pipe','pipe'],windowsHide:true});let chunks=[],size=0,expired=false;const timer=setTimeout(()=>{expired=true;c.kill();},timeout);c.stdout.on('data',b=>{size+=b.length;if(size>32768){expired=true;c.kill();}else chunks.push(b);});c.stderr.on('data',()=>{});c.on('error',()=>{clearTimeout(timer);no(Error('FIXED_SPAWN_FAILED'));});c.on('close',code=>{clearTimeout(timer);const bytes=Buffer.concat(chunks);for(const b of chunks)b.fill(0);try{if(expired)throw Error();ok({code,value:JSON.parse(bytes.toString('utf8'))});}catch{no(Error('FIXED_RECEIPT_FAILED'));}finally{bytes.fill(0);}});c.stdin.on('error',()=>{});c.stdin.end(input??'');});}
+async function call(action,extra={}){const r=await capture(['-NoLogo','-NoProfile','-NonInteractive','-File',helper,'-Action',action],JSON.stringify({...base,binding,...extra}));return r.value;}
+function timerChild(){const c=spawn(process.execPath,['-e','setInterval(()=>{},1000)'],{stdio:'ignore',windowsHide:true});owned.push(c);return c;}
+async function metadata(c){assert.ok(Number.isSafeInteger(c.pid));const command=`$p=Get-Process -Id ${c.pid};@{pid=$p.Id;startTicks=$p.StartTime.ToUniversalTime().Ticks.ToString([Globalization.CultureInfo]::InvariantCulture);image=$p.MainModule.FileName}|ConvertTo-Json -Compress`;const r=await capture(['-NoLogo','-NoProfile','-NonInteractive','-Command',command]);assert.equal(r.code,0);return r.value;}
+async function stopped(c,ms=15000){if(c.exitCode!==null||c.signalCode!==null)return;await Promise.race([new Promise(r=>c.once('exit',r)),new Promise((_,j)=>setTimeout(()=>j(Error('OWNED_EXIT_UNCONFIRMED')),ms))]);}
+async function check(name,fn){proof.stage=name;await fn();proof.checks.push({name,passed:true});}
+try{
+ const start=stamp();lease={run:process.env.GITHUB_RUN_ID,commit:process.env.GITHUB_SHA,requestDigest,issuedAt:start,expiresAt:start+90000};
+ binding={version:1,...lease,project:'jbvrdmrkwpznbrvteive',slot:'A',accountKey:'qa20261027a8be246d1',owner:'account:354d8831-51fc-417b-bc69-19a18b74387b',authUid:'65dd4c6b-7bfb-435f-840e-d2457c42e692',credentialVersion:hash('SYNTHETIC_CREDENTIAL_VERSION')};
+ await check('protected-lease-init',async()=>{assert.equal((await call('init',{lease})).ok,true);created=true;});
+ await check('fake-secret-sealed-and-private-pipe-restored',async()=>{assert.equal((await call('seal',{secret:'SYNTHETIC_ONLY_NOT_REAL_CREDENTIAL_012345678901234567'})).ok,true);const r=await call('restore');assert.equal(r.result.secret,'SYNTHETIC_ONLY_NOT_REAL_CREDENTIAL_012345678901234567');r.result.secret=null;});
+ const h1=timerChild(),m1=await metadata(h1);
+ await check('holder-epoch-and-no-live-replacement',async()=>{assert.equal((await call('bind-holder',{record:m1})).result.epoch,1);assert.equal((await call('bind-holder',{record:m1})).ok,false);});
+ const profile=mkdtempSync(join(process.env.RUNNER_TEMP,'lingjing-live-holder-'));ownedProfiles.push(profile);writeFileSync(join(profile,'synthetic.txt'),'PUBLIC_SYNTHETIC_FILE');const app=timerChild(),appRecord=await metadata(app);
+ await check('exact-owned-model-registry-and-private-profile',async()=>{assert.equal((await call('register-owned',{record:{role:'a',profile,launcher:appRecord,runtime:appRecord}})).ok,true);});
+ watchdog=spawn(ps,['-NoLogo','-NoProfile','-NonInteractive','-File',supervisor,'-RequestDigest',requestDigest,'-HolderPid',String(m1.pid),'-HolderStartTicks',m1.startTicks,'-HolderImage',m1.image],{stdio:['ignore','pipe','pipe'],windowsHide:true});owned.push(watchdog);watchdog.stderr.on('data',()=>{});const lines=[];let buffer='';watchdog.stdout.on('data',b=>{buffer+=b.toString('utf8');while(buffer.includes('\n')){const end=buffer.indexOf('\n');try{lines.push(JSON.parse(buffer.slice(0,end)));}catch{lines.push({parseFailed:true});watchdog.kill();}buffer=buffer.slice(end+1);}});
+ await check('independent-owned-watchdog-ready-and-registered',async()=>{const until=stamp()+15000;while(!lines.some(r=>r.ready===true)&&stamp()<until){if(watchdog.exitCode!==null)break;await new Promise(r=>setTimeout(r,50));}assert.ok(lines.some(r=>r.ready===true));assert.equal((await call('bind-supervisor',{record:await metadata(watchdog)})).ok,true);});
+ await check('durable-unknown-intent-no-blind-repeat',async()=>{const intentDigest=hash('SYNTHETIC_FIXED_INTENT');assert.equal((await call('claim',{operation:'login',intentDigest})).ok,true);assert.equal((await call('readback',{intentDigest})).result.requiresAuthoritativeReadback,true);assert.equal((await call('claim',{operation:'login',intentDigest})).ok,false);});
+ h1.kill();await stopped(h1);
+ await check('holder-death-stops-owned-app-but-preserves-profile-and-ciphertext',async()=>{await stopped(app);assert.equal(existsSync(profile),true);assert.equal(existsSync(root),true);const r=await call('restore');assert.equal(typeof r.result.secret,'string');r.result.secret=null;});
+ const h2=timerChild();
+ await check('same-vm-new-holder-epoch-with-original-ciphertext',async()=>{assert.equal((await call('bind-holder',{record:await metadata(h2)})).result.epoch,2);const r=await call('restore');assert.equal(typeof r.result.secret,'string');r.result.secret=null;});
+ const replacement=timerChild(),replacementRecord=await metadata(replacement);
+ await check('same-profile-new-owned-epoch-and-fixed-business-deadline',async()=>{assert.equal((await call('register-owned',{record:{role:'a',profile,launcher:replacementRecord,runtime:replacementRecord}})).result.epoch,2);const now=stamp(),deadline={insertedAtMs:now,expiresAtMs:Math.min(now+8000,lease.expiresAt-5000),scopeDigest:hash('SYNTHETIC_SCOPE')};businessDeadlineValue=deadline.expiresAtMs;assert.ok(deadline.expiresAtMs>now);assert.equal((await call('business-deadline',{deadline})).ok,true);assert.equal((await call('business-deadline',{deadline:{...deadline,expiresAtMs:deadline.expiresAtMs+1000}})).ok,false);});
+ await check('business-expiry-stops-app-with-holder-profile-and-ciphertext-preserved',async()=>{assert.ok(stamp()<businessDeadlineValue,'Must observe replacement before deadline');assert.equal(replacement.exitCode,null);assert.equal(replacement.signalCode,null);await new Promise(r=>setTimeout(r,500));assert.ok(stamp()<businessDeadlineValue);assert.equal(replacement.exitCode,null);assert.equal(replacement.signalCode,null);await stopped(replacement);assert.ok(stamp()>=businessDeadlineValue,'Exit must follow actual business deadline');assert.equal(h2.exitCode,null);assert.equal(h2.signalCode,null);assert.equal(existsSync(profile),true);assert.equal(existsSync(root),true);const r=await call('restore');assert.equal(typeof r.result.secret,'string');r.result.secret=null;});
+ const bystander=timerChild();
+ await check('real-short-expiry-stops-exact-owned-and-removes-profile-vault',async()=>{await stopped(watchdog,Math.max(15000,lease.expiresAt-stamp()+30000));assert.equal(watchdog.exitCode,0);const terminal=JSON.parse(readFileSync(join('artifacts/qa/same-run-watchdog-'+process.env.GITHUB_RUN_ID,requestDigest+'-terminal.json'),'utf8'));assert.equal(terminal.requestDigest,requestDigest);assert.equal(terminal.run,process.env.GITHUB_RUN_ID);assert.equal(terminal.commit,process.env.GITHUB_SHA);assert.equal(terminal.cleanupConfirmed,true);assert.equal(terminal.ciphertextRemoved,true);assert.equal(terminal.registeredProfilesOnly,true);proof.fixedTerminalReceiptVerified=true;assert.ok(lines.some(r=>r.cleanupConfirmed===true));await stopped(h2);await stopped(app);assert.equal(existsSync(profile),false);assert.equal(existsSync(root),false);assert.equal(bystander.exitCode,null);assert.equal(bystander.signalCode,null);});
+ assert.equal(proof.checks.length,11);proof.passed=true;
+}catch{proof.error='AUTHORIZED_DPAPI_SYNTHETIC_CONTRACT_FAILED';}
+finally{
+ for(const c of owned){if(c.exitCode===null&&c.signalCode===null)c.kill();try{await stopped(c,10000);}catch{proof.passed=false;proof.ownedExitUnconfirmed=true;}}
+ if(existsSync(root)){try{proof.fallbackCleanup=(await call('cleanup')).ok===true;}catch{proof.fallbackCleanup=false;}if(!proof.fallbackCleanup)proof.passed=false;}
+ if(!proof.ownedExitUnconfirmed){for(const p of ownedProfiles){if(existsSync(p))rmSync(p,{recursive:true,force:true});}}
+ proof.profilesRemoved=ownedProfiles.every(p=>!existsSync(p));if(!proof.profilesRemoved)proof.passed=false;
+ proof.vaultRemoved=!existsSync(root);if(!proof.vaultRemoved)proof.passed=false;
+ const out='artifacts/qa/authorized-dpapi-synthetic';mkdirSync(out,{recursive:true});writeFileSync(join(out,'evidence.json'),JSON.stringify(proof,null,2)+'\n');
+}
+console.log(JSON.stringify({syntheticOnly:true,passed:proof.passed,checks:proof.checks.length,vaultRemoved:proof.vaultRemoved}));if(!proof.passed)process.exitCode=1;
