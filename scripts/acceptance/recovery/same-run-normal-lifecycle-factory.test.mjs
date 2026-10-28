@@ -65,3 +65,5 @@ test('original remote invoke receives real synthetic 401 and invalidates despite
 });
 
 test('inode negative fixture stays different even above Number safe precision',()=>{for(const value of [0,1,Number.MAX_SAFE_INTEGER,2**54])assert.notEqual(differentInode(value),value);assert.equal(2**54+1,2**54);});
+
+test('signedout prelude cannot accept a caller authority or artifact projection',async()=>{const {runSignedoutPrelude}=await import('./same-run-normal-lifecycle-factory.mjs');for(const admission of [{approved:true},{source:'github-environment-v1'}])await assert.rejects(runSignedoutPrelude({admission,artifactHandle:{profiles:5},preparation:{}}));});

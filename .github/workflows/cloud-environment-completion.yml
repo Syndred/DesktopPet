@@ -203,6 +203,8 @@ jobs:
             artifacts/qa/same-run-entry-${{ github.run_id }}/environment-start-ready.json
             artifacts/qa/same-run-${{ github.run_id }}/environment-custody.json
             artifacts/qa/same-run-${{ github.run_id }}/precredential-model-readiness.json
+            artifacts/qa/same-run-${{ github.run_id }}/holder-preimport-state.json
+            artifacts/qa/same-run-${{ github.run_id }}/held-model-progress.json
             artifacts/qa/same-run-entry-${{ github.run_id }}/environment-bootstrap.json
             artifacts/qa/same-run-entry-${{ github.run_id }}/environment-bootstrap-reconciliation.json
             artifacts/qa/same-run-entry-${{ github.run_id }}/environment-reconciliation-status.json

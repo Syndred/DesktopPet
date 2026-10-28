@@ -1,0 +1,86 @@
+name: DesktopPet actual signedout holder prelude contract
+on:
+  workflow_dispatch:
+  push:
+    branches: [codex/cloud-authority-convergence]
+    paths:
+      - .github/workflows/cloud-held-prelude-contract.yml
+      - scripts/acceptance/recovery/preparation-state.mjs
+      - scripts/acceptance/recovery/same-run-normal-lifecycle-factory.test.mjs
+      - scripts/acceptance/recovery/held-prelude-windows.test.mjs
+      - scripts/acceptance/recovery/same-run-normal-lifecycle-factory.mjs
+      - scripts/acceptance/recovery/holder-environment.mjs
+      - scripts/acceptance/cloud-live-qa-completion-readiness.mjs
+      - scripts/acceptance/cloud-live-qa-completion-package-preflight.mjs
+      - scripts/acceptance/native-file-dialog.mjs
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: desktoppet-held-prelude-contract
+  cancel-in-progress: false
+jobs:
+  synthetic:
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - name: Preserve original job deadline with ten-minute terminal cleanup reserve
+        env:
+          TEMP: ${{ runner.temp }}
+          TMP: ${{ runner.temp }}
+        shell: pwsh
+        run: |
+          if($env:RUNNER_TEMP -match '[\r\n]'){throw 'INVALID_RUNNER_TEMP'}
+          'TEMP='+$env:RUNNER_TEMP | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          'TMP='+$env:RUNNER_TEMP | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          $p=Join-Path $env:RUNNER_TEMP ('same-run-job-clock-'+$env:GITHUB_RUN_ID+'.json')
+          if(Test-Path -LiteralPath $p){throw 'NO_JOB_DEADLINE_RESTART'}
+          $now=[DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
+          @{version=1;run=$env:GITHUB_RUN_ID;commit=$env:GITHUB_SHA;startedAtMs=$now;hardEndMs=($now+19200000)}|ConvertTo-Json|Set-Content -LiteralPath $p -Encoding utf8
+      - name: Preserve reviewed source bytes before checkout
+        shell: pwsh
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+      - run: npm ci
+      - run: npm ci --prefix scripts/acceptance/recovery --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
+      - uses: actions/download-artifact@v8.0.2
+        with:
+          artifact-ids: '12786865736'
+          run-id: 40618386720
+          github-token: ${{ github.token }}
+          path: artifacts/qa/native-baseline
+          merge-multiple: true
+      - uses: actions/download-artifact@v8.0.2
+        with:
+          artifact-ids: '12783353029'
+          run-id: 40607080843
+          github-token: ${{ github.token }}
+          path: artifacts/qa/same-run-prior
+          merge-multiple: true
+      - name: Exact original audited package reuse
+        run: node scripts/acceptance/verify-portable-reuse.mjs --source=5016f1c3f7de04b4e2b322d0b47ec52248596771
+      - name: Actual vault watchdog deadline and five signedout held models only
+        timeout-minutes: 10
+        run: node scripts/acceptance/recovery/held-prelude-windows.test.mjs
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: held-prelude-${{ github.run_id }}
+          retention-days: 7
+          if-no-files-found: error
+          path: |
+            artifacts/qa/held-prelude-contract/evidence.json
+            artifacts/qa/held-prelude-contract/watchdog-terminal.json
+            artifacts/qa/same-run-${{ github.run_id }}/signedout-prelude-evidence.json
+            artifacts/qa/same-run-${{ github.run_id }}/held-model-progress.json
+            artifacts/qa/same-run-${{ github.run_id }}/precredential-model-readiness.json
+            artifacts/qa/same-run-${{ github.run_id }}/lifecycle-cleanup.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/preparation-state.json
+            artifacts/qa/native-continuation/package-reuse.json
