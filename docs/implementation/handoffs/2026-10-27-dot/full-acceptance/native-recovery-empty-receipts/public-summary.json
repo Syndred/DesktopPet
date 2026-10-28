@@ -1,0 +1,51 @@
+{
+  "format": "desktoppet.acceptance.public-summary",
+  "version": 1,
+  "publication": "Handwritten non-sensitive summary only. Raw receipts and the complete LOCAL matrix are not published in the repository.",
+  "asOf": "2026-10-28T01:18:00Z",
+  "accepted": 78,
+  "total": 98,
+  "remaining": {
+    "partial": 10,
+    "unclosed": 10
+  },
+  "versionScope": "Latest audited package: eabcb7a77e9a693d2b774601ba3e0b9d11f59055. One current mixed-evidence case and 77 version-bound carried cases; not 78 cases rerun on this package.",
+  "package": {
+    "sourceCommit": "eabcb7a77e9a693d2b774601ba3e0b9d11f59055",
+    "exeSha256": "76517b9e02954e179b3ee1773b9b1b4fb14b7e1f8f7f78b3a361acfbb429c685",
+    "run": "https://github.com/Syndred/DesktopPet/actions/runs/40612337365",
+    "artifact": "https://github.com/Syndred/DesktopPet/actions/runs/40612337365/artifacts/12784800060",
+    "wholeArtifactSha256": "d124f3a7f2063cbb98b0eabc78d61ffdaa8dd0ffc974770a9ab709dd142ed43a"
+  },
+  "newlyClosed": [
+    {
+      "case": "C02",
+      "result": "Two normal same-template cloud adoptions remained distinct, with stable unique authoritative numbering, original-intent replay and second-device restart readback. Independent bounded database readback and unchanged standard-name projection were reviewed. This is not complete multi-screen C03 UI coverage."
+    },
+    {
+      "case": "I04",
+      "result": "Actual natural crop maturity, harvest, crafting and feeding were followed by normal restart and second-device inventory/receipt comparison. Independent readback linked this batch’s exact successful intents to unique authoritative receipts and confirmed that the rejected insufficient-material intent created no operation. This does not reconstruct an earlier historical cloud readback."
+    },
+    {
+      "case": "S03",
+      "result": "A dedicated QA process business-transport interruption preserved the original pending request across normal restart; the same intent was verified once, with matching second-device content and an independently read unique authoritative action. This is not a physical network-interface outage or a committed-response-loss test."
+    },
+    {
+      "case": "M04",
+      "result": "Combined evidence covers the newly approved 100m/450m display filtering, a naturally empty 100m view with nonempty 450m results, normal retries, actual success cooldown, repeated-click suppression and no reward side effects. The display filter does not change the cloud query radius. No claim of GPS, production-cloud scanning, or an empty default 450m query is made."
+    }
+  ],
+  "cloudEvidence": {
+    "packageSource": "1c9af85185bc0fd09a30b02c624c29e9f6cc0bbd",
+    "run": "https://github.com/Syndred/DesktopPet/actions/runs/40607080843",
+    "artifact": "https://github.com/Syndred/DesktopPet/actions/runs/40607080843/artifacts/12783353029",
+    "wholeArtifactSha256": "8b2bc3005a61e2f17a988fc446bf600b95211460a919fbce937cf2494805ff1e",
+    "qualification": "The overall cloud job failed. Only independently reviewed sub-results are accepted; unrelated later package changes do not turn them into new-package reruns."
+  },
+  "openIssues": [
+    "The original cloud record-isolation observation timed out without a sufficiently precise stage receipt; no successful Realtime delivery is claimed.",
+    "An independently reproduced Realtime/RLS permission-context incompatibility remains under security-preserving repair design; no security-policy deployment is claimed.",
+    "The same-record repeated backup-restore regression was not reached and remains open.",
+    "Further cloud multi-domain, conflict, resource-profile and UI coverage remains incomplete. Original-profile migration, actual positioning and cross-DPI hardware gaps are not erased."
+  ]
+}
