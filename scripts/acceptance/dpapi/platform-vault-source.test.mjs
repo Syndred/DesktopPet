@@ -1,0 +1,9 @@
+import {readFileSync} from 'node:fs';
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createPlatformAuthorizedVault,validateAppliedParentCredentialProvenance,FIXED_IDENTITIES,vaultChildEnvironment} from './authorized-vault-client.mjs';
+const proof=()=>({source:'parent-private-cas-record',slot:'A',authUid:FIXED_IDENTITIES.A.authUid,expectedBefore:'2026-10-28T00:00:00Z',actualAfter:'2026-10-28T00:01:00Z',rowCount:1});
+test('parent provenance is exact target metadata, not a reset execution or authority capability',()=>{assert.equal(validateAppliedParentCredentialProvenance(proof(),'A'),true);for(const mutate of [x=>x.rowCount=0,x=>x.rowCount=2,x=>x.slot='B',x=>x.authUid=FIXED_IDENTITIES.B.authUid,x=>x.actualAfter=x.expectedBefore,x=>x.password='synthetic',x=>x.source='caller-approved']){const x=proof();mutate(x);assert.throws(()=>validateAppliedParentCredentialProvenance(x,'A'));}});
+test('plain projection, legacy-shaped object, and approved boolean cannot create platform vault',async()=>{for(const admission of [{},{approved:true},{source:'github-environment-v1',permissions:['login-A']},{purpose:'same-run-qa-continuity-v1'}])await assert.rejects(createPlatformAuthorizedVault({admission}),{code:'PLATFORM_ADMISSION_NOT_READY'});});
+
+test('all PS guard environment bindings survive while every secret stays excluded',()=>{const env={SystemRoot:'x',RUNNER_TEMP:'t',GITHUB_ACTIONS:'true',GITHUB_RUN_ID:'123',GITHUB_SHA:'a'.repeat(40),GITHUB_RUN_ATTEMPT:'1',GITHUB_TOKEN:'secret',GH_ENVIRONMENT_ADMISSION_TOKEN:'secret',QA_A_PASSWORD:'secret'};const clean=vaultChildEnvironment(env);for(const file of ['authorized-vault.ps1','holder-supervisor.ps1']){const text=readFileSync(new URL(file,import.meta.url),'utf8');for(const match of text.matchAll(/\$env:([A-Za-z0-9_]+)/g))assert.ok(Object.keys(clean).some(k=>k.toLowerCase()===match[1].toLowerCase()),match[1]);}assert.equal(Object.values(clean).includes('secret'),false);});

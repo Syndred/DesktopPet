@@ -1,0 +1,75 @@
+name: DesktopPet environment admission synthetic contracts
+on:
+  workflow_dispatch:
+  push:
+    branches: [codex/cloud-authority-convergence]
+    paths:
+      - .github/workflows/cloud-environment-contract.yml
+      - scripts/acceptance/recovery/github-environment-admission.mjs
+      - scripts/acceptance/recovery/environment-adapter-windows.test.mjs
+      - scripts/acceptance/recovery/environment-bootstrap-windows.test.mjs
+      - scripts/acceptance/recovery/environment-bootstrap.mjs
+      - scripts/acceptance/recovery/environment-process.ps1
+      - scripts/acceptance/recovery/run-environment-completion.mjs
+      - scripts/acceptance/dpapi/authorized-vault-client.mjs
+      - scripts/acceptance/dpapi/authorized-vault.ps1
+permissions:
+  contents: read
+concurrency:
+  group: desktoppet-environment-synthetic-contract
+  cancel-in-progress: false
+jobs:
+  synthetic:
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - name: Preserve original job deadline with ten-minute terminal cleanup reserve
+        env:
+          TEMP: ${{ runner.temp }}
+          TMP: ${{ runner.temp }}
+        shell: pwsh
+        run: |
+          if($env:RUNNER_TEMP -match '[\r\n]'){throw 'INVALID_RUNNER_TEMP'}
+          'TEMP='+$env:RUNNER_TEMP | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          'TMP='+$env:RUNNER_TEMP | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          $p=Join-Path $env:RUNNER_TEMP ('same-run-job-clock-'+$env:GITHUB_RUN_ID+'.json')
+          if(Test-Path -LiteralPath $p){throw 'NO_JOB_DEADLINE_RESTART'}
+          $now=[DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
+          @{version=1;run=$env:GITHUB_RUN_ID;commit=$env:GITHUB_SHA;startedAtMs=$now;hardEndMs=($now+19200000)}|ConvertTo-Json|Set-Content -LiteralPath $p -Encoding utf8
+      - name: Preserve reviewed source bytes before checkout
+        shell: pwsh
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+      - run: npm ci
+      - run: npm ci --prefix scripts/acceptance/recovery --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
+      - name: Entry argument and opaque capability negative contracts
+        run: node --test scripts/acceptance/recovery/github-environment-admission.test.mjs scripts/acceptance/recovery/holder-environment.test.mjs scripts/acceptance/recovery/environment-entry.test.mjs scripts/acceptance/dpapi/platform-vault-source.test.mjs scripts/acceptance/cloud-live-qa-s06-platform-transition.test.mjs scripts/acceptance/cloud-live-qa-s02-platform-cell.test.mjs scripts/acceptance/recovery/same-run-request.test.mjs scripts/acceptance/recovery/same-run-fixture-index.test.mjs
+      - name: Thirteen real Windows synthetic custody checks before any real identity
+        timeout-minutes: 5
+        run: node scripts/acceptance/dpapi/authorized-vault-windows.test.mjs
+      - name: Isolated real platform-source Windows custody contract (no accounts)
+        timeout-minutes: 5
+        run: node scripts/acceptance/recovery/environment-adapter-windows.test.mjs
+      - name: Actual fixed PS5 bootstrap and source-gate rejection (no approval)
+        timeout-minutes: 5
+        run: node scripts/acceptance/recovery/environment-bootstrap-windows.test.mjs
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: environment-synthetic-${{ github.run_id }}
+          retention-days: 7
+          if-no-files-found: error
+          path: |
+            artifacts/qa/environment-adapter-contract/evidence.json
+            artifacts/qa/environment-bootstrap-contract/evidence.json
+            artifacts/qa/authorized-dpapi-synthetic/evidence.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/environment-bootstrap.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/environment-status.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/terminal-cleanup.json

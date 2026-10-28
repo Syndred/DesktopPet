@@ -1,6 +1,7 @@
 // Synthetic-only integration of new production-purpose primitives. No Auth/SDK/network.
 // Fixed known identity strings are binding fixtures; the only secret is a public fake string.
 import assert from 'node:assert/strict';
+import {validateConfirmedRegistrationReadback} from './authorized-vault-client.mjs';
 import {spawn} from 'node:child_process';
 import {createHash,randomUUID} from 'node:crypto';
 import {mkdirSync,mkdtempSync,writeFileSync,readFileSync,existsSync,rmSync} from 'node:fs';
@@ -28,6 +29,11 @@ try{
  await check('exact-owned-model-registry-and-private-profile',async()=>{assert.equal((await call('register-owned',{record:{role:'a',profile,launcher:appRecord,runtime:appRecord}})).ok,true);});
  watchdog=spawn(ps,['-NoLogo','-NoProfile','-NonInteractive','-File',supervisor,'-RequestDigest',requestDigest,'-HolderPid',String(m1.pid),'-HolderStartTicks',m1.startTicks,'-HolderImage',m1.image],{stdio:['ignore','pipe','pipe'],windowsHide:true});owned.push(watchdog);watchdog.stderr.on('data',()=>{});const lines=[];let buffer='';watchdog.stdout.on('data',b=>{buffer+=b.toString('utf8');while(buffer.includes('\n')){const end=buffer.indexOf('\n');try{lines.push(JSON.parse(buffer.slice(0,end)));}catch{lines.push({parseFailed:true});watchdog.kill();}buffer=buffer.slice(end+1);}});
  await check('independent-owned-watchdog-ready-and-registered',async()=>{const until=stamp()+15000;while(!lines.some(r=>r.ready===true)&&stamp()<until){if(watchdog.exitCode!==null)break;await new Promise(r=>setTimeout(r,50));}assert.ok(lines.some(r=>r.ready===true));assert.equal((await call('bind-supervisor',{record:await metadata(watchdog)})).ok,true);});
+ await check('registration-outcome-binding-guard-real-dpapi',async()=>{
+  const original=binding;
+  try{for(const outcome of ['rejected','confirmed']){binding={...original,slot:'C',accountKey:'qa20261028c8be246d1',owner:'PRE_REGISTRATION',authUid:'PRE_REGISTRATION',credentialVersion:hash('SYNTHETIC_C_'+outcome)};const intentDigest=hash('SYNTHETIC_C_INTENT_'+outcome);assert.equal((await call('seal',{secret:'SYNTHETIC_ONLY_NOT_REAL_CREDENTIAL_012345678901234567'})).ok,true);assert.equal((await call('claim',{operation:'register',intentDigest})).ok,true);const unknown=await call('readback',{intentDigest});assert.equal(unknown.result.outcome,null);assert.throws(()=>validateConfirmedRegistrationReadback(unknown.result));assert.equal((await call('receipt',{intentDigest,outcome,readbackDigest:hash('SYNTHETIC_'+outcome)})).ok,true);const read=await call('readback',{intentDigest});assert.equal(read.result.outcome,outcome);if(outcome==='rejected')assert.throws(()=>validateConfirmedRegistrationReadback(read.result));else assert.equal(validateConfirmedRegistrationReadback(read.result),true);}}
+  finally{binding=original;}
+ });
  await check('durable-unknown-intent-no-blind-repeat',async()=>{const intentDigest=hash('SYNTHETIC_FIXED_INTENT');assert.equal((await call('claim',{operation:'login',intentDigest})).ok,true);assert.equal((await call('readback',{intentDigest})).result.requiresAuthoritativeReadback,true);assert.equal((await call('claim',{operation:'login',intentDigest})).ok,false);});
  await check('readonly-original-intent-four-state-classification',async()=>{
   const originalBinding={...binding,credentialVersion:hash('SYNTHETIC_INSPECT_VERSION')},intentDigest=hash('SYNTHETIC_INSPECT_INTENT'),operation='reset';
@@ -49,7 +55,7 @@ try{
  await check('business-expiry-stops-app-with-holder-profile-and-ciphertext-preserved',async()=>{assert.ok(stamp()<businessDeadlineValue,'Must observe replacement before deadline');assert.equal(replacement.exitCode,null);assert.equal(replacement.signalCode,null);await new Promise(r=>setTimeout(r,500));assert.ok(stamp()<businessDeadlineValue);assert.equal(replacement.exitCode,null);assert.equal(replacement.signalCode,null);await stopped(replacement);assert.ok(stamp()>=businessDeadlineValue,'Exit must follow actual business deadline');assert.equal(h2.exitCode,null);assert.equal(h2.signalCode,null);assert.equal(existsSync(profile),true);assert.equal(existsSync(root),true);const r=await call('restore');assert.equal(typeof r.result.secret,'string');r.result.secret=null;});
  const bystander=timerChild();
  await check('real-short-expiry-stops-exact-owned-and-removes-profile-vault',async()=>{await stopped(watchdog,Math.max(15000,lease.expiresAt-stamp()+30000));assert.equal(watchdog.exitCode,0);const terminal=JSON.parse(readFileSync(join('artifacts/qa/same-run-watchdog-'+process.env.GITHUB_RUN_ID,requestDigest+'-terminal.json'),'utf8'));assert.equal(terminal.requestDigest,requestDigest);assert.equal(terminal.run,process.env.GITHUB_RUN_ID);assert.equal(terminal.commit,process.env.GITHUB_SHA);assert.equal(terminal.cleanupConfirmed,true);assert.equal(terminal.ciphertextRemoved,true);assert.equal(terminal.registeredProfilesOnly,true);proof.fixedTerminalReceiptVerified=true;assert.ok(lines.some(r=>r.cleanupConfirmed===true));await stopped(h2);await stopped(app);assert.equal(existsSync(profile),false);assert.equal(existsSync(root),false);assert.equal(bystander.exitCode,null);assert.equal(bystander.signalCode,null);});
- assert.equal(proof.checks.length,12);proof.passed=true;
+ assert.equal(proof.checks.length,13);proof.passed=true;
 }catch{proof.error='AUTHORIZED_DPAPI_SYNTHETIC_CONTRACT_FAILED';}
 finally{
  for(const c of owned){if(c.exitCode===null&&c.signalCode===null)c.kill();try{await stopped(c,10000);}catch{proof.passed=false;proof.ownedExitUnconfirmed=true;}}

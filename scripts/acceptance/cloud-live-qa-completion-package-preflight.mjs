@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict';
 import {readFileSync,mkdtempSync,rmSync} from 'node:fs';
 import {createHash} from 'node:crypto';
+import {platformChildEnvironment} from './recovery/github-environment-admission.mjs';
 import {execFileSync} from 'node:child_process';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
@@ -24,12 +25,12 @@ export async function verifyCompletionPackageBeforeCredentials(binding){
  validatePinnedNotificationPackage(binding);assert.equal(process.platform,'win32');assert.equal(process.env.GITHUB_ACTIONS,'true');assert.equal(process.env.GITHUB_RUN_ATTEMPT,'1');
  assert.match(binding?.expectedSource||'',/^[a-f0-9]{40}$/);for(const k of ['expectedFingerprint','expectedExeSha256'])assert.match(binding[k]||'',/^[a-f0-9]{64}$/);
  for(const k of ['manifestPath','auditPath','closurePath','executable'])assert.equal(typeof binding[k],'string');
- const sourceBytes=execFileSync('git',['show',binding.expectedSource+':'+notificationRuntime.path],{cwd:root,maxBuffer:1024*1024});
+ const sourceBytes=execFileSync('git',['show',binding.expectedSource+':'+notificationRuntime.path],{cwd:root,maxBuffer:1024*1024,env:platformChildEnvironment()});
  // Git stores LF, while audited Windows checkout/ASAR may use CRLF. Closure
  // must identify exactly one of those byte-equivalent source representations.
  const closureBytes=readFileSync(binding.closurePath),closure=JSON.parse(closureBytes);const row=closure.files.find(x=>x.path===notificationRuntime.path);let packagedSource=sourceBytes;
  if(row?.sha256!==sha(sourceBytes)){packagedSource=Buffer.from(sourceBytes.toString('utf8').replace(/\r?\n/g,'\r\n'));assert.equal(row?.sha256,sha(packagedSource));}
- const result=verifyCompletionPackageDocuments({manifest:JSON.parse(readFileSync(binding.manifestPath)),audit:JSON.parse(readFileSync(binding.auditPath)),closureBytes,exeBytes:readFileSync(binding.executable),sourceBytes:packagedSource,sourceTree:execFileSync('git',['rev-parse',binding.expectedSource+'^{tree}'],{cwd:root,encoding:'utf8'}).trim()},binding);
+ const result=verifyCompletionPackageDocuments({manifest:JSON.parse(readFileSync(binding.manifestPath)),audit:JSON.parse(readFileSync(binding.auditPath)),closureBytes,exeBytes:readFileSync(binding.executable),sourceBytes:packagedSource,sourceTree:execFileSync('git',['rev-parse',binding.expectedSource+'^{tree}'],{cwd:root,encoding:'utf8',env:platformChildEnvironment()}).trim()},binding);
  const profile=mkdtempSync(join(tmpdir(),'lingjing-precredential-package-')),standard=new Set(['SYSTEMROOT','WINDIR','COMSPEC','PATH','PATHEXT','TEMP','TMP','USERPROFILE','APPDATA','LOCALAPPDATA','PROGRAMDATA','PROGRAMFILES','PROGRAMFILES(X86)','COMMONPROGRAMFILES','COMMONPROGRAMFILES(X86)','NUMBER_OF_PROCESSORS','PROCESSOR_ARCHITECTURE','PSMODULEPATH']);
  const environment=Object.fromEntries(Object.entries(process.env).filter(([k])=>k.toUpperCase()!=='PET_USER_DATA_DIR').map(([k,v])=>[k,standard.has(k.toUpperCase())?v:undefined]));let model,launchAttempted=false;
  try{const {launchPortableSession}=await import('./portable-session.mjs');launchAttempted=true;model=await launchPortableSession({executable:binding.executable,expectedSource:binding.expectedSource,profile,label:'signedout-notification-package-preflight',environment});

@@ -8,12 +8,14 @@ import {mkdtempSync,mkdirSync,readFileSync,writeFileSync,renameSync,realpathSync
 import {tmpdir} from 'node:os';
 import {join,resolve,dirname,basename} from 'node:path';
 import {compactVerify,importSPKI} from 'jose';
-import {assertSameRunAuthorization,assertAuthorizedVault,FIXED_IDENTITIES} from '../dpapi/authorized-vault-client.mjs';
+import {assertCompletionAuthorization,assertAuthorizedVault,vaultChildEnvironment,FIXED_IDENTITIES} from '../dpapi/authorized-vault-client.mjs';
 import {hashNewPassword,sealHash,validateBinding,verifyAppliedReceipt} from './protocol.mjs';
 import {readAppliedReceipt} from './transport.mjs';
 import {launchPortableSession} from '../portable-session.mjs';
 import {pollState} from '../poll-state.mjs';
-import {installS06BeforeLogin,s06GateSafeManifest,admitS06SingleSnapshot,releaseS06AfterFormalGrant,closeS06GateAfterOwnedProcessStopped} from '../cloud-live-qa-s06-prelogin-gate.mjs';
+import {createPlatformCellRequest} from '../cloud-live-qa-s02-platform-cell.mjs';
+import {observePlatformFourGrantTransition} from '../cloud-live-qa-s06-platform-transition.mjs';
+import {installPlatformS06BeforeLogin,admitPlatformS06SingleSnapshot,releasePlatformS06AfterFormalGrant,installS06BeforeLogin,s06GateSafeManifest,admitS06SingleSnapshot,releaseS06AfterFormalGrant,closeS06GateAfterOwnedProcessStopped} from '../cloud-live-qa-s06-prelogin-gate.mjs';
 import {createNewCUiLifecycle} from '../cloud-new-c-ui-lifecycle.mjs';
 import {assertPreparedCompletion} from '../cloud-live-qa-completion-readiness.mjs';
 const require=createRequire(import.meta.url),sha=x=>createHash('sha256').update(x).digest('hex');
@@ -24,7 +26,7 @@ const proofPurposes=new Set(['grant-manifest','s06-pregrant','s02-empty-cell','c
 const exact=(o,keys)=>assert.deepEqual(Object.keys(o).sort(),[...keys].sort());
 const pause=ms=>new Promise(r=>setTimeout(r,ms));
 const slotFor=role=>role.startsWith('a')?'A':role.toUpperCase();
-function own(cap){const s=states.get(cap);assert.ok(s,'REAL_LIFECYCLE_CAPABILITY_REQUIRED');assertSameRunAuthorization(s.authorization);return s;}
+function own(cap){const s=states.get(cap);assert.ok(s,'REAL_LIFECYCLE_CAPABILITY_REQUIRED');assertCompletionAuthorization(s.authorization);return s;}
 function safeWrite(s,name,value){assert.match(name,/^[a-z0-9-]+\.json$/);const file=join(s.output,name);writeFileSync(file+'.tmp',JSON.stringify(value,null,2),{mode:0o600});renameSync(file+'.tmp',file);}
 function live(pid){try{process.kill(pid,0);return true;}catch(e){if(e.code==='ESRCH')return false;throw e;}}
 export function parentProofUrl(nonce,purpose){assert.match(nonce,/^[a-f0-9-]{36}$/);assert.ok(proofPurposes.has(purpose));return `https://raw.githubusercontent.com/Syndred/DesktopPet/refs/heads/codex/cloud-authority-convergence/scripts/acceptance/requests/same-run-${nonce}-${purpose}.json`;}
@@ -101,14 +103,14 @@ export function installRestoredCAuthGuard(_e,b){
 }
 
 export async function prepareNormalLifecycle({authorization,roles:roleLabels,completionOptions,completionPlan}){
- const a=assertSameRunAuthorization(authorization);assertPreparedCompletion(completionPlan);assert.equal(process.platform,'win32');assert.equal(process.env.GITHUB_ACTIONS,'true');assert.deepEqual(Object.keys(roleLabels),roles);assert.ok(process.env.RUNNER_TEMP);assert.equal(realpathSync.native(tmpdir()).toLowerCase(),realpathSync.native(process.env.RUNNER_TEMP).toLowerCase(),'PRIVATE_PROFILE_TEMP_ROOT_REQUIRED');
+ const a=assertCompletionAuthorization(authorization);assertPreparedCompletion(completionPlan);assert.equal(process.platform,'win32');assert.equal(process.env.GITHUB_ACTIONS,'true');assert.deepEqual(Object.keys(roleLabels),roles);assert.ok(process.env.RUNNER_TEMP);assert.equal(realpathSync.native(tmpdir()).toLowerCase(),realpathSync.native(process.env.RUNNER_TEMP).toLowerCase(),'PRIVATE_PROFILE_TEMP_ROOT_REQUIRED');
  assert.equal(completionOptions.scenario,scenario);assert.equal(completionPlan.runId,completionOptions.runId);assert.equal(completionPlan.packageProof?.sourceCommit,a.packageSource);assert.equal(completionPlan.packageProof?.exeSha256,a.executableSha256);
  const output=resolve('artifacts/qa/same-run-'+a.run);assert.ok(!existsSync(output),'ONE_FRESH_LIFECYCLE_ONLY');mkdirSync(dirname(output),{recursive:true});mkdirSync(output,{recursive:false});
  const profiles={...completionPlan.launchProfiles};for(const role of roles)if(!profiles[role])profiles[role]=realpathSync.native(mkdtempSync(join(tmpdir(),'lingjing-live-holder-')));
  const cap=Object.freeze({});states.set(cap,{authorization,binding:a,completionOptions,completionPlan,profiles,profileRoots:Object.freeze(Object.fromEntries(Object.entries(profiles).map(([r,p])=>{const st=lstatSync(p);assert.equal(st.isSymbolicLink(),false);const canonical=realpathSync.native(p);assert.match(basename(canonical),/^lingjing-live-holder-/);assert.equal(dirname(canonical).toLowerCase(),realpathSync.native(tmpdir()).toLowerCase());return [r,Object.freeze({canonical,dev:st.dev,ino:st.ino})];}))),output,models:{},identities:{},proofSequences:new Map(),resetResults:{},scopeGrants:new Map(),roleLabels,supervisor:null,revoked:new Set()});return cap;
 }
 export async function prepareReconciliationLifecycle({authorization}){
- const binding=assertSameRunAuthorization(authorization);assert.equal(process.platform,'win32');assert.equal(process.env.GITHUB_ACTIONS,'true');
+ const binding=assertCompletionAuthorization(authorization);assert.equal(process.platform,'win32');assert.equal(process.env.GITHUB_ACTIONS,'true');
  const output=resolve('artifacts/qa/same-run-'+binding.run);assert.ok(existsSync(output),'ORIGINAL_LIFECYCLE_DIRECTORY_REQUIRED');assert.equal(lstatSync(output).isSymbolicLink(),false);assert.equal(realpathSync.native(output),output);
  const cap=Object.freeze({});states.set(cap,{authorization,binding,output,models:{},identities:{},proofSequences:new Map(),resetResults:{},scopeGrants:new Map(),supervisor:null,reconciliationOnly:true});return cap;
 }
@@ -120,7 +122,7 @@ const systemKeys=new Set(['PATH','PATHEXT','SYSTEMROOT','SYSTEMDRIVE','WINDIR','
 export function appEnvironment(){const env=Object.fromEntries(Object.keys(process.env).filter(k=>k.toUpperCase()!=='PET_USER_DATA_DIR').map(k=>[k,systemKeys.has(k.toUpperCase())?process.env[k]:undefined]));return {...env,GITHUB_ACTIONS:'true',GITHUB_RUN_ATTEMPT:'1',GITHUB_RUN_ID:process.env.GITHUB_RUN_ID};}
 function processIdentity(pid){
  assert.ok(Number.isInteger(pid)&&pid>0);const script=`$ErrorActionPreference='Stop'; $p=[Diagnostics.Process]::GetProcessById(${pid}); [Console]::Out.WriteLine((@{pid=$p.Id;startTicks=$p.StartTime.ToUniversalTime().Ticks.ToString([Globalization.CultureInfo]::InvariantCulture);image=$p.MainModule.FileName}|ConvertTo-Json -Compress))`;
- const bytes=execFileSync(join(process.env.SystemRoot,'System32','WindowsPowerShell','v1.0','powershell.exe'),['-NoLogo','-NoProfile','-NonInteractive','-EncodedCommand',Buffer.from(script,'utf16le').toString('base64')],{timeout:10000,maxBuffer:4096,windowsHide:true,stdio:['ignore','pipe','ignore']});
+ const bytes=execFileSync(join(process.env.SystemRoot,'System32','WindowsPowerShell','v1.0','powershell.exe'),['-NoLogo','-NoProfile','-NonInteractive','-EncodedCommand',Buffer.from(script,'utf16le').toString('base64')],{timeout:10000,maxBuffer:4096,windowsHide:true,stdio:['ignore','pipe','ignore'],env:vaultChildEnvironment()});
  const value=JSON.parse(bytes);exact(value,['pid','startTicks','image']);assert.equal(value.pid,pid);assert.match(value.startTicks,/^[0-9]{1,19}$/);assert.ok(value.image);return value;
 }
 export async function verifySupervisorCapability(cap,{vault,...binding}){
@@ -133,7 +135,7 @@ export async function verifySupervisorCapability(cap,{vault,...binding}){
  const registry=await vault.verifyRegistry();assert.equal(registry.records.filter(r=>r.kind==='holder').at(-1)?.process.pid,process.pid);
  const priorWatchdog=registry.records.filter(r=>r.kind==='supervisor');assert.ok(priorWatchdog.length<=1);
  if(priorWatchdog.length){const expected=priorWatchdog[0].process;assert.deepEqual(processIdentity(expected.pid),expected,'Original watchdog must still be alive');s.supervisor={ready:true,closed:false,existingProcess:expected};return {ready:true,sameVmOnly:true,resumedOriginalWatchdog:true};}
- const child=spawn(join(process.env.SystemRoot,'System32','WindowsPowerShell','v1.0','powershell.exe'),['-NoLogo','-NoProfile','-NonInteractive','-File',resolve('scripts/acceptance/dpapi/holder-supervisor.ps1'),'-RequestDigest',binding.requestDigest,'-HolderPid',String(holder.pid),'-HolderStartTicks',holder.startTicks,'-HolderImage',holder.image],{windowsHide:true,stdio:['ignore','pipe','pipe']});
+ const child=spawn(join(process.env.SystemRoot,'System32','WindowsPowerShell','v1.0','powershell.exe'),['-NoLogo','-NoProfile','-NonInteractive','-File',resolve('scripts/acceptance/dpapi/holder-supervisor.ps1'),'-RequestDigest',binding.requestDigest,'-HolderPid',String(holder.pid),'-HolderStartTicks',holder.startTicks,'-HolderImage',holder.image],{windowsHide:true,stdio:['ignore','pipe','pipe'],env:vaultChildEnvironment()});
  const watcher={child,closed:false,ready:false};s.supervisor=watcher;child.stderr.on('data',()=>{});child.on('exit',()=>{watcher.closed=true;});
  await new Promise((ok,fail)=>{let buf='';const timer=setTimeout(()=>fail(Error('SUPERVISOR_NOT_READY')),10000);child.once('error',()=>{clearTimeout(timer);fail(Error('SUPERVISOR_START_FAILED'));});child.stdout.on('data',b=>{buf+=b;if(buf.length>4096){clearTimeout(timer);fail(Error('SUPERVISOR_OUTPUT_INVALID'));return;}const line=buf.split(/\r?\n/).find(x=>x);if(!line)return;try{const r=JSON.parse(line);assert.equal(r.ready,true);assert.equal(r.sameRunOnly,true);watcher.ready=true;clearTimeout(timer);ok();}catch{clearTimeout(timer);fail(Error('SUPERVISOR_NOT_READY'));}});});
  assert.ok(watcher.ready&&!watcher.closed);await vault.registerSupervisor(processIdentity(child.pid));return {ready:true,sameVmOnly:true};
@@ -144,7 +146,7 @@ async function captureModel(s,model,role){
  const deviceId=await model.main(()=>{const a=globalThis.__sameRunAccountCapture?.accounts;if(!a||a.remote.authKind!=='supabase')throw Error('ACCOUNT_CAPTURE_MISSING');return a.remote.deviceId;});
  const binding={role,accountKey:account.accountKey,owner:slotFor(role)==='C'?null:account.owner,origin,profile:model.profile,deviceId,scenario,expiresAt:s.binding.expiresAt};
  if(role==='a3'){
-  model.s06Ticket=await installS06BeforeLogin({model,binding:{role,ownerAccountId:account.owner,authUserId:account.authUid,deviceId,accountKey:account.accountKey,origin,scenario,runId:s.completionOptions.runId,nonce:s.binding.nonce}});
+  model.s06Ticket=await (s.binding.source==='github-environment-v1'?installPlatformS06BeforeLogin:installS06BeforeLogin)({...(s.binding.source==='github-environment-v1'?{admission:s.authorization}:{}),model,binding:{ciRunId:s.binding.run,role,ownerAccountId:account.owner,authUserId:account.authUid,deviceId,accountKey:account.accountKey,origin,scenario,runId:s.completionOptions.runId,nonce:s.binding.nonce}});
   await model.main((_e,b)=>{const capture=globalThis.__sameRunAccountCapture,a=capture?.accounts;if(!a)throw Error('CAPTURE_MISSING');delete globalThis.__sameRunAccountCapture;globalThis.__qaUiCaseContext={accounts:a,binding:b,epoch:null,released:false};},binding);
  }else await model.main(installNormalPreloginHold,binding);
  model.expectedDeviceId=deviceId;
@@ -165,7 +167,7 @@ export async function prepareHeldModels(cap,{vault}){
 }
 async function safeActor(model){return model.main(async()=>{const h=globalThis.__qaUiCaseContext;if(!h?.accounts)throw Error('NORMAL_CONTEXT_REQUIRED');const context=await h.accounts.requireCloudActor(),a=context.actor||context;if(a.authKind!=='supabase'||a.authority!=='live')throw Error('NORMAL_ACTOR_REQUIRED');return {ownerAccountId:a.ownerAccountId,authUserId:a.authUserId,deviceId:a.deviceId,sessionId:a.sessionId,epoch:h.accounts.epoch};});}
 async function normalLogin(cap,role,credentialCap){
- const s=own(cap),m=s.models[role]||await startModel(cap,role),account=FIXED_IDENTITIES[slotFor(role)];assertSameRunAuthorization(s.authorization,{permissions:['login-'+slotFor(role)]});
+ const s=own(cap),m=s.models[role]||await startModel(cap,role),account=FIXED_IDENTITIES[slotFor(role)];assertCompletionAuthorization(s.authorization,{permissions:['login-'+slotFor(role)]});
  await m.page.getByRole('heading',{name:'欢迎回来',exact:true}).waitFor({timeout:20000});
  await s.vault.withCredential(credentialCap,async secret=>{assert.equal(secret.accountKey,account.accountKey);await m.page.locator('input[autocomplete="username"]').fill(secret.accountKey);await m.page.getByLabel('密码',{exact:true}).fill(secret.password);
   for(const name of ['保持登录','记住账号']){const box=m.page.getByRole('checkbox',{name,exact:true});if(await box.getAttribute('aria-checked')==='true')await box.click();}
@@ -174,7 +176,7 @@ async function normalLogin(cap,role,credentialCap){
  const actor=await safeActor(m);assert.equal(actor.deviceId,m.expectedDeviceId);m.actor={ownerAccountId:actor.ownerAccountId,authUserId:actor.authUserId,deviceId:actor.deviceId};m.sessionEpoch=actor.epoch;s.identities[slotFor(role)]={owner:actor.ownerAccountId,authUid:actor.authUserId,accountKey:account.accountKey};return m;
 }
 export async function resetKnownViaApprovedParentReceipt(cap,{slot,intentId,credentialCap,vault,authorization}){
- const s=own(cap);assert.equal(s.heldPrepared,true,'ALL_MODELS_READY_BEFORE_RESET');assert.equal(authorization,s.authorization);assert.equal(vault,s.vault);assert.ok(['A','B'].includes(slot));assertSameRunAuthorization(authorization,{permissions:['reset-'+slot]});const a=s.binding,target=FIXED_IDENTITIES[slot];assert.equal(intentId,`${a.requestDigest}:${slot}:reset`);
+ const s=own(cap);assert.equal(s.heldPrepared,true,'ALL_MODELS_READY_BEFORE_RESET');assert.equal(authorization,s.authorization);assert.equal(vault,s.vault);assert.ok(['A','B'].includes(slot));assertCompletionAuthorization(authorization,{permissions:['reset-'+slot]});const a=s.binding,target=FIXED_IDENTITIES[slot];assert.equal(intentId,`${a.requestDigest}:${slot}:reset`);
  const now=Math.floor(Date.now()/1000),binding=validateBinding({version:1,projectRef:'jbvrdmrkwpznbrvteive',account:target.accountKey,owner:target.owner,authUserId:target.authUid,expectedUpdatedAt:a.recovery.expectedUpdatedAt[slot],nonce:a.recovery.resetNonces[slot],ciRunId:a.run,ciRunAttempt:1,harnessCommit:a.commit,packageSource:a.packageSource,encryptionKeySha256:a.recovery.encryptionKeySha256,signingKeySha256:a.recovery.signingKeySha256,issuedAt:now,expiresAt:Math.min(Math.floor(a.expiresAt/1000),now+1800)});
  assert.ok(!s.resetResults[slot],'NO_RESET_REPLAY');let capsule;await vault.withCredential(credentialCap,async credential=>{assert.equal(credential.accountKey,target.accountKey);let hash=await hashNewPassword(credential.password);try{capsule=await sealHash(hash,binding,a.recovery.encryptionPublicPem);}finally{hash=null;}return {ok:true};});
  safeWrite(s,'reset-'+slot.toLowerCase()+'-capsule.json',capsule);safeWrite(s,'awaiting-reset.json',{slot,run:a.run,nonce:binding.nonce,capsuleSha256:capsule.requestSha256});
@@ -209,14 +211,15 @@ export async function launchNormalModel(cap,{role,prior,identity,vault,expectedE
  assert.equal(model.epoch,expectedEpoch);
  if(role==='a3'){
   const manifest=await s06GateSafeManifest(model.s06Ticket);await persistSafeIdentityManifest(cap);
-  const read=await freshParentProof(cap,'s06-pregrant',{runId:s.completionOptions.runId,nonce:s.binding.nonce,ownerAccountId:model.actor.ownerAccountId,authUserId:model.actor.authUserId,deviceId:model.actor.deviceId,scenario});
-  await admitS06SingleSnapshot(model.s06Ticket,{parentRead:read,parentApproval:{approvedSingleSnapshot:true,runId:s.completionOptions.runId,nonce:s.binding.nonce,deviceId:model.actor.deviceId}});
+  if(s.binding.source!=='github-environment-v1'){const read=await freshParentProof(cap,'s06-pregrant',{runId:s.completionOptions.runId,nonce:s.binding.nonce,ownerAccountId:model.actor.ownerAccountId,authUserId:model.actor.authUserId,deviceId:model.actor.deviceId,scenario});
+  await admitS06SingleSnapshot(model.s06Ticket,{parentRead:read,parentApproval:{approvedSingleSnapshot:true,runId:s.completionOptions.runId,nonce:s.binding.nonce,deviceId:model.actor.deviceId}});}
   s.s06Manifest={...manifest,role:'a3'};
  }else if(prior){const grant=s.scopeGrants.get(role);assert.ok(grant?.expiresAtMs>Date.now());if(role!=='c')await model.main(async(_e,g)=>globalThis.__qaUiCaseContext.release(g),grant);}
  await persistSafeIdentityManifest(cap);return model;
 }
-async function releaseAllKnownGrants(cap){
+async function releaseAllKnownGrants(cap,registeredLoginCredential){
  const s=own(cap);await persistSafeIdentityManifest(cap);assert.equal(Object.keys(s.models).length,5);assert.ok(roles.every(r=>s.models[r].actor));
+ if(s.binding.source==='github-environment-v1')return releasePlatformGrants(cap,registeredLoginCredential);
  const proof=await freshParentProof(cap,'grant-manifest',{scenario,runId:s.completionOptions.runId});assert.ok(Array.isArray(proof.devices)&&proof.devices.length===5);assert.deepEqual(proof.devices.map(x=>x.role).sort(),[...roles].sort());
  for(const role of roles){const model=s.models[role],grant=proof.devices.find(x=>x.role===role);for(const k of ['ownerAccountId','authUserId','deviceId'])assert.equal(grant[k],model.actor[k]);assert.equal(grant.scenario,scenario);assert.equal(grant.formalInserted,true);assert.ok(Number.isSafeInteger(grant.expiresAtMs)&&grant.expiresAtMs>Date.now()&&grant.expiresAtMs<=proof.insertedAtMs+7200000);s.scopeGrants.set(role,grant);}
  await s.vault.registerBusinessDeadline({insertedAtMs:proof.insertedAtMs,expiresAtMs:Math.min(s.binding.expiresAt,...[...s.scopeGrants.values()].map(g=>g.expiresAtMs)),scopeDigest:sha(JSON.stringify(proof))});
@@ -243,6 +246,7 @@ async function installLocationBridge(cap,role,position){
 }
 export async function awaitFreshS02TerritoryBinding(cap,{runId,scenario:expectedScenario,ownerAccountId,petId}){
  const s=own(cap);assert.equal(runId,s.completionOptions.runId);assert.equal(expectedScenario,scenario);assert.equal(ownerAccountId,s.models.a.actor.ownerAccountId);assert.equal(typeof petId,'string');await assertSameRunGrant(cap,{hardDeadline:s.binding.expiresAt});
+ if(s.binding.source==='github-environment-v1'){const position={lat:45.3001,lng:70.1001};const binding=await installLocationBridge(cap,'a',position),actor=await safeActor(s.models.a);const platformCellRequest=createPlatformCellRequest({admission:s.authorization,model:s.models.a,actor,position,runId});return {position,platformCellRequest,nonce:s.binding.nonce,locationBindingDigest:binding.bindingDigest};}
  const proof=await freshParentProof(cap,'s02-empty-cell',{runId,nonce:s.binding.nonce,scenario,ownerAccountId});assert.ok(Date.now()-proof.observedAtMs<=60000&&Date.now()>=proof.observedAtMs);assert.equal(proof.ownerAccountIdAtCell,null);assert.equal(proof.otherOwnerCount,0);assert.equal(proof.exactCellVerified,true);
  const binding=await installLocationBridge(cap,'a',proof.position);return {position:proof.position,parentEmptyCell:proof,nonce:s.binding.nonce,locationBindingDigest:binding.bindingDigest};
 }
@@ -252,16 +256,16 @@ export async function registerCThroughNormalUi(cap,{slot,intentId,credentialCap,
  assert.equal(s.heldPrepared,true);const model=s.models.c;assert.ok(model&&!model.actor);assert.equal((await model.call('accounts','session')).currentUser,null);s.cState={credentialCap,knownIdentity:null,loginFrozen:false};
  const identity=async m=>{const a=await safeActor(m);assert.equal(a.deviceId,m.expectedDeviceId);return a;};
  const deps={accountKey:FIXED_IDENTITIES.C.accountKey,role:'c',authorization,vault,
-  async assertAuthorization(){assertSameRunAuthorization(authorization,{permissions:['register-C','login-C','remember-C','password-change-C','revoke-C','business']});assert.ok(s.supervisor?.ready&&!s.supervisor.closed);},
+  async assertAuthorization(){assertCompletionAuthorization(authorization,{permissions:['register-C','login-C','remember-C','password-change-C','revoke-C','business']});assert.ok(s.supervisor?.ready&&!s.supervisor.closed);},
   async assertPersistentProfile(){assert.equal(realpathSync.native(s.models.c.profile),realpathSync.native(s.profiles.c));assert.equal((await s.models.c.call('accounts','session')).secureStorageAvailable,true);await vault.verifyRegistry();},
-  async assertExactAbsence(){const p=await freshParentProof(cap,'c-absent',{accountKey:FIXED_IDENTITIES.C.accountKey});assert.equal(p.accountAbsent,true);assert.equal(p.directoryAbsent,true);assert.ok(Number.isSafeInteger(p.observedAtMs)&&Date.now()-p.observedAtMs<=60000&&Date.now()>=p.observedAtMs);s.cState.absence=p;},
+  async assertExactAbsence(){if(s.binding.source==='github-environment-v1'){assert.equal(FIXED_IDENTITIES.C.accountKey,'qa20261028c8be246d1');assert.equal((await s.models.c.call('accounts','session')).currentUser,null);s.cState.absence={observedAtMs:Date.now(),source:'normal-register-atomic-uniqueness',notDatabaseAbsenceProof:true};return;}const p=await freshParentProof(cap,'c-absent',{accountKey:FIXED_IDENTITIES.C.accountKey});assert.equal(p.accountAbsent,true);assert.equal(p.directoryAbsent,true);assert.ok(Number.isSafeInteger(p.observedAtMs)&&Date.now()-p.observedAtMs<=60000&&Date.now()>=p.observedAtMs);s.cState.absence=p;},
   async assertPreloginHold(){assert.ok(s.cState.absence&&Date.now()-s.cState.absence.observedAtMs<=60000);const held=await s.models.c.main(()=>{const h=globalThis.__qaUiCaseContext;return !!h&&!h.released&&!h.accounts.current&&h.registerCount===0;});assert.equal(held,true);},
-  async verifyIdentity(m){const a=await identity(m);s.cState.knownIdentity={owner:a.ownerAccountId,authUid:a.authUserId,accountKey:FIXED_IDENTITIES.C.accountKey};s.identities.C=s.cState.knownIdentity;m.actor={ownerAccountId:a.ownerAccountId,authUserId:a.authUserId,deviceId:a.deviceId};m.sessionEpoch=a.epoch;return a;},
+  async verifyIdentity(m){const a=await identity(m);s.cState.knownIdentity={owner:a.ownerAccountId,authUid:a.authUserId,accountKey:FIXED_IDENTITIES.C.accountKey};s.identities.C=s.cState.knownIdentity;m.actor={ownerAccountId:a.ownerAccountId,authUserId:a.authUserId,deviceId:a.deviceId};m.sessionEpoch=a.epoch;if(s.binding.source==='github-environment-v1')await persistSafeIdentityManifest(cap);return a;},
   async prepareNextCredential(a){
    const known={accountKey:FIXED_IDENTITIES.C.accountKey,owner:a.ownerAccountId,authUid:a.authUserId},intentId=s.binding.requestDigest+':C:password-change';let password=randomBytes(48).toString('base64url');
    try{s.cState.nextCap=await vault.sealBeforeMutation({slot:'C',credentialVersion:sha(intentId),password,operation:'password-change',intentId,identity:known});return s.cState.nextCap;}finally{password=null;}
   },
-  async awaitGrantAndRelease(){await releaseAllKnownGrants(cap);},
+  async awaitGrantAndRelease(_identity,capabilities){await releaseAllKnownGrants(cap,capabilities?.registeredLoginCredential);},
   async assertGrant(){await assertSameRunGrant(cap,{hardDeadline:s.binding.expiresAt});},
   async relaunch(role,{logout}){assert.equal(role,'c');assert.equal(logout,false);return launchNormalModel(cap,{role,prior:s.models.c,identity:s.identities.C,vault,expectedEpoch:s.models.c.epoch+1});},
   async freezeCLogin(){s.cState.loginFrozen=true;await s.models.c.main(()=>{const h=globalThis.__qaUiCaseContext;if(!h?.accounts)throw Error('EXACT_C_CONTEXT_REQUIRED');const actor=h.accounts.remote.active?.actor;if(!actor||actor.authKind!=='supabase')throw Error('C_ACTIVE_SESSION_REQUIRED');h.frozenActor=Object.freeze(Object.fromEntries(['ownerAccountId','authUserId','deviceId','sessionId'].map(k=>[k,actor[k]])));h.epoch=h.accounts.epoch;h.loginFrozen=true;});},
@@ -274,7 +278,7 @@ export async function registerCThroughNormalUi(cap,{slot,intentId,credentialCap,
  await s.cApi.register();assert.ok(s.identities.C);await persistSafeIdentityManifest(cap);return {confirmed:true};
 }
 export async function runAuthorizedNewCLifecycle(cap,{output}){
- const s=own(cap);assertSameRunAuthorization(s.authorization,{caseIds:['A06','A13','A15','A12']});assert.ok(s.cApi&&s.identities.C&&s.grantsReleased);assert.equal(s.cFinished,undefined,'C_LIFECYCLE_NO_REPLAY');s.cFinished=false;
+ const s=own(cap);assertCompletionAuthorization(s.authorization,{caseIds:['A06','A13','A15','A12']});assert.ok(s.cApi&&s.identities.C&&s.grantsReleased);assert.equal(s.cFinished,undefined,'C_LIFECYCLE_NO_REPLAY');s.cFinished=false;
  try{
   await s.cApi.firstAdoptionGuidance();await s.cApi.persistentRestart('before-password-change');await s.cApi.passwordNegatives();await s.cApi.changePassword();await s.cApi.persistentRestart('after-password-change');await s.cApi.verifyOldRejectedNewAccepted();await s.cApi.persistentRestart('after-new-login');await s.cApi.revokeCurrentSession();
   assert.equal((await s.models.c.call('accounts','session')).currentUser,null);s.revoked.add('c');const result=await s.cApi.close();assert.equal(result.passed,true);s.cFinished=true;
@@ -290,4 +294,23 @@ export async function closeOwnedModels(cap,{models,preserveForReconciliation=fal
  if(failed)throw Error('OWNED_PROFILE_CLEANUP_UNCONFIRMED');
  if(!preserveForReconciliation){const noLinks=p=>{const st=lstatSync(p);assert.equal(st.isSymbolicLink(),false,'OWNED_PROFILE_REPARSE_REJECTED');if(st.isDirectory())for(const name of readdirSync(p))noLinks(join(p,name));};for(const role of roles){const path=assertOwnedProfileRoot(s.profiles[role],s.profileRoots[role]);assert.ok(!Object.values(s.models).some(m=>m.profile===path&&[m.launcherPid,m.runtime.pid].some(live)));noLinks(path);rmSync(path,{recursive:true,force:true});}}
  safeWrite(s,'lifecycle-cleanup.json',{ownedProcessesStopped:true,profilesRemoved:!preserveForReconciliation,preservedOnlyUntilHardDeadline:preserveForReconciliation,expiresAt:s.binding.expiresAt});
+}
+
+export async function importEnvironmentCredentials(cap,{vault,provenance}){
+ const s=own(cap);assert.equal(s.binding.source,'github-environment-v1');assert.equal(s.heldPrepared,true);assert.equal(vault,s.vault);assert.equal(s.environmentImported,undefined);s.environmentImported=false;const result={};
+ const names={A:'DESKTOPPET_QA_A_PASSWORD',B:'DESKTOPPET_QA_B_PASSWORD'};
+ try{for(const slot of ['A','B']){let password=process.env[names[slot]];try{result[slot]=await vault.importAppliedParentCredential({slot,password,provenance:provenance[slot]});}finally{password=null;delete process.env[names[slot]];}}s.environmentImported=true;safeWrite(s,'environment-custody.json',{version:1,source:'github-environment-v1',aImported:true,bImported:true,parentCasNotPerformedByRunner:true,resetReceiptNotSynthesized:true,environmentNamesRemoved:true});return result;}
+ finally{for(const name of Object.values(names))delete process.env[name];}
+}
+async function releasePlatformGrants(cap,cCredential){
+ const s=own(cap);assert.equal(s.binding.source,'github-environment-v1');assert.equal(s.grantsReleased,undefined);const actors={};for(const role of roles)actors[role]=await safeActor(s.models[role]);
+ // Internal same-job orchestration barrier only: uploaded identity is visible to
+ // parent before the one 60-second baseline window. This never authorizes a grant.
+ const barrier=join(s.output,'identity-upload-complete.json');while(!existsSync(barrier)){own(cap);assert.ok(Date.now()<s.binding.businessDeadline);await pause(250);}assert.equal(lstatSync(barrier).isSymbolicLink(),false);const scheduled=JSON.parse(readFileSync(barrier,'utf8').replace(/^\uFEFF/,''));assert.deepEqual(scheduled,{version:1,run:s.binding.run,commit:s.binding.commit,requestDigest:s.binding.requestDigest,purpose:'identity-upload-complete-no-authority'});
+ const transition=await observePlatformFourGrantTransition({admission:s.authorization,models:s.models,actors,scenario,vault:s.vault,cCredential});
+ await admitPlatformS06SingleSnapshot(s.models.a3.s06Ticket,{transition});
+ safeWrite(s,'s06-platform-warning.json',{version:1,run:s.binding.run,commit:s.binding.commit,requestDigest:s.binding.requestDigest,realOriginalWarningObserved:true,originalSnapshotCount:1,deadline:s.binding.businessDeadline});
+ await releasePlatformS06AfterFormalGrant(s.models.a3.s06Ticket);
+ for(const role of roles){const actor=await safeActor(s.models[role]);for(const key of ['ownerAccountId','authUserId','deviceId','sessionId','epoch'])assert.equal(actor[key],actors[role][key]);s.scopeGrants.set(role,{...actor,role,scenario,expiresAtMs:s.binding.businessDeadline,deadlineSource:'fixed-platform-admission',protocolDoesNotReturnExpiry:true});}
+ for(const role of roles.filter(r=>r!=='a3'))await s.models[role].main(async(_e,g)=>globalThis.__qaUiCaseContext.release(g),s.scopeGrants.get(role));s.grantsReleased=true;await assertSameRunGrant(cap,{hardDeadline:s.binding.businessDeadline});
 }

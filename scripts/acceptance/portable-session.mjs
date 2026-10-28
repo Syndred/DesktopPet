@@ -38,8 +38,8 @@ export async function launchPortableSession({executable,profile,expectedSource,l
     if(connection)try{await main(({app})=>{app.quit();return true;});}catch{}
     connection?.close();await browser?.close().catch(()=>{});
     if(child.exitCode===null)await Promise.race([new Promise(done=>child.once('exit',done)),new Promise(done=>setTimeout(done,2500))]);
-    if(child.exitCode===null&&child.pid)try{execFileSync('taskkill',['/PID',String(child.pid),'/T','/F'],{windowsHide:true,stdio:'ignore'});}catch{}
-    if(runtime?.pid&&runtime.pid!==child.pid)try{execFileSync('taskkill',['/PID',String(runtime.pid),'/T','/F'],{windowsHide:true,stdio:'ignore'});}catch{}
+    if(child.exitCode===null&&child.pid)try{execFileSync('taskkill',['/PID',String(child.pid),'/T','/F'],{windowsHide:true,stdio:'ignore',env});}catch{}
+    if(runtime?.pid&&runtime.pid!==child.pid)try{execFileSync('taskkill',['/PID',String(runtime.pid),'/T','/F'],{windowsHide:true,stdio:'ignore',env});}catch{}
   }
   async function main(fn,...args){
     const expression=`(async()=>{const require=process.getBuiltinModule('node:module').createRequire(process.resourcesPath+'/app.asar/package.json');return await (${fn.toString()})(require('electron'),...${JSON.stringify(args)});})()`;

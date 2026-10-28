@@ -193,8 +193,9 @@ try {
       $claim=ReadOwn $script:intentName
       if($claim.intent -cne $x.intentDigest -or [Convert]::ToBase64String((Entropy $claim.binding)) -cne [Convert]::ToBase64String((Entropy $x.binding))){Reject}
       $hasReceipt=Test-Path -LiteralPath (FilePath $script:receiptName)
-      if($hasReceipt){$receipt=ReadOwn $script:receiptName;if($receipt.state -cne 'confirmed-after-readback' -or $receipt.intent -cne $claim.intent){Reject}}
-      $result=@{claimed=$true;requiresAuthoritativeReadback=(-not $hasReceipt);mayBlindRetry=$false}
+      if($hasReceipt){$receipt=ReadOwn $script:receiptName;if($receipt.state -cne 'confirmed-after-readback' -or $receipt.intent -cne $claim.intent -or $receipt.outcome -notin @('confirmed','rejected')){Reject}}
+      $outcome=$null;if($hasReceipt){$outcome=$receipt.outcome}
+      $result=@{claimed=$true;requiresAuthoritativeReadback=(-not $hasReceipt);mayBlindRetry=$false;outcome=$outcome}
     } elseif($Action -eq 'receipt') {
       $claim=ReadOwn $script:intentName
       if($x.outcome -notin @('confirmed','rejected') -or $x.readbackDigest -notmatch '^[a-f0-9]{64}$' -or [Convert]::ToBase64String((Entropy $claim.binding)) -cne [Convert]::ToBase64String((Entropy $x.binding))){Reject}

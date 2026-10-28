@@ -1,11 +1,8 @@
 name: DesktopPet fixed same-run completion and manual preparation
-# No request exists yet. Manual runs are synthetic preparation only.
+# Retired signed-ticket identity trigger. Manual synthetic preparation only.
 # Real identity entry also requires exact one-new-file push, signed ticket and all pins.
 on:
   workflow_dispatch:
-  push:
-    branches: [codex/cloud-authority-convergence]
-    paths: [scripts/acceptance/requests/same-run-next-trigger.json]
 permissions:
   contents: read
   actions: read
