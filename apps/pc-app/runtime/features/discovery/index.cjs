@@ -46,7 +46,7 @@ module.exports={
       setDemo:payload=>{discovery.location.setDemo(payload.enabled===true); return discovery.snapshot();},
       setProvider:payload=>{const result=discovery.map.setProvider(payload.providerId); return result.ok ? discovery.snapshot() : {ok:false,code:result.error.code,message:result.error.message};},
       tile:payload=>loadMapTile(discovery.map,tiles,payload),
-      ...(qaLocation?{qaTarget:async payload=>{qaLocation.selectTemplate(payload.templateId);location.reset();const result=await location.locate();return result.ok?discovery.snapshot():{ok:false,code:result.error.code,message:result.error.message};}}:{}),
+      ...(qaLocation?{qaPositionFixture:payload=>{qaLocation.selectPosition(payload);location.reset();return discovery.snapshot();},qaTarget:async payload=>{qaLocation.selectTemplate(payload.templateId);location.reset();const result=await location.locate();return result.ok?discovery.snapshot():{ok:false,code:result.error.code,message:result.error.message};}}:{}),
       observe:payload=>discovery.observe(payload),begin:payload=>discovery.begin(payload),act:payload=>discovery.act(payload),cancel:payload=>discovery.cancel(payload),confirm:payload=>discovery.confirm(payload),
       pokedex:()=>({ok:true,data:discovery.captureViews(discovery.owner())}),memories:payload=>discovery.memories(payload)
     },dispose(){windowVisibility.dispose();offSession();offPrivacy();unsubscribe();removeCloudContext?.();proofs.clear();cloud.clear();cloudRuntime.clear();setExploring(false);discovery.dispose();}};

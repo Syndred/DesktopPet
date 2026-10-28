@@ -35,7 +35,7 @@ jobs:
     # Deliberately not a release, deployment, real-account test or the old 98-case batch.
     # Test-only continuation commits use the immutable-package workflow; its guard
     # rejects any product/dependency/build change before reusing prior results.
-    if: github.ref == 'refs/heads/codex/cloud-authority-convergence' && !contains(github.event.head_commit.message, '[native-only]') && !contains(github.event.head_commit.message, '[desktop-interaction-only]') && !contains(github.event.head_commit.message, '[desktop-tray-only]') && !contains(github.event.head_commit.message, '[map-discovery-only]')
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence' && !contains(github.event.head_commit.message, '[native-only]') && !contains(github.event.head_commit.message, '[desktop-interaction-only]') && !contains(github.event.head_commit.message, '[desktop-tray-only]') && !contains(github.event.head_commit.message, '[map-discovery-only]') && !contains(github.event.head_commit.message, '[qa-nearby-empty-only]')
     runs-on: windows-latest
     timeout-minutes: 55
     steps:
@@ -206,7 +206,7 @@ jobs:
   isolated-cloud-source:
     # Test-only continuation commits use the immutable-package workflow; its guard
     # rejects any product/dependency/build change before reusing prior results.
-    if: github.ref == 'refs/heads/codex/cloud-authority-convergence' && !contains(github.event.head_commit.message, '[native-only]') && !contains(github.event.head_commit.message, '[desktop-interaction-only]') && !contains(github.event.head_commit.message, '[desktop-tray-only]') && !contains(github.event.head_commit.message, '[map-discovery-only]')
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence' && !contains(github.event.head_commit.message, '[native-only]') && !contains(github.event.head_commit.message, '[desktop-interaction-only]') && !contains(github.event.head_commit.message, '[desktop-tray-only]') && !contains(github.event.head_commit.message, '[map-discovery-only]') && !contains(github.event.head_commit.message, '[qa-nearby-empty-only]')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:

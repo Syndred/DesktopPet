@@ -248,3 +248,7 @@ test('real territory battle ownership feeds the discovery map and capture proven
     const outside={...f.api.location.snapshot().fix,lat:Math.min(...territory.boundary.map(p=>p.lat))-.001,lng:center.lng};assert.equal(f.api.territories.captureContext(f.owner,outside).territoryId,null,'An outside position must keep the ordinary no-territory result');
   } finally {f.close();}
 });
+
+test('ordinary authenticated discovery does not register QA coordinate fixture command',integrationOptions,async()=>{
+  const f=fixture();try{const before=f.api.location.snapshot();const result=await f.services.invoke('discovery','qaPositionFixture',{lat:31.11,lng:121.235});assert.equal(result.ok,false);assert.equal(result.code,'COMMAND_UNAVAILABLE');assert.deepEqual(f.api.location.snapshot(),before);}finally{f.close();}
+});

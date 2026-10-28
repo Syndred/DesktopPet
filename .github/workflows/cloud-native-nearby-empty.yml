@@ -1,0 +1,72 @@
+name: DesktopPet isolated nearby empty-result fixture acceptance
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/cloud-authority-convergence']
+    paths:
+      - '.github/workflows/cloud-native-nearby-empty.yml'
+      - 'apps/pc-app/runtime/features/discovery/qa-location.cjs'
+      - 'apps/pc-app/runtime/features/discovery/index.cjs'
+      - 'apps/pc-app/runtime/features/discovery/tests/qa-location.test.cjs'
+      - 'apps/pc-app/runtime/features/discovery/tests/discovery.test.cjs'
+      - 'scripts/acceptance/cloud-native-nearby-empty-acceptance.mjs'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nearby-empty-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  nearby-empty:
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Type-check affected product contracts
+        run: npm run typecheck
+      - name: Verified QA coordinates, source and identity gates
+        run: node --test apps/pc-app/runtime/features/discovery/tests/qa-location.test.cjs
+      - name: Actual ordinary-command rejection and unchanged discovery contracts
+        run: node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/discovery/tests/discovery.test.cjs
+      - name: Build one actual new Windows portable
+        run: npm run package:pc:win
+      - name: Audit ASAR, source fingerprint and native closure
+        id: audit
+        run: npm run release:audit
+      - name: Ordinary signed-out new executable startup
+        if: ${{ !cancelled() && steps.audit.outcome == 'success' }}
+        timeout-minutes: 6
+        run: node scripts/acceptance/cloud-repair-portable.mjs
+      - name: Actual natural display-filter empty and ordinary location retry
+        if: ${{ !cancelled() && steps.audit.outcome == 'success' }}
+        timeout-minutes: 8
+        run: node scripts/acceptance/cloud-native-nearby-empty-acceptance.mjs --source=$env:GITHUB_SHA
+      - name: Retain exact package and bounded owned-app evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: desktoppet-nearby-empty-${{ github.sha }}
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            artifacts/pc-cloud-upgrade/*.exe
+            apps/pc-app/dist/build-manifest.json
+            apps/pc-app/dist/runtime-closure.json
+            artifacts/foundation/cloud-engineering/package-audit.json
+            artifacts/foundation/cloud-engineering/focused-portable/*/evidence.json
+            artifacts/foundation/cloud-engineering/focused-portable/*/signed-out-evidence.json
+            artifacts/foundation/cloud-engineering/nearbyEmpty/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/nearbyEmpty/run-*/M04-natural-100m-empty.png
+            artifacts/foundation/cloud-engineering/nearbyEmpty/run-*/M04-natural-450m-results.png
+            artifacts/foundation/cloud-engineering/nearbyEmpty/run-*/M04-natural-filter-empty-and-retry-failed.png

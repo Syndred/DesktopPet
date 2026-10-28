@@ -25,7 +25,7 @@ concurrency:
 
 jobs:
   map-discovery:
-    if: github.ref == 'refs/heads/codex/cloud-authority-convergence' && !contains(github.event.head_commit.message, '[map-reuse-only]')
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence' && !contains(github.event.head_commit.message, '[map-reuse-only]') && !contains(github.event.head_commit.message, '[qa-nearby-empty-only]')
     runs-on: windows-latest
     timeout-minutes: 45
     steps:

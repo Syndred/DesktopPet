@@ -35,3 +35,15 @@ test('an ordinary location service never promotes a simulated adapter result to 
   const location=new LocationService({adapter:{getPosition:async()=>({ok:true,source:'simulated',scenarioId:'unverified',lat:31.2,lng:121.4,accuracyMeters:5,timestampMs:Date.now()})}});
   try {const result=await location.locate();assert.equal(result.ok,false);assert.equal(result.error.code,'QA_PROFILE_REQUIRED');assert.equal(location.snapshot().permission,'unknown');assert.equal(location.snapshot().fix,null);}finally{location.dispose();}
 });
+test('explicit QA coordinate fixture accepts only finite WGS84 coordinates and never a clock or authority override',async()=>{
+  const f=fixture(),adapter=createQaLocationAdapter(f.services,f.now);
+  for(const input of [null,{}, {lat:'31',lng:121},{lat:NaN,lng:121},{lat:91,lng:0},{lat:0,lng:181},{lat:31,lng:121,timestampMs:0},{lat:31,lng:121,source:'os'}])assert.throws(()=>adapter.selectPosition(input),{code:'INVALID_COORDINATES'});
+  const selected=adapter.selectPosition({lat:31.11,lng:121.235});assert.equal(selected.source,'simulated');
+  const location=new LocationService({adapter,now:f.now,mayUseLocation:()=>adapter.allowed()});
+  try{assert.equal(location.snapshot().fix,null);assert.equal((await location.locate()).ok,true);const fix=location.snapshot().fix;assert.equal(fix.lat,31.11);assert.equal(fix.lng,121.235);assert.equal(fix.timestampMs,f.now());assert.equal(fix.source,'simulated');assert.equal(location.snapshot().permission,'unknown');assert.equal(geofence(fix,fix,100,f.now()).code,'REAL_LOCATION_REQUIRED');}finally{location.dispose();}
+});
+test('coordinate fixture rechecks current scenario and identity before every selection',()=>{
+  const f=fixture(),adapter=createQaLocationAdapter(f.services,f.now);f.scene.requireIdentity=()=>({authority:'supabase',scenarioId:f.scene.id,runId:f.scene.runId,ownerAccountId:'qa:test-owner'});assert.throws(()=>adapter.selectPosition({lat:31,lng:121}),{code:'QA_IDENTITY_MISMATCH'});
+  f.remove();assert.throws(()=>adapter.selectPosition({lat:31,lng:121}),{code:'QA_SCENARIO_CHANGED'});
+  assert.equal(createQaLocationAdapter({get:()=>null}),null);
+});

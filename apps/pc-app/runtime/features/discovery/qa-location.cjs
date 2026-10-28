@@ -1,5 +1,6 @@
 const {resolve}=require('node:path');
 const {nearbySpawns}=require('./spawns.cjs');
+const {point}=require('./coordinates.cjs');
 
 /** Only consumes foundation's verified, namespaced main-process QA service. */
 function createQaLocationAdapter(services,now=Date.now) {
@@ -21,10 +22,16 @@ function createQaLocationAdapter(services,now=Date.now) {
     if(!target)throw Object.assign(new Error('此场景尚无对应角色'),{code:'QA_TARGET_UNAVAILABLE'});
     position={...target.position};return {templateId:target.templateId,resourceId:target.resourceId};
   }
+  function selectPosition(input) {
+    identity();
+    if(!input||Object.keys(input).sort().join(',')!=='lat,lng')throw Object.assign(new Error('模拟位置仅接受 WGS84 经纬度'),{code:'INVALID_COORDINATES'});
+    position=point(input);
+    return {...position,source:'simulated',scenarioId:scene.runId};
+  }
   return {
     scenario:'qa',scenarioId:scene.runId,
     allowed(){try{identity();return true;}catch{return false;}},
-    selectTemplate,
+    selectTemplate,selectPosition,
     metricFix(fix){
       identity();
       if(fix?.source!=='simulated'||fix.scenarioId!==scene.runId||fix.provider!=='qa-discovery')throw Object.assign(new Error('位置不属于当前 QA 场景'),{code:'QA_LOCATION_MISMATCH'});
