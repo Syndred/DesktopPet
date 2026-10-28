@@ -1,9 +1,10 @@
 # Fixed same-run entry only; never kills a holder or its independent watchdog.
-param([Parameter(Mandatory=$true)][ValidateSet('selftest','start','status','authorization','reset-a','reset-b','s06-pregrant','c-absent','grant-manifest','s02-empty-cell','final','reconcile','reconcile-A','reconcile-B','reconcile-C','reconcile-final','stop')][string]$Action)
+param([Parameter(Mandatory=$true)][ValidateSet('selftest','start','handshake-start','handshake-ack','handshake-final','status','authorization','reset-a','reset-b','s06-pregrant','c-absent','grant-manifest','s02-empty-cell','final','reconcile','reconcile-A','reconcile-B','reconcile-C','reconcile-final','stop')][string]$Action)
 $ErrorActionPreference='Stop'
 if ($env:GITHUB_ACTIONS -ne 'true' -or $env:GITHUB_RUN_ATTEMPT -ne '1' -or $env:GITHUB_RUN_ID -notmatch '^[0-9]+$') { throw 'PRE_CREDENTIAL_NOT_READY' }
 $root=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../..'))
 $directory=Join-Path $root ('artifacts/qa/same-run-entry-'+$env:GITHUB_RUN_ID)
+if($Action -in @('handshake-start','handshake-ack','handshake-final')){$directory=Join-Path $root ('artifacts/qa/same-run-handshake-'+$env:GITHUB_RUN_ID)}
 $business=Join-Path $root ('artifacts/qa/same-run-'+$env:GITHUB_RUN_ID)
 $pidFile=Join-Path $directory 'holder-process.json'
 $reconcilePidFile=Join-Path $directory 'reconcile-process.json'
@@ -49,18 +50,31 @@ if($Action -eq 'selftest') {
  if($LASTEXITCODE -and $LASTEXITCODE -ne 0){throw 'IDENTITY_SELFTEST_FAILED'}
  exit 0
 }
-if($Action -eq 'start') {
+function Start-FixedAndWaitReady($entry,$expectedNonce) {
  if(Test-Path -LiteralPath $pidFile){throw 'NO_SECOND_HOLDER_START'}
- $self=Join-Path $directory 'identity-selftest/supervisor-selftest.json'
- if(!(Test-Path -LiteralPath $self) -or (Get-Content -LiteralPath $self -Raw | ConvertFrom-Json).passed -ne $true){throw 'IDENTITY_SELFTEST_REQUIRED'}
- New-Item -ItemType Directory -Path $directory -Force | Out-Null
- $entry=Join-Path $PSScriptRoot 'same-run-bootstrap.mjs'
- if($entry -match '["\r\n]'){throw 'INVALID_FIXED_ENTRY'}
- # These private streams are deliberately NEVER artifact paths.
+ $self=Join-Path $root ('artifacts/qa/same-run-entry-'+$env:GITHUB_RUN_ID+'/identity-selftest/supervisor-selftest.json')
+ if(!(Test-Path -LiteralPath $self) -or (Get-Content -LiteralPath $self -Raw|ConvertFrom-Json).passed -ne $true){throw 'IDENTITY_SELFTEST_REQUIRED'}
+ New-Item -ItemType Directory -Path $directory -Force|Out-Null
+ if($entry -match '[\r\n]' -or $entry.Contains('"')){throw 'INVALID_FIXED_ENTRY'}
  $child=Start-Process -FilePath (Get-Command node).Source -ArgumentList ('"'+$entry+'"') -WorkingDirectory $root -PassThru -WindowStyle Hidden -RedirectStandardOutput (Join-Path $directory 'private-stdout.txt') -RedirectStandardError (Join-Path $directory 'private-stderr.txt')
- Write-Owned $child | Out-Null
- Write-Output 'SAME_RUN_FIXED_ENTRY_STARTED'
- exit 0
+ $null=$child.Handle;Write-Owned $child|Out-Null
+ $until=[DateTime]::UtcNow.AddSeconds(20);if($until -gt $hardEnd){$until=$hardEnd}
+ while([DateTime]::UtcNow -lt $until){
+  if(!(Resolve-Owned)){throw 'ENTRY_STOPPED_BEFORE_READY_HANDSHAKE'}
+  $requestPath=Join-Path $directory 'authorization-request.json';$heartbeatPath=Join-Path $directory 'authorization-wait-heartbeat.json'
+  if((Test-Path -LiteralPath $requestPath) -and (Test-Path -LiteralPath $heartbeatPath)){
+   $r=Read-SafeJson $requestPath;$h=Read-SafeJson $heartbeatPath
+   if(@($r.PSObject.Properties.Name).Count -ne 7 -or $r.version -ne 1 -or [string]$r.run -cne $env:GITHUB_RUN_ID -or $r.commit -cne $env:GITHUB_SHA -or $r.nonce -cne $expectedNonce -or $r.hardEndMs -ne $clock.hardEndMs){throw 'READY_REQUEST_BINDING_MISMATCH'}
+   $requested=[DateTimeOffset]::Parse([string]$r.requestedAt);$deadline=[DateTimeOffset]::Parse([string]$r.waitDeadline)
+   if($deadline -le [DateTimeOffset]::UtcNow -or $deadline.ToUnixTimeMilliseconds() -gt $clock.hardEndMs -or ($deadline-$requested).TotalMinutes -gt 20.01 -or $requested -gt [DateTimeOffset]::UtcNow){throw 'READY_REQUEST_TIME_INVALID'}
+   if(@($h.PSObject.Properties.Name).Count -ne 6 -or $h.version -ne 1 -or [string]$h.run -cne $env:GITHUB_RUN_ID -or $h.commit -cne $env:GITHUB_SHA -or $h.nonce -cne $expectedNonce -or ($h.ticks -isnot [int] -and $h.ticks -isnot [long]) -or $h.ticks -lt 1 -or $h.ticks -gt 1200 -or $h.credentialOperationsStarted -isnot [bool] -or $h.credentialOperationsStarted -ne $false){throw 'READY_HEARTBEAT_BINDING_MISMATCH'}
+   if(!(Resolve-Owned)){throw 'ENTRY_DIED_DURING_READY_HANDSHAKE'}
+   @{version=1;run=$env:GITHUB_RUN_ID;commit=$env:GITHUB_SHA;requestAndFirstTickVerified=$true;ownedPidAlive=$true}|ConvertTo-Json|Set-Content -LiteralPath (Join-Path $directory 'start-ready.json') -Encoding UTF8
+   return
+  }
+  Start-Sleep -Milliseconds 100
+ }
+ throw 'READY_HANDSHAKE_TIMEOUT'
 }
 function Read-SafeJson($path) {
  $item=Get-Item -LiteralPath $path
@@ -71,7 +85,7 @@ function Assert-NoPrecredentialCustody {
  if(Resolve-Owned){throw 'PREAUTH_HOLDER_STILL_ALIVE'}
  if(Test-Path -LiteralPath (Join-Path $directory 'entry-binding.json')){throw 'PREAUTH_BINDING_EXISTS'}
  $boot=Read-SafeJson (Join-Path $directory 'entry-bootstrap.json')
- $allowed=@('IMPORT_FIXED_ENTRY','ARGUMENTS','TEMP','REQUEST','JOB_CLOCK','PUBLIC_INPUT','PRIVATE_FIXTURE','AWAIT_SIGNED_AUTHORIZATION')
+ $allowed=@('IMPORT_FIXED_ENTRY','ARGUMENTS','TEMP','REQUEST','JOB_CLOCK','PUBLIC_INPUT','PRIVATE_FIXTURE','AWAIT_SIGNED_AUTHORIZATION','AUTHORIZATION_STATIC_CLIENT_READY','AUTHORIZATION_GUARDS_PASSED','AUTHORIZATION_REQUEST_WRITING','AUTHORIZATION_REQUEST_WRITTEN','AUTHORIZATION_FIRST_WAIT_TICK','AUTHORIZATION_FIXED_FETCH','AUTHORIZATION_HTTP_404','AUTHORIZATION_HTTP_200','AUTHORIZATION_CANCEL_OBSERVED')
  if($boot.version -ne 1 -or [string]$boot.run -cne $env:GITHUB_RUN_ID -or $boot.commit -cne $env:GITHUB_SHA -or $boot.started -isnot [bool] -or $boot.started -ne $true -or $boot.mainCalled -isnot [bool] -or $boot.phase -cnotin $allowed -or $boot.credentialOperationsStarted -isnot [bool] -or $boot.credentialOperationsStarted -ne $false -or $boot.nodeExitObserved -isnot [bool] -or $boot.nodeExitObserved -ne $true -or $boot.requestedExitCode -ne 1 -or $null -ne $boot.actualExitCode -or $boot.errorCode -cne 'PRE_CREDENTIAL_NOT_READY'){throw 'PREAUTH_SAFE_BOOTSTRAP_PROOF_REQUIRED'}
  # Registry lives only under an authorized-vault root. Match this run exactly;
  # enumerate metadata only, never read another run's directory or any ciphertext.
@@ -79,6 +93,34 @@ function Assert-NoPrecredentialCustody {
  $roots=@(Get-ChildItem -LiteralPath $env:RUNNER_TEMP -Force | Where-Object {$_.Name.StartsWith($prefix,[StringComparison]::Ordinal)})
  if($roots.Count -ne 0){throw 'PREAUTH_CUSTODY_ROOT_OR_REGISTRY_PRESENT'}
  return $true
+}
+if($Action -eq 'start'){
+ $trigger=Read-SafeJson (Join-Path $PSScriptRoot '../requests/same-run-next-trigger.json')
+ if($trigger.nonce -notmatch '^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$'){throw 'FIXED_TRIGGER_NONCE_REQUIRED'}
+ Start-FixedAndWaitReady (Join-Path $PSScriptRoot 'same-run-bootstrap.mjs') $trigger.nonce
+ Write-Output 'SAME_RUN_FIXED_ENTRY_READY';exit 0
+}
+if($Action -eq 'handshake-start'){
+ Start-FixedAndWaitReady (Join-Path $PSScriptRoot 'same-run-authorization-wait-selftest.mjs') '00000000-0000-4000-8000-000000000002'
+ Write-Output 'FIXED_REAL_WAIT_SELFTEST_READY';exit 0
+}
+if($Action -eq 'handshake-ack'){
+ Start-Sleep -Seconds 5;if(!(Resolve-Owned)){throw 'SELFTEST_DIED_BETWEEN_STEPS'}
+ $h=Read-SafeJson (Join-Path $directory 'authorization-wait-heartbeat.json')
+ if([string]$h.run -cne $env:GITHUB_RUN_ID -or $h.commit -cne $env:GITHUB_SHA -or $h.nonce -cne '00000000-0000-4000-8000-000000000002' -or $h.ticks -lt 2 -or $h.credentialOperationsStarted -ne $false){throw 'SELFTEST_WAIT_DID_NOT_ADVANCE'}
+ $path=Join-Path $directory 'synthetic-cancel.json';if(Test-Path -LiteralPath $path){throw 'NO_SECOND_TEST_CANCEL'}
+ @{version=1;purpose='cancel-real-wait-selftest-only';run=$env:GITHUB_RUN_ID;commit=$env:GITHUB_SHA}|ConvertTo-Json|Set-Content -LiteralPath $path -Encoding UTF8
+ Write-Output 'FIXED_REAL_WAIT_SELFTEST_CANCEL_REQUESTED';exit 0
+}
+if($Action -eq 'handshake-final'){
+ $until=[DateTime]::UtcNow.AddSeconds(30)
+ while([DateTime]::UtcNow -lt $until -and (Resolve-Owned)){Start-Sleep -Milliseconds 100}
+ $still=Resolve-Owned;if($still){$still.Kill();if(!$still.WaitForExit(5000)){throw 'SELFTEST_EXACT_PID_CLEANUP_UNCONFIRMED'};throw 'SELFTEST_DID_NOT_EXIT_NATURALLY'}
+ $proof=Read-SafeJson (Join-Path $directory 'handshake-evidence.json')
+ if($proof.passed -ne $true -or $proof.run -cne $env:GITHUB_RUN_ID -or $proof.commit -cne $env:GITHUB_SHA -or $proof.authorizationReturned -ne $false -or $proof.expectedAbortObserved -ne $true -or $proof.nodeExitObserved -ne $true -or $proof.requestedExitCode -ne 0 -or ($proof.http404Observed+$proof.http200Observed) -lt 1){throw 'SELFTEST_REAL_WAIT_NOT_CONFIRMED'}
+ if((Test-Path -LiteralPath (Join-Path $directory 'entry-binding.json')) -or @(Get-ChildItem -LiteralPath $env:RUNNER_TEMP -Force|Where-Object {$_.Name.StartsWith(('dpapi-authorized-'+$env:GITHUB_RUN_ID+'-'),[StringComparison]::Ordinal)}).Count -ne 0){throw 'SELFTEST_UNEXPECTED_CUSTODY'}
+ @{version=1;run=$env:GITHUB_RUN_ID;commit=$env:GITHUB_SHA;ownedPidExited=$true;bindingAbsent=$true;vaultAndRegistryAbsent=$true;scope='Real authorization wait cancelled before any authorization return; no global profile cleanup claim'}|ConvertTo-Json|Set-Content -LiteralPath (Join-Path $directory 'handshake-terminal.json') -Encoding UTF8
+ Write-Output 'FIXED_REAL_WAIT_SELFTEST_CONFIRMED';exit 0
 }
 if($Action -eq 'reconcile') {
  if([DateTime]::UtcNow -ge $hardEnd.AddMinutes(-2)){throw 'ORIGINAL_RECONCILIATION_WINDOW_EXPIRED'}
@@ -111,6 +153,19 @@ if($Action -eq 'reconcile') {
 if($Action -eq 'stop') {
  $owned=Resolve-Owned
  $bindingFile=Join-Path $directory 'entry-binding.json'
+ if($owned -and !(Test-Path -LiteralPath $bindingFile)){
+  $boot=Read-SafeJson (Join-Path $directory 'entry-bootstrap.json')
+  if($boot.version -ne 1 -or [string]$boot.run -cne $env:GITHUB_RUN_ID -or $boot.commit -cne $env:GITHUB_SHA -or $boot.mainCalled -ne $true -or $boot.credentialOperationsStarted -isnot [bool] -or $boot.credentialOperationsStarted -ne $false){throw 'PREAUTH_CANCEL_STATE_UNCONFIRMED'}
+  $trigger=Read-SafeJson (Join-Path $PSScriptRoot '../requests/same-run-next-trigger.json')
+  if($trigger.nonce -notmatch '^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$'){throw 'PREAUTH_CANCEL_NONCE_INVALID'}
+  if(!(Resolve-Owned)){throw 'PREAUTH_PROCESS_CHANGED_BEFORE_CANCEL'}
+  $cancelPath=Join-Path $directory 'preauthorization-cancel.json'
+  $bytes=[Text.Encoding]::UTF8.GetBytes((@{version=1;purpose='cancel-preauthorization-only';run=$env:GITHUB_RUN_ID;commit=$env:GITHUB_SHA;nonce=$trigger.nonce}|ConvertTo-Json -Compress))
+  $stream=[IO.File]::Open($cancelPath,[IO.FileMode]::CreateNew,[IO.FileAccess]::Write,[IO.FileShare]::None);try{$stream.Write($bytes,0,$bytes.Length)}finally{$stream.Dispose()}
+  $until=[DateTime]::UtcNow.AddSeconds(15)
+  while([DateTime]::UtcNow -lt $until -and !(Test-Path -LiteralPath $bindingFile) -and (Resolve-Owned)){Start-Sleep -Milliseconds 100}
+  # A concurrent authorization return is NOT killed: follow the existing bound watchdog route.
+ }
  if(!(Test-Path -LiteralPath $bindingFile)){
   [void](Assert-NoPrecredentialCustody)
   @{version=1;run=$env:GITHUB_RUN_ID;commit=$env:GITHUB_SHA;scope='precredential-no-custody';credentialOperationsStarted=$false;holderExited=$true;bindingAbsent=$true;thisRunVaultAndRegistryAbsent=$true;actualExitCode=$null;registeredProfileCleanupNotClaimed=$true}|ConvertTo-Json|Set-Content -LiteralPath (Join-Path $directory 'terminal-cleanup.json') -Encoding UTF8

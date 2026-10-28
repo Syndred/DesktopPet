@@ -9,6 +9,7 @@ on:
       - scripts/acceptance/recovery/same-run-bootstrap-windows.test.mjs
       - scripts/acceptance/recovery/run-same-run.mjs
       - scripts/acceptance/recovery/same-run-process.ps1
+      - scripts/acceptance/recovery/same-run-authorization-wait-selftest.mjs
       - scripts/acceptance/recovery/same-run-lifetime-timer.mjs
       - scripts/acceptance/recovery/same-run-lifetime-contract.ps1
 permissions:
@@ -44,24 +45,28 @@ jobs:
         with:
           node-version: 24
       - run: npm ci --prefix scripts/acceptance/recovery --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
-      - name: Start fixed cross-step synthetic timer then exit parent step
+      - name: Original exact owned-process identity selftest
         shell: pwsh
-        run: powershell -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-lifetime-contract.ps1 -Action start-cross-step
-      - name: Observe cross-step timer and acknowledge only fixed synthetic request
+        run: powershell -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action selftest
+      - name: Shared real Start and real authorization wait first-tick handshake
         shell: pwsh
-        run: powershell -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-lifetime-contract.ps1 -Action observe-cross-step
-      - name: Same-step retained handle synthetic positive control
+        run: powershell -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action handshake-start
+      - name: Confirm same exact process survives next step then request test cancellation only
+        shell: pwsh
+        run: powershell -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action handshake-ack
+      - name: Confirm cancellation without authorization and exact own-process exit
         if: always()
         shell: pwsh
-        run: powershell -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-lifetime-contract.ps1 -Action same-step
+        run: powershell -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action handshake-final
       - uses: actions/upload-artifact@v7.0.0
         if: always()
         with:
           name: same-run-bootstrap-contract-${{ github.sha }}
           path: |
-            artifacts/qa/same-run-lifetime-${{ github.run_id }}/cross-step-ticks.json
-            artifacts/qa/same-run-lifetime-${{ github.run_id }}/cross-step-evidence.json
-            artifacts/qa/same-run-lifetime-${{ github.run_id }}/same-step-ticks.json
-            artifacts/qa/same-run-lifetime-${{ github.run_id }}/same-step-evidence.json
+            artifacts/qa/same-run-handshake-${{ github.run_id }}/handshake-evidence.json
+            artifacts/qa/same-run-handshake-${{ github.run_id }}/authorization-request.json
+            artifacts/qa/same-run-handshake-${{ github.run_id }}/authorization-wait-heartbeat.json
+            artifacts/qa/same-run-handshake-${{ github.run_id }}/start-ready.json
+            artifacts/qa/same-run-handshake-${{ github.run_id }}/handshake-terminal.json
           if-no-files-found: warn
           retention-days: 14

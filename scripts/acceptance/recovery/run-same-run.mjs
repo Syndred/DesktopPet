@@ -1,11 +1,12 @@
 // Local entry contract. This file does not enable a workflow or fill approval pins.
 import assert from 'node:assert/strict';
-import {readFileSync,lstatSync,realpathSync,mkdirSync,writeFileSync,renameSync} from 'node:fs';
+import {readFileSync,lstatSync,realpathSync,mkdirSync,writeFileSync,renameSync,existsSync} from 'node:fs';
 import {resolve,join,dirname} from 'node:path';
 import {fileURLToPath,pathToFileURL} from 'node:url';
 import {validatePublicCompletionIndex,resolvePrivateCompletionFixture,readPrivateCompletionFixture} from './same-run-fixture-index.mjs';
 import {validateSameRunRequest} from './same-run-request.mjs';
 import {DEFAULT_REQUESTED_CASES} from '../cloud-live-qa-completion-readiness.mjs';
+import {APPROVAL_KEY_SHA256,verifySameRunAuthorization,assertSameRunAuthorization} from '../dpapi/authorized-vault-client.mjs';
 import {notificationPackage} from '../cloud-live-qa-completion-package-preflight.mjs';
 const root=resolve(fileURLToPath(new URL('../../../',import.meta.url)));
 export const SAME_RUN_ENTRY_FILES=Object.freeze({authorization:'scripts/acceptance/requests/same-run-next-authorization.json',approvalPublic:'scripts/acceptance/requests/same-run-next-approval-public.pem',completion:'scripts/acceptance/requests/same-run-next-completion.json'});
@@ -20,23 +21,31 @@ export function validateSameRunJobClock(value,env=process.env,now=Date.now()){
 function readJobClock(){const p=join(process.env.RUNNER_TEMP,'same-run-job-clock-'+process.env.GITHUB_RUN_ID+'.json'),st=lstatSync(p);assert.ok(st.isFile()&&!st.isSymbolicLink()&&st.size<2048);assert.equal(realpathSync.native(p).toLowerCase(),p.toLowerCase());return validateSameRunJobClock(JSON.parse(readFileSync(p,'utf8')));}
 export const SAME_RUN_AUTHORIZATION_URL='https://raw.githubusercontent.com/Syndred/DesktopPet/refs/heads/codex/cloud-authority-convergence/'+SAME_RUN_ENTRY_FILES.authorization;
 export function parseAuthorizationEnvelope(bytes){assert.ok(Buffer.byteLength(bytes)<=65536);const request=JSON.parse(bytes);assert.deepEqual(Object.keys(request),['ticket']);assert.ok(typeof request.ticket==='string'&&request.ticket.length>0&&request.ticket.length<=60000);return request;}
-async function awaitSignedAuthorization(publicKeyPem,statusRoot,trigger,clock,resume=false){
- const {APPROVAL_KEY_SHA256,verifySameRunAuthorization,assertSameRunAuthorization}=await import('../dpapi/authorized-vault-client.mjs');
+export function validatePreauthorizationCancellation(value,{run,commit,nonce}){assert.deepEqual(Object.keys(value).sort(),['version','purpose','run','commit','nonce'].sort());assert.equal(value.version,1);assert.equal(value.purpose,'cancel-preauthorization-only');assert.equal(value.run,run);assert.equal(value.commit,commit);assert.equal(value.nonce,nonce);return true;}
+export async function awaitSignedAuthorization(publicKeyPem,statusRoot,trigger,clock,resume=false,{signal,onSafePhase=()=>{}}={}){
+ onSafePhase('AUTHORIZATION_STATIC_CLIENT_READY');
  assert.match(APPROVAL_KEY_SHA256||'',/^[a-f0-9]{64}$/,'PRE_CREDENTIAL_NOT_READY');assert.equal(process.env.GITHUB_EVENT_NAME,'push','MANUAL_PREPARATION_IS_NOT_IDENTITY_AUTHORIZATION');
- const deadline=Math.min(clock.hardEndMs,Date.now()+20*60000);
- if(!resume)writeFileSync(join(statusRoot,'authorization-request.json'),JSON.stringify({version:1,run:process.env.GITHUB_RUN_ID,commit:process.env.GITHUB_SHA,nonce:trigger.nonce,hardEndMs:clock.hardEndMs,requestedAt:new Date().toISOString(),waitDeadline:new Date(deadline).toISOString()}),{mode:0o600,flag:'wx'});
- while(Date.now()<deadline){
-  const response=await fetch(SAME_RUN_AUTHORIZATION_URL,{credentials:'omit',redirect:'error',headers:{Accept:'application/json','Cache-Control':'no-cache'},signal:AbortSignal.timeout(Math.min(10000,deadline-Date.now()))});
-  if(response.status===404){await response.body?.cancel();await new Promise(r=>setTimeout(r,2000));continue;}assert.equal(response.status,200);
+ onSafePhase('AUTHORIZATION_GUARDS_PASSED');const deadline=Math.min(clock.hardEndMs,Date.now()+20*60000);
+ onSafePhase('AUTHORIZATION_REQUEST_WRITING');if(!resume)writeFileSync(join(statusRoot,'authorization-request.json'),JSON.stringify({version:1,run:process.env.GITHUB_RUN_ID,commit:process.env.GITHUB_SHA,nonce:trigger.nonce,hardEndMs:clock.hardEndMs,requestedAt:new Date().toISOString(),waitDeadline:new Date(deadline).toISOString()}),{mode:0o600,flag:'wx'});
+ onSafePhase('AUTHORIZATION_REQUEST_WRITTEN');
+ const heartbeatPath=join(statusRoot,resume?'reconciliation-wait-heartbeat.json':'authorization-wait-heartbeat.json');let ticks=0,heartbeatFailed=false,stopRequested=false;const stopController=new AbortController();
+ const checkCancellation=()=>{const p=join(statusRoot,'preauthorization-cancel.json');if(!existsSync(p))return;const st=lstatSync(p);assert.ok(st.isFile()&&!st.isSymbolicLink()&&st.size<=2048);assert.equal(realpathSync.native(p).toLowerCase(),p.toLowerCase());validatePreauthorizationCancellation(JSON.parse(readFileSync(p,'utf8').replace(/^\uFEFF/,'')),{run:process.env.GITHUB_RUN_ID,commit:process.env.GITHUB_SHA,nonce:trigger.nonce});stopRequested=true;onSafePhase('AUTHORIZATION_CANCEL_OBSERVED');stopController.abort();};
+ const heartbeat=()=>{ticks++;writeFileSync(heartbeatPath+'.tmp',JSON.stringify({version:1,run:process.env.GITHUB_RUN_ID,commit:process.env.GITHUB_SHA,nonce:trigger.nonce,ticks,credentialOperationsStarted:false}),{mode:0o600});renameSync(heartbeatPath+'.tmp',heartbeatPath);if(ticks===1)onSafePhase('AUTHORIZATION_FIRST_WAIT_TICK');};
+ const timer=setInterval(()=>{try{checkCancellation();heartbeat();}catch{heartbeatFailed=true;stopController.abort();}},1000);
+ const aborted=()=>{checkCancellation();if(stopRequested)throw Error('PRE_CREDENTIAL_NOT_READY');if(heartbeatFailed)throw Error('PRE_CREDENTIAL_NOT_READY');if(signal?.aborted)throw Object.assign(Error('AUTHORIZATION_WAIT_ABORTED'),{code:'AUTHORIZATION_WAIT_ABORTED'});};
+ try{while(Date.now()<deadline){
+  aborted();onSafePhase('AUTHORIZATION_FIXED_FETCH');const response=await fetch(SAME_RUN_AUTHORIZATION_URL,{credentials:'omit',redirect:'error',headers:{Accept:'application/json','Cache-Control':'no-cache'},signal:AbortSignal.any([stopController.signal,...(signal?[signal]:[]),AbortSignal.timeout(Math.min(10000,deadline-Date.now()))])});
+  aborted();if(response.status===404)onSafePhase('AUTHORIZATION_HTTP_404');else if(response.status===200)onSafePhase('AUTHORIZATION_HTTP_200');if(response.status===404){await response.body?.cancel();await new Promise(r=>setTimeout(r,2000));continue;}assert.equal(response.status,200);
   const length=response.headers.get('content-length');if(length!==null)assert.ok(/^\d+$/.test(length)&&Number(length)<=65536);
   assert.ok(response.body);const reader=response.body.getReader(),chunks=[];let size=0;
   try{for(;;){const {value,done}=await reader.read();if(done)break;size+=value.length;assert.ok(size<=65536);chunks.push(value);}}finally{await reader.cancel().catch(()=>{});reader.releaseLock();}
   const request=parseAuthorizationEnvelope(Buffer.concat(chunks).toString('utf8'));
   // A previous fixed-file ticket may be cached. It never authorizes this run;
   // only the real verifier may admit a matching signed run/trigger commit/TTL.
-  try{const authorization=await verifySameRunAuthorization({ticket:request.ticket,publicKeyPem});const binding=assertSameRunAuthorization(authorization);assert.equal(binding.nonce,trigger.nonce,'SIGNED_TRIGGER_NONCE_MISMATCH');assert.ok(binding.expiresAt<=clock.hardEndMs,'LEASE_MUST_END_BEFORE_JOB_CLEANUP_RESERVE');return {request,binding};}catch{await new Promise(r=>setTimeout(r,2000));}
+  try{const authorization=await verifySameRunAuthorization({ticket:request.ticket,publicKeyPem});const binding=assertSameRunAuthorization(authorization);assert.equal(binding.nonce,trigger.nonce,'SIGNED_TRIGGER_NONCE_MISMATCH');assert.ok(binding.expiresAt<=clock.hardEndMs,'LEASE_MUST_END_BEFORE_JOB_CLEANUP_RESERVE');aborted();return {request,binding};}catch{await new Promise(r=>setTimeout(r,2000));}
  }
  throw Error('PRE_CREDENTIAL_NOT_READY');
+ }catch(error){aborted();throw error;}finally{clearInterval(timer);}
 }
 export async function runSameRunEntry(args=process.argv.slice(2),onSafePhase=()=>{}){
  let phase='PRE_CREDENTIAL_NOT_READY',statusPath,resumeMode=false;
@@ -44,7 +53,7 @@ export async function runSameRunEntry(args=process.argv.slice(2),onSafePhase=()=
   const statusRoot=join(root,'artifacts/qa/same-run-entry-'+process.env.GITHUB_RUN_ID);mkdirSync(statusRoot,{recursive:true});statusPath=join(statusRoot,resume?'reconciliation-status.json':'entry-status.json');
   const write=value=>{writeFileSync(statusPath+'.tmp',JSON.stringify(value,null,2),{mode:0o600});renameSync(statusPath+'.tmp',statusPath);};
   onSafePhase('PUBLIC_INPUT');const publicKeyPem=fixedFile('approvalPublic',8192);assert.ok(publicKeyPem.startsWith('-----BEGIN PUBLIC KEY-----'));const input=validateSameRunEntryOptions(JSON.parse(fixedFile('completion',32768)));onSafePhase('PRIVATE_FIXTURE');const privateFixture=resume?null:resolvePrivateCompletionFixture(input);
-  onSafePhase('AWAIT_SIGNED_AUTHORIZATION');const {request,binding}=await awaitSignedAuthorization(publicKeyPem,statusRoot,trigger,clock,resume);
+  onSafePhase('AWAIT_SIGNED_AUTHORIZATION');const {request,binding}=await awaitSignedAuthorization(publicKeyPem,statusRoot,trigger,clock,resume,{onSafePhase});
   const bindingPath=join(statusRoot,'entry-binding.json'),safeBinding={version:1,run:binding.run,commit:binding.commit,requestDigest:binding.requestDigest};
   if(resume){const stat=lstatSync(bindingPath);assert.ok(stat.isFile()&&!stat.isSymbolicLink()&&stat.size<2048);assert.equal(realpathSync.native(bindingPath).toLowerCase(),bindingPath.toLowerCase());assert.deepEqual(JSON.parse(readFileSync(bindingPath,'utf8')),safeBinding,'ORIGINAL_SAME_RUN_BINDING_REQUIRED');}
   else writeFileSync(bindingPath,JSON.stringify(safeBinding),{mode:0o600,flag:'wx'});

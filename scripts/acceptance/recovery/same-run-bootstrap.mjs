@@ -4,7 +4,7 @@ import {resolve,join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import assert from 'node:assert/strict';
 const root=resolve(fileURLToPath(new URL('../../../',import.meta.url)));
-const phases=new Set(['IMPORT_FIXED_ENTRY','ARGUMENTS','TEMP','REQUEST','JOB_CLOCK','PUBLIC_INPUT','PRIVATE_FIXTURE','AWAIT_SIGNED_AUTHORIZATION','BOUND_AUTHORIZATION','PREPARE_HOLDER','RUN_HOLDER','COMPLETED']);
+const phases=new Set(['IMPORT_FIXED_ENTRY','ARGUMENTS','TEMP','REQUEST','JOB_CLOCK','PUBLIC_INPUT','PRIVATE_FIXTURE','AWAIT_SIGNED_AUTHORIZATION','AUTHORIZATION_STATIC_CLIENT_READY','AUTHORIZATION_GUARDS_PASSED','AUTHORIZATION_REQUEST_WRITING','AUTHORIZATION_REQUEST_WRITTEN','AUTHORIZATION_FIRST_WAIT_TICK','AUTHORIZATION_FIXED_FETCH','AUTHORIZATION_HTTP_404','AUTHORIZATION_HTTP_200','AUTHORIZATION_CANCEL_OBSERVED','BOUND_AUTHORIZATION','PREPARE_HOLDER','RUN_HOLDER','COMPLETED']);
 const env=process.env;let path,record,markerOwned=false;
 function persist(){if(!path||!markerOwned)return;writeFileSync(path+'.tmp',JSON.stringify(record),{mode:0o600});renameSync(path+'.tmp',path);}
 try{

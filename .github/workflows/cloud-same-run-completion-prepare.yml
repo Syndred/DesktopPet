@@ -211,8 +211,8 @@ jobs:
         if: ${{ always() && steps.reconcile.outputs.started == 'true' }}
         timeout-minutes: 22
         run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action reconcile-final
-      - name: Terminal cleanup via watchdog only (no holder tree kill)
-        if: ${{ always() && steps.start.outcome == 'success' }}
+      - name: Terminal cleanup via preauthorization cancellation or bound watchdog (no holder tree kill)
+        if: ${{ always() && (steps.start.outcome == 'success' || steps.start.outcome == 'failure') }}
         timeout-minutes: 5
         run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action stop
       - uses: actions/upload-artifact@v7.0.2
@@ -224,6 +224,8 @@ jobs:
           path: |
             artifacts/qa/authorized-dpapi-synthetic/evidence.json
             artifacts/qa/native-continuation/package-reuse.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/start-ready.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/authorization-wait-heartbeat.json
             artifacts/qa/same-run-entry-${{ github.run_id }}/entry-bootstrap.json
             artifacts/qa/same-run-entry-${{ github.run_id }}/reconciliation-bootstrap.json
             artifacts/qa/same-run-entry-${{ github.run_id }}/entry-status.json
