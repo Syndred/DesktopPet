@@ -1,0 +1,73 @@
+name: DesktopPet focused territory map layout acceptance
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/cloud-authority-convergence']
+    paths:
+      - '.github/workflows/cloud-map-layout.yml'
+      - 'apps/pc-app/ui/src/features/garden/garden.css'
+      - 'scripts/acceptance/territory-map-layout-dom.mjs'
+      - 'scripts/acceptance/cloud-native-map-provider-acceptance.mjs'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: map-layout-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  map-layout:
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Type-check affected product contracts
+        run: npm run typecheck
+      - name: Type-check affected renderer contracts
+        run: npm run typecheck:ui
+      - name: Install exact isolated DOM-only dependencies
+        run: npm ci --prefix scripts/acceptance/discovery-dom-deps --ignore-scripts --no-audit --no-fund
+      - name: Actual production CSS map-control separation contract
+        run: |
+          $jsdomPath = (Resolve-Path scripts/acceptance/discovery-dom-deps/node_modules/jsdom).Path
+          node scripts/acceptance/territory-map-layout-dom.mjs --jsdom=$jsdomPath
+      - name: Build one actual new Windows portable
+        run: npm run package:pc:win
+      - name: Audit ASAR, source fingerprint and native closure
+        id: audit
+        run: npm run release:audit
+      - name: Ordinary signed-out new executable startup
+        if: ${{ !cancelled() && steps.audit.outcome == 'success' }}
+        timeout-minutes: 6
+        run: node scripts/acceptance/cloud-repair-portable.mjs
+      - name: Actual new-package territory map controls and selection
+        if: ${{ !cancelled() && steps.audit.outcome == 'success' }}
+        timeout-minutes: 10
+        run: node scripts/acceptance/cloud-native-map-provider-acceptance.mjs --source=$env:GITHUB_SHA --territory-only
+      - name: Retain exact package and bounded owned-app evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: desktoppet-map-layout-${{ github.sha }}
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            artifacts/pc-cloud-upgrade/*.exe
+            apps/pc-app/dist/build-manifest.json
+            apps/pc-app/dist/runtime-closure.json
+            artifacts/foundation/cloud-engineering/package-audit.json
+            artifacts/foundation/cloud-engineering/focused-portable/*/evidence.json
+            artifacts/foundation/cloud-engineering/focused-portable/*/signed-out-evidence.json
+            artifacts/qa/native-map-provider/run-*/evidence.json
+            artifacts/qa/native-map-provider/run-*/territory-map.png
+            artifacts/qa/native-map-provider/run-*/failure.png

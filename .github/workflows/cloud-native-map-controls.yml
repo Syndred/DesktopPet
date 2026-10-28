@@ -2,11 +2,6 @@ name: DesktopPet audited-package map and controls continuation
 
 on:
   workflow_dispatch:
-  push:
-    branches: ['codex/cloud-authority-convergence']
-    paths:
-      - '.github/workflows/cloud-native-map-controls.yml'
-      - 'scripts/acceptance/cloud-native-map-provider-acceptance.mjs'
 
 permissions:
   contents: read
