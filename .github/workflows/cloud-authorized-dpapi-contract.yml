@@ -18,10 +18,13 @@ jobs:
   synthetic-only:
     runs-on: windows-latest
     timeout-minutes: 8
-    env:
-      TEMP: ${{ runner.temp }}
-      TMP: ${{ runner.temp }}
     steps:
+      - name: Bind process temporary directories to this runner
+        shell: pwsh
+        run: |
+          if(-not [IO.Path]::IsPathRooted($env:RUNNER_TEMP)){throw 'RUNNER_TEMP_REQUIRED'}
+          "TEMP=$env:RUNNER_TEMP" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          "TMP=$env:RUNNER_TEMP" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
