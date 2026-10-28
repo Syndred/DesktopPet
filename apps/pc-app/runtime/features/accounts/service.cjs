@@ -188,10 +188,24 @@ class AccountsService {
     // PostgreSQL row changes are authorized by table RLS. No broadcast topic or
     // new realtime.messages policy is needed for this owner-filtered listener.
     const owner=this.requireOwner(),channel=actor.client.channel(`account-state:${owner}:${actor.deviceId}`);
-    const changed=()=>{clearTimeout(this.cloudRefreshTimer);this.cloudRefreshTimer=setTimeout(()=>{
-      if(this.epoch===epoch)void this.runAutomaticSync().catch(()=>{});
-    },200);this.cloudRefreshTimer.unref?.();};
-    for(const table of ['lingjing_saves','lingjing_personal_records'])channel.on('postgres_changes',{event:'*',schema:'public',table,filter:`owner_id=eq.${owner}`},changed);
+    // Private tables retain the HTTP device-header RLS. Realtime carries only
+    // server-authored invalidations authorized by the JWT's live device binding;
+    // actual content still comes from the normal header-bound refresh APIs.
+    const seen=new Map();
+    const changed=payload=>{
+      if(this.epoch!==epoch||this.current?.ownerAccountId!==owner)return;
+      const row=payload?.new;
+      if(row?.owner_id!==owner||!['records','save'].includes(row.domain)||!Number.isSafeInteger(row.revision)||row.revision<1)return;
+      if(row.revision<=(seen.get(row.domain)||0))return;seen.set(row.domain,row.revision);
+      clearTimeout(this.cloudRefreshTimer);this.cloudRefreshTimer=setTimeout(()=>{
+        if(this.epoch!==epoch||this.current?.ownerAccountId!==owner)return;
+        // seen is delivery coalescing, never proof of consumption. A busy/failed
+        // or unverified read permits the same revision to trigger another read;
+        // the existing 30s normal sync also recovers without another event.
+        void this.runAutomaticSync().then(result=>{if(this.epoch===epoch&&result?.verified!==true)seen.clear();},()=>{if(this.epoch===epoch)seen.clear();});
+      },200);this.cloudRefreshTimer.unref?.();
+    };
+    for(const event of ['INSERT','UPDATE'])channel.on('postgres_changes',{event,schema:'public',table:'lingjing_account_notifications',filter:`owner_id=eq.${owner}`},changed);
     channel.subscribe();this.cloudChannel={client:actor.client,channel};
   }
   persistSession(rememberSession) {

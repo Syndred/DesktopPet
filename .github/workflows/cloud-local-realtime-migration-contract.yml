@@ -1,0 +1,53 @@
+name: DesktopPet local-only Realtime migration contract
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/cloud-authority-convergence']
+    paths:
+      - '.github/workflows/cloud-local-realtime-migration-contract.yml'
+      - 'scripts/acceptance/cloud-local-realtime-migration-contract.mjs'
+      - 'scripts/acceptance/account-realtime-notifications.test.mjs'
+      - 'infra/supabase/operations/account-realtime-notifications.rollback.sql'
+      - 'infra/supabase/migrations/20261028012527_lingjing_account_realtime_notifications.sql'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: local-realtime-migration-contract-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  disposable-platform:
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
+    runs-on: ubuntu-latest
+    timeout-minutes: 32
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - name: Repository test dependencies
+        run: npm ci
+      - name: Pinned isolated CLI and PostgreSQL driver, no login or project link
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/local-db-tools" "$RUNNER_TEMP/local-db-tools-home"
+          HOME="$RUNNER_TEMP/local-db-tools-home" npm install --prefix "$RUNNER_TEMP/local-db-tools" --save-exact --package-lock supabase@2.122.0 pg@8.16.3
+      - name: Full original platform chain, new migration, negative contracts and local rollback
+        timeout-minutes: 27
+        env:
+          DESKTOPPET_LOCAL_DB_TOOLS: ${{ runner.temp }}/local-db-tools
+        run: node scripts/acceptance/cloud-local-realtime-migration-contract.mjs
+      - name: Upload safe local contract only, never CLI logs or local keys
+        if: always()
+        uses: actions/upload-artifact@v7.0.0
+        with:
+          name: desktoppet-local-realtime-contract-${{ github.sha }}
+          path: artifacts/qa/local-realtime-migration/evidence.json
+          if-no-files-found: warn
+          retention-days: 7
