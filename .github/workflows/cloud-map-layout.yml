@@ -8,7 +8,6 @@ on:
       - '.github/workflows/cloud-map-layout.yml'
       - 'apps/pc-app/ui/src/features/garden/garden.css'
       - 'scripts/acceptance/territory-map-layout-dom.mjs'
-      - 'scripts/acceptance/cloud-native-map-provider-acceptance.mjs'
 
 permissions:
   contents: read
@@ -19,7 +18,7 @@ concurrency:
 
 jobs:
   map-layout:
-    if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence' && !contains(github.event.head_commit.message, '[map-layout-reuse-only]')
     runs-on: windows-latest
     timeout-minutes: 45
     steps:

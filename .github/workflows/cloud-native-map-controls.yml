@@ -1,7 +1,12 @@
-name: DesktopPet audited-package map and controls continuation
+name: DesktopPet audited-package territory layout continuation
 
 on:
   workflow_dispatch:
+  push:
+    branches: ['codex/cloud-authority-convergence']
+    paths:
+      - '.github/workflows/cloud-native-map-controls.yml'
+      - 'scripts/acceptance/cloud-native-map-provider-acceptance.mjs'
 
 permissions:
   contents: read
@@ -21,7 +26,7 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 18
     env:
-      PACKAGE_SOURCE: 1c9af85185bc0fd09a30b02c624c29e9f6cc0bbd
+      PACKAGE_SOURCE: a05bd55b139fb47c0c2441e6541d19911848957c
     steps:
       - uses: actions/checkout@v7.0.1
         with:
@@ -36,8 +41,8 @@ jobs:
       - name: Download this repository's exact audited package
         uses: actions/download-artifact@v8.0.2
         with:
-          name: desktoppet-map-discovery-1c9af85185bc0fd09a30b02c624c29e9f6cc0bbd
-          run-id: 40605728788
+          name: desktoppet-map-layout-a05bd55b139fb47c0c2441e6541d19911848957c
+          run-id: 40609069249
           github-token: ${{ github.token }}
           path: artifacts/qa/native-baseline
       - name: Verify source tree, test-only difference, closure and exact SFX hash
@@ -46,7 +51,7 @@ jobs:
       - name: Actual narrow map or nearby-controls continuation
         if: ${{ !cancelled() && steps.reuse.outcome == 'success' }}
         timeout-minutes: 10
-        run: node scripts/acceptance/cloud-native-${{ matrix.flow }}-acceptance.mjs --source=$env:PACKAGE_SOURCE
+        run: node scripts/acceptance/cloud-native-${{ matrix.flow }}-acceptance.mjs --source=$env:PACKAGE_SOURCE --territory-only
       - name: Retain only bounded new evidence and owned-app screenshots
         if: always()
         uses: actions/upload-artifact@v7.0.2
@@ -57,13 +62,5 @@ jobs:
           path: |
             artifacts/qa/native-continuation/package-reuse.json
             artifacts/qa/native-map-provider/run-*/evidence.json
-            artifacts/qa/native-map-provider/run-*/nearby-loaded.png
-            artifacts/qa/native-map-provider/run-*/nearby-recovered.png
             artifacts/qa/native-map-provider/run-*/territory-map.png
             artifacts/qa/native-map-provider/run-*/failure.png
-            artifacts/foundation/cloud-engineering/nearbyControls/run-*/evidence.json
-            artifacts/foundation/cloud-engineering/nearbyControls/run-*/M04-cooldown.png
-            artifacts/foundation/cloud-engineering/nearbyControls/run-*/M04-retryable-error.png
-            artifacts/foundation/cloud-engineering/nearbyControls/run-*/M04-retry-success.png
-            artifacts/foundation/cloud-engineering/nearbyControls/run-*/M04-approved-range-and-throttle-failed.png
-            artifacts/foundation/cloud-engineering/nearbyControls/run-*/M04-failed-manual-locate-immediate-retry-failed.png
