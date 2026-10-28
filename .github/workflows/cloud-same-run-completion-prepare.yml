@@ -37,6 +37,9 @@ jobs:
           if(Test-Path -LiteralPath $p){throw 'NO_JOB_DEADLINE_RESTART'}
           $now=[DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
           @{version=1;run=$env:GITHUB_RUN_ID;commit=$env:GITHUB_SHA;startedAtMs=$now;hardEndMs=($now+19200000)}|ConvertTo-Json|Set-Content -LiteralPath $p -Encoding utf8
+      - name: Preserve reviewed source bytes before checkout
+        shell: pwsh
+        run: git config --global core.autocrlf false
       - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
@@ -51,7 +54,7 @@ jobs:
       - run: npm ci
       - run: npm ci --prefix scripts/acceptance/recovery --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
       - name: Entry argument and opaque capability negative contracts
-        run: node --test scripts/acceptance/recovery/run-same-run.test.mjs scripts/acceptance/recovery/same-run-request.test.mjs scripts/acceptance/recovery/same-run-fixture-index.test.mjs scripts/acceptance/dpapi/authorized-vault-contract.test.mjs
+        run: node --test scripts/acceptance/recovery/same-run-bootstrap.test.mjs scripts/acceptance/recovery/run-same-run.test.mjs scripts/acceptance/recovery/same-run-request.test.mjs scripts/acceptance/recovery/same-run-fixture-index.test.mjs scripts/acceptance/dpapi/authorized-vault-contract.test.mjs
       - name: Twelve real Windows synthetic custody checks before any real identity
         timeout-minutes: 5
         run: node scripts/acceptance/dpapi/authorized-vault-windows.test.mjs
@@ -221,6 +224,8 @@ jobs:
           path: |
             artifacts/qa/authorized-dpapi-synthetic/evidence.json
             artifacts/qa/native-continuation/package-reuse.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/entry-bootstrap.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/reconciliation-bootstrap.json
             artifacts/qa/same-run-entry-${{ github.run_id }}/entry-status.json
             artifacts/qa/same-run-entry-${{ github.run_id }}/terminal-cleanup.json
             artifacts/qa/same-run-entry-${{ github.run_id }}/identity-selftest/supervisor-selftest.json

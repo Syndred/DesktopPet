@@ -38,19 +38,19 @@ async function awaitSignedAuthorization(publicKeyPem,statusRoot,trigger,clock,re
  }
  throw Error('PRE_CREDENTIAL_NOT_READY');
 }
-export async function runSameRunEntry(args=process.argv.slice(2)){
+export async function runSameRunEntry(args=process.argv.slice(2),onSafePhase=()=>{}){
  let phase='PRE_CREDENTIAL_NOT_READY',statusPath,resumeMode=false;
- try{const {resume}=parseSameRunEntryArgs(args);resumeMode=resume;verifySameRunTempEnvironment();const trigger=validateSameRunRequest({reconciliation:resume}),clock=readJobClock();
+ try{onSafePhase('ARGUMENTS');const {resume}=parseSameRunEntryArgs(args);resumeMode=resume;onSafePhase('TEMP');verifySameRunTempEnvironment();onSafePhase('REQUEST');const trigger=validateSameRunRequest({reconciliation:resume});onSafePhase('JOB_CLOCK');const clock=readJobClock();
   const statusRoot=join(root,'artifacts/qa/same-run-entry-'+process.env.GITHUB_RUN_ID);mkdirSync(statusRoot,{recursive:true});statusPath=join(statusRoot,resume?'reconciliation-status.json':'entry-status.json');
   const write=value=>{writeFileSync(statusPath+'.tmp',JSON.stringify(value,null,2),{mode:0o600});renameSync(statusPath+'.tmp',statusPath);};
-  const publicKeyPem=fixedFile('approvalPublic',8192);assert.ok(publicKeyPem.startsWith('-----BEGIN PUBLIC KEY-----'));const input=validateSameRunEntryOptions(JSON.parse(fixedFile('completion',32768))),privateFixture=resume?null:resolvePrivateCompletionFixture(input);
-  const {request,binding}=await awaitSignedAuthorization(publicKeyPem,statusRoot,trigger,clock,resume);
+  onSafePhase('PUBLIC_INPUT');const publicKeyPem=fixedFile('approvalPublic',8192);assert.ok(publicKeyPem.startsWith('-----BEGIN PUBLIC KEY-----'));const input=validateSameRunEntryOptions(JSON.parse(fixedFile('completion',32768)));onSafePhase('PRIVATE_FIXTURE');const privateFixture=resume?null:resolvePrivateCompletionFixture(input);
+  onSafePhase('AWAIT_SIGNED_AUTHORIZATION');const {request,binding}=await awaitSignedAuthorization(publicKeyPem,statusRoot,trigger,clock,resume);
   const bindingPath=join(statusRoot,'entry-binding.json'),safeBinding={version:1,run:binding.run,commit:binding.commit,requestDigest:binding.requestDigest};
   if(resume){const stat=lstatSync(bindingPath);assert.ok(stat.isFile()&&!stat.isSymbolicLink()&&stat.size<2048);assert.equal(realpathSync.native(bindingPath).toLowerCase(),bindingPath.toLowerCase());assert.deepEqual(JSON.parse(readFileSync(bindingPath,'utf8')),safeBinding,'ORIGINAL_SAME_RUN_BINDING_REQUIRED');}
   else writeFileSync(bindingPath,JSON.stringify(safeBinding),{mode:0o600,flag:'wx'});
-  const {prepareSameRunBeforeCredentials,runSameRunHolder}=await import('./holder-same-run.mjs');
-  write({version:1,state:'precredential-checks',credentialOperationsStarted:false,resume});const prepared=await prepareSameRunBeforeCredentials({ticket:request.ticket,publicKeyPem,completionOptions:resume?undefined:sameRunCompletionOptions(input,process.env.GITHUB_RUN_ID,privateFixture),resume});
-  phase='SAME_RUN_STOPPED_CHECK_SAFE_CHECKPOINT';write({version:1,state:'prepared-starting-holder',credentialOperationsStarted:false,resume});const result=await runSameRunHolder(prepared,{resume});
+  onSafePhase('BOUND_AUTHORIZATION');const {prepareSameRunBeforeCredentials,runSameRunHolder}=await import('./holder-same-run.mjs');
+  write({version:1,state:'precredential-checks',credentialOperationsStarted:false,resume});onSafePhase('PREPARE_HOLDER');const prepared=await prepareSameRunBeforeCredentials({ticket:request.ticket,publicKeyPem,completionOptions:resume?undefined:sameRunCompletionOptions(input,process.env.GITHUB_RUN_ID,privateFixture),resume});
+  phase='SAME_RUN_STOPPED_CHECK_SAFE_CHECKPOINT';write({version:1,state:'prepared-starting-holder',credentialOperationsStarted:false,resume});onSafePhase('RUN_HOLDER');const result=await runSameRunHolder(prepared,{resume});
   if(resume)writeFileSync(join(statusRoot,'reconciliation-result.json'),JSON.stringify(result,null,2),{mode:0o600,flag:'wx'});
   const passed=resume?result.reconciliationOnly===true&&result.businessExecuted===false:result.passed===true&&result.globalStopped!==true;write({version:1,state:passed?'completed':'stopped',credentialOperationsStarted:!resume,reconciliationOnly:resume,passed});assert.equal(passed,true);return {passed,reconciliationOnly:resume};
  }catch{if(statusPath){writeFileSync(statusPath+'.tmp',JSON.stringify({version:1,state:'stopped',errorCode:phase,credentialOperationsStarted:!resumeMode&&phase!=='PRE_CREDENTIAL_NOT_READY',reconciliationOnly:resumeMode}),{mode:0o600});renameSync(statusPath+'.tmp',statusPath);}throw Object.assign(Error(phase),{code:phase});}

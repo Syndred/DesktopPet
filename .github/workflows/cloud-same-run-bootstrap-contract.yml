@@ -1,0 +1,59 @@
+name: DesktopPet fixed bootstrap preauthorization contract
+on:
+  push:
+    branches: [codex/cloud-authority-convergence]
+    paths:
+      - .github/workflows/cloud-same-run-bootstrap-contract.yml
+      - scripts/acceptance/recovery/same-run-bootstrap.mjs
+      - scripts/acceptance/recovery/same-run-bootstrap.test.mjs
+      - scripts/acceptance/recovery/same-run-bootstrap-windows.test.mjs
+      - scripts/acceptance/recovery/run-same-run.mjs
+      - scripts/acceptance/recovery/same-run-process.ps1
+permissions:
+  contents: read
+concurrency:
+  group: desktoppet-fixed-bootstrap-contract
+  cancel-in-progress: false
+jobs:
+  startup:
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence' && github.run_attempt == 1
+    runs-on: windows-latest
+    timeout-minutes: 8
+    steps:
+      - name: Preserve reviewed LF bytes and fixed temporary job clock
+        shell: pwsh
+        env:
+          TEMP: ${{ runner.temp }}
+          TMP: ${{ runner.temp }}
+        run: |
+          git config --global core.autocrlf false
+          if($env:RUNNER_TEMP -match '[\r\n]'){throw 'INVALID_RUNNER_TEMP'}
+          'TEMP='+$env:RUNNER_TEMP | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          'TMP='+$env:RUNNER_TEMP | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          $p=Join-Path $env:RUNNER_TEMP ('same-run-job-clock-'+$env:GITHUB_RUN_ID+'.json')
+          if(Test-Path -LiteralPath $p){throw 'NO_JOB_DEADLINE_RESTART'}
+          $now=[DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
+          @{version=1;run=$env:GITHUB_RUN_ID;commit=$env:GITHUB_SHA;startedAtMs=$now;hardEndMs=($now+19200000)}|ConvertTo-Json|Set-Content -LiteralPath $p -Encoding utf8
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+      - run: npm ci --prefix scripts/acceptance/recovery --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
+      - name: Pure fixed startup contracts
+        run: node --test scripts/acceptance/recovery/same-run-bootstrap.test.mjs scripts/acceptance/recovery/run-same-run.test.mjs
+      - name: Actual Windows fixed startup rejected before authorization
+        timeout-minutes: 3
+        run: node scripts/acceptance/recovery/same-run-bootstrap-windows.test.mjs
+      - uses: actions/upload-artifact@v7.0.0
+        if: always()
+        with:
+          name: same-run-bootstrap-contract-${{ github.sha }}
+          path: |
+            artifacts/qa/same-run-bootstrap-contract/evidence.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/entry-bootstrap.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/terminal-cleanup.json
+          if-no-files-found: warn
+          retention-days: 14

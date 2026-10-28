@@ -54,7 +54,7 @@ if($Action -eq 'start') {
  $self=Join-Path $directory 'identity-selftest/supervisor-selftest.json'
  if(!(Test-Path -LiteralPath $self) -or (Get-Content -LiteralPath $self -Raw | ConvertFrom-Json).passed -ne $true){throw 'IDENTITY_SELFTEST_REQUIRED'}
  New-Item -ItemType Directory -Path $directory -Force | Out-Null
- $entry=Join-Path $PSScriptRoot 'run-same-run.mjs'
+ $entry=Join-Path $PSScriptRoot 'same-run-bootstrap.mjs'
  if($entry -match '["\r\n]'){throw 'INVALID_FIXED_ENTRY'}
  # These private streams are deliberately NEVER artifact paths.
  $child=Start-Process -FilePath (Get-Command node).Source -ArgumentList ('"'+$entry+'"') -WorkingDirectory $root -PassThru -WindowStyle Hidden -RedirectStandardOutput (Join-Path $directory 'private-stdout.txt') -RedirectStandardError (Join-Path $directory 'private-stderr.txt')
@@ -67,6 +67,19 @@ function Read-SafeJson($path) {
  if($item.PSIsContainer -or ($item.Attributes -band [IO.FileAttributes]::ReparsePoint) -or $item.Length -gt 65536){throw 'FIXED_SAFE_FILE_REQUIRED'}
  return Get-Content -LiteralPath $path -Raw | ConvertFrom-Json
 }
+function Assert-NoPrecredentialCustody {
+ if(Resolve-Owned){throw 'PREAUTH_HOLDER_STILL_ALIVE'}
+ if(Test-Path -LiteralPath (Join-Path $directory 'entry-binding.json')){throw 'PREAUTH_BINDING_EXISTS'}
+ $boot=Read-SafeJson (Join-Path $directory 'entry-bootstrap.json')
+ $allowed=@('IMPORT_FIXED_ENTRY','ARGUMENTS','TEMP','REQUEST','JOB_CLOCK','PUBLIC_INPUT','PRIVATE_FIXTURE','AWAIT_SIGNED_AUTHORIZATION')
+ if($boot.version -ne 1 -or [string]$boot.run -cne $env:GITHUB_RUN_ID -or $boot.commit -cne $env:GITHUB_SHA -or $boot.started -isnot [bool] -or $boot.started -ne $true -or $boot.mainCalled -isnot [bool] -or $boot.phase -cnotin $allowed -or $boot.credentialOperationsStarted -isnot [bool] -or $boot.credentialOperationsStarted -ne $false -or $boot.nodeExitObserved -isnot [bool] -or $boot.nodeExitObserved -ne $true -or $boot.requestedExitCode -ne 1 -or $null -ne $boot.actualExitCode -or $boot.errorCode -cne 'PRE_CREDENTIAL_NOT_READY'){throw 'PREAUTH_SAFE_BOOTSTRAP_PROOF_REQUIRED'}
+ # Registry lives only under an authorized-vault root. Match this run exactly;
+ # enumerate metadata only, never read another run's directory or any ciphertext.
+ $prefix='dpapi-authorized-'+$env:GITHUB_RUN_ID+'-'
+ $roots=@(Get-ChildItem -LiteralPath $env:RUNNER_TEMP -Force | Where-Object {$_.Name.StartsWith($prefix,[StringComparison]::Ordinal)})
+ if($roots.Count -ne 0){throw 'PREAUTH_CUSTODY_ROOT_OR_REGISTRY_PRESENT'}
+ return $true
+}
 if($Action -eq 'reconcile') {
  if([DateTime]::UtcNow -ge $hardEnd.AddMinutes(-2)){throw 'ORIGINAL_RECONCILIATION_WINDOW_EXPIRED'}
  if(Test-Path -LiteralPath $reconcilePidFile){throw 'NO_REPEATED_RECONCILIATION_HOLDER'}
@@ -76,7 +89,7 @@ if($Action -eq 'reconcile') {
  $status=if(Test-Path -LiteralPath $statusFile){Read-SafeJson $statusFile}else{$null}
  if($status -and $status.state -eq 'completed' -and $status.passed -eq $true){if($env:GITHUB_OUTPUT){'started=false'|Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8};exit 0}
  if(!(Test-Path -LiteralPath $bindingFile)){
-  if($old -or !$status -or $status.errorCode -ne 'PRE_CREDENTIAL_NOT_READY' -or $status.credentialOperationsStarted -ne $false){throw 'UNRESOLVED_ENTRY_WITHOUT_BINDING'}
+  [void](Assert-NoPrecredentialCustody)
   if($env:GITHUB_OUTPUT){'started=false'|Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8};exit 0
  }
  $binding=Read-SafeJson $bindingFile
@@ -89,7 +102,7 @@ if($Action -eq 'reconcile') {
   $old.Kill();if(!$old.WaitForExit(10000)){throw 'OLD_HOLDER_EXIT_UNCONFIRMED'}
  }
  if(Resolve-Owned){throw 'OLD_HOLDER_STILL_PRESENT'}
- $entry=Join-Path $PSScriptRoot 'run-same-run.mjs'
+ $entry=Join-Path $PSScriptRoot 'same-run-bootstrap.mjs'
  $child=Start-Process -FilePath (Get-Command node).Source -ArgumentList ('"'+$entry+'" --reconcile-only') -WorkingDirectory $root -PassThru -WindowStyle Hidden -RedirectStandardOutput (Join-Path $directory 'private-reconcile-stdout.txt') -RedirectStandardError (Join-Path $directory 'private-reconcile-stderr.txt')
  $pidFile=$reconcilePidFile;Write-Owned $child|Out-Null
  if($env:GITHUB_OUTPUT){'started=true'|Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8}
@@ -99,9 +112,8 @@ if($Action -eq 'stop') {
  $owned=Resolve-Owned
  $bindingFile=Join-Path $directory 'entry-binding.json'
  if(!(Test-Path -LiteralPath $bindingFile)){
-  $status=Read-SafeJson (Join-Path $directory 'entry-status.json')
-  if($owned -or $status.errorCode -ne 'PRE_CREDENTIAL_NOT_READY' -or $status.credentialOperationsStarted -ne $false){throw 'STOP_BINDING_UNAVAILABLE'}
-  @{version=1;scope='entry-before-credential-authorization';credentialOperationsStarted=$false;holderExited=$true;registeredProfileCleanupNotClaimed=$true}|ConvertTo-Json|Set-Content -LiteralPath (Join-Path $directory 'terminal-cleanup.json') -Encoding UTF8
+  [void](Assert-NoPrecredentialCustody)
+  @{version=1;run=$env:GITHUB_RUN_ID;commit=$env:GITHUB_SHA;scope='precredential-no-custody';credentialOperationsStarted=$false;holderExited=$true;bindingAbsent=$true;thisRunVaultAndRegistryAbsent=$true;actualExitCode=$null;registeredProfileCleanupNotClaimed=$true}|ConvertTo-Json|Set-Content -LiteralPath (Join-Path $directory 'terminal-cleanup.json') -Encoding UTF8
   exit 0
  }
  $binding=Read-SafeJson $bindingFile
