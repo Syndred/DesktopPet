@@ -1,0 +1,57 @@
+name: DesktopPet notification runtime package preparation
+
+on:
+  push:
+    branches: ['codex/cloud-authority-convergence']
+    paths:
+      - '.github/workflows/cloud-account-notification-package.yml'
+permissions:
+  contents: read
+concurrency:
+  group: account-notification-package-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  package-only:
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
+    runs-on: windows-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Type-check original application contracts
+        run: npm run typecheck
+      - name: Synthetic notification SQL and runtime contracts only
+        timeout-minutes: 5
+        run: node --test scripts/acceptance/account-realtime-notifications.test.mjs
+      - name: Existing account and automatic sync regression contracts
+        timeout-minutes: 5
+        run: node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/accounts/tests/accounts.test.cjs apps/pc-app/runtime/features/accounts/tests/automatic-sync.test.cjs apps/pc-app/runtime/features/accounts/tests/cloud-refresh.test.cjs apps/pc-app/runtime/features/accounts/tests/startup.test.cjs
+      - name: Build actual Windows package containing notification runtime
+        run: npm run package:pc:win
+      - name: Audit source fingerprint, ASAR and native closure
+        id: audit
+        run: npm run release:audit
+      - name: Fresh signed-out native startup only, no cloud login or business
+        if: ${{ !cancelled() && steps.audit.outcome == 'success' }}
+        timeout-minutes: 6
+        run: node scripts/acceptance/cloud-repair-portable.mjs
+      - name: Retain exact package and bounded fresh signed-out evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: desktoppet-notification-package-${{ github.sha }}
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            artifacts/pc-cloud-upgrade/*.exe
+            apps/pc-app/dist/build-manifest.json
+            apps/pc-app/dist/runtime-closure.json
+            artifacts/foundation/cloud-engineering/package-audit.json
+            artifacts/foundation/cloud-engineering/focused-portable/*/evidence.json
+            artifacts/foundation/cloud-engineering/focused-portable/*/signed-out-evidence.json
