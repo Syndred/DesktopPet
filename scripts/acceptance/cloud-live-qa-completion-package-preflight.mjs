@@ -1,5 +1,6 @@
 // No credentials or login: verify the actual new portable before identity recovery.
 import assert from 'node:assert/strict';
+import {preparationStage,preparationExternalStart,preparationExternalDone,preparationDirectory,preparationPids,preparationFailed} from './recovery/preparation-state.mjs';
 import {readFileSync,mkdtempSync,rmSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {platformChildEnvironment} from './recovery/github-environment-admission.mjs';
@@ -21,7 +22,8 @@ export function verifyCompletionPackageDocuments({manifest,audit,closureBytes,ex
  const closure=JSON.parse(closureBytes);const rows=closure.files.filter(x=>x.path===notificationRuntime.path);assert.equal(rows.length,1);assert.equal(rows[0].sha256,sha(sourceBytes));
  return {sourceCommit:binding.expectedSource,compiledFingerprint:binding.expectedFingerprint,exeSha256:binding.expectedExeSha256,notificationRuntimeSha256:notificationRuntime.sha256,closureSha256:sha(closureBytes)};
 }
-export async function verifyCompletionPackageBeforeCredentials(binding){
+export async function verifyCompletionPackageBeforeCredentials(binding,{preparation}={}){
+ preparationStage(preparation,'package-docs');
  validatePinnedNotificationPackage(binding);assert.equal(process.platform,'win32');assert.equal(process.env.GITHUB_ACTIONS,'true');assert.equal(process.env.GITHUB_RUN_ATTEMPT,'1');
  assert.match(binding?.expectedSource||'',/^[a-f0-9]{40}$/);for(const k of ['expectedFingerprint','expectedExeSha256'])assert.match(binding[k]||'',/^[a-f0-9]{64}$/);
  for(const k of ['manifestPath','auditPath','closurePath','executable'])assert.equal(typeof binding[k],'string');
@@ -31,12 +33,15 @@ export async function verifyCompletionPackageBeforeCredentials(binding){
  const closureBytes=readFileSync(binding.closurePath),closure=JSON.parse(closureBytes);const row=closure.files.find(x=>x.path===notificationRuntime.path);let packagedSource=sourceBytes;
  if(row?.sha256!==sha(sourceBytes)){packagedSource=Buffer.from(sourceBytes.toString('utf8').replace(/\r?\n/g,'\r\n'));assert.equal(row?.sha256,sha(packagedSource));}
  const result=verifyCompletionPackageDocuments({manifest:JSON.parse(readFileSync(binding.manifestPath)),audit:JSON.parse(readFileSync(binding.auditPath)),closureBytes,exeBytes:readFileSync(binding.executable),sourceBytes:packagedSource,sourceTree:execFileSync('git',['rev-parse',binding.expectedSource+'^{tree}'],{cwd:root,encoding:'utf8',env:platformChildEnvironment()}).trim()},binding);
+ preparationStage(preparation,'package-allocation');preparationExternalStart(preparation,'package');
  const profile=mkdtempSync(join(tmpdir(),'lingjing-precredential-package-')),standard=new Set(['SYSTEMROOT','WINDIR','COMSPEC','PATH','PATHEXT','TEMP','TMP','USERPROFILE','APPDATA','LOCALAPPDATA','PROGRAMDATA','PROGRAMFILES','PROGRAMFILES(X86)','COMMONPROGRAMFILES','COMMONPROGRAMFILES(X86)','NUMBER_OF_PROCESSORS','PROCESSOR_ARCHITECTURE','PSMODULEPATH']);
  const environment=Object.fromEntries(Object.entries(process.env).filter(([k])=>k.toUpperCase()!=='PET_USER_DATA_DIR').map(([k,v])=>[k,standard.has(k.toUpperCase())?v:undefined]));let model,launchAttempted=false;
- try{const {launchPortableSession}=await import('./portable-session.mjs');launchAttempted=true;model=await launchPortableSession({executable:binding.executable,expectedSource:binding.expectedSource,profile,label:'signedout-notification-package-preflight',environment});
+ preparationDirectory(preparation,profile,{kind:'package'});
+ try{preparationStage(preparation,'package-launch');const {launchPortableSession}=await import('./portable-session.mjs');launchAttempted=true;model=await launchPortableSession({executable:binding.executable,expectedSource:binding.expectedSource,profile,label:'signedout-notification-package-preflight',environment});
+  preparationPids(preparation,profile,[model.runtime.pid,model.launcherPid]);
   assert.equal((await model.call('accounts','session')).currentUser,null);assert.equal(model.info.build.compiledFingerprint,binding.expectedFingerprint);assert.deepEqual(model.info.build.sourceDirtyFiles,[]);
   const actual=await model.main((_e,path)=>{const fs=process.getBuiltinModule('node:fs'),crypto=process.getBuiltinModule('node:crypto');const bytes=fs.readFileSync(process.resourcesPath+'/app.asar/'+path);return crypto.createHash('sha256').update(bytes.toString('utf8').replace(/\r\n/g,'\n')).digest('hex');},notificationRuntime.path);assert.equal(actual,notificationRuntime.sha256);
   result.actualSignedoutAsarRuntimeVerified=true;
- }finally{const cleanup={stopCompleted:!launchAttempted,allOwnedProcessesStopped:!launchAttempted||Boolean(model),profileRemoved:false};if(model){let timer;try{await Promise.race([model.stop(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('OWNED_STOP_TIMEOUT')),15000);})]);cleanup.stopCompleted=true;}catch{cleanup.stopCompleted=false;}finally{clearTimeout(timer);}for(const pid of new Set([model.runtime.pid,model.launcherPid])){let alive=true;try{process.kill(pid,0);}catch(e){alive=e.code!=='ESRCH';}if(alive)cleanup.allOwnedProcessesStopped=false;}}if(cleanup.allOwnedProcessesStopped)try{rmSync(profile,{recursive:true,force:true});cleanup.profileRemoved=true;}catch{}result.cleanup=cleanup;assert.ok(Object.values(cleanup).every(v=>v===true),'Signedout package probe cleanup incomplete; credentials forbidden');}
+ }catch(error){preparationFailed(preparation,error);throw error;}finally{preparationStage(preparation,'package-cleanup');const cleanup={stopCompleted:!launchAttempted,allOwnedProcessesStopped:!launchAttempted||Boolean(model),profileRemoved:false};if(model){let timer;try{await Promise.race([model.stop(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('OWNED_STOP_TIMEOUT')),15000);})]);cleanup.stopCompleted=true;}catch{cleanup.stopCompleted=false;}finally{clearTimeout(timer);}for(const pid of new Set([model.runtime.pid,model.launcherPid])){let alive=true;try{process.kill(pid,0);}catch(e){alive=e.code!=='ESRCH';}if(alive)cleanup.allOwnedProcessesStopped=false;}}if(cleanup.allOwnedProcessesStopped)try{rmSync(profile,{recursive:true,force:true});cleanup.profileRemoved=true;}catch{}result.cleanup=cleanup;preparationExternalDone(preparation,'package',Object.values(cleanup).every(v=>v===true));assert.ok(Object.values(cleanup).every(v=>v===true),'Signedout package probe cleanup incomplete; credentials forbidden');}
  return result;
 }

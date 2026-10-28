@@ -71,6 +71,21 @@ function Read-SafeJson($path) {
  return Get-Content -LiteralPath $path -Raw | ConvertFrom-Json
 }
 
+function Get-PreparedNoCustody($binding){
+ if(@($binding.PSObject.Properties.Name).Count -ne 4 -or $binding.version -ne 1 -or [string]$binding.run -cne $env:GITHUB_RUN_ID -or $binding.commit -cne $env:GITHUB_SHA -or $binding.requestDigest -notmatch '^[a-f0-9]{64}$'){throw 'EXACT_PREPARATION_BINDING_REQUIRED'}
+ $path=Join-Path $directory 'preparation-state.json';if(!(Test-Path -LiteralPath $path)){return $null}
+ $p=Read-SafeJson $path
+ if($p.version -ne 1 -or $p.run -cne $binding.run -or $p.commit -cne $binding.commit -or $p.requestDigest -cne $binding.requestDigest){throw 'PREPARATION_RECEIPT_BINDING_INVALID'}
+ foreach($k in @('holderEntered','allocationsStarted','cleanupConfirmed','allocationUnconfirmed')){if($p.$k -isnot [bool]){throw 'PREPARATION_BOOLEAN_INVALID'}}
+ foreach($k in @('ownedDirectoryCount','removedDirectoryCount','pendingExternalCount')){if(($p.$k -isnot [int] -and $p.$k -isnot [long]) -or $p.$k -lt 0){throw 'PREPARATION_COUNT_INVALID'}}
+ if($p.removedDirectoryCount -gt $p.ownedDirectoryCount){throw 'PREPARATION_COUNT_INVALID'}
+ if(!$p.allocationsStarted -and ($p.ownedDirectoryCount -ne 0 -or $p.removedDirectoryCount -ne 0 -or $p.pendingExternalCount -ne 0 -or $p.allocationUnconfirmed -ne $false)){throw 'PREPARATION_ALLOCATION_CONTRADICTION'}
+ if($p.cleanupConfirmed -and ($p.pendingExternalCount -ne 0 -or $p.allocationUnconfirmed -ne $false -or $p.removedDirectoryCount -ne $p.ownedDirectoryCount)){throw 'PREPARATION_CLEANUP_CONTRADICTION'}
+ if($p.holderEntered -or ($p.allocationsStarted -and !$p.cleanupConfirmed)){return $null}
+ if(Resolve-Owned){throw 'PREPARATION_ORIGINAL_HOLDER_STILL_ALIVE'}
+ $prefix='dpapi-authorized-'+$env:GITHUB_RUN_ID+'-';if(@(Get-ChildItem -LiteralPath $env:RUNNER_TEMP -Force|Where-Object {$_.Name.StartsWith($prefix,[StringComparison]::Ordinal)}).Count -ne 0){throw 'PREPARATION_VAULT_UNEXPECTED'}
+ return $p
+}
 if($Action -eq 'selftest'){& (Join-Path $PSScriptRoot 'process.ps1') -Action selftest -Output (Join-Path $directory 'identity-selftest');if($LASTEXITCODE -and $LASTEXITCODE -ne 0){throw 'IDENTITY_SELFTEST_FAILED'};exit 0}
 if($Action -eq 'start'){
  if(Test-Path -LiteralPath $pidFile){throw 'NO_SECOND_HOLDER_START'}
@@ -89,6 +104,9 @@ if($Action -eq 'reconcile'){
  $status=Read-SafeJson (Join-Path $directory 'environment-status.json');if($status.stage -eq 'completed' -and $status.passed -eq $true){Write-Output 'COMPLETED_NO_READBACK';exit 0}
  $until=[DateTime]::UtcNow.AddSeconds(45);if($until -gt $hardEnd){$until=$hardEnd};while((Resolve-Owned) -and [DateTime]::UtcNow -lt $until){Start-Sleep -Milliseconds 100};if(Resolve-Owned){throw 'ORIGINAL_HOLDER_EXIT_UNCONFIRMED_NO_RESTART'}
  if([DateTime]::UtcNow -ge $hardEnd){throw 'CUSTODY_WINDOW_EXPIRED_NO_READBACK_START'}
+ $binding=Read-SafeJson $bindingPath
+ $noCustody=Get-PreparedNoCustody $binding
+ if($null -ne $noCustody){@{version=1;run=$binding.run;commit=$binding.commit;requestDigest=$binding.requestDigest;reconciliationOnly=$true;newIdentityMutations=$false;businessExecuted=$false;noRunnerIntent=$true;originalBusinessFailureUnchanged=$true;scope='precredential-owned-cleanup'}|ConvertTo-Json|Set-Content -LiteralPath (Join-Path $directory 'environment-reconciliation-result.json') -Encoding UTF8;Write-Output 'PREPARATION_NEVER_ENTERED_NO_RUNNER_INTENT';exit 0}
  $pidFile=$reconcilePidFile;$entry=Join-Path $PSScriptRoot 'environment-bootstrap.mjs'
  $child=Start-Process -FilePath (Get-Command node).Source -ArgumentList ('"'+$entry+'" --reconcile-only') -WorkingDirectory $root -PassThru -WindowStyle Hidden -RedirectStandardOutput (Join-Path $directory 'private-readback-stdout.txt') -RedirectStandardError (Join-Path $directory 'private-readback-stderr.txt');$null=$child.Handle;Write-Owned $child|Out-Null
  $until=[DateTime]::UtcNow.AddMinutes(2);if($until -gt $hardEnd){$until=$hardEnd}
@@ -105,6 +123,8 @@ if($Action -eq 'stop'){
  }
  $binding=Read-SafeJson $bindingFile
  if(@($binding.PSObject.Properties.Name).Count -ne 4 -or $binding.version -ne 1 -or [string]$binding.run -cne $env:GITHUB_RUN_ID -or $binding.commit -cne $env:GITHUB_SHA -or $binding.requestDigest -notmatch '^[a-f0-9]{64}$'){throw 'EXACT_PLATFORM_ENTRY_BINDING_REQUIRED'}
+ $p=Get-PreparedNoCustody $binding
+ if($null -ne $p){@{version=1;run=$binding.run;commit=$binding.commit;requestDigest=$binding.requestDigest;scope='precredential-owned-cleanup';noRunnerCustody=$true;cleanupConfirmed=$p.cleanupConfirmed;ownedDirectoryCount=$p.ownedDirectoryCount;removedDirectoryCount=$p.removedDirectoryCount}|ConvertTo-Json|Set-Content -LiteralPath (Join-Path $directory 'terminal-cleanup.json') -Encoding UTF8;exit 0}
  $vaultName='dpapi-authorized-'+$env:GITHUB_RUN_ID+'-'+$binding.requestDigest
  $vaultRoot=Join-Path $env:RUNNER_TEMP $vaultName
  if(Test-Path -LiteralPath $vaultRoot){

@@ -6,6 +6,7 @@
 // UIA APIs: https://learn.microsoft.com/dotnet/api/system.windows.automation.valuepattern.setvalue
 // https://learn.microsoft.com/dotnet/api/system.windows.automation.invokepattern.invoke
 import assert from 'node:assert/strict';
+import {preparationStage,preparationExternalStart,preparationExternalDone,preparationDirectory,preparationPids,preparationFailed} from './recovery/preparation-state.mjs';
 import {spawn} from 'node:child_process';
 import {mkdtempSync,mkdirSync,readFileSync,writeFileSync,realpathSync,lstatSync,existsSync,rmSync} from 'node:fs';
 import {join,resolve,relative,isAbsolute,dirname,sep} from 'node:path';
@@ -502,9 +503,11 @@ export async function driveNativeFileDialog({scope,kind,filePath,ownerPid,ownerW
 
 
 /** Runner-only reflection and interop-compilation selftest; no application/UI calls. */
-export async function selftestNativeDialogApis(){
+export async function selftestNativeDialogApis({preparation}={}){
  assert.equal(process.platform,'win32');assert.equal(process.env.GITHUB_ACTIONS,'true');
- const directory=canonical(mkdtempSync(join(tmpdir(),'lingjing-uia-api-selftest-')));
+ preparationStage(preparation,'native-selftest');preparationExternalStart(preparation,'native');
+ const directory=canonical(mkdtempSync(join(tmpdir(),'lingjing-uia-api-selftest-')));preparationDirectory(preparation,directory,{kind:'native'});
+ let child,stdout='',stderr='',timer;try{
  const scriptFile=join(directory,'api-selftest.ps1'),settingsFile=join(directory,'api-selftest.json');
  writeFileSync(scriptFile,'\ufeff'+controller,{flag:'wx'});
  writeFileSync(settingsFile,JSON.stringify({apiSelftest:true}),{flag:'wx'});
@@ -513,9 +516,8 @@ export async function selftestNativeDialogApis(){
  const shell=join(process.env.SystemRoot||process.env.WINDIR||'C:\\Windows','System32','WindowsPowerShell','v1.0','powershell.exe');
  const literal=value=>"'"+value.replaceAll("'","''")+"'";
  const bootstrap=`& ${literal(scriptFile)} -SettingsFile ${literal(settingsFile)}`;
- const child=spawn(shell,['-NoProfile','-NonInteractive','-STA','-ExecutionPolicy','Bypass','-EncodedCommand',Buffer.from(bootstrap,'utf16le').toString('base64')],{env,windowsHide:true,stdio:['ignore','pipe','pipe']});
- let stdout='',stderr='',timer;
- try{
+ child=spawn(shell,['-NoProfile','-NonInteractive','-STA','-ExecutionPolicy','Bypass','-EncodedCommand',Buffer.from(bootstrap,'utf16le').toString('base64')],{env,windowsHide:true,stdio:['ignore','pipe','pipe']});
+ if(child.pid)preparationPids(preparation,directory,[child.pid]);
   await new Promise((yes,no)=>{
    child.on('error',no);
    child.stdout.on('data',data=>{stdout+=data.toString('utf8');if(stdout.length>32000){stdout=stdout.slice(0,32000);no(Error('Selftest output limit'));}});
@@ -526,12 +528,12 @@ export async function selftestNativeDialogApis(){
   const phases=stdout.trim().split(/\r?\n/).filter(Boolean).map(line=>JSON.parse(line));
   assert.ok(phases.some(row=>row.phase==='uia-api-selftest-passed'&&row.uiAccessed===false&&row.checks===31));
   return {passed:true,reflectionChecks:true,nativeControlBackend:"win32-exact-standard-chain",interopCompiled:true,noUiCalls:true,appStarted:false,phases};
- }finally{
+ }catch(error){preparationFailed(preparation,error);throw error;}finally{
   clearTimeout(timer);
-  if(child.exitCode===null&&child.signalCode===null)child.kill();
-  if(child.exitCode===null&&child.signalCode===null)await Promise.race([new Promise(resolve=>child.once('exit',resolve)),new Promise(resolve=>setTimeout(resolve,3000))]);
-  if(child.pid&&child.exitCode===null&&child.signalCode===null)throw Error('Exact UIA selftest helper exit unconfirmed; retain owned directory');
-  rmSync(directory,{recursive:true,force:true});
+  if(child&&child.exitCode===null&&child.signalCode===null)child.kill();
+  if(child&&child.exitCode===null&&child.signalCode===null)await Promise.race([new Promise(resolve=>child.once('exit',resolve)),new Promise(resolve=>setTimeout(resolve,3000))]);
+  if(child?.pid&&child.exitCode===null&&child.signalCode===null)throw Error('Exact UIA selftest helper exit unconfirmed; retain owned directory');
+  rmSync(directory,{recursive:true,force:true});preparationExternalDone(preparation,'native',!existsSync(directory));
  }
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){

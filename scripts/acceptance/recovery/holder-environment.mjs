@@ -1,22 +1,26 @@
 // Fixed environment source. No legacy ticket/parent-proof/reset transport fallback.
 import assert from 'node:assert/strict';
 import {createHash,randomBytes} from 'node:crypto';
-import {readFileSync} from 'node:fs';
+import {readFileSync,existsSync,readdirSync,lstatSync,realpathSync} from 'node:fs';
+import {resolve,join} from 'node:path';
+import {createPreparationState,preparationStage,preparationFailed,cleanupPreparation,preparationHolderEntered,validatePreparationNoCustody} from './preparation-state.mjs';
 import {assertPlatformAdmission} from './github-environment-admission.mjs';
 import {createPlatformAuthorizedVault,cleanupFailedPlatformInitialization,FIXED_IDENTITIES} from '../dpapi/authorized-vault-client.mjs';
 import {prepareCompletionBeforeCredentials} from '../cloud-live-qa-completion-readiness.mjs';
 import {runPreparedCloudCompletion} from '../cloud-live-qa-completion-driver.mjs';
 const hash=x=>createHash('sha256').update(x).digest('hex'),prepared=new WeakMap();
-export const ENVIRONMENT_LIFECYCLE_SHA256='5b93c4b8398294c4dca01021eb2bfe1d35f33abb671a958bb6f27989adfad3f4'; // Exact reviewed local implementation; platform admission remains fail-closed.
+export const ENVIRONMENT_LIFECYCLE_SHA256='33b75b232b972c12d30b7cc4ef4adabd710a25710c33f0a0e28758a365ddbdf1'; // Exact reviewed local implementation; platform admission remains fail-closed.
 const roles=Object.freeze({a:'A primary',a2:'A cold restore',a3:'A original S06',b:'B peer',c:'C new lifecycle'});
 export async function prepareEnvironmentBeforeCredentials({admission,completionOptions}){
- const binding=assertPlatformAdmission(admission);assert.equal(binding.readOnly,false);assert.equal(process.platform,'win32');assert.equal(completionOptions.scenario,binding.scenario);assert.deepEqual(completionOptions.selectedCases,binding.caseIds);
+ const binding=assertPlatformAdmission(admission);const preparation=createPreparationState({run:binding.run,commit:binding.commit,requestDigest:binding.requestDigest});try{assert.equal(binding.readOnly,false);assert.equal(process.platform,'win32');assert.equal(completionOptions.scenario,binding.scenario);assert.deepEqual(completionOptions.selectedCases,binding.caseIds);
  assert.match(ENVIRONMENT_LIFECYCLE_SHA256||'',/^[a-f0-9]{64}$/,'ENVIRONMENT_FACTORY_NOT_READY');const url=new URL('./same-run-normal-lifecycle-factory.mjs',import.meta.url);assert.equal(hash(readFileSync(url)),ENVIRONMENT_LIFECYCLE_SHA256);
- const factory=await import(url.href),completion=await prepareCompletionBeforeCredentials({...completionOptions,authorization:admission});
- const lifecycle=await factory.prepareNormalLifecycle({authorization:admission,roles,completionOptions,completionPlan:completion});const plan=Object.freeze({});prepared.set(plan,{admission,binding,factory,lifecycle,completion,completionOptions,used:false});return plan;
+ const factory=await import(url.href),completion=await prepareCompletionBeforeCredentials({...completionOptions,authorization:admission,preparation});
+ preparationStage(preparation,'factory-prepare');
+ const lifecycle=await factory.prepareNormalLifecycle({authorization:admission,roles,completionOptions,completionPlan:completion});const plan=Object.freeze({});prepared.set(plan,{admission,binding,factory,lifecycle,completion,completionOptions,preparation,used:false});preparationStage(preparation,'prepared');return plan;}catch(error){preparationFailed(preparation,error);cleanupPreparation(preparation);throw error;}
 }
 export async function runEnvironmentHolder(plan,{parentCasProvenance}){
- const p=prepared.get(plan);assert.ok(p&&!p.used,'GENUINE_ENVIRONMENT_PREPARATION_REQUIRED');p.used=true;const {admission,binding,factory,lifecycle,completion,completionOptions}=p;assertPlatformAdmission(admission);
+ const p=prepared.get(plan);assert.ok(p&&!p.used,'GENUINE_ENVIRONMENT_PREPARATION_REQUIRED');p.used=true;const {admission,binding,factory,lifecycle,completion,completionOptions}=p;try{assertPlatformAdmission(admission);}catch(error){preparationFailed(p.preparation,error);cleanupPreparation(p.preparation);throw error;}
+ preparationHolderEntered(p.preparation);
  let vault=null,complete=false,held=false,models={},identities={};const epochs={};
  try{
   vault=await createPlatformAuthorizedVault({admission});
@@ -43,7 +47,7 @@ export async function runEnvironmentHolder(plan,{parentCasProvenance}){
 // Original known terminal/readback only. Never generates or consumes credentials,
 // repeats parent CAS, registers C, launches a model or enters the business driver.
 export async function inspectEnvironmentOriginalIntent({admission}){
- const binding=assertPlatformAdmission(admission);assert.equal(binding.readOnly,true);const vault=await createPlatformAuthorizedVault({admission,resume:true});const intentId=binding.requestDigest+':C:register';
+ const binding=assertPlatformAdmission(admission);assert.equal(binding.readOnly,true);const prepPath=resolve('artifacts/qa/same-run-entry-'+binding.run,'preparation-state.json');if(existsSync(prepPath)){assert.equal(lstatSync(prepPath).isSymbolicLink(),false);assert.equal(realpathSync.native(prepPath).toLowerCase(),prepPath.toLowerCase());const r=JSON.parse(readFileSync(prepPath,'utf8'));if(validatePreparationNoCustody(r,binding)){assert.equal(readdirSync(process.env.RUNNER_TEMP).some(n=>n.startsWith('dpapi-authorized-'+binding.run+'-')),false);return {reconciliationOnly:true,newIdentityMutations:false,businessExecuted:false,noRunnerIntent:true,preparationCleanupConfirmed:r.cleanupConfirmed===true,scope:'precredential-owned-cleanup'};}}const vault=await createPlatformAuthorizedVault({admission,resume:true});const intentId=binding.requestDigest+':C:register';
  const c=await vault.inspectOriginalIntent({slot:'C',operation:'register',intentId,credentialVersion:hash(intentId)});
  return {reconciliationOnly:true,newIdentityMutations:false,businessExecuted:false,A:{state:'parent-cas-external-no-runner-reset-intent'},B:{state:'parent-cas-external-no-runner-reset-intent'},C:c,requiresParentPrivateReadback:c.requiresAuthoritativeReadback===true};
 }

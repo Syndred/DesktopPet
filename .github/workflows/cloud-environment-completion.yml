@@ -199,6 +199,7 @@ jobs:
             artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-ui/M07-nearby-recovered.png
             artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/s02-territory-producer/live-s02-territory-producer-intents.json
             artifacts/qa/same-run-entry-${{ github.run_id }}/environment-status.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/preparation-state.json
             artifacts/qa/same-run-entry-${{ github.run_id }}/environment-start-ready.json
             artifacts/qa/same-run-${{ github.run_id }}/environment-custody.json
             artifacts/qa/same-run-${{ github.run_id }}/precredential-model-readiness.json
