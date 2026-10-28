@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {execFileSync} from 'node:child_process';
+import {verifyCompletionPackageDocuments,notificationRuntime,notificationPackage,validatePinnedNotificationPackage} from './cloud-live-qa-completion-package-preflight.mjs';
+const sha=b=>createHash('sha256').update(b).digest('hex');
+function fixture(){const sourceBytes=readFileSync(new URL('../../'+notificationRuntime.path,import.meta.url));const exeBytes=Buffer.from('pure-fixture-not-executable');const closureBytes=Buffer.from(JSON.stringify({files:[{path:notificationRuntime.path,sha256:sha(sourceBytes)}]}));const binding={expectedSource:'a'.repeat(40),expectedFingerprint:'b'.repeat(64),expectedExeSha256:sha(exeBytes)};const manifest={sourceCommit:binding.expectedSource,sourceTree:'c'.repeat(40),sourceDirtyFiles:[],compiledFingerprint:binding.expectedFingerprint};const audit={passed:true,errors:[],forbidden:[],build:manifest,sourceCommit:binding.expectedSource,sha256:binding.expectedExeSha256,bytes:exeBytes.length,runtimeClosure:{sha256:sha(closureBytes)},runtimeDependencies:{passed:true,errors:[]}};return {documents:{manifest,audit,sourceBytes,sourceTree:manifest.sourceTree,closureBytes,exeBytes},binding};}
+test('documents bind new reviewed source, closure, manifest, actual bytes and audit',()=>{const {documents,binding}=fixture();assert.equal(verifyCompletionPackageDocuments(documents,binding).notificationRuntimeSha256,notificationRuntime.sha256);for(const key of ['exeBytes','sourceBytes','closureBytes'])assert.throws(()=>verifyCompletionPackageDocuments({...documents,[key]:Buffer.from('changed')},binding));});
+test('actual historical eab source cannot authorize notifications regardless of boolean or claimed fingerprint',()=>{const {documents,binding}=fixture();const sourceBytes=execFileSync('git',['show','eabcb7a77e9a693d2b774601ba3e0b9d11f59055:'+notificationRuntime.path]);assert.throws(()=>verifyCompletionPackageDocuments({...documents,sourceBytes},{...binding,accountNotificationDeploymentVerified:true}),/NEW_NOTIFICATION_RUNTIME_REQUIRED/);});
+
+test('future actual launch is pinned to independently extracted 5016 SFX, not caller claims',()=>{validatePinnedNotificationPackage(notificationPackage);assert.throws(()=>validatePinnedNotificationPackage({...notificationPackage,expectedSource:'eabcb7a77e9a693d2b774601ba3e0b9d11f59055'}));});

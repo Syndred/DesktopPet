@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {validateS06DedicatedRoles} from './cloud-live-qa-s06-metadata-completion.mjs';
+const actors=()=>({a:{ownerAccountId:'A',authUserId:'auth-A',deviceId:'1'},a2:{ownerAccountId:'A',authUserId:'auth-A',deviceId:'2'},a3:{ownerAccountId:'A',authUserId:'auth-A',deviceId:'3'},b:{ownerAccountId:'B',authUserId:'auth-B',deviceId:'4'}});
+test('dedicated original A3 same owner isolates S06 from cold A2',()=>{validateS06DedicatedRoles(actors());for(const mutate of[e=>e.a3.ownerAccountId='C',e=>e.a3.authUserId='auth-C',e=>e.a3.deviceId=e.a2.deviceId,e=>e.b.ownerAccountId='A']){const e=actors();mutate(e);assert.throws(()=>validateS06DedicatedRoles(e));}});

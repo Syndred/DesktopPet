@@ -13,7 +13,7 @@ import {randomUUID,createHash} from 'node:crypto';
 import {tmpdir} from 'node:os';
 import {pathToFileURL} from 'node:url';
 
-const scopes=new WeakSet();
+const scopes=new WeakSet(),liveTickets=new WeakSet(),liveScopes=new WeakMap();
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
 const inside=(root,file)=>{const rel=relative(root,file);return rel!==''&&rel!=='..'&&!rel.startsWith('..'+sep)&&!isAbsolute(rel);};
 const canonical=file=>realpathSync.native(file);
@@ -28,6 +28,34 @@ export function createNativeDialogScope({profile,runId}){
  const directory=canonical(mkdtempSync(join(actual,'native-dialog-')));assert.ok(inside(actual,directory));
  const scope=Object.freeze({profile:actual,runId,directory});scopes.add(scope);return scope;
 }
+/** Allocate an ordinary disposable profile BEFORE normal login. Never adopts an
+ * existing profile, and never writes a local-QA marker or identity/token. */
+export function allocateLiveNativeProfile({runId}){
+ assert.equal(process.platform,'win32');assert.equal(process.env.GITHUB_ACTIONS,'true');assert.equal(process.env.GITHUB_RUN_ATTEMPT,'1');assert.match(runId,/^[0-9a-f-]{36}$/i);assert.match(process.env.GITHUB_RUN_ID||'',/^[1-9][0-9]*$/);
+ const profile=canonical(mkdtempSync(join(canonical(tmpdir()),'lingjing-live-holder-')));
+ const ticket=Object.freeze({profile,runId,ciRunId:process.env.GITHUB_RUN_ID});liveTickets.add(ticket);return ticket;
+}
+/** Bind only a privately allocated ticket to its currently authenticated normal
+ * app process. Parent holder remains responsible for audited package preflight. */
+export async function bindLiveNativeDialogScope({ticket,model,expectedActor,expectedSource,expectedFingerprint,executable,expectedExeSha256,assertActive}){
+ assert.equal(process.platform,'win32');assert.equal(process.env.GITHUB_ACTIONS,'true');assert.ok(liveTickets.has(ticket));assert.equal(ticket.ciRunId,process.env.GITHUB_RUN_ID);assert.equal(typeof assertActive,'function');
+ assert.match(expectedSource||'',/^[a-f0-9]{40}$/);assert.match(expectedFingerprint||'',/^[a-f0-9]{64}$/);assert.match(expectedExeSha256||'',/^[a-f0-9]{64}$/);assert.equal(sha(readFileSync(executable)),expectedExeSha256);
+ assert.ok(samePath(canonical(model.profile),ticket.profile));assert.ok(!existsSync(join(ticket.profile,'.lingjing-qa-profile.json')));assert.ok(!lstatSync(ticket.profile).isSymbolicLink());
+ const expected=Object.freeze({...expectedActor});assert.match(expected.ownerAccountId||'',/^account:[0-9a-f-]{36}$/i);assert.match(expected.authUserId||'',/^[0-9a-f-]{36}$/i);assert.match(expected.deviceId||'',/^[0-9a-f-]{36}$/i);
+ async function inspect(){
+  await assertActive();
+  await model.main(()=>{const req=process.getBuiltinModule('node:module').createRequire(process.resourcesPath+'/app.asar/package.json'),p=req('./apps/pc-app/runtime/features/accounts/service.cjs').AccountsService.prototype;if(globalThis.__nativeDialogEpochProbe)throw Error('Existing epoch probe');const state={prototype:p,original:p.session,epoch:null};globalThis.__nativeDialogEpochProbe=state;p.session=function(...args){const value=state.original.apply(this,args);state.epoch=this.epoch;return value;};});
+  let session,epoch;try{session=await model.call('accounts','session');}finally{epoch=await model.main(()=>{const s=globalThis.__nativeDialogEpochProbe;if(!s)throw Error('Missing epoch probe');try{return s.epoch;}finally{s.prototype.session=s.original;delete globalThis.__nativeDialogEpochProbe;}});}assert.ok(Number.isSafeInteger(epoch)&&epoch>=0);
+assert.equal(session.currentUser?.id,expected.ownerAccountId);assert.equal(session.currentUser?.authUserId,expected.authUserId);assert.equal(session.currentUser?.authKind,'supabase');assert.ok(!session.scenario);
+  const info=await model.call('app','info');assert.equal(info.build.sourceCommit,expectedSource);assert.equal(info.build.compiledFingerprint,expectedFingerprint);assert.deepEqual(info.build.sourceDirtyFiles,[]);
+  const mainUrl=model.page.url().split('#')[0];assert.ok(mainUrl.includes('/app.asar/')&&mainUrl.includes('/ui/index.html'));const state=await model.main(({app,BrowserWindow},profile,mainUrl)=>{const fs=process.getBuiltinModule('node:fs'),p=process.getBuiltinModule('node:path');if(fs.realpathSync.native(app.getPath('userData')).toLowerCase()!==profile.toLowerCase()||fs.existsSync(p.join(profile,'.lingjing-qa-profile.json')))throw Error('Ordinary exact profile required');const windows=BrowserWindow.getAllWindows().filter(w=>!w.isDestroyed()&&w.webContents.getURL().split('#')[0]===mainUrl);if(windows.length!==1)throw Error('Unique owned main required');const w=windows[0];return {pid:process.pid,exe:app.getPath('exe'),windowId:w.id,hwnd:Array.from(w.getNativeWindowHandle()),deviceId:JSON.parse(fs.readFileSync(p.join(profile,'accounts','device.json'),'utf8')).deviceId};},ticket.profile,mainUrl);
+  assert.equal(state.pid,model.runtime.pid);assert.equal(state.deviceId,expected.deviceId);assert.ok(isAbsolute(state.exe));state.hwnd=nativeWindowHandleDecimal(state.hwnd);state.accountEpoch=epoch;return state;
+ }
+ const initial=await inspect(),directory=canonical(mkdtempSync(join(ticket.profile,'native-dialog-')));assert.ok(inside(ticket.profile,directory));
+ const scope=Object.freeze({profile:ticket.profile,runId:ticket.runId,directory});scopes.add(scope);
+ liveScopes.set(scope,{initial,async validate(){const now=await inspect();assert.equal(now.pid,initial.pid);assert.equal(now.accountEpoch,initial.accountEpoch);assert.equal(now.windowId,initial.windowId);assert.equal(now.hwnd,initial.hwnd);assert.ok(samePath(canonical(now.exe),canonical(initial.exe)));return now;}});return scope;
+}
+export async function liveNativeDialogOwner(scope){assert.ok(liveScopes.has(scope));return liveScopes.get(scope).validate();}
 /** Convert Electron's getNativeWindowHandle() bytes to a precise HWND string. */
 export function nativeWindowHandleDecimal(bytes){
  const data=Buffer.from(bytes);assert.ok(data.length===4||data.length===8);
@@ -419,6 +447,7 @@ export async function driveNativeFileDialog({scope,kind,filePath,ownerPid,ownerW
  assert.ok(isAbsolute(ownerExecutablePath));assert.ok(lstatSync(ownerExecutablePath).isFile());
  assert.ok(typeof expectedTitle==='string'&&expectedTitle.length>0&&expectedTitle.length<=120&&!/[\r\n\x00]/.test(expectedTitle));
  assert.ok(Number.isSafeInteger(timeoutMs)&&timeoutMs>=5000&&timeoutMs<=60000);
+ const live=liveScopes.get(scope);if(live){const exact=await live.validate();assert.equal(ownerPid,exact.pid);assert.equal(String(ownerWindowHandle),exact.hwnd);assert.ok(samePath(canonical(ownerExecutablePath),canonical(exact.exe)));}
  const file=validateFile(scope,filePath,kind);const original=kind==='open'?readFileSync(file):null;
  if(kind==='open'){assert.match(expectedSha256||'',/^[a-f0-9]{64}$/);assert.equal(sha(original),expectedSha256,'Open fixture must match caller-selected exact bytes');}
  const id=randomUUID(),scriptFile=join(scope.directory,`dialog-controller-${id}.ps1`),settingsFile=join(scope.directory,`dialog-controller-${id}.json`);
@@ -447,6 +476,7 @@ export async function driveNativeFileDialog({scope,kind,filePath,ownerPid,ownerW
  const timed=new Promise((_yes,no)=>{timer=setTimeout(()=>{const error=Error('Owned native dialog operation timed out');error.controllerStderr=stderr;fail(error);no(error);},timeoutMs+5000);});timed.catch(()=>{});
  try{
   await Promise.race([ready,timed]);
+  if(live)await live.validate();
   const triggered=Promise.resolve().then(trigger);triggered.catch(()=>{});
   await Promise.race([Promise.all([triggered,done]),timed]);
   if(kind==='save')while(!existsSync(file)&&Date.now()<deadline)await new Promise(resolve=>setTimeout(resolve,50));
@@ -455,6 +485,7 @@ export async function driveNativeFileDialog({scope,kind,filePath,ownerPid,ownerW
   const bytes=readFileSync(file);assert.ok(bytes.length>0);
   if(kind==='open')assert.deepEqual(bytes,original,'Opening a backup must not alter original bytes');
   const fileEvidence={filePath:file,bytes:bytes.length,sha256:sha(bytes)};
+  if(live)await live.validate();
   const business=await Promise.race([Promise.resolve().then(()=>verifyResult(fileEvidence)),timed]);
   assert.equal(business?.verified,true,'Caller must independently verify product UI/receipt');
   return {nativeDialogCompleted:true,nativePickerUsed:true,nativeControlBackend:"win32-exact-standard-chain",file:fileEvidence,phases,business,controllerPid:child.pid};

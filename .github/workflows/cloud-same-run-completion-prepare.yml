@@ -1,0 +1,268 @@
+name: DesktopPet fixed same-run completion and manual preparation
+# No request exists yet. Manual runs are synthetic preparation only.
+# Real identity entry also requires exact one-new-file push, signed ticket and all pins.
+on:
+  workflow_dispatch:
+  push:
+    branches: [codex/cloud-authority-convergence]
+    paths: [scripts/acceptance/requests/same-run-next-trigger.json]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: desktoppet-same-run-completion
+  cancel-in-progress: false
+jobs:
+  prepare:
+    if: >-
+      github.ref == 'refs/heads/codex/cloud-authority-convergence' &&
+      (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' &&
+      github.actor == 'Syndred' && github.triggering_actor == 'Syndred' && github.run_attempt == 1 &&
+      startsWith(github.event.head_commit.message, 'acceptance: authorized same-run completion ')))
+    runs-on: windows-latest
+    timeout-minutes: 330
+    env:
+      PACKAGE_SOURCE: 5016f1c3f7de04b4e2b322d0b47ec52248596771
+    steps:
+      - name: Preserve original job deadline with ten-minute terminal cleanup reserve
+        env:
+          TEMP: ${{ runner.temp }}
+          TMP: ${{ runner.temp }}
+        shell: pwsh
+        run: |
+          if($env:RUNNER_TEMP -match '[\r\n]'){throw 'INVALID_RUNNER_TEMP'}
+          'TEMP='+$env:RUNNER_TEMP | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          'TMP='+$env:RUNNER_TEMP | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          $p=Join-Path $env:RUNNER_TEMP ('same-run-job-clock-'+$env:GITHUB_RUN_ID+'.json')
+          if(Test-Path -LiteralPath $p){throw 'NO_JOB_DEADLINE_RESTART'}
+          $now=[DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
+          @{version=1;run=$env:GITHUB_RUN_ID;commit=$env:GITHUB_SHA;startedAtMs=$now;hardEndMs=($now+19200000)}|ConvertTo-Json|Set-Content -LiteralPath $p -Encoding utf8
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+      - name: Exact one-new-file signed-intent trigger guard
+        id: request
+        if: github.event_name == 'push'
+        run: node scripts/acceptance/recovery/same-run-request.mjs --check
+      - run: npm ci
+      - run: npm ci --prefix scripts/acceptance/recovery --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
+      - name: Entry argument and opaque capability negative contracts
+        run: node --test scripts/acceptance/recovery/run-same-run.test.mjs scripts/acceptance/recovery/same-run-request.test.mjs scripts/acceptance/recovery/same-run-fixture-index.test.mjs scripts/acceptance/dpapi/authorized-vault-contract.test.mjs
+      - name: Twelve real Windows synthetic custody checks before any real identity
+        timeout-minutes: 5
+        run: node scripts/acceptance/dpapi/authorized-vault-windows.test.mjs
+      - uses: actions/download-artifact@v8.0.2
+        with:
+          artifact-ids: '12786865736'
+          run-id: 40618386720
+          github-token: ${{ github.token }}
+          path: artifacts/qa/native-baseline
+          merge-multiple: true
+      - uses: actions/download-artifact@v8.0.2
+        with:
+          artifact-ids: '12783353029'
+          run-id: 40607080843
+          github-token: ${{ github.token }}
+          path: artifacts/qa/same-run-prior
+          merge-multiple: true
+      - name: Strict audited actual 5016 package reuse
+        run: node scripts/acceptance/verify-portable-reuse.mjs --source=$env:PACKAGE_SOURCE
+      - name: Exact holder identity negative selftest
+        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action selftest
+      - name: Fixed entry only after exact once-request guard
+        if: steps.request.outcome == 'success'
+        id: start
+        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action start
+      - name: Await exact run and trigger commit authorization request
+        if: steps.start.outcome == 'success'
+        timeout-minutes: 26
+        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action authorization
+      - uses: actions/upload-artifact@v7.0.2
+        if: steps.start.outcome == 'success'
+        with:
+          name: same-run-${{ github.run_id }}-authorization-request
+          retention-days: 7
+          if-no-files-found: error
+          path: artifacts/qa/same-run-entry-${{ github.run_id }}/authorization-request.json
+      - name: Await fixed reset-a phase
+        if: steps.start.outcome == 'success'
+        timeout-minutes: 26
+        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action reset-a
+      - uses: actions/upload-artifact@v7.0.2
+        if: steps.start.outcome == 'success'
+        with:
+          name: same-run-${{ github.run_id }}-reset-a
+          retention-days: 7
+          if-no-files-found: error
+          path: |
+            artifacts/qa/same-run-${{ github.run_id }}/reset-a-capsule.json
+      - name: Await fixed reset-b phase
+        if: steps.start.outcome == 'success'
+        timeout-minutes: 26
+        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action reset-b
+      - uses: actions/upload-artifact@v7.0.2
+        if: steps.start.outcome == 'success'
+        with:
+          name: same-run-${{ github.run_id }}-reset-b
+          retention-days: 7
+          if-no-files-found: error
+          path: |
+            artifacts/qa/same-run-${{ github.run_id }}/reset-b-capsule.json
+      - name: Await fixed s06-pregrant phase
+        if: steps.start.outcome == 'success'
+        timeout-minutes: 26
+        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action s06-pregrant
+      - uses: actions/upload-artifact@v7.0.2
+        if: steps.start.outcome == 'success'
+        with:
+          name: same-run-${{ github.run_id }}-s06-pregrant
+          retention-days: 7
+          if-no-files-found: error
+          path: |
+            artifacts/qa/same-run-${{ github.run_id }}/awaiting-parent-proof.json
+            artifacts/qa/same-run-${{ github.run_id }}/identity-manifest.json
+      - name: Await fixed c-absent phase
+        if: steps.start.outcome == 'success'
+        timeout-minutes: 26
+        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action c-absent
+      - uses: actions/upload-artifact@v7.0.2
+        if: steps.start.outcome == 'success'
+        with:
+          name: same-run-${{ github.run_id }}-c-absent
+          retention-days: 7
+          if-no-files-found: error
+          path: |
+            artifacts/qa/same-run-${{ github.run_id }}/awaiting-parent-proof.json
+      - name: Await fixed grant-manifest phase
+        if: steps.start.outcome == 'success'
+        timeout-minutes: 26
+        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action grant-manifest
+      - uses: actions/upload-artifact@v7.0.2
+        if: steps.start.outcome == 'success'
+        with:
+          name: same-run-${{ github.run_id }}-grant-manifest
+          retention-days: 7
+          if-no-files-found: error
+          path: |
+            artifacts/qa/same-run-${{ github.run_id }}/awaiting-parent-proof.json
+            artifacts/qa/same-run-${{ github.run_id }}/identity-manifest.json
+      - name: Await fixed s02-empty-cell phase
+        if: steps.start.outcome == 'success'
+        timeout-minutes: 26
+        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action s02-empty-cell
+      - uses: actions/upload-artifact@v7.0.2
+        if: steps.start.outcome == 'success'
+        with:
+          name: same-run-${{ github.run_id }}-s02-empty-cell
+          retention-days: 7
+          if-no-files-found: error
+          path: |
+            artifacts/qa/same-run-${{ github.run_id }}/awaiting-parent-proof.json
+      - name: Join exact holder after complete fixed business chain
+        if: ${{ always() && steps.start.outcome == 'success' }}
+        timeout-minutes: 131
+        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action final
+      - name: One original-intent readback-only window after failed holder
+        id: reconcile
+        if: ${{ failure() && steps.start.outcome == 'success' }}
+        timeout-minutes: 2
+        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action reconcile
+      - name: Await original A identity readback request or explicit unsubmitted skip
+        if: ${{ always() && steps.reconcile.outputs.started == 'true' }}
+        timeout-minutes: 22
+        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action reconcile-A
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() && steps.reconcile.outputs.started == 'true' }}
+        with:
+          name: same-run-${{ github.run_id }}-reconcile-A
+          retention-days: 7
+          if-no-files-found: warn
+          path: artifacts/qa/same-run-entry-${{ github.run_id }}/reconcile-A-request.json
+      - name: Await original B identity readback request or explicit unsubmitted skip
+        if: ${{ always() && steps.reconcile.outputs.started == 'true' }}
+        timeout-minutes: 22
+        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action reconcile-B
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() && steps.reconcile.outputs.started == 'true' }}
+        with:
+          name: same-run-${{ github.run_id }}-reconcile-B
+          retention-days: 7
+          if-no-files-found: warn
+          path: artifacts/qa/same-run-entry-${{ github.run_id }}/reconcile-B-request.json
+      - name: Await original C identity readback request or explicit unsubmitted skip
+        if: ${{ always() && steps.reconcile.outputs.started == 'true' }}
+        timeout-minutes: 22
+        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action reconcile-C
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() && steps.reconcile.outputs.started == 'true' }}
+        with:
+          name: same-run-${{ github.run_id }}-reconcile-C
+          retention-days: 7
+          if-no-files-found: warn
+          path: artifacts/qa/same-run-entry-${{ github.run_id }}/reconcile-C-request.json
+      - name: Join original-intent readback-only holder before terminal cleanup
+        if: ${{ always() && steps.reconcile.outputs.started == 'true' }}
+        timeout-minutes: 22
+        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action reconcile-final
+      - name: Terminal cleanup via watchdog only (no holder tree kill)
+        if: ${{ always() && steps.start.outcome == 'success' }}
+        timeout-minutes: 5
+        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action stop
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: same-run-${{ github.run_id }}-fixed-evidence
+          retention-days: 7
+          if-no-files-found: warn
+          path: |
+            artifacts/qa/authorized-dpapi-synthetic/evidence.json
+            artifacts/qa/native-continuation/package-reuse.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/entry-status.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/terminal-cleanup.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/identity-selftest/supervisor-selftest.json
+            artifacts/qa/same-run-${{ github.run_id }}/lifecycle-cleanup.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/completion-driver-evidence.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/s06-metadata/live-s06-metadata-completion-evidence.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/resource-restore/live-restore-completion-evidence.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/identity-ui/live-identity-ui-evidence.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/s05/live-record-evidence.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/p05/live-record-evidence.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/garden-sync/live-garden-sync-completion-evidence.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/s04/live-cross-domain-conflict-evidence.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/live-friend-completion-evidence.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/s02-territory-producer/live-s02-territory-producer-evidence.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/s02-base-producer/live-s02-base-producer-evidence.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/s02/live-cross-domain-conflict-evidence.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-wild/live-discovery-evidence.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-ui/live-discovery-ui-evidence.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/new-c-lifecycle/new-c-ui-lifecycle-evidence.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/s06-metadata/s06-owned-a3-garden/live-garden-sync-completion-evidence.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/s06-metadata/s06-owned-a3-garden/live-garden-sync-completion-intent.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/resource-restore/live-restore-completion-intent.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/identity-ui/C03-list.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/identity-ui/C03-detail.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/identity-ui/C03-chat.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/identity-ui/C03-battle.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/identity-ui/C03-desktop.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/identity-ui/C03-relaunch.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/s05/live-record-intents.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/p05/live-record-intents.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/garden-sync/live-garden-sync-completion-intent.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/s04/live-cross-domain-conflict-intent.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/live-friend-completion-intents.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/live-authority-realtime-observation.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/live-authority-readback-evidence.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/s02/live-cross-domain-conflict-intent.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-wild/live-discovery-intents.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-ui/M07-initial-ready.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-ui/M07-source-error.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-ui/M07-source-recovered.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-ui/M07-nearby-error.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-ui/M07-nearby-recovered.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/s02-territory-producer/live-s02-territory-producer-intents.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/reconciliation-status.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/reconciliation-result.json

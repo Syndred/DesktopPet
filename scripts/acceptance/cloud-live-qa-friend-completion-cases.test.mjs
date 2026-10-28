@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {assertFriendPair,validateCreatedFriendRoom} from './cloud-live-qa-friend-completion-cases.mjs';
+const id='10000000-0000-4000-8000-000000000000',pets={a:'a-pet',b:'b-pet'};
+const pair=()=>Object.fromEntries(['a','b'].map(role=>[role,{id:'online-'+id,mode:'friend',status:'active',context:{authority:'supabase'},room:{id},player:{petId:pets[role]},snapshot:{round:1},pendingAction:null}]));
+test('same original cloud room exact pets/round only',()=>{const p=pair();assert.equal(assertFriendPair(p.a,p.b,id,pets),1);});
+test('unknown pending, different round/room/actor/source all stop before another click',()=>{for(const change of[{pendingAction:{id:'original'}},{room:{id:'other'}},{snapshot:{round:2}},{player:{petId:'different'}},{context:{authority:'simulated'}}]){const p=pair();assert.throws(()=>assertFriendPair(p.a,{...p.b,...change},id,pets));}});
+test('accepting B is host and original A invited; unrelated membership refused',()=>{const r={id,host_user_id:'owner-b',invited_user_id:'owner-a',guest_user_id:null};assert.equal(validateCreatedFriendRoom(r,{hostOwner:'owner-b',invitedOwner:'owner-a'}),id);assert.throws(()=>validateCreatedFriendRoom({...r,guest_user_id:'unrelated'},{hostOwner:'owner-b',invitedOwner:'owner-a'}));});
+test('transparent read-only binding occurs before original createRoom subscription in actual product',()=>{const s=readFileSync(new URL('../../apps/pc-app/runtime/services/online-duel-service.cjs',import.meta.url),'utf8');const body=s.slice(s.indexOf('async createRoom('),s.indexOf('async joinRoom('));assert.ok(body.indexOf('await this.invoke("create_room"')<body.indexOf('this.applyRoom(response.room)'));assert.ok(body.indexOf('this.applyRoom(response.room)')<body.indexOf('await this.subscribeRoom()'));});

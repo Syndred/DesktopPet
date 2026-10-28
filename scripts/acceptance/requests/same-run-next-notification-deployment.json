@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "scope": "account-notifications-v1-production-schema-only",
+  "verifiedAt": "2026-10-28T03:20:00Z",
+  "migrationSha256": "5e27189f31b6be27b7edc409f4f22e8ab64f806403bf13ede641455265229f17",
+  "rollbackSha256": "30bc2338385f96038cb19ac9a9fa6565a5e7c6a7f99b28dd691c262a9b24e6ae",
+  "applyResultSha256": "b862675804b37aa63a8c0ba6f26a4eca4c4812843b96913b5a1a0a7cda207f33",
+  "readbackSha256": {
+    "notification-deployment-preflight-20261028.json": "9b65a8a18842da70131ad686507dc63bb81bea04d7765ccae8edf4b0137dfa6c",
+    "notification-deployment-additional-preflight-20261028.json": "09a5ed7e209c6538b8c6955fcadb4014e233e6191063cafe632b63e3a627f63d",
+    "notification-deployment-other-functions-preflight-20261028.json": "99343a560f35a00becf764e0f5cef09028b893a052281f2efd950a8765bd1a03",
+    "notification-deployment-postflight-20261028.json": "34d7abb4b87197654608069b9c4f802e9a3fdaea3ea92b1e88838ee7793f5c6a"
+  },
+  "checks": {
+    "applySucceeded": true,
+    "newMetadataOnlyColumnsAndConstraintsVerified": true,
+    "minimalAclAndRlsVerified": true,
+    "twoOriginalSourceTriggersVerified": true,
+    "newFunctionBodiesMatchReviewedSql": true,
+    "fiveOriginalFunctionDefinitionsUnchanged": true,
+    "originalPrivateTablePoliciesAndAclUnchanged": true,
+    "publicationOnlyNewMetadataTableAdded": true
+  },
+  "limitations": [
+    "No production Realtime business delivery acceptance claimed",
+    "No test business rows or synthetic identities written by this review",
+    "Raw database definitions remain private"
+  ]
+}
