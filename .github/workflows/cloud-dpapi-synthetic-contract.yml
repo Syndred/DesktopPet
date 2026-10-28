@@ -1,0 +1,34 @@
+name: DesktopPet same-run DPAPI synthetic contract
+on:
+  push:
+    branches: ['codex/cloud-authority-convergence']
+    paths:
+      - 'scripts/acceptance/dpapi/same-run-vault.ps1'
+      - 'scripts/acceptance/dpapi/same-run-vault.test.mjs'
+      - '.github/workflows/cloud-dpapi-synthetic-contract.yml'
+permissions:
+  contents: read
+concurrency:
+  group: desktoppet-dpapi-synthetic-contract
+  cancel-in-progress: false
+jobs:
+  synthetic-only:
+    runs-on: windows-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+      - name: Fake string DPAPI, exact ACL, separate-process restore and consumed intent
+        timeout-minutes: 5
+        run: node scripts/acceptance/dpapi/same-run-vault.test.mjs
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: dpapi-synthetic-contract-${{ github.run_id }}
+          path: artifacts/qa/dpapi-selftest/evidence.json
+          if-no-files-found: warn
+          retention-days: 7
