@@ -3,7 +3,7 @@ name: DesktopPet protected environment completion
 on:
   push:
     branches: [codex/cloud-authority-convergence]
-    paths: [scripts/acceptance/requests/same-run-next-trigger.json]
+    paths: [scripts/acceptance/requests/same-run-next-trigger.json, .github/workflows/cloud-environment-completion.yml]
 permissions:
   contents: read
   actions: read
