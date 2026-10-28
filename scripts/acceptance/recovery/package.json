@@ -1,0 +1,8 @@
+{
+  "name": "desktoppet-isolated-recovery-protocol",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test protocol.test.mjs" },
+  "dependencies": { "bcryptjs": "3.0.3", "jose": "6.2.13" }
+}

@@ -1,0 +1,125 @@
+name: DesktopPet one-time authorized QA A recovery
+on:
+  push:
+    branches: ['codex/cloud-authority-convergence']
+    paths:
+      - 'scripts/acceptance/recovery/**'
+      - '.github/workflows/cloud-live-qa-recovery.yml'
+      - 'scripts/acceptance/requests/live-qa-recovery-20261027.json'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: desktoppet-authorized-qa-recovery
+  cancel-in-progress: false
+jobs:
+  offline-contract:
+    runs-on: windows-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+      - run: npm ci --prefix scripts/acceptance/recovery --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
+      - run: node --test scripts/acceptance/recovery/protocol.test.mjs scripts/acceptance/recovery/parent-helper.test.mjs scripts/acceptance/recovery/request.test.mjs scripts/acceptance/recovery/transport.test.mjs
+      - name: Pure owned-process contract; no holder, accounts or network
+        timeout-minutes: 2
+        run: ./scripts/acceptance/recovery/process.ps1 -Action selftest -Output artifacts/qa/recovery-supervisor-contract
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: recovery-supervisor-contract-${{ github.run_id }}
+          path: artifacts/qa/recovery-supervisor-contract/supervisor-selftest.json
+          if-no-files-found: warn
+          retention-days: 7
+  authorized-recovery:
+    needs: offline-contract
+    if: >-
+      github.ref == 'refs/heads/codex/cloud-authority-convergence' && github.event_name == 'push' && github.run_attempt == 1 && github.actor == 'Syndred' && github.triggering_actor == 'Syndred' && startsWith(github.event.head_commit.message, 'acceptance: recover authorized QA A ')
+    runs-on: windows-latest
+    timeout-minutes: 165
+    env:
+      QA_OUTPUT: artifacts/qa/live-qa-recovery
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --prefix scripts/acceptance/recovery --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
+      - name: Exact added-only nonce request and parent commit gate
+        id: request
+        run: node scripts/acceptance/recovery/request.mjs --check
+      - run: npm ci
+      - uses: actions/download-artifact@v8.0.2
+        with:
+          name: ${{ steps.request.outputs.artifact-name }}
+          run-id: ${{ steps.request.outputs.artifact-run }}
+          github-token: ${{ github.token }}
+          path: artifacts/qa/native-baseline
+      - name: Exact new audited package and unchanged product guard
+        env:
+          PACKAGE_SOURCE: ${{ steps.request.outputs.source }}
+        run: node scripts/acceptance/verify-portable-reuse.mjs --source=$env:PACKAGE_SOURCE
+      - name: Repeat exact process selftest before creating any replacement password
+        timeout-minutes: 2
+        run: ./scripts/acceptance/recovery/process.ps1 -Action selftest -Output artifacts/qa/recovery-supervisor-preflight
+      - name: Start one memory-only holder and expose encrypted capsule only
+        timeout-minutes: 5
+        env:
+          PACKAGE_SOURCE: ${{ steps.request.outputs.source }}
+        run: |
+          $request = Get-Content -LiteralPath scripts/acceptance/requests/live-qa-recovery-20261027.json -Raw | ConvertFrom-Json
+          ./scripts/acceptance/recovery/process.ps1 -Action start -Output $env:QA_OUTPUT -Executable artifacts/pc-cloud-upgrade/Lingjing-0.1.8-portable-x64.exe -Source $env:PACKAGE_SOURCE -Scenario $request.scenario
+          ./scripts/acceptance/recovery/process.ps1 -Action capsule -Output $env:QA_OUTPUT
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          name: recovery-capsule-${{ github.run_id }}-1
+          path: artifacts/qa/live-qa-recovery/capsule.json
+          retention-days: 1
+          if-no-files-found: error
+      - name: Await signed CAS receipt, one A login and first B registration
+        timeout-minutes: 36
+        run: ./scripts/acceptance/recovery/process.ps1 -Action identity -Output $env:QA_OUTPUT
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          name: recovery-identities-${{ github.run_id }}-1
+          path: artifacts/qa/live-qa-recovery/identity.json
+          retention-days: 7
+          if-no-files-found: error
+      - name: Await separate exact scope grant and finish same-process business batch
+        timeout-minutes: 124
+        run: ./scripts/acceptance/recovery/process.ps1 -Action final -Output $env:QA_OUTPUT
+      - name: Stop only this holder's verified PID tree
+        if: always()
+        timeout-minutes: 2
+        run: ./scripts/acceptance/recovery/process.ps1 -Action stop -Output $env:QA_OUTPUT
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: recovery-proof-${{ github.run_id }}-1
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            artifacts/qa/recovery-supervisor-preflight/supervisor-selftest.json
+            artifacts/qa/native-continuation/package-reuse.json
+            artifacts/qa/live-qa-recovery/recovery-intent.json
+            artifacts/qa/live-qa-recovery/identity-checkpoint.json
+            artifacts/qa/live-qa-recovery/identity.json
+            artifacts/qa/live-qa-recovery/status.json
+            artifacts/qa/live-qa-recovery/ready.json
+            artifacts/qa/live-qa-recovery/final.json
+            artifacts/qa/live-qa-recovery/live-business-intents.json
+            artifacts/qa/live-qa-recovery/live-business-evidence.json
+            artifacts/qa/live-qa-recovery/live-record-intents.json
+            artifacts/qa/live-qa-recovery/live-record-evidence.json
+            artifacts/qa/live-qa-recovery/live-game-intents.json
+            artifacts/qa/live-qa-recovery/live-game-evidence.json
+            artifacts/qa/live-qa-recovery/live-discovery-intents.json
+            artifacts/qa/live-qa-recovery/live-discovery-evidence.json

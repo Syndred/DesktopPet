@@ -1,0 +1,6 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {receiptUrl,readAppliedReceipt} from './transport.mjs';
+const nonce='11111111-2222-4333-8444-555555555555';const call=fetchImpl=>readAppliedReceipt(nonce,{deadline:Date.now()+1000,fetchImpl});
+test('fixed transport origin/path and no redirects/credentials',async()=>{assert.equal(await call(async(url,opt)=>{assert.equal(url,receiptUrl(nonce));assert.equal(opt.redirect,'error');assert.equal(opt.credentials,'omit');return new Response('{"jws":"test"}',{status:200});}),'test');});
+test('404 means no login receipt',async()=>assert.equal(await call(async()=>new Response(null,{status:404})),null));
+for(const [name,response] of [['status',()=>new Response(null,{status:403})],['extra fields',()=>new Response('{"jws":"test","url":"other"}')],['oversize',()=>new Response('x'.repeat(20481))],['malformed',()=>new Response('not json')]])test(`reject ${name}`,async()=>await assert.rejects(call(async()=>response())));
+test('invalid nonce or expired deadline rejected before fetch',async()=>{assert.throws(()=>receiptUrl('../other'));await assert.rejects(readAppliedReceipt(nonce,{deadline:0,fetchImpl:()=>{throw Error('must not fetch')}}));});
