@@ -1,0 +1,87 @@
+// New-package affected-entry regression only: M02 privacy and M05/M06 entry/session continuity. No full-case claim.
+// No cloud identity, clock/stat mutation, forced outcome or SQL writes.
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {randomUUID} from 'node:crypto';
+import {mkdtempSync,mkdirSync,readFileSync,writeFileSync,realpathSync,rmSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {resolve,join,dirname,basename} from 'node:path';
+import {launchPortableSession} from './portable-session.mjs';
+import {pollState} from './poll-state.mjs';
+import {sha256} from '../release/release-store.mjs';
+const require=createRequire(import.meta.url),{MARKER,SCENARIO}=require('../../apps/pc-app/runtime/core/qa-scenario.cjs');
+for(const arg of process.argv.slice(2))assert.ok(/^--(?:executable|source)=.+$/.test(arg),'UNKNOWN_OPTION');
+const option=name=>process.argv.find(value=>value.startsWith(`--${name}=`))?.slice(name.length+3);
+const config=JSON.parse(readFileSync('scripts/release/electron-builder.pc.json')),version=JSON.parse(readFileSync('package.json')).version,build=JSON.parse(readFileSync('apps/pc-app/dist/build-manifest.json'));
+const executable=resolve(option('executable')||join(config.directories.output,`Lingjing-${version}-portable-x64.exe`)),expectedSource=option('source')||build.sourceCommit;
+assert.ok(process.platform==='win32'&&process.env.GITHUB_ACTIONS==='true');assert.match(expectedSource,/^[a-f0-9]{40}$/);
+const output=resolve('artifacts/foundation/cloud-engineering/discoveryEntry',`run-${Date.now()}`);mkdirSync(output,{recursive:true});
+let profile,runId,offlineConfig,qaPhase=false;const profiles=[];
+function fresh(qa){qaPhase=qa;profile=realpathSync.native(mkdtempSync(join(tmpdir(),'lingjing-discoveryEntry-')));profiles.push(profile);runId=randomUUID();
+ if(qa)writeFileSync(join(profile,MARKER),JSON.stringify({schemaVersion:1,application:'lingjing',scenario:SCENARIO,runId,isolated:true,profilePath:profile,createdAt:new Date().toISOString()}),{flag:'wx'});
+ offlineConfig=join(profile,'offline-public.json');writeFileSync(offlineConfig,'{}',{flag:'wx'});
+}
+const systemKeys=new Set(['PATH','PATHEXT','PSMODULEPATH','SYSTEMROOT','SYSTEMDRIVE','WINDIR','COMSPEC','TEMP','TMP','TMPDIR','HOME','USERPROFILE','APPDATA','LOCALAPPDATA','PROGRAMFILES','PROGRAMFILES(X86)','PROGRAMW6432','LANG','LC_ALL','CI']);
+const offlineEnvironment=Object.fromEntries(Object.keys(process.env).filter(key=>!systemKeys.has(key.toUpperCase())).map(key=>[key,undefined]));
+const proof={scope:'Affected entry regression only. M02 ordinary local-profile privacy refusal; official QA default450 list, wild preview, normal begin and same-session return. Prior capture/expiry proofs remain version-bound; no new full-case claim.',fullCasePassed:false,sourceCommit:expectedSource,compiledFingerprint:build.compiledFingerprint,exeSha256:await sha256(executable),cases:[],passed:false,startedAt:new Date().toISOString()};
+let model,uncertain=false,owner;const pids=new Set();const redact=()=> 'DISCOVERY_ENTRY_REGRESSION_FAILED_SEE_STAGE';const save=()=>writeFileSync(join(output,'evidence.json'),JSON.stringify(proof,null,2));
+function alive(pid){try{process.kill(pid,0);return true;}catch(error){if(error.code==='ESRCH')return false;throw error;}}
+async function stop(){if(model){proof.offlineBlocked=(proof.offlineBlocked||[]);proof.offlineBlocked.push(await model.main(()=>globalThis.__discoveryEntryOfflineBlocked).catch(()=>({observation:'unavailable'})));await Promise.race([model.stop(),new Promise((_,reject)=>setTimeout(()=>reject(Error('OWNED_STOP_TIMEOUT')),15000))]);}if(uncertain)throw Error('Launch outcome/PID unknown; keep temporary profile');proof.pidChecks=await pollState(()=>[...pids].map(pid=>({pid,alive:alive(pid)})),rows=>rows.every(row=>!row.alive),{timeoutMs:10000,intervalMs:200,label:'Owned process still alive; keep temporary profile'});model=null;}
+async function launch(){Object.assign(offlineEnvironment,{LINGJING_QA_SCENARIO:qaPhase?SCENARIO:undefined,LINGJING_PUBLIC_CONFIG:offlineConfig});uncertain=true;model=await launchPortableSession({executable,profile,expectedSource,label:'discoveryEntry-qa',environment:offlineEnvironment});for(const pid of[model.launcherPid,model.runtime.pid])if(Number.isInteger(pid)&&pid>0)pids.add(pid);uncertain=false;assert.equal(model.info.build.compiledFingerprint,build.compiledFingerprint);assert.deepEqual(model.info.build.sourceDirtyFiles,[]);const sessionInfo=await model.call('accounts','session');if(qaPhase)assert.equal(sessionInfo.scenario?.runId,runId);else assert.ok(!sessionInfo.scenario);await model.main(({session,net:electronNet})=>{
+  globalThis.__discoveryEntryOfflineBlocked={node:0,fetch:0,websocket:0,chromium:0};
+  const denied=kind=>{globalThis.__discoveryEntryOfflineBlocked[kind]++;throw Error('OFFLINE_QA_REMOTE_NETWORK_FORBIDDEN');};
+  const local=value=>{try{const host=typeof value==='string'||value instanceof URL?new URL(String(value)).hostname:value?.hostname||value?.host||'localhost';return ['localhost','127.0.0.1','::1','[::1]'].includes(String(host).split(':').length===2?String(host).split(':')[0]:String(host));}catch{return false;}};
+  for(const name of['node:http','node:https']){const mod=process.getBuiltinModule(name);for(const method of['request','get']){const original=mod[method];mod[method]=function(input,...args){if(!local(input))return denied('node');return original.call(this,input,...args);};}}
+  for(const name of['node:net','node:tls']){const transport=process.getBuiltinModule(name);transport.connect=()=>denied('node');if(transport.createConnection)transport.createConnection=()=>denied('node');}
+  process.getBuiltinModule('node:http2').connect=()=>denied('node');
+  const nativeFetch=electronNet.fetch;electronNet.fetch=function(input,...args){if(/^https?:/i.test(String(input?.url||input)))return Promise.reject(Object.assign(Error('OFFLINE_QA_REMOTE_NETWORK_FORBIDDEN'),{code:'OFFLINE_QA_REMOTE_NETWORK_FORBIDDEN'}));return nativeFetch.call(this,input,...args);};
+  const fetchOriginal=globalThis.fetch;globalThis.fetch=function(input,...args){if(!local(input?.url||input)){globalThis.__discoveryEntryOfflineBlocked.fetch++;return Promise.reject(Object.assign(Error('OFFLINE_QA_REMOTE_NETWORK_FORBIDDEN'),{code:'OFFLINE_QA_REMOTE_NETWORK_FORBIDDEN'}));}return fetchOriginal.call(this,input,...args);};
+  if(globalThis.WebSocket){const Original=globalThis.WebSocket;globalThis.WebSocket=class extends Original{constructor(url,...args){if(!local(url))denied('websocket');super(url,...args);}};}
+  session.defaultSession.webRequest.onBeforeRequest({urls:['http://*/*','https://*/*','ws://*/*','wss://*/*']},(_details,callback)=>{globalThis.__discoveryEntryOfflineBlocked.chromium++;callback({cancel:true});});
+ });}
+async function step(id,coverage,fn){const row={id,coverage,status:'running',startedAt:new Date().toISOString()};proof.cases.push(row);save();try{Object.assign(row,await fn());row.status='passed-original-scope-offline';}catch(error){row.status='failed';row.error=redact(error);try{await model.page.screenshot({path:join(output,id+'-failed.png'),timeout:10000});}catch{}throw error;}finally{row.completedAt=new Date().toISOString();save();}}
+async function route(path){proof.stage=path.startsWith('/discovery/encounter/')?'route-existing-encounter':path.startsWith('/discovery/wild/')?'route-existing-spawn':path==='/companions'?'route-companions':'route-discovery';save();await model.page.evaluate(path=>{location.hash='#'+path;},path);await model.page.waitForFunction(path=>location.hash==='#'+path,path);const current=model.page.locator(`.app-page-motion[data-route-key="${path}"][data-current-route="true"]`);await current.waitFor();if(path.startsWith('/discovery/encounter/'))await current.locator('[data-battle-screen="shared-v1"][data-session-id]').waitFor();else await current.locator('h1').first().waitFor();assert.equal(await current.getByText('页面暂时遇到问题',{exact:true}).count(),0);}
+async function register(account,password,name){const page=model.page;await page.getByRole('tab',{name:'注册',exact:true}).click();await page.getByLabel('用户名',{exact:true}).fill(name);await page.locator('input[autocomplete="username"]').fill(account);await page.getByLabel('密码',{exact:true}).fill(password);await page.getByLabel('确认密码',{exact:true}).fill(password);await page.getByRole('button',{name:'创建账号 →',exact:true}).click();await page.getByRole('navigation',{name:'主导航',exact:true}).waitFor();const session=await model.call('accounts','session');assert.equal(session.defaultProvider,'local');if(qaPhase){assert.equal(session.dataMode,'simulated');assert.ok(session.currentUser.id.startsWith(`qa:${runId}:`));}else{assert.ok(!session.scenario);assert.ok(session.currentUser.id.startsWith('local-'));}return session.currentUser.id;}
+
+const deadline=Date.now()+7*60*1000;
+function budget(){assert.ok(Date.now()<deadline,'NATIVE_DEADLINE');}
+async function effects(){return model.main(({app},input)=>{
+ const fs=process.getBuiltinModule('node:fs'),path=process.getBuiltinModule('node:path');assertProfile();function assertProfile(){if(fs.realpathSync.native(app.getPath('userData')).toLowerCase()!==input.profile.toLowerCase())throw Error('WRONG_PROFILE');}
+ const req=process.getBuiltinModule('node:module').createRequire(process.resourcesPath+'/app.asar/package.json'),db=new(req('better-sqlite3'))(path.join(input.profile,'lingjing.sqlite'),{readonly:true,fileMustExist:true});
+ try{db.pragma('query_only=ON');const result={};for(const table of ['discovery_encounters','discovery_captures','discovery_actions','battle_sessions','battle_reward_receipts','companion_pets']){const rows=db.prepare(`SELECT * FROM ${table} WHERE owner_account_id=?`).all(input.owner).map(row=>JSON.stringify(row)).sort();result[table]={count:rows.length,sha256:process.getBuiltinModule('node:crypto').createHash('sha256').update(JSON.stringify(rows)).digest('hex')};}return result;}finally{db.close();}
+},{profile,owner});}
+try{
+ // Validate the copied audited package before any application account preparation.
+ const reuse=JSON.parse(readFileSync('artifacts/qa/native-continuation/package-reuse.json','utf8'));
+ assert.equal(reuse.packageSourceCommit,expectedSource);assert.equal(reuse.executableSha256,proof.exeSha256);assert.equal(reuse.compiledFingerprint,build.compiledFingerprint);assert.equal(reuse.productPathsUnchanged,true);assert.equal(reuse.auditReceiptVerified,true);assert.equal(reuse.runtimeClosureVerified,true);assert.deepEqual(build.sourceDirtyFiles,[]);
+ fresh(false);await launch();owner=await register('qa_privacy_'+runId.slice(0,8),'Qa-'+randomUUID()+'!','位置隐私回归');
+ await step('M02-ordinary-privacy-refusal','Ordinary local profile, no QA adapter; UI location permission false and normal refused locate',async()=>{
+  budget();proof.stage='ordinary-privacy-setting';await route('/settings/privacy');const toggle=model.page.getByRole('switch',{name:'允许附近探索使用位置',exact:true});await toggle.waitFor();assert.equal(await toggle.getAttribute('aria-checked'),'false');
+  await model.page.getByRole('button',{name:'保存设置',exact:true}).click();await model.page.getByText('设置已保存。',{exact:true}).waitFor();
+  const settings=await model.call('accounts','settingsGet');assert.equal(settings.document.privacy.locationAllowed,false);assert.equal(settings.host.locationAllowed,false);
+  const before=await effects();proof.stage='ordinary-privacy-ui-locate';await route('/discovery');const locate=model.page.getByRole('button',{name:'获取系统位置',exact:true});await pollState(()=>locate.isEnabled(),Boolean,{timeoutMs:10000});await locate.click();
+  const state=await pollState(()=>model.call('discovery','snapshot'),s=>s.location.status==='privacy_disabled'&&s.location.lastError?.code==='APP_LOCATION_DISABLED',{timeoutMs:15000});assert.equal(state.location.fix,null);assert.equal(state.location.watching,false);assert.equal(state.spawns.length,0);assert.deepEqual(await effects(),before);
+  await model.page.getByText('应用内定位未开启',{exact:true}).first().waitFor();await model.page.screenshot({path:join(output,'M02-privacy-refusal.png'),timeout:10000});return {qaAdapterAbsent:true,appLocationAllowed:false,errorCode:state.location.lastError.code,fix:null,watching:false,noGameplayEffects:true,osSettingsMutationPerformed:false};
+ });await stop();
+ fresh(true);await launch();owner=await register('qa_entry_'+runId.slice(0,8),'Qa-'+randomUUID()+'!','相遇入口回归');
+ const roster=await model.call('companions','list');const template=roster.templates.find(t=>t.visualKind==='2d')||roster.templates[0];assert.ok(template);
+ const player=(await model.call('companions','adopt',{templateId:template.templateId,name:template.name,showOnDesktop:false,actionId:randomUUID()})).pet;await model.call('battle','selectPet',{petId:player.petId,actionId:randomUUID()});
+ await step('M05-M06-entry-session-regression','Normal simulated default450 list to preview/begin; leave page and resume exact existing battle without settlement',async()=>{
+  budget();proof.stage='qa-default-list';await route('/discovery');const range=model.page.getByRole('combobox',{name:'附近显示范围',exact:true});assert.equal(await range.inputValue(),'450');const locate=model.page.getByRole('button',{name:'更新场景位置',exact:true});await pollState(()=>locate.isEnabled(),Boolean,{timeoutMs:10000});await locate.click();
+  const nearby=await pollState(()=>model.call('discovery','snapshot'),s=>s.location.status==='ready'&&s.spawns.some(x=>x.inRange),{timeoutMs:15000});assert.equal(nearby.scenario,'qa');assert.equal(nearby.location.fix.source,'simulated');assert.equal(nearby.location.fix.scenarioId,runId);assert.equal(nearby.encounters.length,0);
+  await pollState(()=>model.page.locator('.discovery-nearby-heading').innerText(),text=>text.includes(`${nearby.spawns.length} 位伙伴`),{timeoutMs:10000});const hello=model.page.getByRole('button',{name:'和她打个招呼',exact:true});await hello.waitFor();await hello.click();
+  await model.page.locator('.discovery-wild-view').waitFor();const spawnId=await model.page.evaluate(()=>decodeURIComponent(location.hash.split('/wild/')[1]||''));const spawn=nearby.spawns.find(x=>x.id===spawnId);assert.ok(spawn?.inRange);proof.stage='qa-preview';await model.page.screenshot({path:join(output,'entry-preview.png'),timeout:10000});
+  const start=model.page.getByRole('button',{name:'开始挑战',exact:true});await pollState(()=>start.isEnabled(),Boolean,{timeoutMs:10000});await start.click();const screen=model.page.locator('[data-battle-screen="shared-v1"][data-battle-mode="wild"]');await screen.waitFor();const sessionId=await screen.getAttribute('data-session-id');assert.ok(sessionId);
+  const session=await model.call('battle','snapshot',{sessionId});assert.equal(session.id,sessionId);assert.equal(session.status,'active');assert.equal(session.player.petId,player.petId);assert.equal(session.context.authority,'simulated');assert.ok(!session.pendingAction);
+  const state=await model.call('discovery','snapshot');const encounter=state.encounters.find(e=>e.battle?.battleId===sessionId);assert.ok(encounter);assert.equal(encounter.spawn.id,spawnId);assert.equal(encounter.status,'challenging');const baseline=await effects();
+  proof.stage='qa-leave-and-resume-same-session';await model.page.getByRole('navigation',{name:'主导航',exact:true}).getByText('附近探索',{exact:true}).click();await model.page.locator('.discovery-resume').waitFor();await model.page.locator('.discovery-resume').getByRole('button',{name:'继续',exact:true}).click();await model.page.locator(`[data-battle-screen="shared-v1"][data-session-id="${sessionId}"]`).waitFor();
+  const returned=await model.call('battle','snapshot',{sessionId});assert.equal(returned.id,sessionId);assert.equal(returned.status,'active');assert.equal(returned.snapshot.round,session.snapshot.round);assert.ok(!returned.pendingAction);assert.deepEqual(await effects(),baseline);const after=await model.call('discovery','snapshot');assert.equal(after.encounters.length,1);assert.equal(after.captures.length,0);
+  await model.page.screenshot({path:join(output,'entry-session-resumed.png'),timeout:10000});return {displayRadius:450,source:'simulated',resultCount:nearby.spawns.length,spawnId,encounterId:encounter.encounterId,sessionId,sameSessionResumed:true,roundUnchanged:true,noCaptureOrSettlement:true,fullCasePassed:false};
+ });assert.equal(proof.cases.length,2);proof.passed=proof.cases.every(c=>c.status==='passed-original-scope-offline');
+
+}catch(error){proof.error=redact(error);proof.errorKind=['TimeoutError','AssertionError'].includes(error?.name)?error.name:'CASE_FAILED';const line=String(error?.stack||'').match(/cloud-native-discovery-entry-regression\.mjs:(\d+):(\d+)/);if(line)proof.scriptLocation={line:Number(line[1]),column:Number(line[2])};proof.passed=false;process.exitCode=1;}
+finally{
+ try{await stop();proof.ownedProcessStopped=true;}catch(error){proof.stopError=redact(error);proof.passed=false;process.exitCode=1;}
+ try{assert.ok(proof.ownedProcessStopped);for(const p of profiles){assert.equal(dirname(p),realpathSync.native(tmpdir()));assert.ok(basename(p).startsWith('lingjing-discoveryEntry-'));rmSync(p,{recursive:true,force:true});}proof.temporaryProfilesRemoved=profiles.length;}catch(error){proof.cleanupError=redact(error);proof.passed=false;process.exitCode=1;}
+ proof.completedAt=new Date().toISOString();save();console.log(JSON.stringify({output,passed:proof.passed,fullCasePassed:false}));
+}
