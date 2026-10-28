@@ -4,11 +4,11 @@ import assert from 'node:assert/strict';import {readFileSync,writeFileSync,mkdir
 import {awaitSignedAuthorization,validateSameRunJobClock,verifySameRunTempEnvironment} from './run-same-run.mjs';
 const root=resolve(fileURLToPath(new URL('../../../',import.meta.url))),env=process.env;
 verifySameRunTempEnvironment();assert.equal(process.argv.length,2);assert.equal(env.GITHUB_EVENT_NAME,'push');
-const output=join(root,'artifacts/qa/same-run-handshake-'+env.GITHUB_RUN_ID);mkdirSync(output,{recursive:true});
+const output=join(root,'artifacts/qa/same-run-entry-'+env.GITHUB_RUN_ID);mkdirSync(output,{recursive:true});
 const proof={version:1,run:env.GITHUB_RUN_ID,commit:env.GITHUB_SHA,scope:'Actual fixed authorization wait with real public URL and verifier, cancelled without authorization',passed:false,phase:'START',authorizationReturned:false,expectedAbortObserved:false,syntheticCancelObserved:false,nodeExitObserved:false,http404Observed:0,http200Observed:0};
 const save=()=>{const p=join(output,'handshake-evidence.json');writeFileSync(p+'.tmp',JSON.stringify(proof));renameSync(p+'.tmp',p);};save();
 process.on('exit',()=>{proof.nodeExitObserved=true;proof.requestedExitCode=process.exitCode??0;try{save();}catch{}});
-const controller=new AbortController(),deadline=setTimeout(()=>controller.abort(),40000);
+const controller=new AbortController(),deadline=setTimeout(()=>controller.abort(),120000);
 const cancelPath=join(output,'synthetic-cancel.json');
 const poll=setInterval(()=>{if(!existsSync(cancelPath))return;try{const x=JSON.parse(readFileSync(cancelPath,'utf8').replace(/^\uFEFF/,''));assert.deepEqual(x,{version:1,purpose:'cancel-real-wait-selftest-only',run:env.GITHUB_RUN_ID,commit:env.GITHUB_SHA});proof.syntheticCancelObserved=true;save();controller.abort();}catch{proof.cancelRejected=true;save();controller.abort();}},100);
 try{

@@ -4,7 +4,6 @@ $ErrorActionPreference='Stop'
 if ($env:GITHUB_ACTIONS -ne 'true' -or $env:GITHUB_RUN_ATTEMPT -ne '1' -or $env:GITHUB_RUN_ID -notmatch '^[0-9]+$') { throw 'PRE_CREDENTIAL_NOT_READY' }
 $root=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../..'))
 $directory=Join-Path $root ('artifacts/qa/same-run-entry-'+$env:GITHUB_RUN_ID)
-if($Action -in @('handshake-start','handshake-ack','handshake-final')){$directory=Join-Path $root ('artifacts/qa/same-run-handshake-'+$env:GITHUB_RUN_ID)}
 $business=Join-Path $root ('artifacts/qa/same-run-'+$env:GITHUB_RUN_ID)
 $pidFile=Join-Path $directory 'holder-process.json'
 $reconcilePidFile=Join-Path $directory 'reconcile-process.json'
@@ -101,6 +100,9 @@ if($Action -eq 'start'){
  Write-Output 'SAME_RUN_FIXED_ENTRY_READY';exit 0
 }
 if($Action -eq 'handshake-start'){
+ New-Item -ItemType Directory -Path $directory -Force|Out-Null
+ $hostPath=Join-Path $directory 'handshake-host.json';if(Test-Path -LiteralPath $hostPath){throw 'NO_SECOND_HOST_DIAGNOSTIC'}
+ @{version=1;run=$env:GITHUB_RUN_ID;commit=$env:GITHUB_SHA;scope='Actual helper PowerShell host only';engineVersion=$PSVersionTable.PSVersion.ToString();engineMajorVersion=$PSVersionTable.PSVersion.Major;edition=[string]$PSVersionTable.PSEdition;pointerBytes=[IntPtr]::Size}|ConvertTo-Json|Set-Content -LiteralPath $hostPath -Encoding UTF8
  Start-FixedAndWaitReady (Join-Path $PSScriptRoot 'same-run-authorization-wait-selftest.mjs') '00000000-0000-4000-8000-000000000002'
  Write-Output 'FIXED_REAL_WAIT_SELFTEST_READY';exit 0
 }

@@ -20,6 +20,10 @@ concurrency:
 jobs:
   startup:
     if: github.ref == 'refs/heads/codex/cloud-authority-convergence' && github.run_attempt == 1
+    strategy:
+      fail-fast: false
+      matrix:
+        host: [ps5, ps7]
     runs-on: windows-latest
     timeout-minutes: 8
     steps:
@@ -47,26 +51,64 @@ jobs:
       - run: npm ci --prefix scripts/acceptance/recovery --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
       - name: Original exact owned-process identity selftest
         shell: pwsh
-        run: powershell -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action selftest
+        run: |
+          if('${{ matrix.host }}' -ceq 'ps5') {
+            & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action selftest
+          } elseif('${{ matrix.host }}' -ceq 'ps7') {
+            ./scripts/acceptance/recovery/same-run-process.ps1 -Action selftest
+          } else { throw 'UNKNOWN_FIXED_DIAGNOSTIC_HOST' }
       - name: Shared real Start and real authorization wait first-tick handshake
+        id: start
         shell: pwsh
-        run: powershell -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action handshake-start
+        run: |
+          if('${{ matrix.host }}' -ceq 'ps5') {
+            & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action handshake-start
+          } elseif('${{ matrix.host }}' -ceq 'ps7') {
+            ./scripts/acceptance/recovery/same-run-process.ps1 -Action handshake-start
+          } else { throw 'UNKNOWN_FIXED_DIAGNOSTIC_HOST' }
+      - name: Actual authorization phase command before request upload
+        if: steps.start.outcome == 'success'
+        shell: pwsh
+        run: |
+          if('${{ matrix.host }}' -ceq 'ps5') {
+            & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action authorization
+          } elseif('${{ matrix.host }}' -ceq 'ps7') {
+            ./scripts/acceptance/recovery/same-run-process.ps1 -Action authorization
+          } else { throw 'UNKNOWN_FIXED_DIAGNOSTIC_HOST' }
+      - uses: actions/upload-artifact@v7.0.2
+        if: steps.start.outcome == 'success'
+        with:
+          name: same-run-bootstrap-${{ matrix.host }}-${{ github.run_id }}-authorization-request
+          retention-days: 7
+          if-no-files-found: error
+          path: artifacts/qa/same-run-entry-${{ github.run_id }}/authorization-request.json
       - name: Confirm same exact process survives next step then request test cancellation only
         shell: pwsh
-        run: powershell -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action handshake-ack
+        run: |
+          if('${{ matrix.host }}' -ceq 'ps5') {
+            & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action handshake-ack
+          } elseif('${{ matrix.host }}' -ceq 'ps7') {
+            ./scripts/acceptance/recovery/same-run-process.ps1 -Action handshake-ack
+          } else { throw 'UNKNOWN_FIXED_DIAGNOSTIC_HOST' }
       - name: Confirm cancellation without authorization and exact own-process exit
         if: always()
         shell: pwsh
-        run: powershell -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action handshake-final
+        run: |
+          if('${{ matrix.host }}' -ceq 'ps5') {
+            & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action handshake-final
+          } elseif('${{ matrix.host }}' -ceq 'ps7') {
+            ./scripts/acceptance/recovery/same-run-process.ps1 -Action handshake-final
+          } else { throw 'UNKNOWN_FIXED_DIAGNOSTIC_HOST' }
       - uses: actions/upload-artifact@v7.0.0
         if: always()
         with:
-          name: same-run-bootstrap-contract-${{ github.sha }}
+          name: same-run-bootstrap-contract-${{ matrix.host }}-${{ github.sha }}
           path: |
-            artifacts/qa/same-run-handshake-${{ github.run_id }}/handshake-evidence.json
-            artifacts/qa/same-run-handshake-${{ github.run_id }}/authorization-request.json
-            artifacts/qa/same-run-handshake-${{ github.run_id }}/authorization-wait-heartbeat.json
-            artifacts/qa/same-run-handshake-${{ github.run_id }}/start-ready.json
-            artifacts/qa/same-run-handshake-${{ github.run_id }}/handshake-terminal.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/handshake-host.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/handshake-evidence.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/authorization-request.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/authorization-wait-heartbeat.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/start-ready.json
+            artifacts/qa/same-run-entry-${{ github.run_id }}/handshake-terminal.json
           if-no-files-found: warn
           retention-days: 14
