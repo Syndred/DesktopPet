@@ -75,15 +75,21 @@ jobs:
       - name: Strict audited actual 5016 package reuse
         run: node scripts/acceptance/verify-portable-reuse.mjs --source=$env:PACKAGE_SOURCE
       - name: Exact holder identity negative selftest
-        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action selftest
+        shell: pwsh
+        run: |
+          & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action selftest
       - name: Fixed entry only after exact once-request guard
         if: steps.request.outcome == 'success'
         id: start
-        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action start
+        shell: pwsh
+        run: |
+          & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action start
       - name: Await exact run and trigger commit authorization request
         if: steps.start.outcome == 'success'
         timeout-minutes: 26
-        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action authorization
+        shell: pwsh
+        run: |
+          & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action authorization
       - uses: actions/upload-artifact@v7.0.2
         if: steps.start.outcome == 'success'
         with:
@@ -94,7 +100,9 @@ jobs:
       - name: Await fixed reset-a phase
         if: steps.start.outcome == 'success'
         timeout-minutes: 26
-        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action reset-a
+        shell: pwsh
+        run: |
+          & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action reset-a
       - uses: actions/upload-artifact@v7.0.2
         if: steps.start.outcome == 'success'
         with:
@@ -106,7 +114,9 @@ jobs:
       - name: Await fixed reset-b phase
         if: steps.start.outcome == 'success'
         timeout-minutes: 26
-        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action reset-b
+        shell: pwsh
+        run: |
+          & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action reset-b
       - uses: actions/upload-artifact@v7.0.2
         if: steps.start.outcome == 'success'
         with:
@@ -118,7 +128,9 @@ jobs:
       - name: Await fixed s06-pregrant phase
         if: steps.start.outcome == 'success'
         timeout-minutes: 26
-        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action s06-pregrant
+        shell: pwsh
+        run: |
+          & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action s06-pregrant
       - uses: actions/upload-artifact@v7.0.2
         if: steps.start.outcome == 'success'
         with:
@@ -131,7 +143,9 @@ jobs:
       - name: Await fixed c-absent phase
         if: steps.start.outcome == 'success'
         timeout-minutes: 26
-        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action c-absent
+        shell: pwsh
+        run: |
+          & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action c-absent
       - uses: actions/upload-artifact@v7.0.2
         if: steps.start.outcome == 'success'
         with:
@@ -143,7 +157,9 @@ jobs:
       - name: Await fixed grant-manifest phase
         if: steps.start.outcome == 'success'
         timeout-minutes: 26
-        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action grant-manifest
+        shell: pwsh
+        run: |
+          & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action grant-manifest
       - uses: actions/upload-artifact@v7.0.2
         if: steps.start.outcome == 'success'
         with:
@@ -156,7 +172,9 @@ jobs:
       - name: Await fixed s02-empty-cell phase
         if: steps.start.outcome == 'success'
         timeout-minutes: 26
-        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action s02-empty-cell
+        shell: pwsh
+        run: |
+          & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action s02-empty-cell
       - uses: actions/upload-artifact@v7.0.2
         if: steps.start.outcome == 'success'
         with:
@@ -168,16 +186,22 @@ jobs:
       - name: Join exact holder after complete fixed business chain
         if: ${{ always() && steps.start.outcome == 'success' }}
         timeout-minutes: 131
-        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action final
+        shell: pwsh
+        run: |
+          & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action final
       - name: One original-intent readback-only window after failed holder
         id: reconcile
         if: ${{ failure() && steps.start.outcome == 'success' }}
         timeout-minutes: 2
-        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action reconcile
+        shell: pwsh
+        run: |
+          & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action reconcile
       - name: Await original A identity readback request or explicit unsubmitted skip
         if: ${{ always() && steps.reconcile.outputs.started == 'true' }}
         timeout-minutes: 22
-        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action reconcile-A
+        shell: pwsh
+        run: |
+          & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action reconcile-A
       - uses: actions/upload-artifact@v7.0.2
         if: ${{ always() && steps.reconcile.outputs.started == 'true' }}
         with:
@@ -188,7 +212,9 @@ jobs:
       - name: Await original B identity readback request or explicit unsubmitted skip
         if: ${{ always() && steps.reconcile.outputs.started == 'true' }}
         timeout-minutes: 22
-        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action reconcile-B
+        shell: pwsh
+        run: |
+          & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action reconcile-B
       - uses: actions/upload-artifact@v7.0.2
         if: ${{ always() && steps.reconcile.outputs.started == 'true' }}
         with:
@@ -199,7 +225,9 @@ jobs:
       - name: Await original C identity readback request or explicit unsubmitted skip
         if: ${{ always() && steps.reconcile.outputs.started == 'true' }}
         timeout-minutes: 22
-        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action reconcile-C
+        shell: pwsh
+        run: |
+          & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action reconcile-C
       - uses: actions/upload-artifact@v7.0.2
         if: ${{ always() && steps.reconcile.outputs.started == 'true' }}
         with:
@@ -210,11 +238,15 @@ jobs:
       - name: Join original-intent readback-only holder before terminal cleanup
         if: ${{ always() && steps.reconcile.outputs.started == 'true' }}
         timeout-minutes: 22
-        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action reconcile-final
+        shell: pwsh
+        run: |
+          & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action reconcile-final
       - name: Terminal cleanup via preauthorization cancellation or bound watchdog (no holder tree kill)
         if: ${{ always() && (steps.start.outcome == 'success' || steps.start.outcome == 'failure') }}
         timeout-minutes: 5
-        run: ./scripts/acceptance/recovery/same-run-process.ps1 -Action stop
+        shell: pwsh
+        run: |
+          & "$env:SystemRoot/System32/WindowsPowerShell/v1.0/powershell.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-process.ps1 -Action stop
       - uses: actions/upload-artifact@v7.0.2
         if: always()
         with:
