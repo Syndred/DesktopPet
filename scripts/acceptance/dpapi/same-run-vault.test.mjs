@@ -19,10 +19,10 @@ async function call(action,fields={}){return new Promise((resolve,reject)=>{
  child.stdout.on('data',b=>{if(out.length+b.length>4096){tooLarge=true;clearTimeout(timeout);terminate();}else out+=b;});
  // Never retain/log arbitrary stderr or the input JSON.
  child.stderr.on('data',()=>{});child.on('error',()=>{clearTimers();if(child.pid)unconfirmedOwnedExit=true;reject(Error('SELFTEST_SPAWN_FAILED'));});
- child.on('close',code=>{clearTimers();try{assert.equal(timedOut,false);assert.equal(tooLarge,false);const result=JSON.parse(out);assert.equal(Object.hasOwn(result,'password'),false);resolve({code,...result});}catch{reject(Error('SELFTEST_FIXED_RECEIPT_INVALID'));}});
+ child.on('close',code=>{clearTimers();try{assert.equal(timedOut,false);assert.equal(tooLarge,false);const result=JSON.parse(out);assert.equal(Object.hasOwn(result,'password'),false);if(result.ok===false)proof.lastRejectedOperation={action,stage:result.stage??null,exceptionType:result.exceptionType??null,acl:result.acl??null};resolve({code,...result});}catch{reject(Error('SELFTEST_FIXED_RECEIPT_INVALID'));}});
  child.stdin.on('error',()=>{});child.stdin.end(JSON.stringify({syntheticOnly:true,directoryName,binding,...fields}));
  });}
-async function check(name,fn){await fn();proof.checks.push({name,passed:true});}
+async function check(name,fn){proof.currentCheck=name;await fn();proof.checks.push({name,passed:true});}
 let created=false,expiryCreated=false;const expiryDirectory='dpapi-synthetic-'+randomUUID(),expiryRoot=join(process.env.RUNNER_TEMP,expiryDirectory);
 try{
  await check('exact-runner-SID-and-SYSTEM-protected-ACL',async()=>{const r=await call('init');assert.equal(r.ok,true);assert.equal(r.result.aclExact,true);created=true;});
@@ -43,10 +43,10 @@ try{
   assert.equal(existsSync(join(expiryRoot,'sealed.json')),false);assert.equal(JSON.parse(readFileSync(join(expiryRoot,'terminal.json'),'utf8')).state,'expired');
  });
  proof.passed=true;
-}catch{proof.error='DPAPI_SYNTHETIC_SELFTEST_FAILED';proof.passed=false;}
+}catch{proof.failedOperation=proof.lastRejectedOperation??null;proof.error='DPAPI_SYNTHETIC_SELFTEST_FAILED';proof.passed=false;}
 finally{
  if(unconfirmedOwnedExit){proof.cleanup={removed:false,ownedExitUnconfirmed:true,leftover:existsSync(root)};proof.passed=false;}
- else if(created||existsSync(root)){try{const result=await call('cleanup');proof.cleanup={removed:result.ok===true&&result.result.removed===true&& !existsSync(root)};if(!proof.cleanup.removed)proof.passed=false;}catch{proof.cleanup={removed:false,leftover:existsSync(root)};proof.passed=false;}}
+ else if(created||existsSync(root)){try{const result=await call('cleanup');proof.cleanup={removed:result.ok===true&&result.result.removed===true&& !existsSync(root),leftover:existsSync(root)};if(!proof.cleanup.removed)proof.passed=false;}catch{proof.cleanup={removed:false,leftover:existsSync(root)};proof.passed=false;}}
  else proof.cleanup={notCreated:true};
  if(unconfirmedOwnedExit){proof.expiryCleanup={removed:false,ownedExitUnconfirmed:true,leftover:existsSync(expiryRoot)};proof.passed=false;}
  else if(expiryCreated||existsSync(expiryRoot)){try{const r=await call('cleanup',{directoryName:expiryDirectory});proof.expiryCleanup={removed:r.ok===true&&!existsSync(expiryRoot)};if(!proof.expiryCleanup.removed)proof.passed=false;}catch{proof.expiryCleanup={removed:false};proof.passed=false;}}

@@ -1,7 +1,7 @@
 # Synthetic-only DPAPI contract. Never accepts a real credential or outputs plaintext.
 param([Parameter(Mandatory=$true)][ValidateSet('init','seal','verify','claim','readback','receipt','cleanup')][string]$Action)
 $ErrorActionPreference='Stop'
-$plain=$null; $clear=$null
+$plain=$null; $clear=$null; $script:stage='bootstrap'; $script:aclObservation=$null
 function Reject { throw 'DPAPI_CONTRACT_REJECTED' }
 function Now { [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds() }
 function CheckBinding($b) {
@@ -18,17 +18,24 @@ function Entropy($b) {
   try { return $hash.ComputeHash([Text.Encoding]::UTF8.GetBytes(($stable|ConvertTo-Json -Compress))) } finally {$hash.Dispose()}
 }
 function CheckRoot {
+  $script:stage='root-item-read'
   $item=Get-Item -LiteralPath $script:root -Force
   if(-not $item.PSIsContainer -or (($item.Attributes -band [IO.FileAttributes]::ReparsePoint) -ne 0)){Reject}
-  $acl=Get-Acl -LiteralPath $script:root
+  $script:stage='root-acl-read'; $acl=Get-Acl -LiteralPath $script:root
+  $script:stage='root-acl-protected'
   if(-not $acl.AreAccessRulesProtected){Reject}
   CheckAcl $acl
 }
 function CheckAcl($acl) {
-  if($acl.GetOwner([Security.Principal.SecurityIdentifier]).Value -cne $script:sid){Reject}
+  $script:stage='acl-owner-check'
+  $actualOwner=$acl.GetOwner([Security.Principal.SecurityIdentifier]).Value
+  $script:aclObservation=@{ownerIsRunner=($actualOwner -ceq $script:sid);ownerIsSystem=($actualOwner -ceq 'S-1-5-18');protected=$acl.AreAccessRulesProtected}
+  if($actualOwner -cne $script:sid){Reject}
   $rules=@($acl.GetAccessRules($true,$true,[Security.Principal.SecurityIdentifier]))
+  $script:stage='acl-rules-count';$script:aclObservation.ruleCount=$rules.Count
   if($rules.Count -ne 2){Reject}
   $seen=@()
+  $script:stage='acl-rule-rights-check'
   foreach($r in $rules){$id=$r.IdentityReference.Value;if($id -notin @($script:sid,'S-1-5-18') -or $r.AccessControlType -ne 'Allow' -or $r.FileSystemRights -ne [Security.AccessControl.FileSystemRights]::FullControl){Reject};$seen+=$id}
   if(@($seen|Select-Object -Unique).Count -ne 2){Reject}
 }
@@ -51,12 +58,12 @@ function ReadOwn($name) {
 }
 try {
   if($env:GITHUB_ACTIONS -cne 'true' -or -not $env:RUNNER_TEMP -or -not $env:GITHUB_RUN_ID -or $env:GITHUB_SHA -notmatch '^[a-f0-9]{40}$'){Reject}
-  Add-Type -AssemblyName System.Security
-  $inputText=[Console]::In.ReadToEnd()
+  $script:stage='load-system-security';Add-Type -AssemblyName System.Security
+  $script:stage='read-synthetic-stdin';$inputText=[Console]::In.ReadToEnd()
   if($inputText.Length -gt 32768){Reject}
   $x=$inputText|ConvertFrom-Json; $inputText=$null
   if($x.syntheticOnly -ne $true -or $x.directoryName -notmatch '^dpapi-synthetic-[a-f0-9-]{36}$'){Reject}
-  $base=[IO.Path]::GetFullPath($env:RUNNER_TEMP)
+  $script:stage='canonical-temp-root';$base=[IO.Path]::GetFullPath($env:RUNNER_TEMP)
   if(((Get-Item -LiteralPath $base -Force).Attributes -band [IO.FileAttributes]::ReparsePoint) -ne 0){Reject}
   $script:root=[IO.Path]::GetFullPath([IO.Path]::Combine($base,$x.directoryName))
   if([IO.Path]::GetDirectoryName($script:root) -cne $base.TrimEnd('\')){Reject}
@@ -64,12 +71,13 @@ try {
   if($script:sid -eq 'S-1-5-18'){Reject}
   if($Action -eq 'init') {
     if(Test-Path -LiteralPath $root){Reject}
-    [void][IO.Directory]::CreateDirectory($root)
-    $acl=New-Object Security.AccessControl.DirectorySecurity
-    $acl.SetOwner((New-Object Security.Principal.SecurityIdentifier($sid)))
-    $acl.SetAccessRuleProtection($true,$false)
+    $script:stage='init-create-directory';[void][IO.Directory]::CreateDirectory($root)
+    $script:stage='init-directory-security';$acl=New-Object Security.AccessControl.DirectorySecurity
+    $script:stage='init-set-owner';$acl.SetOwner((New-Object Security.Principal.SecurityIdentifier($sid)))
+    $script:stage='init-protect-dacl';$acl.SetAccessRuleProtection($true,$false)
+    $script:stage='init-create-rules'
     foreach($id in @($sid,'S-1-5-18')){$r=New-Object Security.AccessControl.FileSystemAccessRule((New-Object Security.Principal.SecurityIdentifier($id)),[Security.AccessControl.FileSystemRights]::FullControl,([Security.AccessControl.InheritanceFlags]::ContainerInherit -bor [Security.AccessControl.InheritanceFlags]::ObjectInherit),[Security.AccessControl.PropagationFlags]::None,[Security.AccessControl.AccessControlType]::Allow);$acl.AddAccessRule($r)}
-    Set-Acl -LiteralPath $root -AclObject $acl;CheckRoot
+    $script:stage='init-apply-acl';Set-Acl -LiteralPath $root -AclObject $acl;CheckRoot
     $result=@{initialized=$true;aclExact=$true}
   } elseif($Action -eq 'cleanup') {
     CheckRoot
@@ -121,7 +129,9 @@ try {
   }
   [Console]::Out.WriteLine((@{ok=$true;result=$result}|ConvertTo-Json -Compress -Depth 5))
 } catch {
-  [Console]::Out.WriteLine('{"ok":false,"error":"DPAPI_CONTRACT_REJECTED"}');exit 1
+  $type=$_.Exception.GetType().FullName
+  if($type -notin @('System.Management.Automation.RuntimeException','System.Management.Automation.MethodInvocationException','System.Management.Automation.ParameterBindingException','System.UnauthorizedAccessException','System.Security.Cryptography.CryptographicException','System.IO.IOException')){$type='OTHER'}
+  [Console]::Out.WriteLine((@{ok=$false;error='DPAPI_CONTRACT_REJECTED';stage=$script:stage;exceptionType=$type;acl=$script:aclObservation}|ConvertTo-Json -Compress -Depth 4));exit 1
 } finally {
   if($null -ne $plain){[Array]::Clear($plain,0,$plain.Length)}
   if($null -ne $clear){[Array]::Clear($clear,0,$clear.Length)}
