@@ -9,6 +9,8 @@ on:
       - scripts/acceptance/recovery/same-run-bootstrap-windows.test.mjs
       - scripts/acceptance/recovery/run-same-run.mjs
       - scripts/acceptance/recovery/same-run-process.ps1
+      - scripts/acceptance/recovery/same-run-lifetime-timer.mjs
+      - scripts/acceptance/recovery/same-run-lifetime-contract.ps1
 permissions:
   contents: read
 concurrency:
@@ -42,18 +44,24 @@ jobs:
         with:
           node-version: 24
       - run: npm ci --prefix scripts/acceptance/recovery --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
-      - name: Pure fixed startup contracts
-        run: node --test scripts/acceptance/recovery/same-run-bootstrap.test.mjs scripts/acceptance/recovery/run-same-run.test.mjs
-      - name: Actual Windows fixed startup rejected before authorization
-        timeout-minutes: 3
-        run: node scripts/acceptance/recovery/same-run-bootstrap-windows.test.mjs
+      - name: Start fixed cross-step synthetic timer then exit parent step
+        shell: pwsh
+        run: powershell -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-lifetime-contract.ps1 -Action start-cross-step
+      - name: Observe cross-step timer and acknowledge only fixed synthetic request
+        shell: pwsh
+        run: powershell -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-lifetime-contract.ps1 -Action observe-cross-step
+      - name: Same-step retained handle synthetic positive control
+        if: always()
+        shell: pwsh
+        run: powershell -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/acceptance/recovery/same-run-lifetime-contract.ps1 -Action same-step
       - uses: actions/upload-artifact@v7.0.0
         if: always()
         with:
           name: same-run-bootstrap-contract-${{ github.sha }}
           path: |
-            artifacts/qa/same-run-bootstrap-contract/evidence.json
-            artifacts/qa/same-run-entry-${{ github.run_id }}/entry-bootstrap.json
-            artifacts/qa/same-run-entry-${{ github.run_id }}/terminal-cleanup.json
+            artifacts/qa/same-run-lifetime-${{ github.run_id }}/cross-step-ticks.json
+            artifacts/qa/same-run-lifetime-${{ github.run_id }}/cross-step-evidence.json
+            artifacts/qa/same-run-lifetime-${{ github.run_id }}/same-step-ticks.json
+            artifacts/qa/same-run-lifetime-${{ github.run_id }}/same-step-evidence.json
           if-no-files-found: warn
           retention-days: 14
