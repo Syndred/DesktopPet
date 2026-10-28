@@ -46,7 +46,13 @@ function FilePath($name) {
 function WriteNew($name,$value) {
   CheckRoot; $path=FilePath $name
   $bytes=[Text.Encoding]::UTF8.GetBytes(($value|ConvertTo-Json -Compress -Depth 10))
-  $stream=[IO.File]::Open($path,[IO.FileMode]::CreateNew,[IO.FileAccess]::Write,[IO.FileShare]::None)
+  # Set owner AND protected DACL at CreateNew, not after an inherited-token-owner file exists.
+  $script:stage='file-explicit-security-create'
+  $security=New-Object Security.AccessControl.FileSecurity
+  $security.SetOwner((New-Object Security.Principal.SecurityIdentifier($script:sid)))
+  $security.SetAccessRuleProtection($true,$false)
+  foreach($id in @($script:sid,'S-1-5-18')){$rule=New-Object Security.AccessControl.FileSystemAccessRule((New-Object Security.Principal.SecurityIdentifier($id)),[Security.AccessControl.FileSystemRights]::FullControl,[Security.AccessControl.AccessControlType]::Allow);$security.AddAccessRule($rule)}
+  $stream=[IO.FileStream]::new($path,[IO.FileMode]::CreateNew,[Security.AccessControl.FileSystemRights]::FullControl,[IO.FileShare]::None,4096,[IO.FileOptions]::None,$security)
   try {$stream.Write($bytes,0,$bytes.Length);$stream.Flush($true)} finally {$stream.Dispose();[Array]::Clear($bytes,0,$bytes.Length)}
   CheckAcl ([IO.File]::GetAccessControl($path))
 }
@@ -61,6 +67,7 @@ try {
   $script:stage='load-system-security';Add-Type -AssemblyName System.Security
   $script:stage='acl-framework-api-contract'
   if($null -eq [IO.Directory].GetMethod('SetAccessControl',[type[]]@([string],[Security.AccessControl.DirectorySecurity])) -or $null -eq [IO.Directory].GetMethod('GetAccessControl',[type[]]@([string])) -or $null -eq [IO.File].GetMethod('GetAccessControl',[type[]]@([string]))){Reject}
+  if($null -eq [IO.FileStream].GetConstructor([type[]]@([string],[IO.FileMode],[Security.AccessControl.FileSystemRights],[IO.FileShare],[int],[IO.FileOptions],[Security.AccessControl.FileSecurity]))){Reject}
   $script:stage='read-synthetic-stdin';$inputText=[Console]::In.ReadToEnd()
   if($inputText.Length -gt 32768){Reject}
   $x=$inputText|ConvertFrom-Json; $inputText=$null
