@@ -17,7 +17,7 @@ const root=fileURLToPath(new URL('../../',import.meta.url));
 const sha=x=>createHash('sha256').update(x).digest('hex');
 const frozen=x=>Object.freeze(x);
 export const MODULES=frozen({
- platformAdmission:frozen({file:'recovery/github-environment-admission.mjs',sha256:'f600d298277ac52459d92f5f1ea477e54eb54e2973d52d53ee4e2808c1e2bcb0',exports:['admitGitHubEnvironment', 'assertPlatformAdmission', 'validatePlatformReadbacks'],tests:['recovery/github-environment-admission.test.mjs']}),
+ platformAdmission:frozen({file:'recovery/github-environment-admission.mjs',sha256:'1326909620ba2d4983620bc68e2afd4d9ef77505df941b93d0e56eb05ff5cc76',exports:['admitGitHubEnvironment', 'assertPlatformAdmission', 'validatePlatformReadbacks'],tests:['recovery/github-environment-admission.test.mjs']}),
  s06Platform:frozen({file:'cloud-live-qa-s06-platform-transition.mjs',sha256:'c04df3f87d5c6af19180ee21bd39b2991fdba15fffbfd2a7d178a42145f212ec',exports:['observePlatformFourGrantTransition', 'consumePlatformGrantTransition'],tests:['cloud-live-qa-s06-platform-transition.test.mjs'],dependencies:['vaultClient']}),
  s02Platform:frozen({file:'cloud-live-qa-s02-platform-cell.mjs',sha256:'0964be069d35644008164b3ec3cca62ea45f30bdaeec072218bad46ccd0ff47a',exports:['createPlatformCellRequest', 'consumePlatformCellRequest'],tests:['cloud-live-qa-s02-platform-cell.test.mjs'],dependencies:['platformAdmission']}),
  environmentHolder:frozen({file:'recovery/holder-environment.mjs',sha256:'a6e4ec5d51a906e80061ee05fc8ee590082751d1a06237e8cc1a983876607482',exports:['prepareEnvironmentBeforeCredentials', 'runEnvironmentHolder', 'inspectEnvironmentOriginalIntent'],tests:['recovery/holder-environment.test.mjs'],dependencies:['lifecycle', 'platformAdmission', 'vaultClient']}),

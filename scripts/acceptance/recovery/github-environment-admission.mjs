@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import {validateSameRunRequest} from './same-run-request.mjs';
-export const PLATFORM_PINS=Object.freeze({repositoryId:null,workflowId:null,environmentId:null,environmentName:null,actorId:null,reviewerId:null,reviewerLogin:null});
+export const PLATFORM_PINS=Object.freeze({repositoryId:1173290306,workflowId:399362066,environmentId:25567576058,environmentName:'desktoppet-qa-20261028',actorId:103977765,reviewerId:103977765,reviewerLogin:'Syndred'});
 export const PLATFORM_CASES=Object.freeze(['S06','R06','R05','C03','S05','P05','G07','S04','B06','B11','S02','C11','M07','A06','A13','A15','A12']);
 export const PLATFORM_WORKFLOW='.github/workflows/cloud-environment-completion.yml';
 const admissions=new WeakMap();
