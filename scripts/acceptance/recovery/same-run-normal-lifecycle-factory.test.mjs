@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {installNormalPreloginHold,installRestoredCAuthGuard,appEnvironment,parentProofUrl,validateParentProofClaims,getCompletionContext} from './same-run-normal-lifecycle-factory.mjs';
 const origin='https://jbvrdmrkwpznbrvteive.supabase.co';
+const differentInode=value=>value===0?1:0;
 function held(role='a'){
  const binding={role,accountKey:'synthetic-fixed',owner:role==='c'?null:'owner-a',origin,profile:'/synthetic-owned',deviceId:'device-a',scenario:'synthetic-scope',expiresAt:Date.now()+60000};
  const actor={authKind:'supabase',authority:'live',ownerAccountId:'owner-a',authUserId:'auth-a',deviceId:'device-a',sessionId:'session-a'};
@@ -46,7 +47,7 @@ test('parent proof binds fixed route schema time and batch, not caller authority
 test('cleanup root requires minted canonical identity, not a path self-comparison',async()=>{
  const fs=await import('node:fs'),{join}=await import('node:path'),{tmpdir}=await import('node:os');const {assertOwnedProfileRoot}=await import('./same-run-normal-lifecycle-factory.mjs');
  const p=fs.realpathSync.native(fs.mkdtempSync(join(tmpdir(),'lingjing-live-holder-contract-'))),st=fs.lstatSync(p),ticket={canonical:p,dev:st.dev,ino:st.ino};
- try{assert.equal(assertOwnedProfileRoot(p,ticket),p);assert.throws(()=>assertOwnedProfileRoot(p,{...ticket,canonical:p+'-other'}));assert.throws(()=>assertOwnedProfileRoot(p,{...ticket,ino:st.ino+1}));}finally{fs.rmSync(p,{recursive:true});}
+ try{assert.equal(assertOwnedProfileRoot(p,ticket),p);assert.throws(()=>assertOwnedProfileRoot(p,{...ticket,canonical:p+'-other'}));const wrongInode=differentInode(st.ino);assert.notEqual(wrongInode,st.ino);assert.throws(()=>assertOwnedProfileRoot(p,{...ticket,ino:wrongInode}));}finally{fs.rmSync(p,{recursive:true});}
 });
 test('original remote invoke receives real synthetic 401 and invalidates despite C freeze',async()=>{
  const {createRequire}=await import('node:module'),{randomUUID}=await import('node:crypto');const require=createRequire(import.meta.url),{SupabaseRemote,normalized,decodeProof}=require('../../../apps/pc-app/runtime/features/accounts/supabase-remote.cjs');
@@ -62,3 +63,5 @@ test('original remote invoke receives real synthetic 401 and invalidates despite
  await assert.rejects(remote.request('lingjing-auth',{op:'login',account:actor.account}),/C_AUTH_FROZEN/);
  bundle.actor={...actor,sessionId:randomUUID()};await assert.rejects(remote.refresh(remote.active),/C_REFRESH_BINDING_CHANGED/);
 });
+
+test('inode negative fixture stays different even above Number safe precision',()=>{for(const value of [0,1,Number.MAX_SAFE_INTEGER,2**54])assert.notEqual(differentInode(value),value);assert.equal(2**54+1,2**54);});
