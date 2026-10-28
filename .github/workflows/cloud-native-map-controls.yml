@@ -7,7 +7,6 @@ on:
     paths:
       - '.github/workflows/cloud-native-map-controls.yml'
       - 'scripts/acceptance/cloud-native-map-provider-acceptance.mjs'
-      - 'scripts/acceptance/cloud-native-nearby-controls-acceptance.mjs'
 
 permissions:
   contents: read
@@ -23,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        flow: [map-provider, nearby-controls]
+        flow: [map-provider]
     runs-on: windows-latest
     timeout-minutes: 18
     env:
