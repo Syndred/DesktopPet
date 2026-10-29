@@ -4,15 +4,16 @@ const {join}=require('node:path');
 const canonical=value=>value===null||typeof value!=='object'?JSON.stringify(value):Array.isArray(value)?`[${value.map(canonical).join(',')}]`:`{${Object.keys(value).sort().map(key=>`${JSON.stringify(key)}:${canonical(value[key])}`).join(',')}}`;
 const fail=(code,message)=>{throw Object.assign(new Error(message),{code});};
 const actorKey=actor=>[actor.authUserId,actor.ownerAccountId,actor.deviceId,actor.sessionId].join('\0');
+const secureStorageAvailable=storage=>{try{return Boolean(storage?.isEncryptionAvailable?.())&&storage.getSelectedStorageBackend?.()!=='basic_text';}catch{return false;}};
 
 /** Main-process-only signer. There is no IPC method accepting coordinates or
  * exposing this key. getFix is the existing privacy/quality guarded OS service. */
 class CloudLocationProofs {
   constructor({authority,getFix,safeStorage,userData}) {this.authority=authority;this.getFix=getFix;this.safeStorage=safeStorage;this.userData=userData;this.keys=new Map();this.registered=new Set();}
   privateKey(actor) {
+    if(!secureStorageAvailable(this.safeStorage))fail('CLOUD_DEVICE_KEY_UNAVAILABLE','系统安全存储暂不可用');
     const id=createHash('sha256').update([actor.authUserId,actor.ownerAccountId,actor.deviceId].join('\0')).digest('hex');
     if(this.keys.has(id))return this.keys.get(id);
-    if(!this.safeStorage?.isEncryptionAvailable())fail('CLOUD_DEVICE_KEY_UNAVAILABLE','系统安全存储暂不可用');
     const directory=join(this.userData,'secure','discovery'),file=join(directory,`${id}.key`);
     let key;
     if(existsSync(file)) {
