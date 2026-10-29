@@ -1,6 +1,7 @@
 // Production-purpose adapter, disabled until a separately approved signing key is pinned.
 // Never invoke a real reset/register here. Private child pipes are NOT console output.
 import assert from 'node:assert/strict';
+import {createVaultIoFailure} from './vault-io-diagnostic.mjs';
 import {assertPlatformAdmission,platformChildEnvironment} from '../recovery/github-environment-admission.mjs';
 import {spawn} from 'node:child_process';
 import {createHash,createPublicKey} from 'node:crypto';
@@ -47,9 +48,9 @@ export function vaultChildEnvironment(env=process.env){const clean=platformChild
 let ownedIoUnconfirmed=false;
 function privateCall(action,input){if(ownedIoUnconfirmed)return Promise.reject(Error('OWNED_VAULT_IO_UNCONFIRMED'));return new Promise((resolvePromise,rejectPromise)=>{
  const child=spawn(join(process.env.SystemRoot,'System32','WindowsPowerShell','v1.0','powershell.exe'),['-NoLogo','-NoProfile','-NonInteractive','-File',resolve('scripts/acceptance/dpapi/authorized-vault.ps1'),'-Action',action],{stdio:['pipe','pipe','pipe'],windowsHide:true,env:vaultChildEnvironment()});
- let chunks=[],length=0,failed=false,killTimer,exitTimer;const fail=()=>{if(failed)return;failed=true;child.kill();killTimer=setTimeout(()=>{child.kill();exitTimer=setTimeout(()=>{ownedIoUnconfirmed=true;for(const b of chunks)b.fill(0);chunks=[];rejectPromise(Error('OWNED_VAULT_IO_UNCONFIRMED'));},5000);},5000);};const timer=setTimeout(fail,15000);
- child.stdout.on('data',b=>{length+=b.length;if(length>32768)fail();else chunks.push(b);});child.stderr.on('data',()=>{});child.stdin.on('error',fail);child.on('error',()=>{if(child.pid)fail();else{clearTimeout(timer);rejectPromise(Error('VAULT_CHILD_NOT_STARTED'));}});
- child.on('close',code=>{clearTimeout(timer);clearTimeout(killTimer);clearTimeout(exitTimer);const bytes=Buffer.concat(chunks);for(const b of chunks)b.fill(0);chunks=[];try{if(failed||code!==0)reject();const x=JSON.parse(bytes.toString('utf8'));if(x.ok!==true)reject();resolvePromise(x.result);}catch{rejectPromise(Object.assign(Error('AUTHORIZED_VAULT_IO_FAILED'),{code:'AUTHORIZED_VAULT_IO_FAILED'}));}finally{bytes.fill(0);}});
+ let chunks=[],length=0,failed=false,failureReason=null,timedOut=false,killTimer,exitTimer;const fail=(reason)=>{if(failed)return;failed=true;failureReason=reason;timedOut=reason==='timeout';child.kill();killTimer=setTimeout(()=>{child.kill();exitTimer=setTimeout(()=>{ownedIoUnconfirmed=true;for(const b of chunks)b.fill(0);chunks=[];rejectPromise(Error('OWNED_VAULT_IO_UNCONFIRMED'));},5000);},5000);};const timer=setTimeout(()=>fail('timeout'),15000);
+ child.stdout.on('data',b=>{length+=b.length;if(length>32768)fail('output-limit');else chunks.push(b);});child.stderr.on('data',()=>{});child.stdin.on('error',()=>fail('stdin-error'));child.on('error',()=>{if(child.pid)fail('child-error');else{clearTimeout(timer);rejectPromise(Error('VAULT_CHILD_NOT_STARTED'));}});
+ child.on('close',(code,signal)=>{clearTimeout(timer);clearTimeout(killTimer);clearTimeout(exitTimer);const bytes=Buffer.concat(chunks);for(const b of chunks)b.fill(0);chunks=[];let response=null;try{try{response=JSON.parse(bytes.toString('utf8'));}catch{}if(failed||code!==0||response?.ok!==true){rejectPromise(createVaultIoFailure({action,reason:failureReason??(response?.ok===false&&response?.error==='AUTHORIZED_VAULT_REJECTED'?'ps-rejected':code!==0?'child-exit':'invalid-response'),exitCode:code,signal,timedOut,response:failed?null:response}));}else resolvePromise(response.result);}finally{bytes.fill(0);}});
  // Timeout does not return while an owned process can still produce a response.
  child.stdin.end(JSON.stringify(input));
  });}

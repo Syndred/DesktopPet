@@ -1,0 +1,43 @@
+name: DesktopPet fixed vault rejection diagnostic
+on:
+  push:
+    branches: [codex/cloud-authority-convergence]
+    paths:
+      - .github/workflows/cloud-vault-io-diagnostic-contract.yml
+      - scripts/acceptance/dpapi/vault-io-diagnostic.mjs
+      - scripts/acceptance/dpapi/vault-io-diagnostic.test.mjs
+      - scripts/acceptance/dpapi/vault-io-diagnostic-windows.test.mjs
+permissions:
+  contents: read
+concurrency:
+  group: desktoppet-vault-io-diagnostic-contract
+  cancel-in-progress: false
+jobs:
+  synthetic:
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
+    runs-on: windows-latest
+    timeout-minutes: 5
+    steps:
+      - name: Preserve source bytes
+        shell: pwsh
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+      - name: Pure disclosure contract
+        run: node --test scripts/acceptance/dpapi/vault-io-diagnostic.test.mjs
+      - name: Actual fixed private child rejection
+        env:
+          TEMP: ${{ runner.temp }}
+          TMP: ${{ runner.temp }}
+        run: node scripts/acceptance/dpapi/vault-io-diagnostic-windows.test.mjs
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: vault-io-diagnostic-contract
+          path: artifacts/qa/vault-io-diagnostic-contract/evidence.json
+          if-no-files-found: error
+          retention-days: 14

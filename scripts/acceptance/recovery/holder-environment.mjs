@@ -1,5 +1,6 @@
 // Fixed environment source. No legacy ticket/parent-proof/reset transport fallback.
 import assert from 'node:assert/strict';
+import {getVaultIoDiagnostic} from '../dpapi/vault-io-diagnostic.mjs';
 import {createHash,randomBytes} from 'node:crypto';
 import {readFileSync,writeFileSync,renameSync,existsSync,readdirSync,lstatSync,realpathSync} from 'node:fs';
 import {resolve,join} from 'node:path';
@@ -12,7 +13,7 @@ const hash=x=>createHash('sha256').update(x).digest('hex'),prepared=new WeakMap(
 export const ENVIRONMENT_LIFECYCLE_SHA256='79ea39c154aa8ae780f5c614e28ddcb82ad6e17abf902dcf45b30fe0a90baaf9'; // Exact reviewed local implementation; platform admission remains fail-closed.
 const roles=Object.freeze({a:'A primary',a2:'A cold restore',a3:'A original S06',b:'B peer',c:'C new lifecycle'});
 const holderErrorCodes=new Set(['ERR_ASSERTION','AUTHORIZED_VAULT_IO_FAILED','OWNED_VAULT_IO_UNCONFIRMED','VAULT_CHILD_NOT_STARTED','ENOENT','EACCES','EPERM','ETIMEDOUT','SUPERVISOR_NOT_READY','SUPERVISOR_START_FAILED','SUPERVISOR_OUTPUT_INVALID','ACCOUNT_CAPTURE_MISSING','NORMAL_FRESH_ACCOUNT_REQUIRED','PROFILE_MISMATCH']);
-function holderSafeError(error){return {code:holderErrorCodes.has(error?.code??error?.message)?(error.code??error.message):'HOLDER_STAGE_FAILED',type:error?.name==='AssertionError'?'assertion':'error'};}
+function holderSafeError(error){return {code:holderErrorCodes.has(error?.code??error?.message)?(error.code??error.message):'HOLDER_STAGE_FAILED',type:error?.name==='AssertionError'?'assertion':'error',vaultIo:getVaultIoDiagnostic(error)};}
 function holderObservation(binding){const directory=resolve('artifacts/qa/same-run-'+binding.run);assert.equal(lstatSync(directory).isSymbolicLink(),false);assert.equal(realpathSync.native(directory).toLowerCase(),directory.toLowerCase());const file=join(directory,'holder-preimport-state.json'),proof={version:1,run:binding.run,commit:binding.commit,requestDigest:binding.requestDigest,stage:'holder-entered',vaultCreated:false,supervisorReady:false,deadlineRegistered:false,heldReady:false,credentialImportStarted:false,businessCompleted:false,ownedCleanup:null,vaultClose:null,requestStop:null};assert.equal(existsSync(file),false);const save=()=>{writeFileSync(file+'.tmp',JSON.stringify(proof),{mode:0o600});renameSync(file+'.tmp',file);};save();return {proof,save,stage(value){assert.ok(['vault-create','supervisor','business-deadline','held-models','credential-import','normal-identities','C-registration','completion','cleanup','finished'].includes(value));proof.stage=value;save();}};}
 
 export async function prepareEnvironmentBeforeCredentials({admission,completionOptions}){
