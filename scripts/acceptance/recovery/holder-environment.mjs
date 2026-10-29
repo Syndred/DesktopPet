@@ -10,7 +10,7 @@ import {createPlatformAuthorizedVault,cleanupFailedPlatformInitialization,FIXED_
 import {prepareCompletionBeforeCredentials} from '../cloud-live-qa-completion-readiness.mjs';
 import {runPreparedCloudCompletion} from '../cloud-live-qa-completion-driver.mjs';
 const hash=x=>createHash('sha256').update(x).digest('hex'),prepared=new WeakMap();
-export const ENVIRONMENT_LIFECYCLE_SHA256='79ea39c154aa8ae780f5c614e28ddcb82ad6e17abf902dcf45b30fe0a90baaf9'; // Exact reviewed local implementation; platform admission remains fail-closed.
+export const ENVIRONMENT_LIFECYCLE_SHA256='2f88880662dc897962a8cf0aa689ab0cf1249b8da52924fac594a9973564f5ae'; // Exact reviewed local implementation; platform admission remains fail-closed.
 const roles=Object.freeze({a:'A primary',a2:'A cold restore',a3:'A original S06',b:'B peer',c:'C new lifecycle'});
 const holderErrorCodes=new Set(['ERR_ASSERTION','AUTHORIZED_VAULT_IO_FAILED','OWNED_VAULT_IO_UNCONFIRMED','VAULT_CHILD_NOT_STARTED','ENOENT','EACCES','EPERM','ETIMEDOUT','SUPERVISOR_NOT_READY','SUPERVISOR_START_FAILED','SUPERVISOR_OUTPUT_INVALID','ACCOUNT_CAPTURE_MISSING','NORMAL_FRESH_ACCOUNT_REQUIRED','PROFILE_MISMATCH']);
 function holderSafeError(error){return {code:holderErrorCodes.has(error?.code??error?.message)?(error.code??error.message):'HOLDER_STAGE_FAILED',type:error?.name==='AssertionError'?'assertion':'error',vaultIo:getVaultIoDiagnostic(error)};}

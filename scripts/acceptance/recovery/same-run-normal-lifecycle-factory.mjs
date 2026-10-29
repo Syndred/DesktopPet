@@ -326,7 +326,8 @@ async function releasePlatformGrants(cap,cCredential){
  const barrier=join(s.output,'identity-upload-complete.json');while(!existsSync(barrier)){own(cap);assert.ok(Date.now()<s.binding.businessDeadline);await pause(250);}assert.equal(lstatSync(barrier).isSymbolicLink(),false);const scheduled=JSON.parse(readFileSync(barrier,'utf8').replace(/^\uFEFF/,''));assert.deepEqual(scheduled,{version:1,run:s.binding.run,commit:s.binding.commit,requestDigest:s.binding.requestDigest,purpose:'identity-upload-complete-no-authority'});
  const transition=await observePlatformFourGrantTransition({admission:s.authorization,models:s.models,actors,scenario,vault:s.vault,cCredential});
  await admitPlatformS06SingleSnapshot(s.models.a3.s06Ticket,{transition});
- safeWrite(s,'s06-platform-warning.json',{version:1,run:s.binding.run,commit:s.binding.commit,requestDigest:s.binding.requestDigest,realOriginalWarningObserved:true,originalSnapshotCount:1,deadline:s.binding.businessDeadline});
+ const observedAtMs=Date.now();
+ safeWrite(s,'s06-platform-warning.json',{version:1,run:s.binding.run,commit:s.binding.commit,requestDigest:s.binding.requestDigest,nonce:s.binding.nonce,observedAtMs,realOriginalWarningObserved:true,originalSnapshotCount:1,deadline:s.binding.businessDeadline});
  await releasePlatformS06AfterFormalGrant(s.models.a3.s06Ticket);
  for(const role of roles){const actor=await safeActor(s.models[role]);for(const key of ['ownerAccountId','authUserId','deviceId','sessionId','epoch'])assert.equal(actor[key],actors[role][key]);s.scopeGrants.set(role,{...actor,role,scenario,expiresAtMs:s.binding.businessDeadline,deadlineSource:'fixed-platform-admission',protocolDoesNotReturnExpiry:true});}
  for(const role of roles.filter(r=>r!=='a3'))await s.models[role].main(async(_e,g)=>globalThis.__qaUiCaseContext.release(g),s.scopeGrants.get(role));s.grantsReleased=true;await assertSameRunGrant(cap,{hardDeadline:s.binding.businessDeadline});
