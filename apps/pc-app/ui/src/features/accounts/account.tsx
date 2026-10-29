@@ -11,6 +11,8 @@ import { AnimatedList } from "../../components/motion";
 import { usePath } from "../../app/navigation";
 import { AccountStatus } from "./status";
 import { PreservedRecords } from './preserved-records';
+import { useAppInfo } from './about';
+import { deviceLabel } from './device-label';
 
 export function SettingsNavigation() {
   const path = usePath();
@@ -25,6 +27,7 @@ function dateText(value?: string | null) { return value ? new Date(value).toLoca
 
 function AccountDetails({ user, session, refreshSession }: { user: AccountUser; session: AccountsSession; refreshSession: () => Promise<void> }) {
   const authoritative = user.authKind === 'supabase';
+  const { info: appInfo } = useAppInfo();
   const [label, setLabel] = useState(user.username);
   const [profilePassword, setProfilePassword] = useState("");
   const [oldPassword, setOldPassword] = useState("");
@@ -173,7 +176,7 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
           </div>
           {authoritative && showPreserved && <PreservedRecords onChanged={refresh} />}
         </Card>
-        <Card className="ac-card"><h2><Monitor size={19} />当前设备</h2><div className="ac-device"><Monitor size={25} /><div><strong>Windows PC</strong><p>{session.persistence === "secure" ? "已保持登录" : "本次登录"}</p></div></div>
+        <Card className="ac-card"><h2><Monitor size={19} />当前设备</h2><div className="ac-device"><Monitor size={25} /><div><strong>{deviceLabel(appInfo?.platform)}</strong><p>{session.persistence === "secure" ? "已保持登录" : "本次登录"}</p></div></div>
           <Button className="ac-quiet-button" disabled={Boolean(pending)} onClick={() => void run("logout", async () => { await request("logout"); await refreshSession(); })}><LogOut size={16} />退出登录</Button>
         </Card>
       </div>
