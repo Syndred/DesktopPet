@@ -9,7 +9,12 @@ class SessionVault {
     this.safeStorage = safeStorage;
     this.file = join(userData, "accounts", "verified-session.bin");
   }
-  available() { return Boolean(this.safeStorage?.isEncryptionAvailable?.()); }
+  available() {
+    try {
+      return Boolean(this.safeStorage?.isEncryptionAvailable?.()) &&
+        this.safeStorage.getSelectedStorageBackend?.() !== "basic_text";
+    } catch { return false; }
+  }
   save(session) {
     if (!this.available()) throw new AccountError("SECURE_STORAGE_UNAVAILABLE", "系统安全存储不可用，登录仅在本次运行中保持。");
     atomicWrite(this.file, this.safeStorage.encryptString(JSON.stringify({ version: 1, ...session })));
