@@ -12,9 +12,13 @@ window.runDialogTests = async () => {
   // Tailwind uses the independent translate property; it must not combine with
   // the app's legacy centering transform (which displaced long dialogs offscreen).
   check(source.sharedDialog.includes('-translate-x-1/2 -translate-y-1/2'), 'shared dialog independent centering contract');
-  check(/(?:^|;)translate:none(?:;|$)/.test(generic), 'generic dialog cancels independent Tailwind translate');
+  check(/(?:^|;)translate:none!important(?:;|$)/.test(generic), 'generic dialog cancels independent Tailwind translate');
   check(/(?:^|;)transform:translate\(-50%,-50%\)(?:;|$)/.test(generic), 'generic dialog preserves single legacy centering transform');
+  check(/translate:none!important/.test(source.minifiedCSS), 'production CSS optimizer preserves centering override');
+  if (source.compiledCSS !== undefined) check(/translate:none!important/.test(source.compiledCSS), 'actual built generic dialog preserves centering override');
   results.push('single-centering-css-contract');
+  results.push('production-css-optimizer-contract');
+  if (source.compiledCSS !== undefined) results.push('actual-compiled-css-contract');
   for (const mode of ['escape', 'cancel', 'busy', 'removed', 'unmount', 'moved', 'disabled', 'hidden', 'inert']) {
     const host = document.createElement('div'); document.body.append(host);
     const root = createRoot(host); let update;

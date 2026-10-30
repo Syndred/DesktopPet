@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
@@ -23,5 +23,15 @@ dom.window.dialogGeometrySource = {
     : readFileSync(path.join(root, cssPath), 'utf8'),
   sharedDialog: readFileSync(path.join(root, 'apps/pc-app/ui/src/components/ui/dialog.tsx'), 'utf8')
 };
+const genericRule = dom.window.dialogGeometrySource.globalCSS.match(/\.app-dialog-content\{[^}]+\}/)?.[0] || '';
+// Use the actual production dependency: it previously erased a non-important none
+// when combining independent transforms. A hand-written post-build patch cannot pass this gate.
+dom.window.dialogGeometrySource.minifiedCSS = require('lightningcss').transform({ filename: 'dialog-contract.css', code: Buffer.from(genericRule), minify: true }).code.toString();
+if (process.argv.includes('--compiled-css')) {
+  const assets = path.join(root, 'apps/pc-app/dist/ui/assets');
+  const builtRules = readdirSync(assets).filter(name => name.endsWith('.css')).flatMap(name => readFileSync(path.join(assets, name), 'utf8').match(/\.app-dialog-content\{[^}]+\}/g) || []);
+  if (builtRules.length !== 1) throw Error('Exactly one compiled generic dialog rule required');
+  dom.window.dialogGeometrySource.compiledCSS = builtRules[0];
+}
 try { dom.window.eval(bundle.outputFiles[0].text); console.log(JSON.stringify(await dom.window.runDialogTests())); }
 finally { dom.window.close(); }
