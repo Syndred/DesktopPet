@@ -9,6 +9,17 @@ import {existsSync,writeFileSync,renameSync} from 'node:fs';
 import {join} from 'node:path';
 const hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex');
 const quantities=s=>Object.fromEntries(s.items.map(x=>[x.id,x.quantity]));
+// Self-contained for Electron main serialization; never overwrite another hook.
+export function restoreGardenCompletionWrapper(_electron,kind){
+ const spec=kind==='fault'?['__gardenCompletionFault','request']:kind==='context'?['__gardenCompletionContext','cloudContext']:null;
+ if(!spec)throw Error('Unknown garden wrapper kind');
+ const [slot,method]=spec,state=globalThis[slot];if(!state)return;
+ if(typeof state.original!=='function'||typeof state.wrapper!=='function')throw Error('Missing owned garden wrapper identity');
+ const current=state.prototype[method];
+ if(current!==state.wrapper&&current!==state.original)throw Error('Foreign garden wrapper preserved');
+ if(current===state.wrapper)state.prototype[method]=state.original;
+ delete globalThis[slot];
+}
 export function requireFreshGarden(value,owner){
  assert.equal(value.ownerAccountId,owner);assert.equal(value.sync?.mode,'cloud');
  assert.equal(value.sync.pending,0);assert.equal(value.sync.conflicts,0);return value;
@@ -73,7 +84,7 @@ export async function runCloudLiveQaGardenSyncCompletionCases({models,expectedAc
    const crops=baseline.crops.filter(c=>baseline.items.some(i=>i.id===c.seedItemId&&i.quantity>0));const plot=baseline.plots.find(p=>!p.cropType);
    if(!plot||!crops.length)throw Object.assign(Error(),{code:'NO_SAFE_PLANT_FIXTURE'});selected={plotId:plot.plotId,cropId:crops[0].id,seedId:crops[0].seedItemId};intent.selection=selected;persist();
    // Capture only this already logged-in A2's normal SDK context, never its token.
-   await models.a2.main((_electron,owner)=>{const req=process.getBuiltinModule('node:module').createRequire(process.resourcesPath+'/app.asar/package.json'),p=req('./apps/pc-app/runtime/features/accounts/supabase-remote.cjs').SupabaseRemote.prototype;if(globalThis.__gardenCompletionContext)throw Error('Existing own context');const s={prototype:p,original:p.cloudContext,context:null};globalThis.__gardenCompletionContext=s;p.cloudContext=async function(...args){const c=await s.original.apply(this,args);if(c.ownerAccountId===owner){s.context=c;p.cloudContext=s.original;}return c;};},owner);contextInstalled=true;
+   await models.a2.main((_electron,owner)=>{const req=process.getBuiltinModule('node:module').createRequire(process.resourcesPath+'/app.asar/package.json'),p=req('./apps/pc-app/runtime/features/accounts/supabase-remote.cjs').SupabaseRemote.prototype;if(globalThis.__gardenCompletionContext)throw Error('Existing own context');const s={prototype:p,original:p.cloudContext,context:null};globalThis.__gardenCompletionContext=s;s.wrapper=async function(...args){const c=await s.original.apply(this,args);if(c.ownerAccountId===owner){if(p.cloudContext!==s.wrapper)throw Error('Foreign garden wrapper preserved');s.context=c;p.cloudContext=s.original;}return c;};p.cloudContext=s.wrapper;},owner);contextInstalled=true;
    await call('a2','garden','snapshot');return {plotId:selected.plotId,cropId:selected.cropId,metadataWarningObserved:proof.actualMetadataWarningObserved};
   });
   await step('G07-S06-durable-pending-cache-and-no-storm',async()=>{
@@ -84,7 +95,7 @@ export async function runCloudLiveQaGardenSyncCompletionCases({models,expectedAc
    await models.a.main((_electron,target)=>{
     const req=process.getBuiltinModule('node:module').createRequire(process.resourcesPath+'/app.asar/package.json'),p=req('./apps/pc-app/runtime/features/accounts/supabase-remote.cjs').SupabaseRemote.prototype;
     if(globalThis.__gardenCompletionFault)throw Error('Existing garden fault');const f={prototype:p,original:p.request,enabled:true,target,commands:[],reads:0};globalThis.__gardenCompletionFault=f;
-    p.request=async function(name,body,...opaque){
+    f.wrapper=async function(name,body,...opaque){
      if(this.deviceId===target.deviceId&&f.enabled){
       if(name==='garden-sync'&&body?.op==='command'&&body.command==='plant'&&body.input?.plotId===target.plotId&&body.input.cropType===target.cropId){
        if(target.actionId&&target.actionId!==body.input.actionId)throw Error('Replacement action refused');target.actionId=body.input.actionId;
@@ -94,7 +105,7 @@ export async function runCloudLiveQaGardenSyncCompletionCases({models,expectedAc
       if((name==='garden-sync'||name==='territory-sync')&&body?.op==='snapshot'){f.reads++;if(f.reads>60)throw Error('Read bound exceeded');throw Object.assign(Error('Owned read unavailable'),{code:'CLOUD_UNAVAILABLE'});}
      }
      return f.original.call(this,name,body,...opaque);
-    };
+    };p.request=f.wrapper;
    },{deviceId:expectedActors.a.deviceId,...selected,actionId:null});faultInstalled=true;
    await active();const immediatelyBefore=await call('a','accounts','syncStatus');if(requireGenuineMetadataWarning&&!hasGenuineS06Metadata(immediatelyBefore)){proof.s06BlockedReason='GENUINE_METADATA_WARNING_NO_LONGER_PRESENT';throw Object.assign(Error(),{code:'S06_GENUINE_METADATA_MISSING'});}proof.metadataWarningPresentImmediatelyBeforePlant=hasGenuineS06Metadata(immediatelyBefore);proof.originalPlantUiSubmitted=true;save();await page.locator('.garden-plot-detail').getByRole('button',{name:'播种',exact:true}).click();
    await page.locator('.garden-notice-pending').getByRole('button',{name:'重试',exact:true}).waitFor({timeout:20000});
@@ -149,8 +160,8 @@ export async function runCloudLiveQaGardenSyncCompletionCases({models,expectedAc
  }catch(e){if(e?.code==='S06_GENUINE_METADATA_MISSING'&&proof.originalPlantUiSubmitted!==true&&!intent.command)proof.beforeAnyBusinessWrite=true;proof.errorCode=e?.code==='S06_GENUINE_METADATA_MISSING'?e.code:codes.has(e?.code)?e.code:'SCOPED_ASSERTION_FAILED';}
  finally{
   proof.cleanup={faultRemoved:!faultInstalled,contextRemoved:!contextInstalled};
-  if(faultInstalled)try{await models.a.main(()=>{const f=globalThis.__gardenCompletionFault;if(f){f.prototype.request=f.original;delete globalThis.__gardenCompletionFault;}});proof.cleanup.faultRemoved=true;}catch{proof.passed=false;}
-  if(contextInstalled)try{await models.a2.main(()=>{const p=globalThis.__gardenCompletionContext;if(p){p.prototype.cloudContext=p.original;delete globalThis.__gardenCompletionContext;}});proof.cleanup.contextRemoved=true;}catch{proof.passed=false;}
+  if(faultInstalled)try{await models.a.main(restoreGardenCompletionWrapper,'fault');proof.cleanup.faultRemoved=true;}catch{proof.passed=false;}
+  if(contextInstalled)try{await models.a2.main(restoreGardenCompletionWrapper,'context');proof.cleanup.contextRemoved=true;}catch{proof.passed=false;}
   proof.metadataFailureContinuation=requireGenuineMetadataWarning&&proof.g07Passed===true&&proof.s06Status==='blocked'&&proof.s06BlockedReason==='GENUINE_METADATA_NOT_RETAINED_AT_FAILURE_AGGREGATION'&&!proof.errorCode&&proof.finalPendingByRole?.a===0&&proof.finalPendingByRole?.a2===0&&Object.values(proof.cleanup).every(x=>x===true)?{onlyOriginalMetadataObservationMissing:true,originalPlantCommittedAndIndependentlyVerified:true,staleIntentDefinitivelyRejected:true,bothOriginalPendingZero:true,ownFaultAndContextCleaned:true}:null;
   proof.completedAt=new Date().toISOString();save();
  }

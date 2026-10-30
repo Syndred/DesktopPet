@@ -23,3 +23,19 @@ test('unchanged product garden domain rejects actual earlier revision before occ
 });
 
 test('S06 requires exact genuine companions metadata, not generic pending/network/warning',async()=>{const {hasGenuineS06Metadata}=await import('./cloud-live-qa-garden-sync-completion-cases.mjs');const d={domain:'companions',metadataWarning:true,error:'GLOBAL_SERIAL_SCOPE_REVOKED'};assert.equal(hasGenuineS06Metadata({domainStates:[d]}),true);for(const x of[{error:'CLOUD_UNAVAILABLE'},{metadataWarning:false},{domain:'garden'}])assert.equal(hasGenuineS06Metadata({domainStates:[{...d,...x}]}),false);assert.equal(hasGenuineS06Metadata({domainStates:[]}),false);});
+
+// Execute the real cleanup callback after serialization, as Electron main does.
+// No account/transport/credentials are involved.
+import {restoreGardenCompletionWrapper} from './cloud-live-qa-garden-sync-completion-cases.mjs';
+import vm from 'node:vm';
+for(const kind of ['fault','context'])for(const currentKind of ['own','original','foreign']){
+ test(`garden ${kind} cleanup preserves ${currentKind} identity`,()=>{
+  const slot=kind==='fault'?'__gardenCompletionFault':'__gardenCompletionContext',method=kind==='fault'?'request':'cloudContext';
+  const original=()=>{},wrapper=()=>{},foreign=()=>{};
+  const prototype={[method]:{own:wrapper,original,foreign}[currentKind]};
+  const state={prototype,original,wrapper};const sandbox={[slot]:state};
+  const invoke=vm.runInNewContext('('+restoreGardenCompletionWrapper.toString()+')',sandbox);
+  if(currentKind==='foreign'){assert.throws(()=>invoke(null,kind),/Foreign garden wrapper preserved/);assert.equal(prototype[method],foreign);assert.equal(sandbox[slot],state);}
+  else{invoke(null,kind);assert.equal(prototype[method],original);assert.equal(sandbox[slot],undefined);invoke(null,kind);}
+ });
+}

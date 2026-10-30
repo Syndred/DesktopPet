@@ -30,13 +30,14 @@ function claimExploration() {
 export function useDiscovery() {
   const [data, setData] = useState<DiscoverySnapshot | null>(null);
   const [error, setError] = useState('');
+  const [snapshotError, setSnapshotError] = useState('');
   const [pending, setPending] = useState(false);
   const [sessionEpoch, setSessionEpoch] = useState(0);
   const alive = useRef(true), generation = useRef(0), sessionGeneration = useRef(0), locked = useRef(false);
   const refresh = useCallback(async () => {
     const current = ++generation.current;
-    try { const state = await request<DiscoverySnapshot>('discovery', 'snapshot'); if (alive.current && generation.current === current) setData(state); }
-    catch (e) { if (alive.current && generation.current === current) setError(e instanceof Error ? e.message : String(e)); }
+    try { const state = await request<DiscoverySnapshot>('discovery', 'snapshot'); if (alive.current && generation.current === current) { setData(state); setSnapshotError(''); } }
+    catch (e) { if (alive.current && generation.current === current) setSnapshotError(e instanceof Error ? e.message : String(e)); }
   }, []);
   useEffect(() => {
     alive.current = true;
@@ -44,7 +45,7 @@ export function useDiscovery() {
     void refresh();
     const subscriptions = ['discovery:changed', 'discovery:location', 'companions:changed', 'garden:changed'].map(event => window.lingjing?.subscribe(event, () => void refresh()));
     for (const event of ['app:session','accounts:session-changed']) subscriptions.push(window.lingjing?.subscribe(event, () => {
-      ++generation.current; ++sessionGeneration.current; locked.current = false; setPending(false); setError(''); setSessionEpoch(value => value + 1); setData(null); setError('');
+      ++generation.current; ++sessionGeneration.current; locked.current = false; setPending(false); setError(''); setSessionEpoch(value => value + 1); setData(null); setSnapshotError('');
       setExploring(inExploration() && document.visibilityState === 'visible'); void refresh();
     }));
     const timer = setInterval(() => { if(document.visibilityState === 'visible') void refresh(); }, 15000);
@@ -65,6 +66,6 @@ export function useDiscovery() {
       return undefined;
     } finally { if (current()) { locked.current = false; setPending(false); } }
   }, [refresh]);
-  return { data, error, pending, run, refresh, sessionEpoch };
+  return { data, error: snapshotError || error, pending, run, refresh, sessionEpoch };
 }
 export const actionId = () => crypto.randomUUID();

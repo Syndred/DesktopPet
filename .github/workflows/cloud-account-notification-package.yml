@@ -7,6 +7,7 @@ on:
     paths:
       - '.github/workflows/cloud-account-notification-package.yml'
       - 'apps/pc-app/ui/src/features/battle/route-id.ts'
+      - 'apps/pc-app/ui/src/features/discovery/use-discovery.ts'
 permissions:
   contents: read
 concurrency:
