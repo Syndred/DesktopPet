@@ -1,6 +1,7 @@
 name: DesktopPet notification runtime package preparation
 
 on:
+  workflow_dispatch:
   push:
     branches: ['codex/cloud-authority-convergence']
     paths:
