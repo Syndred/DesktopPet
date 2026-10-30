@@ -6,6 +6,7 @@ on:
     branches: ['codex/cloud-authority-convergence']
     paths:
       - '.github/workflows/cloud-account-notification-package.yml'
+      - 'apps/pc-app/ui/src/features/battle/route-id.ts'
 permissions:
   contents: read
 concurrency:
