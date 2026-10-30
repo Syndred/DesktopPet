@@ -1,5 +1,5 @@
 import { useRef, useSyncExternalStore } from 'react';
-import { routePathFromHash } from '../../app/navigation';
+import { routePathFromHash } from '../../app/navigation.js';
 
 /** Consume a raw hash segment exactly once; never decode the already-decoded usePath value. */
 export function battleRouteId(hash: string, prefix: '/battle/session/' | '/battle/reports/'): string | null {
