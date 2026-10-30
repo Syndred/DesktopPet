@@ -6,6 +6,15 @@ const delay = () => new Promise(resolve => setTimeout(resolve, 30));
 const check = (value, name) => { if (!value) throw Error(name); };
 window.runDialogTests = async () => {
   const results = [];
+  const source = window.dialogGeometrySource;
+  const generic = source?.globalCSS.match(/\.app-dialog-content\{([^}]+)\}/)?.[1];
+  check(Boolean(generic), 'generic dialog CSS exists');
+  // Tailwind uses the independent translate property; it must not combine with
+  // the app's legacy centering transform (which displaced long dialogs offscreen).
+  check(source.sharedDialog.includes('-translate-x-1/2 -translate-y-1/2'), 'shared dialog independent centering contract');
+  check(/(?:^|;)translate:none(?:;|$)/.test(generic), 'generic dialog cancels independent Tailwind translate');
+  check(/(?:^|;)transform:translate\(-50%,-50%\)(?:;|$)/.test(generic), 'generic dialog preserves single legacy centering transform');
+  results.push('single-centering-css-contract');
   for (const mode of ['escape', 'cancel', 'busy', 'removed', 'unmount', 'moved', 'disabled', 'hidden', 'inert']) {
     const host = document.createElement('div'); document.body.append(host);
     const root = createRoot(host); let update;
@@ -50,5 +59,5 @@ window.runDialogTests = async () => {
     if (mode !== 'unmount') await act(async () => { root.unmount(); await delay(); });
     host.remove(); results.push(mode);
   }
-  return { passed: true, checks: results, nativePassed: false };
+  return { passed: true, checks: results, nativePassed: false, geometryPassed: false };
 };

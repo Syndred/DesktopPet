@@ -46,11 +46,24 @@ export function NearbyMap({ state, selectedId, onSelect, mini = false }: { state
   useEffect(() => {
     if (!host.current || !canRender || !center) return;
     setReady(false); setError(''); setLoadedTiles(0); setPaint({ idle: false, tilesLoaded: false, zoom: 0, lat: 0, lng: 0 });
+    let active = true;
+    let created: LibreMap | null = null;
+    let observer: ResizeObserver | null = null;
+    const container = host.current;
+    const cleanup = () => {
+      active = false;
+      observer?.disconnect(); observer = null;
+      try { created?.remove(); } catch { /* A partially initialized renderer may not support remove. */ }
+      if (map.current === created) map.current = null;
+      created = null;
+      // This container belongs only to this map, including constructor-created fragments.
+      container.replaceChildren();
+    };
+    try {
     const instance = new LibreMap({ container: host.current, style: mapStyle(latest.current), center: [center.lng, center.lat], zoom: state.map.initialZoom ?? (mini ? 14 : 16.8),
       minZoom: state.map.minZoom ?? 11, maxZoom: state.map.maxZoom, attributionControl: false, interactive: !mini, dragRotate: false, pitchWithRotate: false,
       renderWorldCopies: false, fadeDuration: 0, maxTileCacheSize: 64 });
-    map.current = instance;
-    let active = true;
+    created = instance; map.current = instance;
     instance.addControl(new AttributionControl({ compact: false, customAttribution: state.map.id === 'nasa-gibs-bluemarble' ? '<a href="https://nasa-gibs.github.io/gibs-api-docs/" target="_blank" rel="noreferrer">NASA GIBS / MODIS Blue Marble</a>' : '<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors</a>' }), 'bottom-right');
     if (!mini) instance.addControl(new NavigationControl({ showCompass: true }), 'top-right');
     // Overlays depend on the style, not on every remote raster tile finishing.
@@ -73,8 +86,14 @@ export function NearbyMap({ state, selectedId, onSelect, mini = false }: { state
       if (tile.state === 'loaded') { tiles.add(String(tile.tileID?.key)); setLoadedTiles(tiles.size); }
     });
     instance.on('error', event => { if (!active) return; console.warn('[discovery:map]', event.error?.message); setError('部分底图暂时无法加载，可稍后重试。'); });
-    const observer = new ResizeObserver(() => instance.resize()); observer.observe(host.current);
-    return () => { active = false; observer.disconnect(); instance.remove(); map.current = null; };
+    observer = new ResizeObserver(() => { if (active) instance.resize(); }); observer.observe(container);
+    } catch {
+      cleanup();
+      setReady(false); setLoadedTiles(0);
+      setPaint({ idle: false, tilesLoaded: false, zoom: 0, lat: 0, lng: 0 });
+      setError('地图暂时不可用，仍可使用列表；可稍后重新加载底图。');
+    }
+    return cleanup;
   }, [canRender, state.map.id, mini, retry]);
   useEffect(() => {
     const instance = map.current; if (!instance || !ready || !center) return;
@@ -106,6 +125,7 @@ export function NearbyMap({ state, selectedId, onSelect, mini = false }: { state
     <div className="discovery-map-canvas" ref={host}/>
     {!canRender ? <div className="discovery-map-empty"><Crosshair size={30}/><strong>{center ? '当前底图尚未配置' : '让相遇，从这里开始。'}</strong><span>{center ? '请选择已配置的地图服务。' : '获取系统位置，或明确进入演示模式。'}</span></div> : null}
     {state.map.imageryNotice ? <span className="discovery-imagery-notice" role="note">{state.map.imageryNotice}</span> : null}
-    {!mini ? <><div className="discovery-map-legend"><PawPrint size={16}/>可相遇伙伴 <Flag size={15}/>领地</div><div className="discovery-map-controls"><Button variant="ghost" aria-label="地图回到当前位置" onClick={() => { if (center) map.current?.easeTo({ center: [center.lng, center.lat], duration: 0 }); }}><Crosshair size={19}/></Button><Button variant="ghost" aria-label="重新加载底图" onClick={() => setRetry(v => v + 1)}><RefreshCw size={17}/></Button></div>{error ? <span className="discovery-map-error" role="status">{error}</span> : null}</> : null}
+    {!mini ? <><div className="discovery-map-legend"><PawPrint size={16}/>可相遇伙伴 <Flag size={15}/>领地</div><div className="discovery-map-controls"><Button variant="ghost" aria-label="地图回到当前位置" onClick={() => { if (center) map.current?.easeTo({ center: [center.lng, center.lat], duration: 0 }); }}><Crosshair size={19}/></Button><Button variant="ghost" aria-label="重新加载底图" onClick={() => setRetry(v => v + 1)}><RefreshCw size={17}/></Button></div></> : null}
+    {error ? <span className="discovery-map-error" role="status">{error}</span> : null}
   </div>;
 }
