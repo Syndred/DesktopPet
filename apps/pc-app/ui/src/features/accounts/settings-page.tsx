@@ -28,6 +28,9 @@ function SettingsForm({ privacy = false, session }: { privacy?: boolean; session
   const [document, setDocument] = useState<SettingsDocument | null>(null);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
+  const [readError, setReadError] = useState("");
+  const [reading, setReading] = useState(true);
+  const retryRead = useRef<(() => void) | null>(null);
   const [notice, setNotice] = useState("");
   const [pointerPreview, setPointerPreview] = useState(false);
   const hostGeneration = useRef(0);
@@ -36,17 +39,21 @@ function SettingsForm({ privacy = false, session }: { privacy?: boolean; session
   const visibleCount = hostCurrent && Array.isArray(snapshot?.host?.windows) ? snapshot.host.windows.filter(value => value.visible).length : null;
   const appliedLimit = hostCurrent ? snapshot?.host?.companionLimit : null;
   useEffect(() => {
-    let active = true, policyKey: string | null = null;
+    let active = true, policyKey: string | null = null, pendingRead: number | null = null;
     const refreshHost = async () => {
       const generation = ++hostGeneration.current;
+      pendingRead = generation; setReading(true);
       try {
         const value = await request<SettingsSnapshot>("settingsGet");
         if (!active || generation !== hostGeneration.current) return;
-        if (value.host?.ownerAccountId && value.host.ownerAccountId !== owner) return;
+        if (value.host?.ownerAccountId && value.host.ownerAccountId !== owner) { setReadError("设置归属已变化，请重新读取。"); return; }
         setSnapshot(previous => previous ? { ...previous, host: value.host } : value);
         setDocument(previous => previous || value.document);
-      } catch (e) { if (active && generation === hostGeneration.current) setError(errorText(e)); }
+        setReadError("");
+      } catch (e) { if (active && generation === hostGeneration.current) setReadError(errorText(e)); }
+      finally { if (pendingRead === generation) pendingRead = null; if (active && generation === hostGeneration.current) setReading(false); }
     };
+    retryRead.current = () => { if (active && pendingRead === null) void refreshHost(); };
     void refreshHost();
     const stopWindows = window.lingjing?.subscribe('companions:windows-changed', value => {
       const who = (value as { ownerAccountId?: string } | null)?.ownerAccountId;
@@ -58,7 +65,7 @@ function SettingsForm({ privacy = false, session }: { privacy?: boolean; session
       const key = desktopPolicyFingerprint(value);
       if (key !== null && key !== policyKey) { policyKey = key; void refreshHost(); }
     });
-    return () => { active = false; hostGeneration.current += 1; stopWindows?.(); stopPolicy?.(); };
+    return () => { active = false; retryRead.current = null; hostGeneration.current += 1; stopWindows?.(); stopPolicy?.(); };
   }, [owner]);
   const edit = <K extends keyof SettingsDocument, P extends keyof SettingsDocument[K]>(section: K, key: P, value: SettingsDocument[K][P]) => {
     setDocument(previous => previous ? { ...previous, [section]: { ...previous[section], [key]: value } } : previous);
@@ -76,7 +83,7 @@ function SettingsForm({ privacy = false, session }: { privacy?: boolean; session
   }
   return <div className="accounts ac-page ac-preferences-page">
     <div className="ac-settings-layout"><SettingsNavigation /><div className="ac-settings-body"><header className="ac-page-heading"><div className="ac-title-row"><h1>{privacy ? "留一点安静，给自己。" : "按你的节奏，安静陪伴。"}</h1>{session.scenario && <AccountStatus icon={FlaskConical} label="测试场景" detail={`隔离测试 · ${session.scenario.id}`} iconOnly />}</div></header><form className="ac-settings-content" onSubmit={event => void save(event)}>
-      {!document ? <p role="status">正在读取设置…</p> : <fieldset disabled={pending}>
+      {!document ? <div>{reading ? <p role="status">正在读取设置…</p> : <p>暂时无法读取设置。</p>}<Button type="button" disabled={reading} onClick={() => retryRead.current?.()}>重新读取设置</Button></div> : <fieldset disabled={pending}>
         {!privacy && <div className="ac-desktop-columns"><Card className="ac-card"><h2>桌面表现</h2>
           <ToggleRow title="始终置顶" checked={document.desktop.alwaysOnTop} onChange={v => edit("desktop", "alwaysOnTop", v)} />
           <ToggleRow title="透明区域鼠标穿透" description="透明区域不拦截鼠标，伙伴本体仍可互动。" checked={document.desktop.clickThrough} onChange={v => edit("desktop", "clickThrough", v)} />
@@ -105,7 +112,7 @@ function SettingsForm({ privacy = false, session }: { privacy?: boolean; session
         <div className="ac-settings-footer"><Button type="button" className="ac-text-button" onClick={() => { void request<SettingsDocument>("settingsDefaults").then(value => { setDocument(value); setNotice("已填入默认设置，保存后生效。"); }).catch(e => setError(errorText(e))); }}><RefreshCw size={16} />恢复默认设置</Button><label className="ac-animation-preference"><AccountSwitch label="界面动效" checked={document.desktop.animationsEnabled} onChange={value => edit("desktop", "animationsEnabled", value)} disabled={pending} />界面动效</label><Button type="submit" className="ac-primary">{pending ? "正在保存…" : "保存设置"}</Button></div>
         {privacy && <Button type="button" className="ac-secondary" onClick={() => { void request<{ delivered: boolean; reason?: string }>("testNotification").then(value => setNotice(value.delivered ? "已发送测试通知。" : `当前未发送通知：${notificationReasonText.get(value.reason || "") || "暂时无法发送，请稍后重试"}。`)).catch(e => setError(errorText(e))); }}>测试已保存的通知设置</Button>}
       </fieldset>}
-      <p role="status" aria-live="polite" className="ac-notice">{notice}</p><p role="alert" className="ac-notice ac-error">{error}</p>
+      <p role="status" aria-live="polite" className="ac-notice">{notice}</p>{readError && <p role="alert" className="ac-notice ac-error">{readError}</p>}<p role="alert" className="ac-notice ac-error">{error}</p>
     </form></div></div>
   </div>;
 }

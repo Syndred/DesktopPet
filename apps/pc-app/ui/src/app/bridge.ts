@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { AppResult, FeatureId } from '../../../../../packages/shared-types/src/app';
 import type { IpcFeature, IpcCommand, IpcArguments, IpcOutput } from '../../../../../packages/shared-types/src/ipc';
 export function command<Feature extends IpcFeature, Command extends IpcCommand<Feature>>(feature: Feature, method: Command, ...args: IpcArguments<Feature, Command>): Promise<AppResult<IpcOutput<Feature, Command>>> {
@@ -18,15 +18,36 @@ export function useFeatureRequest<T = any>(feature: FeatureId | 'app', command: 
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const generation = useRef(0);
+  const active = useRef(false);
   const serialized = JSON.stringify(payload);
   const reload = useCallback(async () => {
+    if (!active.current) return;
+    const current = ++generation.current;
+    const isCurrent = () => active.current && generation.current === current;
     setLoading(true);
-    try { setData(await request<T>(feature, command, JSON.parse(serialized || '{}'))); setError(''); }
-    catch (e) { setError(e instanceof Error ? e.message : String(e)); }
-    finally { setLoading(false); }
+    try {
+      const result = await request<T>(feature, command, JSON.parse(serialized || '{}'));
+      if (isCurrent()) { setData(result); setError(''); }
+    } catch (e) { if (isCurrent()) setError(e instanceof Error ? e.message : String(e)); }
+    finally { if (isCurrent()) setLoading(false); }
   }, [feature, command, serialized]);
-  useEffect(() => { void reload(); }, [reload]);
-  useEffect(() => window.lingjing?.subscribe('app:session', () => { void reload(); }), [reload]);
-  useEffect(() => window.lingjing?.subscribe('accounts:session-changed', () => { void reload(); }), [reload]);
+  useEffect(() => {
+    active.current = true;
+    setData(null); setError('');
+    void reload();
+    return () => { active.current = false; ++generation.current; };
+  }, [reload]);
+  useEffect(() => {
+    const sessionChanged = () => {
+      if (!active.current) return;
+      // Never show the previous session's result while the new read is pending.
+      setData(null); setError('');
+      void reload();
+    };
+    const offApp = window.lingjing?.subscribe('app:session', sessionChanged);
+    const offAccounts = window.lingjing?.subscribe('accounts:session-changed', sessionChanged);
+    return () => { offApp?.(); offAccounts?.(); };
+  }, [reload]);
   return { data, error, loading, reload };
 }

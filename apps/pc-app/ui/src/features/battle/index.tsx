@@ -12,11 +12,13 @@ import { ReportsPanel } from './ReportsPanel';
 import { elements, modeLabels } from './presentation';
 import { useBattleSession } from './useBattleSession';
 import './battle.css';
+import { useBattleRouteId } from './route-id';
 
 function BattleLobby() {
   const path = usePath();
   const tab = path.startsWith('/battle/reports') ? 'reports' : path.startsWith('/battle/friends') ? 'friends' : 'training';
-  const reportId = path.startsWith('/battle/reports/') ? decodeURIComponent(path.slice('/battle/reports/'.length)) : undefined;
+  const rawReportId = useBattleRouteId(path, '/battle/reports/');
+  const reportId = path.startsWith('/battle/reports/') ? rawReportId ?? '' : undefined;
   const controller = useBattleSession();
   const { data, session, error, busy, run, reload } = controller;
   const [petId, setPetId] = useState(''), [enemyElement, setEnemyElement] = useState<ElementType>('fire');
@@ -29,7 +31,7 @@ function BattleLobby() {
   return <div className="battle-page"><PageHeader title={tab === 'reports' ? '战报' : '对战中心'}/>
     <Tabs value={tab} onValueChange={value => navigate(value === 'friends' ? '/battle/friends' : value === 'reports' ? '/battle/reports' : '/battle')}><TabsList className="battle-tabs" aria-label="对战方式">{[{ id: 'training', label: '训练' }, { id: 'friends', label: '好友对战' }, { id: 'reports', label: '战报' }].map(item => <TabsTrigger key={item.id} value={item.id}>{item.label}</TabsTrigger>)}</TabsList><TabsContent value={tab}>
       <ErrorNotice message={error}/>{!data ? <EmptyState title={error ? '暂时无法打开对战' : '正在准备…'} action={<Button onClick={() => void run(reload)}><RefreshCw size={16}/>重试</Button>}/>
-        : tab === 'reports' ? <ReportsPanel rules={data.rules} reports={data.reports} selectedId={reportId} busy={busy} onSelect={id => navigate(`/battle/reports/${encodeURIComponent(id)}`)} onBack={() => navigate('/battle')}
+        : tab === 'reports' ? <ReportsPanel rules={data.rules} reports={data.reports} selectedId={reportId} busy={busy} onSelect={id => navigate(`/battle/reports/${encodeURIComponent(id)}`)} onBack={() => navigate('/battle')} onList={() => navigate('/battle/reports')}
           onAgain={report => { void run(async () => { await request('battle', 'selectPet', { petId: report.player.petId, actionId: crypto.randomUUID() }); navigate(report.mode === 'friend' ? '/battle/friends' : '/battle'); }); }}
           onRetry={id => void run(async () => { await request('battle', 'retrySettlement', { sessionId: id }); await reload(); })}/>
         : session ? <Card className="space-y-4 p-5" aria-label="已保留的对局"><div><h2 className="font-semibold">当前对局已保留</h2><p className="muted">可继续{modeLabels[session.mode]}，或查看历史战报。</p></div><Button onClick={() => navigate(`/battle/session/${encodeURIComponent(session.id)}`)}><Swords size={18}/>{session.status === 'finished' || session.status === 'abandoned' ? '查看对局' : '继续本场'}</Button></Card>
@@ -45,7 +47,9 @@ function BattleLobby() {
 }
 function BattlePage() {
   const path = usePath();
-  return path.startsWith('/battle/session/') ? <BattleScreen key={path} sessionId={decodeURIComponent(path.slice('/battle/session/'.length))}/> : <BattleLobby/>;
+  const sessionId = useBattleRouteId(path, '/battle/session/');
+  if (!path.startsWith('/battle/session/')) return <BattleLobby/>;
+  return sessionId === null ? <EmptyState title="无法打开这场对战" description="对战链接无效，请返回对战中心。" action={<Button onClick={() => navigate('/battle')}>返回对战中心</Button>}/> : <BattleScreen key={sessionId} sessionId={sessionId}/>;
 }
 export default { id: 'battle', title: '对战中心', routes: [
   { path: '/battle', title: '对战中心', component: BattlePage }, { path: '/battle/friends', title: '好友对战', component: BattlePage },

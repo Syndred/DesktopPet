@@ -8,11 +8,11 @@ import { BattlePortrait, CombatantStatus, battleActionAnimation } from './Battle
 import { dateLabel, elements, modeLabels, petName, roundLines, seedRewardName, statusLabel } from './presentation';
 import { ParticipantNumber } from './identity';
 
-export function ReportsPanel({ rules, reports, selectedId, onSelect, onAgain, onBack, onRetry, busy }: {
+export function ReportsPanel({ rules, reports, selectedId, onSelect, onAgain, onBack, onList, onRetry, busy }: {
   rules: BattleRulesProfile; reports: BattleReport[]; selectedId?: string; onSelect(id: string): void; onAgain(report: BattleReport): void;
-  onBack(): void; onRetry(id: string): void; busy: boolean;
+  onBack(): void; onList(): void; onRetry(id: string): void; busy: boolean;
 }) {
-  const report = reports.find(item => item.id === selectedId) || reports[0];
+  const report = selectedId === undefined ? reports[0] : reports.find(item => item.id === selectedId);
   const [roundIndex, setRoundIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [lineIndex, setLineIndex] = useState(-1);
@@ -26,6 +26,7 @@ export function ReportsPanel({ rules, reports, selectedId, onSelect, onAgain, on
     return () => window.clearTimeout(timer);
   }, [playing, lineIndex, lines.length]);
   function selectRound(index: number) { setRoundIndex(index); setPlaying(false); setLineIndex(-1); }
+  if (selectedId !== undefined && !report) return <EmptyState title="未找到这场战报" description="这场战报可能尚未同步，或不属于当前账号。请返回战报列表查看已有记录。" action={<Button onClick={onList}>返回战报列表</Button>}/>;
   if (!report) return <EmptyState title="每一场并肩，都会记在这里。" description="完成一场训练、好友或野外挑战，即可查看战报与回合记录。" action={<Button onClick={onBack}>前往对战中心</Button>}/>;
   const won = report.winner === 'player';
   const reward = report.reward;
