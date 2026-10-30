@@ -33,12 +33,22 @@ test('same tile requests deduplicate and source switch cannot return old tile in
  const map=new MapAdapter();const one=loadMapTile(map,cache,{providerId:'osm',z:2,x:1,y:1});const two=cache.get(map.snapshot(),2,1,1);map.setProvider('nasa-gibs-bluemarble');release();assert.equal((await one).code,'MAP_PROVIDER_CHANGED');await two;assert.equal(calls,1);
  const stale=await loadMapTile(map,cache,{providerId:'osm',z:2,x:1,y:1});assert.equal(stale.code,'MAP_PROVIDER_CHANGED');assert.equal(calls,1);
 });
-test('six-request bound includes response-body reads, not just response headers',async t=>{
- let release,started=0,active=0,maximum=0;const bodyGate=new Promise(resolve=>release=resolve);
- const {cache}=await fixture(t,async url=>{started++;active++;maximum=Math.max(maximum,active);return {ok:true,url,headers:new Headers({'content-type':'image/jpeg'}),body:new ReadableStream({async start(controller){await bodyGate;active--;controller.enqueue(jpeg);controller.close();}})};});
- const tasks=Array.from({length:7},(_,x)=>cache.get(PROVIDERS['nasa-gibs-bluemarble'],3,x,1));
- for(let i=0;i<50 && started<6;i++) await new Promise(resolve=>setImmediate(resolve));
- assert.equal(started,6);assert.equal(active,6);release();await Promise.all(tasks);assert.equal(started,7);assert.equal(maximum,6);assert.equal(cache.active,0);assert.equal(cache.pending.size,0);
+test('six-request bound includes response-body reads, not just response headers',{timeout:15000},async t=>{
+ for(const schedulingDelayMs of [0,30]) {
+  let release,started=0,active=0,maximum=0,arrivals=0,sixStarted,sevenArrived,timer;
+  const bodyGate=new Promise(resolve=>release=resolve),six=new Promise(resolve=>sixStarted=resolve),seven=new Promise(resolve=>sevenArrived=resolve);
+  const {cache}=await fixture(t,async url=>{started++;active++;maximum=Math.max(maximum,active);if(started===6)sixStarted();return {ok:true,url,headers:new Headers({'content-type':'image/jpeg'}),body:new ReadableStream({async start(controller){await bodyGate;active--;controller.enqueue(jpeg);controller.close();}})};});
+  // Cache stat is asynchronous. Observe actual limiter admission, not a fixed
+  // number of event-loop ticks (which can finish before Windows filesystem I/O).
+  const acquire=cache.acquire.bind(cache);
+  cache.acquire=async()=>{if(schedulingDelayMs)await new Promise(resolve=>setTimeout(resolve,schedulingDelayMs));const admission=acquire();if(++arrivals===7)sevenArrived();return admission;};
+  const tasks=Array.from({length:7},(_,x)=>cache.get(PROVIDERS['nasa-gibs-bluemarble'],3,x,1));
+  try {
+   await Promise.race([Promise.all([six,seven]),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('Six body reads and seventh queue admission not observed')),5000);})]);
+   assert.equal(started,6);assert.equal(active,6);assert.equal(cache.active,6);assert.equal(cache.queue.length,1);
+  } finally {clearTimeout(timer);release();await Promise.all(tasks);}
+  assert.equal(started,7);assert.equal(maximum,6);assert.equal(cache.active,0);assert.equal(cache.pending.size,0);assert.equal(cache.queue.length,0);
+ }
 });
 
 test('missing length does not permit unbounded body; aborted body frees the slot',async t=>{
