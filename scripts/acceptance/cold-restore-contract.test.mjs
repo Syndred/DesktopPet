@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFileSync} from 'node:fs';
+import {createRequire} from 'node:module';
+import {DatabaseSync} from 'node:sqlite';
+const require=createRequire(import.meta.url);
 const script=readFileSync(new URL('./cloud-native-cold-restore.mjs',import.meta.url),'utf8');
 const workflow=readFileSync(new URL('../../.github/workflows/cloud-native-cold-restore.yml',import.meta.url),'utf8');
 function readbackBody(source){
@@ -23,6 +26,23 @@ test('same absolute profile and marker bytes retained, with no owner/provenance 
 test('baseline has explicit logged-out/empty/session/provider boundaries and SQLite integrity check',()=>{
   for(const token of ['assertStoppedDatabase','inspectStoppedSeed','quick_check','loginSessions:0','cloudLinks:0','conversationCredentials:0','vaultExists:false','assertEmptyBusiness'])assert.ok(script.includes(token),token);
   assert.match(script,/for\(const suffix of \['-wal','-shm'\]\)/);
+});
+test('production empty legacy initialization is exactly revision 1 without authored pets or actions',()=>{
+  const {migrateCompanions}=require('../../apps/pc-app/runtime/features/companions/migrations.cjs');
+  const {CompanionsService}=require('../../apps/pc-app/runtime/features/companions/service.cjs');
+  const db=new DatabaseSync(':memory:'),owner='cold-contract-owner',at='2026-11-04T00:00:00.000Z';
+  try{
+    migrateCompanions(db);
+    const service=new CompanionsService({db,now:()=>new Date(at)});
+    assert.deepEqual(service.importLegacyInventory(owner,{pets:[]}),{imported:0,alreadyImported:false});
+    const expected={owner_account_id:owner,revision:1,selections_json:JSON.stringify({chatPetId:null,battlePetId:null,guardPetId:null}),legacy_imported_at:at};
+    assert.deepEqual({...service.account(owner)},expected);
+    for(const table of ['companion_pets','companion_actions','companion_legacy_archive','companion_interactions','companion_capture_receipts','companion_identity_imports'])assert.equal(db.prepare('SELECT count(*) n FROM '+table).get().n,0);
+    assert.deepEqual(service.importLegacyInventory(owner,{pets:[]}),{imported:0,alreadyImported:true});
+    assert.deepEqual({...service.account(owner)},expected);
+    assert.match(script,/assert.equal\(row.revision,1,'Empty legacy initialization/);
+    assert.match(script,/assert.deepEqual\(rows,emptyCompanionAccounts/);
+  }finally{db.close();}
 });
 test('source preserved separately and read back from preserved directory, with original byte hashes',()=>{
   assert.match(script,/renameSync\(profile,preserved\)/);assert.match(script,/assert.equal\(existsSync\(preserved\),false\)/);

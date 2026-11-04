@@ -25,7 +25,7 @@ const offlineConfig=join(profile,'offline-public.json');writeFileSync(offlineCon
 const systemKeys=new Set(['PATH','PATHEXT','SYSTEMROOT','SYSTEMDRIVE','WINDIR','COMSPEC','TEMP','TMP','TMPDIR','HOME','USERPROFILE','APPDATA','LOCALAPPDATA','PROGRAMFILES','PROGRAMFILES(X86)','PROGRAMW6432','LANG','LC_ALL','CI']);
 const environment=Object.fromEntries(Object.keys(process.env).filter(key=>!systemKeys.has(key.toUpperCase())).map(key=>[key,undefined]));Object.assign(environment,{PET_USER_DATA_DIR:profile,LINGJING_QA_SCENARIO:SCENARIO,LINGJING_PUBLIC_CONFIG:offlineConfig});
 const proof={scope:'Same-path empty-baseline cold recovery of a synthetic offline identity in an audited Windows SFX. Not cross-profile/cloud recovery or a whole acceptance case.',dialogMode:'native-win32-exact-standard-chain',nativeDialogs:[],sourceCommit:expectedSource,compiledFingerprint:build.compiledFingerprint,exeSha256:await sha256(executable),full98Passed:false,nativeFilePickerExercised:false,liveCloudExercised:false,cases:[],passed:false,startedAt:new Date().toISOString()};
-let model,uncertain=false,owner,petId,resourceId;const pids=new Set();const redact=value=>String(value).split(secret).join('[redacted]');
+let model,uncertain=false,owner,petId,resourceId,emptyCompanionAccounts;const pids=new Set();const redact=value=>String(value?.stack||value).split(secret).join('[redacted]');
 const save=()=>writeFileSync(join(output,'evidence.json'),JSON.stringify(proof,null,2));
 const digest=value=>createHash('sha256').update(typeof value==='string'||Buffer.isBuffer(value)?value:JSON.stringify(value)).digest('hex');
 const within=(root,file)=>{const rel=relative(realpathSync(root),realpathSync(file));assert.ok(rel&&rel!=='..'&&!rel.startsWith('..\\')&&!rel.startsWith('../')&&!isAbsolute(rel),'Fixture path must remain within exact temporary profile');return file;};
@@ -159,10 +159,20 @@ async function identityCounts(){
   },profile);
 }
 function assertEmptyBusiness(snapshot){
-  const emptyTables=['companion_pets','companion_actions','companion_legacy_archive','companion_interactions','companion_capture_receipts','conversation_messages','conversation_memories','conversation_profiles','conversation_connections','conversation_credentials','lingjing_resource_imports','lingjing_resource_preferences'];
+  const emptyTables=['companion_pets','companion_actions','companion_legacy_archive','companion_interactions','companion_capture_receipts','companion_identity_imports','conversation_messages','conversation_memories','conversation_profiles','conversation_connections','conversation_credentials','lingjing_resource_imports','lingjing_resource_preferences'];
   for(const table of emptyTables)assert.equal(snapshot[table].length,0,`Seed must have no authored ${table}`);
-  assert.equal(snapshot.lingjing_resources.filter(row=>row.owner_account_id!==null).length,0);
-  for(const row of snapshot.companion_accounts){assert.equal(row.revision,0);assert.ok(Object.values(JSON.parse(row.selections_json)).every(value=>value===null));}
+  assert.equal(snapshot.lingjing_resources.filter(row=>row.owner_account_id!==null).length,0,'Seed must have no owner-authored resources');
+  // The production list path records its one-time empty legacy import even when
+  // there are no pets. That initialization is revision 1, not an authored action.
+  assert.equal(snapshot.companion_accounts.length,1,'Exactly one empty owner account');
+  for(const row of snapshot.companion_accounts){
+    assert.equal(row.owner_account_id,owner);
+    assert.equal(row.revision,1,'Empty legacy initialization is exactly revision 1');
+    assert.deepEqual(JSON.parse(row.selections_json),{chatPetId:null,battlePetId:null,guardPetId:null});
+    assert.equal(new Date(row.legacy_imported_at).toISOString(),row.legacy_imported_at);
+  }
+  if(emptyCompanionAccounts)assert.deepEqual(snapshot.companion_accounts,emptyCompanionAccounts,'Empty owner initialization must remain byte-logically unchanged');
+  else emptyCompanionAccounts=structuredClone(snapshot.companion_accounts);
 }
 function assertStoppedDatabase(){
   for(const suffix of ['-wal','-shm']){
@@ -187,7 +197,7 @@ function assertEmptyProtection(value){
   assert.equal(resources.resources.length,0);assert.equal(resources.imports.length,0);assert.equal(resources.preferences.length,0);
   assert.equal(value.data.modules.companions.data.identityImports.length,0);
   for(const [name,rows] of Object.entries(value.data.modules.companions.data.tables)){
-    if(name==='companion_accounts')for(const row of rows){assert.equal(row.revision,0);assert.ok(Object.values(JSON.parse(row.selections_json)).every(item=>item===null));}
+    if(name==='companion_accounts')assert.deepEqual(rows,emptyCompanionAccounts,'Protection retains exact empty owner initialization');
     else assert.equal(rows.length,0,'Protection has unexpected '+name);
   }
   const conversations=value.data.modules.conversations.data;
@@ -241,6 +251,7 @@ async function assertRestored(snapshot,resourceBytes){
 try{
   await step('seed-empty-same-path','New UI-created simulated identity; logged-out empty database baseline only',async()=>{
     await launch();owner=await register(account);
+    assert.equal((await model.call('companions','list')).pets.length,0);
     assertEmptyBusiness(await state());
     await logout();
     const counts=await identityCounts();
