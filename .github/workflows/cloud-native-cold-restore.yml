@@ -1,0 +1,76 @@
+name: DesktopPet native cold baseline restore
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/cloud-authority-convergence']
+    paths:
+      - '.github/workflows/cloud-native-cold-restore.yml'
+      - 'scripts/acceptance/cloud-native-cold-restore.mjs'
+      - 'scripts/acceptance/cold-restore-contract.test.mjs'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: native-cold-restore-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  cold-restore:
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
+    runs-on: windows-latest
+    timeout-minutes: 25
+    env:
+      PACKAGE_SOURCE: 735c48476d3c0efc2aab62cecc765c9ce1933adb
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install isolated existing test dependencies
+        run: npm ci
+      - name: Check only new harness syntax and scope contracts
+        run: |
+          node --check scripts/acceptance/cloud-native-cold-restore.mjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node --test scripts/acceptance/cold-restore-contract.test.mjs
+      - name: Download exact already audited Windows package
+        uses: actions/download-artifact@v8.0.2
+        with:
+          name: desktoppet-map-discovery-735c48476d3c0efc2aab62cecc765c9ce1933adb
+          run-id: 41005729685
+          github-token: ${{ github.token }}
+          path: artifacts/qa/native-baseline
+      - name: Bind package bytes, product tree and unchanged build
+        id: reuse
+        run: node scripts/acceptance/verify-portable-reuse.mjs --source=$env:PACKAGE_SOURCE
+      - name: Verify native UIA API without opening application dialogs
+        id: uia
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' }}
+        timeout-minutes: 2
+        run: node scripts/acceptance/native-file-dialog.mjs --selftest
+      - name: Native empty-baseline restore and normal restart
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && steps.uia.outcome == 'success' }}
+        timeout-minutes: 14
+        run: node scripts/acceptance/cloud-native-cold-restore.mjs --source=$env:PACKAGE_SOURCE
+      - name: Retain bounded synthetic evidence only, never databases or profiles
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: desktoppet-native-cold-restore-${{ github.sha }}
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            artifacts/qa/native-continuation/package-reuse.json
+            artifacts/qa/native-cold-restore/run-*/evidence.json
+            artifacts/qa/native-cold-restore/run-*/source-export.png
+            artifacts/qa/native-cold-restore/run-*/cold-restored-memory.png
+            artifacts/qa/native-cold-restore/run-*/restart-resource-ready.png
+            artifacts/qa/native-cold-restore/run-*/failure.png
+            artifacts/foundation/cloud-engineering/backup/run-native-dialog-*/owned-native-dialog.png
