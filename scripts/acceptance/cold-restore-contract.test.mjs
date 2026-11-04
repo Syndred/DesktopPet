@@ -3,6 +3,13 @@ import test from 'node:test';
 import {readFileSync} from 'node:fs';
 const script=readFileSync(new URL('./cloud-native-cold-restore.mjs',import.meta.url),'utf8');
 const workflow=readFileSync(new URL('../../.github/workflows/cloud-native-cold-restore.yml',import.meta.url),'utf8');
+function readbackBody(source){
+  const normalized=source.replace(/\r\n?/g,'\n');
+  const start=normalized.indexOf('async function assertRestored');
+  const end=normalized.indexOf('\ntry{\n  await step',start);
+  assert.ok(start>=0&&end>start,'Readback function boundaries must exist');
+  return normalized.slice(start,end);
+}
 test('cold restore has mandatory disposable Windows native UI and no dialog bridge',()=>{
   assert.match(script,/const nativeDialog=true/);assert.match(script,/assert.equal\(process.env.GITHUB_ACTIONS,'true'/);
   assert.match(script,/assert.equal\(process.platform,'win32'\)/);assert.doesNotMatch(script,/async function bridge|globalThis.__backupDialogPending/);
@@ -22,8 +29,13 @@ test('source preserved separately and read back from preserved directory, with o
   assert.match(script,/preservedProof.resources/);assert.match(script,/preservedSourceUnchangedAfterRestore=true/);
 });
 test('readback does not create additional pet selection actions',()=>{
-  const readback=script.slice(script.indexOf('async function assertRestored'),script.indexOf('\ntry{\n  await step'));
+  const readback=readbackBody(script);
   assert.doesNotMatch(readback,/\.click\(/);assert.match(readback,/aria-pressed/);
+});
+test('readback scope is identical for LF and Windows CRLF and rejects absent boundaries',()=>{
+  const lf=script.replace(/\r\n?/g,'\n');
+  assert.equal(readbackBody(lf),readbackBody(lf.replace(/\n/g,'\r\n')));
+  assert.throws(()=>readbackBody('async function assertRestored(){}'),/boundaries must exist/);
 });
 test('old path absence and byte checks apply to imported resource only',()=>{
   assert.match(script,/sourceState.lingjing_resource_files.filter\(row=>row.resource_id===resourceId\)\)assert.equal\(existsSync/);
