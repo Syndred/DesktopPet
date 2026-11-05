@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import {createHash,randomUUID,randomBytes} from 'node:crypto';
 import {createRequire} from 'node:module';
 import {spawn,execFileSync} from 'node:child_process';
-import {mkdtempSync,mkdirSync,readFileSync,writeFileSync,renameSync,realpathSync,existsSync,rmSync,lstatSync,readdirSync} from 'node:fs';
+import {mkdtempSync,mkdirSync,readFileSync,writeFileSync,renameSync,linkSync,realpathSync,existsSync,rmSync,lstatSync,readdirSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join,resolve,dirname,basename} from 'node:path';
 import {compactVerify,importSPKI} from 'jose';
@@ -14,6 +14,7 @@ import {readAppliedReceipt} from './transport.mjs';
 import {launchPortableSession} from '../portable-session.mjs';
 import {pollState} from '../poll-state.mjs';
 import {createPlatformCellRequest} from '../cloud-live-qa-s02-platform-cell.mjs';
+import {createS06ActorBinding,assertS06OriginalActors,assertS06ActorBinding} from '../cloud-live-qa-s06-actor-binding.mjs';
 import {observePlatformFourGrantTransition} from '../cloud-live-qa-s06-platform-transition.mjs';
 import {installPlatformS06BeforeLogin,admitPlatformS06SingleSnapshot,releasePlatformS06AfterFormalGrant,installS06BeforeLogin,s06GateSafeManifest,admitS06SingleSnapshot,releaseS06AfterFormalGrant,closeS06GateAfterOwnedProcessStopped} from '../cloud-live-qa-s06-prelogin-gate.mjs';
 import {createNewCUiLifecycle} from '../cloud-new-c-ui-lifecycle.mjs';
@@ -208,7 +209,29 @@ export async function reconcileOriginalIntent(cap,{slot,operation,intentId,prior
  const s=own(cap);assert.ok(['A','B','C'].includes(slot));assert.equal(operation,slot==='C'?'register':'reset');assert.equal(intentId,`${s.binding.requestDigest}:${slot}:${operation}`);
  assert.equal(prior.mayBlindRetry,false);const p=await freshParentProof(cap,'reconcile-'+slot,{slot,intentDigest:sha(intentId),accountKey:FIXED_IDENTITIES[slot].accountKey});assert.equal(p.confirmed,true);return {confirmed:true};
 }
-export async function persistSafeIdentityManifest(cap){const s=own(cap);safeWrite(s,'identity-manifest.json',{version:1,run:s.binding.run,commit:s.binding.commit,requestDigest:s.binding.requestDigest,scenario,createdAt:new Date().toISOString(),devices:Object.entries(s.models).filter(([,m])=>m.actor).map(([role,m])=>({role,...m.actor})),registrationConfirmed:Boolean(s.identities.C)});}
+// BEGIN S06_ORIGINAL_ACTOR_ARTIFACT
+function safeWriteOriginalIdentity(s,value){
+ const file=join(s.output,'identity-manifest.json'),temporary=file+'.original.tmp';writeFileSync(temporary,JSON.stringify(value,null,2),{flag:'wx',mode:0o600});
+ // A same-directory hard link publishes complete bytes atomically and refuses
+ // an existing destination on Windows and POSIX. It never replaces an artifact.
+ try{linkSync(temporary,file);}finally{rmSync(temporary);}
+}
+async function collectS06OriginalActors(s){
+ const actors={};for(const role of roles){const model=s.models[role],actor=await safeActor(model);assert.equal(actor.deviceId,model.expectedDeviceId);for(const key of ['ownerAccountId','authUserId','deviceId'])assert.equal(actor[key],model.actor[key]);actors[role]=Object.freeze(actor);}return Object.freeze(actors);
+}
+export async function persistSafeIdentityManifest(cap){
+ const s=own(cap);
+ if(s.binding.source==='github-environment-v1'){
+  // This uploaded file describes the original S06 issuance only. Subsequent
+  // normal A/C relaunches update live models but must not rewrite its sessions.
+  if(s.s06ActorBinding)return;
+  if(!s.identities.C||!roles.every(role=>s.models[role]?.actor))return;
+  const actors=await collectS06OriginalActors(s),binding=createS06ActorBinding({binding:s.binding,actors,cIdentity:s.identities.C});
+  safeWriteOriginalIdentity(s,{version:2,purpose:'s06-original-issuance-observation-no-authority',...binding,createdAt:new Date().toISOString(),registrationConfirmed:true});s.s06OriginalActors=actors;s.s06ActorBinding=binding;return;
+ }
+ safeWrite(s,'identity-manifest.json',{version:1,run:s.binding.run,commit:s.binding.commit,requestDigest:s.binding.requestDigest,scenario,createdAt:new Date().toISOString(),devices:Object.entries(s.models).filter(([,m])=>m.actor).map(([role,m])=>({role,...m.actor})),registrationConfirmed:Boolean(s.identities.C)});
+}
+// END S06_ORIGINAL_ACTOR_ARTIFACT
 async function stopModel(model){let timer;try{await Promise.race([model.stop(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('OWNED_STOP_TIMEOUT')),15000);})]);}finally{clearTimeout(timer);}await pollState(()=>[model.launcherPid,model.runtime.pid].every(p=>!live(p)),Boolean,{timeoutMs:10000,intervalMs:200,label:'OWNED_EXIT_REQUIRED'});}
 export async function launchNormalModel(cap,{role,prior,identity,vault,expectedEpoch}){
  const s=own(cap);assert.equal(vault,s.vault);assert.ok(roles.includes(role));assert.equal(identity.accountKey,FIXED_IDENTITIES[slotFor(role)].accountKey);
@@ -416,14 +439,15 @@ export async function importEnvironmentCredentials(cap,{vault,provenance}){
  finally{for(const name of Object.values(names))delete process.env[name];}
 }
 async function releasePlatformGrants(cap,cCredential){
- const s=own(cap);assert.equal(s.binding.source,'github-environment-v1');assert.equal(s.grantsReleased,undefined);const actors={};for(const role of roles)actors[role]=await safeActor(s.models[role]);
+ const s=own(cap);assert.equal(s.binding.source,'github-environment-v1');assert.equal(s.grantsReleased,undefined);const actors=await collectS06OriginalActors(s);assertS06OriginalActors(actors,s.s06OriginalActors);assertS06ActorBinding(s.s06ActorBinding,{binding:s.binding,actors,cIdentity:s.identities.C});
  // Internal same-job orchestration barrier only: uploaded identity is visible to
  // parent before the one 60-second baseline window. This never authorizes a grant.
  const barrier=join(s.output,'identity-upload-complete.json');while(!existsSync(barrier)){own(cap);assert.ok(Date.now()<s.binding.businessDeadline);await pause(250);}assert.equal(lstatSync(barrier).isSymbolicLink(),false);const scheduled=JSON.parse(readFileSync(barrier,'utf8').replace(/^\uFEFF/,''));assert.deepEqual(scheduled,{version:1,run:s.binding.run,commit:s.binding.commit,requestDigest:s.binding.requestDigest,purpose:'identity-upload-complete-no-authority'});
- const transition=await observePlatformFourGrantTransition({admission:s.authorization,models:s.models,actors,scenario,vault:s.vault,cCredential});
- await admitPlatformS06SingleSnapshot(s.models.a3.s06Ticket,{transition});
- const observedAtMs=Date.now();
- safeWrite(s,'s06-platform-warning.json',{version:1,run:s.binding.run,commit:s.binding.commit,requestDigest:s.binding.requestDigest,nonce:s.binding.nonce,observedAtMs,realOriginalWarningObserved:true,originalSnapshotCount:1,deadline:s.binding.businessDeadline});
+ const transition=await observePlatformFourGrantTransition({admission:s.authorization,models:s.models,actors,actorBinding:s.s06ActorBinding,cIdentity:s.identities.C,scenario,vault:s.vault,cCredential});
+ const warning=await admitPlatformS06SingleSnapshot(s.models.a3.s06Ticket,{transition});
+ assertS06OriginalActors(await collectS06OriginalActors(s),s.s06OriginalActors);
+ assert.equal(warning.actorBindingDigest,s.s06ActorBinding.actorBindingDigest);assert.ok(Date.now()<s.binding.businessDeadline);
+ safeWrite(s,'s06-platform-warning.json',{version:2,...warning,deadline:s.binding.businessDeadline});
  await releasePlatformS06AfterFormalGrant(s.models.a3.s06Ticket);
  for(const role of roles){const actor=await safeActor(s.models[role]);for(const key of ['ownerAccountId','authUserId','deviceId','sessionId','epoch'])assert.equal(actor[key],actors[role][key]);s.scopeGrants.set(role,{...actor,role,scenario,expiresAtMs:s.binding.businessDeadline,deadlineSource:'fixed-platform-admission',protocolDoesNotReturnExpiry:true});}
  for(const role of roles.filter(r=>r!=='a3'))await s.models[role].main(async(_e,g)=>globalThis.__qaUiCaseContext.release(g),s.scopeGrants.get(role));s.grantsReleased=true;await assertSameRunGrant(cap,{hardDeadline:s.binding.businessDeadline});

@@ -1,5 +1,6 @@
 // Offline isolation contracts. These are not Windows UI or cloud acceptance.
 import test from 'node:test';
+import {withoutS06SessionBinding} from './s06-session-binding-preservation.test-support.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
@@ -8,12 +9,36 @@ import vm from 'node:vm';
 import {notificationPackage,signedoutPreparationPackage,notificationRuntime,validatePinnedNotificationPackage,validatePinnedSignedoutPreparationPackage,verifyCompletionPackageBeforeCredentials,verifySignedoutPackageWithoutCredentials,assertNoIdentityEnvironment} from './cloud-live-qa-completion-package-preflight.mjs';
 import {MODULES,assertPreparedCompletion,takePreparedCompletion} from './cloud-live-qa-completion-readiness.mjs';
 import {assertPlatformAdmission} from './recovery/github-environment-admission.mjs';
+import {verifyEnvironmentLifecycleSource} from './recovery/holder-environment.mjs';
 import {assertCompletionAuthorization} from './dpapi/authorized-vault-client.mjs';
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
 const read=path=>readFileSync(new URL('../../'+path,import.meta.url),'utf8').replace(/\r\n/g,'\n');
 const migrationBase='b6378f4d70e703505f5f103765279b1aa88cf46b';
 const baseline=path=>execFileSync('git',['show',migrationBase+':'+path]);
 const identityKeys=['expectedSource','expectedFingerprint','expectedExeSha256'];
+function withoutSharedLifecycleSourceGate(source){
+ source=withoutS06SessionBinding(source,'recovery/holder-environment.mjs');
+ const oldPin='2f88880662dc897962a8cf0aa689ab0cf1249b8da52924fac594a9973564f5ae',newPin='9b32480fda049997bfde0ab587fae2d84e0345436d3661a83ad1bbeeeb9044df';
+ const originalGate=" assert.match(ENVIRONMENT_LIFECYCLE_SHA256||'',/^[a-f0-9]{64}$/,'ENVIRONMENT_FACTORY_NOT_READY');const url=new URL('./same-run-normal-lifecycle-factory.mjs',import.meta.url);assert.equal(hash(readFileSync(url)),ENVIRONMENT_LIFECYCLE_SHA256);\n";
+ const sharedGate='// Read-only fixed source gate shared by live and signedout preparation.\nexport function verifyEnvironmentLifecycleSource(){\n'+originalGate+' return url;\n}\n';
+ for(const [current,previous]of [["ENVIRONMENT_LIFECYCLE_SHA256='"+newPin+"'","ENVIRONMENT_LIFECYCLE_SHA256='"+oldPin+"'"],[sharedGate,''],[' const url=verifyEnvironmentLifecycleSource();\n',originalGate]]){assert.equal(source.split(current).length,2,'Exactly one reviewed fixed source gate change');source=source.replace(current,previous);}
+ return source;
+}
+function withoutSharedSourceGateCall(source){
+ const call=' loaded.environmentHolder.verifyEnvironmentLifecycleSource();\n';assert.equal(source.split(call).length,2,'Exactly one shared fixed source gate call');return source.replace(call,'');
+}
+function withoutFixedCompletionOutputAllocation(source){
+ const start='// BEGIN FIXED_COMPLETION_OUTPUT_DIRECTORY\n',end='// END FIXED_COMPLETION_OUTPUT_DIRECTORY\n';
+ assert.equal(source.split(start).length,2);assert.equal(source.split(end).length,2);const a=source.indexOf(start),b=source.indexOf(end,a);assert.ok(b>a);
+ const block=source.slice(a,b+end.length);assert.equal(sha(Buffer.from(block)),'6c68d8506eb50b8f1edfc780fc408ba80ee8fbd281440f9affc53443fdfb8c4e');source=source.slice(0,a)+source.slice(b+end.length);
+ const replacements=[
+  ["import {readFileSync,writeFileSync,renameSync,mkdirSync,existsSync,realpathSync,lstatSync} from 'node:fs';","import {readFileSync,writeFileSync,renameSync,mkdirSync,existsSync,realpathSync} from 'node:fs';"],
+  ["import {join,resolve} from 'node:path';\nimport {fileURLToPath} from 'node:url';","import {join} from 'node:path';"],
+  [" const base=allocateFixedCompletionDirectory({repositoryRoot:resolve(fileURLToPath(new URL('../../',import.meta.url))),output:context.output,ciRunId:process.env.GITHUB_RUN_ID});"," const base=join(context.output,'fixed-completion');assert.equal(existsSync(base),false,'Do not rerun after any uncertain original intent');mkdirSync(base);"]
+ ];
+ for(const [current,previous]of replacements){assert.equal(source.split(current).length,2,'Exactly one reviewed completion output allocation change');source=source.replace(current,previous);}
+ return source;
+}
 const previousPackage={expectedSource:'5016f1c3f7de04b4e2b322d0b47ec52248596771',expectedFingerprint:'25d17ddda4a5526a6e9e63503f4fd3def1816935b97a96a5c1d0a19795a21387',expectedExeSha256:'a88f61364810291e6ca79ff1b9030680831d7382e65137b9ace9607e3e65fafc'};
 test('audited bytes align while signedout and live preparation remain separate fixed gates',()=>{
  assert.equal(signedoutPreparationPackage.expectedSource,'735c48476d3c0efc2aab62cecc765c9ce1933adb');
@@ -33,7 +58,7 @@ test('identity-bearing environments are rejected before signedout package prepar
  }
 });
 test('a valid current package and caller approval are never platform or business capabilities',()=>{
- for(const forged of [notificationPackage,signedoutPreparationPackage,{scope:'assertion-only',source:'not-authenticated',fullCasePassed:false},{}, {approved:true,packageSource:notificationPackage.expectedSource,executableSha256:notificationPackage.expectedExeSha256},{protocol:'fixed-completion-precredential-v1',signedoutOnly:true,selftestsPassed:true,packageProof:signedoutPreparationPackage}]){
+ for(const forged of [verifyEnvironmentLifecycleSource(),notificationPackage,signedoutPreparationPackage,{scope:'assertion-only',source:'not-authenticated',fullCasePassed:false},{}, {approved:true,packageSource:notificationPackage.expectedSource,executableSha256:notificationPackage.expectedExeSha256},{protocol:'fixed-completion-precredential-v1',signedoutOnly:true,selftestsPassed:true,packageProof:signedoutPreparationPackage}]){
   assert.throws(()=>assertPlatformAdmission(forged));assert.throws(()=>assertCompletionAuthorization(forged));assert.throws(()=>assertPreparedCompletion(forged));assert.throws(()=>takePreparedCompletion(forged));
  }
 });
@@ -45,8 +70,15 @@ test('shared preparation wrappers cannot select a caller supplied verifier or mi
  assert.match(source,/const handle=await prepareCompletionArtifacts\(\{selectedCases,runId,scenario,\.\.\.options,packageBinding,preparation\}\)/);
  assert.match(source,/assertCompletionAuthorization\(authorization,\{caseIds:selectedCases\}\)/);
 });
+test('shared fixed holder source gate follows module hashes and precedes any package or profile work',()=>{
+ const source=read('scripts/acceptance/cloud-live-qa-completion-readiness.mjs'),start=source.indexOf('async function prepareCompletionArtifactsInternal('),body=source.slice(start,source.indexOf('export function inspectCompletionArtifacts',start));
+ assert.ok(MODULES.environmentHolder.exports.includes('verifyEnvironmentLifecycleSource'));
+ const hashes=body.indexOf('let moduleIndex=0;'),gate=body.indexOf(' loaded.environmentHolder.verifyEnvironmentLifecycleSource();'),prior=body.indexOf(" preparationStage(preparation,'prior-proof');"),contracts=body.indexOf(" preparationStage(preparation,'pure-contracts');"),packageCheck=body.indexOf(' const packageProof='),profiles=body.indexOf(' const tickets=');
+ assert.ok(hashes>=0&&hashes<gate&&gate<prior&&prior<contracts&&contracts<packageCheck&&packageCheck<profiles);
+ assert.equal(body.split('verifyEnvironmentLifecycleSource').length,2);assert.doesNotMatch(body,/signedoutOnly[^\n]*verifyEnvironmentLifecycleSource|verifier|callbacks/);
+});
 test('all reviewed module and asset pins match exact source bytes',()=>{
- let count=0;for(const spec of Object.values(MODULES))for(const entry of [spec,...spec.assets||[]]){assert.equal(sha(readFileSync(new URL(entry.file,import.meta.url))),entry.sha256,entry.file);count++;}assert.equal(count,44);
+ let count=0;for(const spec of Object.values(MODULES))for(const entry of [spec,...spec.assets||[]]){assert.equal(sha(readFileSync(new URL(entry.file,import.meta.url))),entry.sha256,entry.file);count++;}assert.equal(count,47);
 });
 test('the current package notification runtime is unchanged and product reuse remains strict',()=>{
  const bytes=execFileSync('git',['show',signedoutPreparationPackage.expectedSource+':'+notificationRuntime.path]);assert.equal(sha(bytes.toString('utf8').replace(/\r\n/g,'\n')),notificationRuntime.sha256);
@@ -70,7 +102,7 @@ test('active authorization guards change only the exact reviewed package binding
 });
 test('legacy credentials, custody, grants and historical fixture code remain byte-for-byte unchanged',()=>{
  for(const path of ['scripts/acceptance/dpapi/authorized-vault-client.mjs','.github/workflows/cloud-same-run-completion-prepare.yml','scripts/acceptance/recovery/run-environment-completion.mjs','scripts/acceptance/recovery/environment-bootstrap.mjs','scripts/acceptance/recovery/environment-process.ps1','scripts/acceptance/recovery/holder-environment.mjs','scripts/acceptance/cloud-live-qa-s06-platform-transition.mjs','scripts/acceptance/cloud-live-qa-s06-prelogin-gate.mjs','scripts/acceptance/recovery/same-run-fixture-index.mjs','scripts/acceptance/requests/same-run-next-completion.json']){
-  assert.equal(sha(readFileSync(new URL('../../'+path,import.meta.url))),sha(baseline(path)),path);
+  const current=path.endsWith('/holder-environment.mjs')?Buffer.from(withoutSharedLifecycleSourceGate(read(path))):path.includes('cloud-live-qa-s06-')?Buffer.from(withoutS06SessionBinding(read(path),path)):readFileSync(new URL('../../'+path,import.meta.url));assert.equal(sha(current),sha(baseline(path)),path);
  }
 });
 
@@ -82,6 +114,7 @@ function withoutBattleEvidencePaths(source){
  }return source;
 }
 function withoutCTransition(source){
+ source=withoutS06SessionBinding(source,'recovery/same-run-normal-lifecycle-factory.mjs');
  const invalidation=" // BEGIN A_UI_BINDING_RELAUNCH_INVALIDATION\n if(prior&&role==='a'){\n  await persistSafeIdentityManifest(cap);\n  delete s.uiBinding;\n  return model;\n }\n // END A_UI_BINDING_RELAUNCH_INVALIDATION\n";assert.equal(source.split(invalidation).length,2);source=source.replace(invalidation,'');
  for(const [indent,part] of [['','DEFINITIONS'],['  ','DEPS']]){
   const start=indent+'// BEGIN C_AUTHENTICATION_TRANSITION '+part+'\n',end=indent+'// END C_AUTHENTICATION_TRANSITION '+part+'\n';
@@ -91,14 +124,15 @@ function withoutCTransition(source){
 test('C authentication and fixed A binding invalidation leave every original lifecycle guard unchanged',()=>{
  const path='scripts/acceptance/recovery/same-run-normal-lifecycle-factory.mjs';assert.equal(withoutCTransition(read(path)),baseline(path).toString('utf8').replace(/\r\n/g,'\n'));
 });
-test('evidence revision changes only seven reviewed modules, bounded watchdog IO repair and exact test/display assets, never preparation authority',()=>{
- const path='scripts/acceptance/cloud-live-qa-completion-readiness.mjs',prior=execFileSync('git',['show','797eb0ad6510b9d558297c2e4c0651cc6b14f3f2:'+path],{encoding:'utf8'}),current=read(path);
+test('evidence revision allows only reviewed pins, exact output allocation and the shared fixed source gate',()=>{
+ const path='scripts/acceptance/cloud-live-qa-completion-readiness.mjs',prior=execFileSync('git',['show','797eb0ad6510b9d558297c2e4c0651cc6b14f3f2:'+path],{encoding:'utf8'}),current=withoutS06SessionBinding(read(path),path);
  function split(source){const a=source.indexOf('export const MODULES=frozen('),start=a+'export const MODULES=frozen('.length,end=source.indexOf(');\nconst common=',start);assert.ok(a>=0&&end>start);return {prefix:source.slice(0,start),suffix:source.slice(end),modules:JSON.parse(JSON.stringify(vm.runInNewContext('('+source.slice(start,end)+')',{frozen:value=>value}))) };}
- const a=split(prior),b=split(current);assert.equal(b.prefix,a.prefix);assert.equal(b.suffix,a.suffix);assert.deepEqual(Object.keys(b.modules),Object.keys(a.modules));
- const changed=new Set(['newC','lifecycle','discoveryUi','friend','authority','records','discovery']);
+ const a=split(prior),b=split(current);assert.equal(b.prefix,a.prefix);assert.equal(withoutSharedSourceGateCall(b.suffix),a.suffix);assert.deepEqual(Object.keys(b.modules),Object.keys(a.modules));
+ const changed=new Set(['environmentHolder','newC','lifecycle','discoveryUi','friend','authority','records','discovery']);
  const identity='../../apps/pc-app/runtime/features/companions/display-identity.mjs',catalog='../../apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json';
  for(const [key,spec] of Object.entries(a.modules)){
   if(changed.has(key))spec.sha256=b.modules[key].sha256;
+  if(key==='environmentHolder'){spec.exports.push('verifyEnvironmentLifecycleSource');spec.tests.push('cloud-live-qa-completion-output.test.mjs');spec.assets=[{file:'cloud-live-qa-completion-driver.mjs',sha256:'f573c393f264a2a20bebcda182b9ecc2294a16dc92a928eb4b8b63a5f8fa964d'},{file:'cloud-live-qa-completion-output.test.mjs',sha256:'e06dbd7dcaf2b63f8210834ebd66fc743666b27b42a7dfd6102e0fc16472ad39'}];}
   if(key==='newC')spec.tests.push('cloud-new-c-desktop-positive.test.mjs');
   if(key==='discovery'){
    spec.tests.push('cloud-live-qa-discovery-readback.test.mjs','cloud-c11-account-switch-observations.test.mjs','cloud-c11-independent-sequence-observations.test.mjs');
@@ -117,7 +151,7 @@ test('evidence revision changes only seven reviewed modules, bounded watchdog IO
 test('C11 observation preparation cannot execute, authorize or remove missing live steps',()=>{
  const base='0c2e522b432d6480978c3ce3b97e923f70b0b704';
  for(const file of ['cloud-live-qa-discovery-cases.mjs','cloud-live-qa-completion-driver.mjs','recovery/same-run-normal-lifecycle-factory.mjs','recovery/github-environment-admission.mjs','dpapi/authorized-vault-client.mjs','recovery/same-run-fixture-index.mjs','requests/same-run-next-completion.json']){
-  assert.equal(sha(readFileSync(new URL(file,import.meta.url))),sha(execFileSync('git',['show',base+':scripts/acceptance/'+file])),file);
+  const current=file==='cloud-live-qa-completion-driver.mjs'?Buffer.from(withoutFixedCompletionOutputAllocation(read('scripts/acceptance/'+file))):file==='recovery/same-run-normal-lifecycle-factory.mjs'?Buffer.from(withoutS06SessionBinding(read('scripts/acceptance/'+file),file)):readFileSync(new URL(file,import.meta.url));assert.equal(sha(current),sha(execFileSync('git',['show',base+':scripts/acceptance/'+file])),file);
  }
  const source=read('scripts/acceptance/cloud-live-qa-discovery-cases.mjs');
  assert.ok(source.includes('Real-cloud same-profile account A to B to A transition'));

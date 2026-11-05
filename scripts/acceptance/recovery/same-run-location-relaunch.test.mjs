@@ -1,4 +1,5 @@
 import test from 'node:test';
+import {withoutS06SessionBinding} from '../s06-session-binding-preservation.test-support.mjs';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
@@ -83,7 +84,7 @@ function lifecycle(text=source){
 }
 
 test('removing only the marked A invalidation restores the exact original factory including C guards',()=>{
- assert.equal(sha(withoutInvalidation(source)),'4cb797cbcab474631f8e848111037a036d976825f5a0f1c7682a7431b61abb2f');
+ assert.equal(sha(withoutInvalidation(withoutS06SessionBinding(source,'recovery/same-run-normal-lifecycle-factory.mjs'))),'4cb797cbcab474631f8e848111037a036d976825f5a0f1c7682a7431b61abb2f');
  assert.match(source,/\/\/ BEGIN A_UI_BINDING_RELAUNCH_INVALIDATION\n if\(prior&&role==='a'\)\{\n  await persistSafeIdentityManifest\(cap\);\n  delete s\.uiBinding;\n  return model;\n \}\n \/\/ END A_UI_BINDING_RELAUNCH_INVALIDATION/);
 });
 

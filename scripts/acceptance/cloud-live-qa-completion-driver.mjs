@@ -1,8 +1,9 @@
 // Actual fixed dispatcher for implemented remaining cases. No recovery/login,
 // registration, password or grant API; requires a genuine precredential plan.
 import assert from 'node:assert/strict';
-import {readFileSync,writeFileSync,renameSync,mkdirSync,existsSync,realpathSync} from 'node:fs';
-import {join} from 'node:path';
+import {readFileSync,writeFileSync,renameSync,mkdirSync,existsSync,realpathSync,lstatSync} from 'node:fs';
+import {join,resolve} from 'node:path';
+import {fileURLToPath} from 'node:url';
 import {takePreparedCompletion,CASES} from './cloud-live-qa-completion-readiness.mjs';
 const write=(p,v)=>{writeFileSync(p+'.tmp',JSON.stringify(v,null,2),{mode:0o600});renameSync(p+'.tmp',p);};
 const success=row=>row?.status==='passed-scoped'||row?.passed===true;
@@ -20,6 +21,22 @@ export function classifiedIndependentFailure(result){
 }
 export function stageMustStopGlobally({cleanupFailed=false,permissionFailed=false,pendingUnknown=false,uncertainWrite=false,safetyReadFailed=false}){return cleanupFailed||permissionFailed||pendingUnknown||uncertainWrite||safetyReadFailed;}
 export function dependencyBlocked(id,results){return (CASES[id]?.dependsOn||[]).some(dep=>results[dep]&&results[dep].status!=='passed-scoped');}
+// BEGIN FIXED_COMPLETION_OUTPUT_DIRECTORY
+// Filesystem allocation only: no plan, authority, model or caller IO callbacks.
+export function allocateFixedCompletionDirectory({repositoryRoot,output,ciRunId}){
+ for(const value of [repositoryRoot,output,ciRunId])assert.equal(typeof value,'string');
+ assert.match(ciRunId,/^\d+$/,'Exact current CI run required');assert.equal(repositoryRoot,resolve(repositoryRoot),'Canonical repository root required');
+ const artifacts=join(repositoryRoot,'artifacts'),qa=join(artifacts,'qa'),runRoot=join(qa,'same-run-'+ciRunId);
+ assert.equal(output,join(runRoot,'completion'),'Completion output must match the current fixed CI run path');
+ const directory=path=>{const stat=lstatSync(path);assert.equal(stat.isSymbolicLink(),false,'Completion path must not be a symlink');assert.equal(stat.isDirectory(),true,'Completion parent must be an existing directory');assert.equal(realpathSync.native(path),path,'Canonical completion path required');};
+ for(const path of [repositoryRoot,artifacts,qa,runRoot])directory(path);
+ // lstat also rejects dangling links; no existing completion is safe to reuse.
+ assert.equal(lstatSync(output,{throwIfNoEntry:false}),undefined,'Do not rerun after any uncertain original intent');
+ mkdirSync(output,{recursive:false,mode:0o700});directory(output);
+ const base=join(output,'fixed-completion');mkdirSync(base,{recursive:false,mode:0o700});directory(base);
+ return base;
+}
+// END FIXED_COMPLETION_OUTPUT_DIRECTORY
 export async function runPreparedCloudCompletion(plan,context){
  assert.equal(process.platform,'win32');assert.equal(process.env.GITHUB_ACTIONS,'true');assert.equal(process.env.GITHUB_RUN_ATTEMPT,'1');
  const prepared=takePreparedCompletion(plan),{loaded,tickets,options,packageBinding}=prepared;
@@ -27,7 +44,7 @@ export async function runPreparedCloudCompletion(plan,context){
  const currentRegistry=await loaded.lifecycle.getCompletionContext(context.lifecycleCapability);assert.equal(currentRegistry.models,context.models,'Completion must share the factory current-model registry, not a stale copy');validateCompletionDeadline(context.businessDeadline,currentRegistry.businessDeadline);
  const {models,expectedActors}=context;assert.equal(expectedActors.a.ownerAccountId,expectedActors.a2.ownerAccountId);assert.notEqual(expectedActors.a.ownerAccountId,expectedActors.b.ownerAccountId);
  for(const [role,ticket]of Object.entries(tickets))assert.equal(realpathSync.native(models[role].profile),ticket.profile,'Holder must launch preallocated native-profile ticket, never retrofit');
- const base=join(context.output,'fixed-completion');assert.equal(existsSync(base),false,'Do not rerun after any uncertain original intent');mkdirSync(base);
+ const base=allocateFixedCompletionDirectory({repositoryRoot:resolve(fileURLToPath(new URL('../../',import.meta.url))),output:context.output,ciRunId:process.env.GITHUB_RUN_ID});
  const file=join(base,'completion-driver-evidence.json'),proof={runId:plan.runId,scenario:plan.scenario,selectedCases:plan.selectedCases,precredentialModuleHashes:plan.moduleHashes,credentialOperations:0,globalStopped:false,results:{},stages:[],passed:false};write(file,proof);
  const nativeChooser=async()=>loaded.restore.createLiveRestoreNativeChooser({tickets,models,expectedActors,...packageBinding,assertActive:context.assertActive});
  async function safety(result,thrown,stageName){

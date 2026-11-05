@@ -72,7 +72,7 @@ export async function closeS06GateAfterOwnedProcessStopped(ticket,{ownedProcessS
 export async function admitPlatformS06SingleSnapshot(ticket,{transition}){
  const h=own(ticket);assert.ok(h.platformAdmission);assertPlatformAdmission(h.platformAdmission,{caseIds:['S06'],permissions:['business']});assert.equal(h.phase,'manifest');
  const actor=await h.model.main(async()=>{const g=globalThis.__s06PreloginGate;if(!g?.accounts||g.failed||g.phase!=='manifest'||!g.binding.platformOnly)throw Error('PLATFORM_GATE_REQUIRED');const c=await g.accounts.requireCloudActor(),a=c.actor||c;if(a.sessionId!==g.sessionId||g.accounts.epoch!==g.sessionEpoch)throw Error('SESSION_CHANGED');return {ownerAccountId:a.ownerAccountId,authUserId:a.authUserId,deviceId:a.deviceId,sessionId:a.sessionId,epoch:g.accounts.epoch};});
- const t=consumePlatformGrantTransition(transition,{model:h.model,actor,scenario:h.binding.scenario});h.businessDeadline=t.businessDeadline;h.phase=s06GateTransition(h.phase,'proof');return performSingleSnapshot(h);
+ const t=consumePlatformGrantTransition(transition,{admission:h.platformAdmission,model:h.model,actor,scenario:h.binding.scenario});h.businessDeadline=t.businessDeadline;h.phase=s06GateTransition(h.phase,'proof');const warning=await performSingleSnapshot(h);const observedAtMs=Date.now();assert.ok(observedAtMs<h.businessDeadline);return Object.freeze({...t,...warning,errorCode:'GLOBAL_SERIAL_SCOPE_REVOKED',observedAtMs});
 }
 export async function releasePlatformS06AfterFormalGrant(ticket){
  const h=own(ticket);assert.ok(h.platformAdmission);assert.equal(h.phase,'warning');assert.ok(h.businessDeadline>Date.now());

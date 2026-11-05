@@ -1,4 +1,5 @@
 import test from 'node:test';
+import {withoutS06SessionBinding} from '../s06-session-binding-preservation.test-support.mjs';
 import assert from 'node:assert/strict';
 import {mkdtempSync,mkdirSync,rmSync,readFileSync,writeFileSync,realpathSync,symlinkSync} from 'node:fs';
 import {tmpdir} from 'node:os';
@@ -10,6 +11,17 @@ import {assertPreparedCompletion} from '../cloud-live-qa-completion-readiness.mj
 import {createPreparationState,preparationAllocationStart,preparationDirectory,preparationSnapshot,preparationExternalStart,preparationHolderEntered} from './preparation-state.mjs';
 import {observeSignedoutCleanup} from './signedout-cleanup-observation.mjs';
 
+function withoutSharedLifecycleSourceGate(source){
+ source=withoutS06SessionBinding(source,'recovery/holder-environment.mjs');
+ const oldPin='2f88880662dc897962a8cf0aa689ab0cf1249b8da52924fac594a9973564f5ae',newPin='9b32480fda049997bfde0ab587fae2d84e0345436d3661a83ad1bbeeeb9044df';
+ const originalGate=" assert.match(ENVIRONMENT_LIFECYCLE_SHA256||'',/^[a-f0-9]{64}$/,'ENVIRONMENT_FACTORY_NOT_READY');const url=new URL('./same-run-normal-lifecycle-factory.mjs',import.meta.url);assert.equal(hash(readFileSync(url)),ENVIRONMENT_LIFECYCLE_SHA256);\n";
+ const sharedGate='// Read-only fixed source gate shared by live and signedout preparation.\nexport function verifyEnvironmentLifecycleSource(){\n'+originalGate+' return url;\n}\n';
+ for(const [current,previous]of [["ENVIRONMENT_LIFECYCLE_SHA256='"+newPin+"'","ENVIRONMENT_LIFECYCLE_SHA256='"+oldPin+"'"],[sharedGate,''],[' const url=verifyEnvironmentLifecycleSource();\n',originalGate]]){assert.equal(source.split(current).length,2,'Exactly one reviewed fixed source gate change');source=source.replace(current,previous);}
+ return source;
+}
+function withoutSharedSourceGateCall(source){
+ const call=' loaded.environmentHolder.verifyEnvironmentLifecycleSource();\n';assert.equal(source.split(call).length,2,'Exactly one shared fixed source gate call');return source.replace(call,'');
+}
 function fixture(fn){
  const keys=['GITHUB_RUN_ID','GITHUB_SHA','RUNNER_TEMP'],saved=Object.fromEntries(keys.map(k=>[k,process.env[k]]));
  const run=String(910000000000+Math.floor(Math.random()*100000000)),commit='a'.repeat(40),root=realpathSync.native(tmpdir());
@@ -100,15 +112,15 @@ test('custody, preparation and activation guards remain exact published bytes',(
  const baseline='9b16b9e95fdf7fd3d0b0ecde423cb6264f1109a2';
  for(const path of ['scripts/acceptance/recovery/preparation-state.mjs','scripts/acceptance/recovery/github-environment-admission.mjs','scripts/acceptance/recovery/same-run-request.mjs','scripts/acceptance/recovery/environment-process.ps1','scripts/acceptance/recovery/holder-environment.mjs','scripts/acceptance/dpapi/authorized-vault-client.mjs','.github/workflows/cloud-environment-completion.yml']){let current=readFileSync(resolve(path),'utf8');if(path.endsWith('cloud-environment-completion.yml')){
  for(const name of ['C11-wild-session.png', 'C11-wild-session-return.png', 'C11-a2-auto-sync.png', 'C11-captured-list.png', 'C11-captured-detail.png', 'C11-a-relaunch.png']){const line='            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-wild/'+name+'\n';assert.equal(current.split(line).length,2);current=current.replace(line,'');}
-}if(path.endsWith('cloud-environment-completion.yml'))for(const stage of ['active','warm','report-before-restart','report-after-restart'])for(const role of ['a','b']){const line='            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/C03-friend-'+stage+'-'+role+'.png\n';assert.equal(current.split(line).length,2);current=current.replace(line,'');}assert.equal(current,execFileSync('git',['show',baseline+':'+path],{encoding:'utf8'}));}
+}if(path.endsWith('cloud-environment-completion.yml'))for(const stage of ['active','warm','report-before-restart','report-after-restart'])for(const role of ['a','b']){const line='            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/C03-friend-'+stage+'-'+role+'.png\n';assert.equal(current.split(line).length,2);current=current.replace(line,'');}if(path.endsWith('/holder-environment.mjs'))current=withoutSharedLifecycleSourceGate(current);assert.equal(current,execFileSync('git',['show',baseline+':'+path],{encoding:'utf8'}));}
 });
 
 test('cleanup changes cannot alter original lifecycle guards outside isolated C authentication and fixed A binding invalidation',()=>{
- let source=readFileSync(resolve('scripts/acceptance/recovery/same-run-normal-lifecycle-factory.mjs'),'utf8');
+ let source=withoutS06SessionBinding(readFileSync(resolve('scripts/acceptance/recovery/same-run-normal-lifecycle-factory.mjs'),'utf8'),'recovery/same-run-normal-lifecycle-factory.mjs');
  const invalidation=" // BEGIN A_UI_BINDING_RELAUNCH_INVALIDATION\n if(prior&&role==='a'){\n  await persistSafeIdentityManifest(cap);\n  delete s.uiBinding;\n  return model;\n }\n // END A_UI_BINDING_RELAUNCH_INVALIDATION\n";assert.equal(source.split(invalidation).length,2);source=source.replace(invalidation,'');
  for(const [indent,part]of [['','DEFINITIONS'],['  ','DEPS']]){const start=indent+'// BEGIN C_AUTHENTICATION_TRANSITION '+part+'\n',end=indent+'// END C_AUTHENTICATION_TRANSITION '+part+'\n';assert.equal(source.split(start).length,2);assert.equal(source.split(end).length,2);const a=source.indexOf(start),b=source.indexOf(end,a);assert.ok(b>a);source=source.slice(0,a)+source.slice(b+end.length);}
  assert.equal(source,execFileSync('git',['show','797eb0ad6510b9d558297c2e4c0651cc6b14f3f2:scripts/acceptance/recovery/same-run-normal-lifecycle-factory.mjs'],{encoding:'utf8'}));
  const sourcePath='scripts/acceptance/cloud-live-qa-completion-readiness.mjs',old=execFileSync('git',['show','797eb0ad6510b9d558297c2e4c0651cc6b14f3f2:'+sourcePath],{encoding:'utf8'}),current=readFileSync(resolve(sourcePath),'utf8');
  for(const value of [old,current])assert.equal(value.split(');\nconst common=').length,2);
- assert.equal(current.split('export const MODULES=frozen(')[0],old.split('export const MODULES=frozen(')[0]);assert.equal(current.split(');\nconst common=')[1],old.split(');\nconst common=')[1]);
+ assert.equal(current.split('export const MODULES=frozen(')[0],old.split('export const MODULES=frozen(')[0]);assert.equal(withoutSharedSourceGateCall(current.split(');\nconst common=')[1]),old.split(');\nconst common=')[1]);
 });
