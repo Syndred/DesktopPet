@@ -190,6 +190,14 @@ jobs:
             artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/live-friend-completion-intents.json
             artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/live-authority-realtime-observation.json
             artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/live-authority-readback-evidence.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/C03-friend-active-a.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/C03-friend-active-b.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/C03-friend-warm-a.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/C03-friend-warm-b.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/C03-friend-report-before-restart-a.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/C03-friend-report-before-restart-b.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/C03-friend-report-after-restart-a.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/C03-friend-report-after-restart-b.png
             artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/s02/live-cross-domain-conflict-intent.json
             artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-wild/live-discovery-intents.json
             artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-ui/M07-initial-ready.png

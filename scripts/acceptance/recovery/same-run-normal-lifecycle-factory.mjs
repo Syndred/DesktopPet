@@ -248,6 +248,90 @@ export async function assertSameRunGrant(cap,{hardDeadline}){
  if(s.supervisor.existingProcess)assert.deepEqual(processIdentity(s.supervisor.existingProcess.pid),s.supervisor.existingProcess);
  for(const [role,m] of Object.entries(s.models)){if(s.revoked.has(role)){assert.equal(role,'c');assert.equal((await m.call('accounts','session')).currentUser,null);continue;}const g=s.scopeGrants.get(role);assert.ok(g&&g.expiresAtMs>Date.now(),'QA_SCOPE_EXPIRED');const a=await safeActor(m);for(const k of ['ownerAccountId','authUserId','deviceId'])assert.equal(a[k],g[k]);const p=await m.main(async()=>{const a=globalThis.__qaUiCaseContext.accounts,c=await a.requireCloudActor();return c.invoke('discovery',{op:'protocol'});});assert.equal(p.simulatedLocationAllowed,true);assert.equal(p.scenarioId,scenario);}
 }
+// BEGIN C_AUTHENTICATION_TRANSITION DEFINITIONS
+const authenticationTransitions=new WeakMap();
+// A one-use holder capability for the fixed C logout/old-password/new-password
+// stage. This is not a business grant and never changes assertSameRunGrant.
+async function readCAuthenticationState(model,marker,{install=false,confirmLogout=false,deadline}={}){
+ return model.main(async(_e,input)=>{
+  const h=globalThis.__qaUiCaseContext,a=h?.accounts;
+  if(!a||h.binding?.role!=='c'||!h.released||h.loginFrozen||a.qaScenario)throw Error('C_AUTH_TRANSITION_CONTEXT_CHANGED');
+  if(input.install){if(Object.hasOwn(h,'authenticationTransitionMarker'))throw Error('C_AUTH_TRANSITION_REPLAY');Object.defineProperty(h,'authenticationTransitionMarker',{value:Object.freeze({marker:input.marker,context:h,accounts:a,remote:a.remote,request:a.remote.request})});}
+  const binding=h.authenticationTransitionMarker;if(binding?.marker!==input.marker||binding.context!==h||binding.accounts!==a||binding.remote!==a.remote||binding.request!==a.remote.request)throw Error('C_AUTH_TRANSITION_CONTEXT_CHANGED');
+  if(input.confirmLogout){
+   if(a.current||a.remote.active||!(a.signOutPending instanceof Promise))throw Error('NORMAL_C_LOGOUT_REQUIRED');const pending=a.signOutPending;
+   let timer;try{const left=Math.min(25000,input.deadline-Date.now());if(left<=0)throw Error('C_AUTH_TRANSITION_EXPIRED');const result=await Promise.race([pending,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('C_LOGOUT_UNCONFIRMED')),left);})]);if(result?.confirmed!==true)throw Error('C_LOGOUT_UNCONFIRMED');}finally{clearTimeout(timer);}
+   if(globalThis.__qaUiCaseContext!==h||h.accounts!==a||a.remote!==binding.remote||a.remote.request!==binding.request||a.signOutPending!==pending||a.current||a.remote.active)throw Error('C_AUTH_TRANSITION_CONTEXT_CHANGED');
+  }
+  const session=a.session(),actor=a.remote.active?.actor;
+  return {role:h.binding.role,profile:h.binding.profile,origin:a.remote.config.url,deviceId:a.remote.deviceId,epoch:a.epoch,
+   currentUser:session.currentUser?Object.fromEntries(['id','account','authKind','authUserId'].map(k=>[k,session.currentUser[k]])):null,
+   actor:actor?Object.fromEntries(['ownerAccountId','authUserId','deviceId','sessionId','authKind','authority'].map(k=>[k,actor[k]])):null,
+   dataMode:session.dataMode,persistence:session.persistence,secureStorageAvailable:session.secureStorageAvailable,
+   hasCurrent:Boolean(a.current),logoutConfirmed:input.confirmLogout===true};
+ },{marker,install,confirmLogout,deadline});
+}
+async function assertCTransitionAuthority(cap,transition){
+ const s=own(cap);assert.equal(transition.state,'active','C_AUTH_TRANSITION_REQUIRED');assert.equal(transition.cap,cap,'C_AUTH_TRANSITION_CAPABILITY_MISMATCH');
+ assertCompletionAuthorization(s.authorization,{permissions:['login-C','remember-C','business'],caseIds:['A15']});assertAuthorizedVault(s.vault);
+ assert.ok(s.supervisor?.ready&&!s.supervisor.closed,'OWNED_WATCHDOG_REQUIRED');if(s.supervisor.existingProcess)assert.deepEqual(processIdentity(s.supervisor.existingProcess.pid),s.supervisor.existingProcess);
+ assert.equal(s.grantsReleased,true,'ALL_FORMAL_GRANTS_REQUIRED');assert.equal(s.cFinished,false,'C_LIFECYCLE_NOT_ACTIVE');assert.equal(s.cState.loginFrozen,false,'C_AUTH_FROZEN');assert.equal(s.revoked.size,0,'C_AUTH_TRANSITION_REVOKED');
+ assert.deepEqual(Object.keys(s.models).sort(),[...roles].sort(),'ALL_FIVE_MODELS_REQUIRED');assert.equal(s.models.c,transition.model,'C_AUTH_TRANSITION_MODEL_CHANGED');
+ assert.ok(Date.now()<transition.deadline&&transition.deadline<=s.binding.expiresAt,'C_AUTH_TRANSITION_EXPIRED');
+ for(const role of roles){const grant=s.scopeGrants.get(role);assert.equal(grant,transition.grants.get(role),'C_AUTH_TRANSITION_GRANT_CHANGED');assert.ok(grant&&grant.expiresAtMs>Date.now(),'QA_SCOPE_EXPIRED');for(const k of ['ownerAccountId','authUserId','deviceId','expiresAtMs'])assert.equal(grant[k],transition.grantBindings.get(role)[k],'C_AUTH_TRANSITION_GRANT_CHANGED');assert.equal(grant.scenario,scenario);}
+ assert.equal(assertOwnedProfileRoot(s.models.c.profile,s.profileRoots.c),transition.profile,'C_AUTH_TRANSITION_PROFILE_CHANGED');
+ assert.equal(s.models.c.expectedDeviceId,transition.actor.deviceId);assert.equal(s.models.c.launcherPid,transition.launcherPid);assert.equal(s.models.c.runtime.pid,transition.runtimePid);
+ await s.vault.verifyRegistry();own(cap);assert.equal(transition.state,'active','C_AUTH_TRANSITION_REQUIRED');assert.ok(Date.now()<transition.deadline,'C_AUTH_TRANSITION_EXPIRED');assert.ok(s.supervisor.ready&&!s.supervisor.closed,'OWNED_WATCHDOG_REQUIRED');return s;
+}
+async function assertOtherTransitionGrants(s){
+ // Only this private, capability-checked authentication path admits an empty C
+ // session. All four peers still require their live actor and fresh QA protocol.
+ for(const role of ['a','a2','a3','b']){const model=s.models[role],grant=s.scopeGrants.get(role),actor=await safeActor(model);for(const k of ['ownerAccountId','authUserId','deviceId'])assert.equal(actor[k],grant[k]);const protocol=await model.main(async()=>{const c=await globalThis.__qaUiCaseContext.accounts.requireCloudActor();return c.invoke('discovery',{op:'protocol'});});assert.equal(protocol.simulatedLocationAllowed,true);assert.equal(protocol.scenarioId,scenario);}
+}
+function assertCTransitionObservation(transition,observation,phase){
+ assert.equal(observation.role,'c');assert.equal(observation.profile,transition.model.profile);assert.equal(observation.origin,origin);assert.equal(observation.deviceId,transition.actor.deviceId);assert.equal(observation.dataMode,'live');assert.equal(observation.secureStorageAvailable,true);
+ if(!observation.currentUser){assert.equal(observation.hasCurrent,false);assert.equal(observation.actor,null);assert.equal(observation.persistence,'none');assert.equal(observation.epoch,transition.actor.epoch+1,'C_AUTH_TRANSITION_EPOCH_CHANGED');return;}
+ assert.notEqual(phase,'old-login','OLD_PASSWORD_MUST_NOT_AUTHENTICATE');assert.equal(observation.hasCurrent,true);assert.equal(observation.persistence,'secure');
+ assert.equal(observation.currentUser.id,transition.actor.ownerAccountId);assert.equal(observation.currentUser.authUserId,transition.actor.authUserId);assert.equal(observation.currentUser.account,FIXED_IDENTITIES.C.accountKey);assert.equal(observation.currentUser.authKind,'supabase');
+ assert.ok(observation.actor);assert.equal(observation.actor.authKind,'supabase');assert.equal(observation.actor.authority,'live');for(const k of ['ownerAccountId','authUserId','deviceId'])assert.equal(observation.actor[k],transition.actor[k]);
+ if(phase==='logout'){assert.equal(observation.epoch,transition.actor.epoch);assert.equal(observation.actor.sessionId,transition.actor.sessionId);}
+ else{assert.equal(phase,'new-login');assert.equal(transition.logoutConfirmed,true,'NORMAL_C_LOGOUT_REQUIRED');assert.equal(observation.epoch,transition.actor.epoch+2,'C_AUTH_TRANSITION_EPOCH_CHANGED');assert.equal(typeof observation.actor.sessionId,'string');assert.ok(observation.actor.sessionId);assert.notEqual(observation.actor.sessionId,transition.actor.sessionId,'NEW_C_SESSION_REQUIRED');}
+}
+async function beginCAuthenticationTransition(cap,{stage,intentId}){
+ const s=own(cap);assert.equal(stage,'A15-old-new-login');assert.match(intentId,/^[a-f0-9-]{36}$/);assert.equal(s.cState.authenticationTransitionStarted,undefined,'C_AUTH_TRANSITION_REPLAY');
+ // Claim once even if setup fails; an uncertain logout is never retried.
+ s.cState.authenticationTransitionStarted=true;await assertSameRunGrant(cap,{hardDeadline:s.binding.expiresAt});
+ const model=s.models.c,actor=await safeActor(model),grants=new Map(s.scopeGrants),deadline=Math.min(s.binding.expiresAt,...[...grants.values()].map(g=>g.expiresAtMs));
+ for(const k of ['ownerAccountId','authUserId','deviceId'])assert.equal(actor[k],grants.get('c')[k],'C_AUTH_TRANSITION_GRANT_CHANGED');
+ const transition={cap,model,actor,grants,grantBindings:new Map([...grants].map(([role,g])=>[role,{...g}])),deadline,profile:assertOwnedProfileRoot(model.profile,s.profileRoots.c),launcherPid:model.launcherPid,runtimePid:model.runtime.pid,marker:randomUUID(),phase:'logout',logoutConfirmed:false,state:'active'};
+ await assertCTransitionAuthority(cap,transition);const observation=await readCAuthenticationState(model,transition.marker,{install:true});assertCTransitionObservation(transition,observation,'logout');assert.ok(observation.currentUser,'ORIGINAL_C_SESSION_REQUIRED');
+ const token=Object.freeze({});authenticationTransitions.set(token,transition);return token;
+}
+async function assertCAuthenticationTransition(cap,token,{phase}){
+ const transition=authenticationTransitions.get(token);assert.ok(transition?.state==='active','C_AUTH_TRANSITION_REQUIRED');
+ try{
+  const phases=['logout','old-login','new-login'],index=phases.indexOf(phase),previous=phases.indexOf(transition.phase);assert.ok(index>=0&&(index===previous||index===previous+1),'C_AUTH_TRANSITION_ORDER');
+  const s=await assertCTransitionAuthority(cap,transition);await assertOtherTransitionGrants(s);
+  const observation=await readCAuthenticationState(transition.model,transition.marker,{confirmLogout:phase==='old-login'&&!transition.logoutConfirmed,deadline:transition.deadline});
+  if(observation.logoutConfirmed)transition.logoutConfirmed=true;assertCTransitionObservation(transition,observation,phase);
+  if(phase==='new-login'&&observation.currentUser){const actor=await safeActor(transition.model);for(const k of ['ownerAccountId','authUserId','deviceId','sessionId'])assert.equal(actor[k],observation.actor[k]);assert.equal(actor.epoch,observation.epoch);}
+  // Peer probes and normal signOutPending can await network work. Recheck all
+  // deadlines and the owned registry after those awaits, before any UI action.
+  await assertCTransitionAuthority(cap,transition);transition.phase=phase;return {authorized:true,phase};
+ }catch(error){transition.state='failed';throw error;}
+}
+async function finishCAuthenticationTransition(cap,token){
+ const transition=authenticationTransitions.get(token);assert.ok(transition?.state==='active','C_AUTH_TRANSITION_REQUIRED');
+ try{
+  assert.equal(transition.phase,'new-login');await assertCAuthenticationTransition(cap,token,{phase:'new-login'});
+  const before=await readCAuthenticationState(transition.model,transition.marker);assertCTransitionObservation(transition,before,'new-login');assert.ok(before.currentUser,'NEW_C_SESSION_REQUIRED');
+  // No business operation may use the transition token. Restore the unchanged
+  // five-actor business check, including C's fresh protocol, before consuming it.
+  await assertSameRunGrant(cap,{hardDeadline:transition.deadline});const actor=await safeActor(transition.model);for(const k of ['ownerAccountId','authUserId','deviceId','sessionId'])assert.equal(actor[k],before.actor[k]);assert.equal(actor.epoch,before.epoch);
+  await assertCTransitionAuthority(cap,transition);transition.state='consumed';return {confirmed:true};
+ }catch(error){transition.state='failed';throw error;}
+}
+// END C_AUTHENTICATION_TRANSITION DEFINITIONS
 async function installLocationBridge(cap,role,position){
  const s=own(cap),m=s.models[role];assert.ok(m&&role==='a');await assertSameRunGrant(cap,{hardDeadline:s.binding.expiresAt});const actor=await safeActor(m);
  const path=resolve('scripts/acceptance/cloud-qa-ui-location-fixture.cjs'),digest=sha(readFileSync(path));assert.equal(digest,'2fced8c5b05ac0fe2fe4b1e34e4692d0821e3cd3b1d4bdfa2d6587a836832094');
@@ -284,6 +368,11 @@ export async function registerCThroughNormalUi(cap,{slot,intentId,credentialCap,
   },
   async awaitGrantAndRelease(_identity,capabilities){await releaseAllKnownGrants(cap,capabilities?.registeredLoginCredential);},
   async assertGrant(){await assertSameRunGrant(cap,{hardDeadline:s.binding.expiresAt});},
+  // BEGIN C_AUTHENTICATION_TRANSITION DEPS
+  async beginAuthenticationTransition(input){return beginCAuthenticationTransition(cap,input);},
+  async assertAuthenticationTransition(token,input){return assertCAuthenticationTransition(cap,token,input);},
+  async finishAuthenticationTransition(token){return finishCAuthenticationTransition(cap,token);},
+  // END C_AUTHENTICATION_TRANSITION DEPS
   async relaunch(role,{logout}){assert.equal(role,'c');assert.equal(logout,false);return launchNormalModel(cap,{role,prior:s.models.c,identity:s.identities.C,vault,expectedEpoch:s.models.c.epoch+1});},
   async freezeCLogin(){s.cState.loginFrozen=true;await s.models.c.main(()=>{const h=globalThis.__qaUiCaseContext;if(!h?.accounts)throw Error('EXACT_C_CONTEXT_REQUIRED');const actor=h.accounts.remote.active?.actor;if(!actor||actor.authKind!=='supabase')throw Error('C_ACTIVE_SESSION_REQUIRED');h.frozenActor=Object.freeze(Object.fromEntries(['ownerAccountId','authUserId','deviceId','sessionId'].map(k=>[k,actor[k]])));h.epoch=h.accounts.epoch;h.loginFrozen=true;});},
   async assertExactRevokeTarget(m){assert.equal(s.cState.loginFrozen,true);assert.equal(m,s.models.c);const a=await identity(m);const digest=sha(JSON.stringify({requestDigest:s.binding.requestDigest,role:'c',...a}));

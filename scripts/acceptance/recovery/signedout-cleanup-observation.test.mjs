@@ -96,7 +96,16 @@ test('Windows held integration binds the original admission and uploads only the
  assert.doesNotMatch(workflow,/LOCAL-ONLY|secrets\.|environment: desktoppet/);
  const artifacts=workflow.split('          path: |')[1];assert.ok(artifacts);assert.ok(artifacts.trim().split('\n').every(p=>/^artifacts\/qa\/[a-z-]+(?:-\$\{\{ github.run_id \}\})?\/[a-z-]+\.json$/.test(p.trim())));
 });
-test('production lifecycle, custody, preparation and activation guards remain exact published bytes',()=>{
+test('custody, preparation and activation guards remain exact published bytes',()=>{
  const baseline='9b16b9e95fdf7fd3d0b0ecde423cb6264f1109a2';
- for(const path of ['scripts/acceptance/recovery/preparation-state.mjs','scripts/acceptance/recovery/same-run-normal-lifecycle-factory.mjs','scripts/acceptance/cloud-live-qa-completion-readiness.mjs','scripts/acceptance/recovery/github-environment-admission.mjs','scripts/acceptance/recovery/same-run-request.mjs','scripts/acceptance/recovery/environment-process.ps1','scripts/acceptance/recovery/holder-environment.mjs','scripts/acceptance/dpapi/authorized-vault-client.mjs','.github/workflows/cloud-environment-completion.yml'])assert.deepEqual(readFileSync(resolve(path)),execFileSync('git',['show',baseline+':'+path]));
+ for(const path of ['scripts/acceptance/recovery/preparation-state.mjs','scripts/acceptance/recovery/github-environment-admission.mjs','scripts/acceptance/recovery/same-run-request.mjs','scripts/acceptance/recovery/environment-process.ps1','scripts/acceptance/recovery/holder-environment.mjs','scripts/acceptance/dpapi/authorized-vault-client.mjs','.github/workflows/cloud-environment-completion.yml']){let current=readFileSync(resolve(path),'utf8');if(path.endsWith('cloud-environment-completion.yml'))for(const stage of ['active','warm','report-before-restart','report-after-restart'])for(const role of ['a','b']){const line='            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/C03-friend-'+stage+'-'+role+'.png\n';assert.equal(current.split(line).length,2);current=current.replace(line,'');}assert.equal(current,execFileSync('git',['show',baseline+':'+path],{encoding:'utf8'}));}
+});
+
+test('cleanup changes cannot alter original lifecycle guards outside the isolated C authentication addition',()=>{
+ let source=readFileSync(resolve('scripts/acceptance/recovery/same-run-normal-lifecycle-factory.mjs'),'utf8');
+ for(const [indent,part]of [['','DEFINITIONS'],['  ','DEPS']]){const start=indent+'// BEGIN C_AUTHENTICATION_TRANSITION '+part+'\n',end=indent+'// END C_AUTHENTICATION_TRANSITION '+part+'\n';assert.equal(source.split(start).length,2);assert.equal(source.split(end).length,2);const a=source.indexOf(start),b=source.indexOf(end,a);assert.ok(b>a);source=source.slice(0,a)+source.slice(b+end.length);}
+ assert.equal(source,execFileSync('git',['show','797eb0ad6510b9d558297c2e4c0651cc6b14f3f2:scripts/acceptance/recovery/same-run-normal-lifecycle-factory.mjs'],{encoding:'utf8'}));
+ const sourcePath='scripts/acceptance/cloud-live-qa-completion-readiness.mjs',old=execFileSync('git',['show','797eb0ad6510b9d558297c2e4c0651cc6b14f3f2:'+sourcePath],{encoding:'utf8'}),current=readFileSync(resolve(sourcePath),'utf8');
+ for(const value of [old,current])assert.equal(value.split(');\nconst common=').length,2);
+ assert.equal(current.split('export const MODULES=frozen(')[0],old.split('export const MODULES=frozen(')[0]);assert.equal(current.split(');\nconst common=')[1],old.split(');\nconst common=')[1]);
 });

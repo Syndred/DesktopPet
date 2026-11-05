@@ -11,6 +11,79 @@ const {checksum}=createRequire(import.meta.url)('../../apps/pc-app/runtime/featu
 
 export function validateRecordCaseSelection(cases){const allowed=['S03','N03-cross-device-persona-draft','S05','P05-repeat-original-memory-restore'];assert.ok(Array.isArray(cases)&&cases.length>0&&new Set(cases).size===cases.length);assert.deepEqual(cases,allowed.filter(x=>cases.includes(x)),'Fixed known cases in original order required');return [...cases];}
 
+// The shipped UI has /chat and /settings/ai, but no memory-ID route. The
+// existing companion detail route is the only known-ID deep link used here.
+// This evaluator reads rendered DOM only; it never returns private text or reads
+// connection/password inputs, and never invokes a business command.
+export function readS05PrivateUiSample({route,view,foreignPetId,ownPetId,forbiddenText}){
+ const visible=element=>Boolean(element&&element.getClientRects().length&&element.checkVisibility({checkOpacity:true,checkVisibilityCSS:true}));
+ const all=(selector,root=document)=>[...root.querySelectorAll(selector)].filter(visible);
+ const normalize=value=>String(value).replace(/\s+/g,' ').trim();
+ const nodes=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),text=[];
+ while(nodes.nextNode())if(visible(nodes.currentNode.parentElement))text.push(nodes.currentNode.textContent);
+ // Personas can be rendered as textarea values rather than text nodes. API keys
+ // and other input values are deliberately never inspected.
+ for(const field of all('textarea'))text.push(field.value);
+ const rendered=normalize(text.join(' ')),forbidden=forbiddenText.map(normalize);
+ const roots=all('.app-page-motion[data-current-route="true"]'),root=roots.length===1?roots[0]:null;
+ const inRoot=selector=>root?all(selector,root):[];
+ const exactText=(selector,value)=>inRoot(selector).filter(element=>normalize(element.textContent)===value).length;
+ const own=(selector)=>inRoot(selector).filter(element=>element.getAttribute('data-pet-id')===ownPetId).length;
+ let surfaceReady=false;
+ if(view==='chat')surfaceReady=ownPetId?own('.cv-thread')===1&&inRoot('.cv-memories').length===1:exactText('.cv-empty h1','暂无伙伴')===1;
+ if(view==='settings')surfaceReady=inRoot('.cv-ai-settings').length===1&&inRoot('.cv-partners').length===1&&(ownPetId?own('.cv-persona .cv-pet-scene')===1&&inRoot('.cv-memories').length===1:exactText('.cv-empty h2','还没有伙伴')===1);
+ if(view==='known-id')surfaceReady=inRoot('.cp-detail-page').length===1&&exactText('h2','这只伙伴不在当前账号的灵境里')===1&&exactText('button','回到我的灵宠')===1&&inRoot('.cp-detail-layout').length===0;
+ if(view==='roster')surfaceReady=inRoot('.cp-roster').length===1||exactText('h2','第一份陪伴，从这里开始。')===1;
+ let path=null;try{path=decodeURI(location.hash.slice(1));}catch{/* Invalid paths never qualify. */}
+ return {routeMatches:path===route,currentRouteCount:roots.length,currentRouteMatches:root?.getAttribute('data-route-key')===route,
+  surfaceReady,openingCount:inRoot('.opening-state').length,visibleAlertCount:all('[role="alert"]').length,
+  foreignPetVisibleCount:all('[data-pet-id]').filter(element=>element.getAttribute('data-pet-id')===foreignPetId).length,
+  foreignPrivateTextVisible:forbidden.some(value=>rendered.includes(value))};
+}
+
+export function validateS05PrivateUiSample(sample){
+ assert.ok(sample&&typeof sample==='object');
+ for(const key of ['currentRouteCount','openingCount','visibleAlertCount','foreignPetVisibleCount'])assert.ok(Number.isSafeInteger(sample[key])&&sample[key]>=0,'Invalid native UI observation');
+ for(const key of ['routeMatches','currentRouteMatches','surfaceReady','foreignPrivateTextVisible'])assert.equal(typeof sample[key],'boolean','Invalid native UI observation');
+ assert.equal(sample.foreignPetVisibleCount,0,'Foreign original pet is visible in B native UI');
+ assert.equal(sample.foreignPrivateTextVisible,false,'Foreign original record content is visible in B native UI');
+ assert.equal(sample.visibleAlertCount,0,'A failed native page is not an isolation proof');
+ return sample.routeMatches&&sample.currentRouteCount===1&&sample.currentRouteMatches&&sample.surfaceReady&&sample.openingCount===0;
+}
+
+export async function observeS05NativePrivateUi({page,active,until,checkpoint,foreignPetId,memoryId,ownPetId,privateContents}){
+ assert.equal(typeof active,'function');assert.equal(typeof until,'function');assert.equal(typeof checkpoint,'function');
+ assert.ok(typeof foreignPetId==='string'&&foreignPetId.length>0&&foreignPetId.length<=160);
+ assert.ok(typeof memoryId==='string'&&memoryId.length>0&&memoryId.length<=160);
+ assert.ok(ownPetId===null||(typeof ownPetId==='string'&&ownPetId.length>0));assert.notEqual(ownPetId,foreignPetId);
+ assert.ok(Array.isArray(privateContents)&&privateContents.length>0&&privateContents.every(value=>typeof value==='string'&&value.trim().length>0));
+ const encodedRoute=`/companions/${encodeURIComponent(foreignPetId)}`,knownRoute=decodeURI(encodedRoute);
+ assert.equal(knownRoute,`/companions/${foreignPetId}`,'Original pet ID must match the actual shipped detail route');
+ assert.ok(!foreignPetId.includes('/')&&foreignPetId!=='adopt','Original ID must not alias another route');
+ const forbiddenText=[foreignPetId,memoryId,...privateContents],observations=[];
+ async function observe(stage,route,view,navigate=true){
+  checkpoint(stage);
+  if(navigate){await active();await page.evaluate(path=>{location.hash=`#${path}`;},route);}
+  let consecutive=0,samples=0;
+  await until(async()=>{
+   await active();const sample=await page.evaluate(readS05PrivateUiSample,{route,view,foreignPetId,ownPetId,forbiddenText});samples++;
+   checkpoint(stage,{nativeUi:{stage,...sample,samples}});
+   consecutive=validateS05PrivateUiSample(sample)?consecutive+1:0;
+   return consecutive;
+  },count=>count>=2);
+  observations.push({stage,route,view,readySamples:consecutive,samples,noVisibleForeignPetOrRecord:true});
+ }
+ await observe('b-native-chat','/chat','chat');
+ await observe('b-native-private-settings','/settings/ai','settings');
+ await observe('b-native-known-pet-id',knownRoute,'known-id');
+ checkpoint('b-native-return-roster');await active();await page.locator('.app-page-motion[data-current-route="true"]').getByRole('button',{name:'回到我的灵宠',exact:true}).click();
+ await observe('b-native-return-roster','/companions','roster',false);
+ await observe('b-native-chat-after-return','/chat','chat');
+ await active();
+ return {source:'B native renderer DOM',readOnly:true,observations,knownOriginalPetIdDenied:true,nativeReturnObserved:true,privatePageReopened:true,
+  scope:'Bounded rendered-page samples for the original A pet/memory only; no standalone memory-ID route exists.',fullCasePassed:false};
+}
+
 export async function runCloudLiveQaRecordCases({models,expectedActors,relaunch,assertActive,scenario,runId,output,createNativeChooser,selectedCases=['S03','N03-cross-device-persona-draft','S05','P05-repeat-original-memory-restore'],existingRecordFixture=null,realtimeMode='private-records'}){
  assert.ok(['private-records','account-notifications-v1'].includes(realtimeMode),'Explicit fixed Realtime contract required');
  const selected=validateRecordCaseSelection(selectedCases);
@@ -92,7 +165,7 @@ export async function runCloudLiveQaRecordCases({models,expectedActors,relaunch,
   let s05Failed=false,s05Cleaned=true,s05MayContinue=false,s05OriginalError;
   function s05Checkpoint(stage,lastSafe={}){const row=proof.cases.find(x=>x.id==='S05');if(row){row.substage=stage;row.lastSafe={...row.lastSafe,...lastSafe};row.observedAt=new Date().toISOString();save();}}
   async function waitS05(stage,read,test,project){s05Checkpoint(stage);return until(async()=>{const value=await read();s05Checkpoint(stage,project(value));return value;},test);}
-  try{await step('S05','Real B actor owner-mismatch endpoint rejection and exact A-memory RLS read denial with A positive control; finite realtime non-disclosure observation, not universal channel denial.',async()=>{
+  try{await step('S05','Real B actor owner-mismatch endpoint rejection and exact A-memory RLS read denial with A positive control; finite realtime and native private-page/known-ID non-disclosure observations, not universal channel denial.',async()=>{
    const memory=(await snap('a')).memories.find(m=>m.id===setup.memoryId);assert.ok(memory);const recordId=JSON.stringify([petId,memory.id]);
    for(const role of ['a','b']){
     await active();await models[role].main((_electron,expectedOwner)=>{
@@ -139,7 +212,8 @@ export async function runCloudLiveQaRecordCases({models,expectedActors,relaunch,
    if(realtimeMode==='account-notifications-v1'){const afterNotice=await probe('a','notification-read');assert.equal(afterNotice.count,1);assert.ok(afterNotice.revision>=expectedSequence);s05Checkpoint('notification-post-write-read-control',{notificationAfterCount:1,notificationAfterRevision:afterNotice.revision});}
    s05Checkpoint('b-no-disclosure-window');const untilAt=Date.now()+8000;while(Date.now()<untilAt){await active();const bState=await probe('b','state');s05Checkpoint('b-no-disclosure-window',{bChannel:bState});assert.equal(bState.events,0);await new Promise(r=>setTimeout(r,400));}
    s05Checkpoint('final-exact-record-and-local-isolation');const finalA=await probe('a','read'),finalB=await probe('b','read');assert.equal(finalB.count,0);const bLocal=await call('b','conversations','snapshot');assert.equal(bLocal.accountId,expectedActors.b.ownerAccountId);assert.ok(!(bLocal.memories||[]).some(m=>m.id===memory.id));assert.ok(!bLocal.pets.some(p=>p.petId===petId));assert.ok(finalA.rows[0].revision>positive.rows[0].revision);
-   return {petId,memoryId:memory.id,knownRecordId:recordId,serverOwnerRejection:denied,positiveControl:positive,afterWritePositiveControl:finalA,foreignReadCount:0,realtimeObservationMs:8000,foreignEvents:0,ownEventPositiveControl:true,realtimeContract:realtimeMode,notificationIsMetadataOnly:realtimeMode==='account-notifications-v1',uncovered:['universal channel denial','all private collections','same-device owner swap']};
+   const nativePrivateUi=await observeS05NativePrivateUi({page:models.b.page,active,until,checkpoint:s05Checkpoint,foreignPetId:petId,memoryId:memory.id,ownPetId:bLocal.petId??null,privateContents:[memory.content,content]});
+   return {petId,memoryId:memory.id,knownRecordId:recordId,serverOwnerRejection:denied,positiveControl:positive,afterWritePositiveControl:finalA,foreignReadCount:0,realtimeObservationMs:8000,foreignEvents:0,ownEventPositiveControl:true,realtimeContract:realtimeMode,nativePrivateUi,notificationIsMetadataOnly:realtimeMode==='account-notifications-v1',uncovered:['universal channel denial','all private collections','same-device owner swap']};
   });}catch(error){s05Failed=true;s05OriginalError=error;const row=proof.cases.find(x=>x.id==='S05'),safe=row?.lastSafe;s05MayContinue=error?.code==='READBACK_TIMEOUT'&&['a-channel-subscription','b-channel-subscription','a2-normal-record-readback','a-own-realtime-positive-control'].includes(row?.substage)&&safe?.positiveCount===1&&safe?.ownerMismatchRejected===true&&safe?.httpStatus===403&&safe?.foreignReadCount===0;}
   finally{for(const role of ['a','b']){try{await cleanupProbe(role);s05Checkpoint(proof.cases.find(x=>x.id==='S05')?.substage||'cleanup',{[role+'ProbeCleaned']:true});}catch{ s05Cleaned=false;s05Checkpoint(proof.cases.find(x=>x.id==='S05')?.substage||'cleanup',{[role+'ProbeCleaned']:false});}}save();}
   // A failed subscription/readback is not success and must not discard the

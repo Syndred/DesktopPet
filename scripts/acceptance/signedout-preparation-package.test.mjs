@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
+import vm from 'node:vm';
 import {notificationPackage,signedoutPreparationPackage,notificationRuntime,validatePinnedNotificationPackage,validatePinnedSignedoutPreparationPackage,verifyCompletionPackageBeforeCredentials,verifySignedoutPackageWithoutCredentials,assertNoIdentityEnvironment} from './cloud-live-qa-completion-package-preflight.mjs';
 import {MODULES,assertPreparedCompletion,takePreparedCompletion} from './cloud-live-qa-completion-readiness.mjs';
 import {assertPlatformAdmission} from './recovery/github-environment-admission.mjs';
@@ -45,7 +46,7 @@ test('shared preparation wrappers cannot select a caller supplied verifier or mi
  assert.match(source,/assertCompletionAuthorization\(authorization,\{caseIds:selectedCases\}\)/);
 });
 test('all reviewed module and asset pins match exact source bytes',()=>{
- let count=0;for(const spec of Object.values(MODULES))for(const entry of [spec,...spec.assets||[]]){assert.equal(sha(readFileSync(new URL(entry.file,import.meta.url))),entry.sha256,entry.file);count++;}assert.equal(count,37);
+ let count=0;for(const spec of Object.values(MODULES))for(const entry of [spec,...spec.assets||[]]){assert.equal(sha(readFileSync(new URL(entry.file,import.meta.url))),entry.sha256,entry.file);count++;}assert.equal(count,42);
 });
 test('the current package notification runtime is unchanged and product reuse remains strict',()=>{
  const bytes=execFileSync('git',['show',signedoutPreparationPackage.expectedSource+':'+notificationRuntime.path]);assert.equal(sha(bytes.toString('utf8').replace(/\r\n/g,'\n')),notificationRuntime.sha256);
@@ -65,10 +66,39 @@ test('active authorization guards change only the exact reviewed package binding
   'scripts/acceptance/recovery/github-environment-admission.mjs':[[previousPackage.expectedSource,notificationPackage.expectedSource],[previousPackage.expectedExeSha256,notificationPackage.expectedExeSha256]],
   '.github/workflows/cloud-environment-completion.yml':[[previousPackage.expectedSource,notificationPackage.expectedSource],["artifact-ids: '12786865736'","artifact-ids: '12956066898'"],['run-id: 40618386720','run-id: 41005729685'],['Strict audited actual 5016 package reuse','Strict audited actual 735 package reuse']]
  };
- for(const [path,replacements] of Object.entries(mappings)){let expected=baseline(path).toString('utf8').replace(/\r\n/g,'\n');for(const [before,after] of replacements){assert.equal(expected.split(before).length,2,path+': exact one binding');expected=expected.replace(before,after);}assert.equal(read(path),expected,path+': no guard relaxation');}
+ for(const [path,replacements] of Object.entries(mappings)){let expected=baseline(path).toString('utf8').replace(/\r\n/g,'\n');for(const [before,after] of replacements){assert.equal(expected.split(before).length,2,path+': exact one binding');expected=expected.replace(before,after);}const current=path.endsWith('cloud-environment-completion.yml')?withoutBattleEvidencePaths(read(path)):read(path);assert.equal(current,expected,path+': no guard relaxation');}
 });
-test('legacy credentials, custody, live lifecycle, grants and historical fixture code remain byte-for-byte unchanged',()=>{
- for(const path of ['scripts/acceptance/dpapi/authorized-vault-client.mjs','.github/workflows/cloud-same-run-completion-prepare.yml','scripts/acceptance/recovery/run-environment-completion.mjs','scripts/acceptance/recovery/environment-bootstrap.mjs','scripts/acceptance/recovery/environment-process.ps1','scripts/acceptance/recovery/holder-environment.mjs','scripts/acceptance/recovery/same-run-normal-lifecycle-factory.mjs','scripts/acceptance/cloud-live-qa-s06-platform-transition.mjs','scripts/acceptance/cloud-live-qa-s06-prelogin-gate.mjs','scripts/acceptance/recovery/same-run-fixture-index.mjs','scripts/acceptance/requests/same-run-next-completion.json']){
+test('legacy credentials, custody, grants and historical fixture code remain byte-for-byte unchanged',()=>{
+ for(const path of ['scripts/acceptance/dpapi/authorized-vault-client.mjs','.github/workflows/cloud-same-run-completion-prepare.yml','scripts/acceptance/recovery/run-environment-completion.mjs','scripts/acceptance/recovery/environment-bootstrap.mjs','scripts/acceptance/recovery/environment-process.ps1','scripts/acceptance/recovery/holder-environment.mjs','scripts/acceptance/cloud-live-qa-s06-platform-transition.mjs','scripts/acceptance/cloud-live-qa-s06-prelogin-gate.mjs','scripts/acceptance/recovery/same-run-fixture-index.mjs','scripts/acceptance/requests/same-run-next-completion.json']){
   assert.equal(sha(readFileSync(new URL('../../'+path,import.meta.url))),sha(baseline(path)),path);
+ }
+});
+
+function withoutBattleEvidencePaths(source){
+ for(const stage of ['active','warm','report-before-restart','report-after-restart'])for(const role of ['a','b']){
+  const line='            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/C03-friend-'+stage+'-'+role+'.png\n';
+  assert.equal(source.split(line).length,2,'Exactly one bounded screenshot path');source=source.replace(line,'');
+ }return source;
+}
+function withoutCTransition(source){
+ for(const [indent,part] of [['','DEFINITIONS'],['  ','DEPS']]){
+  const start=indent+'// BEGIN C_AUTHENTICATION_TRANSITION '+part+'\n',end=indent+'// END C_AUTHENTICATION_TRANSITION '+part+'\n';
+  assert.equal(source.split(start).length,2);assert.equal(source.split(end).length,2);const a=source.indexOf(start),b=source.indexOf(end,a);assert.ok(b>a);source=source.slice(0,a)+source.slice(b+end.length);
+ }return source;
+}
+test('C-only authentication additions leave every original lifecycle guard byte-for-byte unchanged',()=>{
+ const path='scripts/acceptance/recovery/same-run-normal-lifecycle-factory.mjs';assert.equal(withoutCTransition(read(path)),baseline(path).toString('utf8').replace(/\r\n/g,'\n'));
+});
+test('evidence revision changes only six reviewed modules and exact test/display assets, never preparation authority',()=>{
+ const path='scripts/acceptance/cloud-live-qa-completion-readiness.mjs',prior=execFileSync('git',['show','797eb0ad6510b9d558297c2e4c0651cc6b14f3f2:'+path],{encoding:'utf8'}),current=read(path);
+ function split(source){const a=source.indexOf('export const MODULES=frozen('),start=a+'export const MODULES=frozen('.length,end=source.indexOf(');\nconst common=',start);assert.ok(a>=0&&end>start);return {prefix:source.slice(0,start),suffix:source.slice(end),modules:JSON.parse(JSON.stringify(vm.runInNewContext('('+source.slice(start,end)+')',{frozen:value=>value}))) };}
+ const a=split(prior),b=split(current);assert.equal(b.prefix,a.prefix);assert.equal(b.suffix,a.suffix);assert.deepEqual(Object.keys(b.modules),Object.keys(a.modules));
+ const changed=new Set(['newC','lifecycle','discoveryUi','friend','authority','records']);
+ const identity='../../apps/pc-app/runtime/features/companions/display-identity.mjs',catalog='../../apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json';
+ for(const [key,spec] of Object.entries(a.modules)){
+  if(changed.has(key))spec.sha256=b.modules[key].sha256;
+  if(key==='records')spec.tests.push('cloud-live-qa-record-native-ui.test.mjs');
+  if(['discoveryUi','friend','authority'].includes(key))spec.assets=(key==='authority'?[catalog]:[identity,catalog]).map(file=>({file,sha256:sha(execFileSync('git',['show',notificationPackage.expectedSource+':'+file.slice(6)]))}));
+  assert.deepEqual(b.modules[key],spec,key+': reviewed source-only change');
  }
 });

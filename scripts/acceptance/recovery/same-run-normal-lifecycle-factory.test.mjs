@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
+import {readFileSync} from 'node:fs';
 import {installNormalPreloginHold,installRestoredCAuthGuard,appEnvironment,parentProofUrl,validateParentProofClaims,getCompletionContext} from './same-run-normal-lifecycle-factory.mjs';
 const origin='https://jbvrdmrkwpznbrvteive.supabase.co';
 const differentInode=value=>value===0?1:0;
@@ -71,4 +72,63 @@ test('signedout prelude cannot accept a caller authority or artifact projection'
 test('platform warning receipt timestamps only the successful original snapshot observation',async()=>{
  const {readFileSync}=await import('node:fs');const source=readFileSync(new URL('./same-run-normal-lifecycle-factory.mjs',import.meta.url),'utf8');const start=source.indexOf(' await admitPlatformS06SingleSnapshot(s.models.a3.s06Ticket,{transition});'),end=source.indexOf(' await releasePlatformS06AfterFormalGrant',start);assert.ok(start>=0&&end>start);const segment=source.slice(start,end);
  for(const succeeds of [true,false]){let clock=100,written=null,calls=0;const binding={run:'synthetic-run',commit:'synthetic-commit',requestDigest:'synthetic-digest',nonce:'synthetic-nonce',businessDeadline:1000};const context=vm.createContext({s:{models:{a3:{s06Ticket:{}}},binding},transition:{},Date:{now:()=>clock},admitPlatformS06SingleSnapshot:async()=>{calls++;await Promise.resolve();clock=200;if(!succeeds)throw Error('SYNTHETIC_REJECT');},safeWrite:(_s,file,value)=>{assert.equal(file,'s06-platform-warning.json');written=JSON.parse(JSON.stringify(value));}});const p=vm.runInContext('(async()=>{'+segment+'})()',context);if(succeeds){await p;assert.deepEqual(written,{version:1,run:binding.run,commit:binding.commit,requestDigest:binding.requestDigest,nonce:binding.nonce,observedAtMs:200,realOriginalWarningObserved:true,originalSnapshotCount:1,deadline:1000});}else{await assert.rejects(p);assert.equal(written,null);}assert.equal(calls,1);}
+});
+
+// Execute the actual private guard functions with synthetic in-memory models.
+// No admission is minted, credentials read, process launched or network used.
+function authenticationFixture(){
+ const source=readFileSync(new URL('./same-run-normal-lifecycle-factory.mjs',import.meta.url),'utf8'),start=source.indexOf('export async function assertSameRunGrant('),end=source.indexOf('async function installLocationBridge(',start);
+ const safeStart=source.indexOf('async function safeActor('),safeEnd=source.indexOf('async function normalLogin(',safeStart),cap=Object.freeze({}),roles=['a','a2','a3','b','c'],scenario='synthetic-scope';
+ let now=1000,registryChecks=0;const actorReads={},protocolReads={},models={},scopeGrants=new Map(),profiles={},profileRoots={};
+ const s={authorization:{},authorized:true,vault:{async verifyRegistry(){registryChecks++;assert.equal(s.registryValid,true);}},registryValid:true,binding:{expiresAt:100000},supervisor:{ready:true,closed:false},grantsReleased:true,cFinished:false,cState:{loginFrozen:false},revoked:new Set(),models,scopeGrants,profiles,profileRoots};
+ const ctx=vm.createContext({assert,Date:{now:()=>now},Error,Map,WeakMap,Promise,setTimeout,clearTimeout,roles,scenario,origin,FIXED_IDENTITIES:{C:{accountKey:'synthetic-c'}},authenticationTransitions:new WeakMap(),randomUUID:()=> '11111111-1111-4111-8111-111111111111',own:value=>{assert.equal(value,cap);assert.equal(s.authorized,true);return s;},assertCompletionAuthorization:()=>assert.equal(s.authorized,true),assertAuthorizedVault:value=>assert.equal(value,s.vault),assertOwnedProfileRoot:(profile,ticket)=>{assert.equal(profile,ticket.canonical);return profile;},processIdentity:()=>{throw Error('No process access in isolated fixture');}});
+ for(const role of roles){
+  const actor={ownerAccountId:'owner-'+role,authUserId:'auth-'+role,deviceId:'device-'+role,sessionId:'session-'+role,authKind:'supabase',authority:'live'},profile='/synthetic/'+role;
+  const a={epoch:7,current:{authKind:'supabase'},qaScenario:null,remote:{config:{url:origin},deviceId:actor.deviceId,active:{actor}},session(){const active=this.remote.active?.actor;return {currentUser:this.current?{id:active?.ownerAccountId,authUserId:active?.authUserId,account:role==='c'?'synthetic-c':'synthetic-'+role,authKind:'supabase'}:null,dataMode:'live',persistence:this.current?'secure':'none',secureStorageAvailable:true};},async requireCloudActor(){actorReads[role]=(actorReads[role]||0)+1;if(!this.current||this.rejectActor)throw Object.assign(Error('CLOUD_LOGIN_REQUIRED'),{code:'CLOUD_LOGIN_REQUIRED'});return {actor:this.remote.active.actor,invoke:async(name,body)=>{assert.equal(name,'discovery');assert.equal(body.op,'protocol');protocolReads[role]=(protocolReads[role]||0)+1;return {simulatedLocationAllowed:this.allowed!==false,scenarioId:this.protocolScenario||scenario};}};}};
+  const h={accounts:a,binding:{role,profile},released:true,loginFrozen:false};models[role]={profile,expectedDeviceId:actor.deviceId,launcherPid:role.charCodeAt(0),runtime:{pid:role.charCodeAt(0)+10},actor,context:h,async main(fn,input){ctx.__qaUiCaseContext=this.context;return fn(null,input);},async call(){return a.session();}};
+  profiles[role]=profile;profileRoots[role]={canonical:profile};scopeGrants.set(role,{...actor,scenario,expiresAtMs:100000});
+ }
+ const api=vm.runInContext(source.slice(safeStart,safeEnd)+'\n'+source.slice(start,end).replace('export async function','async function')+'\n({begin:beginCAuthenticationTransition,check:assertCAuthenticationTransition,finish:finishCAuthenticationTransition,full:assertSameRunGrant})',ctx);
+ const a=models.c.context.accounts,originalActor={...a.remote.active.actor};
+ return {cap,s,models,a,actorReads,protocolReads,registryChecks:()=>registryChecks,setNow:value=>{now=value;},
+  begin:(input={stage:'A15-old-new-login',intentId:'22222222-2222-4222-8222-222222222222'})=>api.begin(cap,input),
+  check:(token,phase)=>api.check(cap,token,{phase}),finish:token=>api.finish(cap,token),full:()=>api.full(cap,{hardDeadline:s.binding.expiresAt}),
+  logout:(pending=Promise.resolve({confirmed:true}))=>{a.epoch++;a.current=null;a.remote.active=null;a.signOutPending=pending;},
+  login:(changes={})=>{a.epoch++;a.current={authKind:'supabase'};a.remote.active={actor:{...originalActor,sessionId:'new-session-c',...changes}};}};
+}
+async function afterOldLogin(f){const token=await f.begin();f.logout();await f.check(token,'logout');await f.check(token,'old-login');return token;}
+
+test('C signed-out transition never changes the full five-model business guard',async()=>{
+ const f=authenticationFixture(),token=await f.begin();for(const role of ['a','a2','a3','b','c'])assert.ok(f.protocolReads[role]>=1);assert.equal(Object.isFrozen(token),true);assert.deepEqual(Object.keys(token),[]);
+ f.logout();await assert.rejects(f.full(),{code:'CLOUD_LOGIN_REQUIRED'});const before={...f.protocolReads};await f.check(token,'logout');
+ for(const role of ['a','a2','a3','b'])assert.equal(f.protocolReads[role],before[role]+1);assert.equal(f.protocolReads.c,before.c);await assert.rejects(f.check({},'logout'),/C_AUTH_TRANSITION_REQUIRED/);await assert.rejects(f.check(true,'logout'),/C_AUTH_TRANSITION_REQUIRED/);await assert.rejects(f.full(),{code:'CLOUD_LOGIN_REQUIRED'});
+});
+test('C relogin waits for original logout, verifies new actor, rechecks all grants and consumes token',async()=>{
+ const f=authenticationFixture(),token=await f.begin();let resolveLogout;f.logout(new Promise(resolve=>{resolveLogout=resolve;}));await f.check(token,'logout');let settled=false;const pending=f.check(token,'old-login').then(()=>{settled=true;});await new Promise(setImmediate);assert.equal(settled,false);resolveLogout({confirmed:true});await pending;
+ await f.check(token,'old-login');await f.check(token,'new-login');f.login();const reads=f.actorReads.c;await f.check(token,'new-login');assert.ok(f.actorReads.c>reads);const protocols=f.protocolReads.c;assert.equal((await f.finish(token)).confirmed,true);assert.ok(f.protocolReads.c>protocols);assert.ok(f.registryChecks()>0);
+ await assert.rejects(f.check(token,'new-login'),/C_AUTH_TRANSITION_REQUIRED/);await assert.rejects(f.finish(token),/C_AUTH_TRANSITION_REQUIRED/);await assert.rejects(f.begin(),/C_AUTH_TRANSITION_REPLAY/);await f.full();
+});
+test('C transition rejects wrong stage, phase skipping and phase rollback',async()=>{
+ const wrong=authenticationFixture();await assert.rejects(wrong.begin({stage:'A12-own-current-session-revoke',intentId:'22222222-2222-4222-8222-222222222222'}));
+ for(const phase of ['new-login','business','']){const f=authenticationFixture(),token=await f.begin();await assert.rejects(f.check(token,phase),/C_AUTH_TRANSITION_ORDER/);await assert.rejects(f.check(token,'logout'),/C_AUTH_TRANSITION_REQUIRED/);}
+ const f=authenticationFixture(),token=await afterOldLogin(f);await assert.rejects(f.check(token,'logout'),/C_AUTH_TRANSITION_ORDER/);
+});
+test('C logout failure, missing pending promise or deadline expiry permanently closes transition',async()=>{
+ for(const pending of [Promise.resolve({confirmed:false}),undefined]){const f=authenticationFixture(),token=await f.begin();f.logout(pending);if(pending===undefined)delete f.a.signOutPending;await assert.rejects(f.check(token,'old-login'),/C_LOGOUT_UNCONFIRMED|NORMAL_C_LOGOUT_REQUIRED/);await assert.rejects(f.check(token,'old-login'),/C_AUTH_TRANSITION_REQUIRED/);}
+ const f=authenticationFixture(),token=await f.begin();let resolveLogout;f.logout(new Promise(resolve=>{resolveLogout=resolve;}));const pending=f.check(token,'old-login');await new Promise(setImmediate);f.setNow(100001);resolveLogout({confirmed:true});await assert.rejects(pending,/C_AUTH_TRANSITION_EXPIRED/);await assert.rejects(f.check(token,'old-login'),/C_AUTH_TRANSITION_REQUIRED/);
+});
+test('C transition fails closed for ownership, grants, watchdog, profile and context changes',async()=>{
+ const changes=[f=>{f.s.authorized=false;},f=>{f.s.supervisor.closed=true;},f=>{f.s.cState.loginFrozen=true;},f=>{f.s.revoked.add('c');},f=>{f.s.scopeGrants.delete('c');},f=>{f.s.scopeGrants.get('c').expiresAtMs=999;},f=>{f.s.scopeGrants.get('c').deviceId='other';},f=>{f.s.scopeGrants.get('c').scenario='other';},f=>{f.s.models.c={...f.s.models.c};},f=>{delete f.s.models.b;},f=>{f.s.registryValid=false;},f=>{f.models.c.profile='/different';},f=>{f.models.c.expectedDeviceId='different';},f=>{f.models.c.context={...f.models.c.context};},f=>{f.models.c.context.binding.role='b';},f=>{f.a.remote.config.url='https://other.invalid';},f=>{f.a.remote.deviceId='different';},f=>{f.a.epoch++;},f=>{f.models.a.context.accounts.allowed=false;},f=>{f.models.b.context.accounts.current=null;},f=>{f.models.a2.context.accounts.protocolScenario='other';}];
+ for(const change of changes){const f=authenticationFixture(),token=await f.begin();f.logout();change(f);await assert.rejects(f.check(token,'logout'));await assert.rejects(f.check(token,'logout'),/C_AUTH_TRANSITION_REQUIRED/);}
+});
+test('old password cannot authenticate; new login must be fresh exact actor and full live C scope',async()=>{
+ const old=authenticationFixture(),oldToken=await afterOldLogin(old);old.login();await assert.rejects(old.check(oldToken,'old-login'),/OLD_PASSWORD_MUST_NOT_AUTHENTICATE/);
+ for(const change of [{ownerAccountId:'other'},{authUserId:'other'},{deviceId:'other'},{sessionId:'session-c'},{sessionId:''},{authority:'simulated'}]){const f=authenticationFixture(),token=await afterOldLogin(f);await f.check(token,'new-login');f.login(change);await assert.rejects(f.check(token,'new-login'));}
+ const reject=authenticationFixture(),rejectToken=await afterOldLogin(reject);await reject.check(rejectToken,'new-login');reject.login();reject.a.rejectActor=true;await assert.rejects(reject.check(rejectToken,'new-login'),{code:'CLOUD_LOGIN_REQUIRED'});
+ const missing=authenticationFixture(),missingToken=await afterOldLogin(missing);await missing.check(missingToken,'new-login');await assert.rejects(missing.finish(missingToken),/NEW_C_SESSION_REQUIRED/);
+ const scope=authenticationFixture(),scopeToken=await afterOldLogin(scope);await scope.check(scopeToken,'new-login');scope.login();scope.a.allowed=false;await assert.rejects(scope.finish(scopeToken));await assert.rejects(scope.finish(scopeToken),/C_AUTH_TRANSITION_REQUIRED/);
+});
+test('restored guard preserves normal logout and two login attempts without manual epoch rebinding',async()=>{
+ const calls=[],a={current:{authKind:'supabase'},epoch:3,remote:{async request(_name,body){calls.push(body.op);if(body.password==='FAKE-OLD')throw Object.assign(Error('invalid'),{code:'INVALID_CREDENTIALS'});return {ok:true};}}};
+ const ctx=vm.createContext({__sameRunAccountCapture:{accounts:a},Date,Error});vm.runInContext('('+installRestoredCAuthGuard.toString()+')(null,'+JSON.stringify({expiresAt:Date.now()+30000})+')',ctx);a.current=null;a.epoch++;await a.remote.request('lingjing-auth',{op:'logout'});await assert.rejects(a.remote.request('lingjing-auth',{op:'login',password:'FAKE-OLD'}),{code:'INVALID_CREDENTIALS'});await a.remote.request('lingjing-auth',{op:'login',password:'FAKE-NEW'});a.current={authKind:'supabase'};a.epoch++;await a.remote.request('lingjing-auth',{op:'actor'});assert.equal(ctx.__qaUiCaseContext.epoch,a.epoch);assert.deepEqual(calls,['logout','login','login','actor']);
 });

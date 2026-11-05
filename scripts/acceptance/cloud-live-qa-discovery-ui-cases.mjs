@@ -2,9 +2,77 @@
 import assert from 'node:assert/strict';
 import {existsSync,writeFileSync} from 'node:fs';
 import {join} from 'node:path';
+import {companionIdentity} from '../../apps/pc-app/runtime/features/companions/display-identity.mjs';
 export function requireUiBinding(input){
  for(const k of ['bindingDigest','sourceCommit','profilePath','ownerAccountId','authUserId','deviceId','sessionId'])assert.ok(typeof input?.[k]==='string'&&input[k]);
  assert.match(input.bindingDigest,/^[a-f0-9]{64}$/);assert.match(input.sourceCommit,/^[a-f0-9]{40}$/);return input;
+}
+// The product keeps server-generated points at their original positions while
+// recomputing preview distances/range from the current fix. A failed request
+// must not stamp that old payload with the new fix's timestamp. The UI may
+// still show the previous snapshot, or a genuine subsequent background success.
+export function assertNearbyFailureBinding(before,observed){
+ const failure=observed.nearbyFailure;
+ assert.ok(failure,'The exact before-send failure must have been observed');
+ assert.equal(observed.nearbyFailureStage,'refresh-rejected','Observe rejected refresh before any later UI-triggered recovery');
+ assert.equal(observed.nearbyFailures,1);assert.equal(observed.armed,null);
+ assert.equal(before.location.status,'ready');assert.equal(before.location.fix?.source,'simulated');
+ assert.ok(before.remoteCount>0);assert.equal(before.remote?.timestampMs,before.location.fix.timestampMs);
+ assert.equal(before.remote.source,before.location.fix.source);assert.equal(before.remote.scenarioId,before.location.fix.scenarioId??null);
+ assert.equal(failure.location.status,'ready');assert.equal(failure.location.fix?.source,'simulated');
+ assert.ok(failure.location.fix.timestampMs>before.location.fix.timestampMs);
+ assert.equal(failure.nearbySuccesses,before.nearbySuccesses,'A success before the fault invalidates this baseline');
+ assert.deepEqual(failure.remote,before.remote,'Failure must retain the original timestamp and complete server payload');
+ assert.notEqual(failure.remote.timestampMs,failure.location.fix.timestampMs,'Old results are not a new-position success');
+ for(const state of [before,failure,observed]){
+  assert.equal(state.location.watching,false,'The manual failure case must not race location watch');
+  assert.equal(state.view.bindingsSha256,state.remote?.bindingsSha256,'Preview must preserve server IDs, templates and positions');
+ }
+ assert.equal(observed.location.status,'ready');
+ assert.deepEqual(observed.location.fix,failure.location.fix,'Watch is disabled: no unobserved fix may replace the failed attempt');
+ assert.ok(observed.nearbySuccesses>=failure.nearbySuccesses);
+ let backgroundRecoveryApplied=false;
+ if(JSON.stringify(observed.remote)!==JSON.stringify(failure.remote)){
+  const response=observed.nearbyResponses.find(value=>value.sequence>failure.nearbySuccesses&&value.sequence<=observed.nearbySuccesses&&value.payloadSha256===observed.remote?.payloadSha256&&value.fixTimestamp===observed.remote?.timestampMs);
+  assert.ok(response,'Changed results require a matching authenticated successful nearby response, not just a success counter');
+  assert.equal(response.fixTimestamp,failure.location.fix.timestampMs);
+  assert.equal(observed.remote.source,failure.location.fix.source);
+  assert.equal(observed.remote.scenarioId,failure.location.fix.scenarioId??null);
+  backgroundRecoveryApplied=true;
+ }
+ return {backgroundRecoveryApplied,retainedAtFailure:true,originalPositionBindingsPreserved:true};
+}
+export function assertNearbyFailureUi(visible,candidates){
+ assert.ok(visible.error?.includes('受控附近请求暂时不可用'),'Failure must remain visibly reported');
+ assert.equal(visible.retryEnabled,true);assert.ok([100,450].includes(visible.radius));
+ assert.equal(new Set(visible.markers.map(marker=>marker.id)).size,visible.markers.length,'Visible pins must not duplicate an identity');
+ for(const {origin,state} of candidates){
+  const spawns=state.view.spawns.filter(spawn=>spawn.distanceMeters<=visible.radius);
+  if(visible.countText!==`${spawns.length} 位伙伴`)continue;
+  const selected=visible.selected&&spawns.find(spawn=>{
+   const identity=companionIdentity(spawn);
+   return visible.selected.name===identity.roleName&&visible.selected.number===`编号 ${identity.instanceNumber}`&&visible.selected.resourceId===spawn.resourceId&&visible.selected.distance===`${spawn.distanceMeters} m · ${spawn.inRange?'可挑战':'前往附近'}`;
+  });
+  if(spawns.length?!selected:Boolean(visible.selected))continue;
+  const rows=spawns.filter(spawn=>spawn.id!==selected?.id).slice(0,3).map(spawn=>({name:spawn.name,resourceId:spawn.resourceId,distance:`${spawn.distanceMeters} m`}));
+  if(JSON.stringify(visible.rows)!==JSON.stringify(rows))continue;
+  // Map tiles may fail independently. Any rendered pin must still identify a
+  // real point with the corresponding distance, never a new locally made one.
+  if(visible.markers.some(marker=>!spawns.slice(0,8).some(spawn=>marker.id===spawn.id&&marker.label===`${spawn.name}，距离 ${spawn.distanceMeters} 米`&&marker.selected===(spawn.id===selected?.id))))continue;
+  return {origin,count:spawns.length,markerCount:visible.markers.length};
+ }
+ assert.fail('Visible nearby identities/distances do not match a retained or authenticated recovered snapshot');
+}
+// DOM-only inspection: no renderer IPC, hidden React state or location mutation.
+export function readNearbyFailureUi(){
+ const root=document.querySelector('.app-page-motion[data-route-key="/discovery"][data-current-route="true"] .discovery-page');
+ // Native visibility includes transparent/hidden ancestors during route fades.
+ const shown=el=>Boolean(el&&el.getClientRects().length&&el.checkVisibility({checkOpacity:true,checkVisibilityCSS:true}));
+ const text=el=>el?.textContent?.trim()??null,hero=root?.querySelector('.discovery-selected-hero'),alert=root?.querySelector('.discovery-alert[role="alert"]'),retry=root?.querySelector('button[aria-label="更新场景位置"]');
+ return {error:shown(alert)?text(alert):null,retryEnabled:shown(retry)&&!retry.disabled,radius:Number(root?.querySelector('select[aria-label="附近显示范围"]')?.value),countText:text(root?.querySelector('.discovery-nearby-heading span')),
+  selected:shown(hero)?{name:text(hero.querySelector('h2')),number:text(hero.querySelector('.discovery-instance-number')),resourceId:hero.querySelector('[data-resource-id]')?.getAttribute('data-resource-id'),distance:text(hero.querySelector('.discovery-distance'))}:null,
+  rows:[...root?.querySelectorAll('.discovery-nearby-row')??[]].filter(shown).map(row=>({name:text(row.querySelector('strong')),resourceId:row.querySelector('[data-resource-id]')?.getAttribute('data-resource-id'),distance:text(row.querySelector(':scope > span:last-of-type'))})),
+  markers:[...root?.querySelectorAll('.discovery-pin-button')??[]].filter(shown).map(marker=>({id:marker.getAttribute('data-spawn-id'),label:marker.getAttribute('aria-label'),selected:marker.getAttribute('aria-pressed')==='true'}))};
 }
 // Serialized into the already-owned main process. Holder alone supplies this private
 // context after real authorization/grant verification; it is never an IPC endpoint.
@@ -16,7 +84,17 @@ export async function installUiFaultProbe(_electron,binding){
  const fs=process.getBuiltinModule('node:fs'),path=process.getBuiltinModule('node:path'),crypto=process.getBuiltinModule('node:crypto');
  if(!location||!authority||!d.cloudRuntime||services.get('qaScenario'))fail('NORMAL_CLOUD_REQUIRED');
  const epoch=accounts.epoch,originalPosition=adapter.getPosition,originalActor=authority.requireActor;
- let armed=null,sourceFailures=0,nearbyFailures=0,nearbySuccesses=0,closed=false;
+ let armed=null,sourceFailures=0,nearbyFailures=0,nearbySuccesses=0,closed=false,nearbyFailure=null,nearbyFailureStage=null;
+ const nearbyResponses=[];
+ const digest=value=>crypto.createHash('sha256').update(JSON.stringify(value)).digest('hex');
+ const bindings=spawns=>spawns.map(({id,templateId,position})=>({id,templateId,position}));
+ function observation(){
+  const s=location.snapshot(),remote=d.cloudRuntime.nearbyState,spawns=d.nearby().spawns;
+  const {timestampMs,...payload}=remote||{};
+  return structuredClone({nearbySuccesses,location:s,remoteTimestamp:timestampMs??null,remoteCount:remote?.spawns?.length??0,
+   remote:remote?{timestampMs,source:remote.source,scenarioId:remote.scenarioId??null,payloadSha256:digest(payload),bindingsSha256:digest(bindings(remote.spawns))}:null,
+   view:{bindingsSha256:digest(bindings(spawns)),spawns:spawns.map(({id,templateId,name,resourceId,globalSerial,distanceMeters,inRange})=>({id,templateId,name,resourceId,globalSerial,distanceMeters,inRange}))}});
+ }
  function gate(){
   if(closed||accounts.epoch!==epoch||services.get('discovery')!==d||d.location!==location||location.adapter!==adapter||d.authority!==authority||services.session.getOwnerAccountId()!==binding.ownerAccountId)fail('UI_FIXTURE_CHANGED');
   if(fs.realpathSync(services.paths.userData).toLowerCase()!==fs.realpathSync(binding.profilePath).toLowerCase())fail('PROFILE_MISMATCH');
@@ -25,12 +103,27 @@ export async function installUiFaultProbe(_electron,binding){
  function actorExact(context){const a=context.actor||context;for(const k of ['ownerAccountId','authUserId','deviceId','sessionId'])if(a[k]!==binding[k])fail('ACTOR_CHANGED');if(a.authKind!=='supabase'||a.authority!=='live')fail('NORMAL_CLOUD_REQUIRED');}
  gate();actorExact(await originalActor.call(authority));gate();if(adapter.getPosition!==originalPosition||authority.requireActor!==originalActor||globalThis.__qaDiscoveryUiFault)fail('PROBE_INSTALL_CHANGED');
  const position=async function(...args){gate();if(armed==='source'){armed=null;sourceFailures++;throw Object.assign(Error('受控定位来源暂时不可用，请重试'),{code:'LOCATION_UNAVAILABLE'});}return originalPosition.apply(this,args);};
- const actor=async function(...args){gate();const context=await originalActor.apply(this,args);gate();actorExact(context);return {...context,invoke:async(feature,body)=>{gate();if(feature==='discovery'&&body?.op==='nearby'&&armed==='nearby'){armed=null;nearbyFailures++;throw Object.assign(Error('受控附近请求暂时不可用，请重试'),{code:'CLOUD_UNAVAILABLE'});}const result=await context.invoke(feature,body);gate();if(feature==='discovery'&&body?.op==='nearby')nearbySuccesses++;return result;}};};
+ const actor=async function(...args){gate();const context=await originalActor.apply(this,args);gate();actorExact(context);return {...context,invoke:async(feature,body)=>{
+  gate();const nearby=feature==='discovery'&&body?.op==='nearby',fixTimestamp=nearby?location.snapshot().fix?.timestampMs:null;
+  if(nearby&&armed==='nearby'){
+   armed=null;nearbyFailures++;nearbyFailure=observation();nearbyFailureStage='before-send';
+   // Observe the existing task's rejection without replacing refresh, delaying
+   // its completion, or changing its rejection. Its already-registered finally
+   // runs first; UI catch/retry resumes only after this observation is queued.
+   const pending=d.cloudRuntime.pendingRefresh;
+   if(pending?.then)void pending.then(()=>{},error=>{
+    try{exact();if(error?.code!=='CLOUD_UNAVAILABLE')fail('UNEXPECTED_REFRESH_FAILURE');nearbyFailure=observation();nearbyFailureStage='refresh-rejected';}
+    catch{nearbyFailureStage='observation-failed';}
+   });
+   throw Object.assign(Error('受控附近请求暂时不可用，请重试'),{code:'CLOUD_UNAVAILABLE'});
+  }
+  const result=await context.invoke(feature,body);gate();if(nearby){nearbySuccesses++;nearbyResponses.push({sequence:nearbySuccesses,fixTimestamp,payloadSha256:digest(result)});}return result;
+ }};};
  adapter.getPosition=position;authority.requireActor=actor;
  function exact(){gate();if(adapter.getPosition!==position||authority.requireActor!==actor)fail('PROBE_REPLACED');}
  globalThis.__qaDiscoveryUiFault={
   arm(kind){exact();if(armed||!['source','nearby'].includes(kind))fail('INVALID_FAULT');armed=kind;},
-  read(){exact();const s=location.snapshot(),remote=d.cloudRuntime.nearbyState;return {armed,sourceFailures,nearbyFailures,nearbySuccesses,location:s,remoteTimestamp:remote?.timestampMs??null,remoteCount:remote?.spawns?.length??0};},
+  read(){exact();return structuredClone({armed,sourceFailures,nearbyFailures,...observation(),nearbyFailure,nearbyFailureStage,nearbyResponses});},
   effects(){exact();const req=process.getBuiltinModule('node:module').createRequire(process.resourcesPath+'/app.asar/package.json'),db=new(req('better-sqlite3'))(path.join(binding.profilePath,'lingjing.sqlite'),{readonly:true,fileMustExist:true});try{db.pragma('query_only=ON');const result={};for(const table of ['discovery_encounters','discovery_captures','discovery_actions','battle_sessions','battle_reward_receipts','companion_pets']){const rows=db.prepare(`SELECT * FROM ${table} WHERE owner_account_id=?`).all(binding.ownerAccountId).map(r=>JSON.stringify(r)).sort();result[table]={count:rows.length,sha256:crypto.createHash('sha256').update(JSON.stringify(rows)).digest('hex')};}return result;}finally{db.close();}},
   restore(){armed=null;const ownPosition=adapter.getPosition===position,ownActor=authority.requireActor===actor;if(ownPosition)adapter.getPosition=originalPosition;if(ownActor)authority.requireActor=originalActor;closed=true;delete globalThis.__qaDiscoveryUiFault;if(!ownPosition||!ownActor)fail('PROBE_REPLACED');}
  };return {installed:true};
@@ -60,9 +153,16 @@ export async function runCloudLiveQaDiscoveryUiCases({model,binding,assertActive
   assert.deepEqual(await effects(),baseline);await page.screenshot({path:join(output,'M07-source-error.png'),timeout:10000});await recover('M07-source-recovered');proof.checks.push({id:'source-read-error-and-ui-retry',passed:true,fixCleared:true});save();
   await readyButton();const before=await probe();await model.main(()=>globalThis.__qaDiscoveryUiFault.arm('nearby'));await click(button());
   await until(()=>alert().innerText(),t=>t.includes('受控附近请求暂时不可用'),'nearby-request-error-visible');const failed=await probe();assert.equal(failed.nearbyFailures,1);assert.equal(failed.armed,null);assert.equal(await button().isEnabled(),true);
-  // Existing results may be preserved only with a visible error, never silently
-  // described as a successfully completed refresh. No new encounter is invoked.
-  proof.nearbyFailure={visibleError:true,priorRemoteTimestamp:before.remoteTimestamp,observedRemoteTimestamp:failed.remoteTimestamp,observedFixTimestamp:failed.location.fix?.timestampMs??null,backgroundRecoveryAlreadyObserved:failed.nearbySuccesses>before.nearbySuccesses};
+  assertNearbyFailureBinding(before,failed);
+  const visible=await until(async()=>{
+   const left=await probe();assertNearbyFailureBinding(before,left);
+   const ui=await page.evaluate(readNearbyFailureUi),right=await probe();const bindingCheck=assertNearbyFailureBinding(before,right);
+   // The hook's immediate refresh can succeed while the command error remains.
+   // Bracket the DOM read, and accept only a complete known presentation, not
+   // mixed old/new rows. Polling tolerates a React render in progress.
+   try{return {...assertNearbyFailureUi(ui,[{origin:'prior-snapshot',state:before},{origin:'retained-points-current-fix',state:failed.nearbyFailure},{origin:'observed-before-dom',state:left},{origin:'observed-after-dom',state:right}]),bindingCheck,observed:right};}catch{return null;}
+  },Boolean,'nearby-error-retains-position-bindings');
+  proof.nearbyFailure={visibleError:true,failureStage:failed.nearbyFailureStage,...visible.bindingCheck,visibleViewOrigin:visible.origin,visibleCount:visible.count,visibleMarkerCount:visible.markerCount,priorRemoteTimestamp:before.remoteTimestamp,failureRemoteTimestamp:failed.nearbyFailure.remoteTimestamp,failureFixTimestamp:failed.nearbyFailure.location.fix.timestampMs,observedRemoteTimestamp:visible.observed.remoteTimestamp,observedFixTimestamp:visible.observed.location.fix?.timestampMs??null,backgroundRecoveryAlreadyObserved:visible.bindingCheck.backgroundRecoveryApplied};
   assert.deepEqual(await effects(),baseline);await page.screenshot({path:join(output,'M07-nearby-error.png'),timeout:10000});await recover('M07-nearby-recovered');assert.deepEqual(await effects(),baseline);
   proof.checks.push({id:'authenticated-nearby-before-send-and-ui-retry',passed:true,noBusinessChanges:true});proof.passed=true;
  }catch{proof.errorCode='DISCOVERY_UI_CHECK_FAILED';}

@@ -10,6 +10,7 @@ import {friendSession,reportFor} from '../../infra/supabase/functions/lingjing-b
 const require=createRequire(import.meta.url);
 const {canonical,checksum}=require('../../apps/pc-app/runtime/features/accounts/util.cjs');
 const {presentReport}=require('../../apps/pc-app/runtime/features/battle/presentation.cjs');
+const displayRoleNames=new Set(['历史伙伴',...require('../../apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json').characters.map(character=>character.name)]);
 const digest=x=>createHash('sha256').update(canonical(x)).digest('hex');
 const save=(file,value)=>{writeFileSync(file+'.tmp',JSON.stringify(value,null,2),{mode:0o600});renameSync(file+'.tmp',file);};
 export function canonicalPerspective(value,side){
@@ -108,6 +109,31 @@ export function validateBattleReadback(value,owner,roomId,settlementId){
  assert.deepEqual(raw,expected);assert.deepEqual(receipt.result_json.report,expected);assert.deepEqual(JSON.parse(value.rewards[0].data_json),expected.reward);assert.equal(receipt.won,expected.winner==='player');assert.equal(receipt.experience,receipt.won?20:5);
  return {report:presentReport(expected),canonicalRounds:canonicalPerspective(expected.rounds,projected.side),winner:value.room.winner_side};
 }
+export function validateBattleReportView(actual,expected){
+ assert.equal(expected.mode,'friend');assert.ok(actual&&typeof actual==='object'&&!Array.isArray(actual));
+ const core={...actual};
+ for(const side of['player','enemy']){
+  // Strip only the two presentation additions, after validating their exact
+  // shape and original participant binding. This is not serial-ownership proof.
+  assert.ok(expected[side]&&typeof expected[side].petId==='string'&&expected[side].petId.length>0);
+  for(const key of['displayKind','displayIdentity'])assert.equal(Object.hasOwn(expected[side],key),false,'Authority fields must never be silently excluded');
+  assert.ok(actual[side]&&typeof actual[side]==='object'&&!Array.isArray(actual[side]));
+  assert.equal(actual[side].petId,expected[side].petId);
+  const {displayKind,displayIdentity,...participant}=actual[side];assert.equal(displayKind,'instance');
+  assert.ok(displayIdentity&&typeof displayIdentity==='object'&&!Array.isArray(displayIdentity));
+  assert.deepEqual(Object.keys(displayIdentity).sort(),['historicalNickname','instanceNumber','roleName']);
+  assert.ok(displayRoleNames.has(displayIdentity.roleName));
+  const number=displayIdentity.instanceNumber;assert.equal(typeof number,'string');
+  assert.ok(number==='待同步'||/^[0-9]+$/u.test(number)&&/[1-9]/u.test(number)&&number===number.replace(/^0+/u,'').padStart(4,'0'));
+  assert.ok(displayIdentity.historicalNickname===null||typeof displayIdentity.historicalNickname==='string'&&displayIdentity.historicalNickname!==displayIdentity.roleName);
+  // Peer names come from the original report. The own pet may have been renamed
+  // since that report, so its current nickname is not a gameplay comparison.
+  if(side==='enemy'){const value=expected[side].petName,name=typeof value==='string'?value:typeof value?.zh==='string'?value.zh:'';assert.equal(displayIdentity.historicalNickname,name===displayIdentity.roleName?null:name);}
+  core[side]=participant;
+ }
+ // Retain every other key, including future business fields and unknown extras.
+ assert.deepEqual(core,expected);return actual;
+}
 export function validateAuthorityReadbackSelection(selected){assert.ok(Array.isArray(selected)&&selected.length>0&&new Set(selected).size===selected.length);assert.deepEqual(selected,['B06','B11','I04'].filter(id=>selected.includes(id)));return [...selected];}
 export async function runCloudAuthorityReadbackCases(context,{observation,roomId,sessions,settlementIds,economicCheckpoint,selectedCases=['B06','B11']}){
  selectedCases=validateAuthorityReadbackSelection(selectedCases);
@@ -119,9 +145,9 @@ export async function runCloudAuthorityReadbackCases(context,{observation,roomId
  try{
   await step('B06',async()=>{assert.equal(observation.runId,context.runId);assert.equal(observation.scenario,context.scenario);assert.equal(observation.roomId,roomId);for(const role of['a','b']){const seen=observation.uiProgress[role];const actualEvents=await models[role].main((_e,roomId,runId)=>{const o=globalThis.__authorityReadbackObserver;if(!o||o.overflow||o.roomId!==roomId||o.runId!==runId)throw Error('Original observer unavailable');return o.events;},roomId,context.runId);assert.ok(actualEvents.some(x=>digest(x)===digest(seen.push)));assert.ok(actualEvents.some(x=>digest(x)===digest(seen.subscribed)));assert.equal(seen.subscribed.status,'SUBSCRIBED');assert.ok(seen.subscribed.at<=seen.push.at);assert.equal(seen.push.source,'realtime');assert.equal(seen.push.roomId,roomId);assert.ok(seen.uiRound>=seen.push.round&&seen.push.round>0);assert.ok(seen.observedAt>=seen.push.at);assert.equal(sessions[role],observation.sessions[role]);}return {observations:observation.uiProgress,pollingRemainedEnabled:true,exclusiveUiCausalityNotClaimed:true};});
   await step('B11',async()=>{
-   const before={},checked={};for(const role of['a','b']){assert.equal(sessions[role],`online-${roomId}`);before[role]=await battleRead(context,role,roomId);checked[role]=validateBattleReadback(before[role],expectedActors[role].ownerAccountId,roomId,settlementIds[role]);const actual=await models[role].call('battle','getReport',{reportId:sessions[role]});assert.deepEqual(actual,checked[role].report);}
+   const before={},checked={};for(const role of['a','b']){assert.equal(sessions[role],`online-${roomId}`);before[role]=await battleRead(context,role,roomId);checked[role]=validateBattleReadback(before[role],expectedActors[role].ownerAccountId,roomId,settlementIds[role]);const actual=await models[role].call('battle','getReport',{reportId:sessions[role]});validateBattleReportView(actual,checked[role].report);}
    assert.deepEqual(before.a.room,before.b.room);assert.deepEqual(before.a.rounds,before.b.rounds);assert.deepEqual(checked.a.canonicalRounds,checked.b.canonicalRounds);assert.equal(checked.a.winner,checked.b.winner);
-   for(const role of['a','b']){await active();models[role]=await context.relaunch(role);await active();const report=await models[role].call('battle','getReport',{reportId:sessions[role]});assert.deepEqual(report,checked[role].report);const after=await battleRead(context,role,roomId);validateBattleReadback(after,expectedActors[role].ownerAccountId,roomId,settlementIds[role]);assert.deepEqual(after,before[role]);}
+   for(const role of['a','b']){await active();models[role]=await context.relaunch(role);await active();const report=await models[role].call('battle','getReport',{reportId:sessions[role]});validateBattleReportView(report,checked[role].report);const after=await battleRead(context,role,roomId);validateBattleReadback(after,expectedActors[role].ownerAccountId,roomId,settlementIds[role]);assert.deepEqual(after,before[role]);}
    return {roomId,rounds:before.a.rounds.length,fullRoundComparison:true,eachOwnerOneSettlementAndReward:true,bothNormallyRestarted:true,authorityDigest:{a:digest(before.a),b:digest(before.b)}};
   });
   await step('I04',async()=>{
