@@ -10,6 +10,26 @@ function Owned {
  if($p.StartTime.ToUniversalTime().Ticks.ToString([Globalization.CultureInfo]::InvariantCulture) -cne $HolderStartTicks -or -not [string]::Equals($p.MainModule.FileName,$HolderImage,[StringComparison]::OrdinalIgnoreCase)){Fail}
  return $p
 }
+# BEGIN SUPERVISOR_RUNTIME_DIAGNOSTIC
+$script:observationStage='deadline-loop'
+function WriteRuntimeDiagnostic($exception) {
+ $inner=$exception;while($inner.InnerException){$inner=$inner.InnerException}
+ $category='other';$win32Code=$null
+ if($inner -is [UnauthorizedAccessException]){$category='access-denied';$win32Code=5}
+ elseif($inner -is [IO.IOException]){$code=$inner.HResult -band 0xffff;if($code -eq 32){$category='sharing-violation';$win32Code=32}elseif($code -eq 5){$category='access-denied';$win32Code=5}else{$category='io-failure'}}
+ elseif($inner -is [ArgumentException]){$category='validation-failure'}
+ elseif($inner -is [Management.Automation.RuntimeException]){if($inner.Message -ceq 'SAME_RUN_SUPERVISOR_REJECTED'){$category='validation-failure'}else{$category='other'}}
+ $stages=@('root-check','registry-read','holder-check','business-deadline-read','business-deadline-validate','business-deadline-stop','deadline-loop')
+ $stage=if($script:observationStage -in $stages){$script:observationStage}else{'deadline-loop'}
+ $directory=Join-Path ([IO.Path]::GetFullPath((Get-Location).Path)) ('artifacts/qa/same-run-watchdog-'+$env:GITHUB_RUN_ID)
+ [void][IO.Directory]::CreateDirectory($directory)
+ if(((Get-Item -LiteralPath $directory -Force).Attributes -band [IO.FileAttributes]::ReparsePoint) -ne 0){Fail}
+ $file=Join-Path $directory ($RequestDigest+'-diagnostic.json')
+ $receipt=@{version=1;run=$env:GITHUB_RUN_ID;commit=$env:GITHUB_SHA;requestDigest=$RequestDigest;stage=$stage;category=$category;win32Code=$win32Code;observedAt=[DateTimeOffset]::UtcNow.ToString('O')}
+ $bytes=[Text.Encoding]::UTF8.GetBytes(($receipt|ConvertTo-Json -Compress));$stream=[IO.File]::Open($file,[IO.FileMode]::CreateNew,[IO.FileAccess]::Write,[IO.FileShare]::None)
+ try{$stream.Write($bytes,0,$bytes.Length);$stream.Flush($true)}finally{$stream.Dispose()}
+}
+# END SUPERVISOR_RUNTIME_DIAGNOSTIC
 try {
  if($env:GITHUB_ACTIONS -cne 'true' -or $env:GITHUB_RUN_ATTEMPT -cne '1' -or $env:GITHUB_RUN_ID -notmatch '^[1-9][0-9]*$' -or $env:GITHUB_SHA -notmatch '^[a-f0-9]{40}$' -or $RequestDigest -notmatch '^[a-f0-9]{64}$' -or $HolderStartTicks -notmatch '^[0-9]{1,19}$' -or $HolderPid -le 0 -or -not [IO.Path]::IsPathRooted($HolderImage)){Fail}
  $root=[IO.Path]::Combine([IO.Path]::GetFullPath($env:RUNNER_TEMP),('dpapi-authorized-'+$env:GITHUB_RUN_ID+'-'+$RequestDigest))
@@ -34,6 +54,25 @@ try {
   $until=[Math]::Min([long]$lease.expiresAt,(Now)+3000)
   while($true){try{return @(ReadRegistryOnce)}catch{$inner=$_.Exception;while($inner.InnerException){$inner=$inner.InnerException};if($inner -isnot [IO.IOException] -or ($inner.HResult -band 0xffff) -ne 32 -or (Now) -ge $until){throw};Start-Sleep -Milliseconds 50}}
  }
+ # BEGIN BUSINESS_DEADLINE_SHARING_RETRY
+ function ReadBusinessDeadline($path) {
+  $until=[Math]::Min([long]$lease.expiresAt,(Now)+3000)
+  while($true){
+   try{
+    $script:observationStage='business-deadline-read';CheckFile $path
+    $script:observationStage='business-deadline-read';$business=[IO.File]::ReadAllText($path)|ConvertFrom-Json
+    $script:observationStage='business-deadline-validate';if([long]$business.expiresAtMs -gt [long]$lease.expiresAt -or ([long]$business.expiresAtMs-[long]$business.insertedAtMs) -gt 7200000 -or $business.scopeDigest -notmatch '^[a-f0-9]{64}$'){Fail}
+    return $business
+   }catch{
+    $failure=$_;$inner=$_.Exception;while($inner.InnerException){$inner=$inner.InnerException}
+    if($inner -isnot [IO.IOException] -or ($inner.HResult -band 0xffff) -ne 32 -or (Now) -ge $until){throw}
+    $remaining=$until-(Now);if($remaining -le 0){throw}
+    Start-Sleep -Milliseconds ([Math]::Min(50,$remaining))
+    if((Now) -ge $until){throw $failure}
+   }
+  }
+ }
+ # END BUSINESS_DEADLINE_SHARING_RETRY
  function WriteTerminal([bool]$confirmed,[bool]$ciphertextRemoved){
   $directory=Join-Path ([IO.Path]::GetFullPath((Get-Location).Path)) ('artifacts/qa/same-run-watchdog-'+$env:GITHUB_RUN_ID)
   [void][IO.Directory]::CreateDirectory($directory)
@@ -66,19 +105,27 @@ try {
  $runtimeFailure=$false
  try{
  while((Now) -lt [long]$lease.expiresAt){
+  $script:observationStage='root-check' # SUPERVISOR_DIAGNOSTIC_STAGE
   if(-not (Test-Path -LiteralPath $root)){$gone=RegisteredModelsGone $rows;WriteTerminal $gone $true;if(-not $gone){Fail};[Console]::Out.WriteLine('{"closed":true,"cleanupConfirmed":true}');exit 0}
+  $script:observationStage='root-check' # SUPERVISOR_DIAGNOSTIC_STAGE
   CheckFile $root
+  $script:observationStage='root-check' # SUPERVISOR_DIAGNOSTIC_STAGE
   if(Test-Path -LiteralPath (Join-Path $root 'terminal.json')){break}
   # Stop signed-in apps on holder loss, but preserve profiles/ciphertext for
   # reconciliation until the original custody deadline. Never restart or mutate.
+  $script:observationStage='registry-read' # SUPERVISOR_DIAGNOSTIC_STAGE
   $rows=@(ReadRegistry);$holders=@($rows|Where-Object {$_.kind -eq 'holder'}|Sort-Object epoch)
+  $script:observationStage='holder-check' # SUPERVISOR_DIAGNOSTIC_STAGE
   if($holders[-1].epoch -gt $epoch){if(Owned){Fail};StopRegisteredApps $rows $epoch;$epoch=$holders[-1].epoch;$HolderPid=[int]$holders[-1].process.pid;$HolderStartTicks=$holders[-1].process.startTicks;$HolderImage=$holders[-1].process.image}
+  $script:observationStage='holder-check' # SUPERVISOR_DIAGNOSTIC_STAGE
   if(-not (Owned)){StopRegisteredApps $rows $epoch}
   $businessPath=Join-Path $root 'business-deadline.json'
-  if(Test-Path -LiteralPath $businessPath){CheckFile $businessPath;$business=[IO.File]::ReadAllText($businessPath)|ConvertFrom-Json;if([long]$business.expiresAtMs -gt [long]$lease.expiresAt -or ([long]$business.expiresAtMs-[long]$business.insertedAtMs) -gt 7200000 -or $business.scopeDigest -notmatch '^[a-f0-9]{64}$'){Fail};if((Now) -ge [long]$business.expiresAtMs){StopRegisteredApps $rows}}
+  $script:observationStage='business-deadline-read' # SUPERVISOR_DIAGNOSTIC_STAGE
+  if(Test-Path -LiteralPath $businessPath){$business=ReadBusinessDeadline $businessPath;$script:observationStage='business-deadline-stop';if((Now) -ge [long]$business.expiresAtMs){StopRegisteredApps $rows}} # SUPERVISOR_BUSINESS_READ_CALL
+  $script:observationStage='deadline-loop' # SUPERVISOR_DIAGNOSTIC_STAGE
   Start-Sleep -Milliseconds ([Math]::Min(1000,[Math]::Max(1,[long]$lease.expiresAt-(Now))))
  }
- }catch{$runtimeFailure=$true}
+ }catch{$runtimeFailure=$true;try{WriteRuntimeDiagnostic $_.Exception}catch{}} # SUPERVISOR_DIAGNOSTIC_CATCH
  # After ready, any observation/identity failure closes the lease and destroys
  # ciphertext independently; never exit leaving an unmonitored usable vault.
  $cleanupFailed=$runtimeFailure

@@ -89,7 +89,7 @@ function withoutCTransition(source){
 test('C-only authentication additions leave every original lifecycle guard byte-for-byte unchanged',()=>{
  const path='scripts/acceptance/recovery/same-run-normal-lifecycle-factory.mjs';assert.equal(withoutCTransition(read(path)),baseline(path).toString('utf8').replace(/\r\n/g,'\n'));
 });
-test('evidence revision changes only six reviewed modules and exact test/display assets, never preparation authority',()=>{
+test('evidence revision changes only six reviewed modules, bounded watchdog IO repair and exact test/display assets, never preparation authority',()=>{
  const path='scripts/acceptance/cloud-live-qa-completion-readiness.mjs',prior=execFileSync('git',['show','797eb0ad6510b9d558297c2e4c0651cc6b14f3f2:'+path],{encoding:'utf8'}),current=read(path);
  function split(source){const a=source.indexOf('export const MODULES=frozen('),start=a+'export const MODULES=frozen('.length,end=source.indexOf(');\nconst common=',start);assert.ok(a>=0&&end>start);return {prefix:source.slice(0,start),suffix:source.slice(end),modules:JSON.parse(JSON.stringify(vm.runInNewContext('('+source.slice(start,end)+')',{frozen:value=>value}))) };}
  const a=split(prior),b=split(current);assert.equal(b.prefix,a.prefix);assert.equal(b.suffix,a.suffix);assert.deepEqual(Object.keys(b.modules),Object.keys(a.modules));
@@ -98,6 +98,7 @@ test('evidence revision changes only six reviewed modules and exact test/display
  for(const [key,spec] of Object.entries(a.modules)){
   if(changed.has(key))spec.sha256=b.modules[key].sha256;
   if(key==='records')spec.tests.push('cloud-live-qa-record-native-ui.test.mjs');
+  if(key==='vaultClient'){spec.tests.push('dpapi/holder-supervisor-io.test.mjs');const asset=spec.assets.find(x=>x.file==='dpapi/holder-supervisor.ps1');assert.ok(asset);asset.sha256=sha(Buffer.from(read('scripts/acceptance/'+asset.file)));}
   if(['discoveryUi','friend','authority'].includes(key))spec.assets=(key==='authority'?[catalog]:[identity,catalog]).map(file=>({file,sha256:sha(execFileSync('git',['show',notificationPackage.expectedSource+':'+file.slice(6)]))}));
   assert.deepEqual(b.modules[key],spec,key+': reviewed source-only change');
  }
