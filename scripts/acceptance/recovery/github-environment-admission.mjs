@@ -9,7 +9,7 @@ export const PLATFORM_CASES=Object.freeze(['S06','R06','R05','C03','S05','P05','
 export const PLATFORM_WORKFLOW='.github/workflows/cloud-environment-completion.yml';
 const admissions=new WeakMap();
 let mintAttempted=false;
-const fixed={repo:'Syndred/DesktopPet',branch:'codex/cloud-authority-convergence',actor:'Syndred',source:'5016f1c3f7de04b4e2b322d0b47ec52248596771',exe:'a88f61364810291e6ca79ff1b9030680831d7382e65137b9ace9607e3e65fafc'};
+const fixed={repo:'Syndred/DesktopPet',branch:'codex/cloud-authority-convergence',actor:'Syndred',source:'735c48476d3c0efc2aab62cecc765c9ce1933adb',exe:'88ed00e1a94df58d7df80df3978798f9bf67c76c43c6d808df5eccc00d7aa79c'};
 const fail=()=>{throw Object.assign(Error('PLATFORM_ADMISSION_NOT_READY'),{code:'PLATFORM_ADMISSION_NOT_READY'});};
 const freeze=x=>{if(x&&typeof x==='object'){for(const v of Object.values(x))freeze(v);Object.freeze(x);}return x;};
 export function assertPlatformPins(p){for(const k of ['repositoryId','workflowId','environmentId','actorId','reviewerId'])assert.ok(Number.isSafeInteger(p[k])&&p[k]>0);for(const k of ['environmentName','reviewerLogin'])assert.ok(typeof p[k]==='string'&&/^[A-Za-z0-9][A-Za-z0-9_-]{0,99}$/.test(p[k]));}

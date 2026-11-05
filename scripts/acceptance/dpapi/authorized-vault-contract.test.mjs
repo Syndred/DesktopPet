@@ -15,3 +15,5 @@ test('exact future fixed batch data contract only; all substituted identity/run/
 test('fake methods/boolean are not authorization or vault capabilities; only pinned parent signing key is trusted',async()=>{
  assert.equal(APPROVAL_KEY_SHA256,'bc18889a509bc5aa204ac95135d9811f4f6ec2af51d54ebc915d99f9b8c4ae12');assert.throws(()=>assertAuthorizedVault({sealBeforeMutation(){},ready:true}));assert.throws(()=>assertSameRunAuthorization({approved:true}));await assert.rejects(verifySameRunAuthorization({ticket:'not-a-real-ticket',publicKeyPem:a.recovery.signingPublicPem,env}));
 });
+
+test('active package migration does not expand the legacy signed-ticket package scope',()=>{assert.equal(validateAuthorizationData(a,env,1500),true);assert.throws(()=>validateAuthorizationData({...a,packageSource:'735c48476d3c0efc2aab62cecc765c9ce1933adb',executableSha256:'88ed00e1a94df58d7df80df3978798f9bf67c76c43c6d808df5eccc00d7aa79c'},env,1500));});
