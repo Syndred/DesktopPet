@@ -8,6 +8,8 @@ on:
       - scripts/acceptance/recovery/preparation-state.mjs
       - scripts/acceptance/recovery/same-run-normal-lifecycle-factory.test.mjs
       - scripts/acceptance/recovery/held-prelude-windows.test.mjs
+      - scripts/acceptance/recovery/signedout-cleanup-observation.mjs
+      - scripts/acceptance/recovery/signedout-cleanup-observation.test.mjs
       - scripts/acceptance/recovery/same-run-normal-lifecycle-factory.mjs
       - scripts/acceptance/recovery/holder-environment.mjs
       - scripts/acceptance/cloud-live-qa-completion-readiness.mjs
@@ -66,6 +68,8 @@ jobs:
           merge-multiple: true
       - name: Exact original audited package reuse
         run: node scripts/acceptance/verify-portable-reuse.mjs --source=735c48476d3c0efc2aab62cecc765c9ce1933adb
+      - name: Read-only post-cleanup observation contracts
+        run: node --test scripts/acceptance/recovery/signedout-cleanup-observation.test.mjs
       - name: Actual vault watchdog deadline and five signedout held models only
         timeout-minutes: 10
         run: node scripts/acceptance/recovery/held-prelude-windows.test.mjs
@@ -78,6 +82,7 @@ jobs:
           path: |
             artifacts/qa/held-prelude-contract/evidence.json
             artifacts/qa/held-prelude-contract/watchdog-terminal.json
+            artifacts/qa/held-prelude-contract/post-cleanup-observation.json
             artifacts/qa/same-run-${{ github.run_id }}/signedout-prelude-evidence.json
             artifacts/qa/same-run-${{ github.run_id }}/held-model-progress.json
             artifacts/qa/same-run-${{ github.run_id }}/precredential-model-readiness.json
