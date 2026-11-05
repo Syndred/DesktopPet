@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {existsSync,mkdtempSync,readFileSync,rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
-import {join} from 'node:path';
+import {basename,join,posix,win32} from 'node:path';
 import {captureIdentityTuple,assertCapturedIdentity,automaticCaptureCheckpoint,readC11UiSample,validateC11UiSample,
  observeC11PublicUi,observeC11AutomaticCapture,readC11HeldIdentity,wildSessionCheckpoint,relaunchC11OriginalProfile,runCloudLiveQaDiscoveryCases} from './cloud-live-qa-discovery-cases.mjs';
 
@@ -15,6 +15,7 @@ const status=(at=time)=>({mode:'cloud-authority',running:false,pending:0,lastClo
 const sample=(patch={})=>({routeMatches:true,currentRouteCount:1,currentRouteMatches:true,visibleAlertCount:0,openingCount:0,surfaceReady:true,
  roster:[{petId:tuple.petId,numbers:['编号 0007']}],detailCount:0,detailNumbers:[],battleCount:0,battleMatches:false,enemyPetIds:[],enemyNumbers:[],...patch});
 const immediateUntil=async(read,accept)=>{for(let i=0;i<5;i++){const value=await read();if(accept(value))return value;}throw Object.assign(Error('Synthetic read timeout'),{code:'C11_READBACK_TIMEOUT'});};
+function recordScreenshotName(screenshots,path){screenshots.push(basename(path));}
 
 test('captured tuple retains owner, exact instance, template and canonical arbitrary-width decimal',()=>{
  assert.deepEqual(captureIdentityTuple(tuple,owner),tuple);assert.equal(assertCapturedIdentity(tuple,{...tuple,name:'unrelated display name'}),true);
@@ -201,7 +202,7 @@ async function syntheticBatch({fallback=false,failure=null}={}){
      if(route.startsWith('/companions/'))return sample({roster:[],detailCount:1,detailNumbers:['编号 '+capture.globalSerial.padStart(4,'0')]});
      return sample({roster:rows,...(failure==='bad-ui'&&confirmedAt!==null?{surfaceReady:false}:{})});
     },
-    locator(){return {async scrollIntoViewIfNeeded(){}};},async screenshot({path}){screenshots.push(path.split('/').at(-1));}
+    locator(){return {async scrollIntoViewIfNeeded(){}};},async screenshot({path}){recordScreenshotName(screenshots,path);}
    }};return model;
  }
  for(const role of ['a','a2','b'])models[role]=makeModel(role);
@@ -248,4 +249,18 @@ test('selectors, automatic checkpoint source and deliberate non-goals remain gro
  assert.ok(read('runtime/features/accounts/service.cjs').includes('30_000'));assert.ok(read('runtime/features/companions/index.cjs').includes('readIdentityPet(ownerAccountId, petId)'));
  const source=readFileSync(new URL('./cloud-live-qa-discovery-cases.mjs',import.meta.url),'utf8');assert.ok(!source.includes('fullCasePassed=true'));assert.ok(!source.includes("'syncNow'"));
  const auto=observeC11AutomaticCapture.toString();assert.ok(!auto.includes("'list'"));assert.ok(!auto.includes('location.hash'));assert.ok(!auto.includes('relaunch('));
+});
+
+test('screenshot mock retains exact filenames under native, POSIX and Windows path semantics',()=>{
+ const filenames=['C11-wild-session.png','C11-wild-session-return.png','C11-a2-auto-sync.png','C11-captured-list.png','C11-captured-detail.png','C11-a-relaunch.png'];
+ const native=[];for(const name of filenames)recordScreenshotName(native,join(tmpdir(),'c11-readback-pure',name));assert.deepEqual(native,filenames);
+ // Run the actual recorder with each platform's node:path implementation, so
+ // Windows drive/UNC regressions are exercised even on a POSIX test runner.
+ for(const [paths,directory] of [[posix,'/tmp/c11 readback'],[win32,'C:\\Users\\runner\\AppData\\Local\\Temp\\c11 readback'],[win32,'\\\\synthetic-host\\share\\c11 readback']]){
+  const record=vm.runInNewContext('('+recordScreenshotName.toString()+')',{basename:paths.basename}),captured=[];
+  for(const name of filenames)record(captured,paths.join(directory,name));assert.deepEqual(captured,filenames);
+ }
+ const windowsPath=win32.join('C:\\Temp\\c11-readback-pure',filenames[0]);
+ assert.notEqual(windowsPath.split('/').at(-1),filenames[0],'The old slash-only recorder must fail this Windows fixture');
+ assert.equal(win32.basename(windowsPath),filenames[0]);
 });

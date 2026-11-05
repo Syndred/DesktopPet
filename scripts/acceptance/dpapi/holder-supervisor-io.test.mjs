@@ -70,25 +70,49 @@ ${diagnostic}`;
 const secureFile=`$sec=New-Object Security.AccessControl.FileSecurity;$sec.SetOwner((New-Object Security.Principal.SecurityIdentifier($sid)));$sec.SetAccessRuleProtection($true,$false)
 foreach($id in @($sid,'S-1-5-18')){$rule=New-Object Security.AccessControl.FileSystemAccessRule((New-Object Security.Principal.SecurityIdentifier($id)),[Security.AccessControl.FileSystemRights]::FullControl,[Security.AccessControl.AccessControlType]::Allow);$sec.AddAccessRule($rule)}
 [IO.File]::SetAccessControl($path,$sec)`;
+// The positive short-lock case releases its actual Windows lock synchronously
+// only after the unchanged reader has caught IO32 and requested a retry. It must
+// not depend on a parent stdout event, a guessed delay, or another process waking.
+const shortLockSetup='$script:retryLock=[IO.File]::Open($path,[IO.FileMode]::Open,[IO.FileAccess]::ReadWrite,[IO.FileShare]::None)';
+const shortLockSleep=`function Start-Sleep([int]$Milliseconds){
+ $script:sleeps++
+ if($null -ne $script:retryLock){$script:retryLock.Dispose();$script:retryLock=$null;$script:releasedOnRetry=$true;$script:releaseAfterAttempt=$script:attempts}
+ Microsoft.PowerShell.Utility\\Start-Sleep -Milliseconds $Milliseconds
+}`;
+
+test('positive real-lock release is inside the first actual IO32 retry, not a parent timer',()=>{
+ assert.match(shortLockSetup,/\[IO.File\]::Open\(\$path,\[IO.FileMode\]::Open,\[IO.FileAccess\]::ReadWrite,\[IO.FileShare\]::None\)/);
+ assert.match(shortLockSleep,/function Start-Sleep\(\[int\]\$Milliseconds\)/);
+ assert.ok(shortLockSleep.indexOf('$script:retryLock.Dispose()')<shortLockSleep.indexOf('Microsoft.PowerShell.Utility\\Start-Sleep'));
+ assert.match(shortLockSleep,/\$script:releaseAfterAttempt=\$script:attempts/);
+ assert.doesNotMatch(shortLockSleep,/throw|New-Object.*IOException|FromMilliseconds|Start-Job/);
+ const self=readFileSync(new URL('holder-supervisor-io.test.mjs',import.meta.url),'utf8'),windowsTests=self.match(/^test\('Windows actual exclusive locks[\s\S]+/m)[0];
+ assert.equal(windowsTests.includes("onLine:line=>{if(line==='READING'"),false);
+ assert.equal(windowsTests.includes("setTimeout(()=>release.child.stdin.end"),false);
+ assert.ok(retry.indexOf('($inner.HResult -band 0xffff) -ne 32')<retry.indexOf('Start-Sleep -Milliseconds'));
+ assert.equal(createHash('sha256').update(source).digest('hex'),'5ded2c0d06c39464ec5be2694986a1b18e4879a368ee19f66002c27ad53bb08f');
+});
 
 test('Windows actual exclusive locks and immediate-rejection negatives, only independent mock files',{skip:process.platform!=='win32'},async t=>{
  const directory=mkdtempSync(join(tmpdir(),'lingjing-watchdog-io-contract-')),path=join(directory,'mock-deadline.json');
  const file=`$path=${quote(path)}`;const owned=[];
  async function makeFile(content){await run(`${setup}\n${file}\n[IO.File]::WriteAllText($path,${quote(content??JSON.stringify({insertedAtMs:Date.now(),expiresAtMs:Date.now()+60000,scopeDigest:'a'.repeat(64)}))})\n${secureFile}`);}
  async function lock(){let locked;const ready=new Promise(r=>locked=r);const p=powershell(`${file};$s=[IO.File]::Open($path,[IO.FileMode]::Open,[IO.FileAccess]::ReadWrite,[IO.FileShare]::None);try{[Console]::Out.WriteLine('LOCKED');[void][Console]::In.ReadLine()}finally{$s.Dispose()}`,{onLine:line=>{if(line==='LOCKED')locked();},timeout:20000});owned.push(p);await Promise.race([ready,p.done.then(()=>{throw Error('LOCK_NOT_READY');})]);return p;}
- async function read({old=false,leaseMs=120000,check='CheckFileActual $p',noSleep=false,release}={}){
+ async function read({old=false,leaseMs=120000,check='CheckFileActual $p',noSleep=false,releaseOnRetry=false}={}){
+  assert.equal(noSleep&&releaseOnRetry,false);
   const script=`${setup}\n${file}
-$script:attempts=0;$script:lastAttemptAt=0;$script:sleeps=0
+$script:attempts=0;$script:lastAttemptAt=0;$script:sleeps=0;$script:retryLock=$null;$script:releasedOnRetry=$false;$script:releaseAfterAttempt=0
 function CheckFile($p){$script:attempts++;$script:lastAttemptAt=Now;${check}}
-${noSleep?"function Start-Sleep { $script:sleeps++;throw 'UNEXPECTED_RETRY' }":''}
-$lease=@{expiresAt=(Now)+${leaseMs}};$start=Now;[Console]::Out.WriteLine('READING')
-try{${old?'$business=[IO.File]::ReadAllText($path)|ConvertFrom-Json':'$business=ReadBusinessDeadline $path'};$ok=$true;$code=$null;$kind='none'}catch{$ok=$false;$e=$_.Exception;while($e.InnerException){$e=$e.InnerException};$code=if($e -is [IO.IOException]){$e.HResult -band 0xffff}else{$null};$kind=$e.GetType().FullName}
-[Console]::Out.WriteLine((@{ok=$ok;win32Code=$code;exceptionType=$kind;attempts=$script:attempts;sleeps=$script:sleeps;elapsedMs=((Now)-$start);lastAttemptAt=$script:lastAttemptAt;leaseEnd=$lease.expiresAt}|ConvertTo-Json -Compress))`;
-  let releaseTimer;try{const text=await run(script,{onLine:line=>{if(line==='READING'&&release)releaseTimer=setTimeout(()=>release.child.stdin.end('release\n'),300);}});return JSON.parse(text.split(/\r?\n/).at(-1));}finally{clearTimeout(releaseTimer);}
+${noSleep?"function Start-Sleep { $script:sleeps++;throw 'UNEXPECTED_RETRY' }":releaseOnRetry?shortLockSleep:''}
+${releaseOnRetry?shortLockSetup:''}
+$lease=@{expiresAt=(Now)+${leaseMs}};$start=Now
+try{${old?'$business=[IO.File]::ReadAllText($path)|ConvertFrom-Json':'$business=ReadBusinessDeadline $path'};$finished=Now;$ok=$true;$code=$null;$kind='none'}catch{$finished=Now;$ok=$false;$e=$_.Exception;while($e.InnerException){$e=$e.InnerException};$code=if($e -is [IO.IOException]){$e.HResult -band 0xffff}else{$null};$kind=$e.GetType().FullName}finally{if($null -ne $script:retryLock){$script:retryLock.Dispose();$script:retryLock=$null}}
+[Console]::Out.WriteLine((@{ok=$ok;win32Code=$code;exceptionType=$kind;attempts=$script:attempts;sleeps=$script:sleeps;elapsedMs=($finished-$start);lastAttemptAt=$script:lastAttemptAt;leaseEnd=$lease.expiresAt;releasedOnRetry=$script:releasedOnRetry;releaseAfterAttempt=$script:releaseAfterAttempt}|ConvertTo-Json -Compress))`;
+  return JSON.parse((await run(script)).split(/\r?\n/).at(-1));
  }
  try{
   await t.test('old ReadAllText deterministically raises actual Windows error 32',async()=>{await makeFile();const p=await lock();try{const result=await read({old:true});assert.equal(result.ok,false);assert.equal(result.win32Code,32);}finally{p.child.stdin.end('release\n');await p.done;}});
-  await t.test('bounded new read survives only a temporary actual exclusive lock',async()=>{await makeFile();const p=await lock();try{const result=await read({release:p});assert.equal(result.ok,true);assert.ok(result.attempts>1);assert.ok(result.elapsedMs<3000);}finally{p.child.stdin.end();await p.done;}});
+  await t.test('bounded new read survives only a temporary actual exclusive lock',async()=>{await makeFile();const result=await read({releaseOnRetry:true});assert.equal(result.ok,true);assert.equal(result.releasedOnRetry,true);assert.equal(result.releaseAfterAttempt,1);assert.ok(result.sleeps>=1);assert.ok(result.attempts>1);});
   await t.test('actual exclusive lock beyond three seconds rejects without an extra attempt',async()=>{await makeFile();const p=await lock();try{const result=await read();assert.equal(result.ok,false);assert.equal(result.win32Code,32);assert.ok(result.attempts>1);assert.ok(result.elapsedMs>=2900&&result.elapsedMs<4500);}finally{p.child.stdin.end('release\n');await p.done;}});
   await t.test('original lease clips the retry window instead of receiving three new seconds',async()=>{await makeFile();const p=await lock();try{const result=await read({leaseMs:250});assert.equal(result.ok,false);assert.equal(result.win32Code,32);assert.ok(result.elapsedMs>=200&&result.elapsedMs<1200);assert.ok(result.lastAttemptAt<result.leaseEnd);}finally{p.child.stdin.end('release\n');await p.done;}});
   await t.test('invalid actual ACL is rejected on the first read with no sleep',async()=>{await makeFile();await run(`${setup}\n${file}\n$acl=[IO.File]::GetAccessControl($path);$acl.SetAccessRuleProtection($false,$true);[IO.File]::SetAccessControl($path,$acl)`);const result=await read({noSleep:true});assert.equal(result.ok,false);assert.equal(result.attempts,1);assert.equal(result.sleeps,0);});
