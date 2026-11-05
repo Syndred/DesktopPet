@@ -99,6 +99,7 @@ test('evidence revision changes only seven reviewed modules, bounded watchdog IO
  const identity='../../apps/pc-app/runtime/features/companions/display-identity.mjs',catalog='../../apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json';
  for(const [key,spec] of Object.entries(a.modules)){
   if(changed.has(key))spec.sha256=b.modules[key].sha256;
+  if(key==='newC')spec.tests.push('cloud-new-c-desktop-positive.test.mjs');
   if(key==='discovery')spec.tests.push('cloud-live-qa-discovery-readback.test.mjs');
   if(key==='lifecycle')spec.tests.push('recovery/same-run-location-relaunch.test.mjs');
   if(key==='records')spec.tests.push('cloud-live-qa-record-native-ui.test.mjs');

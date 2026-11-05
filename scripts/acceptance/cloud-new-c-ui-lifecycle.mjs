@@ -27,6 +27,47 @@ export function assertCSignedoutPrivacy(observation){
  for(const key of ['sidebarCount','privateContentCount','visibleDesktopCount'])assert.equal(observation[key],0,key);
  return {signedout:true,privateRoutesHidden:true,visibleDesktopCount:0,priorVisibleDesktopNotEstablished:true};
 }
+const desktopBindingKeys=['runId','stageIntentId','ownerAccountId','authUserId','deviceId','sessionId','petId','resourceId'];
+// These helpers validate observations only. They cannot grant execution authority.
+export function assertCDesktopPositive(binding,observation){
+ for(const key of desktopBindingKeys)assert.ok(typeof binding?.[key]==='string'&&binding[key],`C_DESKTOP_BINDING_${key}`);
+ assert.match(binding.petId,/^[A-Za-z0-9:_-]+$/);
+ const {actor,session,host,renderer}=observation;
+ for(const key of ['ownerAccountId','authUserId','deviceId','sessionId'])assert.equal(actor?.[key],binding[key],`C_DESKTOP_ACTOR_${key}`);
+ assert.equal(session?.currentUser?.id,binding.ownerAccountId);assert.equal(session.currentUser.authUserId,binding.authUserId);assert.equal(session.currentUser.account,plannedCAccount);assert.equal(session.currentUser.authKind,'supabase');assert.equal(session.dataMode,'live');
+ assert.equal(host?.currentOwnerAccountId,binding.ownerAccountId);assert.equal(host.pet?.ownerAccountId,binding.ownerAccountId);assert.equal(host.pet.petId,binding.petId);assert.equal(host.pet.resourceId,binding.resourceId);assert.equal(host.pet.desktopVisible,true);
+ assert.equal(host.windows?.length,1);assert.equal(host.nativeWindows?.length,1);const owned=host.windows[0],native=host.nativeWindows[0];
+ assert.equal(owned.ownerAccountId,binding.ownerAccountId);assert.equal(owned.petId,binding.petId);assert.equal(owned.visible,true);assert.ok(Number.isSafeInteger(owned.windowId)&&owned.windowId>0);assert.equal(native.id,owned.windowId);
+ const url=new URL(native.url);assert.equal(url.protocol,'file:');assert.ok(url.pathname.includes('/app.asar/')&&url.pathname.endsWith('/ui/desktop.html'));assert.equal(url.hash,'#/desktop/'+encodeURIComponent(binding.petId));
+ assert.equal(native.visible,true);assert.equal(native.destroyed,false);assert.equal(native.minimized,false);assert.equal(native.onDisplay,true);
+ assert.equal(renderer?.pageCount,1);assert.equal(renderer.url,native.url);assert.equal(renderer.surfaceCount,1);assert.equal(renderer.petId,binding.petId);assert.equal(renderer.resourceId,binding.resourceId);assert.equal(renderer.visible,true);
+ assert.equal(renderer.stageCount,1);assert.equal(renderer.stagePetId,binding.petId);assert.equal(renderer.stageResourceId,binding.resourceId);assert.equal(renderer.status,'ready');assert.equal(renderer.canvasCount,1);assert.equal(renderer.canvasVisible,true);
+ // Keep the verified route classification, never the machine's installation path.
+ return {...Object.fromEntries(desktopBindingKeys.map(key=>[key,binding[key]])),windowId:owned.windowId,packagedDesktopVerified:true,nativeVisible:true,rendererReady:true,observedAt:new Date().toISOString()};
+}
+export function assertCDesktopRemoved(binding,positive,observation){
+ assert.ok(positive,'C_DESKTOP_POSITIVE_REQUIRED');for(const key of desktopBindingKeys){assert.ok(typeof binding?.[key]==='string'&&binding[key]);assert.equal(positive[key],binding[key],`C_DESKTOP_POSITIVE_${key}`);}
+ assert.ok(Number.isSafeInteger(positive.windowId)&&positive.windowId>0);assert.equal(positive.packagedDesktopVerified,true);assert.equal(positive.nativeVisible,true);assert.equal(positive.rendererReady,true);assert.ok(Number.isFinite(Date.parse(positive.observedAt)));
+ assert.equal(observation?.windowId,positive.windowId);assert.equal(observation.oldWindowDestroyed,true);assert.equal(observation.visibleDesktopCount,0);
+ return {priorVisibleDesktopEstablished:true,oldDesktopWindowDestroyed:true,priorDesktopWindowId:positive.windowId};
+}
+export function readCDesktopHost({BrowserWindow,screen},binding){
+ const h=globalThis.__qaUiCaseContext,services=h?.accounts?.services;
+ if(h?.binding?.role!=='c'||!services||services.session.getOwnerAccountId()!==binding.ownerAccountId)throw Error('C_DESKTOP_OWNER_CHANGED');
+ const companions=services.get('companions'),pet=companions.readIdentityPet(binding.ownerAccountId,binding.petId),displays=screen.getAllDisplays();
+ return {currentOwnerAccountId:services.session.getOwnerAccountId(),pet:{ownerAccountId:pet.ownerAccountId,petId:pet.petId,resourceId:pet.resource.resourceId,desktopVisible:pet.desktop.visible},
+  windows:companions.getDesktopWindows().map(w=>({ownerAccountId:w.ownerAccountId,petId:w.petId,windowId:w.windowId,visible:w.visible})),
+  nativeWindows:BrowserWindow.getAllWindows().filter(w=>!w.isDestroyed()&&w.webContents.getURL().split('#')[0].endsWith('/desktop.html')).map(w=>{const bounds=w.getBounds();return {id:w.id,url:w.webContents.getURL(),visible:w.isVisible(),destroyed:w.isDestroyed(),minimized:w.isMinimized(),onDisplay:bounds.width>0&&bounds.height>0&&displays.some(d=>bounds.x<d.workArea.x+d.workArea.width&&bounds.x+bounds.width>d.workArea.x&&bounds.y<d.workArea.y+d.workArea.height&&bounds.y+bounds.height>d.workArea.y)};})};
+}
+export function readCDesktopRenderer(){
+ const shown=node=>{if(!node||!node.getClientRects().length)return false;for(let p=node;p;p=p.parentElement){const style=getComputedStyle(p);if(style.display==='none'||style.visibility==='hidden'||style.visibility==='collapse'||Number(style.opacity)===0)return false;}const r=node.getBoundingClientRect();return r.width>0&&r.height>0;};
+ const surfaces=document.querySelectorAll('.cp-desktop-surface'),surface=surfaces[0],stages=surface?.querySelectorAll('.resource-stage')||[],stage=stages[0],canvases=stage?.querySelectorAll('canvas')||[];
+ return {surfaceCount:surfaces.length,petId:surface?.getAttribute('data-pet-id'),resourceId:surface?.getAttribute('data-resource-id'),visible:shown(surface),stageCount:stages.length,stagePetId:stage?.getAttribute('data-pet-id'),stageResourceId:stage?.getAttribute('data-resource-id'),status:stage?.getAttribute('data-status'),canvasCount:canvases.length,canvasVisible:shown(canvases[0])};
+}
+export function readCSignedoutDesktop({BrowserWindow},windowId){
+ const old=windowId===null?null:BrowserWindow.fromId(windowId);
+ return {windowId,oldWindowDestroyed:windowId!==null&&(!old||old.isDestroyed()),visibleDesktopCount:BrowserWindow.getAllWindows().filter(w=>w.webContents.getURL().includes('/desktop.html')&&w.isVisible()).length};
+}
 export function assertCExecutionDependencies(deps){
  for(const key of ['assertAuthorization','assertPreloginHold','assertExactAbsence','awaitGrantAndRelease','assertGrant','verifyIdentity','relaunch','assertPersistentProfile','assertExactRevokeTarget','freezeCLogin','prepareNextCredential','beginAuthenticationTransition','assertAuthenticationTransition','finishAuthenticationTransition'])assert.equal(typeof deps?.[key],'function',`C_NOT_READY_${key}`);
  assert.equal(deps.accountKey,plannedCAccount);assert.equal(deps.role,'c');return true;
@@ -65,25 +106,52 @@ export async function createNewCUiLifecycle({models,dependencies:deps,initialCre
   const snapshot=await models.c.call('companions','list');
   const notice=await page().locator('.cp-cloud-notice').evaluateAll(nodes=>nodes.map(node=>{const button=node.querySelector('button');return {text:node.querySelector('span')?.textContent||'',button:button?.textContent||'',enabled:!!button&&!button.disabled};}));return {snapshot,notice};
  }
- async function signedoutPrivacy(assertReadOnly){
+ async function observeA12Desktop(binding){
+  await authorized('a12-owned-desktop-observation');const actor=await exact(),host=await models.c.main(readCDesktopHost,binding);
+  const pages=models.c.pages().filter(p=>p.url().endsWith('/desktop.html#/desktop/'+encodeURIComponent(binding.petId)));
+  const renderer=pages.length===1?{...await pages[0].evaluate(readCDesktopRenderer),url:pages[0].url(),pageCount:1}:{pageCount:pages.length};
+  await authorized('a12-owned-desktop-observed');return {actor,host,renderer,session:await session()};
+ }
+ async function prepareA12Desktop(row){
+  assert.equal(row.name,'A12-own-current-session-revoke');assert.equal(authenticationTransition,null);assert.equal(row.desktopPreparation,undefined,'C_DESKTOP_PREPARATION_NO_REPLAY');
+  const adoption=proof.stages.find(value=>value.name==='A13-first-adoption-guidance');assert.equal(adoption?.state,'confirmed');assert.ok(adoption.durableIntent?.found&&adoption.durableIntent.sameOriginalIntent&&adoption.durableIntent.commandIsAdopt&&adoption.durableIntent.status==='verified');
+  await authorized('a12-desktop-prepare');const actor=await exact();assert.deepEqual(await business(),businessBaseline);
+  const snapshot=await models.c.call('companions','list');assert.equal(snapshot.ownerAccountId,actor.ownerAccountId);assert.equal(snapshot.sync?.status,'ready');assert.equal(snapshot.sync.pending,0);assert.equal(snapshot.pets.length,1);
+  const pet=snapshot.pets[0];assert.equal(pet.ownerAccountId,actor.ownerAccountId);assert.equal(pet.petId,adoption.petId);assert.match(pet.petId,/^[A-Za-z0-9:_-]+$/);assert.equal(pet.resource.kind,'2d');assert.ok(pet.globalSerial);assert.equal(pet.desktop.visible,false,'C_DESKTOP_UNEXPECTED_PREEXISTING_PREFERENCE');
+  const binding={runId,stageIntentId:row.intentId,...Object.fromEntries(['ownerAccountId','authUserId','deviceId','sessionId'].map(key=>[key,actor[key]])),petId:pet.petId,resourceId:pet.resource.resourceId};
+  row.desktopPreparation={state:'prepared',runId,stageIntentId:row.intentId,petId:pet.petId,clickCount:0};save();
+  try{
+   const before=await models.c.main(readCDesktopHost,binding);assert.equal(before.windows.length,0);assert.equal(before.nativeWindows.length,0);
+   await page().evaluate(id=>{location.hash='#/companions/'+encodeURIComponent(id);},pet.petId);await page().locator(`.cp-detail-layout[data-pet-id="${pet.petId}"]`).waitFor({timeout:15000});
+   const button=page().getByRole('button',{name:'开启桌面陪伴',exact:true});await authorized('a12-normal-desktop-click');assert.equal(await button.count(),1);assert.equal(await button.isEnabled(),true);
+   // This is a local UI intent, not submission of the later session revocation.
+   row.desktopPreparation.state='submitted-outcome-unknown';row.desktopPreparation.clickCount=1;save();await click(button);
+   const observation=await until(()=>observeA12Desktop(binding),value=>{try{assertCDesktopPositive(binding,value);return true;}catch{return false;}},'a12-real-owned-desktop-visible');
+   const positive=assertCDesktopPositive(binding,observation);assert.deepEqual(await business(),businessBaseline);
+   await routeAccount();const latest=assertCDesktopPositive(binding,await observeA12Desktop(binding));assert.equal(latest.windowId,positive.windowId,'C_DESKTOP_WINDOW_REPLACED');
+   row.desktopPreparation.state='confirmed';row.desktopPreparation.positive=latest;save();return {binding,positive:latest};
+  }catch(error){row.desktopPreparation.state=row.desktopPreparation.clickCount?'unknown-do-not-retry':'failed-before-click';save();throw error;}
+ }
+ async function signedoutPrivacy(assertReadOnly,desktopEvidence=null){
   // No business API, sign-in, select or mutation. Revisit old routes through the
   // renderer, including browser history, while the account gate must remain.
-  const petId=proof.stages.find(row=>row.name==='A13-first-adoption-guidance')?.petId;assert.ok(typeof petId==='string'&&petId);const routes=['#/companions','#/companions/'+encodeURIComponent(petId),'#/chat','#/account'];let checked=0;
+  const petId=proof.stages.find(row=>row.name==='A13-first-adoption-guidance')?.petId;assert.ok(typeof petId==='string'&&petId);const routes=['#/companions','#/companions/'+encodeURIComponent(petId),'#/chat','#/account'];let checked=0,desktopCleanup=null;
+  if(desktopEvidence){const b=desktopEvidence.binding;assert.equal(b.runId,runId);assert.equal(b.stageIntentId,proof.stages.find(row=>row.name==='A12-own-current-session-revoke')?.intentId);assert.equal(b.petId,petId);for(const key of ['ownerAccountId','authUserId','deviceId'])assert.equal(b[key],identity[key]);}
   const inspect=async()=>{
    const end=Date.now()+15000;let passed=false;
    while(Date.now()<end){
     await assertReadOnly();assert.equal((await session()).currentUser,null);await page().locator('.ac-auth').waitFor({timeout:15000});
     const observation=await page().evaluate(()=>{const auth=document.querySelector('.ac-auth');let shown=!!auth&&auth.getClientRects().length>0;for(let node=auth;node&&shown;node=node.parentElement){const style=getComputedStyle(node);if(style.display==='none'||style.visibility==='hidden'||style.visibility==='collapse'||Number(style.opacity)===0)shown=false;}return {authVisible:shown,sidebarCount:document.querySelectorAll('.sidebar').length,privateContentCount:document.querySelectorAll('.cp-pet-card,.cp-detail-page,.cp-adoption-page,.cv-root,.ac-password-form,.ac-account-grid').length};});
-    const visibleDesktopCount=await models.c.main(({BrowserWindow})=>BrowserWindow.getAllWindows().filter(w=>w.webContents.getURL().includes('/desktop.html')&&w.isVisible()).length);
+    const desktops=await models.c.main(readCSignedoutDesktop,desktopEvidence?.positive?.windowId??null),visibleDesktopCount=desktops.visibleDesktopCount;
     await assertReadOnly();const currentUser=(await session()).currentUser;
-    try{assertCSignedoutPrivacy({...observation,currentUser,visibleDesktopCount});passed=true;break;}catch{await new Promise(resolve=>setTimeout(resolve,100));}
+    try{assertCSignedoutPrivacy({...observation,currentUser,visibleDesktopCount});if(desktopEvidence)desktopCleanup=assertCDesktopRemoved(desktopEvidence.binding,desktopEvidence.positive,desktops);passed=true;break;}catch{await new Promise(resolve=>setTimeout(resolve,100));}
    }
    assert.equal(passed,true,'SIGNEDOUT_PRIVATE_UI_NOT_CLEARED');checked++;
   };
   for(const route of routes){await assertReadOnly();await page().evaluate(value=>{location.hash=value;},route);await inspect();}
   await page().evaluate(()=>history.back());await page().waitForFunction(()=>location.hash==='#/chat');await inspect();
   await page().evaluate(()=>history.forward());await page().waitForFunction(()=>location.hash==='#/account');await inspect();
-  return {routeObservations:checked,privateRoutesHidden:true,noVisibleDesktopWindows:true,priorVisibleDesktopNotEstablished:true};
+  return {routeObservations:checked,privateRoutesHidden:true,noVisibleDesktopWindows:true,priorVisibleDesktopNotEstablished:!desktopCleanup,...desktopCleanup};
  }
  async function login(cap,{negative=false}={}){
   await page().getByRole('tab',{name:'登录',exact:true}).waitFor();await click(page().getByRole('tab',{name:'登录',exact:true}));await page().getByLabel('账号',{exact:true}).fill(plannedCAccount);await remember();
@@ -141,11 +209,14 @@ export async function createNewCUiLifecycle({models,dependencies:deps,initialCre
    await login(nextCredential);await deps.finishAuthenticationTransition(authenticationTransition);authenticationTransition=null;authenticationPhase=null;
    await deps.assertGrant();assert.deepEqual(await business(),businessBaseline);return {oldRejected:true,newAccepted:true,secureSession:true,normalLogoutConfirmed:true,privateUi:privacy,originalNonemptyAdoptionHistory:true};
   });},
-  async revokeCurrentSession(){return stage('A12-own-current-session-revoke',async(row,submitted)=>{assert.ok(changed);await exact();await routeAccount();await deps.freezeCLogin();const target=await deps.assertExactRevokeTarget(models.c);submitted();const result=await models.c.main(async(_electron,input)=>{
-    const handle=globalThis.__qaUiCaseContext;if(!handle?.accounts||handle.bindingDigest!==input.bindingDigest)throw Error('C_NOT_READY');const context=await handle.accounts.requireCloudActor(),actor=context.actor||context;for(const key of ['ownerAccountId','authUserId','deviceId','sessionId'])if(actor[key]!==input[key])throw Error('REVOKE_TARGET_CHANGED');const response=await context.client.rpc('lingjing_revoke_device',{p_device_id:actor.deviceId});if(response.error||response.data?.revoked!==true)throw Error('REVOKE_UNCONFIRMED');return {revoked:true};
-   },target);assert.equal(result.revoked,true);
+  async revokeCurrentSession(){return stage('A12-own-current-session-revoke',async(row,submitted)=>{assert.ok(changed);await exact();const desktopEvidence=await prepareA12Desktop(row);await deps.freezeCLogin();const target=await deps.assertExactRevokeTarget(models.c);for(const key of ['ownerAccountId','authUserId','deviceId','sessionId'])assert.equal(target[key],desktopEvidence.binding[key]);submitted();const result=await models.c.main(async({BrowserWindow},input)=>{
+    const handle=globalThis.__qaUiCaseContext;if(!handle?.accounts||handle.bindingDigest!==input.bindingDigest)throw Error('C_NOT_READY');const context=await handle.accounts.requireCloudActor(),actor=context.actor||context;for(const key of ['ownerAccountId','authUserId','deviceId','sessionId'])if(actor[key]!==input[key])throw Error('REVOKE_TARGET_CHANGED');
+    const owned=handle.accounts.services.get('companions').getDesktopWindows().filter(w=>w.windowId===input.desktopWindowId&&w.petId===input.desktopPetId&&w.ownerAccountId===actor.ownerAccountId&&w.visible===true),window=BrowserWindow.fromId(input.desktopWindowId);
+    if(owned.length!==1||!window||window.isDestroyed()||!window.isVisible()||!window.webContents.getURL().endsWith('/desktop.html#/desktop/'+encodeURIComponent(input.desktopPetId)))throw Error('C_DESKTOP_POSITIVE_LOST_BEFORE_REVOKE');
+    const response=await context.client.rpc('lingjing_revoke_device',{p_device_id:actor.deviceId});if(response.error||response.data?.revoked!==true)throw Error('REVOKE_UNCONFIRMED');return {revoked:true};
+   },{...target,desktopWindowId:desktopEvidence.positive.windowId,desktopPetId:desktopEvidence.binding.petId});assert.equal(result.revoked,true);
    // Real normal UI protected operation, not an internal invalidate-session call.
-   await page().getByRole('button',{name:'刷新云端数据',exact:true}).click({timeout:10000});const end=Date.now()+25000;while((await session()).currentUser&&Date.now()<end){custodyModule.assertCompletionAuthorization(deps.authorization,{permissions:['register-C','login-C','remember-C','password-change-C','revoke-C','business'],caseIds:['A06','A13','A15','A12']});await new Promise(r=>setTimeout(r,200));}assert.equal((await session()).currentUser,null);await page().locator('.ac-auth').waitFor({timeout:15000});const privacy=await signedoutPrivacy(async()=>{custodyModule.assertCompletionAuthorization(deps.authorization,{permissions:['register-C','login-C','remember-C','password-change-C','revoke-C','business'],caseIds:['A06','A13','A15','A12']});custodyModule.assertAuthorizedVault(vault);await deps.assertAuthorization('revoked-c-readonly-private-routes');await deps.assertPersistentProfile();assert.equal((await session()).currentUser,null);});revoked=true;return {normalOwnSdk:true,actualReauthenticationUi:true,privateUi:privacy};});},
+   await page().getByRole('button',{name:'刷新云端数据',exact:true}).click({timeout:10000});const end=Date.now()+25000;while((await session()).currentUser&&Date.now()<end){custodyModule.assertCompletionAuthorization(deps.authorization,{permissions:['register-C','login-C','remember-C','password-change-C','revoke-C','business'],caseIds:['A06','A13','A15','A12']});await new Promise(r=>setTimeout(r,200));}assert.equal((await session()).currentUser,null);await page().locator('.ac-auth').waitFor({timeout:15000});const privacy=await signedoutPrivacy(async()=>{custodyModule.assertCompletionAuthorization(deps.authorization,{permissions:['register-C','login-C','remember-C','password-change-C','revoke-C','business'],caseIds:['A06','A13','A15','A12']});custodyModule.assertAuthorizedVault(vault);await deps.assertAuthorization('revoked-c-readonly-private-routes');await deps.assertPersistentProfile();assert.equal((await session()).currentUser,null);},desktopEvidence);revoked=true;return {normalOwnSdk:true,actualReauthenticationUi:true,privateUi:privacy};});},
   async close(){try{await uninstall();proof.observerRestored=true;}catch{proof.observerRestored=false;stopped=true;}finally{proof.passed=proof.observerRestored===true&&proof.stages.length===9&&proof.stages.every(s=>s.state==='confirmed');proof.completedAt=new Date().toISOString();save();}return proof;}
  };
  return Object.freeze(api);
