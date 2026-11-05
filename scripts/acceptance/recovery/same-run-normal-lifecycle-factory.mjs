@@ -232,6 +232,13 @@ export async function launchNormalModel(cap,{role,prior,identity,vault,expectedE
   await admitS06SingleSnapshot(model.s06Ticket,{parentRead:read,parentApproval:{approvedSingleSnapshot:true,runId:s.completionOptions.runId,nonce:s.binding.nonce,deviceId:model.actor.deviceId}});}
   s.s06Manifest={...manifest,role:'a3'};
  }else if(prior){const grant=s.scopeGrants.get(role);assert.ok(grant?.expiresAtMs>Date.now());if(role!=='c')await model.main(async(_e,g)=>globalThis.__qaUiCaseContext.release(g),grant);}
+ // BEGIN A_UI_BINDING_RELAUNCH_INVALIDATION
+ if(prior&&role==='a'){
+  await persistSafeIdentityManifest(cap);
+  delete s.uiBinding;
+  return model;
+ }
+ // END A_UI_BINDING_RELAUNCH_INVALIDATION
  await persistSafeIdentityManifest(cap);return model;
 }
 async function releaseAllKnownGrants(cap,registeredLoginCredential){

@@ -5,6 +5,125 @@ import {randomUUID,createHash} from 'node:crypto';
 import {existsSync,writeFileSync,readFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {planTargetWindow,waitTargetWindow} from './cloud-live-qa-target-window.mjs';
+
+const c11Identifier=value=>typeof value==='string'&&/^[A-Za-z0-9:_-]{1,180}$/.test(value);
+export function captureIdentityTuple(pet,owner){
+ assert.ok(c11Identifier(owner));assert.equal(pet?.ownerAccountId,owner);
+ for(const key of ['petId','templateId'])assert.ok(c11Identifier(pet[key]));
+ assert.equal(typeof pet.globalSerial,'string');assert.match(pet.globalSerial,/^[1-9][0-9]*$/);
+ return {ownerAccountId:owner,petId:pet.petId,templateId:pet.templateId,globalSerial:pet.globalSerial};
+}
+export function assertCapturedIdentity(expected,pet){assert.deepEqual(captureIdentityTuple(pet,expected.ownerAccountId),expected);return true;}
+
+// This public status command does not perform a refresh. lastCloudCheckedAt is
+// advanced by the product's automatic-sync completion, not companions.list.
+export function automaticCaptureCheckpoint(before,after,confirmedAt,now=Date.now()){
+ assert.ok(Number.isSafeInteger(confirmedAt)&&Number.isSafeInteger(now)&&now>=confirmedAt);
+ for(const state of [before,after]){
+  assert.equal(state?.mode,'cloud-authority');assert.equal(typeof state.running,'boolean');
+  assert.ok(Number.isSafeInteger(state.pending)&&state.pending>=0);assert.ok(Array.isArray(state.domainStates));
+  assert.ok(state.lastCloudCheckedAt===null||typeof state.lastCloudCheckedAt==='string'&&Number.isFinite(Date.parse(state.lastCloudCheckedAt)));
+ }
+ const old=before.lastCloudCheckedAt===null?-Infinity:Date.parse(before.lastCloudCheckedAt),checked=Date.parse(after.lastCloudCheckedAt);
+ const domains=after.domainStates.filter(row=>row.domain==='companions');assert.equal(domains.length,1);
+ const domain=domains[0];assert.ok(Number.isSafeInteger(domain.pending)&&domain.pending>=0);
+ return !after.running&&after.pending===0&&checked>old&&checked>confirmedAt&&checked<=now
+  &&domain.checkedAt===after.lastCloudCheckedAt&&domain.status==='ready'&&domain.pending===0&&!domain.error&&!domain.metadataWarning;
+}
+
+// DOM only: no IPC, React internals, refresh, selection or business action.
+export function readC11UiSample({route,view,petId,sessionId}){
+ const visible=el=>Boolean(el&&el.getClientRects().length&&el.checkVisibility({checkOpacity:true,checkVisibilityCSS:true}));
+ const all=(selector,root=document)=>[...root.querySelectorAll(selector)].filter(visible);
+ const roots=all('.app-page-motion[data-current-route="true"]'),root=roots.length===1?roots[0]:null;
+ const inside=selector=>root?all(selector,root):[],text=el=>el?.textContent?.trim()??null;
+ const roster=inside('.cp-pet-card').map(el=>({petId:el.getAttribute('data-pet-id'),numbers:all('.cp-instance-identity code',el).map(text)}));
+ const details=inside('.cp-detail-layout').filter(el=>el.getAttribute('data-pet-id')===petId);
+ const battles=inside('.battle-screen'),battle=battles.length===1?battles[0]:null;
+ const enemy=battle?all('.combatant-status.enemy',battle):[];
+ return {routeMatches:location.hash==='#'+route,currentRouteCount:roots.length,currentRouteMatches:root?.getAttribute('data-route-key')===route,
+  visibleAlertCount:inside('[role="alert"]').length,openingCount:inside('.opening-state').length,
+  surfaceReady:view==='roster'?inside('.cp-roster').length===1:view==='detail'?details.length===1:view==='battle'?battles.length===1:false,
+  roster,detailCount:details.length,detailNumbers:details.length===1?all('.cp-detail-copy .cp-instance-identity code',details[0]).map(text):[],
+  battleCount:battles.length,battleMatches:Boolean(battle&&battle.getAttribute('data-session-id')===sessionId&&battle.getAttribute('data-battle-mode')==='wild'),
+  enemyPetIds:enemy.length===1?all('.battle-portrait[data-pet-id]',enemy[0]).map(el=>el.getAttribute('data-pet-id')):[],
+  enemyNumbers:enemy.length===1?all('.battle-identity-number',enemy[0]).map(text):[]};
+}
+export function validateC11UiSample(sample,{view,petId,globalSerial,enemyPetId}={}){
+ assert.ok(sample&&typeof sample==='object');
+ for(const key of ['currentRouteCount','visibleAlertCount','openingCount','detailCount','battleCount'])assert.ok(Number.isSafeInteger(sample[key])&&sample[key]>=0);
+ for(const key of ['routeMatches','currentRouteMatches','surfaceReady','battleMatches'])assert.equal(typeof sample[key],'boolean');
+ for(const key of ['roster','detailNumbers','enemyPetIds','enemyNumbers'])assert.ok(Array.isArray(sample[key]));
+ assert.equal(sample.visibleAlertCount,0,'A failed page cannot establish identity');
+ assert.equal(new Set(sample.roster.map(row=>row.petId)).size,sample.roster.length,'Duplicate visible pet cards');
+ if(!sample.routeMatches||sample.currentRouteCount!==1||!sample.currentRouteMatches||!sample.surfaceReady||sample.openingCount)return false;
+ if(view==='roster'&&!petId)return sample.roster.length>0&&sample.battleCount===0;
+ assert.ok(typeof globalSerial==='string'&&/^[1-9][0-9]*$/.test(globalSerial));const expected='编号 '+globalSerial.padStart(4,'0');
+ const exact=values=>values.length===1&&values[0]===expected;
+ if(view==='roster'){const rows=sample.roster.filter(row=>row.petId===petId);return rows.length===1&&exact(rows[0].numbers);}
+ if(view==='detail')return sample.detailCount===1&&exact(sample.detailNumbers);
+ if(view==='battle')return sample.battleCount===1&&sample.battleMatches&&sample.enemyPetIds.length===1&&sample.enemyPetIds[0]===enemyPetId&&exact(sample.enemyNumbers);
+ assert.fail('Unknown C11 public surface');
+}
+export async function observeC11PublicUi({page,active,until,checkpoint,route,view,petId,globalSerial,sessionId,enemyPetId,navigate=true}){
+ assert.ok(['/companions',petId&&'/companions/'+petId,sessionId&&'/battle/session/'+sessionId].filter(Boolean).includes(route));
+ if(petId)assert.ok(c11Identifier(petId));if(sessionId)assert.ok(c11Identifier(sessionId));
+ if(navigate){await active();await page.evaluate(path=>{location.hash='#'+path;},route);}
+ let ready=0,samples=0,last;
+ await until(async()=>{await active();last=await page.evaluate(readC11UiSample,{route,view,petId,sessionId});samples++;
+  ready=validateC11UiSample(last,{view,petId,globalSerial,enemyPetId})?ready+1:0;checkpoint({route,view,samples,readySamples:ready});return ready;
+ },n=>n>=2);
+ return {route,view,samples,readySamples:ready,rosterPetIds:last.roster.map(row=>row.petId),readOnly:true};
+}
+export async function observeC11AutomaticCapture({model,baseline,tuple,confirmedAt,active,until,checkpoint}){
+ captureIdentityTuple(tuple,tuple.ownerAccountId);assert.equal(baseline.route,'/companions');
+ assert.ok(Array.isArray(baseline.petIds)&&!baseline.petIds.includes(tuple.petId),'Captured pet must be absent from the original A2 list');
+ let ready=0,samples=0,last;
+ await until(async()=>{
+  await active();const ui=await model.page.evaluate(readC11UiSample,{route:'/companions',view:'roster',petId:tuple.petId});
+  // Never repair a changed route by navigating or invoke list/get/syncNow here.
+  assert.equal(ui.routeMatches,true,'C11_AUTOMATIC_ROUTE_CHANGED');
+  const status=await model.call('accounts','syncStatus');await active();samples++;
+  const complete=validateC11UiSample(ui,{view:'roster',...tuple})&&automaticCaptureCheckpoint(baseline.status,status,confirmedAt);
+  ready=complete?ready+1:0;last={checkedAt:status.lastCloudCheckedAt,running:status.running,pending:status.pending};checkpoint({...last,samples,readySamples:ready});return ready;
+ },n=>n>=2,90000);
+ return {...last,samples,readySamples:ready,originalPageRetained:true,automaticCheckpointAfterCapture:true,manualRefreshUsed:false,realtimeOnly:false};
+}
+
+// The existing fixed holder owns this capability. Only public identity fields
+// and the read-only local identity projection leave its main process.
+export function readC11HeldIdentity({app},{expected,role,profile,petId=null}){
+ const h=globalThis.__qaUiCaseContext,a=h?.accounts,fs=process.getBuiltinModule('node:fs');
+ const fail=()=>{throw Object.assign(Error('C11 current held identity required'),{code:'SESSION_CHANGED'});};
+ if(!h||!a||h.released!==true||!Number.isSafeInteger(h.epoch)||h.epoch!==a.epoch||!Number.isSafeInteger(h.expiresAt)||h.expiresAt<=Date.now()
+  ||h.binding?.role!==role||h.binding?.profile!==profile||h.binding?.owner!==expected.ownerAccountId||h.binding?.deviceId!==expected.deviceId)fail();
+ if(fs.realpathSync.native(app.getPath('userData'))!==fs.realpathSync.native(profile))fail();
+ const session=a.session();if(session.currentUser?.id!==expected.ownerAccountId||session.currentUser?.authUserId!==expected.authUserId||session.currentUser?.authKind!=='supabase'||session.dataMode!=='live'||a.remote.deviceId!==expected.deviceId)fail();
+ const binding={ownerAccountId:expected.ownerAccountId,authUserId:expected.authUserId,deviceId:expected.deviceId};
+ if(petId===null)return binding;
+ const pet=a.services.get('companions').readIdentityPet(expected.ownerAccountId,petId);
+ return {ownerAccountId:pet.ownerAccountId,petId:pet.petId,templateId:pet.templateId,globalSerial:pet.globalSerial};
+}
+export function wildSessionCheckpoint(session,{permitId,spawnId,templateId,globalSerial,playerPetId,ownerAccountId,scenario}){
+ assert.ok(typeof globalSerial==='string'&&/^[1-9][0-9]*$/.test(globalSerial));
+ assert.equal(session?.id,'battle-cloud-'+permitId);assert.equal(session.mode,'wild');assert.equal(session.status,'active');assert.ok(!session.pendingAction);
+ assert.equal(session.player?.petId,playerPetId);assert.equal(session.player?.ownerAccountId,ownerAccountId);
+ assert.equal(session.enemy?.petId,spawnId);assert.equal(session.enemy?.templateId,templateId);assert.equal(session.enemy?.globalSerial,globalSerial);
+ assert.equal(session.context?.permitId,permitId);assert.equal(session.context?.cloudAuthority,'discovery');assert.equal(session.context?.authority,'simulated');assert.equal(session.context?.scenarioId,scenario);
+ assert.equal(session.context?.inputSource,'simulated');assert.ok(Number.isSafeInteger(session.revision)&&session.revision>0);
+ assert.ok(Number.isSafeInteger(session.snapshot?.round)&&session.snapshot.round>=0&&Array.isArray(session.rounds));
+ return {id:session.id,revision:session.revision,status:session.status,winner:session.winner,snapshot:session.snapshot,rounds:session.rounds,
+  playerPetId,ownerAccountId,spawnId,templateId,globalSerial,context:session.context};
+}
+export async function relaunchC11OriginalProfile({models,expectedActor,relaunch,cleanup,active}){
+ const previous=models.a;assert.ok(previous&&typeof previous.profile==='string'&&Number.isSafeInteger(previous.epoch));
+ await active();assert.equal(await cleanup(),true,'C11_DISCOVERY_CLEANUP_REQUIRED');await active();
+ const next=await relaunch('a');assert.equal(models.a,next,'Current holder registry required');assert.notEqual(next,previous);
+ assert.equal(next.profile,previous.profile,'Original A profile required');assert.equal(next.epoch,previous.epoch+1);
+ for(const key of ['ownerAccountId','authUserId','deviceId'])assert.equal(next.actor?.[key],expectedActor[key]);
+ await active();return {sameOriginalProfile:true,sameOriginalDevice:true,previousEpoch:previous.epoch,epoch:next.epoch,holderRelaunch:true,cleanExitWithoutForceVerified:false};
+}
+
 export const originalConcurrentEvidence=Object.freeze({runId:40607080843,artifactId:12783353029,sha256:'7424bc1bab2e207687ee37ee56c3f3952983b44e3ed914307858ffdb57bbf5ce',reuseSha256:'870e1a8cb5cff1857744985483243451dc174325271cb5faf252bbe04de09208',packageSource:'1c9af85185bc0fd09a30b02c624c29e9f6cc0bbd'});
 export function verifyPriorConcurrentEvidence(bytes,binding,scenario,reuseBytes){
  assert.equal(binding?.runId,originalConcurrentEvidence.runId);assert.equal(binding?.artifactId,originalConcurrentEvidence.artifactId);
@@ -33,33 +152,54 @@ async function readOriginalConcurrentAction(model,expected,actionId,assertActive
  return {owner:expected.ownerAccountId,actionId,petId:pet.petId,templateId:pet.templateId};},{expected,actionId});
  }finally{if(installed)await model.main(()=>{const h=globalThis.__concurrentOriginalRead;if(h){h.p.cloudContext=h.original;delete globalThis.__concurrentOriginalRead;}});}
 }
-export async function runCloudLiveQaDiscoveryCases({models,expectedActors,assertActive,scenario,runId,output,businessDeadline,mode='full',priorConcurrent,m07BeforeSend=false}){
+export async function runCloudLiveQaDiscoveryCases({models,expectedActors,relaunch,assertActive,scenario,runId,output,businessDeadline,mode='full',priorConcurrent,m07BeforeSend=false}){
  assert.ok(['full','wild-only'].includes(mode));assert.equal(typeof m07BeforeSend,'boolean');
+ assert.equal(typeof assertActive,'function');assert.equal(typeof relaunch,'function');
+ assert.ok(Number.isSafeInteger(businessDeadline)&&businessDeadline>Date.now(),'Verified holder business deadline required');
+ assert.equal(expectedActors.a.ownerAccountId,expectedActors.a2.ownerAccountId);assert.equal(expectedActors.a.authUserId,expectedActors.a2.authUserId);
+ assert.notEqual(expectedActors.a.ownerAccountId,expectedActors.b.ownerAccountId);assert.notEqual(expectedActors.a.deviceId,expectedActors.a2.deviceId);
+ assert.ok(models.a.profile&&models.a2.profile&&models.a.profile!==models.a2.profile);
  let prior;if(mode==='wild-only'){assert.ok(typeof priorConcurrent?.path==='string'&&typeof priorConcurrent.reusePath==='string');prior=verifyPriorConcurrentEvidence(readFileSync(priorConcurrent.path),priorConcurrent,scenario,readFileSync(priorConcurrent.reusePath));}
  else assert.equal(priorConcurrent,undefined);
 
  const file=join(output,'live-discovery-evidence.json'),intentFile=join(output,'live-discovery-intents.json');
  assert.ok(!existsSync(intentFile),'An uncertain batch must not be replaced');
- const proof={runId,scenario,scope:'simulated-qa coordinates; actual packaged signer + normal HTTPS authority. Not M03 GPS or native discovery UI acceptance. No territory/grid writes.',mode,m07BeforeSend,priorConcurrentEvidence:prior||null,cases:[],passed:false},intentions={runId,scenario,actions:{}};
+ const proof={runId,scenario,scope:'simulated-qa coordinates; actual packaged signer + normal HTTPS authority. Read-only public numbering, original wild-session navigation, A2 automatic-sync checkpoint and fixed-profile A relaunch only. Not M03 GPS or full native discovery acceptance. No territory/grid writes.',mode,m07BeforeSend,priorConcurrentEvidence:prior||null,cases:[],passed:false,fullCasePassed:false,
+  uncovered:['Real-cloud same-profile account A to B to A transition','Independent other-template sequence start/increment','Realtime-only automatic propagation','Clean app exit without taskkill fallback']},intentions={runId,scenario,actions:{}};
  const safe=new Set(['CLOUD_DEVICE_KEY_UNAVAILABLE','DEVICE_KEY_CHANGED','LOCATION_SIGNATURE_INVALID','LOCATION_OWNER_MISMATCH','LOCATION_SCENARIO_MISMATCH','REAL_LOCATION_REQUIRED','GLOBAL_SERIAL_INVALID','CLOUD_PET_NOT_SYNCED','ENCOUNTER_EXPIRED','ROUND_CONFLICT','ACTION_ID_CONFLICT','AUTH_REQUIRED','SESSION_CHANGED','CLOUD_UNAVAILABLE','DISCOVERY_UNAVAILABLE','LOCATION_PROOF_EXPIRED','LOCATION_RATE_LIMITED','GLOBAL_SERIAL_SCOPE_REVOKED','GLOBAL_SERIAL_SCOPE_CONFLICT','SPAWN_EXPIRED','ENCOUNTER_PENDING','VICTORY_REQUIRED','TERRITORY_CONFLICT','SYNC_CONFLICT','REVISION_CONFLICT','PRECONDITION_UNRESOLVED','PRECONDITION_FOREIGN_VISIBLE_TERRITORY','PRECONDITION_NO_TARGET','PRECONDITION_TARGET_WINDOW_DEADLINE','DISCOVERY_TARGET_SCHEMA_INVALID','DISCOVERY_TARGET_CLOCK_UNCERTAIN','PRECONDITION_NOT_WON','PRECONDITION_FAILED']);
  const save=()=>writeFileSync(file,JSON.stringify(proof,null,2));
  const id=key=>{assert.ok(!intentions.actions[key]);const value=randomUUID();intentions.actions[key]={actionId:value,submittedAt:new Date().toISOString()};writeFileSync(intentFile,JSON.stringify(intentions,null,2));return value;};
- async function step(name,coverage,work){const row={id:name,coverage,fullCasePassed:false,status:'running'};proof.cases.push(row);save();try{await assertActive();Object.assign(row,await work());row.status='passed-scoped';}catch(e){row.errorCode=safe.has(e?.code)?e.code:'ASSERTION_OR_STAGE_FAILED';row.status=row.errorCode.startsWith('PRECONDITION_')?'blocked':'failed';}save();}
+ let currentRow=null;
+ async function step(name,coverage,work){const row={id:name,coverage,fullCasePassed:false,status:'running'};proof.cases.push(row);currentRow=row;save();try{await active();Object.assign(row,await work());row.status='passed-scoped';}catch(e){row.errorCode=safe.has(e?.code)?e.code:'ASSERTION_OR_STAGE_FAILED';row.status=row.errorCode.startsWith('PRECONDITION_')?'blocked':'failed';}finally{save();currentRow=null;}}
  const fail=code=>{throw Object.assign(Error(),{code});};
- async function call(role,feature,command,payload={}){await assertActive();const r=await models[role].page.evaluate(x=>window.lingjing.invoke(x.feature,x.command,x.payload),{feature,command,payload});if(!r.ok)fail(r.code);return r.data;}
- async function cloud(op,input={}){await assertActive();return models.a.main(async(_e,x)=>{try{return {ok:true,data:await globalThis.__liveQaDiscovery.call(x.op,x.input)};}catch(e){return {ok:false,code:e.code};}},{op,input}).then(r=>{if(!r.ok)fail(r.code);return r.data;});}
+ safe.add('C11_READBACK_TIMEOUT');safe.add('PRECONDITION_C11_DEADLINE');
+ async function active(){await assertActive();if(Date.now()>=businessDeadline)fail('PRECONDITION_C11_DEADLINE');}
+ async function call(role,feature,command,payload={}){await active();const r=await models[role].page.evaluate(x=>window.lingjing.invoke(x.feature,x.command,x.payload),{feature,command,payload});if(!r.ok)fail(r.code);return r.data;}
+ async function cloud(op,input={}){await active();return models.a.main(async(_e,x)=>{try{return {ok:true,data:await globalThis.__liveQaDiscovery.call(x.op,x.input)};}catch(e){return {ok:false,code:e.code};}},{op,input}).then(r=>{if(!r.ok)fail(r.code);return r.data;});}
  const pets=role=>call(role,'companions','list').then(x=>x.pets);
- let installed=false,ready=false,concurrency=false,observed,spawn,permit,session,captured,initialPets=[];
+ const mark=(stage,observation)=>{if(currentRow){currentRow.substage=stage;if(observation)currentRow.lastReadOnlyObservation=observation;}save();};
+ async function until(read,accept,timeout=25000){const end=Math.min(businessDeadline,Date.now()+timeout);while(Date.now()<end){await active();const value=await read();await active();if(accept(value))return value;await new Promise(r=>setTimeout(r,Math.min(250,Math.max(0,end-Date.now()))));}await active();fail('C11_READBACK_TIMEOUT');}
+ async function localIdentity(role,petId=null){await active();return models[role].main(readC11HeldIdentity,{role,profile:models[role].profile,expected:expectedActors[role],petId});}
+ async function ui(role,stage,input){mark(stage);return observeC11PublicUi({page:models[role].page,active,until,checkpoint:v=>mark(stage,v),...input});}
+ async function shot(role,name,selector){await active();if(selector)await models[role].page.locator(selector).scrollIntoViewIfNeeded({timeout:10000});await active();await models[role].page.screenshot({path:join(output,name),timeout:10000});(proof.screenshots??=[]).push(name);save();}
+ let installed=false,installedModel=null,ready=false,concurrency=false,observed,spawn,permit,session,captured;
+ async function cleanupDiscovery(){
+  if(!installed)return true;
+  try{const cleaned=await installedModel.main(()=>{const state=globalThis.__liveQaDiscovery;if(!state)throw Error('Original discovery hook missing');state.proto.requireCloudActor=state.original;state.clear?.();if(state.proto.requireCloudActor!==state.original)throw Error('Discovery hook not restored');delete globalThis.__liveQaDiscovery;return !globalThis.__liveQaDiscovery;});
+   assert.equal(cleaned,true);installed=false;proof.cleanup={discoveryHarness:true};save();return true;
+  }catch(error){proof.cleanup={discoveryHarness:false};save();throw error;}
+ }
  try{
  await step('fixture-discovery-scope','Exact original devices/grant; no active or unresolved preceding battle; normal visible territory read, no grid writes',async()=>{
   for(const role of ['a','b']){const overview=await call(role,'battle','overview');if((overview.session&&!['finished','abandoned','cancelled','expired'].includes(overview.session.status))||overview.session?.pendingAction)fail('PRECONDITION_UNRESOLVED');}
-  for(const role of ['a','b']){const s=await call(role,'accounts','session');assert.equal(s.currentUser?.id,expectedActors[role].ownerAccountId);assert.equal(s.currentUser?.authUserId,expectedActors[role].authUserId);assert.equal(s.currentUser?.authKind,'supabase');assert.equal(s.dataMode,'live');}
-  if(prior){const originalActions=[];for(const [i,role]of ['a','b'].entries())originalActions.push(await readOriginalConcurrentAction(models[role],expectedActors[role],prior.actionIds[i],assertActive));proof.priorConcurrentReadback=verifyExistingConcurrentPets({a:await pets('a'),b:await pets('b')},expectedActors,prior,originalActions);concurrency=true;save();}
+  for(const role of ['a','a2','b']){const s=await call(role,'accounts','session');assert.equal(s.currentUser?.id,expectedActors[role].ownerAccountId);assert.equal(s.currentUser?.authUserId,expectedActors[role].authUserId);assert.equal(s.currentUser?.authKind,'supabase');assert.equal(s.dataMode,'live');const status=await call(role,'accounts','syncStatus');if(status.pending!==0)fail('PRECONDITION_UNRESOLVED');}
+  for(const role of ['a','a2'])assert.deepEqual(await localIdentity(role),expectedActors[role]);
+  if(prior){const originalActions=[];for(const [i,role]of ['a','b'].entries())originalActions.push(await readOriginalConcurrentAction(models[role],expectedActors[role],prior.actionIds[i],active));proof.priorConcurrentReadback=verifyExistingConcurrentPets({a:await pets('a'),b:await pets('b')},expectedActors,prior,originalActions);concurrency=true;save();}
   await models.a.main((_e,target)=>{const req=process.getBuiltinModule('node:module').createRequire(process.resourcesPath+'/app.asar/package.json');const {AccountsService}=req('./apps/pc-app/runtime/features/accounts/service.cjs');const proto=AccountsService.prototype;
    if(globalThis.__liveQaDiscovery)throw Error('Duplicate discovery harness');const state={proto,original:proto.requireCloudActor,accounts:null};globalThis.__liveQaDiscovery=state;
    proto.requireCloudActor=async function(...args){const result=await state.original.apply(this,args);if(result.ownerAccountId===target.ownerAccountId&&result.deviceId===target.deviceId){state.accounts=this;proto.requireCloudActor=state.original;}return result;};
-  },expectedActors.a);installed=true;
-  initialPets=await pets('a');
+  },expectedActors.a);installed=true;installedModel=models.a;
+  await pets('a');
   const initialized=await models.a.main(async({app,safeStorage},input)=>{
    const state=globalThis.__liveQaDiscovery;if(!state?.accounts)throw Error('Actual account capability not observed');state.proto.requireCloudActor=state.original;
    const req=process.getBuiltinModule('node:module').createRequire(process.resourcesPath+'/app.asar/package.json');const {CloudDiscoveryAuthority}=req('./apps/pc-app/runtime/features/discovery/cloud-adapter.cjs');const {CloudLocationProofs}=req('./apps/pc-app/runtime/features/discovery/cloud-location.cjs');
@@ -123,26 +263,48 @@ export async function runCloudLiveQaDiscoveryCases({models,expectedActors,assert
    const plan=planTargetWindow(nearby,{requestedAt,receivedAt,deadline:businessDeadline});proof.targetWindowObservations.push(plan.observation);save();
    if(plan.selected){spawn=plan.selected;break;}
    if(!plan.waitMs||attempt===1)fail('PRECONDITION_NO_TARGET');
-   await waitTargetWindow(plan.waitMs,{deadline:businessDeadline,assertActive});
+   await waitTargetWindow(plan.waitMs,{deadline:businessDeadline,assertActive:active});
   }
   if(!spawn)fail('PRECONDITION_NO_TARGET');
-  await cloud('position',spawn.position);observed=await cloud('observe',{spawnId:spawn.id});assert.equal(observed.namespace,`qa:${scenario}`);assert.equal(observed.source,'simulated');assert.equal(observed.scenarioId,scenario);assert.equal(observed.templateId,spawn.templateId);
+  await cloud('position',spawn.position);observed=await cloud('observe',{spawnId:spawn.id});assert.equal(observed.ownerAccountId,expectedActors.a.ownerAccountId);assert.equal(observed.namespace,`qa:${scenario}`);assert.equal(observed.source,'simulated');assert.equal(observed.scenarioId,scenario);assert.equal(observed.templateId,spawn.templateId);
   const own=[...await pets('a'),...await pets('b')].filter(p=>p.templateId===spawn.templateId);const max=own.reduce((n,p)=>BigInt(p.globalSerial)>n?BigInt(p.globalSerial):n,0n);assert.equal(BigInt(observed.globalSerial),max+1n);
   let refreshed=await cloud('nearby');assert.equal(refreshed.spawns.find(s=>s.id===spawn.id)?.globalSerial,observed.globalSerial);
   await cloud('position',{lat:spawn.position.lat+.018,lng:spawn.position.lng+.018});await cloud('nearby');await cloud('position',spawn.position);
   refreshed=await cloud('nearby');assert.equal(refreshed.spawns.find(s=>s.id===spawn.id)?.globalSerial,observed.globalSerial);const again=await cloud('observe',{spawnId:spawn.id});assert.equal(again.globalSerial,observed.globalSerial);
-  return {spawnId:spawn.id,templateId:spawn.templateId,globalSerial:observed.globalSerial,priorOwnedHighest:String(max),sameNumberAfterFreshProofAndReturn:true};
+  return {spawnId:spawn.id,templateId:spawn.templateId,preferredTemplate:'animal-wood-deer',fallbackTemplateUsed:spawn.templateId!=='animal-wood-deer',independentOtherTemplateSequenceVerified:false,globalSerial:observed.globalSerial,priorOwnedHighest:String(max),sameNumberAfterFreshProofAndReturn:true};
  });
- await step('C11-wild-capture','Normal server reserve/rounds/natural victory/capture, original confirm replay preserves encounter serial; no fabricated victory',async()=>{
+ await step('C11-wild-capture','Original server reserve/rounds/natural victory/capture and confirm replay; read-only original battle page return, A2 automatic sync and original A profile restart preserve exact captured identity',async()=>{
   if(proof.cases.find(x=>x.id==='C11-observe-stability')?.status!=='passed-scoped')fail('PRECONDITION_FAILED');
-  const owned=await pets('a');const pet=owned.find(p=>p.templateId==='animal-wood-deer');assert.ok(pet);const reserve={spawnId:spawn.id,petId:pet.petId,actionId:id('wild:reserve')};permit=await cloud('reserve',reserve);assert.ok(permit.id);session=await cloud('session',{permitId:permit.id});assert.equal(session.enemy.globalSerial,observed.globalSerial);
+  const owned=await pets('a');const pet=owned.find(p=>p.templateId==='animal-wood-deer');assert.ok(pet);const reserve={spawnId:spawn.id,petId:pet.petId,actionId:id('wild:reserve')};permit=await cloud('reserve',reserve);assert.equal(permit.ownerAccountId,expectedActors.a.ownerAccountId);assert.equal(permit.authUserId,expectedActors.a.authUserId);session=await cloud('session',{permitId:permit.id});assert.equal(session.enemy.globalSerial,observed.globalSerial);
+  const binding={permitId:permit.id,spawnId:spawn.id,templateId:spawn.templateId,globalSerial:observed.globalSerial,playerPetId:pet.petId,ownerAccountId:expectedActors.a.ownerAccountId,scenario};
+  const originalBattle=wildSessionCheckpoint(session,binding),battleUi={route:'/battle/session/'+session.id,view:'battle',sessionId:session.id,enemyPetId:spawn.id,globalSerial:observed.globalSerial};
+  const navigation=[];navigation.push(await ui('a','original-wild-session-before-navigation',battleUi));await shot('a','C11-wild-session.png');
+  navigation.push(await ui('a','leave-original-wild-page',{route:'/companions',view:'roster'}));
+  navigation.push(await ui('a','return-original-wild-session',battleUi));
+  session=await cloud('session',{permitId:permit.id});assert.deepEqual(wildSessionCheckpoint(session,binding),originalBattle);await shot('a','C11-wild-session-return.png');
+  currentRow.originalBattleNavigation={sessionId:session.id,permitId:permit.id,navigation,sameRoundAndHistory:true,noCancelOrReplacementReserve:true};save();
   for(let n=0;n<80&&session.status==='active';n++){const input={permitId:permit.id,action:session.snapshot.player.anger>=(session.rules?.ultimateAnger||60)?'ultimate':'normal_attack',expectedRound:session.snapshot.round+1,actionId:id(`wild:round:${session.snapshot.round+1}`)};session=await cloud('act',input);}
   assert.equal(session.status,'finished');if(session.winner!=='player')fail('PRECONDITION_NOT_WON');
-  const request={permitId:permit.id,name:'云端相遇验收',actionId:id('wild:confirm')};captured=await cloud('confirm',request);const again=await cloud('confirm',request);assert.equal(again.petId,captured.petId);assert.equal(captured.globalSerial,observed.globalSerial);
+  const a2Roster=await ui('a2','a2-original-roster-before-confirm',{route:'/companions',view:'roster'}),a2Status=await until(()=>call('a2','accounts','syncStatus'),s=>s.pending===0&&!s.running);
+  const baseline={route:a2Roster.route,petIds:a2Roster.rosterPetIds,status:a2Status};currentRow.a2Baseline={petIds:baseline.petIds,lastCloudCheckedAt:a2Status.lastCloudCheckedAt};save();
+  const request={permitId:permit.id,name:'云端相遇验收',actionId:id('wild:confirm')};captured=await cloud('confirm',request);const confirmedAt=Date.now();
+  currentRow.confirmedCapture={petId:captured.petId,permitId:permit.id,actionId:request.actionId,confirmedAt};save();
+  const again=await cloud('confirm',request);assert.equal(again.petId,captured.petId);assert.equal(captured.globalSerial,observed.globalSerial);
   const after=await pets('a');const instance=after.find(p=>p.petId===captured.petId);assert.ok(instance);assert.equal(instance.globalSerial,observed.globalSerial);assert.equal(after.filter(p=>p.petId===captured.petId).length,1);assert.equal(instance.templateId,spawn.templateId);
   const captures=await cloud('captures');assert.equal(captures.filter(c=>c.petId===captured.petId).length,1);
-  return {spawnId:spawn.id,petId:captured.petId,globalSerial:instance.globalSerial,permitId:permit.id,rounds:session.snapshot.round,replayedOriginalConfirm:true,source:'simulated-qa',nativeUi:false};
+  const tuple=captureIdentityTuple(instance,expectedActors.a.ownerAccountId);currentRow.capturedIdentity=tuple;save();
+  mark('a2-automatic-capture-readback');currentRow.automaticSync=await observeC11AutomaticCapture({model:models.a2,baseline,tuple,confirmedAt,active,until,checkpoint:v=>mark('a2-automatic-capture-readback',v)});
+  assertCapturedIdentity(tuple,await localIdentity('a2',tuple.petId));currentRow.automaticSync.sameLocalTuple=true;save();await shot('a2','C11-a2-auto-sync.png',`.cp-pet-card[data-pet-id="${tuple.petId}"]`);
+  const publicIdentity=[];publicIdentity.push(await ui('a','captured-roster-number',{route:'/companions',view:'roster',...tuple}));await shot('a','C11-captured-list.png',`.cp-pet-card[data-pet-id="${tuple.petId}"]`);
+  publicIdentity.push(await ui('a','captured-detail-number',{route:'/companions/'+tuple.petId,view:'detail',...tuple}));await shot('a','C11-captured-detail.png');
+  assertCapturedIdentity(tuple,await localIdentity('a',tuple.petId));currentRow.publicIdentity=publicIdentity;save();
+  mark('original-a-profile-relaunch');currentRow.restart=await relaunchC11OriginalProfile({models,expectedActor:expectedActors.a,relaunch,cleanup:cleanupDiscovery,active});save();
+  // A's fresh normal renderer may perform its ordinary reads. No discovery
+  // harness, credential injection or replacement profile is installed here.
+  await ui('a','relaunch-original-capture-number',{route:'/companions',view:'roster',...tuple});assertCapturedIdentity(tuple,await localIdentity('a',tuple.petId));
+  await shot('a','C11-a-relaunch.png',`.cp-pet-card[data-pet-id="${tuple.petId}"]`);currentRow.restart.sameLocalTupleAndVisibleNumber=true;save();
+  return {spawnId:spawn.id,petId:captured.petId,globalSerial:instance.globalSerial,permitId:permit.id,rounds:session.snapshot.round,replayedOriginalConfirm:true,source:'simulated-qa',nativeUi:true,nativeUiScope:'Read-only numbering and original-session navigation only; reserve/rounds/confirm remain the original API flow'};
  });
- }finally{if(installed){await models.a.main(()=>{const state=globalThis.__liveQaDiscovery;if(state){state.proto.requireCloudActor=state.original;state.clear?.();delete globalThis.__liveQaDiscovery;}return true;});}}
- proof.passed=proof.cases.length===(mode==='full'?4:3)+(m07BeforeSend?1:0)&&proof.cases.every(x=>x.status==='passed-scoped');proof.completedAt=new Date().toISOString();save();return proof;
+ }finally{if(installed)try{await cleanupDiscovery();}catch{proof.cleanupErrors=[{component:'discoveryHarness',code:'C11_DISCOVERY_CLEANUP_FAILED'}];}}
+ proof.passed=proof.cases.length===(mode==='full'?4:3)+(m07BeforeSend?1:0)&&proof.cases.every(x=>x.status==='passed-scoped')&&!proof.cleanupErrors?.length&&proof.cleanup?.discoveryHarness===true;proof.completedAt=new Date().toISOString();save();return proof;
 }

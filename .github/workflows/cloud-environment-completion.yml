@@ -200,6 +200,12 @@ jobs:
             artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/C03-friend-report-after-restart-b.png
             artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/s02/live-cross-domain-conflict-intent.json
             artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-wild/live-discovery-intents.json
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-wild/C11-wild-session.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-wild/C11-wild-session-return.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-wild/C11-a2-auto-sync.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-wild/C11-captured-list.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-wild/C11-captured-detail.png
+            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-wild/C11-a-relaunch.png
             artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-ui/M07-initial-ready.png
             artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-ui/M07-source-error.png
             artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-ui/M07-source-recovered.png

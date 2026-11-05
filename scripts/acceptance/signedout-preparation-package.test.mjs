@@ -75,28 +75,32 @@ test('legacy credentials, custody, grants and historical fixture code remain byt
 });
 
 function withoutBattleEvidencePaths(source){
+ for(const name of ['C11-wild-session.png', 'C11-wild-session-return.png', 'C11-a2-auto-sync.png', 'C11-captured-list.png', 'C11-captured-detail.png', 'C11-a-relaunch.png']){const line='            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/discovery-wild/'+name+'\n';assert.equal(source.split(line).length,2);source=source.replace(line,'');}
  for(const stage of ['active','warm','report-before-restart','report-after-restart'])for(const role of ['a','b']){
   const line='            artifacts/qa/same-run-${{ github.run_id }}/completion/fixed-completion/friend-completion/C03-friend-'+stage+'-'+role+'.png\n';
   assert.equal(source.split(line).length,2,'Exactly one bounded screenshot path');source=source.replace(line,'');
  }return source;
 }
 function withoutCTransition(source){
+ const invalidation=" // BEGIN A_UI_BINDING_RELAUNCH_INVALIDATION\n if(prior&&role==='a'){\n  await persistSafeIdentityManifest(cap);\n  delete s.uiBinding;\n  return model;\n }\n // END A_UI_BINDING_RELAUNCH_INVALIDATION\n";assert.equal(source.split(invalidation).length,2);source=source.replace(invalidation,'');
  for(const [indent,part] of [['','DEFINITIONS'],['  ','DEPS']]){
   const start=indent+'// BEGIN C_AUTHENTICATION_TRANSITION '+part+'\n',end=indent+'// END C_AUTHENTICATION_TRANSITION '+part+'\n';
   assert.equal(source.split(start).length,2);assert.equal(source.split(end).length,2);const a=source.indexOf(start),b=source.indexOf(end,a);assert.ok(b>a);source=source.slice(0,a)+source.slice(b+end.length);
  }return source;
 }
-test('C-only authentication additions leave every original lifecycle guard byte-for-byte unchanged',()=>{
+test('C authentication and fixed A binding invalidation leave every original lifecycle guard unchanged',()=>{
  const path='scripts/acceptance/recovery/same-run-normal-lifecycle-factory.mjs';assert.equal(withoutCTransition(read(path)),baseline(path).toString('utf8').replace(/\r\n/g,'\n'));
 });
-test('evidence revision changes only six reviewed modules, bounded watchdog IO repair and exact test/display assets, never preparation authority',()=>{
+test('evidence revision changes only seven reviewed modules, bounded watchdog IO repair and exact test/display assets, never preparation authority',()=>{
  const path='scripts/acceptance/cloud-live-qa-completion-readiness.mjs',prior=execFileSync('git',['show','797eb0ad6510b9d558297c2e4c0651cc6b14f3f2:'+path],{encoding:'utf8'}),current=read(path);
  function split(source){const a=source.indexOf('export const MODULES=frozen('),start=a+'export const MODULES=frozen('.length,end=source.indexOf(');\nconst common=',start);assert.ok(a>=0&&end>start);return {prefix:source.slice(0,start),suffix:source.slice(end),modules:JSON.parse(JSON.stringify(vm.runInNewContext('('+source.slice(start,end)+')',{frozen:value=>value}))) };}
  const a=split(prior),b=split(current);assert.equal(b.prefix,a.prefix);assert.equal(b.suffix,a.suffix);assert.deepEqual(Object.keys(b.modules),Object.keys(a.modules));
- const changed=new Set(['newC','lifecycle','discoveryUi','friend','authority','records']);
+ const changed=new Set(['newC','lifecycle','discoveryUi','friend','authority','records','discovery']);
  const identity='../../apps/pc-app/runtime/features/companions/display-identity.mjs',catalog='../../apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json';
  for(const [key,spec] of Object.entries(a.modules)){
   if(changed.has(key))spec.sha256=b.modules[key].sha256;
+  if(key==='discovery')spec.tests.push('cloud-live-qa-discovery-readback.test.mjs');
+  if(key==='lifecycle')spec.tests.push('recovery/same-run-location-relaunch.test.mjs');
   if(key==='records')spec.tests.push('cloud-live-qa-record-native-ui.test.mjs');
   if(key==='vaultClient'){spec.tests.push('dpapi/holder-supervisor-io.test.mjs');const asset=spec.assets.find(x=>x.file==='dpapi/holder-supervisor.ps1');assert.ok(asset);asset.sha256=sha(Buffer.from(read('scripts/acceptance/'+asset.file)));}
   if(['discoveryUi','friend','authority'].includes(key))spec.assets=(key==='authority'?[catalog]:[identity,catalog]).map(file=>({file,sha256:sha(execFileSync('git',['show',notificationPackage.expectedSource+':'+file.slice(6)]))}));
