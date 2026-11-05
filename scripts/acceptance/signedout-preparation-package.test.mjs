@@ -33,7 +33,7 @@ test('identity-bearing environments are rejected before signedout package prepar
  }
 });
 test('a valid current package and caller approval are never platform or business capabilities',()=>{
- for(const forged of [notificationPackage,signedoutPreparationPackage,{}, {approved:true,packageSource:notificationPackage.expectedSource,executableSha256:notificationPackage.expectedExeSha256},{protocol:'fixed-completion-precredential-v1',signedoutOnly:true,selftestsPassed:true,packageProof:signedoutPreparationPackage}]){
+ for(const forged of [notificationPackage,signedoutPreparationPackage,{scope:'assertion-only',source:'not-authenticated',fullCasePassed:false},{}, {approved:true,packageSource:notificationPackage.expectedSource,executableSha256:notificationPackage.expectedExeSha256},{protocol:'fixed-completion-precredential-v1',signedoutOnly:true,selftestsPassed:true,packageProof:signedoutPreparationPackage}]){
   assert.throws(()=>assertPlatformAdmission(forged));assert.throws(()=>assertCompletionAuthorization(forged));assert.throws(()=>assertPreparedCompletion(forged));assert.throws(()=>takePreparedCompletion(forged));
  }
 });
@@ -46,7 +46,7 @@ test('shared preparation wrappers cannot select a caller supplied verifier or mi
  assert.match(source,/assertCompletionAuthorization\(authorization,\{caseIds:selectedCases\}\)/);
 });
 test('all reviewed module and asset pins match exact source bytes',()=>{
- let count=0;for(const spec of Object.values(MODULES))for(const entry of [spec,...spec.assets||[]]){assert.equal(sha(readFileSync(new URL(entry.file,import.meta.url))),entry.sha256,entry.file);count++;}assert.equal(count,42);
+ let count=0;for(const spec of Object.values(MODULES))for(const entry of [spec,...spec.assets||[]]){assert.equal(sha(readFileSync(new URL(entry.file,import.meta.url))),entry.sha256,entry.file);count++;}assert.equal(count,44);
 });
 test('the current package notification runtime is unchanged and product reuse remains strict',()=>{
  const bytes=execFileSync('git',['show',signedoutPreparationPackage.expectedSource+':'+notificationRuntime.path]);assert.equal(sha(bytes.toString('utf8').replace(/\r\n/g,'\n')),notificationRuntime.sha256);
@@ -100,11 +100,33 @@ test('evidence revision changes only seven reviewed modules, bounded watchdog IO
  for(const [key,spec] of Object.entries(a.modules)){
   if(changed.has(key))spec.sha256=b.modules[key].sha256;
   if(key==='newC')spec.tests.push('cloud-new-c-desktop-positive.test.mjs');
-  if(key==='discovery')spec.tests.push('cloud-live-qa-discovery-readback.test.mjs');
+  if(key==='discovery'){
+   spec.tests.push('cloud-live-qa-discovery-readback.test.mjs','cloud-c11-account-switch-observations.test.mjs','cloud-c11-independent-sequence-observations.test.mjs');
+   spec.assets=['cloud-c11-account-switch-observations.mjs','cloud-c11-independent-sequence-observations.mjs'].map(file=>({file,sha256:sha(readFileSync(new URL(file,import.meta.url)))}));
+  }
   if(key==='lifecycle')spec.tests.push('recovery/same-run-location-relaunch.test.mjs');
   if(key==='records')spec.tests.push('cloud-live-qa-record-native-ui.test.mjs');
   if(key==='vaultClient'){spec.tests.push('dpapi/holder-supervisor-io.test.mjs');const asset=spec.assets.find(x=>x.file==='dpapi/holder-supervisor.ps1');assert.ok(asset);asset.sha256=sha(Buffer.from(read('scripts/acceptance/'+asset.file)));}
   if(['discoveryUi','friend','authority'].includes(key))spec.assets=(key==='authority'?[catalog]:[identity,catalog]).map(file=>({file,sha256:sha(execFileSync('git',['show',notificationPackage.expectedSource+':'+file.slice(6)]))}));
   assert.deepEqual(b.modules[key],spec,key+': reviewed source-only change');
+ }
+});
+
+// Observation-only additions may be tested/pinned, never attached to the real
+// dispatch, grant, credential or identity-transition machinery.
+test('C11 observation preparation cannot execute, authorize or remove missing live steps',()=>{
+ const base='0c2e522b432d6480978c3ce3b97e923f70b0b704';
+ for(const file of ['cloud-live-qa-discovery-cases.mjs','cloud-live-qa-completion-driver.mjs','recovery/same-run-normal-lifecycle-factory.mjs','recovery/github-environment-admission.mjs','dpapi/authorized-vault-client.mjs','recovery/same-run-fixture-index.mjs','requests/same-run-next-completion.json']){
+  assert.equal(sha(readFileSync(new URL(file,import.meta.url))),sha(execFileSync('git',['show',base+':scripts/acceptance/'+file])),file);
+ }
+ const source=read('scripts/acceptance/cloud-live-qa-discovery-cases.mjs');
+ assert.ok(source.includes('Real-cloud same-profile account A to B to A transition'));
+ assert.ok(source.includes('Independent other-template sequence start/increment'));
+ assert.ok(source.includes('fullCasePassed:false'));
+ const observationNames=['cloud-c11-account-switch-observations','cloud-c11-independent-sequence-observations'];
+ for(const name of observationNames){
+  assert.ok(MODULES.discovery.tests.includes(name+'.test.mjs'));
+  assert.ok(MODULES.discovery.assets.some(asset=>asset.file===name+'.mjs'));
+  assert.ok(Object.values(MODULES).every(spec=>spec.file!==name+'.mjs'));
  }
 });
