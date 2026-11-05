@@ -9,7 +9,7 @@ import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {validateS02ProducedFixturePlan} from './cloud-live-qa-s02-fixture-plan.mjs';
-import {verifyCompletionPackageBeforeCredentials} from './cloud-live-qa-completion-package-preflight.mjs';
+import {verifyCompletionPackageBeforeCredentials,verifySignedoutPackageWithoutCredentials,assertNoIdentityEnvironment} from './cloud-live-qa-completion-package-preflight.mjs';
 // Exact root-approved schema-only production deployment + independent readback.
 // Local SQL tests, caller booleans and new EXE alone cannot establish deployment.
 export const ACCOUNT_NOTIFICATION_DEPLOYMENT_PROOF_SHA256='d145cd7678032add924788f122e821dcc89b9d7b8c7990b21bc5d667ffb57b55';
@@ -38,7 +38,7 @@ export const MODULES=frozen({
  s02Plan:frozen({file:'cloud-live-qa-s02-fixture-plan.mjs',sha256:'6faf99300759d87219b056347b2029bcdd3471008d2ed2afc4214c6df49f7aa6',exports:['validateS02ProducedFixturePlan','assembleS02ProducedFixture'],tests:['cloud-live-qa-s02-fixture-plan.test.mjs'],dependencies:['s02Base','s02Territory','friend','garden','domains']}),
  discovery:frozen({file:'cloud-live-qa-discovery-cases.mjs',sha256:'6629b624116ddf530683730e4c651476728fc5b65e00ea77e6dac780531ce622',exports:['runCloudLiveQaDiscoveryCases','verifyPriorConcurrentEvidence'],tests:['cloud-live-qa-discovery-provenance.test.mjs'],dependencies:['targetWindow']}),
  targetWindow:frozen({file:'cloud-live-qa-target-window.mjs',sha256:'0674e868f5198867e0da42774d22eac647f8d39d70c3b90e15200b598ea3009c',exports:['planTargetWindow','waitTargetWindow'],tests:['cloud-live-qa-target-window.test.mjs']}),
- package:frozen({file:'cloud-live-qa-completion-package-preflight.mjs',sha256:'4d4d213d2f36b9129c3b59db29c33c4766c90a426e5964b4f4bce50dfe076239',exports:['verifyCompletionPackageBeforeCredentials'],dependencies:['preparationObservation'],tests:['cloud-live-qa-completion-package-preflight.test.mjs'],assets:[{file:'portable-session.mjs',sha256:'3851d650c0959593ed57a6f054e5a59b90d77791b159fbc09a7996e7691d86ee'}]}),
+ package:frozen({file:'cloud-live-qa-completion-package-preflight.mjs',sha256:'e79f7df91d4bb81b7f6426455cb56b4e70d25b4b7898a5c65bf7052a43e89697',exports:['verifyCompletionPackageBeforeCredentials','verifySignedoutPackageWithoutCredentials'],dependencies:['preparationObservation'],tests:['cloud-live-qa-completion-package-preflight.test.mjs'],assets:[{file:'portable-session.mjs',sha256:'3851d650c0959593ed57a6f054e5a59b90d77791b159fbc09a7996e7691d86ee'}]}),
  identity:frozen({file:'cloud-live-qa-identity-ui-cases.mjs',sha256:'3b3b4b05fa6e0d1e7ec78a872a810b37bf4d3ecd9754a8dfea5774d7a564b27b',exports:['runCloudLiveQaIdentityUiCases'],tests:['cloud-live-qa-identity-ui-contract.test.mjs']}),
  restore:frozen({file:'cloud-live-qa-restore-completion-cases.mjs',sha256:'48883725d550a162721e35d301b958c50d5682bfe7df0db1dcb8ff9d949771ec',exports:['runCloudLiveQaRestoreCompletionCases','createLiveRestoreNativeChooser'],tests:['cloud-live-qa-restore-completion-cases.test.mjs']}),
  records:frozen({file:'cloud-live-qa-record-cases.mjs',sha256:'f680a02695eb36b474e91f93cff083bfd1d4e1d981920b1ea1bed368d62cbee6',exports:['runCloudLiveQaRecordCases','validateRecordCaseSelection'],tests:['cloud-live-qa-record-selection.test.mjs']}),
@@ -99,7 +99,11 @@ export function expandModuleDependencies(keys){const all=new Set();function add(
 const prepared=new WeakMap();
 const artifactHandles=new WeakMap();
 // Real fixed artifact/package/native preflight, deliberately incapable of minting a business plan.
-export async function prepareCompletionArtifacts({selectedCases=DEFAULT_REQUESTED_CASES,runId,scenario,existingRecordFixture,friendPetIds,domainFixturePlan,notificationDeploymentProofPath,priorConcurrent,packageBinding,preparation}){
+export async function prepareCompletionArtifacts(options){return prepareCompletionArtifactsInternal(options,false);}
+// No public verifier/policy callback exists. The live wrapper always uses its
+// original exact package gate and cannot promote this handle to a business plan.
+export async function prepareSignedoutCompletionArtifacts(options){assertNoIdentityEnvironment();return prepareCompletionArtifactsInternal(options,true);}
+async function prepareCompletionArtifactsInternal({selectedCases=DEFAULT_REQUESTED_CASES,runId,scenario,existingRecordFixture,friendPetIds,domainFixturePlan,notificationDeploymentProofPath,priorConcurrent,packageBinding,preparation},signedoutOnly){
  preparationSnapshot(preparation);assert.equal(process.platform,'win32');assert.equal(process.env.GITHUB_ACTIONS,'true');assert.equal(process.env.GITHUB_RUN_ATTEMPT,'1');assert.deepEqual(selectedCases,DEFAULT_REQUESTED_CASES);assert.match(runId,/^[a-f0-9-]{36}$/i);assert.equal(scenario,'cloud-acceptance-20261027-8be246d1');
  try{preparationStage(preparation,'selection');for(const k of ['owner','petId','memoryId','sourceRunId'])assert.ok(typeof existingRecordFixture?.[k]==='string'&&existingRecordFixture[k]);for(const role of ['a','b'])assert.ok(typeof friendPetIds?.[role]==='string'&&friendPetIds[role]);validateS02ProducedFixturePlan(domainFixturePlan);verifyNotificationDeploymentEvidence(readFileSync(notificationDeploymentProofPath));
  const moduleNames=expandModuleDependencies([...DEFAULT_REQUESTED_CASES.map(id=>CASES[id].module),'package','lifecycle','fixtureIndex','environmentEntry','s02Plan','native','restore']),loaded={},moduleHashes={};
@@ -110,7 +114,7 @@ export async function prepareCompletionArtifacts({selectedCases=DEFAULT_REQUESTE
  // caller-supplied runner/shell/test callback can manufacture a success result.
  preparationStage(preparation,'pure-contracts');
  const driver=await import(new URL('cloud-live-qa-completion-driver.mjs',import.meta.url).href);assert.equal(typeof driver.runPreparedCloudCompletion,'function');const tests=[...new Set([...moduleNames.flatMap(k=>MODULES[k].tests),'cloud-live-qa-completion-readiness.test.mjs'])];if(tests.length){try{execFileSync(process.execPath,['--test','--test-reporter=tap',...tests.map(p=>'scripts/acceptance/'+p)],{cwd:root,timeout:120000,maxBuffer:2*1024*1024,stdio:'pipe',env:vaultChildEnvironment()});}catch(error){preparationPureContractFailure(preparation,error,tests.map(p=>readFileSync(new URL(p,import.meta.url),'utf8')));throw error;}}
- const packageProof=await verifyCompletionPackageBeforeCredentials(packageBinding,{preparation});
+ const packageProof=await (signedoutOnly?verifySignedoutPackageWithoutCredentials:verifyCompletionPackageBeforeCredentials)(packageBinding,{preparation});
  const tickets={};await loaded.native.selftestNativeDialogApis({preparation});for(const role of['a','a2','a3','b','c']){preparationStage(preparation,'profile-allocation');preparationAllocationStart(preparation);tickets[role]=loaded.native.allocateLiveNativeProfile({runId});preparationDirectory(preparation,tickets[role].profile);}
  const value=Object.freeze({});artifactHandles.set(value,{loaded,tickets,moduleHashes,packageProof,preparation,runId,scenario,packageBinding:{...packageBinding},used:false});return value;
 

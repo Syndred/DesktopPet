@@ -9,6 +9,13 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 export const notificationPackage=Object.freeze({runId:40618386720,artifactId:12786865736,zipSha256:'0350eddb32b951a67b4cc362cfc990ac3ac842d868d2a3e17ef8fd0bf4ca9d79',expectedSource:'5016f1c3f7de04b4e2b322d0b47ec52248596771',expectedFingerprint:'25d17ddda4a5526a6e9e63503f4fd3def1816935b97a96a5c1d0a19795a21387',expectedExeSha256:'a88f61364810291e6ca79ff1b9030680831d7382e65137b9ace9607e3e65fafc'});
+// This current package is admitted only to a signed-out preparation probe.
+// It never replaces the separately authorized live-completion package above.
+// ZIP digest: GitHub artifact metadata and download verification in run 41852097310;
+// this local preparation patch does not claim a fresh download or Windows run.
+export const signedoutPreparationPackage=Object.freeze({runId:41005729685,artifactId:12956066898,zipSha256:'a7d88111f2d2b22cc3575e7fe53a9ea91a85416df2bb8fafb1c6bbf778aa286f',expectedSource:'735c48476d3c0efc2aab62cecc765c9ce1933adb',expectedFingerprint:'8ba8990339c420c3dc8d64282d536f4ceddc76c45c24808f524b22f81daa58c6',expectedExeSha256:'88ed00e1a94df58d7df80df3978798f9bf67c76c43c6d808df5eccc00d7aa79c'});
+export function validatePinnedSignedoutPreparationPackage(binding){for(const k of ['expectedSource','expectedFingerprint','expectedExeSha256'])assert.equal(binding?.[k],signedoutPreparationPackage[k],'EXACT_SIGNEDOUT_PREPARATION_PACKAGE_REQUIRED');}
+export function assertNoIdentityEnvironment(){for(const k of ['GH_ENVIRONMENT_ADMISSION_TOKEN','DESKTOPPET_QA_A_PASSWORD','DESKTOPPET_QA_B_PASSWORD','DESKTOPPET_QA_CAS_PROVENANCE'])assert.equal(Object.hasOwn(process.env,k),false,'SIGNEDOUT_PREPARATION_MUST_HAVE_NO_IDENTITY_CREDENTIALS');}
 export function validatePinnedNotificationPackage(binding){for(const k of ['expectedSource','expectedFingerprint','expectedExeSha256'])assert.equal(binding?.[k],notificationPackage[k],'EXACT_NEW_NOTIFICATION_PACKAGE_REQUIRED');}
 const root=fileURLToPath(new URL('../../',import.meta.url));
 export const notificationRuntime=Object.freeze({path:'apps/pc-app/runtime/features/accounts/service.cjs',sha256:'87ca4aca07957a8269346e86acae17fded7e3792e88ce0433e3fc0c224dca172'});
@@ -23,8 +30,16 @@ export function verifyCompletionPackageDocuments({manifest,audit,closureBytes,ex
  return {sourceCommit:binding.expectedSource,compiledFingerprint:binding.expectedFingerprint,exeSha256:binding.expectedExeSha256,notificationRuntimeSha256:notificationRuntime.sha256,closureSha256:sha(closureBytes)};
 }
 export async function verifyCompletionPackageBeforeCredentials(binding,{preparation}={}){
+ validatePinnedNotificationPackage(binding);
+ return verifyPinnedSignedoutPackage(binding,{preparation});
+}
+export async function verifySignedoutPackageWithoutCredentials(binding,{preparation}={}){
+ assertNoIdentityEnvironment();validatePinnedSignedoutPreparationPackage(binding);
+ return verifyPinnedSignedoutPackage(binding,{preparation});
+}
+async function verifyPinnedSignedoutPackage(binding,{preparation}){
  preparationStage(preparation,'package-docs');
- validatePinnedNotificationPackage(binding);assert.equal(process.platform,'win32');assert.equal(process.env.GITHUB_ACTIONS,'true');assert.equal(process.env.GITHUB_RUN_ATTEMPT,'1');
+ assert.equal(process.platform,'win32');assert.equal(process.env.GITHUB_ACTIONS,'true');assert.equal(process.env.GITHUB_RUN_ATTEMPT,'1');
  assert.match(binding?.expectedSource||'',/^[a-f0-9]{40}$/);for(const k of ['expectedFingerprint','expectedExeSha256'])assert.match(binding[k]||'',/^[a-f0-9]{64}$/);
  for(const k of ['manifestPath','auditPath','closurePath','executable'])assert.equal(typeof binding[k],'string');
  const sourceBytes=execFileSync('git',['show',binding.expectedSource+':'+notificationRuntime.path],{cwd:root,maxBuffer:1024*1024,env:platformChildEnvironment()});
