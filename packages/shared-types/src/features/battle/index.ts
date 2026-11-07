@@ -12,7 +12,7 @@ export interface BattleRulesProfile {
   elementEffects?: Record<ElementType, { label: string; description: string }>;
 }
 export interface BattleStatus {
-  type: "burn" | "freeze" | "parasite" | "vulnerability" | "petrify";
+  type: "burn" | "freeze" | "parasite" | "vulnerability" | "petrify" | "dampen";
   duration: number; stacks?: number; potency?: number; sourceId?: string;
 }
 export interface BattleActor {
@@ -34,6 +34,7 @@ export interface BattleRound {
   dotDamageEvents?: Record<"player" | "enemy", Array<{ type: string; amount: number }>>;
   healEvents?: Record<"player" | "enemy", Array<{ type: string; amount: number }>>;
   hpAfter?: { player: number; enemy: number }; angerAfter?: { player: number; enemy: number };
+  angerLoss?: { player: number; enemy: number };
   statusesAfter?: { player: BattleStatus[]; enemy: BattleStatus[] };
   state?: BattleSnapshot; winner: BattleWinner; notes: string[];
   visualEvents?: BattleVisualEvent[];
@@ -41,7 +42,7 @@ export interface BattleRound {
 export interface BattleVisualEvent {
   id: string; phase: 'windup' | 'release' | 'impact' | 'effects';
   side: 'player' | 'enemy'; kind: 'action' | 'damage' | 'dodge' | 'interrupt' | 'anger' | 'heal' | 'status' | 'dot';
-  action?: BattleActionType | 'stunned'; amount?: number; status?: string; element?: ElementType;
+  action?: BattleActionType | 'stunned'; amount?: number; status?: string; element?: ElementType; stacks?: number;
 }
 export interface BattleContext {
   returnTo: string; action?: 'capture' | 'territory'; name?: string; settled?: boolean; resultPath?: string;

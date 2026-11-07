@@ -261,12 +261,14 @@ test("real SQLite and companions: full training awards only the selected instanc
     const before = companions.getPet(f.owner, selected).growth;
     const rules = f.service.rules({}, f.context);
     assert.deepEqual(f.service.overview({}, f.context).rules, rules);
+    assert.equal(rules.id, 'five-elements-stacked-v2');
     assert.equal(rules.vitalPolicy, 'normalized');
     assert.equal(rules.companionStatsApplied, false);
     assert.notEqual(before.stats.hp, rules.maxHp, 'The fixture keeps its actual growth HP; standard battle HP is a separate declared rule');
     const otherBefore = companions.getPet(f.owner, pets[1].petId);
     const legacyBefore = readFileSync(join(f.folder, "legacy.json"), "utf8");
     let session = await f.service.startTraining({ actionId: "start-one", petId: selected, enemyElement: "metal" }, f.context);
+    assert.deepEqual(session.rules, rules);
     assert.equal(session.snapshot.player.maxHp, rules.maxHp);
     assert.equal(session.snapshot.enemy.maxHp, rules.maxHp);
     assert.equal((await f.service.startTraining({ actionId: "start-one", petId: selected, enemyElement: "metal" }, f.context)).id, session.id);
@@ -287,6 +289,7 @@ test("real SQLite and companions: full training awards only the selected instanc
     assert.equal(f.db.prepare("SELECT COUNT(*) n FROM battle_reward_receipts").get().n, 1);
     assert.equal(f.db.prepare("SELECT COUNT(*) n FROM battle_reports_v2").get().n, 1);
     const report = f.service.getReport({ reportId: session.id }, f.context);
+    assert.deepEqual(report.rules, rules);
     assert.equal(report.rounds.length, session.snapshot.round);
     assert.deepEqual(report.rounds.at(-1).state, session.snapshot);
     assert.equal(readFileSync(join(f.folder, "legacy.json"), "utf8"), legacyBefore);
@@ -304,6 +307,7 @@ test("real disk restart restores a fight and stale simultaneous commands cannot 
     f.close(); f = setup(folder);
     session = f.service.snapshot({ sessionId: id }, f.context);
     assert.deepEqual(session.snapshot, saved);
+    assert.equal(session.rules.id, 'five-elements-stacked-v2');
     assert.equal(f.service.overview({}, f.context).session.id, id);
     const attempts = await Promise.allSettled(["same-round-a", "same-round-b"].map(actionId => f.service.act({ sessionId: id, actionId, action: "normal_attack", expectedRound: 2 }, f.context)));
     assert.equal(attempts.filter(item => item.status === "fulfilled").length, 1);

@@ -2,7 +2,6 @@ const migrations = require("./migrations.cjs");
 const { BattleFeatureService, friendlyError } = require("./service.cjs");
 const { createBattleBackupAdapter } = require("./backup.cjs");
 const { registerBattleArt } = require("./assets.cjs");
-const { getBattleRules } = require('../../services/battle-runtime.cjs');
 const { presentSession } = require('./presentation.cjs');
 const { createBattleDisplayViews } = require('./display-views.cjs');
 
@@ -22,7 +21,7 @@ module.exports = {
     void artReady.catch(() => {});
     const removeBackup = services.get("backups")?.register(createBattleBackupAdapter(services.db));
     services.provide("battle", {
-      getRules: getBattleRules,
+      getRules: () => service.getRules(),
       get supportsCloudWild() { return contextAuthorities.has('discovery'); },
       registerContextAuthority(id, api) {
         if (!['discovery','garden'].includes(id) || typeof api?.handlesSession !== 'function' || typeof api?.command !== 'function' || typeof api?.getOutcome !== 'function') throw Object.assign(new Error('领域对战接口无效'),{code:'CONTEXT_AUTHORITY_INVALID'});

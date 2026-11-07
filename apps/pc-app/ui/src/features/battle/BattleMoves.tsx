@@ -64,6 +64,7 @@ export function BattleMoves({ session, rules, busy, onAct }: { session: BattleSe
       const disabled = busy || session.status !== 'active' || Boolean(session.pendingAction) || lackingAnger || exhaustedDodge;
       const reason = busy ? '正在出招' : waiting ? '等待好友' : session.status === 'settling' ? '正在结算' : session.status !== 'active' ? '对战已结束' : session.pendingAction ? '行动已锁定' : lackingAnger ? `需要至少 ${rules.ultimateAnger} 怒气` : exhaustedDodge ? '需要怒气' : move.action === 'dodge' ? `${move.description}；本次消耗 ${dodgeCost} 怒气` : move.description;
       const ultimate = move.action === 'ultimate', ready = ultimate && !lackingAnger;
+      const hint = disabled || move.action === 'element_attack' || ultimate ? reason : commandHints[move.action];
       const Icon = ultimate ? Star : move.Icon;
       const reasonId = `${descriptionId}-${move.action}`;
       return <Tooltip key={move.action}><TooltipTrigger asChild><span className="battle-command-tooltip" aria-label={disabled ? `${actionLabels[move.action]}：${reason}` : undefined} aria-describedby={disabled ? reasonId : undefined} tabIndex={disabled ? 0 : -1}>
@@ -76,7 +77,7 @@ export function BattleMoves({ session, rules, busy, onAct }: { session: BattleSe
           </span><span className="battle-command-label">{commandLabels[move.action]}</span>
         </Button>
         <span className="sr-only" id={reasonId}>{reason}</span>
-      </span></TooltipTrigger><TooltipContent className="battle-command-hint" sideOffset={10}>{commandHints[move.action]}</TooltipContent></Tooltip>;
+      </span></TooltipTrigger><TooltipContent className="battle-command-hint" sideOffset={10}>{hint}</TooltipContent></Tooltip>;
     })}
   </div></TooltipProvider>;
 }

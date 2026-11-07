@@ -36,7 +36,6 @@
 .battle-screen .battle-meter-row b { position: absolute; inset: 0; z-index: 1; display: grid; place-items: center; min-width: 0; color: #173b7a; font-size: 13px; font-weight: 750; line-height: 27px; text-align: center; font-variant-numeric: tabular-nums; }
 .battle-screen .battle-statuses { position: absolute; top: calc(100% + 7px); left: 8px; right: 8px; gap: 4px; margin: 0; }
 .battle-screen .enemy .battle-statuses { justify-content: flex-end; }
-.battle-screen .battle-statuses > span { background: #e9f5ffed; color: #244d83; }
 .battle-screen .battle-round-number { gap: 8px; width: 118px; }
 .battle-screen .battle-round-number > span { display: block; width: 112px; padding: 5px 12px; border: 1px solid #b9e6ff; border-radius: 22px; background: #164a85c9; color: #f1faff; font-size: 15px; font-weight: 650; line-height: 21px; }
 .battle-phase-clock { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; width: 96px; height: 96px; color: #edfaff; background: #10315ec7; border-radius: 50%; }

@@ -24,3 +24,16 @@ test('same-version legacy session and report gain missing display metadata witho
   assert.deepEqual(stored,before);
   const unknown={...rules,id:'historical-other-version'};assert.equal(presentRules(unknown),unknown);
 });
+
+test('unversioned stored reports resolve to the old standard while imported history keeps unknown rules', () => {
+  const stored = { id: 'stored-before-rules', mode: 'training', rounds: [] };
+  const report = presentReport(stored);
+  assert.equal(report.rules.id, 'five-elements-standard-v1');
+  assert.match(report.rules.elementEffects.wood.description, /2生命/);
+  assert.equal(stored.rules, undefined);
+
+  const imported = { ...stored, id: 'legacy:original', legacy: true };
+  assert.equal(presentReport(imported), imported);
+  const current = { ...stored, rules: { id: 'five-elements-stacked-v2' } };
+  assert.match(presentReport(current).rules.elementEffects.wood.description, /5%/);
+});

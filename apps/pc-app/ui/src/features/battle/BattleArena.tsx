@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
-import { ArrowDown, Check, CircleSlash, Clock3, Flame, Footprints, Gem, Heart, Leaf, LogOut, Mountain, RefreshCw, ScrollText, Trophy, UserRound, X, Zap } from 'lucide-react';
+import { motion } from 'motion/react';
+import { Check, Clock3, Heart, LogOut, RefreshCw, ScrollText, Trophy, UserRound, X, Zap } from 'lucide-react';
 import type { BattleActor, BattleParticipant, BattleRulesProfile, BattleSession } from '../../../../../../packages/shared-types/src/features/battle';
 import type { BattleActionType } from '../../../../../../packages/shared-types/src/battle';
 import type { CharacterResource, ResourceAction } from '../../../../../../packages/shared-types/src/features/resources';
@@ -9,8 +9,9 @@ import { AppDialog, Button, Card, ScrollArea, Tooltip, TooltipContent, TooltipPr
 import { useAppMotion } from '../../components/motion';
 import { ResourceStage } from '../resources/ResourceStage';
 import { ResourcePortrait } from '../resources/ResourcePortrait';
-import { battleAffinity, elements, petName, roundLines, statusLabel } from './presentation';
+import { battleAffinity, elements, petName, roundLines } from './presentation';
 import { BattleMoves, ElementMark } from './BattleMoves';
+import { BattleFeedback, BattleStatusList } from './BattleEffects';
 import { BattlePhaseClock } from './BattlePhaseClock';
 import { useBattleAnimation } from './useBattleAnimation';
 import { ParticipantIdentity } from './identity';
@@ -37,16 +38,15 @@ export function BattlePortrait({ pet, facing = 'right', small = false, action = 
     {resource && small ? <ResourcePortrait resource={resource} framing="portrait" className="battle-sprite-thumb" label={petName(pet)}/> : resource ? <ResourceStage resource={resource} petId={pet.petId} context="battle" action={action} playbackKey={playbackKey} facing={facing} playing={playing} motionEnabled={motionAllowed}/> : <span className="battle-asset-state" role="status">{error || '…'}</span>}
   </div>;
 }
-const statusIcons = { burn: Flame, freeze: Zap, parasite: Leaf, vulnerability: Gem, petrify: Mountain };
-function StatusIcon({ type }: { type: string }) { const Icon = statusIcons[type as keyof typeof statusIcons] || Zap; return <Icon size={13} aria-hidden="true"/>; }
 export function CombatantStatus({ pet, actor, rules, enemy = false, waiting = false }: { pet: BattleParticipant; actor: BattleActor; rules: BattleRulesProfile; enemy?: boolean; waiting?: boolean }) {
   if (pet.petId === 'waiting-peer') return <div className="combatant-status enemy battle-waiting-peer" aria-label={waiting ? '等待好友加入' : '对手未加入'}><UserRound size={34}/>{waiting ? <Clock3 size={17}/> : null}</div>;
+  const effect = rules.elementEffects?.[actor.element]?.description;
   return <div className={`combatant-status ${enemy ? 'enemy' : ''}`} data-element={actor.element}>
-    <div className="combatant-identity"><BattlePortrait pet={pet} small facing={enemy ? 'left' : 'right'}/><Tooltip><TooltipTrigger asChild><span className="combatant-level" tabIndex={0} aria-label={`Lv.${pet.level || 1} · ${elements[actor.element].label}系`}>Lv.{String(pet.level || 1).padStart(2, '0')}<ElementMark element={actor.element} size={15}/></span></TooltipTrigger><TooltipContent>{elements[actor.element].label} · {rules.elementEffects?.[actor.element]?.description || elements[actor.element].hint}</TooltipContent></Tooltip></div>
+    <div className="combatant-identity"><BattlePortrait pet={pet} small facing={enemy ? 'left' : 'right'}/><Tooltip><TooltipTrigger asChild><span className="combatant-level" tabIndex={0} aria-label={`Lv.${pet.level || 1} · ${elements[actor.element].label}系`}>Lv.{String(pet.level || 1).padStart(2, '0')}<ElementMark element={actor.element} size={15}/></span></TooltipTrigger><TooltipContent>{elements[actor.element].label}{effect ? ` · ${effect}` : null}</TooltipContent></Tooltip></div>
     <div className="combatant-bars"><div className="combatant-title"><ParticipantIdentity pet={pet}/></div>
       <div className="battle-meter-row"><Heart size={11}/><progress aria-label={`${petName(pet)}生命`} max={actor.maxHp} value={actor.hp}/><b>{actor.hp}/{actor.maxHp}</b></div>
       <div className="battle-meter-row anger"><Zap size={11}/><progress aria-label={`${petName(pet)}怒气`} max={rules.maxAnger} value={actor.anger}/><b>{actor.anger}/{rules.maxAnger}</b></div>
-      <div className="battle-statuses">{actor.statuses.map(status => <Tooltip key={status.type}><TooltipTrigger asChild><span className="battle-status-chip" tabIndex={0} aria-label={statusLabel(status)}><StatusIcon type={status.type}/>{(status.stacks || 1) > 1 ? <b>{status.stacks}</b> : null}<small>{status.duration}</small></span></TooltipTrigger><TooltipContent>{statusLabel(status)}</TooltipContent></Tooltip>)}</div>
+      <BattleStatusList statuses={actor.statuses} rules={rules}/>
     </div>
   </div>;
 }
@@ -82,9 +82,7 @@ export function BattleArena({ session, rules, busy, onAct, onSync, onLeave, onRe
             const shift = !animation.allowed ? 0 : animation.phase === 'windup' ? -direction * 10 : animation.phase === 'release' ? animation.interrupted(side) ? 0 : direction * (dodge ? -32 : 38) : animation.phase === 'impact' && dodge && !(animation.round?.directDamage?.[side] || 0) ? -direction * 35 : 0;
             return <motion.div key={side} className={`battle-actor-slot ${side}`} data-side={side} animate={{ x: shift }} transition={{ duration: animation.allowed ? .22 : 0, ease: 'easeOut' }}>
               {unknownPeer && side === 'enemy' ? <div className="battle-waiting-actor" aria-label={waiting ? '等待好友加入' : '对手未加入'}><UserRound size={70}/></div> : <BattlePortrait pet={session[side]} action={animation.action(side)} playbackKey={`${animation.key}:${side}:${animation.phase}:${animation.action(side)}`} facing={side === 'enemy' ? 'left' : 'right'}/>}
-              <AnimatePresence>{animation.events.filter(event => event.side === side).map(event => <motion.span key={`${animation.key}:${event.id}`} className={`battle-hit-feedback ${event.kind} element-${event.element || session[side].element}`} data-event-kind={event.kind} data-event-id={event.id} initial={{ opacity: 0, y: 8, scale: .85 }} animate={{ opacity: 1, y: -24, scale: 1 }} exit={{ opacity: 0, y: -40 }} transition={{ duration: .2 }}>
-                {event.kind === 'status' ? <StatusIcon type={event.status || ''}/> : event.kind === 'dodge' ? <Footprints size={23} aria-label="闪避成功"/> : event.kind === 'interrupt' ? <CircleSlash size={23} aria-label="施法打断"/> : event.kind === 'anger' ? <><Zap size={20}/><ArrowDown size={15}/><span>{event.amount}</span></> : `${event.kind === 'heal' ? '+' : '−'}${event.amount}`}
-              </motion.span>)}</AnimatePresence>
+              <BattleFeedback events={animation.events.filter(event => event.side === side)} roundKey={animation.key} motionAllowed={animation.allowed}/>
             </motion.div>;
           })}
         </div>

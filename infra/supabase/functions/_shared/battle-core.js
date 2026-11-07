@@ -1,6 +1,8 @@
 // One authoritative pure rule core. The desktop CJS is mechanically generated from this file.
-// Existing rules ID and every numeric formula are retained. Historical saved rules remain untouched.
+// Existing callers keep the original rules. New local sessions opt in by saved rules ID.
 const BATTLE_CORE_VERSION = 'five-elements-standard-v1/2026-10-25';
+const STANDARD_BATTLE_RULES_ID = 'five-elements-standard-v1';
+const STACKED_BATTLE_RULES_ID = 'five-elements-stacked-v2';
 const ELEMENT_ADVANTAGE_CHAIN = {
   metal: "wood",
   wood: "earth",
@@ -23,28 +25,37 @@ const ULTIMATE_ANGER_COST = 50;
 const ELEMENT_STATUS_DURATION = 3;
 const ULTIMATE_FIXED_HEAL = 20;
 const BURN_CURRENT_HP_RATIO_PER_STACK = 0.08;
+const PARASITE_CURRENT_HP_RATIO_PER_STACK = 0.05;
+const DAMPEN_CURRENT_ANGER_RATIO_PER_STACK = 0.10;
 const STANDARD_MAX_HP = 120;
 const MAX_ANGER = 100;
 const DODGE_MAX_COST = 20;
 const DODGE_REFUND_ANGER = 30;
 
-function getBattleRules() {
-  return { id: 'five-elements-standard-v1', label: '标准五行对战', vitalPolicy: 'normalized',
+function getBattleRules(rulesId) {
+  const stacked = rulesId === STACKED_BATTLE_RULES_ID;
+  return { id: stacked ? STACKED_BATTLE_RULES_ID : STANDARD_BATTLE_RULES_ID,
+    label: stacked ? '叠层五行对战' : '标准五行对战', vitalPolicy: 'normalized',
     maxHp: STANDARD_MAX_HP, maxAnger: MAX_ANGER, companionStatsApplied: false,
     baseDamage: { ...BASE_DAMAGE }, ultimateAnger: ULTIMATE_ANGER_THRESHOLD,
     ultimateCost: ULTIMATE_ANGER_COST, ultimateHeal: ULTIMATE_FIXED_HEAL, dodgeMaxCost: DODGE_MAX_COST, dodgeRefund: DODGE_REFUND_ANGER,
     advantage: { ...ELEMENT_ADVANTAGE_CHAIN },
     elementEffects: {
       metal: { label: '易伤', description: '每层受伤×1.5，最多5层' },
-      wood: { label: '寄生', description: '每层回合末吸取2生命，最多5层' },
+      wood: { label: '寄生', description: stacked
+        ? `回合末吸取目标当前生命的${PARASITE_CURRENT_HP_RATIO_PER_STACK * 100}%×层数，最多5层`
+        : '每层回合末吸取2生命，最多5层' },
       earth: { label: '迟钝', description: '每层伤害×0.5，最多5层' },
-      water: { label: '降怒', description: '命中后对方怒气向下取半，不增加受击怒气' },
+      water: { label: '降怒', description: stacked
+        ? `回合末减少目标当前怒气的${DAMPEN_CURRENT_ANGER_RATIO_PER_STACK * 100}%×层数，最多5层`
+        : '命中后对方怒气向下取半，不增加受击怒气' },
       fire: { label: '燃烧', description: '回合末按当前生命8%×层数伤害，最多5层' }
     } };
 }
 
 class BattleRuntimeService {
-  constructor() {
+  constructor(rulesId) {
+    this.rulesId = rulesId;
     this.session = null;
     this.reset();
   }
@@ -95,7 +106,7 @@ class BattleRuntimeService {
     }
     const playerAction = normalizeActionInput(playerActionInput);
     const enemyAction = chooseEnemyAction(session, playerAction);
-    const roundResult = executeRound(session, playerAction, enemyAction);
+    const roundResult = executeRound(session, playerAction, enemyAction, this.rulesId);
     return {
       playerAction,
       enemyAction,
@@ -125,8 +136,10 @@ function createCombatant(id, element) {
   };
 }
 
-function executeRound(session, playerInputAction, enemyInputAction) {
+function executeRound(session, playerInputAction, enemyInputAction, rulesId) {
   session.round += 1;
+  const stacked = rulesId === STACKED_BATTLE_RULES_ID;
+  const angerLoss = stacked ? { player: 0, enemy: 0 } : null;
   const notes = [];
   let firstDefeated = null;
   const damageTaken = {
@@ -172,7 +185,7 @@ function executeRound(session, playerInputAction, enemyInputAction) {
       if (playerAction !== "ultimate") {
         gainAngerOnHit(session.player, session.player.element, session.enemy.element);
       }
-      const statusResult = applyAttackStatus(playerAction, session.player, session.enemy, notes);
+      const statusResult = applyAttackStatus(playerAction, session.player, session.enemy, notes, stacked);
       if (!statusResult.preventHurtAngerGain) {
         gainAngerOnHurt(session.enemy, damage);
       }
@@ -195,7 +208,7 @@ function executeRound(session, playerInputAction, enemyInputAction) {
       if (enemyAction !== "ultimate") {
         gainAngerOnHit(session.enemy, session.enemy.element, session.player.element);
       }
-      const statusResult = applyAttackStatus(enemyAction, session.enemy, session.player, notes);
+      const statusResult = applyAttackStatus(enemyAction, session.enemy, session.player, notes, stacked);
       if (!statusResult.preventHurtAngerGain) {
         gainAngerOnHurt(session.player, damage);
       }
@@ -216,6 +229,7 @@ function executeRound(session, playerInputAction, enemyInputAction) {
   }
 
   applyRoundEndStatusEffects(session, damageTaken, dotDamageEvents, healEvents, notes, {
+    angerLoss,
     onDefeated: (defeatedId) => {
       if (!firstDefeated) firstDefeated = defeatedId;
     }
@@ -256,6 +270,7 @@ function executeRound(session, playerInputAction, enemyInputAction) {
       player: session.player.anger,
       enemy: session.enemy.anger
     },
+    ...(angerLoss ? { angerLoss } : {}),
     statusesAfter: {
       player: session.player.statuses.map(cloneStatus),
       enemy: session.enemy.statuses.map(cloneStatus)
@@ -344,7 +359,7 @@ function getElementMultiplier(attacker, defender) {
   return 1;
 }
 
-function applyAttackStatus(action, attacker, defender, notes) {
+function applyAttackStatus(action, attacker, defender, notes, stacked) {
   if (action !== "element_attack" && action !== "ultimate") {
     return { preventHurtAngerGain: false };
   }
@@ -362,17 +377,29 @@ function applyAttackStatus(action, attacker, defender, notes) {
     notes.push(`enemy burned x${status.stacks || 1}`);
   }
   if (attacker.element === "water") {
-    const angerBefore = defender.anger;
-    const angerAfter = Math.max(0, Math.floor(angerBefore * 0.5));
-    defender.anger = angerAfter;
-    notes.push(`enemy anger halved by freeze (${angerBefore}->${angerAfter})`);
-    result.preventHurtAngerGain = true;
+    if (stacked) {
+      const status = addOrRefreshStatus(defender, {
+        type: "dampen",
+        duration: ELEMENT_STATUS_DURATION,
+        potency: DAMPEN_CURRENT_ANGER_RATIO_PER_STACK,
+        stacks: 1,
+        stackable: true,
+        sourceId: attacker.id
+      });
+      notes.push(`${defender.id} dampened x${status.stacks}`);
+    } else {
+      const angerBefore = defender.anger;
+      const angerAfter = Math.max(0, Math.floor(angerBefore * 0.5));
+      defender.anger = angerAfter;
+      notes.push(`enemy anger halved by freeze (${angerBefore}->${angerAfter})`);
+      result.preventHurtAngerGain = true;
+    }
   }
   if (attacker.element === "wood") {
     const status = addOrRefreshStatus(defender, {
       type: "parasite",
       duration: ELEMENT_STATUS_DURATION,
-      potency: 2,
+      potency: stacked ? PARASITE_CURRENT_HP_RATIO_PER_STACK : 2,
       stacks: 1,
       stackable: true,
       sourceId: attacker.id
@@ -437,14 +464,23 @@ function applyRoundEndStatusEffects(
   options = {}
 ) {
   const players = [session.player, session.enemy];
+  const { angerLoss } = options;
   const onDefeated =
     options && typeof options.onDefeated === "function" ? options.onDefeated : () => {};
   for (const player of players) {
     for (const status of player.statuses) {
+      if (angerLoss && player.hp <= 0) break;
+      const stacks = Math.max(1, status.stacks || 1);
+      if (angerLoss && status.type === "dampen") {
+        const drained = Math.min(player.anger, Math.round(player.anger * DAMPEN_CURRENT_ANGER_RATIO_PER_STACK * stacks));
+        player.anger -= drained;
+        angerLoss[player.id] += drained;
+        if (drained > 0) notes.push(`${player.id} loses ${drained} anger to dampen`);
+      }
       if (status.type === "burn") {
         const burnDamage = Math.max(
           1,
-          Math.round(player.hp * BURN_CURRENT_HP_RATIO_PER_STACK * Math.max(1, status.stacks || 1))
+          Math.round(player.hp * BURN_CURRENT_HP_RATIO_PER_STACK * stacks)
         );
         applyDamage(player, burnDamage, onDefeated);
         damageTaken[player.id] += burnDamage;
@@ -452,7 +488,9 @@ function applyRoundEndStatusEffects(
         notes.push(player.id + " takes burn damage");
       }
       if (status.type === "parasite" && status.potency && status.sourceId) {
-        const parasiteDamage = status.potency * Math.max(1, status.stacks || 1);
+        const parasiteDamage = angerLoss
+          ? Math.min(player.hp, Math.max(1, Math.round(player.hp * PARASITE_CURRENT_HP_RATIO_PER_STACK * stacks)))
+          : status.potency * stacks;
         applyDamage(player, parasiteDamage, onDefeated);
         damageTaken[player.id] += parasiteDamage;
         dotDamageEvents[player.id].push({ type: "parasite", amount: parasiteDamage });
@@ -545,6 +583,7 @@ function normalizeElement(element) {
 
 export {
   BATTLE_CORE_VERSION,
+  STACKED_BATTLE_RULES_ID,
   BattleRuntimeService,
   createSession,
   getBattleRules,

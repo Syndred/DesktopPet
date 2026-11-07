@@ -158,7 +158,7 @@ function simulatedMain(t, primary) {
     'core/qa-scenario.cjs': { readQaScenario: () => null },
     'core/runtime-compat.cjs': { createRuntimeCompatibility: () => ({ dispose() {} }) },
     'core/ipc-guard.cjs': {},
-    'core/tray-recall.cjs': {},
+    'core/tray-recall.cjs': require(join(runtime, 'core/tray-recall.cjs')),
     'core/builtin-art.cjs': { registerBuiltinArt: () => art.promise },
   };
   const imports = {

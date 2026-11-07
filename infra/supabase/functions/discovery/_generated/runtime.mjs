@@ -55,9 +55,10 @@ var init_shared_kernel = __esm({
 var require_presentation = __commonJS({
   "apps/pc-app/runtime/features/battle/presentation.cjs"(exports, module) {
     "use strict";
-    var { getBattleRules: getBattleRules3 } = (init_shared_kernel(), __toCommonJS(shared_kernel_exports));
+    var { getBattleRules: getBattleRules3, STACKED_BATTLE_RULES_ID } = (init_shared_kernel(), __toCommonJS(shared_kernel_exports));
+    var statusTypes = { fire: "burn", wood: "parasite", metal: "vulnerability", earth: "petrify", water: "dampen" };
     function presentRules(saved) {
-      const current = getBattleRules3();
+      const current = getBattleRules3(saved?.id);
       if (!saved) return current;
       if (saved.id !== current.id) return saved;
       return {
@@ -67,10 +68,12 @@ var require_presentation = __commonJS({
       };
     }
     function presentReport(report) {
-      return report?.rules ? { ...report, rules: presentRules(report.rules) } : report;
+      if (!report || report.legacy && !report.rules) return report;
+      return { ...report, rules: presentRules(report.rules) };
     }
     function visualEvents2(round, participants) {
       const events = [];
+      const stacked = participants.rules?.id === STACKED_BATTLE_RULES_ID;
       const add = (side, phase, kind, data = {}) => events.push({ id: `${round.round}:${side}:${phase}:${kind}:${events.length}`, side, phase, kind, ...data });
       for (const side of ["player", "enemy"]) {
         const action = round.actions[side];
@@ -83,13 +86,15 @@ var require_presentation = __commonJS({
         else if (action === "element_attack" && round.actions[target] === "normal_attack") add(side, "impact", "interrupt");
         for (const event of round.dotDamageEvents?.[side] || []) add(side, "effects", "dot", { amount: event.amount, status: event.type });
         for (const event of round.healEvents?.[side] || []) add(side, "effects", "heal", { amount: event.amount, status: event.type });
-        if (["element_attack", "ultimate"].includes(action) && direct > 0) {
-          if (participants[side].element === "water") {
+        if (round.angerLoss?.[side] > 0) add(side, "effects", "anger", { amount: round.angerLoss[side], status: "dampen", element: "water" });
+        const skillHit = action === "ultimate" || action === "element_attack" && round.actions[target] !== "normal_attack";
+        if (skillHit && (direct > 0 || stacked && direct === 0)) {
+          if (participants[side].element === "water" && !stacked) {
             add(target, "effects", "anger", { amount: round.angerAfter?.[target] ?? round.state?.[target]?.anger, element: "water" });
           } else {
-            const type = { fire: "burn", wood: "parasite", metal: "vulnerability", earth: "petrify" }[participants[side].element];
+            const type = statusTypes[participants[side].element];
             const applied = (round.statusesAfter?.[target] || round.state?.[target]?.statuses || []).find((status) => status.type === type && (!status.sourceId || status.sourceId === side));
-            if (applied) add(target, "effects", "status", { status: applied.type, element: participants[side].element });
+            if (applied) add(target, "effects", "status", { status: applied.type, stacks: applied.stacks || 1, element: participants[side].element });
           }
         }
       }

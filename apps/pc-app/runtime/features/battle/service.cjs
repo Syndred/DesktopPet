@@ -1,5 +1,5 @@
 const { randomUUID } = require("node:crypto");
-const { BattleRuntimeService, getBattleRules, executeRound } = require("../../services/battle-runtime.cjs");
+const { BattleRuntimeService, getBattleRules, executeRound, STACKED_BATTLE_RULES_ID } = require("../../services/battle-runtime.cjs");
 const { OnlineDuelService } = require("../../services/online-duel-service.cjs");
 const { BattleStore, copy } = require("./store.cjs");
 const { appearance2d } = require("./assets.cjs");
@@ -148,7 +148,7 @@ class BattleFeatureService {
       }
     }));
     return {
-      pets, session: current, rules: getBattleRules(), selectedPetId: companions?.getSelections?.(owner)?.battlePetId || null,
+      pets, session: current, rules: this.getRules(owner), selectedPetId: companions?.getSelections?.(owner)?.battlePetId || null,
       online: { enabled: status.enabled, configured: status.configured, available: status.available },
       reports: this.localReports(owner,{}), opponents: this.opponents()
     };
@@ -171,7 +171,11 @@ class BattleFeatureService {
     return this.store.save(owner,session);
   }
 
-  rules(_payload, context) { this.owner(context); return getBattleRules(); }
+  getRules(owner = this.verifiedOwner()) {
+    return getBattleRules(this.isCloud(owner) ? undefined : STACKED_BATTLE_RULES_ID);
+  }
+
+  rules(_payload, context) { return this.getRules(this.owner(context)); }
 
   opponents() {
     const catalog = require('../resources/assets/roster-v2/catalog.json');
@@ -201,11 +205,12 @@ class BattleFeatureService {
     const opponent = copy(challenge.opponent);
     if (!opponent?.petId || !ELEMENTS.has(opponent.element)) throw fail("INVALID_OPPONENT", "挑战对象信息不完整");
     opponent.appearance2d = appearance2d(opponent);
-    const engine = new BattleRuntimeService();
+    const rules = this.getRules(owner);
+    const engine = new BattleRuntimeService(rules.id);
     const session = {
       id: `battle-${randomUUID()}`, mode, status: "active", startedAt: new Date().toISOString(),
       player, enemy: opponent, snapshot: engine.reset({ playerElement: player.element, enemyElement: opponent.element }),
-      rounds: [], winner: null, pendingAction: null, historyComplete: true, rules: getBattleRules(),
+      rounds: [], winner: null, pendingAction: null, historyComplete: true, rules,
       context: { ...copy(challenge), authority: this.qa ? 'simulated' : 'local', ...(this.qa ? { scenarioId: this.qa.runId } : {}), opponent: undefined }
     };
     return this.services.db.transaction(() => {
@@ -377,10 +382,11 @@ class BattleFeatureService {
       if (session.mode === "friend") return this.actOnline(owner, session, { ...payload, actionId }, receipt);
       return this.services.db.transaction(() => {
         if (!receipt) this.store.reserve(owner, actionId, session.id, { action: payload.action, roundNo: session.snapshot.round + 1 });
-        const engine = new BattleRuntimeService();
+        const rulesId = session.rules?.id;
+        const engine = new BattleRuntimeService(rulesId);
         engine.restore(session.snapshot);
         const scripted = this.qa && session.context?.qaEnemyAction || this.qa?.enemyActions?.[session.mode]?.[session.snapshot.round % this.qa.enemyActions[session.mode].length];
-        const result = scripted ? (() => { const roundResult = executeRound(engine.session, payload.action, scripted); return { state: engine.snapshot(), roundResult }; })() : engine.act(payload.action);
+        const result = scripted ? (() => { const roundResult = executeRound(engine.session, payload.action, scripted, rulesId); return { state: engine.snapshot(), roundResult }; })() : engine.act(payload.action);
         session.snapshot = result.state;
         session.rounds.push({ ...result.roundResult, state: result.state });
         session.winner = result.roundResult.winner;
