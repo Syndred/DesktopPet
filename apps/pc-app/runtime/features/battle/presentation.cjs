@@ -1,4 +1,4 @@
-const { getBattleRules, STACKED_BATTLE_RULES_ID } = require('../../services/battle-runtime.cjs');
+const { getBattleRules, usesStackedEffects } = require('../../services/battle-runtime.cjs');
 const statusTypes = { fire: 'burn', wood: 'parasite', metal: 'vulnerability', earth: 'petrify', water: 'dampen' };
 /** Additive read projection only. Saved gameplay values remain authoritative. */
 function presentRules(saved) {
@@ -17,7 +17,7 @@ function presentReport(report) {
 /** Presentation events describe the committed result; they never resolve combat. */
 function visualEvents(round, participants) {
   const events = [];
-  const stacked = participants.rules?.id === STACKED_BATTLE_RULES_ID;
+  const stacked = usesStackedEffects(participants.rules?.id);
   const add = (side, phase, kind, data = {}) => events.push({ id: `${round.round}:${side}:${phase}:${kind}:${events.length}`, side, phase, kind, ...data });
   for (const side of ['player', 'enemy']) {
     const action = round.actions[side];

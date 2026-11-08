@@ -55,7 +55,7 @@ var init_shared_kernel = __esm({
 var require_presentation = __commonJS({
   "apps/pc-app/runtime/features/battle/presentation.cjs"(exports, module) {
     "use strict";
-    var { getBattleRules: getBattleRules3, STACKED_BATTLE_RULES_ID } = (init_shared_kernel(), __toCommonJS(shared_kernel_exports));
+    var { getBattleRules: getBattleRules3, usesStackedEffects } = (init_shared_kernel(), __toCommonJS(shared_kernel_exports));
     var statusTypes = { fire: "burn", wood: "parasite", metal: "vulnerability", earth: "petrify", water: "dampen" };
     function presentRules(saved) {
       const current = getBattleRules3(saved?.id);
@@ -73,7 +73,7 @@ var require_presentation = __commonJS({
     }
     function visualEvents2(round, participants) {
       const events = [];
-      const stacked = participants.rules?.id === STACKED_BATTLE_RULES_ID;
+      const stacked = usesStackedEffects(participants.rules?.id);
       const add = (side, phase, kind, data = {}) => events.push({ id: `${round.round}:${side}:${phase}:${kind}:${events.length}`, side, phase, kind, ...data });
       for (const side of ["player", "enemy"]) {
         const action = round.actions[side];

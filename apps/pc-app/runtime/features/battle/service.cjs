@@ -1,5 +1,5 @@
 const { randomUUID } = require("node:crypto");
-const { BattleRuntimeService, getBattleRules, executeRound, STACKED_BATTLE_RULES_ID } = require("../../services/battle-runtime.cjs");
+const { BattleRuntimeService, getBattleRules, executeRound, FIXED_DODGE_BATTLE_RULES_ID } = require("../../services/battle-runtime.cjs");
 const { OnlineDuelService } = require("../../services/online-duel-service.cjs");
 const { BattleStore, copy } = require("./store.cjs");
 const { appearance2d } = require("./assets.cjs");
@@ -172,7 +172,7 @@ class BattleFeatureService {
   }
 
   getRules(owner = this.verifiedOwner()) {
-    return getBattleRules(this.isCloud(owner) ? undefined : STACKED_BATTLE_RULES_ID);
+    return getBattleRules(this.isCloud(owner) ? undefined : FIXED_DODGE_BATTLE_RULES_ID);
   }
 
   rules(_payload, context) { return this.getRules(this.owner(context)); }
@@ -380,9 +380,15 @@ class BattleFeatureService {
         catch(error){this.assertOwner(owner);throw fail('ONLINE_ACTION_UNCERTAIN',`训练结果待云端确认，请同步原回合。${friendlyError(error)}`);}
       }
       if (session.mode === "friend") return this.actOnline(owner, session, { ...payload, actionId }, receipt);
+      const rulesId = session.rules?.id;
+      if (payload.action === "dodge") {
+        const minimum = getBattleRules(rulesId).dodgeMinAnger;
+        if (minimum != null && session.snapshot.player.anger < minimum) {
+          throw fail("INSUFFICIENT_ANGER", `闪避需要至少 ${minimum} 怒气`);
+        }
+      }
       return this.services.db.transaction(() => {
         if (!receipt) this.store.reserve(owner, actionId, session.id, { action: payload.action, roundNo: session.snapshot.round + 1 });
-        const rulesId = session.rules?.id;
         const engine = new BattleRuntimeService(rulesId);
         engine.restore(session.snapshot);
         const scripted = this.qa && session.context?.qaEnemyAction || this.qa?.enemyActions?.[session.mode]?.[session.snapshot.round % this.qa.enemyActions[session.mode].length];

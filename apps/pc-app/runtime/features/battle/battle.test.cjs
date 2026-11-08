@@ -261,7 +261,7 @@ test("real SQLite and companions: full training awards only the selected instanc
     const before = companions.getPet(f.owner, selected).growth;
     const rules = f.service.rules({}, f.context);
     assert.deepEqual(f.service.overview({}, f.context).rules, rules);
-    assert.equal(rules.id, 'five-elements-stacked-v2');
+    assert.equal(rules.id, 'five-elements-stacked-v3');
     assert.equal(rules.vitalPolicy, 'normalized');
     assert.equal(rules.companionStatsApplied, false);
     assert.notEqual(before.stats.hp, rules.maxHp, 'The fixture keeps its actual growth HP; standard battle HP is a separate declared rule');
@@ -302,17 +302,43 @@ test("real disk restart restores a fight and stale simultaneous commands cannot 
   try {
     const petId = f.service.pets(f.owner)[0].petId;
     let session = await f.service.startTraining({ actionId: "restart-start", petId, enemyElement: "wood" }, f.context);
+    session.snapshot.player.anger = 10;
+    f.service.store.save(f.owner, session);
     session = await f.service.act({ sessionId: session.id, actionId: "first", action: "dodge", expectedRound: 1 }, f.context);
     const saved = clone(session.snapshot); const id = session.id;
     f.close(); f = setup(folder);
     session = f.service.snapshot({ sessionId: id }, f.context);
     assert.deepEqual(session.snapshot, saved);
-    assert.equal(session.rules.id, 'five-elements-stacked-v2');
+    assert.equal(session.rules.id, 'five-elements-stacked-v3');
     assert.equal(f.service.overview({}, f.context).session.id, id);
     const attempts = await Promise.allSettled(["same-round-a", "same-round-b"].map(actionId => f.service.act({ sessionId: id, actionId, action: "normal_attack", expectedRound: 2 }, f.context)));
     assert.equal(attempts.filter(item => item.status === "fulfilled").length, 1);
     assert.equal(attempts.find(item => item.status === "rejected").reason.code, "ROUND_CONFLICT");
     assert.equal(f.service.snapshot({ sessionId: id }, f.context).snapshot.round, 2);
+  } finally { f.close(); }
+});
+
+test('local dodge below 10 rage leaves the round and action receipt untouched', { skip: !hasCompanions }, async () => {
+  const f = setup();
+  try {
+    const petId = f.service.pets(f.owner)[0].petId;
+    const session = await f.service.startTraining({ actionId: 'start-dodge', petId, enemyElement: 'water' }, f.context);
+    const input = { sessionId: session.id, actionId: 'dodge-threshold', action: 'dodge', expectedRound: 1 };
+    for (const anger of [0, 9]) {
+      session.snapshot.player.anger = anger;
+      f.service.store.save(f.owner, session);
+      await assert.rejects(f.service.act(input, f.context), { code: 'INSUFFICIENT_ANGER' });
+      assert.equal(f.service.snapshot({ sessionId: session.id }, f.context).snapshot.round, 0);
+      assert.equal(f.service.store.action(f.owner, input.actionId), null);
+    }
+    session.snapshot.player.anger = 10;
+    f.service.store.save(f.owner, session);
+    f.service.qa = { enemyActions: { training: ['normal_attack'] } };
+    const result = await f.service.act(input, f.context);
+    assert.equal(result.snapshot.player.anger, 20);
+    assert.equal(result.snapshot.round, 1);
+    const replay = await f.service.act(input, f.context);
+    assert.deepEqual(replay.snapshot, result.snapshot);
   } finally { f.close(); }
 });
 

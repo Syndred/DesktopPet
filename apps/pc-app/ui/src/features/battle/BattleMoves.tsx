@@ -20,13 +20,16 @@ const moves = [
 
 /** One presentation source for the live command bar and read-only pet details. */
 export function getBattleMovePresentation(element: ElementType, rules: BattleRulesProfile) {
+  const fixedDodge = rules.dodgeMinAnger != null;
+  const dodgeCost = fixedDodge ? `每次消耗 ${rules.dodgeMaxCost} 怒气` : `首次零怒气可免费使用，有怒气时最多消耗 ${rules.dodgeMaxCost}`;
+  const dodgeRefund = rules.dodgeRefund == null ? '' : `，成功躲开普攻返还 ${rules.dodgeRefund} 怒气`;
   return moves.map(move => {
     const effect = move.action === 'element_attack' ? rules.elementEffects?.[element] : undefined;
-    const detail = move.action === 'ultimate' ? `需要 ${rules.ultimateAnger} 怒气，消耗 ${rules.ultimateCost}，基础伤害 ${rules.baseDamage[move.action]}，恢复 ${rules.ultimateHeal} 生命` : move.action === 'dodge' ? `零怒气可免费一次；有怒气时最多消耗 ${rules.dodgeMaxCost}${rules.dodgeRefund == null ? '' : `；成功躲开普攻返还 ${rules.dodgeRefund} 怒气`}` : `基础伤害 ${rules.baseDamage[move.action]}`;
+    const detail = move.action === 'ultimate' ? `需要 ${rules.ultimateAnger} 怒气，消耗 ${rules.ultimateCost}，基础伤害 ${rules.baseDamage[move.action]}，恢复 ${rules.ultimateHeal} 生命` : move.action === 'dodge' ? `${dodgeCost}${dodgeRefund}` : `基础伤害 ${rules.baseDamage[move.action]}`;
     return { action: move.action, label: actionLabels[move.action], Icon: move.action === 'element_attack' ? elementIcons[element] : move.icon,
       caption: effect?.label || (move.action === 'element_attack' ? elements[element].label : move.action === 'normal_attack' ? '打断' : move.action === 'dodge' ? '回避' : '必中 · 回复'),
-      description: `${effect?.description || move.description}；${detail}`,
-      summaryValue: move.action === 'ultimate' ? String(rules.ultimateCost) : move.action === 'dodge' ? `≤${rules.dodgeMaxCost}` : String(rules.baseDamage[move.action]) };
+      description: `${effect?.description || move.description} · ${detail}`,
+      summaryValue: move.action === 'ultimate' ? String(rules.ultimateCost) : move.action === 'dodge' ? `${fixedDodge ? '' : '≤'}${rules.dodgeMaxCost}` : String(rules.baseDamage[move.action]) };
   });
 }
 type MovePresentation = ReturnType<typeof getBattleMovePresentation>[number];
@@ -44,7 +47,6 @@ export function BattleSkillSummary({ element, rules, compact = false }: { elemen
 
 const commandOrder: BattleActionType[] = ['ultimate', 'normal_attack', 'element_attack', 'dodge'];
 const commandLabels = { normal_attack: '攻击', element_attack: '属性', dodge: '闪避', ultimate: '大招' };
-const commandHints = { normal_attack: '打断属性', element_attack: '无法闪避', dodge: '闪避攻击', ultimate: '必中 · 回复' };
 
 /** The same real commands in a compact, floating group. No presentation timer submits a move. */
 export function BattleMoves({ session, rules, busy, onAct }: { session: BattleSession; rules: BattleRulesProfile; busy: boolean; onAct(action: BattleActionType): void }) {
@@ -59,12 +61,16 @@ export function BattleMoves({ session, rules, busy, onAct }: { session: BattleSe
     {commandOrder.map(action => {
       const move = presentations.find(value => value.action === action)!;
       const lackingAnger = move.action === 'ultimate' && actor.anger < rules.ultimateAnger;
-      const exhaustedDodge = move.action === 'dodge' && actor.freeDodgeUsed && actor.anger <= 0;
-      const dodgeCost = Math.min(actor.anger, rules.dodgeMaxCost);
+      const minimumDodgeAnger = rules.dodgeMinAnger;
+      const exhaustedDodge = move.action === 'dodge' && (minimumDodgeAnger == null ? actor.freeDodgeUsed && actor.anger <= 0 : actor.anger < minimumDodgeAnger);
+      const dodgeRequirement = minimumDodgeAnger == null ? '需要怒气' : `需要至少 ${minimumDodgeAnger} 怒气`;
+      const detail = move.action === 'dodge' && minimumDodgeAnger == null
+        ? `${move.description} · 本次消耗 ${Math.min(actor.anger, rules.dodgeMaxCost)} 怒气`
+        : move.description;
       const disabled = busy || session.status !== 'active' || Boolean(session.pendingAction) || lackingAnger || exhaustedDodge;
-      const reason = busy ? '正在出招' : waiting ? '等待好友' : session.status === 'settling' ? '正在结算' : session.status !== 'active' ? '对战已结束' : session.pendingAction ? '行动已锁定' : lackingAnger ? `需要至少 ${rules.ultimateAnger} 怒气` : exhaustedDodge ? '需要怒气' : move.action === 'dodge' ? `${move.description}；本次消耗 ${dodgeCost} 怒气` : move.description;
+      const reason = busy ? '正在出招' : waiting ? '等待好友' : session.status === 'settling' ? '正在结算' : session.status !== 'active' ? '对战已结束' : session.pendingAction ? '行动已锁定' : lackingAnger ? `需要至少 ${rules.ultimateAnger} 怒气` : exhaustedDodge ? dodgeRequirement : detail;
       const ultimate = move.action === 'ultimate', ready = ultimate && !lackingAnger;
-      const hint = disabled || move.action === 'element_attack' || ultimate ? reason : commandHints[move.action];
+      const hint = !disabled && move.action === 'normal_attack' ? '打断属性' : reason;
       const Icon = ultimate ? Star : move.Icon;
       const reasonId = `${descriptionId}-${move.action}`;
       return <Tooltip key={move.action}><TooltipTrigger asChild><span className="battle-command-tooltip" aria-label={disabled ? `${actionLabels[move.action]}：${reason}` : undefined} aria-describedby={disabled ? reasonId : undefined} tabIndex={disabled ? 0 : -1}>
