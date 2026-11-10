@@ -1,16 +1,27 @@
 name: CI
 
 on:
-  push:
-    branches: ["main", "master"]
-  pull_request:
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: Choose which checks to run
+        type: choice
+        required: true
+        default: source
+        options: [source, cloud, windows]
 
 permissions:
   contents: read
 
+concurrency:
+  group: ci-${{ github.ref }}-${{ inputs.scope }}
+  cancel-in-progress: true
+
 jobs:
   verify:
+    if: ${{ inputs.scope == 'source' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v7.0.1
@@ -28,6 +39,7 @@ jobs:
         run: npm run verify
 
   cloud-source:
+    if: ${{ inputs.scope == 'cloud' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
@@ -54,6 +66,7 @@ jobs:
             artifacts/foundation/cloud-engineering/cloud-source-check/run-*/*.log
 
   windows-desktop:
+    if: ${{ inputs.scope == 'windows' }}
     runs-on: windows-latest
     timeout-minutes: 25
     steps:
