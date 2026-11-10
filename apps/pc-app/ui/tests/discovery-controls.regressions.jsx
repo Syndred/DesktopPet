@@ -33,5 +33,15 @@ export async function runTests(){
   await act(async()=>latest.setRadius(100));nearDistance=150;await act(async()=>latest.refresh());check(host.textContent.includes('100 米内暂未发现伙伴'),'real filtered empty label');report('display-filter empty state distinct from unlocated state');
   await act(async()=>root.unmount());check([...listeners.values()].every(s=>s.size===0),'session listeners cleaned');report('unmount cleans subscriptions');
   check(checks.length===10,'test cardinality');return checks;
- }finally{try{await act(async()=>root.unmount());}catch{}host.remove();Date.now=originalNow;window.setInterval=originalSet;window.clearInterval=originalClear;}
+ } finally {
+  try {
+   await act(async () => root.unmount());
+  } catch {
+   // Restore the DOM and timers even if React unmount fails.
+  }
+  host.remove();
+  Date.now = originalNow;
+  window.setInterval = originalSet;
+  window.clearInterval = originalClear;
+ }
 }

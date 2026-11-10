@@ -22,14 +22,14 @@ window.runDialogTests = async () => {
   for (const mode of ['escape', 'cancel', 'busy', 'removed', 'unmount', 'moved', 'disabled', 'hidden', 'inert']) {
     const host = document.createElement('div'); document.body.append(host);
     const root = createRoot(host); let update;
-    function Fixture() {
+    const Fixture = () => {
       const [state, set] = useState({ open: false, trigger: true }); update = set;
       return <>{state.trigger && <button id="opener" onClick={() => set(s => ({ ...s, open: true }))}>Open</button>}
         <button id="elsewhere">Other page</button>
         {state.open && <AppDialog title="Test dialog" busy={mode === 'busy'} onClose={() => set(s => ({ ...s, open: false }))}>
           <button id="cancel" onClick={() => set(s => ({ ...s, open: false }))}>Cancel</button>
         </AppDialog>}</>;
-    }
+    };
     await act(async () => { root.render(<Fixture />); });
     const opener = host.querySelector('#opener'); opener.focus();
     await act(async () => { opener.click(); await delay(); });

@@ -29,15 +29,16 @@ export function useNearbyControls(sessionEpoch: number, locate: () => Promise<bo
     intent.busy = true;
     setState(value => ({ ...value, busy: true }));
     let succeeded = false;
-    try { succeeded = await locate(); }
-    catch { succeeded = false; }
-    finally {
-      if (scope.current !== intent || intent.epoch !== sessionEpoch) return;
-      intent.busy = false;
-      intent.until = succeeded ? Date.now() + MANUAL_LOCATION_COOLDOWN_MS : 0;
-      setNow(Date.now());
-      setState(value => ({ ...value, busy: false, until: intent.until }));
+    try {
+      succeeded = await locate();
+    } catch {
+      succeeded = false;
     }
+    if (scope.current !== intent || intent.epoch !== sessionEpoch) return;
+    intent.busy = false;
+    intent.until = succeeded ? Date.now() + MANUAL_LOCATION_COOLDOWN_MS : 0;
+    setNow(Date.now());
+    setState(value => ({ ...value, busy: false, until: intent.until }));
   }, [locate, sessionEpoch]);
   return { radius: current.radius, setRadius, refreshLocation, manualPending: current.busy,
     cooldownSeconds: Math.max(0, Math.ceil((current.until - now) / 1000)) };
